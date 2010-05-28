@@ -5,6 +5,7 @@
 
 %test of svn
 %another test of svn
+%yet another svn test
 
 
 %% Contribution from gear
