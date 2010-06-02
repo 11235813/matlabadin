@@ -1,8 +1,6 @@
 %% Gear
 %This file serves as a master gear database.
 
-%instructions on how to invoke gear here
-
 %% Contribution from gear
 %Item stats are stored in a global database "idb".  Each item is referenced
 %by its item number (as can be found from the wowhead link).  The database
@@ -23,6 +21,52 @@
 %define idb(###).awe for every other item.  A simple line like
 % idb(12345).awe=9001;
 %would create a new field for all items initialized to an empty array [].
+
+%% Invoking Gear and the Equipped Gear Set
+
+%The currently-equipped set is called the Equipped Gear Set, and stored in
+%structure egs.  The fields of egs are named after the item slots:
+%egs.head
+%egs.neck
+%egs.shoulder
+%egs.back
+%egs.wrist
+%egs.hand
+%egs.belt
+%egs.leg
+%egs.feet
+%egs.finger1
+%egs.finger2
+%egs.trinket1
+%egs.trinket2
+%egs.mainhand
+%egs.offhand
+%egs.ranged
+%egs.ammo
+
+%Equipping an item is as simple as invoking the equip() function.  See the
+%equip file for details about the syntax, but for a simple example we could
+%equip Last Laugh in our main hand with either of the following lines:
+% egs.mainhand=equip('Last Laugh');
+% egs.mainhand=equip(40402);
+%Note that the second one will execute much faster (direct reference rather
+%than a search)
+
+%To equip a particular set of items, one can make a gearset file that looks
+%like this:
+%
+%egs.head=equip('Sanctified Lightsworn Faceguard(Heroic)')
+%egs.neck=equip('Bile-Encrusted Medallion')
+%egs.shoulder=equip('Boneguard Commander's Pauldrons(Heroic)')
+%
+%and so forth.  
+
+%TODO: Come up with a consistent way to handle items with identical names.
+%They'll obviously have different item numbers, but the names should also
+%be different so that the search function can return the proper stats.  For
+%the moment, appending (Heroic) to heroic items will probably suffice, but
+%there may be other situations we want to handle.
+
 
 
 %% Initialize Item database
@@ -119,6 +163,14 @@ idb(40345)=struct( 'name','Broken Promise', ...
 % idb.tempitem=idb.brokenpromise;
 
 %% Enchant section - to be written.  
+
+%TODO: Decide how we want to deal with enchants.  Presumably we'll want
+%more fields in egs, like egs.headenchant, egs.shoulderenchant, etc.  We
+%could also just edit the individual fields and write a separate enchant()
+%function.  I.e.  enchant('head',####) would apply enchant #### to the head
+%slot by simply increasing the appropriate stats (i.e. +37 sta, +20 def).
+
+
 % %% Enchants
 % %Format:
 % %Item   = [STR STA AGI INT SPI Hit Crit Exp AP SP Haste ArP Def Dod Parr BV BR Armor]
