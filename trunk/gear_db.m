@@ -25,39 +25,66 @@
 %% Invoking Gear and the Equipped Gear Set
 
 %The currently-equipped set is called the Equipped Gear Set, and stored in
-%structure egs.  The fields of egs are named after the item slots:
-%egs.head
-%egs.neck
-%egs.shoulder
-%egs.back
-%egs.wrist
-%egs.hand
-%egs.belt
-%egs.leg
-%egs.feet
-%egs.finger1
-%egs.finger2
-%egs.trinket1
-%egs.trinket2
-%egs.mainhand
-%egs.offhand
-%egs.ranged
-%egs.ammo
+%structure egs.  The fields of egs are identical to the fields of idb:
+%egs.name
+%egs.type
+%egs.ilvl
+%egs.dps
+%egs.speed
+%egs.str
+%egs.sta
+%egs.agi
+%egs.int
+%egs.spi
+%egs.hit
+%egs.crit
+%egs.exp
+%egs.haste
+%egs.mastery
+%egs.dodge
+%egs.parry
+%egs.block
+%egs.blval
+%egs.armor
+%egs.bonusarmor
+
+%however, egs only has 20 slots.  those slots correspond to the 20 slots on
+%the paper doll:
+% AmmoSlot      0
+% HeadSlot      1
+% NeckSlot      2
+% ShoulderSlot 	3
+% ShirtSlot 	4
+% ChestSlot 	5
+% WaistSlot 	6
+% LegsSlot      7
+% FeetSlot      8
+% WristSlot 	9
+% HandsSlot 	10
+% Finger0Slot 	11
+% Finger1Slot 	12
+% Trinket0Slot 	13
+% Trinket1Slot 	14
+% BackSlot      15
+% MainHandSlot 	16
+% SecondaryHandSlot 	17
+% RangedSlot 	18
+% TabardSlot 	19
 
 %Equipping an item is as simple as invoking the equip() function.  See the
 %equip file for details about the syntax, but for a simple example we could
 %equip Last Laugh in our main hand with either of the following lines:
-% egs.mainhand=equip('Last Laugh');
-% egs.mainhand=equip(40402);
+% egs(16)=equip('Last Laugh');
+% egs(16)=equip(40402);
 %Note that the second one will execute much faster (direct reference rather
 %than a search)
 
 %To equip a particular set of items, one can make a gearset file that looks
 %like this:
 %
-%egs.head=equip('Sanctified Lightsworn Faceguard(Heroic)')
-%egs.neck=equip('Bile-Encrusted Medallion')
-%egs.shoulder=equip('Boneguard Commander's Pauldrons(Heroic)')
+%egs(1)=equip('Sanctified Lightsworn Faceguard(Heroic)')
+%egs(2)=equip('Bile-Encrusted Medallion')
+%egs(3)=equip('Boneguard Commander's Pauldrons(Heroic)')
 %
 %and so forth.  
 
@@ -73,7 +100,7 @@
 global idb
 
 %initialize the structure array with a fake item
-idb(1)=struct( 'name','Sample Item', ...
+idb=struct('name','Sample Item', ...
             'type','swo', ...
             'ilvl',213, ...
             'dps',156.6, ...
@@ -115,7 +142,10 @@ idb(40402).parry=34;
 idb(40402).hit=24;
 
 %Define a new item - Broken Proimse, item number 40345
-idb(40345)=struct( 'name','Broken Promise', ...
+%note that doing it this way, we *have* to define every value, otherwise we
+%generate an assignment subscript error.  As such, we probably won't use
+%struct() to generate most items.
+idb(40345)=struct('name','Broken Promise', ...
             'type','swo', ...
             'ilvl',213, ...
             'dps',156.6, ...
