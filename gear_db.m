@@ -26,12 +26,12 @@
 
 %The currently-equipped set is called the Equipped Gear Set, and stored in
 %structure egs.  The fields of egs are identical to the fields of idb:
-%egs.name
-%egs.type
-%egs.ilvl
-%egs.tooldps %TODELETE : this will store tooltip dps, for referencing only /TODELETE 
-%egs.rate %TODELETE : store 1/base_swing explicitly, e.g. 1/2.0 /TODELETE
-%egs.avgdmg %TODELETE : store average base damage, for more precise calcs /TODELETE
+%egs.name       (Item Name)
+%egs.type       (3-lettter acronym describing the type of item)
+%egs.ilvl       (item level)
+%egs.tooldps    (tooltip dps, for referencing only)
+%egs.rate       (1/base_swing explicitly)
+%egs.avgdmg 	(average base damage, for more precise calcs)
 %egs.str
 %egs.sta
 %egs.agi
@@ -41,38 +41,36 @@
 %egs.crit
 %egs.exp
 %egs.haste
-%egs.mast %TODELETE : shorter version /TODELEE
+%egs.mast       (mastery)
 %egs.dodge
 %egs.parry
-%egs.blrat %TODELETE : use the same nomenclature as blval /TODELETE
-%egs.blval
-%egs.barmor %TODELETE : base AC /TODELETE
-%egs.earmor %TODELETE : extra AC /TODELETE
-%egs.health %TODELETE : extra HP, mainly for enchants/buffs /TODELETE
+%egs.blrat      (block rating)
+%egs.blval      (block value)
+%egs.barmor 	(base AC)
+%egs.earmor 	(extra AC)
+%egs.health 	(extra HP, mainly for enchants/buffs)
 
-%however, egs only has 20 slots.  those slots correspond to the 20 slots on
-%the paper doll:
-% AmmoSlot      0
-% HeadSlot      1
-% NeckSlot      2
-% ShoulderSlot 	3
-% ShirtSlot 	4
-% ChestSlot 	5
-% WaistSlot 	6
-% LegsSlot      7
-% FeetSlot      8
-% WristSlot 	9
-% HandsSlot 	10
-% Finger0Slot 	11
-% Finger1Slot 	12
-% Trinket0Slot 	13
-% Trinket1Slot 	14
-% BackSlot      15
-% MainHandSlot 	16
-% SecondaryHandSlot 	17
-% RangedSlot 	18
-% TabardSlot 	19
-%TODELETE : aren't we better off with only 18 ? ammo and tabard are redundant /TODELETE
+%however, egs only has 18 slots.  those slots correspond to the 18 slots on
+%the paper doll.  Note that Ammo (0) and Tabard (19) are ignored.
+% HeadSlot          1
+% NeckSlot          2
+% ShoulderSlot      3
+% ShirtSlot         4
+% ChestSlot         5
+% WaistSlot         6
+% LegsSlot          7
+% FeetSlot          8
+% WristSlot         9
+% HandsSlot         10
+% Finger0Slot       11
+% Finger1Slot       12
+% Trinket0Slot      13
+% Trinket1Slot      14
+% BackSlot          15
+% MainHandSlot      16
+% SecondaryHandSlot 17
+% RangedSlot        18
+
 
 %Equipping an item is as simple as invoking the equip() function.  See the
 %equip file for details about the syntax, but for a simple example we could
