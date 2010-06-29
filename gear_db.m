@@ -123,7 +123,7 @@ idb=struct('name','Sample Item', ...
             'blval',0, ...
             'barmor',0, ...
             'earmor',0, ...
-            'health',0,);
+            'health',0);
 
         
 %% Begin adding items
@@ -173,56 +173,44 @@ idb(40345)=struct('name','Broken Promise', ...
             'earmor',0, ...
             'health',0);
 
-%% Alternate Method - deprecated
-% idb.brokenpromise =struct('name','Broken Promise', ...
-%             'type','ohw', ...
-%             'ilvl',213, ...
-%             'dps',156.6, ...
-%             'speed',2.5, ...
-%             'str',29, ...
-%             'sta',64,...
-%             'agi',0,...
-%             'int',0,...
-%             'spi',0,...
-%             'hit',16,...
-%             'crit',0,...
-%             'exp',20,...
-%             'haste',0,...
-%             'mastery',0,...
-%             'dodge',0,...
-%             'parry',0,...
-%             'block',0,...
-%             'blval',0,...
-%             'armor',0,...
-%             'bonusarmor',0);
-% 
-% idb.tempitem=idb.brokenpromise;
+%% Sample items, to be deleted later.  Just for testing purposes while we
+% build the code
+idb(2).name='GenericTwo';
+idb(2).ilvl=2;
+idb(2).sta=100;
+
+idb(3).name='GenericThree';
+idb(3).ilvl=3;
+idb(3).hit=100;
+
+idb(4).name='GenericFour';
+idb(4).ilvl=4;
+idb(4).str=100;
+
+idb(5).name='GenericFive';
+idb(5).ilvl=5;
+idb(5).dodge=100;
+
+idb(16).name='GenericWeap';
+idb(16).ilvl=16;
+idb(16).type='swo';
+idb(16).tooldps=250;
+idb(16).rate=1/2;
+idb(16).avgdmg=500;
 
 %% Enchant section - to be written.  
 
-%TODO: Decide how we want to deal with enchants.  Presumably we'll want
-%more fields in egs, like egs.headenchant, egs.shoulderenchant, etc.  We
-%could also just edit the individual fields and write a separate enchant()
-%function.  I.e.  enchant('head',####) would apply enchant #### to the head
-%slot by simply increasing the appropriate stats (i.e. +37 sta, +20 def).
+%Enchants work exactly the same way that items do.  There is an idb
+%structure that contains all of the relevant enchants, according to the
+%spell id number.  Since it has the same form, we can use the same equip()
+%function, though we need to feed it an additional flag to tell it to use
+%edb rather than idb.  (TODO: add this to equip)
 
+%TODO: Decide whether to load these into egs(21) through egs(38) or whether
+%to make a separate "ees" structure to handle enchants.
 
-% %% Enchants
-% %Format:
-% %Item   = [STR STA AGI INT SPI Hit Crit Exp AP SP Haste ArP Def Dod Parr BV BR Armor]
-% HelmEnch= [37    0  0   0   0   0   0    0   0  0   0    0   20   0   0   0  0     0];
-% ShouEnch= [0     0  0   0   0   0   0    0   0  0   0    0   15  20   0   0  0     0];
-% BackEnch= [0     0  0   0   0   0   0    0   0  0   0    0   16   0   0   0  0     0];
-% ChesEnch= [0     0  0   0   0   0   0    0   0  0   0    0   22   0   0   0  0     0];
-% BracEnch= [0    40  0   0   0   0   0    0   0  0   0    0    0   0   0   0  0     0];
-% GlovEnch= [0     0  0   0   0   0   0    0   0  0   0    0    0   0  10   0  0     0]; %armsman
-% BeltEnch= [0     0  0   0   0   0   0    0   0  0   0    0    0   0   0   0  0     0]; %placeholder for future useful tinkers
-% LegsEnch= [0    55 22   0   0   0   0    0   0  0   0    0    0   0   0   0  0     0];
-% BootEnch= [0    15  0   0   0   0   0    0   0  0   0    0    0   0   0   0  0     0];
-% Rin1Ench= [0     0  0   0   0   0   0    0   0  0   0    0    0   0   0   0  0     0];
-% Rin2Ench= [0     0  0   0   0   0   0    0   0  0   0    0    0   0   0   0  0     0];
-% WeapEnch= [ 0    0  0   0   0  25  25    0   0  0   0    0    0   0   0   0  0     0];
-% ShieEnch= [0     0  0   0   0   0   0    0   0  0   0    0   20   0   0   0  0     0];
-
+edb(59619).name='Accuracy';
+edb(59619).hit=25;
+edb(59619).crit=25;
 
 
