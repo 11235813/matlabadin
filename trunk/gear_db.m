@@ -27,7 +27,7 @@
 %The currently-equipped set is called the Equipped Gear Set, and stored in
 %structure egs.  The fields of egs are identical to the fields of idb:
 %egs.name       (Item Name)
-%egs.type       (3-lettter acronym describing the type of item)
+%egs.wtype      (axe/mac/swo; non-weapons are ignored)
 %egs.ilvl       (item level)
 %egs.tooldps    (tooltip dps, for referencing only)
 %egs.rate       (1/base_swing explicitly)
@@ -50,35 +50,34 @@
 %egs.earmor 	(extra AC)
 %egs.health 	(extra HP, mainly for enchants/buffs)
 
-%however, egs only has 18 slots.  those slots correspond to the 18 slots on
-%the paper doll.  Note that Ammo (0) and Tabard (19) are ignored.
+%However, egs only has 17 slots, corresponding to the 17 relevant slots on
+%the paper doll. Ammo (0), Shirt(18), Tabard (19) are ignored.
 % HeadSlot          1
 % NeckSlot          2
 % ShoulderSlot      3
-% ShirtSlot         4
+% BackSlot          4
 % ChestSlot         5
-% WaistSlot         6
-% LegsSlot          7
-% FeetSlot          8
-% WristSlot         9
-% HandsSlot         10
+% WristSlot         6
+% HandsSlot         7
+% WaistSlot         8
+% LegsSlot          9
+% FeetSlot          10
 % Finger0Slot       11
 % Finger1Slot       12
 % Trinket0Slot      13
 % Trinket1Slot      14
-% BackSlot          15
-% MainHandSlot      16
-% SecondaryHandSlot 17
-% RangedSlot        18
+% MainHandSlot      15
+% OffHandSlot       16
+% RangedSlot        17
 
 
 %Equipping an item is as simple as invoking the equip() function.  See the
 %equip file for details about the syntax, but for a simple example we could
 %equip Last Laugh in our main hand with either of the following lines:
-% egs(16)=equip('Last Laugh');
-% egs(16)=equip(40402);
+% egs(15)=equip('Last Laugh');
+% egs(15)=equip(40402);
 %Note that the second one will execute much faster (direct reference rather
-%than a search)
+%than exhaustive search)
 
 %To equip a particular set of items, one can make a gearset file that looks
 %like this:
@@ -102,11 +101,11 @@ global idb
 
 %initialize the structure array with a fake item
 idb=struct('name','Sample Item', ...
-            'type','swo', ... %TODELETE : use consistent nomenclature; say 3letters axe/mac/swo /TODELETE
+            'wtype','swo', ...
             'ilvl',213, ...
-            'tooldps',156.6, ... %TODELETE : use tooltip dps as parsed by armory /TODELETE
+            'tooldps',156.6, ...
             'rate',1/2.5, ...
-            'avgdmg',391, ... %TODELETE : use accurate values, not based on tooltip dps which is rounded /TODELETE
+            'avgdmg',391, ...
             'str',29, ...
             'sta',64, ...
             'agi',0, ...
@@ -135,7 +134,7 @@ idb=struct('name','Sample Item', ...
         
 %Define a new item - Last Laugh, item number 40402  
 idb(40402).name='Last Laugh';
-idb(40402).type='axe';
+idb(40402).wtype='axe';
 idb(40402).ilvl=226;
 idb(40402).tooldps=171.6;
 idb(40402).rate=1/1.6;
@@ -145,12 +144,12 @@ idb(40402).sta=73;
 idb(40402).parry=34;
 idb(40402).hit=24;
 
-%Define a new item - Broken Proimse, item number 40345
+%Define a new item - Broken Promise, item number 40345
 %note that doing it this way, we *have* to define every value, otherwise we
 %generate an assignment subscript error.  As such, we probably won't use
 %struct() to generate most items.
 idb(40345)=struct('name','Broken Promise', ...
-            'type','swo', ...
+            'wtype','swo', ...
             'ilvl',213, ...
             'tooldps',156.6, ...
             'rate',1/2.5, ...
@@ -193,7 +192,7 @@ idb(5).dodge=100;
 
 idb(16).name='GenericWeap';
 idb(16).ilvl=16;
-idb(16).type='swo';
+idb(16).wtype='swo';
 idb(16).tooldps=250;
 idb(16).rate=1/2;
 idb(16).avgdmg=500;
@@ -202,15 +201,12 @@ idb(16).avgdmg=500;
 
 %Enchants work exactly the same way that items do.  There is an idb
 %structure that contains all of the relevant enchants, according to the
-%spell id number.  Since it has the same form, we can use the same equip()
-%function, though we need to feed it an additional flag to tell it to use
-%edb rather than idb.  (TODO: add this to equip)
+%spell_id value.  Since it has the same form, we can use the same equip()
+%function.
 
-%TODO: Decide whether to load these into egs(21) through egs(38) or whether
-%to make a separate "ees" structure to handle enchants.
-
-edb(59619).name='Accuracy';
-edb(59619).hit=25;
-edb(59619).crit=25;
+% Accuracy as example
+idb(59619).name='Accuracy';
+idb(59619).hit=25;
+idb(59619).crit=25;
 
 
