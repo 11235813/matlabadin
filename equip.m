@@ -11,14 +11,14 @@ function [item] = equip(iref)
 %text input, it searches through idb until it finds the item number with
 %a name string that matches iref, and then returns the stats.
 %IMPORTANT : Note that it is much faster to reference an item
-%by inum (item_id, as parsed by armory) than by its name. /IMPORTANT
+%by inum (item_id, as parsed by armory) than by its name.
 
 global idb
 
 %character input (i.e. iref='Last Laugh')
 if ischar(iref)
     
-   gi=length(idb)
+   gi=length(idb);
    while gi>0 && not(strcmp(idb(gi).name,iref))
        gi=gi+1;
    end 
