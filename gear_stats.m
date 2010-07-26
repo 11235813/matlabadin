@@ -11,11 +11,11 @@
 
 %For stats that can be on any item, simply sum the contributions from all
 %items
-Gear_STR = sum([egs.str]);
-Gear_STA = sum([egs.sta]);
-Gear_AGI = sum([egs.sta]);
-
+gear.str = sum([egs.str]);
+gear.sta = sum([egs.sta]);
+gear.agi = sum([egs.sta]);
+gear.int = sum([egs.int]);
 %For stats that are item-specific (i.e. weapons), we can just reference the
 %field directly, since [egs.x] will return only one member
 
-Weap_AvgDmg = [egs.avgdmg];
+gear.avgdmg = [egs.avgdmg];
