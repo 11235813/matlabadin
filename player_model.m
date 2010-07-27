@@ -14,9 +14,14 @@ global base
 
 base.level=80;
 base.wskill=400;
-base.AP=3.*base.level;  %class specific
+base.ap=3.*base.level;  %class specific
+base.sp=0;              %TODO: look up
+base.mast=0;            %TODO: look up
+base.miss=0;            %TODO: look up (~5?)
 base.dodge=3.4943;      %class and level dependent
-base.scrit=3.34;        %class and level dependent
+base.parry=0;           %TODO: look up (~5?)
+base.block=0;           %TODO: look up (~5?)
+base.spcrit=3.34;        %class and level dependent
 base.phcrit=3.27;       %class and level dependent
 base.health=6934;       %class and level dependent
 base.mana=4394;         %class and level dependent
