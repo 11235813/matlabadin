@@ -57,12 +57,17 @@ extra.blo=extra.itm.blo.*ipconv.blo     + extra.val.blo;
 %% Primary stats
 
 str=floor(floor((base.str+gear.str+extra.str)).*BoK);
-sta=floor(floor((base.sta+gear.sta+extra.sta)).*BoK);
+sta=floor(floor((base.sta+gear.sta+extra.sta).*(1+0.15.*talent.tbtl)).*BoK);
 agi=floor((base.agi+gear.agi+extra.agi).*BoK);
 int=floor((base.int+gear.int+extra.int).*BoK);
 % spi=floor((base.spi+gear.spi).*BoK);
 
 armory_str=floor(floor((base.str+gear.str)));
+
+hitpoints=base.health+10.*(sta-10)+gear.health;
+armor=gear.barmor.*(1+floor(0.034.*talent.Toughness)).*(1+0.2*gear.armormeta) + gear.earmor + agi.*2;
+
+vengeance=0.1.*hitpoints.*talent.vengeance;
 
 %% Hit Rating
 spellhit=buff.example + (gear.hit+extra.hit)./hit_to_spellhit;
@@ -111,7 +116,7 @@ aacrit=(base.phcrit + ...                       %base physical crit
 
 %% SP and AP
 ap=floor((base.ap+gear.ap+2.*(str-10)+extra.ap+buff.example).*(1+0.2.*buff.example));
-sp=gear.sp + extra.sp + floor(str.*0.3.*talent.example) + int./int_to_sp + buff.example;
+sp=gear.sp + extra.sp + floor(str.*0.6.*talent.tbtl) + int./int_to_sp + buff.example;
 
 %% Mastery
 mast=base.mast+gear.mast+talent.example;
