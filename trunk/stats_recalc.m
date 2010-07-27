@@ -111,7 +111,7 @@ aacrit=(base.phcrit + ...                       %base physical crit
 
 %% SP and AP
 ap=floor((base.ap+gear.ap+2.*(str-10)+extra.ap+buff.example).*(1+0.2.*buff.example));
-SP=gear.sp + extra.sp + floor(str.*0.3.*talent.example) + int./int_to_sp + buff.example;
+sp=gear.sp + extra.sp + floor(str.*0.3.*talent.example) + int./int_to_sp + buff.example;
 
 %% Mastery
 mast=base.mast+gear.mast+talent.example;

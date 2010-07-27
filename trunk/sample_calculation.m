@@ -1,3 +1,4 @@
+clear;
 %load gear database
 gear_db;
 

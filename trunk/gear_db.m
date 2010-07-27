@@ -103,18 +103,18 @@ global idb
 %initialize the structure array with a fake item
 idb=struct('name','Sample Item', ...
             'wtype','swo', ...
-            'ilvl',213, ...
-            'tooldps',156.6, ...
+            'ilvl',0, ...
+            'tooldps',0, ...
             'swing',2.5, ...
-            'avgdmg',391, ...
-            'str',29, ...
-            'sta',64, ...
+            'avgdmg',0, ...
+            'str',0, ...
+            'sta',0, ...
             'agi',0, ...
             'int',0, ...
             'spi',0, ...
-            'hit',16, ...
+            'hit',0, ...
             'crit',0, ...
-            'exp',20, ...
+            'exp',0, ...
             'haste',0, ...
             'mast',0, ...
             'sp',0, ...
@@ -188,30 +188,146 @@ idb(40345).exp=20;
 %             'health',0,...
 %             'critmeta',0);
 
-%% Sample items, to be deleted later.  Just for testing purposes while we
-% build the code
-idb(2).name='GenericTwo';
-idb(2).ilvl=2;
-idb(2).sta=100;
+%% Items
+%% T10.277 set
+idb(51266).name='Sanctified Lightsworn Faceguard (Heroic)';
+idb(51266).ilvl=277;
+idb(51266).barmor=2239;
+idb(51266).str=183;
+idb(51266).sta=243+15+12;
+idb(51266).agi=0+10;
+idb(51266).critmeta=1;
+idb(51266).dodge=128;
+idb(51266).parry=88;
 
-idb(3).name='GenericThree';
-idb(3).ilvl=3;
-idb(3).hit=100;
+idb(51265).name='Sanctified Lightsworn Chestguard (Heroic)';
+idb(51265).ilvl=277;
+idb(51265).barmor=2756;
+idb(51265).earmor=3140-idb(51265).barmor;
+idb(51265).str=183;
+idb(51265).sta=251+30+15+9;
+idb(51265).agi=0+10;
+idb(51265).dodge=56;
+idb(51265).parry=96;
 
-idb(4).name='GenericFour';
-idb(4).ilvl=4;
-idb(4).str=100;
+idb(51267).name='Sanctified Lightsworn Handguards (Heroic)';
+idb(51267).ilvl=277;
+idb(51267).barmor=1723;
+idb(51267).earmor=2051-idb(51265).barmor;
+idb(51267).str=103;
+idb(51267).sta=192+30;
+idb(51267).dodge=68;
+idb(51267).hit=69;
 
-idb(5).name='GenericFive';
-idb(5).ilvl=5;
-idb(5).dodge=100;
+idb(51268).name='Sanctified Lightsworn Legguards (Heroic)';
+idb(51268).ilvl=277;
+idb(51268).barmor=2412;
+idb(51268).str=139;
+idb(51268).sta=251+30+30;
+idb(51268).dodge=106;
+idb(51268).exp=93;
 
-idb(16).name='GenericWeap';
-idb(16).ilvl=16;
-idb(16).wtype='swo';
-idb(16).tooldps=250;
-idb(16).rate=1/2;
-idb(16).avgdmg=500;
+idb(51269).name='Sanctified Lightsworn Shoulderguards (Heroic)';
+idb(51269).ilvl=277;
+idb(51269).barmor=2067;
+idb(51269).str=136;
+idb(51269).sta=192+30;
+idb(51269).dodge=99;
+idb(51269).parry=71;
+
+%% Neck 
+idb(50682).name='Bile-Encrusted Medallion (Heroic)';
+idb(50682).ilvl=277;
+idb(50682).earmor=216;
+idb(50682).str=102;
+idb(50682).sta=141+30;
+idb(50682).dodge=73;
+
+%% Cloaks
+idb(50466).name='Sentinel''s Winter Cloak';
+idb(50466).ilvl=264;
+idb(50466).barmor=556;
+idb(50466).earmor=716-idb(50466).barmor;
+idb(50466).str=90;
+idb(50466).sta=124+30;
+idb(50466).dodge=72;
+
+%% Bracers
+idb(51901).name='Gargoyle Spit Bracers (Heroic)';
+idb(51901).ilvl=264;
+idb(51901).barmor=1156;
+idb(51901).earmor=1360-idb(51901).barmor;
+idb(51901).str=82;
+idb(51901).sta=124+30;
+idb(51901).dodge=68;
+
+
+%% Belts
+idb(50991).name='Verdigris Chain Belt';
+idb(50991).ilvl=264;
+idb(50991).barmor=1486;
+idb(50991).earmor=1674-idb(50991).barmor;
+idb(50991).str=120;
+idb(50991).sta=157+15+30+30+9;
+idb(50991).agi=0+10;
+idb(50991).parry=95;
+
+%% Boots
+idb(50625).name='Grinning Skull Greatboots (Heroic)';
+idb(50625).ilvl=277;
+idb(50625).barmor=1895;
+idb(50625).str=103;
+idb(50625).sta=180+30+30;
+idb(50625).dodge=127;
+idb(50625).exp=61;
+
+%% Rings
+idb(50622).name='Devium''s Eternally Cold Ring (Heroic)';
+idb(50622).ilvl=277;
+idb(50622).earmor=216;
+idb(50622).str=102;
+idb(50622).sta=141+30;
+idb(50622).dodge=73;
+
+idb(50404).name='Ashen Band of Endless Courage';
+idb(50404).ilvl=277;
+idb(50404).str=68;
+idb(50404).sta=130+30;
+idb(50404).dodge=84;
+idb(50404).hit=55;
+idb(50404).earmor=2400.*0.03;
+
+%% Trinkets
+idb(50356).name='Corroded Skeleton Key';
+idb(50356).ilvl=264;
+idb(50356).sta=228;
+
+idb(54571).name='Sindragosa''s Flawless Fang';
+idb(54571).ilvl=264;
+idb(54571).sta=228;
+
+%% Weapons
+idb(50708).name='Last Word (Heroic)';
+idb(50708).ilvl=277;
+idb(50708).wtype='mac';
+idb(50708).tooldps=250.6;
+idb(50708).swing=1.8;
+idb(50708).avgdmg=(315+587)/2;
+idb(50708).sta=94+30;
+idb(50708).str=115;
+
+%% Shields
+idb(50729).name='Icecrown Glacial Wall (Heroic)';
+idb(50729).ilvl=277;
+idb(50729).barmor=7699;
+idb(50729).str=102;
+idb(50729).sta=141+30;
+idb(50729).dodge=68;
+idb(50729).parry=72;
+
+%% Librams
+idb(50461).name='Libram of the Eternal Tower';
+idb(50461).dodge=219;
 
 %% Enchant section - to be written.  
 
@@ -220,9 +336,51 @@ idb(16).avgdmg=500;
 %spell_id value.  Since it has the same form, we can use the same equip()
 %function.
 
-% Accuracy as example
-idb(59619).name='Accuracy';
+%% Head
+idb(44150).name='Arcanum of the Stalwart Protector';
+idb(44150).sta=37;
+
+%% Shoulder
+idb(44136).name='Greater Inscription of the Pinnacle';
+idb(44136).dodge=20;
+
+%% Cloak
+idb(39001).name='Enchant Cloak - Mighty Armor';
+idb(39001).barmor=225;
+
+%% Chest
+idb(39005).name='Enchant Chest - Super Health';
+idb(39005).health=275;
+
+%% Wrists
+idb(44947).name='Enchant Bracer - Major Stamina';
+idb(44947).sta=40;
+
+%% Hands
+idb(38376).name='Heavy Borean Armor Kit';
+idb(38376).sta=18;
+
+%% Legs
+idb(38373).name='Frosthide Leg Armor';
+idb(38373).sta=55;
+idb(38373).agi=22;
+
+%% Feet
+idb(39006).name='Enchant Boots - Tuskarr''s Vitality';
+idb(39006).sta=15;
+
+%% Rings
+idb(50).name='Enchant Ring - Stamina';
+idb(50).sta=30;
+
+%% Weapon
+idb(59619).name='Enchant Weapon - Accuracy';
 idb(59619).hit=25;
 idb(59619).crit=25;
+
+%% Shield
+idb(38945).name='Enchant Shield - Major Stamina';
+idb(38945).sta=18;
+
 
 
