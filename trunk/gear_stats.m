@@ -25,6 +25,8 @@ gear.mast =sum([egs.mast]);
 gear.ap  = sum([egs.ap]);
 gear.sp  = sum([egs.sp]);
 
+gear.health=sum([egs.health]);
+
 gear.dodge=sum([egs.dodge]);
 gear.parry=sum([egs.parry]);
 gear.block=sum([egs.block]);
@@ -41,3 +43,4 @@ gear.tooldps=egs(15).tooldps;
 
 %meta gems
 gear.critmeta = egs(1).critmeta;
+gear.armormeta= egs(1).armormeta;

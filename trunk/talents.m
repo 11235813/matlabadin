@@ -15,75 +15,71 @@
 %whether we want to do something more elegant (maybe a "setTalent" function
 %that can take a wowhead URL as an argument?)
 
+%% Base bonuses for choosing prot
+talent.tbtl=1;
+talent.vengeance=1;
+talent.jotw=1;
+
 %% Holy
-talent.SealsOfThePure=0;
-talent.SpiritualFocus=0;
+talent.SanctifiedLight=0;
+talent.Divinity=0;
+talent.JudgementsofthePure=0;
+
+%potential integer matrix for later use
+holy=zeros(2,3);
+holy(1,1)=talent.SanctifiedLight;holy(1,2)=talent.Divinity;holy(1,3)=talent.JudgementsofthePure;
+
 
 %% Prot
-talent.DivineStrength=5;
-talent.Divinity=0;
+talent.Toughness=3;
+talent.SealsofthePure=3;
+talent.ImprovedHammerofJustice=0;
 
-talent.Anticipation=5;
-talent.Stoicism=0;
+talent.JudgementsoftheJust=2;
+talent.ProtectoroftheInnocent=3;
 talent.GuardiansFavor=0;
 
-talent.ImprovedRighteousFury=3;
-talent.Toughness=5;
-talent.DivineSacrifice=1;
+talent.HallowedGround=0;
+talent.Sanctuary=3;
+talent.HammeroftheRighteous=1;
+talent.WrathoftheLightbringer=2;
 
-talent.DivineGuardian=2;
-talent.ImprovedHammerOfJustice=0;
-talent.ImprovedDevotionAura=3;
+talent.Reckoning=2;
+talent.GrandCrusader=2;
+talent.DivineGuardian=1;
 
-talent.Sanctuary=1;
-talent.Reckoning=0;
-
-talent.SacredDuty=2;
-talent.OneHandedWeaponSpecialization=3;
-
-talent.SpiritualAttunement=1;
+talent.Vindication=2;
 talent.HolyShield=1;
-talent.ArdentDefender=3;
 
-talent.Redoubt=3;
-talent.CombatExpertise=3;
+talent.ShieldoftheTemplar=3;
+talent.SacredDuty=2;
 
-talent.TouchedByTheLight=3;
-talent.AvengersShield=1;
-talent.GuardedByTheLight=2;
+talent.ArdentDefender=1;
 
-talent.ShieldOfTheTemplar=3;
-talent.JudgementsOfTheJust=2;
 
-talent.HammerOfTheRighteous=1;
+prot=zeros(7,4);
+prot(1,1)=talent.Toughness;prot(1,2)=talent.SealsofthePure;prot(1,3)=talent.ImprovedHammerofJustice;
+prot(2,1)=talent.JudgementsoftheJust;prot(2,2)=talent.ProtectoroftheInnocent;prot(2,3)=talent.GuardiansFavor;
+prot(3,1)=talent.HallowedGround;prot(3,2)=talent.Sanctuary;prot(3,3)=talent.HammeroftheRighteous;prot(3,4)=talent.WrathoftheLightbringer;
+prot(4,1)=talent.Reckoning;prot(4,2)=talent.GrandCrusader;prot(4,3)=talent.DivineGuardian;
+prot(5,1)=talent.Vindication;prot(5,2)=talent.HolyShield;
+prot(6,1)=talent.ShieldoftheTemplar;prot(6,2)=talent.SacredDuty;
+prot(7,1)=talent.ArdentDefender;
+protpoints=sum(sum(prot));
 
 %% Ret
 %tier 1
-talent.Deflection=5;
-talent.Benediction=0;
-%tier 2
-talent.ImprovedJudgement=2;   
-talent.HeartOfTheCrusader=3;     
-talent.ImprovedBlessingOfMight=0;
-
-talent.Vindication=2;
-talent.Conviction=0;
-talent.SealOfCommand=1;
-talent.PursuitOfJustice=2;
-%tier 4
-talent.EyeForAnEye=0;
-talent.SanctityOfBattle=0;
+talent.EyeforanEye=0;
+talent.RuleofLaw=2;
 talent.Crusade=3;
-%tier 5
-talent.TwoHandedWeaponSpecialization=0;
-talent.SanctifiedRetribution=0;
+%tier 2
+talent.ImprovedJudgement=0;   
+talent.Conviction=3;     
+talent.PursuitofJustice=2;
 
-talent.Vengeance=0;
-talent.DivinePurpose=0;
-
-talent.TheArtOfWar=0;
-talent.Repentance=0;
-talent.JudgementsOfTheWise=0;
+ret=zeros(2,3);
+ret(1,1)=talent.EyeforanEye;ret(1,2)=talent.RuleofLaw;ret(1,3)=talent.Crusade;
+ret(2,1)=talent.ImprovedJudgement;ret(2,2)=talent.Conviction;ret(2,3)=talent.PursuitofJustice;
 
 
 %% Glyphs

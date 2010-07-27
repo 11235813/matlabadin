@@ -125,7 +125,8 @@ idb=struct('name','Sample Item', ...
             'barmor',0, ...
             'earmor',0, ...
             'health',0,...
-            'critmeta',0);
+            'critmeta',0,...
+            'armormeta',0);
 
         
 %% Begin adding items
@@ -194,9 +195,10 @@ idb(51266).name='Sanctified Lightsworn Faceguard (Heroic)';
 idb(51266).ilvl=277;
 idb(51266).barmor=2239;
 idb(51266).str=183;
-idb(51266).sta=243+15+12;
+idb(51266).sta=243+32+15+12;
 idb(51266).agi=0+10;
-idb(51266).critmeta=1;
+idb(51266).critmeta=0;
+idb(51266).armormeta=1;
 idb(51266).dodge=128;
 idb(51266).parry=88;
 
