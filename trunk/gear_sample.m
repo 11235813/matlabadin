@@ -30,7 +30,7 @@ egs(13)=equip(2);
 %trinket1
 egs(14)=equip(2);
 %main hand
-egs(15)=equip(3);
+egs(15)=equip(40345);
 %off hand
 egs(16)=equip(16);
 %ranged

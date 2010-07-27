@@ -13,10 +13,11 @@
 
 
 %offensive conversions
-int_to_scrit=166.6666709;
+agi_to_phcrit=52.0833333;
+int_to_spcrit=166.6666709;
 int_to_sp=1;
-int_to_mcrit=52.08333333;
-crit_to_crit=45.90598679;
+crit_to_phcrit=45.90598679;
+crit_to_spcrit=45.90598679;
 
 hit_to_meleehit=32.78998947;
 hit_to_spellhit=26.23199272;
@@ -24,10 +25,12 @@ hit_to_spellhit=26.23199272;
 exp_to_exp=8.197497368;
 
 haste_to_haste=25.2231;
+ArPen_to_ArPen=13.99572719;
 
 %defensive conversions
 agi_to_dodge=59.88023952;
 block_to_block=16.39499474;
+mast_to_block=100;   %NYI
 
 %ipoint conversions
 ipconv.str = 1;

@@ -15,7 +15,29 @@ gear.str = sum([egs.str]);
 gear.sta = sum([egs.sta]);
 gear.agi = sum([egs.sta]);
 gear.int = sum([egs.int]);
+
+gear.hit = sum([egs.hit]);
+gear.crit= sum([egs.crit]);
+gear.exp = sum([egs.exp]);
+gear.haste=sum([egs.haste]);
+gear.mast =sum([egs.mast]);
+
+gear.ap  = sum([egs.ap]);
+gear.sp  = sum([egs.sp]);
+
+gear.dodge=sum([egs.dodge]);
+gear.parry=sum([egs.parry]);
+gear.block=sum([egs.block]);
+gear.barmor=sum([egs.barmor]);
+gear.earmor=sum([egs.earmor]);
+
 %For stats that are item-specific (i.e. weapons), we can just reference the
 %field directly, since [egs.x] will return only one member
 
-gear.avgdmg = [egs.avgdmg];
+gear.avgdmg = egs(15).avgdmg;
+gear.swing=egs(15).swing;
+gear.wtype=egs(15).wtype;
+gear.tooldps=egs(15).tooldps;
+
+%meta gems
+gear.critmeta = egs(1).critmeta;

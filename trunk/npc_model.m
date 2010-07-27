@@ -43,12 +43,12 @@ if exist('phaste')==0 phaste=0; end;  %probably redundant now?
 %% Start building npc structure
 npc.lvl=lvl;
 
-lvlgap=lvl-base.level;
-lvlflag=lvlgap>2;
+npc.lvlgap=lvl-base.level;
+lvlflag=npc.lvlgap>2;
 
 npc.defskill=5*lvl;
-skillgap=npc.defskill-base.wskill;
-skillflag=skillgap>10;
+npc.skillgap=npc.defskill-base.wskill;
+skillflag=npc.skillgap>10;
 
 %% physical damage
 npc.armor=305.*lvl-14672;
@@ -56,15 +56,15 @@ npc.phflag=phaste;
 npc.blockflag=0;
 
 npc.swing=swing;
-npc.miss=5+skillgap.*(0.1+0.1.*skillflag);
-npc.dodge=5+skillgap.*(0.1);
-npc.parry=5+skillgap.*(0.1+0.5.*skillflag);
-npc.block=5+skillgap.*(0.1);
+npc.miss=5+npc.skillgap.*(0.1+0.1.*skillflag);
+npc.dodge=5+npc.skillgap.*(0.1);
+npc.parry=5+npc.skillgap.*(0.1+0.5.*skillflag);
+npc.block=5+npc.skillgap.*(0.1);
 
-npc.glancing=6.*(1+0.2.*skillgap);
-npc.pcritsupp=0.12.*skillgap+3.*skillflag; %melee crit supp
+npc.glancing=6.*(1+0.2.*npc.skillgap);
+npc.phcritsupp=0.12.*npc.skillgap+3.*skillflag; %melee crit supp
 
 %% spell
-npc.spellresist=4+lvlgap+10.*lvlflag; %spell miss
-npc.partialresist=2.*lvlgap; %resists due to level difference
-npc.scritsupp=0.1525.*skillgap+3.*skillflag;    %spell crit supp
+npc.spresist=4+npc.lvlgap+10.*lvlflag; %spell miss
+npc.partialresist=2.*npc.lvlgap; %resists due to level difference
+npc.spcritsupp=0.1525.*npc.skillgap+3.*skillflag;    %spell crit supp
