@@ -8,29 +8,31 @@
 %Note that x is assumed to be in rating, hence the word "rating" is
 %omitted.
 
-%Since hit rating has two possible conversions (melee and spell), we'll use
-%"meleehit" and "spellhit" instead of "hit" as the destination.
+%Since hit/crit/haste rating have different conversion coefficients
+%(physical and spell), we'll append the ph/sp prefixes.
 
 
-%offensive conversions
-agi_to_phcrit=52.0833333;
-int_to_spcrit=166.6666709;
-int_to_sp=1;
-crit_to_phcrit=45.90598679;
-crit_to_spcrit=45.90598679;
+%offensive conversions (x_y instead of x_to_y)
+agi_phcrit=52.0833333;
+int_spcrit=166.6666709;
+int_sp=1;
+crit_phcrit=45.90598679;
+crit_spcrit=45.90598679;
 
-hit_to_meleehit=32.78998947;
-hit_to_spellhit=26.23199272;
+hit_phhit=32.78998947;
+hit_sphit=26.23199272;
 
-exp_to_exp=8.197497368;
+exp_exp=8.197497368;
 
-haste_to_haste=25.2231;
-ArPen_to_ArPen=13.99572719;
+haste_phhaste=25.2231;
+haste_sphaste=0;
+% todo : fix arpen later on
+% arpen_arpen=13.99572719;
 
 %defensive conversions
-agi_to_dodge=59.88023952;
-block_to_block=16.39499474;
-mast_to_block=100;   %NYI
+agi_dodge=59.88023952;
+block_block=16.39499474;
+mast_block=100;
 
 %ipoint conversions
 ipconv.str = 1;

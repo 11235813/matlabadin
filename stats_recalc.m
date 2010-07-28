@@ -57,7 +57,7 @@ extra.blo=extra.itm.blo.*ipconv.blo     + extra.val.blo;
 %% Primary stats
 
 str=floor(floor((base.str+gear.str+extra.str)).*BoK);
-sta=floor(floor((base.sta+gear.sta+extra.sta).*(1+0.15.*talent.tbtl)).*BoK);
+sta=floor(floor((base.sta+gear.sta+extra.sta).*(1+0.15.*talent.TouchedbytheLight)).*BoK);
 agi=floor((base.agi+gear.agi+extra.agi).*BoK);
 int=floor((base.int+gear.int+extra.int).*BoK);
 % spi=floor((base.spi+gear.spi).*BoK);
@@ -65,14 +65,15 @@ int=floor((base.int+gear.int+extra.int).*BoK);
 armory_str=floor(floor((base.str+gear.str)));
 
 hitpoints=base.health+10.*(sta-10)+gear.health;
-armor=gear.barmor.*(1+floor(0.034.*talent.Toughness)).*(1+0.2*gear.armormeta) + gear.earmor + agi.*2;
+armor=gear.barmor.*(1+floor(3.4.*talent.Toughness)./100).*(1+0.2*gear.armormeta) ...
+    + gear.earmor + agi.*2;
 
-vengeance=0.1.*hitpoints.*talent.vengeance;
+vengeance=0.1.*hitpoints.*talent.Vengeance;
 
 %% Hit Rating
-spellhit=buff.example + (gear.hit+extra.hit)./hit_to_spellhit;
+spellhit=buff.example + (gear.hit+extra.hit)./hit_sphit;
 
-meleehit=buff.example + (gear.hit+extra.hit)./hit_to_meleehit;
+meleehit=buff.example + (gear.hit+extra.hit)./hit_phhit;
 
 %% Expertise
 if (base.race==1 && (strcmp(egs(15).wtype,'swo') || strcmp(egs(15).wtype,'mac')))
@@ -81,11 +82,11 @@ elseif (base.race==2 && strcmp(egs(15).wtype,'mac'))
         base.exp=5;
 end
 
-expertise=(base.exp + (gear.exp+extra.exp)./exp_to_exp + talent.example);
+expertise=(base.exp + (gear.exp+extra.exp)./exp_exp + talent.example);
 
-%% Haste
+%% Haste (only physical haste is relevant)
 haste=100.*( ...
-    (1 + (gear.haste+extra.haste)./haste_to_haste./100).* ...
+    (1 + (gear.haste+extra.haste)./haste_phhaste./100).* ...
     (1 + talent.example./100) .* ...
     -1);
 %     (1 + WF./100) .* ...    %lines for WF and BL when implemented
@@ -97,26 +98,26 @@ spcrit_multiplier=1.5.*(1+0.03.*gear.critmeta);  %for spells
 
 
 %melee abilities ("physical crit")
-phcrit=min([(base.phcrit + ...                    %base physical crit
-    agi./agi_to_phcrit + ...                         %AGI
-    (gear.crit+extra.crit)./crit_to_phcrit + ...    %crit rating
-    -npc.phcritsupp) 100]);                            %crit suppression
+phcrit=min([(base.phcrit + ...                %base physical crit
+    agi./agi_phcrit + ...                     %AGI
+    (gear.crit+extra.crit)./crit_phcrit + ... %crit rating
+    -npc.phcritsupp) 100]);                   %crit suppression
 
 %spell abilities ("spell crit")
-spcrit=min([(base.spcrit + ...                        %base spell crit
-    int./int_to_spcrit + ...                              %INT
-    (gear.crit+extra.crit)./crit_to_spcrit + ...    %crit rating
-    -npc.spcritsupp) 100]);                              %crit suppression
+spcrit=min([(base.spcrit + ...                %base spell crit
+    int./int_spcrit + ...                     %INT
+    (gear.crit+extra.crit)./crit_spcrit + ... %crit rating
+    -npc.spcritsupp) 100]);                   %crit suppression
 
 %crit cap for regular melee attacks (one-roll system)
-aacrit=(base.phcrit + ...                       %base physical crit
-    agi./agi_to_phcrit + ...                         %AGI
-    (gear.crit+extra.crit)./crit_to_phcrit + ...    %crit rating
-    -npc.phcritsupp);                                %crit suppression
+aacrit=(base.phcrit + ...                     %base physical crit
+    agi./agi_phcrit + ...                     %AGI
+    (gear.crit+extra.crit)./crit_phcrit + ... %crit rating
+    -npc.phcritsupp);                         %crit suppression
 
 %% SP and AP
 ap=floor((base.ap+gear.ap+2.*(str-10)+extra.ap+buff.example).*(1+0.2.*buff.example));
-sp=gear.sp + extra.sp + floor(str.*0.6.*talent.tbtl) + int./int_to_sp + buff.example;
+sp=gear.sp + extra.sp + floor(str.*0.6.*talent.TouchedbytheLight) + int./int_sp + buff.example;
 
 %% Mastery
 mast=base.mast+gear.mast+talent.example;
@@ -126,7 +127,7 @@ mast=base.mast+gear.mast+talent.example;
 [dr.dodge dr.parry dr.miss dr.total] =  avoid_dr(gear.dodge,gear.parry,0,agi-base.agi);
 
 avoid.miss=base.miss+dr.miss+buff.example-0.04.*npc.skillgap;
-avoid.dodge=base.dodge+base.agi./agi_to_dodge+dr.dodge-0.04.*npc.skillgap-buff.example;
+avoid.dodge=base.dodge+base.agi./agi_dodge+dr.dodge-0.04.*npc.skillgap-buff.example;
 avoid.parry=base.parry+dr.parry-0.04.*npc.skillgap;
 
 %check for bounding issues
