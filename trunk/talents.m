@@ -15,10 +15,10 @@
 %whether we want to do something more elegant (maybe a "setTalent" function
 %that can take a wowhead URL as an argument?)
 
-%% Base bonuses for choosing prot
-talent.tbtl=1;
-talent.vengeance=1;
-talent.jotw=1;
+%% Base bonuses for choosing prot (inherent)
+talent.Vengeance=1;
+talent.TouchedbytheLight=1;
+talent.JudgementsoftheWise=1;
 
 %% Holy
 talent.SanctifiedLight=0;
