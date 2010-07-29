@@ -54,10 +54,6 @@ Sund=12.*buff.Sund;
 %"extra.itm.x" contain the contributions to stat x in terms of raw stats
 %(val) and ipoints (itm)
 %the ipoint conversion factors are defined in stat_conversions
-%extra_by_ipoints is an 11x? binary array, which can be used to add item
-%points 
-%extra_by_value is a 11x? integer array which can be used to add stat
-%point
 if exist('extra')==0
     extra_init
 end;
@@ -91,9 +87,9 @@ armor=gear.barmor.*(1+floor(3.4.*talent.Toughness)./100).*(1+0.2*gear.armormeta)
 vengeance=0.1.*hitpoints.*talent.Vengeance;
 
 %% Hit Rating
-spellhit=buff.example + (gear.hit+extra.hit)./hit_sphit;
+spellhit=buff.example + (gear.hit+extra.hit)./cnv.hit_sphit;
 
-meleehit=buff.example + (gear.hit+extra.hit)./hit_phhit;
+meleehit=buff.example + (gear.hit+extra.hit)./cnv.hit_phhit;
 
 %% Expertise
 if (base.race==1 && (strcmp(egs(15).wtype,'swo') || strcmp(egs(15).wtype,'mac')))
@@ -102,11 +98,11 @@ elseif (base.race==2 && strcmp(egs(15).wtype,'mac'))
         base.exp=5;
 end
 
-expertise=(base.exp + (gear.exp+extra.exp)./exp_exp + talent.example);
+expertise=(base.exp + (gear.exp+extra.exp)./cnv.exp_exp + talent.example);
 
 %% Haste (only physical haste is relevant)
 haste=100.*( ...
-    (1 + (gear.haste+extra.haste)./haste_phhaste./100).* ...
+    (1 + (gear.haste+extra.haste)./cnv.haste_phhaste./100).* ...
     (1 + talent.example./100) .* ...
     (1 + WF./100) .* ...
     (1 + BL./100) ...
@@ -119,26 +115,27 @@ spcrit_multiplier=1.5.*(1+0.03.*gear.critmeta);  %for spells
 
 
 %melee abilities ("physical crit")
-phcrit=min([(base.phcrit + ...                %base physical crit
-    agi./agi_phcrit + ...                     %AGI
-    (gear.crit+extra.crit)./crit_phcrit + ... %crit rating
-    -npc.phcritsupp) 100]);                   %crit suppression
+phcrit=min([(base.phcrit + ...                      %base physical crit
+    agi./cnv.agi_phcrit + ...                       %AGI
+    (gear.crit+extra.crit)./cnv.crit_phcrit + ...   %crit rating
+    -npc.phcritsupp) 100]);                         %crit suppression
 
 %spell abilities ("spell crit")
-spcrit=min([(base.spcrit + ...                %base spell crit
-    int./int_spcrit + ...                     %INT
-    (gear.crit+extra.crit)./crit_spcrit + ... %crit rating
-    -npc.spcritsupp) 100]);                   %crit suppression
+spcrit=min([(base.spcrit + ...                  %base spell crit
+    int./cnv.int_spcrit + ...                       %INT
+    (gear.crit+extra.crit)./cnv.crit_spcrit + ...   %crit rating
+    -npc.spcritsupp) 100]);                         %crit suppression
 
 %crit cap for regular melee attacks (one-roll system)
-aacrit=(base.phcrit + ...                     %base physical crit
-    agi./agi_phcrit + ...                     %AGI
-    (gear.crit+extra.crit)./crit_phcrit + ... %crit rating
-    -npc.phcritsupp);                         %crit suppression
+%this gets modified again after boss stats to enforce crit cap
+aacrit=(base.phcrit + ...                           %base physical crit
+    agi./cnv.agi_phcrit + ...                       %AGI
+    (gear.crit+extra.crit)./cnv.crit_phcrit + ...   %crit rating
+    -npc.phcritsupp);                               %crit suppression
 
 %% SP and AP
 ap=floor((base.ap+gear.ap+2.*(str-10)+extra.ap+buff.example).*(1+0.2.*buff.example));
-sp=gear.sp + extra.sp + floor(str.*0.6.*talent.TouchedbytheLight) + int./int_sp + buff.example;
+sp=gear.sp + extra.sp + floor(str.*0.6.*talent.TouchedbytheLight) + int./cnv.int_sp + buff.example;
 
 %% Mastery
 mast=base.mast+gear.mast+talent.example;
@@ -148,7 +145,7 @@ mast=base.mast+gear.mast+talent.example;
 [dr.dodge dr.parry dr.miss dr.total] =  avoid_dr(gear.dodge,gear.parry,0,agi-base.agi);
 
 avoid.miss=base.miss+dr.miss+buff.example-0.04.*npc.skillgap;
-avoid.dodge=base.dodge+base.agi./agi_dodge+dr.dodge-0.04.*npc.skillgap-buff.example;
+avoid.dodge=base.dodge+base.agi./cnv.agi_dodge+dr.dodge-0.04.*npc.skillgap-buff.example;
 avoid.parry=base.parry+dr.parry-0.04.*npc.skillgap;
 
 %check for bounding issues
@@ -160,7 +157,7 @@ avoid.totalpct=avoid.total./100;
 
 %at the moment, we don't have Redoubt to worry about, so we shouldnt' need
 %dynamic effects for block chance (hopefully?)
-block=base.block+mast./mast_block;
+block=base.block+mast./cnv.mast_block;
 
 %% Boss Stats
 %TODO: This section is a bit weird.  we have the npc structure already, but
@@ -209,7 +206,7 @@ temp_debuffed_armor=npc.armor.*(1-0.2.*buff.example).*(1-0.05.*buff.example).*(1
 ArPenCap=min([temp_debuffed_armor; (temp_debuffed_armor+C)/3]);
 
 %Armor Penetration Rating in %, up to a max of 100%
-ArP=min([ArPen./arpen_arpen; 100.*ones(size(ArPen))]);
+ArP=min([ArPen./cnv.arpen_arpen; 100.*ones(size(ArPen))]);
 
 %Boss Armor and DR formulas
 boss.armor=floor(temp_debuffed_armor - ArP./100.*min([temp_debuffed_armor; ArPenCap]));
