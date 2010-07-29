@@ -72,24 +72,28 @@ extra.blo=extra.itm.blo.*ipconv.blo     + extra.val.blo;
 
 %% Primary stats
 
-str=floor(floor((base.str+gear.str+extra.str)).*BoK);
-sta=floor(floor((base.sta+gear.sta+extra.sta).*(1+0.15.*talent.TouchedbytheLight)).*BoK);
-agi=floor((base.agi+gear.agi+extra.agi).*BoK);
-int=floor((base.int+gear.int+extra.int).*BoK);
+player.str=floor(floor((base.str+gear.str+extra.str)).*BoK);
+player.sta=floor(floor((base.sta+gear.sta+extra.sta).*(1+0.15.*talent.TouchedbytheLight)).*BoK);
+player.agi=floor((base.agi+gear.agi+extra.agi).*BoK);
+player.int=floor((base.int+gear.int+extra.int).*BoK);
 % spi=floor((base.spi+gear.spi).*BoK);
 
-armory_str=floor(floor((base.str+gear.str)));
+%armory strength
+player.armorystr=floor(floor((base.str+gear.str)));
 
-hitpoints=base.health+10.*(sta-10)+gear.health;
-armor=gear.barmor.*(1+floor(3.4.*talent.Toughness)./100).*(1+0.2*gear.armormeta) ...
-    +gear.earmor+agi.*2+Devo;
+%hit points
+player.hitpoints=base.health+10.*(player.sta-10)+gear.health;
 
-vengeance=0.1.*hitpoints.*talent.Vengeance;
+%armor
+player.armor=gear.barmor.*(1+floor(3.4.*talent.Toughness)./100).*(1+0.2*gear.armormeta) ...
+    +gear.earmor+player.agi.*2+Devo;
+
+player.vengap=0.1.*player.hitpoints.*talent.Vengeance;
 
 %% Hit Rating
-spellhit=buff.example + (gear.hit+extra.hit)./cnv.hit_sphit;
+player.sphit=buff.example + (gear.hit+extra.hit)./cnv.hit_sphit;
 
-meleehit=buff.example + (gear.hit+extra.hit)./cnv.hit_phhit;
+player.mehit=buff.example + (gear.hit+extra.hit)./cnv.hit_phhit;
 
 %% Expertise
 if (base.race==1 && (strcmp(egs(15).wtype,'swo') || strcmp(egs(15).wtype,'mac')))
@@ -98,10 +102,10 @@ elseif (base.race==2 && strcmp(egs(15).wtype,'mac'))
         base.exp=5;
 end
 
-expertise=(base.exp + (gear.exp+extra.exp)./cnv.exp_exp + talent.example);
+player.exp=(base.exp + (gear.exp+extra.exp)./cnv.exp_exp + talent.example);
 
 %% Haste (only physical haste is relevant)
-haste=100.*( ...
+player.haste=100.*( ...
     (1 + (gear.haste+extra.haste)./cnv.haste_phhaste./100).* ...
     (1 + talent.example./100) .* ...
     (1 + WF./100) .* ...
@@ -115,49 +119,53 @@ spcrit_multiplier=1.5.*(1+0.03.*gear.critmeta);  %for spells
 
 
 %melee abilities ("physical crit")
-phcrit=min([(base.phcrit + ...                      %base physical crit
-    agi./cnv.agi_phcrit + ...                       %AGI
+player.phcrit=min([(base.phcrit + ...               %base physical crit
+    player.agi./cnv.agi_phcrit + ...                %AGI
     (gear.crit+extra.crit)./cnv.crit_phcrit + ...   %crit rating
     -npc.phcritsupp) 100]);                         %crit suppression
 
 %spell abilities ("spell crit")
-spcrit=min([(base.spcrit + ...                  %base spell crit
-    int./cnv.int_spcrit + ...                       %INT
+player.spcrit=min([(base.spcrit + ...               %base spell crit
+    player.int./cnv.int_spcrit + ...                %INT
     (gear.crit+extra.crit)./cnv.crit_spcrit + ...   %crit rating
     -npc.spcritsupp) 100]);                         %crit suppression
 
 %crit cap for regular melee attacks (one-roll system)
 %this gets modified again after boss stats to enforce crit cap
-aacrit=(base.phcrit + ...                           %base physical crit
-    agi./cnv.agi_phcrit + ...                       %AGI
+player.aacrit=(base.phcrit + ...                    %base physical crit
+    player.agi./cnv.agi_phcrit + ...                %AGI
     (gear.crit+extra.crit)./cnv.crit_phcrit + ...   %crit rating
     -npc.phcritsupp);                               %crit suppression
 
 %% SP and AP
-ap=floor((base.ap+gear.ap+2.*(str-10)+extra.ap+buff.example).*(1+0.2.*buff.example));
-sp=gear.sp + extra.sp + floor(str.*0.6.*talent.TouchedbytheLight) + int./cnv.int_sp + buff.example;
+player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+buff.example+player.vengap).*(1+0.2.*buff.example));
+player.sp=gear.sp + extra.sp + floor(player.str.*0.6.*talent.TouchedbytheLight) + player.int./cnv.int_sp + buff.example;
+%for future use in case our spellpower and "holy spell power" are both
+%relevant.  hsp is what we get from TbtL, and only affects damage.  We're
+%back to the old 2.x "spell power" and "healing power" modle, it seems.
+player.hsp=player.sp;  
 
 %% Mastery
-mast=base.mast+gear.mast+talent.example;
+player.mast=base.mast+gear.mast+talent.example;
 
 %% Avoidance and Blocking
 %TODO: modify avoid_dr to get rid of defense and fix parry
-[dr.dodge dr.parry dr.miss dr.total] =  avoid_dr(gear.dodge,gear.parry,0,agi-base.agi);
+[dr.dodge dr.parry dr.miss dr.total] =  avoid_dr(gear.dodge,gear.parry,0,player.agi-base.agi);
 
-avoid.miss=base.miss+dr.miss+buff.example-0.04.*npc.skillgap;
-avoid.dodge=base.dodge+base.agi./cnv.agi_dodge+dr.dodge-0.04.*npc.skillgap-buff.example;
-avoid.parry=base.parry+dr.parry-0.04.*npc.skillgap;
+player.miss=base.miss+dr.miss+buff.example-0.04.*npc.skillgap;
+player.dodge=base.dodge+base.agi./cnv.agi_dodge+dr.dodge-0.04.*npc.skillgap-buff.example;
+player.parry=base.parry+dr.parry-0.04.*npc.skillgap;
 
 %check for bounding issues
-avoid.dodge=min([max([avoid.dodge zeros(size(avoid.dodge))]) (100-avoid.miss).*ones(size(avoid.dodge))]);
-avoid.parry=min([avoid.parry (100-avoid.dodge-avoid.miss).*ones(size(avoid.parry))]);
+player.dodge=min([max([player.dodge zeros(size(player.dodge))]) (100-player.miss).*ones(size(player.dodge))]);
+player.parry=min([player.parry (100-player.dodge-player.miss).*ones(size(player.parry))]);
 
-avoid.total=avoid.miss+avoid.dodge+avoid.parry;
-avoid.totalpct=avoid.total./100;
+player.avoid=player.miss+player.dodge+player.parry;
+player.avoidpct=player.avoid./100;
 
 %at the moment, we don't have Redoubt to worry about, so we shouldnt' need
 %dynamic effects for block chance (hopefully?)
-block=base.block+mast./cnv.mast_block;
+player.block=base.block+player.mast./cnv.mast_block;
 
 %% Boss Stats
 %TODO: This section is a bit weird.  we have the npc structure already, but
@@ -182,13 +190,13 @@ block=base.block+mast./cnv.mast_block;
 
 boss.swing=npc.swing.*max([1.2.*talent.example 1]);
 
-boss.miss=max([(npc.phmiss-meleehit) zeros(size(meleehit))]);
-boss.dodge=max([(npc.dodge-0.25.*expertise) zeros(size(expertise))]);
-boss.parry=max([(npc.parry-0.25.*expertise) zeros(size(expertise))]);
+boss.miss=max([(npc.phmiss-player.mehit) zeros(size(player.mehit))]);
+boss.dodge=max([(npc.dodge-0.25.*player.exp) zeros(size(player.exp))]);
+boss.parry=max([(npc.parry-0.25.*player.exp) zeros(size(player.exp))]);
 boss.avoid=boss.miss+boss.dodge+boss.parry;
 
 
-boss.spmiss=max([(npc.spmiss-spellhit-buff.example) zeros(size(spellhit))]);
+boss.spmiss=max([(npc.spmiss-player.sphit-buff.example) zeros(size(player.sphit))]);
 boss.resrdx=(100-npc.presist)./100;
 %%%%%%%%%%%%%%%% EJ Armor calcs
 %since Armor Penetration is being removed from gear, we'll set ArPen to
@@ -213,17 +221,18 @@ boss.armor=floor(temp_debuffed_armor - ArP./100.*min([temp_debuffed_armor; ArPen
 boss.phdr=boss.armor./(boss.armor+C);
 
 %% Weapon Details
-weapon.basedps=gear.avgdmg./gear.swing + ap./14;  %was for HotR, may be obsolete now
-weapon.damage=gear.avgdmg+ap./14.*gear.swing;
-weapon.swing=gear.swing./(1+haste./100);
+%Should these also be wrapped into the "player" structure?  s/weapon/player
+weapon.basedps=gear.avgdmg./gear.swing + player.ap./14;  %was for HotR, may be obsolete now
+weapon.damage=gear.avgdmg+player.ap./14.*gear.swing;
+weapon.swing=gear.swing./(1+player.haste./100);
 weapon.dps=weapon.damage./weapon.swing;
 
 %% Parryhaste corrections
 %ignoring this for now until we know how/if parryhaste is implemented
 
 %% Other dynamic or inter-dependent corrections
-aacrit=max([aacrit.*ones(size(boss.avoid+npc.glance+npc.block))                            %corrects for size of boss_avoid
-    (100-boss.avoid-npc.glance-npc.block)]);                                      %crit cap
+player.aacrit=max([player.aacrit.*ones(size(boss.avoid+npc.glance+npc.block))   %corrects for size of boss_avoid
+    (100-boss.avoid-npc.glance-npc.block)]);                                    %crit cap
 
 %% PPM-based uptimes
 %this section will have to wait until we know which attacks survive, what
