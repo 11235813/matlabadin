@@ -19,13 +19,33 @@ talent.example=1;  %example for how talents are implemented
 %calculations.  I'm leaving the section here to remind myself to check for
 %Armsman implementation down the line
 
-%% Raid Buffs 
+%% Raid Buffs [WIP]
 %awaiting tlitp's buff/debuff imlementation
 buff.example=1; %example for how buffs are implemented
 buff.BoK=1;  %this line would be in the buffs/debuffs module
-BoK=1.1.*buff.BoK;
-%% Raid Debufs
+BoK=1.05.*buff.BoK;
+SoE=100.*buff.SoE;
+PWF=100.*buff.PWF;
+ArcInt=100.*buff.ArcInt;
+UnRage=1.1.*buff.UnRage;
+FMT=6.*buff.FMT; %does it stack with ToW?
+ToW=10.*buff.ToW; %does it stack with FMT?
+HePr=buff.HePr;
+SwRet=1.03.*buff.SwRet;
+LotP=5.*buff.LotP;
+WF=20.*buff.WF;
+WoA=5.*buff.WoA;
+BL=30.*buff.BL;
+Devo=1000.*buff.Devo;
+Focus=3.*buff.Focus;
+%% Raid Debufs [WIP]
 %awaiting tlitp's buff/debuff imlementation
+SavCom=1.04.*buff.SavCom;
+Hemo=1.3.*buff.Hemo;
+CoE=1.08.*buff.CoE;
+ISB=5.*buff.ISB;
+Sund=12.*buff.Sund;
+
 
 %% Extras
 %this section is a way to incorporate extra amounts of different stats to
@@ -66,7 +86,7 @@ armory_str=floor(floor((base.str+gear.str)));
 
 hitpoints=base.health+10.*(sta-10)+gear.health;
 armor=gear.barmor.*(1+floor(3.4.*talent.Toughness)./100).*(1+0.2*gear.armormeta) ...
-    + gear.earmor + agi.*2;
+    +gear.earmor+agi.*2+Devo;
 
 vengeance=0.1.*hitpoints.*talent.Vengeance;
 
@@ -88,9 +108,10 @@ expertise=(base.exp + (gear.exp+extra.exp)./exp_exp + talent.example);
 haste=100.*( ...
     (1 + (gear.haste+extra.haste)./haste_phhaste./100).* ...
     (1 + talent.example./100) .* ...
+    (1 + WF./100) .* ...
+    (1 + BL./100) ...
     -1);
-%     (1 + WF./100) .* ...    %lines for WF and BL when implemented
-%     (1 + BL./100) ...
+    
 
 %% Crit
 phcrit_multiplier=2.*(1+0.03.*gear.critmeta);   %for physical attacks
@@ -143,23 +164,24 @@ block=base.block+mast./mast_to_block;
 
 %% Boss Stats
 %attacking from behind flag
+%TODO it should probably be moved to npc_model
 if exist('they_came_from_behind')==0
     they_came_from_behind=0;
 end
 
 boss.swing=npc.swing.*max([1.2.*talent.example 1]);
 
-boss.miss=max([(npc.miss-meleehit) zeros(size(meleehit))]);
+boss.miss=max([(npc.phmiss-meleehit) zeros(size(meleehit))]);
 boss.dodge=max([(npc.dodge-0.25.*expertise) zeros(size(expertise))]);
 boss.parry=max([(npc.parry-0.25.*expertise).*(1-they_came_from_behind) zeros(size(expertise))]);
 boss.avoid=boss.miss+boss.dodge+boss.parry;
 boss.block=npc.block.*npc.blockflag.*(1-they_came_from_behind);
 
-boss.glancing=npc.glancing;
-boss.glanceredux=(npc.glancing./100).*(0.05+0.1.*(npc.lvlgap-1));
+boss.glance=npc.glance; %redundant, we can work directly with npc.g
+boss.glancerdx=(npc.glancing./100).*(0.05+0.1.*(npc.lvlgap-1));
 
-boss.spresist=max([(npc.spresist-spellhit-buff.example) zeros(size(spellhit))]);
-boss.resredux=(100-npc.partialresist)./100;
+boss.spmiss=max([(npc.spmiss-spellhit-buff.example) zeros(size(spellhit))]);
+boss.resrdx=(100-npc.presist)./100;
 %%%%%%%%%%%%%%%% EJ Armor calcs
 %since Armor Penetration is being removed from gear, we'll set ArPen to
 %zero for now.  Once we know if/how this is implemented for us, we can fix
@@ -192,8 +214,8 @@ weapon.dps=weapon.damage./weapon.swing;
 %ignoring this for now until we know how/if parryhaste is implemented
 
 %% Other dynamic or inter-dependent corrections
-aacrit=max([aacrit.*ones(size(boss.avoid+boss.glancing+boss.block))                            %corrects for size of boss_avoid
-    (100-boss.avoid-boss.glancing-boss.block)]);                                      %crit cap
+aacrit=max([aacrit.*ones(size(boss.avoid+boss.glance+boss.block))                            %corrects for size of boss_avoid
+    (100-boss.avoid-boss.glance-boss.block)]);                                      %crit cap
 
 %% PPM-based uptimes
 %this section will have to wait until we know which attacks survive, what

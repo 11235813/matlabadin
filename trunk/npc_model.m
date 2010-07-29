@@ -27,7 +27,7 @@ for i = 1 : 2 : length(varargin)
             ontarget=value;
         case 'npccount'
             npccount=value;
-        case 'phaste'
+        case 'phflag'
             phflag=value;
     end
 end
@@ -37,7 +37,7 @@ if exist('lvl')==0 lvl=83; end;
 if exist('swing')==0 swing=1.5; end;
 if exist('ontarget')==0 ontarget=1; end;
 if exist('npccount')==0 npccount=1; end;
-if exist('phflag')==0 phflag=0; end;  %probably redundant now?
+if exist('phflag')==0 phflag=0; end;  %nil by default (probably redundant)
 
 
 %% Start building npc structure
@@ -52,19 +52,19 @@ skillflag=npc.skillgap>10;
 
 %% physical damage
 npc.armor=305.*lvl-14672;
-npc.phflag=phaste;
+npc.phflag=phflag;
 npc.blockflag=0;
 
 npc.swing=swing;
-npc.miss=5+npc.skillgap.*(0.1+0.1.*skillflag);
+npc.phmiss=5+npc.skillgap.*(0.1+0.1.*skillflag);
 npc.dodge=5+npc.skillgap.*(0.1);
 npc.parry=5+npc.skillgap.*(0.1+0.5.*skillflag);
 npc.block=5+npc.skillgap.*(0.1);
 
-npc.glancing=6.*(1+0.2.*npc.skillgap);
+npc.glance=6.*(1+0.2.*npc.skillgap);
 npc.phcritsupp=0.12.*npc.skillgap+3.*skillflag; %melee crit supp
 
 %% spell
-npc.spresist=4+npc.lvlgap+10.*lvlflag; %spell miss
-npc.partialresist=2.*npc.lvlgap; %resists due to level difference
-npc.spcritsupp=0.1525.*npc.skillgap+3.*skillflag;    %spell crit supp
+npc.spmiss=4+npc.lvlgap+10.*lvlflag;              %spell miss
+npc.presist=2.*npc.lvlgap;                        %resists due to level difference
+npc.spcritsupp=0.1525.*npc.skillgap+3.*skillflag; %spell crit supp
