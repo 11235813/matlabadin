@@ -7,6 +7,7 @@ function [npc] = npc_model(varargin)
 %ontarget - time on-target, float (0 to 1) [1]
 %npccount - number of npcs to model, integer [1]
 %phflag - parry-haste flag, logical [0]
+%behind - attacking from behind, logical [0]
 %Outputs:
 %npc - structure containing relevant parameters
 
@@ -29,6 +30,8 @@ for i = 1 : 2 : length(varargin)
             npccount=value;
         case 'phflag'
             phflag=value;
+        case 'behind'
+            behind=value;
     end
 end
 
@@ -38,6 +41,7 @@ if exist('swing')==0 swing=1.5; end;
 if exist('ontarget')==0 ontarget=1; end;
 if exist('npccount')==0 npccount=1; end;
 if exist('phflag')==0 phflag=0; end;  %nil by default (probably redundant)
+if exist('behind')==0 behind=0; end;
 
 
 %% Start building npc structure
@@ -53,15 +57,16 @@ skillflag=npc.skillgap>10;
 %% physical damage
 npc.armor=305.*lvl-14672;
 npc.phflag=phflag;
-npc.blockflag=0;
+npc.blockflag=0;        %this should probably be an input, defaulted to 1?
 
 npc.swing=swing;
 npc.phmiss=5+npc.skillgap.*(0.1+0.1.*skillflag);
 npc.dodge=5+npc.skillgap.*(0.1);
-npc.parry=5+npc.skillgap.*(0.1+0.5.*skillflag);
-npc.block=5+npc.skillgap.*(0.1);
+npc.parry=(5+npc.skillgap.*(0.1+0.5.*skillflag)).*(1-behind);
+npc.block=(5+npc.skillgap.*(0.1)).*(1-behind);
 
 npc.glance=6.*(1+0.2.*npc.skillgap);
+npc.glancerdx=(npc.glance./100).*(0.05+0.1.*(npc.lvlgap-1));
 npc.phcritsupp=0.12.*npc.skillgap+3.*skillflag; %melee crit supp
 
 %% spell

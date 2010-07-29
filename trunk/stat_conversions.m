@@ -27,7 +27,7 @@ exp_exp=8.197497368;
 haste_phhaste=25.2231;
 haste_sphaste=0;
 % todo : fix arpen later on
-% arpen_arpen=13.99572719;
+arpen_arpen=13.99572719;
 
 %defensive conversions
 agi_dodge=59.88023952;

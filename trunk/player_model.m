@@ -28,7 +28,7 @@ for i = 1 : 2 : length(varargin)
     value = varargin{i+1};
     switch name
         case 'race'
-            race=value;
+            base.race=value;
     end
 end
 
@@ -41,11 +41,11 @@ player_base_stats=[ 151 143  90  98 108;
                     153 146  86  97 104;
                     152 142  87  99 107;
                     148 141  92 102 104];
-base.str=player_base_stats(race,1);
-base.sta=player_base_stats(race,2);
-base.agi=player_base_stats(race,3);
-base.int=player_base_stats(race,4);    
-base.spi=player_base_stats(race,5);
+base.str=player_base_stats(base.race,1);
+base.sta=player_base_stats(base.race,2);
+base.agi=player_base_stats(base.race,3);
+base.int=player_base_stats(base.race,4);    
+base.spi=player_base_stats(base.race,5);
 
 base.level=80;
 base.wskill=5.*base.level; %inherent

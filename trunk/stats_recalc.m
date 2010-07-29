@@ -160,25 +160,36 @@ avoid.totalpct=avoid.total./100;
 
 %at the moment, we don't have Redoubt to worry about, so we shouldnt' need
 %dynamic effects for block chance (hopefully?)
-block=base.block+mast./mast_to_block;
+block=base.block+mast./mast_block;
 
 %% Boss Stats
-%attacking from behind flag
-%TODO it should probably be moved to npc_model
-if exist('they_came_from_behind')==0
-    they_came_from_behind=0;
-end
+%TODO: This section is a bit weird.  we have the npc structure already, but
+%that contains "base" values.  The boss structure incorporates a lot
+%of the player's stats.  While we certainly need before and after
+%structures, the names aren't as descriptive as I'd like.  On the other
+%hand, this seems like the simplest way to organize things, with "npc"
+%covering all the values that don't get modified by player stats, and
+%"boss" containing anything that does.  We could always rename it "target"
+%if we want to be more descriptive with the names.
+
+%For now, I've eliminated the redundant entries and moved anything that
+%doesn't get modified into npc_model.  We might want to bring them back
+%eventually for ease of use.  As an example, boss contains
+%miss/dodge/parry/avoid, but not block.  It might be easier to have a
+%redundant boss.block so that we can refer to it without having to remember
+%that it doesn't get modified by player stats.
+
+%I'm considering giving player stats the same treatment, and combining them
+%with the avoid structure.  In other words, we'd have player.sphit,
+%player.dodge, player.avoid, and so forth.
 
 boss.swing=npc.swing.*max([1.2.*talent.example 1]);
 
 boss.miss=max([(npc.phmiss-meleehit) zeros(size(meleehit))]);
 boss.dodge=max([(npc.dodge-0.25.*expertise) zeros(size(expertise))]);
-boss.parry=max([(npc.parry-0.25.*expertise).*(1-they_came_from_behind) zeros(size(expertise))]);
+boss.parry=max([(npc.parry-0.25.*expertise) zeros(size(expertise))]);
 boss.avoid=boss.miss+boss.dodge+boss.parry;
-boss.block=npc.block.*npc.blockflag.*(1-they_came_from_behind);
 
-boss.glance=npc.glance; %redundant, we can work directly with npc.g
-boss.glancerdx=(npc.glancing./100).*(0.05+0.1.*(npc.lvlgap-1));
 
 boss.spmiss=max([(npc.spmiss-spellhit-buff.example) zeros(size(spellhit))]);
 boss.resrdx=(100-npc.presist)./100;
@@ -198,7 +209,7 @@ temp_debuffed_armor=npc.armor.*(1-0.2.*buff.example).*(1-0.05.*buff.example).*(1
 ArPenCap=min([temp_debuffed_armor; (temp_debuffed_armor+C)/3]);
 
 %Armor Penetration Rating in %, up to a max of 100%
-ArP=min([ArPen./ArPen_to_ArPen; 100.*ones(size(ArPen))]);
+ArP=min([ArPen./arpen_arpen; 100.*ones(size(ArPen))]);
 
 %Boss Armor and DR formulas
 boss.armor=floor(temp_debuffed_armor - ArP./100.*min([temp_debuffed_armor; ArPenCap]));
@@ -214,8 +225,8 @@ weapon.dps=weapon.damage./weapon.swing;
 %ignoring this for now until we know how/if parryhaste is implemented
 
 %% Other dynamic or inter-dependent corrections
-aacrit=max([aacrit.*ones(size(boss.avoid+boss.glance+boss.block))                            %corrects for size of boss_avoid
-    (100-boss.avoid-boss.glance-boss.block)]);                                      %crit cap
+aacrit=max([aacrit.*ones(size(boss.avoid+npc.glance+npc.block))                            %corrects for size of boss_avoid
+    (100-boss.avoid-npc.glance-npc.block)]);                                      %crit cap
 
 %% PPM-based uptimes
 %this section will have to wait until we know which attacks survive, what
