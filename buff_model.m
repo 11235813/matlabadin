@@ -29,6 +29,7 @@ buff.Hemo=1;              %bleed damage taken : Mangle / Trauma / Hemorrhage
 buff.CoE=1;               %spell damage taken : Ebon Plaguebringer / Earth and Moon / Curse of the Elements / Master Poisoner 
 buff.ISB=1;               %spell crit : Improved Scorch / Improved Shadowbolt
 buff.Sund=1;              %multiplicative armor : Sunder Armor / Expose Armor / Faerie Fire / Scorpid Venom
+buff.ST=1;                %multiplicative armor : Shattering Throw
 
 %% Player debuffs
 Chill_up=0; %PLACEHOLDER
