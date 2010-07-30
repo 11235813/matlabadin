@@ -9,6 +9,7 @@ function [npc] = npc_model(varargin)
 %npccount - number of npcs to model, integer [1]
 %phflag - parry-haste flag, logical [0]
 %behind - attacking from behind, logical [0]
+%blockflag - block flag, logical [0, will be 1 eventually] 
 %Outputs:
 %npc - structure containing relevant parameters
 
@@ -22,52 +23,56 @@ for i = 1 : 2 : length(varargin)
     value = varargin{i+1};
     switch name
         case {'level','lvl'}
-            lvl=value;
+            npc.lvl=value;
         case 'type'
             npc.type=value;
         case 'swing'
-            swing=value;
+            npc.swing=value;
         case 'ontarget'
-            ontarget=value;
+            npc.ontarget=value;
         case 'npccount'
-            npccount=value;
+            npc.count=value;
         case 'phflag'
-            phflag=value;
+            npc.phflag=value;
         case 'behind'
-            behind=value;
+            npc.behind=value;
+        case 'blockflag'
+            npc.blockflag=value;
     end
 end
 
-%% defaults
-if exist('lvl')==0 lvl=83; end;
-if exist('type')==0 npc.type=0; end;
-if exist('swing')==0 swing=1.5; end;
-if exist('ontarget')==0 ontarget=1; end;
-if exist('npccount')==0 npccount=1; end;
-if exist('phflag')==0 phflag=0; end;  %nil by default (probably redundant)
-if exist('behind')==0 behind=0; end;
-
-
 %% Start building npc structure
-npc.lvl=lvl;
 
-npc.lvlgap=lvl-base.level;
+
+%% defaults
+if exist('npc.lvl')==0 npc.lvl=83; end;
+if exist('npc.type')==0 npc.type=0; end;
+if exist('npc.swing')==0 npc.swing=1.5; end;
+if exist('npc.ontarget')==0 npc.ontarget=1; end;
+if exist('npc.npccount')==0 npc.count=1; end;
+if exist('npc.phflag')==0 npc.phflag=0; end;  %nil by default (probably redundant)
+if exist('npc.behind')==0 npc.behind=0; end;
+if exist('npc.blockflag')==0 npc.blockflag=0; end;  %change default to 1 later on when it's implemented
+
+% npc.lvl=lvl;
+
+npc.lvlgap=npc.lvl-base.level;
 lvlflag=npc.lvlgap>2;
 
-npc.defskill=5*lvl;
+npc.defskill=5*npc.lvl;
 npc.skillgap=npc.defskill-base.wskill;
 skillflag=npc.skillgap>10;
 
 %% physical damage
-npc.armor=305.*lvl-14672;
-npc.phflag=phflag;
-npc.blockflag=0;        %this should probably be an input, defaulted to 1?
+npc.armor=305.*npc.lvl-14672;
+% npc.phflag=phflag;
+% npc.blockflag=0;        %this should probably be an input, defaulted to 1?
 
-npc.swing=swing;
+% npc.swing=swing;
 npc.phmiss=5+npc.skillgap.*(0.1+0.1.*skillflag);
 npc.dodge=5+npc.skillgap.*(0.1);
-npc.parry=(5+npc.skillgap.*(0.1+0.5.*skillflag)).*(1-behind);
-npc.block=(5+npc.skillgap.*(0.1)).*(1-behind);
+npc.parry=(5+npc.skillgap.*(0.1+0.5.*skillflag)).*(1-npc.behind);
+npc.block=(5+npc.skillgap.*(0.1)).*(1-npc.behind);
 
 npc.glance=6.*(1+0.2.*npc.skillgap);
 npc.glancerdx=(npc.glance./100).*(0.05+0.1.*(npc.lvlgap-1));

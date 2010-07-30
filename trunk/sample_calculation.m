@@ -21,4 +21,9 @@ gear_stats
 buff_model
 
 %calculate final stats
-stats_recalc
+stat_model
+
+%calculate ability damages
+ability_model
+
+warning('Success!')
