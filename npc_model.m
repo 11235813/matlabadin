@@ -3,6 +3,7 @@ function [npc] = npc_model(varargin)
 %the following property/value pairs as inputs:
 %Inputs [default value]:
 %lvl - desired level of npc(s), integer  [83]
+%type - type of target, logical (1 for demon/undead, 0 for the rest) [0] 
 %swing - swing timer of npc(s), float  [1.5]
 %ontarget - time on-target, float (0 to 1) [1]
 %npccount - number of npcs to model, integer [1]
@@ -22,6 +23,8 @@ for i = 1 : 2 : length(varargin)
     switch name
         case {'level','lvl'}
             lvl=value;
+        case 'type'
+            npc.type=value;
         case 'swing'
             swing=value;
         case 'ontarget'
@@ -37,6 +40,7 @@ end
 
 %% defaults
 if exist('lvl')==0 lvl=83; end;
+if exist('type')==0 npc.type=0; end;
 if exist('swing')==0 swing=1.5; end;
 if exist('ontarget')==0 ontarget=1; end;
 if exist('npccount')==0 npccount=1; end;
