@@ -4,7 +4,7 @@
 %modeled properly in different rotations
 
 %Crusader Strike
-raw.CrusaderStrike= weapon.damage.*mod.phdmg;
+raw.CrusaderStrike= player.wdamage.*mod.phdmg;
 dmg.CrusaderStrike= raw.CrusaderStrike.*mod.mehit.*mod.phcrit;
 
 %Avenger's Shield
@@ -48,8 +48,11 @@ raw.Consecration =  (8+0.04.*hsp+0.04.*ap).*mod.spdmg;
 dmg.Consecration =  raw.Consecration.*target.resrdx;
 
 %Exorcism
+%tracking demons/undead
+mod.Exorcism=mod.spcrit.*(1-min([npc.type;1]))+mod.spcritmulti.*min([npc.type;1];
+
 raw.Exorcism=       ((1135-1267)/2 + 0.15.*hsp + 0.15.*ap).*mod.spdmg;
-dmg.Exorcism=       raw.Exorcism.*mod.sphit.*mod.spcrit.*target.resrdx;
+dmg.Exorcism=       raw.Exorcism.*mod.sphit.*mod.Exorcism.*target.resrdx;
 
 %Holy Wrath
 raw.HolyWrath=      (2401 + 0.3.*hsp).*mod.spdmg;
