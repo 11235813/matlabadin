@@ -19,7 +19,7 @@ mod.AotL=6.*talent.ArbiteroftheLight;
 mod.JotP=1+0.03.*talent.JudgementsofthePure;
 mod.PotI=1+0.2.*talent.ProtectoroftheInnocent;
 mod.SotP=1+0.05.*talent.SealsofthePure;
-mod.JotJ=1.1.*talent.JudgementsoftheJust;
+mod.JotJ=1+0.1.*talent.JudgementsoftheJust;
 mod.Tough=1+floor(3.4.*talent.Toughness)./100;
 mod.Sanct=0.02.*talent.Sanctuary;
 mod.WotL=0.1.*talent.WrathoftheLightbringer; %incorporates both effects
@@ -37,6 +37,9 @@ mod.ImpJud=1+0.05.*talent.ImprovedJudgement;
 %Similar to talents, I'd like to incorporate these directly into the
 %calculations.  I'm leaving the section here to remind myself to check for
 %Armsman implementation down the line
+mod.ameta=1+0.02.*gear.armormeta;
+mod.cmeta=1+0.03.*gear.critmeta;
+
 
 %% Raid Buffs [WIP]
 buff.example=1; %example for how buffs are implemented
@@ -44,11 +47,11 @@ mod.BoK=1+0.05.*buff.BoK;
 mod.SoE=100.*buff.SoE;
 mod.PWF=100.*buff.PWF;
 mod.ArcInt=100.*buff.ArcInt;
-mod.UnRage=1.1.*buff.UnRage;
+mod.UnRage=1+0.1.*buff.UnRage;
 mod.FMT=6.*buff.FMT; %does it stack with ToW?
 mod.ToW=10.*buff.ToW; %does it stack with FMT?
 mod.HePr=buff.HePr;
-mod.SwRet=1.03.*buff.SwRet;
+mod.SwRet=1+0.03.*buff.SwRet;
 mod.LotP=5.*buff.LotP;
 mod.WF=1+0.2.*buff.WF;
 mod.WoA=5.*buff.WoA;
@@ -56,11 +59,12 @@ mod.BL=1+0.3.*buff.BL;
 mod.Devo=1000.*buff.Devo;
 mod.Focus=3.*buff.Focus;
 %% Raid Debufs [WIP]
-mod.SavCom=1.04.*buff.SavCom;
+mod.SavCom=1+0.04.*buff.SavCom;
 mod.Hemo=1.3.*buff.Hemo;
-mod.CoE=1.08.*buff.CoE;
+mod.CoE=1+0.08.*buff.CoE;
 mod.ISB=5.*buff.ISB;
-mod.Sund=12.*buff.Sund;
+mod.Sund=1-0.12.*buff.Sund;
+mod.ST=1-0.2.*buff.ST;
 
 %% Extras
 %this section is a way to incorporate extra amounts of different stats to
@@ -99,14 +103,14 @@ player.armorystr=floor(floor((base.str+gear.str)));
 player.hitpoints=base.health+10.*(player.sta-10)+gear.health;
 
 %armor
-player.armor=gear.barmor.*mod.Tough.*(1+0.2*gear.armormeta) ...
+player.armor=gear.barmor.*mod.Tough.*mod.ameta ...
     +gear.earmor+player.agi.*2+mod.Devo;
 
 player.vengap=min([0.1.*player.hitpoints;boss.output]).*mod.Veng; %TODO fix boss.output
 
-%% Hit Rating
-player.phhit=buff.example + (gear.hit+extra.hit)./cnv.hit_phhit;
-player.sphit=buff.example + (gear.hit+extra.hit)./cnv.hit_sphit;
+%% Hit Rating (TODO check HePr later on)
+player.phhit=buff.example+(gear.hit+extra.hit)./cnv.hit_phhit+mod.HePr;
+player.sphit=buff.example+(gear.hit+extra.hit)./cnv.hit_sphit+mod.HePr;
 
 
 %% Expertise
@@ -128,8 +132,9 @@ player.haste=100.*( ...
     
 
 %% Crit
-phcrit_multiplier=2.*(1+0.03.*gear.critmeta);   %for physical attacks
-spcrit_multiplier=1.5.*(1+0.03.*gear.critmeta);  %for spells
+%multipliers
+mod.phcritmulti=2.*mod.cmeta;   %for physical attacks
+mod.spcritmulti=1.5.*mod.cmeta; %for spells
 
 
 %melee abilities ("physical crit")
@@ -152,8 +157,8 @@ player.aacrit=(base.phcrit + ...                    %base physical crit
     -npc.phcritsupp);                               %crit suppression
 
 %% SP and AP
-player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+buff.example+player.vengap).*(1+0.2.*buff.example));
-player.sp=gear.sp + extra.sp + floor(player.str.*0.6.*talent.TouchedbytheLight) + player.int./cnv.int_sp + buff.example;
+player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+buff.example+player.vengap).*mod.UnRage);
+player.sp=gear.sp+extra.sp+floor(player.str.*4.*mod.TbtL)+player.int./cnv.int_sp+buff.example;
 %for future use in case our spellpower and "holy spell power" are both
 %relevant.  hsp is what we get from TbtL, and only affects damage.  We're
 %back to the old 2.x "spell power" and "healing power" modle, it seems.
@@ -202,16 +207,16 @@ player.block=base.block+player.mast./cnv.mast_block;
 %with the avoid structure.  In other words, we'd have player.sphit,
 %player.dodge, player.avoid, and so forth.
 
-boss.swing=npc.swing.*max([1.2.*talent.example 1]);
+target.swing=npc.swing.*mod.JotJ;
 
-boss.miss=max([(npc.phmiss-player.mehit) zeros(size(player.mehit))]);
-boss.dodge=max([(npc.dodge-0.25.*player.exp) zeros(size(player.exp))]);
-boss.parry=max([(npc.parry-0.25.*player.exp) zeros(size(player.exp))]);
-boss.avoid=boss.miss+boss.dodge+boss.parry;
+target.miss=max([(npc.phmiss-player.phhit) zeros(size(player.mehit))]);
+target.dodge=max([(npc.dodge-0.25.*player.exp) zeros(size(player.exp))]);
+target.parry=max([(npc.parry-0.25.*player.exp) zeros(size(player.exp))]);
+target.avoid=boss.miss+boss.dodge+boss.parry;
 
 
-boss.spmiss=max([(npc.spmiss-player.sphit-buff.example) zeros(size(player.sphit))]);
-boss.resrdx=(100-npc.presist)./100;
+target.spmiss=max([(npc.spmiss-player.sphit-buff.example) zeros(size(player.sphit))]);
+target.resrdx=(100-npc.presist)./100;
 %%%%%%%%%%%%%%%% EJ Armor calcs
 %since Armor Penetration is being removed from gear, we'll set ArPen to
 %zero for now.  Once we know if/how this is implemented for us, we can fix
@@ -222,24 +227,32 @@ ArPen=0;
 C=400+85*base.level+4.5*85*(base.level-59);
 
 %debuffed armor
-temp_debuffed_armor=npc.armor.*(1-0.2.*buff.example).*(1-0.05.*buff.example).*(1-0.2.*buff.example);
+target.dbfarmor=npc.armor.*mod.Sund.*mod.ST;
 
 %Armor penetration cap (max amount of armor that can be removed)
-ArPenCap=min([temp_debuffed_armor; (temp_debuffed_armor+C)/3]);
+ArPenCap=min([target.dbfarmor; (target.dbfarmor+C)/3]);
 
 %Armor Penetration Rating in %, up to a max of 100%
 ArP=min([ArPen./cnv.arpen_arpen; 100.*ones(size(ArPen))]);
 
 %Boss Armor and DR formulas
-boss.armor=floor(temp_debuffed_armor - ArP./100.*min([temp_debuffed_armor; ArPenCap]));
-boss.phdr=boss.armor./(boss.armor+C);
+target.armor=floor(target.dbfarmor - ArP./100.*min([target.dbfarmor; ArPenCap]));
+target.phdr=target.armor./(target.armor+C);
 
 %% Weapon Details
-%Should these also be wrapped into the "player" structure?  s/weapon/player
-weapon.basedps=gear.avgdmg./gear.swing + player.ap./14;  %was for HotR, may be obsolete now
-weapon.damage=gear.avgdmg+player.ap./14.*gear.swing;
-weapon.swing=gear.swing./(1+player.haste./100);
-weapon.dps=weapon.damage./weapon.swing;
+player.wdamage=gear.avgdmg+player.ap./14.*gear.swing;
+player.wswing=gear.swing./(1+player.haste./100);
+player.wdps=player.wdamage./player.wswing;
+
+%TODO witty comments
+mod.phdmg=mod.Conv.*mod.SwRet.*mod.SavCom.*(1-target.phdr);
+mod.mehit=1-(target.miss+target.dodge+target.parry)./100;
+mod.rahit=1-target.miss./100;
+mod.phcrit=1+(mod.phcritmulti-1).*player.phcrit./100;
+
+mod.spdmg=mod.Conv.*mod.SwRet.*mod.CoE;
+mod.sphit=1-target.spmiss./100;
+mod.spcrit=1+(mod.spcritmulti-1).*player.spcrit./100;
 
 %% Parryhaste corrections
 %ignoring this for now until we know how/if parryhaste is implemented
