@@ -13,6 +13,25 @@ stat_conversions
 %Thus, whenever possible I'm going to bake the talent variable into the
 %relevant stat calcluation.  Ideally, this section will end up empty?
 talent.example=1;  %example for how talents are implemented
+mod.VengAP=0.05.*talent.Vengeance;
+mod.TbtL=0.15.*talent.TouchedbytheLight; %incorporates both effects
+mod.AotL=6.*talent.ArbiteroftheLight;
+mod.JotP=1+0.03.*talent.JudgementsofthePure;
+mod.PotI=1+0.2.*talent.ProtectoroftheInnocent;
+mod.SotP=1+0.05.*talent.SealsofthePure;
+mod.JotJ=1.1.*talent.JudgementsoftheJust;
+mod.Tough=1+floor(3.4.*talent.Toughness)./100;
+mod.Sanct=0.02.*talent.Sanctuary;
+mod.WotL=0.1.*talent.WrathoftheLightbringer; %incorporates both effects
+mod.Reck=0.1.*talent.Reckoning;
+% mod.GC %grand crusader is NIY, we'll code it later on
+mod.Vind=0.05.*talent.Vindication; %only the damage reduction ?
+mod.SacDut=5.*talent.SacredDuty; %incorporates both effects
+mod.EfaE=0.3.*sign(talent.EyeforanEye)+0.05.*talent.EyeforanEye; %hacky, incorporates both effects
+mod.RoL=5.*talent.RuleofLaw;
+mod.Crus=1+0.1.*talent.Crusade;
+mod.ImpJud=1+0.05.*talent.ImprovedJudgement;
+% mod.Conv %NYI, we need to decide if we implement time-explicit stacking
 
 %% Meta Gems and Enchants
 %Similar to talents, I'd like to incorporate these directly into the
@@ -20,32 +39,28 @@ talent.example=1;  %example for how talents are implemented
 %Armsman implementation down the line
 
 %% Raid Buffs [WIP]
-%awaiting tlitp's buff/debuff imlementation
 buff.example=1; %example for how buffs are implemented
-buff.BoK=1;  %this line would be in the buffs/debuffs module
-BoK=1.05.*buff.BoK;
-SoE=100.*buff.SoE;
-PWF=100.*buff.PWF;
-ArcInt=100.*buff.ArcInt;
-UnRage=1.1.*buff.UnRage;
-FMT=6.*buff.FMT; %does it stack with ToW?
-ToW=10.*buff.ToW; %does it stack with FMT?
-HePr=buff.HePr;
-SwRet=1.03.*buff.SwRet;
-LotP=5.*buff.LotP;
-WF=20.*buff.WF;
-WoA=5.*buff.WoA;
-BL=30.*buff.BL;
-Devo=1000.*buff.Devo;
-Focus=3.*buff.Focus;
+mod.BoK=1+0.05.*buff.BoK;
+mod.SoE=100.*buff.SoE;
+mod.PWF=100.*buff.PWF;
+mod.ArcInt=100.*buff.ArcInt;
+mod.UnRage=1.1.*buff.UnRage;
+mod.FMT=6.*buff.FMT; %does it stack with ToW?
+mod.ToW=10.*buff.ToW; %does it stack with FMT?
+mod.HePr=buff.HePr;
+mod.SwRet=1.03.*buff.SwRet;
+mod.LotP=5.*buff.LotP;
+mod.WF=1+0.2.*buff.WF;
+mod.WoA=5.*buff.WoA;
+mod.BL=1+0.3.*buff.BL;
+mod.Devo=1000.*buff.Devo;
+mod.Focus=3.*buff.Focus;
 %% Raid Debufs [WIP]
-%awaiting tlitp's buff/debuff imlementation
-SavCom=1.04.*buff.SavCom;
-Hemo=1.3.*buff.Hemo;
-CoE=1.08.*buff.CoE;
-ISB=5.*buff.ISB;
-Sund=12.*buff.Sund;
-
+mod.SavCom=1.04.*buff.SavCom;
+mod.Hemo=1.3.*buff.Hemo;
+mod.CoE=1.08.*buff.CoE;
+mod.ISB=5.*buff.ISB;
+mod.Sund=12.*buff.Sund;
 
 %% Extras
 %this section is a way to incorporate extra amounts of different stats to
@@ -71,12 +86,11 @@ extra.mas=extra.itm.mas.*ipconv.mas     + extra.val.mas;
 extra.blo=extra.itm.blo.*ipconv.blo     + extra.val.blo;
 
 %% Primary stats
-
-player.str=floor(floor((base.str+gear.str+extra.str)).*BoK);
-player.sta=floor(floor((base.sta+gear.sta+extra.sta).*(1+0.15.*talent.TouchedbytheLight)).*BoK);
-player.agi=floor((base.agi+gear.agi+extra.agi).*BoK);
-player.int=floor((base.int+gear.int+extra.int).*BoK);
-% spi=floor((base.spi+gear.spi).*BoK);
+player.str=floor(floor((base.str+gear.str+extra.str)).*mod.BoK);
+player.sta=floor(floor((base.sta+gear.sta+extra.sta).*(1+mod.TbtL)).*mod.BoK);
+player.agi=floor((base.agi+gear.agi+extra.agi).*mod.BoK);
+player.int=floor((base.int+gear.int+extra.int).*mod.BoK);
+% player.spi=floor((base.spi+gear.spi).*mod.BoK);
 
 %armory strength
 player.armorystr=floor(floor((base.str+gear.str)));
@@ -85,15 +99,15 @@ player.armorystr=floor(floor((base.str+gear.str)));
 player.hitpoints=base.health+10.*(player.sta-10)+gear.health;
 
 %armor
-player.armor=gear.barmor.*(1+floor(3.4.*talent.Toughness)./100).*(1+0.2*gear.armormeta) ...
-    +gear.earmor+player.agi.*2+Devo;
+player.armor=gear.barmor.*mod.Tough.*(1+0.2*gear.armormeta) ...
+    +gear.earmor+player.agi.*2+mod.Devo;
 
-player.vengap=0.1.*player.hitpoints.*talent.Vengeance;
+player.vengap=min([0.1.*player.hitpoints;boss.output]).*mod.Veng; %TODO fix boss.output
 
 %% Hit Rating
+player.phhit=buff.example + (gear.hit+extra.hit)./cnv.hit_phhit;
 player.sphit=buff.example + (gear.hit+extra.hit)./cnv.hit_sphit;
 
-player.mehit=buff.example + (gear.hit+extra.hit)./cnv.hit_phhit;
 
 %% Expertise
 if (base.race==1 && (strcmp(egs(15).wtype,'swo') || strcmp(egs(15).wtype,'mac')))
@@ -107,9 +121,9 @@ player.exp=(base.exp + (gear.exp+extra.exp)./cnv.exp_exp + talent.example);
 %% Haste (only physical haste is relevant)
 player.haste=100.*( ...
     (1 + (gear.haste+extra.haste)./cnv.haste_phhaste./100).* ...
-    (1 + talent.example./100) .* ...
-    (1 + WF./100) .* ...
-    (1 + BL./100) ...
+    mod.JotP .* ...
+    mod.WF .* ...
+    mod.BL ...
     -1);
     
 

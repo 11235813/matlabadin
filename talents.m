@@ -21,22 +21,22 @@ talent.TouchedbytheLight=1;
 talent.JudgementsoftheWise=1;
 
 %% Holy
-talent.SanctifiedLight=0;
+talent.ArbiteroftheLight=0;
 talent.Divinity=0;
 talent.JudgementsofthePure=0;
 
 %potential integer matrix for later use
 holy=zeros(2,3);
-holy(1,1)=talent.SanctifiedLight;holy(1,2)=talent.Divinity;holy(1,3)=talent.JudgementsofthePure;
+holy(1,1)=talent.ArbiteroftheLight;holy(1,2)=talent.Divinity;holy(1,3)=talent.JudgementsofthePure;
 
 
 %% Prot
-talent.Toughness=3;
+talent.ProtectoroftheInnocent=3;
 talent.SealsofthePure=3;
 talent.ImprovedHammerofJustice=0;
 
 talent.JudgementsoftheJust=2;
-talent.ProtectoroftheInnocent=3;
+talent.Toughness=3;
 talent.GuardiansFavor=0;
 
 talent.HallowedGround=0;
@@ -50,6 +50,7 @@ talent.DivineGuardian=1;
 
 talent.Vindication=2;
 talent.HolyShield=1;
+talent.GuardedbytheLight=0;
 
 talent.ShieldoftheTemplar=3;
 talent.SacredDuty=2;
@@ -58,8 +59,8 @@ talent.ArdentDefender=1;
 
 
 prot=zeros(7,4);
-prot(1,1)=talent.Toughness;prot(1,2)=talent.SealsofthePure;prot(1,3)=talent.ImprovedHammerofJustice;
-prot(2,1)=talent.JudgementsoftheJust;prot(2,2)=talent.ProtectoroftheInnocent;prot(2,3)=talent.GuardiansFavor;
+prot(1,1)=talent.ProtectoroftheInnocent;prot(1,2)=talent.SealsofthePure;prot(1,3)=talent.ImprovedHammerofJustice;
+prot(2,1)=talent.JudgementsoftheJust;prot(2,2)=talent.Toughness;prot(2,3)=talent.GuardiansFavor;
 prot(3,1)=talent.HallowedGround;prot(3,2)=talent.Sanctuary;prot(3,3)=talent.HammeroftheRighteous;prot(3,4)=talent.WrathoftheLightbringer;
 prot(4,1)=talent.Reckoning;prot(4,2)=talent.GrandCrusader;prot(4,3)=talent.DivineGuardian;
 prot(5,1)=talent.Vindication;prot(5,2)=talent.HolyShield;
