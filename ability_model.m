@@ -3,58 +3,91 @@
 %interest (i.e. Consecration) so that the total uptime and DPS can be
 %modeled properly in different rotations
 
+%% Seals
+%done first so Judgement can be properly defined
+
+%Seal of Truth, using old SoVeng model, assumes a 5-stack
+raw.SealofTruth=    0.33.*player.wdamage.*mod.spdmg; 
+raw.SealJud(1)=    (1+0.22.*player.hsp+0.14.*player.ap).*1.5; 
+dmg.SealofTruth=    raw.SealofTruth.*mod.phcrit.*target.resrdx;
+
+%Censure (prev. Holy Vengeance), damage for a 5 stack over 15 seconds
+raw.Censure=        (0.013.*player.hsp+0.025.*player.ap).*5.*5.*mod.spdmg;
+dmg.Censure=        raw.Censure.*target.resrdx;
+
+%Seal of Righteousness
+raw.SealofRighteousness=    gear.swing.*(0.022.*player.ap+0.044.*player.hsp).*mod.spdmg;
+raw.SealJud(2)=             (0);    %Not yet on wowhead?
+dmg.SealofRighteousness=    raw.SealofRighteousness.*target.resrdx;
+
+%Seal of Inisght
+raw.SealofInsight=          0;
+raw.SealJud(3)=             (1+0.25.*player.hsp+0.16.*player.ap);
+dmg.SealofInsight=          raw.SealofInsight.*target.resrdx;
+
+%Seal of Justice
+raw.SealofJustice=          0;
+raw.SealJud(4)=             (1+0.25.*player.hsp+0.16.*player.ap);
+dmg.SealofJustice=          raw.SealofJustice.*target.resrdx;
+
+%% Melee abilities
+
 %Crusader Strike
 raw.CrusaderStrike= player.wdamage.*mod.phdmg;
 dmg.CrusaderStrike= raw.CrusaderStrike.*mod.mehit.*mod.phcrit;
 
+%Hammer of the Righteous
+raw.HammeroftheRighteous=   3.*player.wdamage.*mod.spdmg;
+dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mod.mehit.*mod.phcrit;
+
+%Melee attacks
+raw.Melee=          player.wdamage.*mod.phdmg;
+dmg.Melee=          raw.Melee.*mod.aahitcrit;
+dps.Melee=          dmg.Melee./player.wswing.*mod.Reck;
+
+%% Ranged abilities
+
 %Avenger's Shield
-raw.AvengersShield= ((1219-1489)/2 + 0.07.*hsp + 0.07.*ap).* ...
-                    mod.spdmg;
+raw.AvengersShield= ((1219-1489)/2 + 0.07.*player.hsp + 0.07.*player.ap).*mod.spdmg;
 dmg.AvengersShield= raw.AvengersShield.*mod.rahit.*mod.phcrit.*target.resrdx;                
 
-%Judgement - have to decide how to handle this since it's seal-dependent.
-%I dislike the old "JudgementofTruth/JudgementofRighteousness" system.
-%Thinking about using the old "seal" variable here so that the damage is
-%automatically reflected in the base Judgement cast.  In other words,
-%raw.Judgement = sealdmgarray(seal).*mod.holydmg;
-%sealdmgarray (or whatever we call it) would be defined down in the Seal
-%section.
-raw.Judgement=      0.*mod.holydmg;
-dmg.Judgement=      raw.Judgement.*mod.rahit.*mod.racrit.*boss.resrdx;
+%Judgement - damage depends on seal.  raw.SealJud contains the Judgement
+%damage values for each seal.  player.seal needs to be defined somewhere
+%else, probably as an argument to player_model (change to base.seal) or in
+%the talent or buff module.  
+player.seal=1; %seal of truth
+raw.Judgement=      raw.SealJud(player.seal).*mod.spdmg;
+dmg.Judgement=      raw.Judgement.*mod.rahit.*mod.phcrit.*target.resrdx;
 
 %Hammer of Wrath
-raw.HammerofWrath=  ((1254-1384)/2 + 0.15.*hsp + 0.15.*ap).* ...
-                    mod.spdmg;
+raw.HammerofWrath=  ((1254-1384)/2 + 0.15.*player.hsp + 0.15.*player.ap).*mod.spdmg;
 dmg.HammerofWrath= raw.HammerofWrath.*mod.rahit.*mod.phcrit.*target.resrdx;    
 
 
-%% Seals
-%cannot miss/dodge/parry, melee crit mechanics
 
-%Seal of Truth, using old SoVeng model, assumes a 5-stack
-raw.SealofTruth=    0.33.*player.wdamage.*mod.spdmg; 
-dmg.SealofTruth=    raw.SealofTruth.*mod.phcrit.*target.resrdx;
 
-%Holy Vengeance, damage for a 5 stack over 15 seconds
-raw.HolyVengeance=  (0.013.*hsp+0.025.*ap).*5.*5.*mod.spdmg;
-dmg.Holyvengeance=  raw.HolyVengeance.*target.resrdx;
-
-%Seal of Righteousness
-raw.SealofRighteousness=    gear.swing.*(0.022.*ap+0.044.*hsp).*mod.spdmg;
-dmg.SealofRighteousness=    raw.SealofRighteousness.*target.resrdx;
+%% Spell abilities
 
 %Consecration
-raw.Consecration =  (8+0.04.*hsp+0.04.*ap).*mod.spdmg;
+raw.Consecration =  (8+0.04.*player.hsp+0.04.*player.ap).*mod.spdmg.*mod.HalGro;
 dmg.Consecration =  raw.Consecration.*target.resrdx;
 
 %Exorcism
 %tracking demons/undead
-mod.Exorcism=mod.spcrit.*(1-min([npc.type;1]))+mod.spcritmulti.*min([npc.type;1];
+mod.Exorcrit=mod.spcrit.*(1-min([npc.type;1]))+mod.spcritmulti.*min([npc.type;1]);
 
-raw.Exorcism=       ((1135-1267)/2 + 0.15.*hsp + 0.15.*ap).*mod.spdmg;
-dmg.Exorcism=       raw.Exorcism.*mod.sphit.*mod.Exorcism.*target.resrdx;
+raw.Exorcism=       ((1135-1267)/2 + 0.15.*player.hsp + 0.15.*player.ap).*mod.spdmg;
+dmg.Exorcism=       raw.Exorcism.*mod.sphit.*mod.Exorcrit.*target.resrdx;
+
+%Hand of Reckoning
+raw.HandofReckoning=(1+0.5.*player.ap).*mod.spdmg;
+dmg.HandofReckoning=raw.HandofReckoning.*mod.sphit.*mod.spcrit.*target.resrdx;
+
+%Holy Shield
+raw.HolyShield=     97.*mod.spdmg; %tooltip might be wrong, "Effect #2" says 79.  Also I assume they'll implement ap/sp scaling.
+dmg.HolyShield=     raw.HolyShield.*mod.sphit.*target.resrdx;
 
 %Holy Wrath
-raw.HolyWrath=      (2401 + 0.3.*hsp).*mod.spdmg;
+raw.HolyWrath=      (2401 + 0.3.*player.hsp).*mod.spdmg;
 dmg.HolyWrath=      raw.HolyWrath.*mod.sphit.*mod.spcrit.*target.resrdx;
 
