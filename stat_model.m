@@ -7,6 +7,7 @@
 %can be called independently by other functions/simulations.  We'll call
 %that file here
 stat_conversions
+mod.threat=1.43.*1.8;
 
 %% Talents & Glyphs
 %I'm going to try and minimize the number of duplicate variables we have.

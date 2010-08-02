@@ -29,4 +29,7 @@ stat_model
 %calculate ability damages
 ability_model
 
+%rotation 
+rotation_model
+
 warning('Success!')
