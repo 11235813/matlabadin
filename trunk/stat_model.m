@@ -147,13 +147,22 @@ player.gcd=1.5./(1+player.sphaste./100);
 mod.phhaste=min([(1+player.phhaste./100) 1.5.*ones(size(player.phhaste))]);
 mod.sphaste=min([(1+player.sphaste./100) 1.5.*ones(size(player.sphaste))]);
 
-%alternat value under effects of Bloolust
+%alternate value under effects of Bloolust
 bl.phhaste=100.*((1+player.phhaste./100).*mod.BL-1);
 bl.sphaste=100.*((1+player.sphaste./100).*mod.BL-1);
 bl.gcd=1.5./(1+bl.sphaste./100);    
 
 mod.blphhaste=min([(1+bl.phhaste./100) 1.5.*ones(size(bl.phhaste))]);
 mod.blsphaste=min([(1+bl.sphaste./100) 1.5.*ones(size(bl.phhaste))]);
+
+%DoT tick formulae for Censure.  Temporary structure for this, can be moved
+%where we want it later
+dot.baseTick=3; %seconds
+dot.baseDur=15; %seconds
+dot.netTick=dot.baseTick./mod.sphaste;
+dot.numTicks=round(dot.baseDur./dot.baseTick.*mod.sphaste); 
+dot.netDur=dot.numTicks.*dot.netTick;
+
 
 %% Crit
 %multipliers
