@@ -2,11 +2,14 @@ clear;
 %load gear database
 gear_db;
 
-%invoke player model.  1=human, 2=dwarf, 3=draenei, 4=belf
+%invoke player model. 1=human, 2=dwarf, 3=draenei, 4=belf
 base=player_model('race',1);
 
 %invoke npc model
 npc=npc_model('lvl',83);
+
+%execution
+exec=execution_model('npccount',1,'timein',1,'timeout',1,'behind',0,'seal',1);
 
 %invoke talents & glyphs
 talents
