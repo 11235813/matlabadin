@@ -7,7 +7,7 @@
 %done first so Judgement can be properly defined
 
 %Seal of Truth, using old SoVeng model, assumes a 5-stack
-raw.SealofTruth=    0.33.*player.wdamage.*mod.spdmg; 
+raw.SealofTruth=    0.33.*player.wdamage.*mod.spdmg.*mod.SotP; 
 raw.SealJud(1)=    (1+0.22.*player.hsp+0.14.*player.ap).*1.5; 
 dmg.SealofTruth=    raw.SealofTruth.*mod.phcrit.*target.resrdx;
 
@@ -18,7 +18,8 @@ raw.Censure=        (0.013.*player.hsp+0.025.*player.ap).*5.*5.* ...
 dmg.Censure=        raw.Censure.*mod.Censcrit.*target.resrdx;
 
 %Seal of Righteousness
-raw.SealofRighteousness=    gear.swing.*(0.022.*player.ap+0.044.*player.hsp).*mod.spdmg;
+raw.SealofRighteousness=    gear.swing.*(0.022.*player.ap+0.044.*player.hsp).* ...
+                            mod.spdmg.*mod.SotP;
 raw.SealJud(2)=             (0);    %Not yet on wowhead?
 dmg.SealofRighteousness=    raw.SealofRighteousness.*target.resrdx;
 
@@ -35,12 +36,12 @@ dmg.SealofJustice=          raw.SealofJustice.*target.resrdx;
 %% Melee abilities
 
 %Crusader Strike
-raw.CrusaderStrike= player.wdamage.*mod.phdmg;
-dmg.CrusaderStrike= raw.CrusaderStrike.*mod.mehit.*mod.phcrit;
+raw.CrusaderStrike= player.wdamage.*mod.phdmg.*mod.Crus;
+dmg.CrusaderStrike= raw.CrusaderStrike.*mod.mehit.*mod.CScrit;
 
 %Hammer of the Righteous
-raw.HammeroftheRighteous=   3.*player.wdamage.*mod.spdmg;
-dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mod.mehit.*mod.phcrit;
+raw.HammeroftheRighteous=   3.*player.wdamage.*mod.spdmg.*mod.Crus;
+dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mod.mehit.*mod.HRcrit;
 
 %Melee attacks
 raw.Melee=          player.wdamage.*mod.phdmg;
@@ -55,8 +56,10 @@ dmg.AvengersShield= raw.AvengersShield.*mod.rahit.*mod.phcrit.*target.resrdx;
 
 %Judgement - damage depends on seal.  raw.SealJud contains the Judgement
 %damage values for each seal. The seal of choice is defined in execution_model. 
-raw.Judgement=      raw.SealJud(exec.seal).*mod.spdmg;
-dmg.Judgement=      raw.Judgement.*mod.rahit.*mod.phcrit.*target.resrdx;
+raw.Judgement=      raw.SealJud(exec.seal).*mod.spdmg.*mod.ImpJud;
+dmg.Judgement=      raw.Judgement.*mod.rahit.*mod.JDcrit.*target.resrdx;
+%for Sacred Duty handling, may implement this for every ability eventually
+crit.Judgement=     raw.Judgement.*mod.phcritmulti.*target.resrdx;  
 
 %Hammer of Wrath
 raw.HammerofWrath=  ((1254-1384)/2 + 0.15.*player.hsp + 0.15.*player.ap).*mod.spdmg;
@@ -83,5 +86,5 @@ raw.HolyShield=     97.*mod.spdmg; %tooltip might be wrong, "Effect #2" says 79.
 dmg.HolyShield=     raw.HolyShield.*mod.sphit.*target.resrdx;
 
 %Holy Wrath
-raw.HolyWrath=      (2401 + 0.3.*player.hsp).*mod.spdmg;
-dmg.HolyWrath=      raw.HolyWrath.*mod.sphit.*mod.spcrit.*target.resrdx;
+raw.HolyWrath=      (2401 + 0.3.*player.hsp).*mod.spdmg.*(1+mod.WotL);
+dmg.HolyWrath=      raw.HolyWrath.*mod.sphit.*mod.HWcrit.*target.resrdx;
