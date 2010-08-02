@@ -133,14 +133,27 @@ end
 
 player.exp=(base.exp + (gear.exp+extra.exp)./cnv.exp_exp + talent.example);
 
-%% Haste (only physical haste is relevant)
-player.haste=100.*( ...
+%% Haste 
+player.phhaste=100.*( ...
     (1 + (gear.haste+extra.haste)./cnv.haste_phhaste./100).* ...
-    mod.JotP .* ...
-    mod.WF .* ...
-    mod.BL ...
+    mod.JotP.*mod.WF ...
     -1);
-    
+player.sphaste=100.*(...
+    (1+(gear.haste+extra.haste)./cnv.haste_sphaste./100).* ...
+    mod.JotP.*mod.WF ...
+    -1);
+player.gcd=1.5./(1+player.sphaste./100); 
+
+mod.phhaste=min([(1+player.phhaste./100) 1.5.*ones(size(player.phhaste))]);
+mod.sphaste=min([(1+player.sphaste./100) 1.5.*ones(size(player.sphaste))]);
+
+%alternat value under effects of Bloolust
+bl.phhaste=100.*((1+player.phhaste./100).*mod.BL-1);
+bl.sphaste=100.*((1+player.sphaste./100).*mod.BL-1);
+bl.gcd=1.5./(1+bl.sphaste./100);    
+
+mod.blphhaste=min([(1+bl.phhaste./100) 1.5.*ones(size(bl.phhaste))]);
+mod.blsphaste=min([(1+bl.sphaste./100) 1.5.*ones(size(bl.phhaste))]);
 
 %% Crit
 %multipliers
@@ -243,8 +256,12 @@ target.phdr=target.armor./(target.armor+C);
 
 %% Weapon Details
 player.wdamage=gear.avgdmg+player.ap./14.*gear.swing;
-player.wswing=gear.swing./(1+player.haste./100);
+player.wswing=gear.swing./(1+player.phhaste./100);
 player.wdps=player.wdamage./player.wswing;
+
+%alternat values during bloodlust
+bl.wswing=gear.swing./(1+bl.phhaste./100);
+bl.wdps=player.wdamage./bl.wswing;
 
 %% Hit/Crit modifier values
 mod.phdmg=mod.Conv.*mod.SwRet.*mod.SavCom.*(1-target.phdr);

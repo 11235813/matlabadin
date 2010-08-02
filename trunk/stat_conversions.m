@@ -24,7 +24,7 @@ cnv.hit_sphit=26.23199272;
 cnv.exp_exp=8.197497368;
 
 cnv.haste_phhaste=25.2231;
-cnv.haste_sphaste=0;
+cnv.haste_sphaste=25.2231;
 % todo : fix arpen later on
 cnv.arpen_arpen=13.99572719;
 
