@@ -10,10 +10,11 @@
 raw.SealofTruth=    0.33.*player.wdamage.*mod.spdmg.*mod.SotP; 
 raw.SealJud(1)=    (1+0.22.*player.hsp+0.14.*player.ap).*1.5; 
 dmg.SealofTruth=    raw.SealofTruth.*mod.phcrit.*target.resrdx;
+dps.SealofTruth=    dmg.SealofTruth./player.wswing;
 
 %Censure (prev. Holy Vengeance), damage for a 5 stack over 15 seconds
 mod.Censcrit=1+(mod.spcritmulti-1).*player.phcrit./100; %physical, 1.5 base multiplier
-raw.Censure=        (0.013.*player.hsp+0.025.*player.ap).*5.*5.*mod.spdmg);
+raw.Censure=        (0.013.*player.hsp+0.025.*player.ap).*5.*5.*mod.spdmg;
 dmg.Censure=        raw.Censure.*mod.Censcrit.*target.resrdx;
 dps.Censure=        dmg.Censure./(5.*dot.netTick);  %this is likely what matters for us
 
@@ -46,12 +47,12 @@ dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mod.mehit.*mod.HRcrit;
 %Melee attacks
 raw.Melee=          player.wdamage.*mod.phdmg;
 dmg.Melee=          raw.Melee.*mod.aahitcrit;
-dps.Melee=          dmg.Melee./player.wswing.*mod.Reck;
+dps.Melee=          dmg.Melee./player.wswing;
 
 %% Ranged abilities
 
 %Avenger's Shield
-raw.AvengersShield= ((1219-1489)/2 + 0.07.*player.hsp + 0.07.*player.ap).*mod.spdmg;
+raw.AvengersShield= ((1219+1489)/2 + 0.07.*player.hsp + 0.07.*player.ap).*mod.spdmg;
 dmg.AvengersShield= raw.AvengersShield.*mod.rahit.*mod.phcrit.*target.resrdx;                
 
 %Judgement - damage depends on seal.  raw.SealJud contains the Judgement
@@ -62,7 +63,7 @@ dmg.Judgement=      raw.Judgement.*mod.rahit.*mod.JDcrit.*target.resrdx;
 crit.Judgement=     raw.Judgement.*mod.phcritmulti.*target.resrdx;  
 
 %Hammer of Wrath
-raw.HammerofWrath=  ((1254-1384)/2 + 0.15.*player.hsp + 0.15.*player.ap).*mod.spdmg;
+raw.HammerofWrath=  ((1254+1384)/2 + 0.15.*player.hsp + 0.15.*player.ap).*mod.spdmg;
 dmg.HammerofWrath= raw.HammerofWrath.*mod.rahit.*mod.phcrit.*target.resrdx;    
 
 
