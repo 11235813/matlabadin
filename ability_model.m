@@ -13,7 +13,8 @@ dmg.SealofTruth=    raw.SealofTruth.*mod.phcrit.*target.resrdx;
 
 %Censure (prev. Holy Vengeance), damage for a 5 stack over 15 seconds
 mod.Censcrit=1+(mod.spcritmulti-1).*player.phcrit./100; %physical, 1.5 base multiplier
-raw.Censure=        (0.013.*player.hsp+0.025.*player.ap).*5.*5.*mod.spdmg;
+raw.Censure=        (0.013.*player.hsp+0.025.*player.ap).*5.*5.* ...
+                    mod.spdmg.*(1+player.sphaste./100);  %might need a floor here
 dmg.Censure=        raw.Censure.*mod.Censcrit.*target.resrdx;
 
 %Seal of Righteousness
