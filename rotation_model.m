@@ -13,17 +13,17 @@
 %With the current state of abilities, Cons
 %isn't even worth casting on a single target (even at 45 seconds, it's less
 %than just about everything else).
-%              SealofTruth: 986.2226
-%                  Censure: 7.2878e+003
+%              SealofTruth: 576.3107
+%                  Censure: 5.3629e+003
 %      SealofRighteousness: 475.9103
 %            SealofInsight: 0
 %            SealofJustice: 0
-%           CrusaderStrike: 2.1938e+003
-%     HammeroftheRighteous: 1.0196e+004
-%                    Melee: 1.6150e+003
-%           AvengersShield: 3.6037e+003
-%                Judgement: 3.5694e+003
-%            HammerofWrath: 4.7941e+003
+%           CrusaderStrike: 1.3315e+003
+%     HammeroftheRighteous: 6.1882e+003
+%                    Melee: 1.4574e+003
+%           AvengersShield: 2.1058e+003
+%                Judgement: 2.0858e+003
+%            HammerofWrath: 2.8015e+003
 %             Consecration: 372.4645
 %                 Exorcism: 1.1861e+003
 %          HandofReckoning: 3.5697e+003
@@ -31,11 +31,12 @@
 %                HolyWrath: 3.5947e+003
 
 %Given this data set, we'd want to fill the X's with:
-%  HoW > AS > HW > Cons 
-%Note that while AS and HW are slightly better than Judgement, we'll get
+%  HW > HoW > AS > Cons 
+%Note that while AS and HW are both better than Judgement, we'll get
 %some guaranteed crits due to Sacred Duty that will increase Judgement's
 %net damage.  So even when GC procs, it's not worth pushing AS up one slot,
-%since it'll still get cast before the next CS.  
+%since it'll still get cast before the next CS.  It may make sense to cast
+%HW sooner, provided it doesn't end up causing pushback down the line.
 
 %For the moment, we'll assume that we get one GC proc, such that we get one
 %HW and two AS's in the rotation above:
@@ -59,7 +60,8 @@
 
 rot1.dmg=   4.*dmg.CrusaderStrike + ...
             2.*dmg.HammeroftheRighteous + ...
-            2.*dmg.Judgement + ...
+            2.*(1-player.HRcrit./100).*dmg.Judgement + ... 
+                player.HRcrit./100.*crit.Judgement + ...  %auto-crit due to HotR
             1.*dmg.HolyWrath + ...
             2.*dmg.AvengersShield + ...
             18.*dps.Melee + ...

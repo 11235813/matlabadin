@@ -13,7 +13,7 @@
 %items
 gear.str = sum([egs.str]);
 gear.sta = sum([egs.sta]);
-gear.agi = sum([egs.sta]);
+gear.agi = sum([egs.agi]);
 gear.int = sum([egs.int]);
 
 gear.hit = sum([egs.hit]);
