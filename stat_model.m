@@ -32,7 +32,7 @@ mod.EfaE=0.3.*sign(talent.EyeforanEye)+0.05.*talent.EyeforanEye; %hacky, incorpo
 mod.RoL=5.*talent.RuleofLaw;
 mod.Crus=1+0.1.*talent.Crusade;
 mod.ImpJud=1+0.05.*talent.ImprovedJudgement;
-mod.Conv=1; %NYI, we need to decide if we implement time-explicit stacking
+mod.Conv=1+0.01.*talent.Conviction; %NYI, we need to decide if we implement time-explicit stacking
 
 %% Meta Gems and Enchants
 %Similar to talents, I'd like to incorporate these directly into the
@@ -162,23 +162,49 @@ mod.spcritmulti=1.5.*mod.cmeta; %for spells
 
 
 %melee abilities ("physical crit")
-player.phcrit=min([(base.phcrit + ...               %base physical crit
+player.phcrit=base.phcrit + ...                     %base physical crit
     player.agi./cnv.agi_phcrit + ...                %AGI
     (gear.crit+extra.crit)./cnv.crit_phcrit + ...   %crit rating
-    -npc.phcritsupp) 100]);                         %crit suppression
+    -npc.phcritsupp;                                %crit suppression
 
 %spell abilities ("spell crit")
-player.spcrit=min([(base.spcrit + ...               %base spell crit
+player.spcrit=base.spcrit + ...                     %base spell crit
     player.int./cnv.int_spcrit + ...                %INT
     (gear.crit+extra.crit)./cnv.crit_spcrit + ...   %crit rating
-    -npc.spcritsupp) 100]);                         %crit suppression
+    -npc.spcritsupp;                                %crit suppression
 
 %regular melee attacks (one-roll system)
 %this gets modified again after boss stats to enforce crit cap
-player.aacrit=(base.phcrit + ...                    %base physical crit
+player.aacrit=base.phcrit + ...                     %base physical crit
     player.agi./cnv.agi_phcrit + ...                %AGI
     (gear.crit+extra.crit)./cnv.crit_phcrit + ...   %crit rating
-    -npc.phcritsupp);                               %crit suppression
+    -npc.phcritsupp;                                %crit suppression
+
+%specials for individual spells
+player.HWcrit=player.spcrit+mod.WotL.*100;          %Wrath of the LB
+player.HRcrit=player.phcrit+mod.SacDut;             %Sacred Duty
+player.CScrit=player.phcrit+mod.RoL;                %Rule of Law
+player.JDcrit=player.phcrit+mod.AotL;               %Arbiter of the Light
+
+
+%enforce crit caps for two-roll (100%)
+player.phcrit=min([player.phcrit 100.*ones(size(player.phcrit))]);
+player.spcrit=min([player.spcrit 100.*ones(size(player.spcrit))]);
+
+player.HWcrit=min([player.HWcrit 100.*ones(size(player.HWcrit))]);
+player.HRcrit=min([player.HRcrit 100.*ones(size(player.HRcrit))]);
+player.CScrit=min([player.CScrit 100.*ones(size(player.CScrit))]);
+player.JDcrit=min([player.JDcrit 100.*ones(size(player.JDcrit))]);
+
+
+%Crit modifier values
+mod.phcrit=1+(mod.phcritmulti-1).*player.phcrit./100;
+mod.spcrit=1+(mod.spcritmulti-1).*player.spcrit./100;
+
+mod.HWcrit=1+(mod.spcritmulti-1).*player.HWcrit./100;
+mod.HRcrit=1+(mod.phcritmulti-1).*player.HRcrit./100;
+mod.CScrit=1+(mod.phcritmulti-1).*player.CScrit./100;
+mod.JDcrit=1+(mod.phcritmulti-1).*player.JDcrit./100;
 
 %% SP and AP
 player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+buff.example+player.vengap).*mod.UnRage);
@@ -263,26 +289,21 @@ player.wdps=player.wdamage./player.wswing;
 bl.wswing=gear.swing./(1+bl.phhaste./100);
 bl.wdps=player.wdamage./bl.wswing;
 
-%% Hit/Crit modifier values
+%% Parryhaste corrections
+%ignoring this for now until we know how/if parryhaste is implemented
+
+%% Other dynamic or inter-dependent corrections 
+%Hit & Damage modifier values
 mod.phdmg=mod.Conv.*mod.SwRet.*mod.SavCom.*(1-target.phdr);
 mod.mehit=1-(target.miss+target.dodge+target.parry)./100;
 mod.rahit=1-target.miss./100;
-mod.phcrit=1+(mod.phcritmulti-1).*player.phcrit./100;
-
 mod.spdmg=mod.Conv.*mod.SwRet.*mod.CoE;
 mod.sphit=1-target.spmiss./100;
-mod.spcrit=1+(mod.spcritmulti-1).*player.spcrit./100;
 
 %enforce one-roll system crit cap for auto-attacks
 player.aacrit=max([player.aacrit.*ones(size(target.avoid+npc.glance+npc.block)) ...   %corrects for size of boss_avoid
     (100-target.avoid-npc.glance-npc.block)]);         
 mod.aahitcrit=1-npc.glancerdx+(mod.mehit-1)+(mod.phcritmulti-1).*player.aacrit./100;
-
-%% Parryhaste corrections
-%ignoring this for now until we know how/if parryhaste is implemented
-
-%% Other dynamic or inter-dependent corrections 
-
 
 %% PPM-based uptimes
 %this section will have to wait until we know which attacks survive, what
