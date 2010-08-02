@@ -1,4 +1,4 @@
-%% stats_recalc
+%% stat_model
 %this m-file recalculates the final stats of the player, taking into
 %account all sources.  It's divided into sections according to topic.
 
@@ -213,7 +213,7 @@ target.swing=npc.swing.*mod.JotJ;
 
 target.miss=max([(npc.phmiss-player.phhit) zeros(size(player.phhit))]);
 target.dodge=max([(npc.dodge-0.25.*player.exp) zeros(size(player.exp))]);
-target.parry=max([(npc.parry-0.25.*player.exp) zeros(size(player.exp))]);
+target.parry=max([(npc.parry.*(1-exec.behind)-0.25.*player.exp) zeros(size(player.exp))]);
 target.avoid=target.miss+target.dodge+target.parry;
 
 

@@ -5,11 +5,8 @@ function [npc] = npc_model(varargin)
 %lvl - desired level of npc(s), integer  [83]
 %type - type of target, logical (1 for demon/undead, 0 for the rest) [0] 
 %swing - swing timer of npc(s), float  [1.5]
-%ontarget - time on-target, float (0 to 1) [1]
-%npccount - number of npcs to model, integer [1]
 %phflag - parry-haste flag, logical [0]
-%behind - attacking from behind, logical [0]
-%blockflag - block flag, logical [0, will be 1 eventually] 
+%blockflag - block flag, logical [0] 
 %Outputs:
 %npc - structure containing relevant parameters
 
@@ -28,14 +25,8 @@ for i = 1 : 2 : length(varargin)
             npc.type=value;
         case 'swing'
             npc.swing=value;
-        case 'ontarget'
-            npc.ontarget=value;
-        case 'npccount'
-            npc.count=value;
         case 'phflag'
             npc.phflag=value;
-        case 'behind'
-            npc.behind=value;
         case 'blockflag'
             npc.blockflag=value;
     end
@@ -48,10 +39,7 @@ end
 if exist('npc.lvl')==0 npc.lvl=83; end;
 if exist('npc.type')==0 npc.type=0; end;
 if exist('npc.swing')==0 npc.swing=1.5; end;
-if exist('npc.ontarget')==0 npc.ontarget=1; end;
-if exist('npc.npccount')==0 npc.count=1; end;
 if exist('npc.phflag')==0 npc.phflag=0; end;  %nil by default (probably redundant)
-if exist('npc.behind')==0 npc.behind=0; end;
 if exist('npc.blockflag')==0 npc.blockflag=0; end;  %change default to 1 later on when it's implemented
 
 % npc.lvl=lvl;
@@ -59,20 +47,17 @@ if exist('npc.blockflag')==0 npc.blockflag=0; end;  %change default to 1 later o
 npc.lvlgap=npc.lvl-base.level;
 lvlflag=npc.lvlgap>2;
 
-npc.defskill=5*npc.lvl;
+npc.defskill=5.*npc.lvl;
 npc.skillgap=npc.defskill-base.wskill;
 skillflag=npc.skillgap>10;
 
 %% physical damage
 npc.armor=305.*npc.lvl-14672;
-% npc.phflag=phflag;
-% npc.blockflag=0;        %this should probably be an input, defaulted to 1?
 
-% npc.swing=swing;
 npc.phmiss=5+npc.skillgap.*(0.1+0.1.*skillflag);
 npc.dodge=5+npc.skillgap.*(0.1);
-npc.parry=(5+npc.skillgap.*(0.1+0.5.*skillflag)).*(1-npc.behind);
-npc.block=(5+npc.skillgap.*(0.1)).*(1-npc.behind);
+npc.parry=(5+npc.skillgap.*(0.1+0.5.*skillflag));
+npc.block=(5+npc.skillgap.*(0.1));
 
 npc.glance=6.*(1+0.2.*npc.skillgap);
 npc.glancerdx=(npc.glance./100).*(0.05+0.1.*(npc.lvlgap-1));

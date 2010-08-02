@@ -12,15 +12,16 @@ raw.SealJud(1)=    (1+0.22.*player.hsp+0.14.*player.ap).*1.5;
 dmg.SealofTruth=    raw.SealofTruth.*mod.phcrit.*target.resrdx;
 
 %Censure (prev. Holy Vengeance), damage for a 5 stack over 15 seconds
+mod.Censcrit=1+(mod.spcritmulti-1).*player.phcrit./100; %physical, 1.5 base multiplier
 raw.Censure=        (0.013.*player.hsp+0.025.*player.ap).*5.*5.*mod.spdmg;
-dmg.Censure=        raw.Censure.*target.resrdx;
+dmg.Censure=        raw.Censure.*mod.Censcrit.*target.resrdx;
 
 %Seal of Righteousness
 raw.SealofRighteousness=    gear.swing.*(0.022.*player.ap+0.044.*player.hsp).*mod.spdmg;
 raw.SealJud(2)=             (0);    %Not yet on wowhead?
 dmg.SealofRighteousness=    raw.SealofRighteousness.*target.resrdx;
 
-%Seal of Inisght
+%Seal of Insight
 raw.SealofInsight=          0;
 raw.SealJud(3)=             (1+0.25.*player.hsp+0.16.*player.ap);
 dmg.SealofInsight=          raw.SealofInsight.*target.resrdx;
@@ -52,11 +53,8 @@ raw.AvengersShield= ((1219-1489)/2 + 0.07.*player.hsp + 0.07.*player.ap).*mod.sp
 dmg.AvengersShield= raw.AvengersShield.*mod.rahit.*mod.phcrit.*target.resrdx;                
 
 %Judgement - damage depends on seal.  raw.SealJud contains the Judgement
-%damage values for each seal.  player.seal needs to be defined somewhere
-%else, probably as an argument to player_model (change to base.seal) or in
-%the talent or buff module.  
-player.seal=1; %seal of truth
-raw.Judgement=      raw.SealJud(player.seal).*mod.spdmg;
+%damage values for each seal. The seal of choice is defined in execution_model. 
+raw.Judgement=      raw.SealJud(exec.seal).*mod.spdmg;
 dmg.Judgement=      raw.Judgement.*mod.rahit.*mod.phcrit.*target.resrdx;
 
 %Hammer of Wrath
@@ -64,18 +62,14 @@ raw.HammerofWrath=  ((1254-1384)/2 + 0.15.*player.hsp + 0.15.*player.ap).*mod.sp
 dmg.HammerofWrath= raw.HammerofWrath.*mod.rahit.*mod.phcrit.*target.resrdx;    
 
 
-
-
 %% Spell abilities
 
 %Consecration
 raw.Consecration =  (8+0.04.*player.hsp+0.04.*player.ap).*mod.spdmg.*mod.HalGro;
-dmg.Consecration =  raw.Consecration.*target.resrdx;
+dmg.Consecration =  raw.Consecration.*mod.spcrit.*target.resrdx;
 
 %Exorcism
-%tracking demons/undead
-mod.Exorcrit=mod.spcrit.*(1-min([npc.type;1]))+mod.spcritmulti.*min([npc.type;1]);
-
+mod.Exorcrit=mod.spcrit.*(1-min([npc.type;1]))+mod.spcritmulti.*min([npc.type;1]); %tracking npc type
 raw.Exorcism=       ((1135-1267)/2 + 0.15.*player.hsp + 0.15.*player.ap).*mod.spdmg;
 dmg.Exorcism=       raw.Exorcism.*mod.sphit.*mod.Exorcrit.*target.resrdx;
 
@@ -90,4 +84,3 @@ dmg.HolyShield=     raw.HolyShield.*mod.sphit.*target.resrdx;
 %Holy Wrath
 raw.HolyWrath=      (2401 + 0.3.*player.hsp).*mod.spdmg;
 dmg.HolyWrath=      raw.HolyWrath.*mod.sphit.*mod.spcrit.*target.resrdx;
-
