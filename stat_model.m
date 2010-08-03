@@ -157,7 +157,7 @@ mod.blsphaste=(1+bl.sphaste./100);
 %haste scaling for DoT effects
 dot.CensBaseTick=3; %seconds
 dot.CensBaseDur=15; %seconds
-dot.CensNetTick=dot.CensBaseTick./mod.sphaste;
+dot.CensNetTick=dot.CensBaseTick./mod.sphaste; %confirmed to scale only with spell haste (b12644)
 dot.CensNumTicks=round(dot.CensBaseDur./dot.CensBaseTick.*mod.sphaste); 
 dot.CensNetDur=dot.CensNumTicks.*dot.CensNetTick;
 
