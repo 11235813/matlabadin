@@ -20,7 +20,7 @@ if ischar(iref)
     
    gi=length(idb);
    while gi>0 && not(strcmp(idb(gi).name,iref))
-       gi=gi+1;
+       gi=gi-1;
    end 
    if gi>0
     item=idb(gi);

@@ -16,7 +16,7 @@ dps.SealofTruth=    dmg.SealofTruth./player.wswing;
 mod.Censcrit=1+(mod.spcritmulti-1).*player.phcrit./100; %physical, 1.5 base multiplier
 raw.Censure=        (0.013.*player.hsp+0.025.*player.ap).*5.*5.*mod.spdmg;
 dmg.Censure=        raw.Censure.*mod.Censcrit.*target.resrdx;
-dps.Censure=        dmg.Censure./(5.*dot.CensNetTick);  %this is likely what matters for us
+dps.Censure=        dmg.Censure./(5.*dot.CensNetTick);
 
 %Seal of Righteousness
 raw.SealofRighteousness=    gear.swing.*(0.022.*player.ap+0.044.*player.hsp).* ...
