@@ -16,7 +16,7 @@ dps.SealofTruth=    dmg.SealofTruth./player.wswing;
 mod.Censcrit=1+(mod.spcritmulti-1).*player.phcrit./100; %physical, 1.5 base multiplier
 raw.Censure=        (0.013.*player.hsp+0.025.*player.ap).*5.*5.*mod.spdmg;
 dmg.Censure=        raw.Censure.*mod.Censcrit.*target.resrdx;
-dps.Censure=        dmg.Censure./(5.*dot.netTick);  %this is likely what matters for us
+dps.Censure=        dmg.Censure./(5.*dot.CensNetTick);  %this is likely what matters for us
 
 %Seal of Righteousness
 raw.SealofRighteousness=    gear.swing.*(0.022.*player.ap+0.044.*player.hsp).* ...
@@ -58,9 +58,10 @@ dmg.AvengersShield= raw.AvengersShield.*mod.rahit.*mod.phcrit.*target.resrdx;
 %Judgement - damage depends on seal.  raw.SealJud contains the Judgement
 %damage values for each seal. The seal of choice is defined in execution_model. 
 raw.Judgement=      raw.SealJud(exec.seal).*mod.spdmg.*mod.ImpJud;
-dmg.Judgement=      raw.Judgement.*mod.rahit.*mod.JDcrit.*target.resrdx;
+dmg.Judgement=      raw.Judgement.*mod.rahit.*mod.Jcrit.*target.resrdx;
 %for Sacred Duty handling, may implement this for every ability eventually
-crit.Judgement=     raw.Judgement.*mod.phcritmulti.*target.resrdx;  
+%/tlitp : don't like dedicated crit structures
+crit.Judgement=     raw.Judgement.*mod.rahit.*mod.phcritmulti.*target.resrdx;  
 
 %Hammer of Wrath
 raw.HammerofWrath=  ((1254+1384)/2 + 0.15.*player.hsp + 0.15.*player.ap).*mod.spdmg;
