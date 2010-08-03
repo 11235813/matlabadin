@@ -13,7 +13,6 @@ mod.threat=1.43.*1.8;
 %I'm going to try and minimize the number of duplicate variables we have.
 %Thus, whenever possible I'm going to bake the talent variable into the
 %relevant stat calcluation.  Ideally, this section will end up empty?
-talent.example=1;  %example for how talents are implemented
 mod.VengAP=0.05.*talent.Vengeance;
 mod.TbtL=0.15.*talent.TouchedbytheLight; %incorporates both effects
 mod.AotL=6.*talent.ArbiteroftheLight;
@@ -43,8 +42,7 @@ mod.ameta=1+0.02.*gear.armormeta;
 mod.cmeta=1+0.03.*gear.critmeta;
 
 
-%% Raid Buffs [WIP]
-buff.example=1; %example for how buffs are implemented
+%% Raid Buffs
 mod.BoK=1+0.05.*buff.BoK;
 mod.SoE=100.*buff.SoE;
 mod.PWF=100.*buff.PWF;
@@ -56,11 +54,11 @@ mod.HePr=buff.HePr;
 mod.SwRet=1+0.03.*buff.SwRet;
 mod.LotP=5.*buff.LotP;
 mod.WF=1+0.2.*buff.WF;
-mod.WoA=5.*buff.WoA;
+mod.WoA=1+0.05.*buff.WoA;
 mod.BL=1+0.3.*buff.BL;
 mod.Devo=1000.*buff.Devo;
 mod.Focus=3.*buff.Focus;
-%% Raid Debufs [WIP]
+%% Raid Debufs
 mod.SavCom=1+0.04.*buff.SavCom;
 mod.Hemo=1.3.*buff.Hemo;
 mod.CoE=1+0.08.*buff.CoE;
@@ -118,11 +116,11 @@ if exist('target.dmgdealt')==0 target.dmgdealt=player.hitpoints; end
 %combat simulating, we can initialize target.dmgdealt separately and
 %track it, giving real-time vengeance AP data.
 player.vengapmax=player.hitpoints.*2.*mod.VengAP; %max of 10% hitpoints
-player.vengap=min([player.vengapmax mod.VengAP.*target.dmgdealt]);
+player.vengap=min([player.vengapmax;mod.VengAP.*target.dmgdealt]);
 
 %% Hit Rating (TODO check HePr later on)
-player.phhit=buff.example+(gear.hit+extra.hit)./cnv.hit_phhit+mod.HePr;
-player.sphit=buff.example+(gear.hit+extra.hit)./cnv.hit_sphit+mod.HePr;
+player.phhit=(gear.hit+extra.hit)./cnv.hit_phhit+mod.HePr;
+player.sphit=(gear.hit+extra.hit)./cnv.hit_sphit+mod.HePr;
 
 
 %% Expertise
@@ -132,7 +130,7 @@ elseif (base.race==2 && strcmp(egs(15).wtype,'mac'))
         base.exp=5;
 end
 
-player.exp=(base.exp + (gear.exp+extra.exp)./cnv.exp_exp + talent.example);
+player.exp=(base.exp + (gear.exp+extra.exp)./cnv.exp_exp);
 
 %% Haste 
 player.phhaste=100.*( ...
@@ -141,28 +139,27 @@ player.phhaste=100.*( ...
     -1);
 player.sphaste=100.*(...
     (1+(gear.haste+extra.haste)./cnv.haste_sphaste./100).* ...
-    mod.JotP.*mod.WF ...
+    mod.JotP.*mod.WoA ...
     -1);
-player.gcd=1.5./(1+player.sphaste./100); 
+player.spgcd=max([1.5./(1+player.sphaste./100);ones(size(player.sphaste))]);
 
-mod.phhaste=min([(1+player.phhaste./100) 1.5.*ones(size(player.phhaste))]);
-mod.sphaste=min([(1+player.sphaste./100) 1.5.*ones(size(player.sphaste))]);
+mod.phhaste=(1+player.phhaste./100);
+mod.sphaste=(1+player.sphaste./100);
 
-%alternate value under effects of Bloolust
+%alternate values under Bloodlust-type effects
 bl.phhaste=100.*((1+player.phhaste./100).*mod.BL-1);
 bl.sphaste=100.*((1+player.sphaste./100).*mod.BL-1);
-bl.gcd=1.5./(1+bl.sphaste./100);    
+bl.spgcd=max([1.5./(1+bl.sphaste./100);ones(size(player.sphaste))]); 
 
-mod.blphhaste=min([(1+bl.phhaste./100) 1.5.*ones(size(bl.phhaste))]);
-mod.blsphaste=min([(1+bl.sphaste./100) 1.5.*ones(size(bl.phhaste))]);
+mod.blphhaste=(1+bl.phhaste./100);
+mod.blsphaste=(1+bl.sphaste./100);
 
-%DoT tick formulae for Censure.  Temporary structure for this, can be moved
-%where we want it later
-dot.baseTick=3; %seconds
-dot.baseDur=15; %seconds
-dot.netTick=dot.baseTick./mod.sphaste;
-dot.numTicks=round(dot.baseDur./dot.baseTick.*mod.sphaste); 
-dot.netDur=dot.numTicks.*dot.netTick;
+%haste scaling for DoT effects
+dot.CensBaseTick=3; %seconds
+dot.CensBaseDur=15; %seconds
+dot.CensNetTick=dot.CensBaseTick./mod.sphaste;
+dot.CensNumTicks=round(dot.CensBaseDur./dot.CensBaseTick.*mod.sphaste); 
+dot.CensNetDur=dot.CensNumTicks.*dot.CensNetTick;
 
 
 %% Crit
@@ -190,21 +187,21 @@ player.aacrit=base.phcrit + ...                     %base physical crit
     (gear.crit+extra.crit)./cnv.crit_phcrit + ...   %crit rating
     -npc.phcritsupp;                                %crit suppression
 
-%specials for individual spells
-player.HWcrit=player.spcrit+mod.WotL.*100;          %Wrath of the LB
+%explicit crit for non-standard abilities
+player.HWcrit=player.spcrit+mod.WotL.*100;          %Wrath of the Lightbringer
 player.HRcrit=player.phcrit+mod.SacDut;             %Sacred Duty
 player.CScrit=player.phcrit+mod.RoL;                %Rule of Law
-player.JDcrit=player.phcrit+mod.AotL;               %Arbiter of the Light
+player.Jcrit =player.phcrit+mod.AotL;               %Arbiter of the Light
 
 
 %enforce crit caps for two-roll (100%)
-player.phcrit=min([player.phcrit 100.*ones(size(player.phcrit))]);
-player.spcrit=min([player.spcrit 100.*ones(size(player.spcrit))]);
+player.phcrit=min([player.phcrit;100.*ones(size(player.phcrit))]);
+player.spcrit=min([player.spcrit;100.*ones(size(player.spcrit))]);
 
-player.HWcrit=min([player.HWcrit 100.*ones(size(player.HWcrit))]);
-player.HRcrit=min([player.HRcrit 100.*ones(size(player.HRcrit))]);
-player.CScrit=min([player.CScrit 100.*ones(size(player.CScrit))]);
-player.JDcrit=min([player.JDcrit 100.*ones(size(player.JDcrit))]);
+player.HWcrit=min([player.HWcrit;100.*ones(size(player.HWcrit))]);
+player.HRcrit=min([player.HRcrit;100.*ones(size(player.HRcrit))]);
+player.CScrit=min([player.CScrit;100.*ones(size(player.CScrit))]);
+player.Jcrit=min([player.Jcrit;100.*ones(size(player.Jcrit))]);
 
 
 %Crit modifier values
@@ -214,30 +211,30 @@ mod.spcrit=1+(mod.spcritmulti-1).*player.spcrit./100;
 mod.HWcrit=1+(mod.spcritmulti-1).*player.HWcrit./100;
 mod.HRcrit=1+(mod.phcritmulti-1).*player.HRcrit./100;
 mod.CScrit=1+(mod.phcritmulti-1).*player.CScrit./100;
-mod.JDcrit=1+(mod.phcritmulti-1).*player.JDcrit./100;
+mod.Jcrit=1+(mod.phcritmulti-1).*player.Jcrit./100;
 
 %% SP and AP
-player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+buff.example+player.vengap).*mod.UnRage);
-player.sp=gear.sp+extra.sp+floor(player.str.*4.*mod.TbtL)+player.int./cnv.int_sp+buff.example;
+player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+player.vengap).*mod.UnRage);
+player.sp=gear.sp+extra.sp+floor(player.str.*4.*mod.TbtL)+player.int./cnv.int_sp;
 %for future use in case our spellpower and "holy spell power" are both
 %relevant.  hsp is what we get from TbtL, and only affects damage.  We're
 %back to the old 2.x "spell power" and "healing power" modle, it seems.
 player.hsp=player.sp;  
 
 %% Mastery
-player.mast=base.mast+gear.mast+talent.example;
+player.mast=base.mast+gear.mast;
 
 %% Avoidance and Blocking
 %TODO: modify avoid_dr to get rid of defense and fix parry
 [dr.dodge dr.parry dr.miss dr.total] =  avoid_dr(gear.dodge,gear.parry,0,player.agi-base.agi);
 
-player.miss=base.miss+dr.miss+buff.example-0.04.*npc.skillgap;
-player.dodge=base.dodge+base.agi./cnv.agi_dodge+dr.dodge-0.04.*npc.skillgap-buff.example;
+player.miss=base.miss+dr.miss-0.04.*npc.skillgap;
+player.dodge=base.dodge+base.agi./cnv.agi_dodge+dr.dodge-0.04.*npc.skillgap;
 player.parry=base.parry+dr.parry-0.04.*npc.skillgap;
 
-%check for bounding issues
-player.dodge=min([max([player.dodge zeros(size(player.dodge))]) (100-player.miss).*ones(size(player.dodge))]);
-player.parry=min([player.parry (100-player.dodge-player.miss).*ones(size(player.parry))]);
+%check for bounding issues, based on the attack table
+player.dodge=min([max([player.dodge;zeros(size(player.dodge))]);(100-player.miss).*ones(size(player.dodge))]);
+player.parry=min([player.parry;(100-player.dodge-player.miss).*ones(size(player.parry))]);
 
 player.avoid=player.miss+player.dodge+player.parry;
 player.avoidpct=player.avoid./100;
@@ -260,13 +257,13 @@ player.block=base.block+player.mast./cnv.mast_block;
 
 target.swing=npc.swing.*mod.JotJ;
 
-target.miss=max([(npc.phmiss-player.phhit) zeros(size(player.phhit))]);
-target.dodge=max([(npc.dodge-0.25.*player.exp) zeros(size(player.exp))]);
-target.parry=max([(npc.parry.*(1-exec.behind)-0.25.*player.exp) zeros(size(player.exp))]);
+target.miss=max([(npc.phmiss-player.phhit);zeros(size(player.phhit))]);
+target.dodge=max([(npc.dodge-0.25.*player.exp);zeros(size(player.exp))]);
+target.parry=max([(npc.parry.*(1-exec.behind)-0.25.*player.exp);zeros(size(player.exp))]);
 target.avoid=target.miss+target.dodge+target.parry;
 
 
-target.spmiss=max([(npc.spmiss-player.sphit-buff.example) zeros(size(player.sphit))]);
+target.spmiss=max([(npc.spmiss-player.sphit);zeros(size(player.sphit))]);
 target.resrdx=(100-npc.presist)./100;
 %%%%%%%%%%%%%%%% EJ Armor calcs
 %since Armor Penetration is being removed from gear, we'll set ArPen to
@@ -281,10 +278,10 @@ C=400+85*base.level+4.5*85*(base.level-59);
 target.dbfarmor=npc.armor.*mod.Sund.*mod.ST;
 
 %Armor penetration cap (max amount of armor that can be removed)
-ArPenCap=min([target.dbfarmor; (target.dbfarmor+C)/3]);
+ArPenCap=min([target.dbfarmor;(target.dbfarmor+C)/3]);
 
 %Armor Penetration Rating in %, up to a max of 100%
-ArP=min([ArPen./cnv.arpen_arpen; 100.*ones(size(ArPen))]);
+ArP=min([ArPen./cnv.arpen_arpen;100.*ones(size(ArPen))]);
 
 %Boss Armor and DR formulas
 target.armor=floor(target.dbfarmor - ArP./100.*min([target.dbfarmor; ArPenCap]));
@@ -292,11 +289,11 @@ target.phdr=target.armor./(target.armor+C);
 
 %% Weapon Details
 player.wdamage=gear.avgdmg+player.ap./14.*gear.swing;
-player.wswing=gear.swing./(1+player.phhaste./100);
+player.wswing=gear.swing./mod.phhaste;
 player.wdps=player.wdamage./player.wswing;
 
-%alternat values during bloodlust
-bl.wswing=gear.swing./(1+bl.phhaste./100);
+%alternate values during bloodlust-type effects
+bl.wswing=gear.swing./mod.blphhaste;
 bl.wdps=player.wdamage./bl.wswing;
 
 %% Parryhaste corrections
@@ -311,7 +308,7 @@ mod.spdmg=mod.Conv.*mod.SwRet.*mod.CoE;
 mod.sphit=1-target.spmiss./100;
 
 %enforce one-roll system crit cap for auto-attacks
-player.aacrit=max([player.aacrit.*ones(size(target.avoid+npc.glance+npc.block)) ...   %corrects for size of boss_avoid
+player.aacrit=max([player.aacrit.*ones(size(target.avoid+npc.glance+npc.block)); ...   %corrects for size of boss_avoid
     (100-target.avoid-npc.glance-npc.block)]);         
 mod.aahitcrit=1-npc.glancerdx+(mod.mehit-1)+(mod.phcritmulti-1).*player.aacrit./100;
 
