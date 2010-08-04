@@ -69,4 +69,4 @@ rot1.dmg=   4.*dmg.CrusaderStrike + ...
             18.*dps.Censure;
         
 rot1.dps=rot1.dmg./18;
-rot1.tps=rot1.dps.*mod.threat;
+rot1.tps=rot1.dps.*mdf.threat;
