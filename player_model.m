@@ -17,10 +17,7 @@ function [base] = player_model(varargin)
 %prof2=0/1/2 (1-mining, 2-skinning, 0-anything else) [0]
 
 %% global variables
-global base
-
-%% global variables
-global base
+% global base
 
 %% input handling
 for i = 1 : 2 : length(varargin)
