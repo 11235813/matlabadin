@@ -41,6 +41,10 @@ mod.Conv=1+0.01.*talent.Conviction; %NYI, we need to decide if we implement time
 mod.ameta=1+0.02.*gear.armormeta;
 mod.cmeta=1+0.03.*gear.critmeta;
 
+%%Standard Professions
+%(passive bonuses, independent of gearing choices)
+if (base.prof1==1 || base.prof2==1) mod.mining=100; else mod.mining=0; end;
+if (base.prof1==2 || base.prof2==2) mod.skinning=100; else mod.skinning=0; end;
 
 %% Raid Buffs
 mod.BoK=1+0.05.*buff.BoK;
@@ -91,16 +95,16 @@ extra.blo=extra.itm.blo.*ipconv.blo     + extra.val.blo;
 
 %% Primary stats
 player.str=floor(floor((base.str+gear.str+extra.str)).*mod.BoK);
-player.sta=floor(floor((base.sta+gear.sta+extra.sta).*(1+mod.TbtL)).*mod.BoK);
+player.sta=floor(floor((base.sta+gear.sta+mod.mining+extra.sta).*(1+mod.TbtL)).*mod.BoK);
 player.agi=floor((base.agi+gear.agi+extra.agi).*mod.BoK);
 player.int=floor((base.int+gear.int+extra.int).*mod.BoK);
 % player.spi=floor((base.spi+gear.spi).*mod.BoK);
 
 %armory strength
-player.armorystr=floor(floor((base.str+gear.str)));
+player.armorystr=floor(floor((base.str+gear.str))); %TODO fix/delete
 
 %hit points
-player.hitpoints=base.health+10.*(player.sta-10)+gear.health;
+player.hitpoints=base.health+10.*(player.sta-18)+gear.health;
 
 %armor
 player.armor=gear.barmor.*mod.Tough.*mod.ameta ...
@@ -169,23 +173,26 @@ mod.spcritmulti=1.5.*mod.cmeta; %for spells
 
 
 %melee abilities ("physical crit")
-player.phcrit=base.phcrit + ...                     %base physical crit
-    player.agi./cnv.agi_phcrit + ...                %AGI
-    (gear.crit+extra.crit)./cnv.crit_phcrit + ...   %crit rating
-    -npc.phcritsupp;                                %crit suppression
+player.phcrit=base.phcrit + ...                                %base physical crit
+    player.agi./cnv.agi_phcrit + ...                           %AGI
+    (gear.crit+mod.skinning+extra.crit)./cnv.crit_phcrit + ... %crit rating
+    mod.LotP ...                                               %buffs
+    -npc.phcritsupp;                                           %crit suppression
 
 %spell abilities ("spell crit")
-player.spcrit=base.spcrit + ...                     %base spell crit
-    player.int./cnv.int_spcrit + ...                %INT
-    (gear.crit+extra.crit)./cnv.crit_spcrit + ...   %crit rating
-    -npc.spcritsupp;                                %crit suppression
+player.spcrit=base.spcrit + ...                                %base spell crit
+    player.int./cnv.int_spcrit + ...                           %INT
+    (gear.crit+mod.skinning+extra.crit)./cnv.crit_spcrit + ... %crit rating
+    mod.LotP+mod.ISB ...                                       %buffs
+    -npc.spcritsupp;                                           %crit suppression
 
 %regular melee attacks (one-roll system)
 %this gets modified again after boss stats to enforce crit cap
-player.aacrit=base.phcrit + ...                     %base physical crit
-    player.agi./cnv.agi_phcrit + ...                %AGI
-    (gear.crit+extra.crit)./cnv.crit_phcrit + ...   %crit rating
-    -npc.phcritsupp;                                %crit suppression
+player.aacrit=base.phcrit + ...                                %base physical crit
+    player.agi./cnv.agi_phcrit + ...                           %AGI
+    (gear.crit+mod.skinning+extra.crit)./cnv.crit_phcrit + ... %crit rating
+    mod.LotP ...                                               %buffs
+    -npc.phcritsupp;                                           %crit suppression
 
 %explicit crit for non-standard abilities
 player.HWcrit=player.spcrit+mod.WotL.*100;          %Wrath of the Lightbringer
