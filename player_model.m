@@ -11,9 +11,10 @@ function [base] = player_model(varargin)
 %Stuff we do care about (like the final stats) will probably still get
 %their own variables so that it's easy to do matrix operations on them.
 
-%player_model is now a function, having race as input argument :
-%race=1/2/3/4, corresponding to human/dwarf/draenai/blood elf (respectively)
-%If race is not specified, player_model will default to human.
+%Inputs [default value] :
+%race=1/2/3/4, corresponding to human/dwarf/draenai/blood elf (respectively) [1]
+%prof1=0/1/2 (1-mining, 2-skinning, 0-anything else) [0]
+%prof2=0/1/2 (1-mining, 2-skinning, 0-anything else) [0]
 
 %% global variables
 global base
@@ -29,11 +30,17 @@ for i = 1 : 2 : length(varargin)
     switch name
         case 'race'
             base.race=value;
+        case 'prof1'
+            base.prof1=value;
+        case 'prof2'
+            base.prof2=value;
     end
 end
 
-%% default (human)
-if exist('race')==0 race=1; end;
+%% defaults
+if exist('race')==0 base.race=1; end;
+if exist('prof1')==0 base.prof1=0; end;
+if exist('prof2')==0 base.prof2=0; end;
 
 %%racial base stats (lvl 80)
 %the format is      STR-STA-AGI-INT-SPI

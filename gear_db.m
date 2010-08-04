@@ -348,7 +348,7 @@ idb(44136).dodge=20;
 
 %% Cloak
 idb(39001).name='Enchant Cloak - Mighty Armor';
-idb(39001).barmor=225;
+idb(39001).earmor=225;
 
 %% Chest
 idb(39005).name='Enchant Chest - Super Health';
@@ -383,6 +383,3 @@ idb(59619).crit=25;
 %% Shield
 idb(38945).name='Enchant Shield - Major Stamina';
 idb(38945).sta=18;
-
-
-
