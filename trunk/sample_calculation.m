@@ -6,7 +6,7 @@ gear_db;
 base=player_model('race',1);
 
 %invoke npc model
-npc=npc_model('lvl',83);
+npc=npc_model(base,'lvl',83);
 
 %execution. seal : 1=truth, 2=righteousness, 3=insight, 4=justice.
 exec=execution_model('npccount',1,'timein',1,'timeout',1,'behind',0,'seal',1);

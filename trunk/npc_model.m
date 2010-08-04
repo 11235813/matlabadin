@@ -1,4 +1,4 @@
-function [npc] = npc_model(varargin)
+function [npc] = npc_model(base, varargin)
 %NPC_MODEL creates an npc model based on the input arguments.  It accepts
 %the following property/value pairs as inputs:
 %Inputs [default value]:
@@ -11,7 +11,7 @@ function [npc] = npc_model(varargin)
 %npc - structure containing relevant parameters
 
 %% global variables
-global base
+% global base
 
 %% input handling
 for i = 1 : 2 : length(varargin)

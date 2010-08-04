@@ -28,7 +28,7 @@ mod.Reck=0.1.*talent.Reckoning;  %this will probably end up in the parryhaste mo
 % mod.GC %grand crusader is NIY, we'll code it later on
 mod.Vind=0.05.*talent.Vindication; %only the damage reduction ?
 mod.SacDut=5.*talent.SacredDuty; %incorporates both effects
-mod.EfaE=0.3.*sign(talent.EyeforanEye)+0.05.*talent.EyeforanEye; %hacky, incorporates both effects
+mod.EfaE=0.3.*logical(talent.EyeforanEye)+0.05.*talent.EyeforanEye; %hacky, incorporates both effects
 mod.RoL=5.*talent.RuleofLaw;
 mod.Crus=1+0.1.*talent.Crusade;
 mod.ImpJud=1+0.05.*talent.ImprovedJudgement;
@@ -159,11 +159,11 @@ mod.blphhaste=(1+bl.phhaste./100);
 mod.blsphaste=(1+bl.sphaste./100);
 
 %haste scaling for DoT effects
-dot.CensBaseTick=3; %seconds
-dot.CensBaseDur=15; %seconds
-dot.CensNetTick=dot.CensBaseTick./mod.sphaste; %confirmed to scale only with spell haste (b12644)
-dot.CensNumTicks=round(dot.CensBaseDur./dot.CensBaseTick.*mod.sphaste); 
-dot.CensNetDur=dot.CensNumTicks.*dot.CensNetTick;
+cens.BaseTick=3; %seconds
+cens.BaseDur=15; %seconds
+cens.NetTick=cens.BaseTick./mod.sphaste; %confirmed to scale only with spell haste (b12644)
+cens.NumTicks=round(cens.BaseDur./cens.BaseTick.*mod.sphaste); 
+cens.NetDur=cens.NumTicks.*cens.NetTick;
 
 
 %% Crit
