@@ -55,7 +55,7 @@ mdf.UnRage=1+0.1.*buff.UnRage;
 mdf.FMT=6.*buff.FMT; %does it stack with ToW?
 mdf.ToW=10.*buff.ToW; %does it stack with FMT?
 mdf.HePr=buff.HePr;
-mdf.SwRet=1+0.03.*buff.SwRet;
+mdf.ArcEmp=1+0.03.*buff.ArcEmp;
 mdf.LotP=5.*buff.LotP;
 mdf.WF=1+0.2.*buff.WF;
 mdf.WoA=1+0.05.*buff.WoA;
@@ -94,10 +94,11 @@ extra.mas=extra.itm.mas.*ipconv.mas     + extra.val.mas;
 extra.blo=extra.itm.blo.*ipconv.blo     + extra.val.blo;
 
 %% Primary stats
-player.str=floor(floor((base.str+gear.str+extra.str)).*mdf.BoK);
-player.sta=floor(floor((base.sta+gear.sta+mdf.mining+extra.sta).*(1+mdf.TbtL)).*mdf.BoK);
-player.agi=floor((base.agi+gear.agi+extra.agi).*mdf.BoK);
-player.int=floor((base.int+gear.int+extra.int).*mdf.BoK);
+player.str=floor(base.str.*mdf.BoK)+floor((gear.str+mdf.SoE+extra.str).*mdf.BoK);
+player.sta=floor((base.sta+mdf.mining).*(1+mdf.TbtL).*mdf.BoK)+ ...
+    floor((gear.sta+mdf.PWF+extra.sta).*(1+mdf.TbtL).*mdf.BoK);
+player.agi=floor(base.agi.*mdf.BoK)+floor((gear.agi+mdf.SoE+extra.agi).*mdf.BoK);
+player.int=floor(base.int.*mdf.BoK)+floor((gear.int+extra.int).*mdf.BoK);
 % player.spi=floor((base.spi+gear.spi).*mdf.BoK);
 
 %armory strength
@@ -183,7 +184,7 @@ player.phcrit=base.phcrit + ...                                %base physical cr
 player.spcrit=base.spcrit + ...                                %base spell crit
     player.int./cnv.int_spcrit + ...                           %INT
     (gear.crit+mdf.skinning+extra.crit)./cnv.crit_spcrit + ... %crit rating
-    mdf.LotP+mdf.ISB ...                                       %buffs
+    mdf.LotP+mdf.ISB+mdf.Focus ...                             %buffs
     -npc.spcritsupp;                                           %crit suppression
 
 %regular melee attacks (one-roll system)
@@ -308,10 +309,10 @@ bl.wdps=player.wdamage./bl.wswing;
 
 %% Other dynamic or inter-dependent corrections 
 %Hit & Damage modifier values
-mdf.phdmg=mdf.Conv.*mdf.SwRet.*mdf.SavCom.*(1-target.phdr);
+mdf.phdmg=mdf.Conv.*mdf.ArcEmp.*mdf.SavCom.*(1-target.phdr);
 mdf.mehit=1-(target.miss+target.dodge+target.parry)./100;
 mdf.rahit=1-target.miss./100;
-mdf.spdmg=mdf.Conv.*mdf.SwRet.*mdf.CoE;
+mdf.spdmg=mdf.Conv.*mdf.ArcEmp.*mdf.CoE;
 mdf.sphit=1-target.spmiss./100;
 
 %enforce one-roll system crit cap for auto-attacks

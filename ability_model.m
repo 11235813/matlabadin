@@ -41,7 +41,7 @@ raw.CrusaderStrike= player.wdamage.*mdf.phdmg.*mdf.Crus;
 dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.mehit.*mdf.CScrit;
 
 %Hammer of the Righteous
-raw.HammeroftheRighteous=   3.*player.wdamage.*mdf.spdmg.*mdf.Crus;
+raw.HammeroftheRighteous=   3.98.*player.wdamage.*mdf.spdmg.*mdf.Crus;
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.mehit.*mdf.HRcrit;
 
 %Melee attacks
@@ -65,8 +65,11 @@ crit.Judgement=     raw.Judgement.*mdf.rahit.*mdf.phcritmulti.*target.resrdx;
 
 %Hammer of Wrath
 raw.HammerofWrath=  ((1254+1384)/2 + 0.15.*player.hsp + 0.15.*player.ap).*mdf.spdmg;
-dmg.HammerofWrath= raw.HammerofWrath.*mdf.rahit.*mdf.phcrit.*target.resrdx;    
+dmg.HammerofWrath= raw.HammerofWrath.*mdf.rahit.*mdf.phcrit.*target.resrdx;
 
+%Shield of the Righteous
+raw.ShieldoftheRighteous= (1+1).*mdf.spdmg; %inherent is NYI
+dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.rahit.*mdf.phcrit.*target.resrdx;
 
 %% Spell abilities
 
