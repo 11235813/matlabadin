@@ -33,7 +33,7 @@ gear.block=sum([egs.block]);
 gear.barmor=sum([egs.barmor]);
 gear.earmor=sum([egs.earmor]);
 
-%For stats that are item-specific (i.e. weapons), we can just reference the
+%For stats that are item-specific (e.g. weapons), we can just reference the
 %field directly, since [egs.x] will return only one member
 
 gear.avgdmg = egs(15).avgdmg;
@@ -42,5 +42,5 @@ gear.wtype=egs(15).wtype;
 gear.tooldps=egs(15).tooldps;
 
 %meta gems
-gear.critmeta = egs(1).critmeta;
 gear.armormeta= egs(1).armormeta;
+gear.critmeta = egs(1).critmeta;

@@ -12,7 +12,7 @@ function [base] = player_model(varargin)
 %their own variables so that it's easy to do matrix operations on them.
 
 %Inputs [default value] :
-%race=1/2/3/4, corresponding to human/dwarf/draenai/blood elf (respectively) [1]
+%race=1/2/3/4/5, corresponding to human/dwarf/draenai/blood elf/tauren (respectively) [1]
 %prof1=0/1/2 (1-mining, 2-skinning, 0-anything else) [0]
 %prof2=0/1/2 (1-mining, 2-skinning, 0-anything else) [0]
 
@@ -40,11 +40,12 @@ if exist('prof1')==0 base.prof1=0; end;
 if exist('prof2')==0 base.prof2=0; end;
 
 %%racial base stats (lvl 80)
-%the format is      STR-STA-AGI-INT-SPI
-player_base_stats=[ 151 143  90  98 108;
-                    153 146  86  97 104;
-                    152 142  87  99 107;
-                    148 141  92 102 104];
+%the format is     STR-STA-AGI-INT-SPI
+player_base_stats=[151 143  90  98 108;
+                   153 146  86  97 104;
+                   152 142  87  99 107;
+                   148 141  92 102 104;
+                   100 100 100 100 100];
 base.str=player_base_stats(base.race,1);
 base.sta=player_base_stats(base.race,2);
 base.agi=player_base_stats(base.race,3);

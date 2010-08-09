@@ -2,7 +2,7 @@ clear;
 %load gear database
 gear_db;
 
-%invoke player model. race : 1=human, 2=dwarf, 3=draenei, 4=belf.
+%invoke player model. race : 1=human, 2=dwarf, 3=draenei, 4=belf, 5=tauren.
 base=player_model('race',1);
 
 %invoke npc model

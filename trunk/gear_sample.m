@@ -39,29 +39,29 @@ egs(17)=equip(50461);
 
 %%Enchants (21-37)
 %head
-egs(21)=equip(44150);
+egs(21)=equip(59955);
 %neck
 % egs(22)=equip(2);
 %shoulders
-egs(23)=equip(44136);
+egs(23)=equip(59941);
 %back
-egs(24)=equip(39001);
+egs(24)=equip(47672);
 %chest
-egs(25)=equip(39005);
+egs(25)=equip(47900);
 %wrists
-egs(26)=equip(44947);
+egs(26)=equip(62256);
 %hands
-egs(27)=equip(38376);
+egs(27)=equip(50909);
 %waist
 % egs(28)=equip(4);
 %legs
-egs(29)=equip(38373);
+egs(29)=equip(60581);
 %feet
-egs(30)=equip(39006);
+egs(30)=equip(47901);
 %finger0
-egs(31)=equip(50);
+egs(31)=equip(59636);
 %finger1
-egs(32)=equip(50);
+egs(32)=equip(59636);
 %trinket0
 % egs(33)=equip(2);
 %trinket1
@@ -69,6 +69,6 @@ egs(32)=equip(50);
 %main hand
 egs(35)=equip(59619);
 %off hand
-egs(36)=equip(38945);
+egs(36)=equip(34009);
 %ranged
 % egs(37)=equip(4);

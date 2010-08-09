@@ -30,7 +30,7 @@
 %egs.wtype      (axe/mac/swo; non-weapons are ignored)
 %egs.ilvl       (item level)
 %egs.tooldps    (tooltip dps, for referencing only)
-%egs.rate       (1/base_swing explicitly)
+%egs.swing      (base swing timer)
 %egs.avgdmg 	(average base damage, for more precise calcs)
 %egs.str
 %egs.sta
@@ -44,12 +44,12 @@
 %egs.mast       (mastery)
 %egs.dodge
 %egs.parry
-%egs.blrat      (block rating)
-%egs.blval      (block value)
+%egs.block      (block rating)
 %egs.barmor 	(base AC)
 %egs.earmor 	(extra AC)
 %egs.health 	(extra HP, mainly for enchants/buffs)
-%egs.critmeta   (crit meta gem)
+%egs.armormeta  (logical : armor meta gem)
+%egs.critmeta   (logical : crit meta gem)
 
 %However, egs only has 17 slots, corresponding to the 17 relevant slots on
 %the paper doll. Ammo (0), Shirt(18), Tabard (19) are ignored.
@@ -125,8 +125,8 @@ idb=struct('name','Sample Item', ...
             'barmor',0, ...
             'earmor',0, ...
             'health',0,...
-            'critmeta',0,... %logical
-            'armormeta',0);  %logical
+            'armormeta',0,...
+            'critmeta',0);
 
         
 %% Begin adding items
@@ -186,7 +186,8 @@ idb(40345).exp=20;
 %             'block',0, ...
 %             'barmor',0, ...
 %             'earmor',0, ...
-%             'health',0,...
+%             'health',0, ...
+%             'armormeta',0, ...
 %             'critmeta',0);
 
 %% Items
@@ -337,43 +338,190 @@ idb(50461).dodge=219;
 %structure that contains all of the relevant enchants, according to the
 %spell_id value.  Since it has the same form, we can use the same equip()
 %function.
+% /tlitp : USE SPELL_ID HERE, NOT ITEM_ID !!1
 
 %% Head
-idb(44150).name='Arcanum of the Stalwart Protector';
-idb(44150).sta=37;
+idb(59955).name='Arcanum of the Stalwart Protector';
+idb(59955).sta=37;
+
+idb(86931).name='Earthen Ring';
+idb(86931).sta=90;
+idb(86931).dodge=35;
+
+idb(86932).name='Guardian of Hyjal';
+idb(86932).int=60;
+idb(86932).crit=35;
+
+idb(86933).name='Dragonmaw/Wildhammer';
+idb(86933).str=60;
+idb(86933).mast=35;
+
+idb(86934).name='Ramhaken';
+idb(86934).agi=60;
+idb(86934).haste=35;
 
 %% Shoulder
-idb(44136).name='Greater Inscription of the Pinnacle';
-idb(44136).dodge=20;
+idb(59941).name='Greater Inscription of the Pinnacle';
+idb(59941).dodge=20;
+
+idb(86854).name='Greater Inscription of Unbreakable Quartz';
+idb(86854).sta=75;
+idb(86854).dodge=25;
+
+idb(86899).name='Greater Inscription of Charged Lodestone';
+idb(86899).int=50;
+idb(86899).haste=25;
+
+idb(86901).name='Greater Inscription of Jagged Stone';
+idb(86901).str=50;
+idb(86901).crit=25;
+
+idb(86907).name='Greater Inscription of Shattered Crystal';
+idb(86907).agi=50;
+idb(86907).mast=25;
+
+idb(86402).name='Inscription of the Earth Prince';
+idb(86402).sta=195;
+idb(86402).dodge=25;
+
+idb(86401).name='Lionsmane Inscription';
+idb(86401).str=130;
+idb(86401).crit=25;
+
+idb(86375).name='Swiftsteel Inscription';
+idb(86375).agi=130;
+idb(86375).mast=25;
+
+idb(86403).name='Felfire Inscription';
+idb(86403).int=130;
+idb(86403).haste=25;
 
 %% Cloak
-idb(39001).name='Enchant Cloak - Mighty Armor';
-idb(39001).earmor=225;
+idb(47672).name='Enchant Cloak - Mighty Armor';
+idb(47672).earmor=225;
+
+idb(74234).name='Enchant Cloak - Protection';
+idb(74234).earmor=250;
+
+idb(74247).name='Enchant Cloak - Greater Critical Strike';
+idb(74247).crit=65;
+
+idb(74240).name='Enchant Cloak - Greater Intellect';
+idb(74240).int=50;
 
 %% Chest
-idb(39005).name='Enchant Chest - Super Health';
-idb(39005).health=275;
+idb(47900).name='Enchant Chest - Super Health';
+idb(47900).health=275;
+
+idb(74251).name='Enchant Chest - Greater Stamina';
+idb(74251).sta=75;
+
+idb(74250).name='Enchant Chest - Peerless Stats';
+idb(74250).sta=20;
+idb(74250).str=20;
+idb(74250).agi=20;
+idb(74250).int=20;
 
 %% Wrists
-idb(44947).name='Enchant Bracer - Major Stamina';
-idb(44947).sta=40;
+idb(62256).name='Enchant Bracer - Major Stamina';
+idb(62256).sta=40;
+
+idb(85007).name='Draconic Embossment - Stamina';
+idb(85007).sta=195;
+
+idb(85009).name='Draconic Embossment - Strength';
+idb(85009).sta=130;
+
+idb(85008).name='Draconic Embossment - Agility';
+idb(85008).sta=130;
+
+idb(85010).name='Draconic Embossment - Intellect';
+idb(85010).sta=130;
+
+idb(74229).name='Enchant Bracer - Dodge';
+idb(74229).dodge=50;
+
+idb(74232).name='Enchant Bracer - Precision';
+idb(74232).hit=50;
+
+idb(74239).name='Enchant Bracer - Greater Expertise';
+idb(74239).exp=50;
+
+idb(74248).name='Enchant Bracer - Greater Critical Strike';
+idb(74248).crit=65;
+
+idb(74256).name='Enchant Bracer - Greater Speed';
+idb(74256).haste=65;
 
 %% Hands
-idb(38376).name='Heavy Borean Armor Kit';
-idb(38376).sta=18;
+idb(50909).name='Heavy Borean Armor Kit';
+idb(50909).sta=18;
+
+idb(74254).name='Enchant Gloves - Mighty Strength';
+idb(74254).str=50;
+
+idb(74255).name='Enchant Gloves - Greater Mastery';
+idb(74255).mast=65;
+
+idb(74220).name='Enchant Gloves - Greater Expertise';
+idb(74220).exp=50;
+
+idb(74198).name='Enchant Gloves - Haste';
+idb(74198).haste=50;
 
 %% Legs
-idb(38373).name='Frosthide Leg Armor';
-idb(38373).sta=55;
-idb(38373).agi=22;
+idb(60581).name='Frosthide Leg Armor';
+idb(60581).sta=55;
+idb(60581).agi=22;
+
+idb(99998).name='Charscale Leg Reinforcements'; %TODO check later on
+idb(99998).sta=145;
+idb(99998).agi=55;
+
+idb(99999).name='Dragonscale Leg Reinforcements'; %TODO check later on
+idb(99999).ap=190;
+idb(99999).crit=55;
 
 %% Feet
-idb(39006).name='Enchant Boots - Tuskarr''s Vitality';
-idb(39006).sta=15;
+idb(47901).name='Enchant Boots - Tuskarr''s Vitality';
+idb(47901).sta=15;
+
+idb(74189).name='Enchant Boots - Earthen Vitality';
+idb(74189).sta=30;
+
+idb(74252).name='Enchant Boots - Assassin''s Step';
+idb(74252).agi=25;
+
+idb(74253).name='Enchant Boots - Lavawalker';
+idb(74253).mast=35;
+
+idb(74213).name='Enchant Boots - Major Agility';
+idb(74213).agi=35;
+
+idb(74238).name='Enchant Boots - Mastery';
+idb(74238).mast=50;
+
+idb(74236).name='Enchant Boots - Precision';
+idb(74236).hit=50;
+
+idb(74199).name='Enchant Boots - Haste';
+idb(74199).haste=50;
 
 %% Rings
-idb(50).name='Enchant Ring - Stamina';
-idb(50).sta=30;
+idb(59636).name='Enchant Ring - Stamina';
+idb(59636).sta=30;
+
+idb(74218).name='Enchant Ring - Greater Stamina';
+idb(74218).sta=75;
+
+idb(74215).name='Enchant Ring - Strength';
+idb(74215).str=50;
+
+idb(74216).name='Enchant Ring - Agility';
+idb(74216).agi=50;
+
+idb(74217).name='Enchant Ring - Intellect';
+idb(74217).int=50;
 
 %% Weapon
 idb(59619).name='Enchant Weapon - Accuracy';
@@ -381,5 +529,14 @@ idb(59619).hit=25;
 idb(59619).crit=25;
 
 %% Shield
-idb(38945).name='Enchant Shield - Major Stamina';
-idb(38945).sta=18;
+idb(34009).name='Enchant Shield - Major Stamina';
+idb(34009).sta=18;
+
+idb(74207).name='Enchant Shield - Protection';
+idb(74207).earmor=160;
+
+idb(74226).name='Enchant Shield - Blocking';
+idb(74226).block=40;
+
+idb(74235).name='Enchant Shield - Superior Intellect';
+idb(74235).int=35;

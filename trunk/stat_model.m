@@ -43,8 +43,8 @@ mdf.cmeta=1+0.03.*gear.critmeta;
 
 %%Standard Professions
 %(passive bonuses, independent of gearing choices)
-if (base.prof1==1 || base.prof2==1) mdf.mining=100; else mdf.mining=0; end;
-if (base.prof1==2 || base.prof2==2) mdf.skinning=100; else mdf.skinning=0; end;
+if (base.prof1==1 || base.prof2==1) mdf.mining=120; else mdf.mining=0; end;
+if (base.prof1==2 || base.prof2==2) mdf.skinning=80; else mdf.skinning=0; end;
 
 %% Raid Buffs
 mdf.BoK=1+0.05.*buff.BoK;
@@ -99,10 +99,10 @@ player.sta=floor((base.sta+mdf.mining).*(1+mdf.TbtL).*mdf.BoK)+ ...
     floor((gear.sta+mdf.PWF+extra.sta).*(1+mdf.TbtL).*mdf.BoK);
 player.agi=floor(base.agi.*mdf.BoK)+floor((gear.agi+mdf.SoE+extra.agi).*mdf.BoK);
 player.int=floor(base.int.*mdf.BoK)+floor((gear.int+extra.int).*mdf.BoK);
-% player.spi=floor((base.spi+gear.spi).*mdf.BoK);
+% player.spi=floor(base.spi.*mdf.BoK)+floor((gear.spi+extra.spi).*mdf.BoK);
 
 %armory strength
-player.armorystr=floor(floor((base.str+gear.str))); %TODO fix/delete
+player.armorystr=base.str+gear.str; %TODO fix/delete
 
 %hit points
 player.hitpoints=base.health+10.*(player.sta-18)+gear.health;
@@ -240,16 +240,22 @@ player.miss=base.miss+dr.miss-0.04.*npc.skillgap;
 player.dodge=base.dodge+base.agi./cnv.agi_dodge+dr.dodge-0.04.*npc.skillgap;
 player.parry=base.parry+dr.parry-0.04.*npc.skillgap;
 
+%at the moment, we don't have Redoubt to worry about, so we shouldnt' need
+%dynamic effects for block chance (hopefully?)
+player.block=base.block+gear.block./cnv.block_block ...
+    +player.mast./cnv.mast_block-0.04.*npc.skillgap;
+
 %check for bounding issues, based on the attack table
-player.dodge=min([max([player.dodge;zeros(size(player.dodge))]);(100-player.miss).*ones(size(player.dodge))]);
-player.parry=min([player.parry;(100-player.dodge-player.miss).*ones(size(player.parry))]);
+player.miss=max([player.miss;zeros(size(player.miss))]);
+player.dodge=min([max([player.dodge;zeros(size(player.dodge))]); ...
+    (100-player.miss).*ones(size(player.dodge))]);
+player.parry=min([max([player.parry;zeros(size(player.parry))]); ...
+    (100-player.miss-player.dodge).*ones(size(player.parry))]);
+player.block=min([max([player.block;zeros(size(player.block))]); ...
+    (100-player.miss-player.dodge-player.parry).*ones(size(player.block))]);
 
 player.avoid=player.miss+player.dodge+player.parry;
 player.avoidpct=player.avoid./100;
-
-%at the moment, we don't have Redoubt to worry about, so we shouldnt' need
-%dynamic effects for block chance (hopefully?)
-player.block=base.block+player.mast./cnv.mast_block;
 
 %% Boss Stats
 %TODO: This section is a bit weird.  we have the npc structure already, but
