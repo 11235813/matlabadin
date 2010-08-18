@@ -64,7 +64,7 @@ dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
 crit.Judgement=     raw.Judgement.*mdf.rahit.*mdf.phcritmulti.*target.resrdx;  
 
 %Hammer of Wrath
-raw.HammerofWrath=  ((351+387)./2 + 0.15.*player.hsp + 0.15.*player.ap).*mdf.spdmg.*mdf.WotL;
+raw.HammerofWrath=  ((351+387)./2 + 0.15.*player.hsp + 0.15.*player.ap).*mdf.spdmg.*(1+mdf.WotL);
 dmg.HammerofWrath= raw.HammerofWrath.*mdf.rahit.*mdf.HoWcrit.*target.resrdx;
 
 %Shield of the Righteous
