@@ -45,12 +45,12 @@ talent.HammeroftheRighteous=1;
 talent.WrathoftheLightbringer=2;
 
 talent.Reckoning=2;
-talent.HolyShield=1;
+talent.ShieldoftheRighteous=1;
 talent.GrandCrusader=2;
 talent.DivineGuardian=1;
 
 talent.Vindication=2;
-talent.ShieldoftheRighteous=1;
+talent.HolyShield=1;
 talent.GuardedbytheLight=0;
 
 talent.ShieldoftheTemplar=3;
@@ -63,8 +63,8 @@ prot=zeros(7,4);
 prot(1,1)=talent.ProtectoroftheInnocent;prot(1,2)=talent.SealsofthePure;prot(1,3)=talent.ImprovedHammerofJustice;
 prot(2,1)=talent.JudgementsoftheJust;prot(2,2)=talent.Toughness;prot(2,3)=talent.GuardiansFavor;
 prot(3,1)=talent.HallowedGround;prot(3,2)=talent.Sanctuary;prot(3,3)=talent.HammeroftheRighteous;prot(3,4)=talent.WrathoftheLightbringer;
-prot(4,1)=talent.Reckoning;prot(4,2)=talent.HolyShield;prot(4,3)=talent.GrandCrusader;prot(4,4)=talent.DivineGuardian;
-prot(5,1)=talent.Vindication;prot(5,2)=talent.ShieldoftheRighteous;prot(5,3)=talent.GuardedbytheLight;
+prot(4,1)=talent.Reckoning;prot(4,2)=talent.ShieldoftheRighteous;prot(4,3)=talent.GrandCrusader;prot(4,4)=talent.DivineGuardian;
+prot(5,1)=talent.Vindication;prot(5,2)=talent.HolyShield;prot(5,3)=talent.GuardedbytheLight;
 prot(6,1)=talent.ShieldoftheTemplar;prot(6,2)=talent.SacredDuty;
 prot(7,1)=talent.ArdentDefender;
 protpoints=sum(sum(prot));
@@ -72,16 +72,17 @@ protpoints=sum(sum(prot));
 %% Ret
 %tier 1
 talent.EyeforanEye=0;
-talent.RuleofLaw=2;
 talent.Crusade=3;
+talent.ImprovedJudgement=0;
+
 %tier 2
-talent.ImprovedJudgement=0;   
-talent.Conviction=3;     
+talent.EternalGlory=0;
+talent.RuleofLaw=2;
 talent.PursuitofJustice=2;
 
 ret=zeros(2,3);
-ret(1,1)=talent.EyeforanEye;ret(1,2)=talent.RuleofLaw;ret(1,3)=talent.Crusade;
-ret(2,1)=talent.ImprovedJudgement;ret(2,2)=talent.Conviction;ret(2,3)=talent.PursuitofJustice;
+ret(1,1)=talent.EyeforanEye;ret(1,2)=talent.Crusade;ret(1,3)=talent.ImprovedJudgement;
+ret(2,1)=talent.EternalGlory;ret(2,2)=talent.RuleofLaw;ret(2,3)=talent.PursuitofJustice;
 
 
 %% Glyphs

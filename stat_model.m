@@ -17,22 +17,23 @@ mdf.VengAP=0.05.*talent.Vengeance;
 mdf.TbtL=0.15.*talent.TouchedbytheLight; %incorporates both effects
 mdf.AotL=6.*talent.ArbiteroftheLight;
 mdf.JotP=1+0.03.*talent.JudgementsofthePure;
-mdf.PotI=1+0.2.*talent.ProtectoroftheInnocent;
+mdf.PotI=1+0.2.*talent.ProtectoroftheInnocent; %RA output
 mdf.SotP=1+0.05.*talent.SealsofthePure;
 mdf.JotJ=1+0.1.*talent.JudgementsoftheJust;
 mdf.Tough=1+floor(3.4.*talent.Toughness)./100;
-mdf.HalGro=1+talent.HallowedGround;
-mdf.Sanct=0.02.*talent.Sanctuary;
+mdf.HalGro=1+0.2.*talent.HallowedGround; %Cons output
+mdf.Sanct=2.*talent.Sanctuary; %crit reduction for now
 mdf.WotL=0.1.*talent.WrathoftheLightbringer; %incorporates both effects
 mdf.Reck=0.1.*talent.Reckoning;  %this will probably end up in the parryhaste module
 % mdf.GC %grand crusader is NIY, we'll code it later on
-mdf.Vind=0.05.*talent.Vindication; %only the damage reduction ?
+mdf.Vind=1-0.05.*talent.Vindication; %damage reduction
+mdf.HolySh=15.*talent.HolyShield;
+% mdf.GbtL %NYI
 mdf.SacDut=5.*talent.SacredDuty; %incorporates both effects
-mdf.EfaE=0.3.*logical(talent.EyeforanEye)+0.05.*talent.EyeforanEye; %hacky, incorporates both effects
-mdf.RoL=5.*talent.RuleofLaw;
+mdf.EfaE=0.2.*talent.EyeforanEye; %proc chance
 mdf.Crus=1+0.1.*talent.Crusade;
-mdf.ImpJud=1+0.05.*talent.ImprovedJudgement;
-mdf.Conv=1+0.01.*talent.Conviction; %NYI, we need to decide if we implement time-explicit stacking
+mdf.RoL=5.*talent.RuleofLaw;
+% mdf.EG %NYI
 
 %% Meta Gems and Enchants
 %Similar to talents, I'd like to incorporate these directly into the
@@ -55,7 +56,7 @@ mdf.UnRage=1+0.1.*buff.UnRage;
 mdf.FMT=6.*buff.FMT; %does it stack with ToW?
 mdf.ToW=10.*buff.ToW; %does it stack with FMT?
 mdf.HePr=buff.HePr;
-mdf.ArcEmp=1+0.03.*buff.ArcEmp;
+mdf.ArcTac=1+0.03.*buff.ArcTac;
 mdf.LotP=5.*buff.LotP;
 mdf.WF=1+0.2.*buff.WF;
 mdf.WoA=1+0.05.*buff.WoA;
@@ -196,20 +197,21 @@ player.aacrit=base.phcrit + ...                                %base physical cr
     -npc.phcritsupp;                                           %crit suppression
 
 %explicit crit for non-standard abilities
-player.HWcrit=player.spcrit+mdf.WotL.*100;          %Wrath of the Lightbringer
-player.HRcrit=player.phcrit+mdf.SacDut;             %Sacred Duty
-player.CScrit=player.phcrit+mdf.RoL;                %Rule of Law
-player.Jcrit =player.phcrit+mdf.AotL;               %Arbiter of the Light
-
+player.HWcrit=player.spcrit+mdf.WotL.*100;          %WotL
+player.HoWcrit=player.phcrit+mdf.WotL.*100;         %WotL
+player.CScrit=player.phcrit+mdf.RoL;                %RoL
+player.Jcrit=player.phcrit+mdf.AotL+100.*mdf.WotL;  %AotL, WotL
+player.WoGcrit=player.spcrit+mdf.RoL;               %RoL
 
 %enforce crit caps for two-roll (100%)
 player.phcrit=min([player.phcrit;100.*ones(size(player.phcrit))]);
 player.spcrit=min([player.spcrit;100.*ones(size(player.spcrit))]);
 
 player.HWcrit=min([player.HWcrit;100.*ones(size(player.HWcrit))]);
-player.HRcrit=min([player.HRcrit;100.*ones(size(player.HRcrit))]);
+player.HoWcrit=min([player.HoWcrit;100.*ones(size(player.HoWcrit))]);
 player.CScrit=min([player.CScrit;100.*ones(size(player.CScrit))]);
 player.Jcrit=min([player.Jcrit;100.*ones(size(player.Jcrit))]);
+player.WoGcrit=min([player.WoGcrit;100.*ones(size(player.WoGcrit))]);
 
 
 %Crit modifier values
@@ -217,9 +219,10 @@ mdf.phcrit=1+(mdf.phcritmulti-1).*player.phcrit./100;
 mdf.spcrit=1+(mdf.spcritmulti-1).*player.spcrit./100;
 
 mdf.HWcrit=1+(mdf.spcritmulti-1).*player.HWcrit./100;
-mdf.HRcrit=1+(mdf.phcritmulti-1).*player.HRcrit./100;
+mdf.HoWcrit=1+(mdf.phcritmulti-1).*player.HoWcrit./100;
 mdf.CScrit=1+(mdf.phcritmulti-1).*player.CScrit./100;
 mdf.Jcrit=1+(mdf.phcritmulti-1).*player.Jcrit./100;
+mdf.WoGcrit=1+(mdf.spcritmulti-1).*player.WoGcrit./100;
 
 %% SP and AP
 player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+player.vengap).*mdf.UnRage);
@@ -242,7 +245,7 @@ player.parry=base.parry+dr.parry-0.04.*npc.skillgap;
 
 %at the moment, we don't have Redoubt to worry about, so we shouldnt' need
 %dynamic effects for block chance (hopefully?)
-player.block=base.block+gear.block./cnv.block_block ...
+player.block=base.block+mdf.HolySh+gear.block./cnv.block_block ...
     +player.mast./cnv.mast_block-0.04.*npc.skillgap;
 
 %check for bounding issues, based on the attack table
@@ -275,7 +278,7 @@ target.miss=max([(npc.phmiss-player.phhit);zeros(size(player.phhit))]);
 target.dodge=max([(npc.dodge-0.25.*player.exp);zeros(size(player.exp))]);
 target.parry=max([(npc.parry.*(1-exec.behind)-0.25.*player.exp);zeros(size(player.exp))]);
 target.avoid=target.miss+target.dodge+target.parry;
-
+target.block=npc.block.*npc.blockflag;
 
 target.spmiss=max([(npc.spmiss-player.sphit);zeros(size(player.sphit))]);
 target.resrdx=(100-npc.presist)./100;
@@ -315,16 +318,19 @@ bl.wdps=player.wdamage./bl.wswing;
 
 %% Other dynamic or inter-dependent corrections 
 %Hit & Damage modifier values
-mdf.phdmg=mdf.Conv.*mdf.ArcEmp.*mdf.SavCom.*(1-target.phdr);
+mdf.phdmg=mdf.SavCom.*mdf.ArcTac.*(1-target.phdr);
 mdf.mehit=1-(target.miss+target.dodge+target.parry)./100;
 mdf.rahit=1-target.miss./100;
-mdf.spdmg=mdf.Conv.*mdf.ArcEmp.*mdf.CoE;
+mdf.spdmg=mdf.CoE.*mdf.ArcTac;
 mdf.sphit=1-target.spmiss./100;
 
-%enforce one-roll system crit cap for auto-attacks
-player.aacrit=max([player.aacrit.*ones(size(target.avoid+npc.glance+npc.block)); ...   %corrects for size of boss_avoid
-    (100-target.avoid-npc.glance-npc.block)]);         
-mdf.aahitcrit=1-npc.glancerdx+(mdf.mehit-1)+(mdf.phcritmulti-1).*player.aacrit./100;
+%enforce one-roll system for auto-attacks
+player.aacrit=min([player.aacrit.*ones(size(target.avoid+npc.glance+target.block)); ...   %corrects for size of boss_avoid
+    (100-target.avoid-npc.glance-target.block)]);
+mdf.glancerdx=1-npc.glancerdx./100;
+mdf.aamodel=(mdf.mehit) ...                   %hit
+    +(mdf.glancerdx-1).*npc.glance./100 ...   %glancing
+    +(mdf.phcritmulti-1).*player.aacrit./100; %crit
 
 %% PPM-based uptimes
 %this section will have to wait until we know which attacks survive, what

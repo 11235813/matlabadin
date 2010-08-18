@@ -7,7 +7,7 @@
 %done first so Judgement can be properly defined
 
 %Seal of Truth, using old SoVeng model, assumes a 5-stack
-raw.SealofTruth=    0.33.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
+raw.SealofTruth=    0.16.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
 raw.SealJud(1)=    (1+0.22.*player.hsp+0.14.*player.ap).*1.5; 
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx;
 dps.SealofTruth=    dmg.SealofTruth./player.wswing;
@@ -42,30 +42,30 @@ dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.mehit.*mdf.CScrit;
 
 %Hammer of the Righteous
 raw.HammeroftheRighteous=   3.98.*player.wdamage.*mdf.spdmg.*mdf.Crus;
-dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.mehit.*mdf.HRcrit;
+dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.mehit.*mdf.phcrit;
 
 %Melee attacks
 raw.Melee=          player.wdamage.*mdf.phdmg;
-dmg.Melee=          raw.Melee.*mdf.aahitcrit;
+dmg.Melee=          raw.Melee.*mdf.aamodel;
 dps.Melee=          dmg.Melee./player.wswing;
 
 %% Ranged abilities
 
 %Avenger's Shield
-raw.AvengersShield= ((1219+1489)/2 + 0.07.*player.hsp + 0.07.*player.ap).*mdf.spdmg;
+raw.AvengersShield= ((440+536)./2 + 0.00.*player.hsp + 0.00.*player.ap).*mdf.spdmg;
 dmg.AvengersShield= raw.AvengersShield.*mdf.rahit.*mdf.phcrit.*target.resrdx;                
 
 %Judgement - damage depends on seal.  raw.SealJud contains the Judgement
 %damage values for each seal. The seal of choice is defined in execution_model. 
-raw.Judgement=      raw.SealJud(exec.seal).*mdf.spdmg.*mdf.ImpJud;
+raw.Judgement=      raw.SealJud(exec.seal).*mdf.spdmg.*(1+mdf.WotL);
 dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
 %for Sacred Duty handling, may implement this for every ability eventually
 %/tlitp : don't like dedicated crit structures
 crit.Judgement=     raw.Judgement.*mdf.rahit.*mdf.phcritmulti.*target.resrdx;  
 
 %Hammer of Wrath
-raw.HammerofWrath=  ((1254+1384)/2 + 0.15.*player.hsp + 0.15.*player.ap).*mdf.spdmg;
-dmg.HammerofWrath= raw.HammerofWrath.*mdf.rahit.*mdf.phcrit.*target.resrdx;
+raw.HammerofWrath=  ((351+387)./2 + 0.15.*player.hsp + 0.15.*player.ap).*mdf.spdmg.*mdf.WotL;
+dmg.HammerofWrath= raw.HammerofWrath.*mdf.rahit.*mdf.HoWcrit.*target.resrdx;
 
 %Shield of the Righteous
 raw.ShieldoftheRighteous= (1+1).*mdf.spdmg; %inherent is NYI
@@ -74,22 +74,22 @@ dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.rahit.*mdf.phcrit.*targe
 %% Spell abilities
 
 %Consecration
-raw.Consecration =  (8+0.04.*player.hsp+0.04.*player.ap).*mdf.spdmg.*mdf.HalGro;
+raw.Consecration =  (8.*(0+0.04.*player.hsp+0.04.*player.ap)).*mdf.spdmg.*mdf.HalGro;
 dmg.Consecration =  raw.Consecration.*mdf.spcrit.*target.resrdx;
 
 %Exorcism
 mdf.Exorcrit=mdf.spcrit.*(1-min([npc.type;1]))+mdf.spcritmulti.*min([npc.type;1]); %tracking npc type
-raw.Exorcism=       ((1135-1267)/2 + 0.15.*player.hsp + 0.15.*player.ap).*mdf.spdmg;
+raw.Exorcism=       ((96-110)./2 + 0.15.*player.hsp + 0.15.*player.ap).*mdf.spdmg;
 dmg.Exorcism=       raw.Exorcism.*mdf.sphit.*mdf.Exorcrit.*target.resrdx;
 
 %Hand of Reckoning
 raw.HandofReckoning=(1+0.5.*player.ap).*mdf.spdmg;
 dmg.HandofReckoning=raw.HandofReckoning.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 
-%Holy Shield
-raw.HolyShield=     97.*mdf.spdmg; %tooltip might be wrong, "Effect #2" says 79.  Also I assume they'll implement ap/sp scaling.
+%Holy Shield /TODO probably redundant
+raw.HolyShield=     0.*mdf.spdmg; %tooltip might be wrong, "Effect #2" says 79.  Also I assume they'll implement ap/sp scaling.
 dmg.HolyShield=     raw.HolyShield.*mdf.sphit.*target.resrdx;
 
 %Holy Wrath
-raw.HolyWrath=      (2401 + 0.3.*player.hsp).*mdf.spdmg.*(1+mdf.WotL);
+raw.HolyWrath=      (399 + 0.3.*player.hsp).*mdf.spdmg.*(1+mdf.WotL);
 dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit.*target.resrdx;
