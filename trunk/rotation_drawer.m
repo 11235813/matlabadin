@@ -13,6 +13,8 @@ function [ output_args ] = rotation_drawer( rs , figno)
 %           the abilities - the earlier abilities are drawn first.  ex:
 %           rs.order=[2 1 3 4 5] would reverse the draw order of the first
 %           two abilities
+%rs.times   is an optional double array containing the times at which each
+%           spell is cast.  If left empty, it will simply assume 1.5s GCDs
 %
 %An optional second input "figno" can be added to specify the figure number
 %of the output.
@@ -20,16 +22,20 @@ function [ output_args ] = rotation_drawer( rs , figno)
 
 
 if isfield(rs,'order')==0 || max(rs.order)~=max(rs.seq)
-    error('Order not defined or too short, defaulting to text order')
-    rs.order=[1:max(rs.seq)]
+    warning('Order not defined or too short, defaulting to text order')
+    rs.order=[1:max(rs.seq)];
 end
 
 if length(rs.cds)<max(rs.seq)
-    error('One or more cooldowns unspecified, defaulting to 0')
+    warning('One or more cooldowns unspecified, defaulting to 0')
     rs.cds(length(rs.cds)+1:max(rs.seq))=0;
 end
 
-time=1.5.*[0:length(rs.seq)-1];
+if isfield(rs,'times')==0 || length(rs.times)~=length(rs.seq)
+    time=1.5.*[0:length(rs.seq)-1];
+else
+    time=rs.times;
+end
 rs.labels=rs.names(rs.order);
 rs.labels={'Empty' rs.labels{:}};
 rs.labels=fliplr(rs.labels);
@@ -45,7 +51,7 @@ end
 %     'LineWidth',2)
 plot(time,zeros(size(rs.seq)),'k-')
 ylim([-max(rs.seq) 1])
-set(gca,'XTick',0:1.5:max(time), ...
+set(gca,'XTick',time, ...
         'XGrid','on', ...
         'YTick',[-max(rs.seq):1:0]+0.5, ...
         'YTickLabels',rs.labels);
@@ -64,7 +70,7 @@ for m=1:length(rs.seq)
               'FaceColor',[1 0 0])
     %now for empties
     else
-    rectangle('Position',[time(m) 0 1.5 0.8], ...
+    rectangle('Position',[time(m) 0 time(min([m+1 length(time)]))-time(m) 0.8], ...
               'LineWidth',2, ...
               'FaceColor',[1 0 0])
     end    
