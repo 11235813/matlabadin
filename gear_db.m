@@ -364,6 +364,9 @@ idb(86934).haste=35;
 idb(59941).name='Greater Inscription of the Pinnacle';
 idb(59941).dodge=20;
 
+idb(62384).name='Greater Inscription of the Gladiator';
+idb(62384).sta=30;
+
 idb(86854).name='Greater Inscription of Unbreakable Quartz';
 idb(86854).sta=75;
 idb(86854).dodge=25;
@@ -485,6 +488,9 @@ idb(99999).crit=55;
 %% Feet
 idb(47901).name='Enchant Boots - Tuskarr''s Vitality';
 idb(47901).sta=15;
+
+idb(44528).name='Enchant Boots - Greater Fortitude';
+idb(44528).sta=22;
 
 idb(74189).name='Enchant Boots - Earthen Vitality';
 idb(74189).sta=30;
