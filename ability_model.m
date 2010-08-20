@@ -10,7 +10,7 @@ player.hopo=3;  %placeholder for now, this may get moved elsewhere
 %done first so Judgement can be properly defined
 
 %Seal of Truth, using old SoVeng model, assumes a 5-stack
-raw.SealofTruth=    0.16.*player.wdamage.*mdf.spdmg.*mdf.SotP; `
+raw.SealofTruth=    0.16.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
 raw.SealJud(1)=    (1+0.22.*player.hsp+0.14.*player.ap).*1.5; 
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx;
 dps.SealofTruth=    dmg.SealofTruth./player.wswing;
@@ -47,7 +47,7 @@ dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.mehit.*mdf.CScrit;
 raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.spdmg.*(mdf.Crus+0); %placeholder for 2T10
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.mehit.*mdf.phcrit;
 %placeholder for aoe portion
-aoe.HammerNova=   (684 + 0.085.*player.hsp + 0.085.*player.ap).*mdf.spdmg.*mdf.Crus;  %Base damage is lvl 80, TODO: fix
+raw.HammerNova=   (684 + 0.085.*player.hsp + 0.085.*player.ap).*mdf.spdmg.*mdf.Crus;  %Base damage is lvl 80, TODO: fix
 dmg.HammerNova=   raw.HammerNova.*mdf.sphit.*mdf.spcrit.*target.resrdx;  %assuming it's treated as spell
 
 %Melee attacks
