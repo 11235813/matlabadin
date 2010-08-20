@@ -21,3 +21,5 @@ item.block = item.block + enhancement.block;
 item.barmor = item.barmor + enhancement.barmor;
 item.earmor = item.earmor + enhancement.earmor;
 item.health = item.health + enhancement.health;
+item.armormeta = item.armormeta + enhancement.armormeta
+item.critmeta = item.critmeta + enhancement.critmeta
