@@ -29,20 +29,22 @@ cnv.haste_sphaste=25.2231;
 cnv.arpen_arpen=13.99572719;
 
 %defensive conversions
+cnv.dodge_dodge=45.25018635;
 cnv.agi_dodge=59.88023952;
+cnv.parry_parry=45.25018722;
 cnv.block_block=16.39499474;
 cnv.mast_block=100;
 
 %ipoint conversions
-ipconv.str = 1;
-ipconv.sta = 3/2;
-ipconv.agi = 1;
-ipconv.int = 1;
-ipconv.hit = 1;
-ipconv.exp = 1;
-ipconv.crit = 1;
-ipconv.ap = 2;
-ipconv.sp = 7/6;
-ipconv.has = 1;
-ipconv.mas = 1;
-ipconv.blo = 1;
+ipconv.str=1;
+ipconv.sta=3/2;
+ipconv.agi=1;
+ipconv.int=1;
+ipconv.hit=1;
+ipconv.exp=1;
+ipconv.crit=1;
+ipconv.ap=2;
+ipconv.sp=7/6;
+ipconv.has=1;
+ipconv.mas=1;
+ipconv.blo=1;

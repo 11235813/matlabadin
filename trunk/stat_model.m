@@ -203,15 +203,22 @@ player.CScrit=player.phcrit+mdf.RoL;                %RoL
 player.Jcrit=player.phcrit+mdf.AotL+100.*mdf.WotL;  %AotL, WotL
 player.WoGcrit=player.spcrit+mdf.RoL;               %RoL
 
-%enforce crit caps for two-roll (100%)
-player.phcrit=min([player.phcrit;100.*ones(size(player.phcrit))]);
-player.spcrit=min([player.spcrit;100.*ones(size(player.spcrit))]);
+%enforce crit caps for two-roll
+player.phcrit=max([min([player.phcrit;100.*ones(size(player.phcrit))]); ...
+    zeros(size(player.phcrit))]);
+player.spcrit=max([min([player.spcrit;100.*ones(size(player.spcrit))]); ...
+    zeros(size(player.spcrit))]);
 
-player.HWcrit=min([player.HWcrit;100.*ones(size(player.HWcrit))]);
-player.HoWcrit=min([player.HoWcrit;100.*ones(size(player.HoWcrit))]);
-player.CScrit=min([player.CScrit;100.*ones(size(player.CScrit))]);
-player.Jcrit=min([player.Jcrit;100.*ones(size(player.Jcrit))]);
-player.WoGcrit=min([player.WoGcrit;100.*ones(size(player.WoGcrit))]);
+player.HWcrit=max([min([player.HWcrit;100.*ones(size(player.HWcrit))]); ...
+    zeros(size(player.HWcrit))]);
+player.HoWcrit=max([min([player.HoWcrit;100.*ones(size(player.HoWcrit))]); ...
+    zeros(size(player.HoWcrit))]);
+player.CScrit=max([min([player.CScrit;100.*ones(size(player.CScrit))]); ...
+    zeros(size(player.CScrit))]);
+player.Jcrit=max([min([player.Jcrit;100.*ones(size(player.Jcrit))]); ...
+    zeros(size(player.Jcrit))]);
+player.WoGcrit=max([min([player.WoGcrit;100.*ones(size(player.WoGcrit))]); ...
+    zeros(size(player.WoGcrit))]);
 
 
 %Crit modifier values
@@ -236,12 +243,12 @@ player.hsp=player.sp;
 player.mast=base.mast+gear.mast;
 
 %% Avoidance and Blocking
-%TODO: modify avoid_dr to get rid of defense and fix parry
-[dr.dodge dr.parry dr.miss dr.total] =  avoid_dr(gear.dodge,gear.parry,0,player.agi-base.agi);
+%TODO: update avoid_dr
+avoiddr=avoid_dr(gear.dodge,gear.parry,player.agi-base.agi); %DR for dodge/parry
 
-player.miss=base.miss+dr.miss-0.04.*npc.skillgap;
-player.dodge=base.dodge+base.agi./cnv.agi_dodge+dr.dodge-0.04.*npc.skillgap;
-player.parry=base.parry+dr.parry-0.04.*npc.skillgap;
+player.miss=base.miss-0.04.*npc.skillgap;
+player.dodge=base.dodge+base.agi./cnv.agi_dodge+avoiddr.dodgedr-0.04.*npc.skillgap;
+player.parry=base.parry+avoiddr.parrydr-0.04.*npc.skillgap;
 
 %at the moment, we don't have Redoubt to worry about, so we shouldnt' need
 %dynamic effects for block chance (hopefully?)
@@ -325,8 +332,8 @@ mdf.spdmg=mdf.CoE.*mdf.ArcTac;
 mdf.sphit=1-target.spmiss./100;
 
 %enforce one-roll system for auto-attacks
-player.aacrit=min([player.aacrit.*ones(size(target.avoid+npc.glance+target.block)); ...   %corrects for size of boss_avoid
-    (100-target.avoid-npc.glance-target.block)]);
+player.aacrit=max([min([player.aacrit.*ones(size(target.avoid+npc.glance+target.block)); ...
+    (100-target.avoid-npc.glance-target.block)]);zeros(size(player.aacrit))]);
 mdf.glancerdx=1-npc.glancerdx./100;
 mdf.aamodel=(mdf.mehit) ...                   %hit
     +(mdf.glancerdx-1).*npc.glance./100 ...   %glancing
