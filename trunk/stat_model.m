@@ -12,9 +12,9 @@ mdf.threat=1.43.*1.8;
 %% Talents & Glyphs
 %I'm going to try and minimize the number of duplicate variables we have.
 %Thus, whenever possible I'm going to bake the talent variable into the
-%relevant stat calcluation.  Ideally, this section will end up empty?
+%relevant stat calculation.  Ideally, this section will end up empty?
 mdf.VengAP=0.05.*talent.Vengeance;
-mdf.TbtL=0.15.*talent.TouchedbytheLight; %incorporates both effects
+mdf.TbtL=6.*talent.TouchedbytheLight; %incorporates all effects
 mdf.AotL=6.*talent.ArbiteroftheLight;
 mdf.JotP=1+0.03.*talent.JudgementsofthePure;
 mdf.PotI=1+0.2.*talent.ProtectoroftheInnocent; %RA output
@@ -96,8 +96,8 @@ extra.blo=extra.itm.blo.*ipconv.blo     + extra.val.blo;
 
 %% Primary stats
 player.str=floor(base.str.*mdf.BoK)+floor((gear.str+mdf.SoE+extra.str).*mdf.BoK);
-player.sta=floor((base.sta+mdf.mining).*(1+mdf.TbtL).*mdf.BoK)+ ...
-    floor((gear.sta+mdf.PWF+extra.sta).*(1+mdf.TbtL).*mdf.BoK);
+player.sta=floor((base.sta+mdf.mining).*(1+(mdf.TbtL./40)).*mdf.BoK)+ ...
+    floor((gear.sta+mdf.PWF+extra.sta).*(1+(mdf.TbtL./40)).*mdf.BoK);
 player.agi=floor(base.agi.*mdf.BoK)+floor((gear.agi+mdf.SoE+extra.agi).*mdf.BoK);
 player.int=floor(base.int.*mdf.BoK)+floor((gear.int+extra.int).*mdf.BoK);
 % player.spi=floor(base.spi.*mdf.BoK)+floor((gear.spi+extra.spi).*mdf.BoK);
@@ -126,7 +126,7 @@ player.vengap=min([player.vengapmax;mdf.VengAP.*target.dmgdealt]);
 
 %% Hit Rating (TODO check HePr later on)
 player.phhit=(gear.hit+extra.hit)./cnv.hit_phhit+mdf.HePr;
-player.sphit=(gear.hit+extra.hit)./cnv.hit_sphit+mdf.HePr;
+player.sphit=(gear.hit+extra.hit)./cnv.hit_sphit+mdf.TbtL+mdf.HePr;
 
 
 %% Expertise
@@ -233,7 +233,7 @@ mdf.WoGcrit=1+(mdf.spcritmulti-1).*player.WoGcrit./100;
 
 %% SP and AP
 player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+player.vengap).*mdf.UnRage);
-player.sp=gear.sp+extra.sp+floor(player.str.*4.*mdf.TbtL)+player.int./cnv.int_sp;
+player.sp=gear.sp+extra.sp+floor(player.str.*(mdf.TbtL./10))+player.int./cnv.int_sp;
 %for future use in case our spellpower and "holy spell power" are both
 %relevant.  hsp is what we get from TbtL, and only affects damage.  We're
 %back to the old 2.x "spell power" and "healing power" modle, it seems.
@@ -285,7 +285,7 @@ target.miss=max([(npc.phmiss-player.phhit);zeros(size(player.phhit))]);
 target.dodge=max([(npc.dodge-0.25.*player.exp);zeros(size(player.exp))]);
 target.parry=max([(npc.parry.*(1-exec.behind)-0.25.*player.exp);zeros(size(player.exp))]);
 target.avoid=target.miss+target.dodge+target.parry;
-target.block=npc.block.*npc.blockflag;
+target.block=npc.block.*npc.blockflag.*(1-exec.behind);
 
 target.spmiss=max([(npc.spmiss-player.sphit);zeros(size(player.sphit))]);
 target.resrdx=(100-npc.presist)./100;

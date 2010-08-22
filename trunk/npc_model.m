@@ -65,5 +65,5 @@ npc.phcritsupp=0.12.*npc.skillgap+3.*skillflag; %melee crit supp
 
 %% spell
 npc.spmiss=4+npc.lvlgap+10.*lvlflag;              %spell miss
-npc.presist=2.*npc.lvlgap;                        %resists due to level difference
+npc.presist=0.*npc.lvlgap;                        %level-based partial resists
 npc.spcritsupp=0.1525.*npc.skillgap+3.*skillflag; %spell crit supp
