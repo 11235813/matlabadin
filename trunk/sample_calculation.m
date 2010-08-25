@@ -9,7 +9,7 @@ base=player_model('race',1);
 npc=npc_model(base,'lvl',83);
 
 %execution. seal : 1=truth, 2=righteousness, 3=insight, 4=justice.
-exec=execution_model('npccount',1,'timein',1,'timeout',1,'behind',0,'seal',1);
+exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal',1);
 
 %invoke talents & glyphs
 talents

@@ -95,15 +95,15 @@ extra.mas=extra.itm.mas.*ipconv.mas     + extra.val.mas;
 extra.blo=extra.itm.blo.*ipconv.blo     + extra.val.blo;
 
 %% Primary stats
-player.str=floor(base.str.*mdf.BoK)+floor((gear.str+mdf.SoE+extra.str).*mdf.BoK);
-player.sta=floor((base.sta+mdf.mining).*(1+(mdf.TbtL./40)).*mdf.BoK)+ ...
+player.str=floor(base.stats.str.*mdf.BoK)+floor((gear.str+mdf.SoE+extra.str).*mdf.BoK);
+player.sta=floor((base.stats.sta+mdf.mining).*(1+(mdf.TbtL./40)).*mdf.BoK)+ ...
     floor((gear.sta+mdf.PWF+extra.sta).*(1+(mdf.TbtL./40)).*mdf.BoK);
-player.agi=floor(base.agi.*mdf.BoK)+floor((gear.agi+mdf.SoE+extra.agi).*mdf.BoK);
-player.int=floor(base.int.*mdf.BoK)+floor((gear.int+extra.int).*mdf.BoK);
-% player.spi=floor(base.spi.*mdf.BoK)+floor((gear.spi+extra.spi).*mdf.BoK);
+player.agi=floor(base.stats.agi.*mdf.BoK)+floor((gear.agi+mdf.SoE+extra.agi).*mdf.BoK);
+player.int=floor(base.stats.int.*mdf.BoK)+floor((gear.int+extra.int).*mdf.BoK);
+% player.spi=floor(base.stats.spi.*mdf.BoK)+floor((gear.spi+extra.spi).*mdf.BoK);
 
 %armory strength
-player.armorystr=base.str+gear.str; %TODO fix/delete
+player.armorystr=base.stats.str+gear.str; %TODO fix/delete
 
 %hit points
 player.hitpoints=base.health+10.*(player.sta-18)+gear.health;
@@ -244,10 +244,10 @@ player.mast=base.mast+gear.mast;
 
 %% Avoidance and Blocking
 %TODO: update avoid_dr
-avoiddr=avoid_dr(gear.dodge,gear.parry,player.agi-base.agi); %DR for dodge/parry
+avoiddr=avoid_dr(gear.dodge,gear.parry,player.agi-base.stats.agi); %DR for dodge/parry
 
 player.miss=base.miss-0.04.*npc.skillgap;
-player.dodge=base.dodge+base.agi./cnv.agi_dodge+avoiddr.dodgedr-0.04.*npc.skillgap;
+player.dodge=base.dodge+base.stats.agi./cnv.agi_dodge+avoiddr.dodgedr-0.04.*npc.skillgap;
 player.parry=base.parry+avoiddr.parrydr-0.04.*npc.skillgap;
 
 %at the moment, we don't have Redoubt to worry about, so we shouldnt' need
@@ -296,7 +296,7 @@ target.resrdx=(100-npc.presist)./100;
 ArPen=0;
 
 %Armor Penetration Constant C
-C=400+85*base.level+4.5*85*(base.level-59);
+C=400+85*base.lvl+4.5*85*(base.lvl-59);
 
 %debuffed armor
 target.dbfarmor=npc.armor.*mdf.Sund.*mdf.ST;
