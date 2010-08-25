@@ -16,45 +16,47 @@ function [base] = player_model(varargin)
 %prof1=0/1/2 (1-mining, 2-skinning, 0-anything else) [0]
 %prof2=0/1/2 (1-mining, 2-skinning, 0-anything else) [0]
 
-%% global variables
-% global base
 
-%% input handling
-for i = 1 : 2 : length(varargin)
-
-    name = varargin{i};
-    value = varargin{i+1};
-    switch name
-        case 'race'
-            base.race=value;
-        case 'prof1'
-            base.prof1=value;
-        case 'prof2'
-            base.prof2=value;
+%% Input handling
+%populate all entries with empty arrays
+base.race=[];base.prof1=[];base.prof2=[];
+%start filling entries with inputs
+if nargin>0
+    for i=1:2:length(varargin)
+        name=varargin{i};
+        value=varargin{i+1};
+        switch name
+            case 'race'
+                base.race=value;
+            case 'prof1'
+                base.prof1=value;
+            case 'prof2'
+                base.prof2=value;
+        end
     end
 end
+%default values of the input arguments
+if isempty(base.race)==1 base.race=1; end;
+if isempty(base.prof1)==1 base.prof1=0; end;
+if isempty(base.prof2)==1 base.prof2=0; end;
 
-%% defaults
-if exist('race')==0 base.race=1; end;
-if exist('prof1')==0 base.prof1=0; end;
-if exist('prof2')==0 base.prof2=0; end;
 
-%%racial base stats (lvl 80)
-%the format is     STR-STA-AGI-INT-SPI
-player_base_stats=[151 143  90  98 108;
-                   153 146  86  97 104;
-                   152 142  87  99 107;
-                   148 141  92 102 104;
-                   100 100 100 100 100];
-base.str=player_base_stats(base.race,1);
-base.sta=player_base_stats(base.race,2);
-base.agi=player_base_stats(base.race,3);
-base.int=player_base_stats(base.race,4);    
-base.spi=player_base_stats(base.race,5);
+%% Start building base structure
+%racial base stats (lvl 80)
+%the format is STR-STA-AGI-INT-SPI
+primary_stats=[151 143  90  98 108;
+               153 146  86  97 104;
+               152 142  87  99 107;
+               148 141  92 102 104;
+               100 100 100 100 100];
+base.stats.str=primary_stats(base.race,1);
+base.stats.sta=primary_stats(base.race,2);
+base.stats.agi=primary_stats(base.race,3);
+base.stats.int=primary_stats(base.race,4);    
+base.stats.spi=primary_stats(base.race,5);
 
-base.level=80;
-base.wskill=5.*base.level; %inherent
-base.ap=3.*base.level;     %class specific
+base.lvl=80;
+base.ap=3.*base.lvl;       %class specific
 base.sp=0;                 %TODO: look up
 base.mast=0;               %TODO: look up
 base.miss=5;               %TODO: look up (~5?)

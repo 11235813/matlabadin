@@ -11,31 +11,32 @@ function [exec] = execution_model(varargin)
 %Outputs:
 %exec - structure containing relevant parameters
 
-%% global variables
-global base
 
-%% input handling
-for i = 1 : 2 : length(varargin)
-
-    name = varargin{i};
-    value = varargin{i+1};
-    switch name
-        case 'npccount'
-            exec.npccount=value;
-        case 'timein'
-            exec.timein=value;
-        case 'timeout'
-            exec.timeout=value;
-        case 'behind'
-            exec.behind=value;
-        case 'seal'
-            exec.seal=value;
+%% Input handling
+%populate all entries with empty arrays
+exec.npccount=[];exec.timein=[];exec.timeout=[];exec.behind=[];exec.seal=[];
+%start filling entries with inputs
+if nargin>0
+    for i=1:2:length(varargin)
+        name=varargin{i};
+        value=varargin{i+1};
+        switch name
+            case 'npccount'
+               exec.npccount=value;
+            case 'timein'
+               exec.timein=value;
+            case 'timeout'
+               exec.timeout=value;
+            case 'behind'
+               exec.behind=value;
+            case 'seal'
+               exec.seal=value;
+        end
     end
 end
-
-%% defaults
-if exist('exec.npccount')==0 exec.npccount=1; end;
-if exist('exec.timein')==0 exec.timein=1; end;
-if exist('exec.timeout')==0 exec.timeout=1; end;
-if exist('exec.behind')==0 exec.behind=0; end;
-if exist('exec.seal')==0 exec.seal=1; end;
+%default values of the input arguments
+if isempty(exec.npccount)==1 exec.npccount=1; end;
+if isempty(exec.timein)==1 exec.timein=1; end;
+if isempty(exec.timeout)==1 exec.timeout=1; end;
+if isempty(exec.behind)==1 exec.behind=0; end;
+if isempty(exec.seal)==1 exec.seal=1; end;

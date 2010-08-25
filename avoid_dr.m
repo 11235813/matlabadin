@@ -17,69 +17,70 @@ if (dodge<0 || parry<0 || agi<0) error('At least one of the input arguments is n
 
 %% Constants
 %rating conversions
-avoiddr.cnv.dodge_dodge=45.25018635;
-avoiddr.cnv.parry_parry=45.25018722;
+cnv.dodge_dodge=45.25018635;
+cnv.parry_parry=45.25018722;
 %DR coefficients (k)
-avoiddr.drcoeff.plate=0.956;
-avoiddr.drcoeff.druid=0.972;
-avoiddr.drcoeff.rogue=0.988;
+drcoeff.plate=0.956;
+drcoeff.druid=0.972;
+drcoeff.rogue=0.988;
 %Caps (c)
-avoiddr.drcap.Pdodge=88.129021;  %plate
-avoiddr.drcap.Pparry=47.003525;  %plate
-avoiddr.drcap.Ddodge=116.890707; %druid
-avoiddr.drcap.Rdodge=145.560408; %rogue
-avoiddr.drcap.Rparry=145.560408; %rogue
+drcap.Pdodge=88.129021;  %plate
+drcap.Pparry=47.003525;  %plate
+drcap.Ddodge=116.890707; %druid
+drcap.Rdodge=145.560408; %rogue
+drcap.Rparry=145.560408; %rogue
 %Agility to dodge conversions (without! BoK)
-avoiddr.cnv.agi_dodge(1)=59.88023952; %paladin
-avoiddr.cnv.agi_dodge(2)=84.74576271; %deathknight, warrior
-avoiddr.cnv.agi_dodge(3)=47.84688995; %druid, rogue
+cnv.agi_dodge(1)=59.88023952; %paladin
+cnv.agi_dodge(2)=84.74576271; %deathknight, warrior
+cnv.agi_dodge(3)=47.84688995; %druid, rogue
 
 
 %% Class choice
 %by default, this simulation assumes a paladin.  A fourth, optional argument
 %allows for other classes to be specified.  
 if nargin<4 || (nargin==4 && (strcmp(class,'Paladin') || strcmp(class,'paladin') || strcmp(class,'pally') || strcmp(class,'pal')))
-    avoiddr.k=avoiddr.drcoeff.plate;
-    avoiddr.c_dodge=avoiddr.drcap.Pdodge;
-    avoiddr.c_parry=avoiddr.drcap.Pparry;
-    avoiddr.agi_dodge=avoiddr.cnv.agi_dodge(1);
+    avoiddr.k=drcoeff.plate;
+    avoiddr.c_dodge=drcap.Pdodge;
+    avoiddr.c_parry=drcap.Pparry;
+    avoiddr.agi_dodge=cnv.agi_dodge(1);
 elseif nargin==4 && (strcmp(class,'Warrior') || strcmp(class,'warrior') || strcmp(class,'warr') || strcmp(class,'war') || ...
                       strcmp(class,'Death Knight') || strcmp(class,'death knight') || strcmp(class,'DeathKnight') || strcmp(class,'deathknight') || strcmp(class,'dk')) || strcmp(class,'dwdk')
-    avoiddr.k=avoiddr.drcoeff.plate;
-    avoiddr.c_dodge=avoiddr.drcap.Pdodge;
-    avoiddr.c_parry=avoiddr.drcap.Pparry;
-    avoiddr.agi_dodge=avoiddr.cnv.agi_dodge(2);
+    avoiddr.k=drcoeff.plate;
+    avoiddr.c_dodge=drcap.Pdodge;
+    avoiddr.c_parry=drcap.Pparry;
+    avoiddr.agi_dodge=cnv.agi_dodge(2);
 elseif nargin==4 && (strcmp(class,'Druid') || strcmp(class,'druid') || strcmp(class,'dru') || strcmp(class,'drood'))
-    avoiddr.k=avoiddr.drcoeff.druid;
-    avoiddr.c_dodge=avoiddr.drcap.Ddodge;
+    avoiddr.k=drcoeff.druid;
+    avoiddr.c_dodge=drcap.Ddodge;
     avoiddr.c_parry=[];
-    avoiddr.agi_dodge=avoiddr.cnv.agi_dodge(3);
+    avoiddr.agi_dodge=cnv.agi_dodge(3);
 elseif nargin==4 && (strcmp(class,'Rogue') || strcmp(class,'rogue') || strcmp(class,'rog'))
-    avoiddr.k=avoiddr.drcoeff.rogue;
-    avoiddr.c_dodge=avoiddr.drcap.Rdodge;
-    avoiddr.c_parry=avoiddr.drcap.Rparry;
-    avoiddr.agi_dodge=avoiddr.cnv.agi_dodge(3);
+    avoiddr.k=drcoeff.rogue;
+    avoiddr.c_dodge=drcap.Rdodge;
+    avoiddr.c_parry=drcap.Rparry;
+    avoiddr.agi_dodge=cnv.agi_dodge(3);
 else
     error('Class string not understood!  Please use the full name of the class (e.g. paladin).')
 end
 
 %% Calculate avoidance values
 %Dodge
-avoiddr.dodge=dodge./avoiddr.cnv.dodge_dodge+agi./avoiddr.agi_dodge;
+avoiddr.dodge=dodge./cnv.dodge_dodge+agi./avoiddr.agi_dodge;
 if avoiddr.dodge==0
     avoiddr.dodgedr=avoiddr.dodge;
 else
     avoiddr.dodgedr=1./(1./avoiddr.c_dodge+avoiddr.k./avoiddr.dodge);
 end
 %Parry
-avoiddr.parry=parry./avoiddr.cnv.parry_parry;
+avoiddr.parry=parry./cnv.parry_parry;
 if avoiddr.parry==0
     avoiddr.parrydr=avoiddr.parry;
 else
     if isempty(avoiddr.c_parry)==0
         avoiddr.parrydr=1./(1./avoiddr.c_parry+avoiddr.k./avoiddr.parry);
-    else
-        avoiddr.parrydr=0; %druid
+    else                   %druid
+        avoiddr.parry=0;
+        avoiddr.parrydr=0;
     end
 end
 %total avoidance
