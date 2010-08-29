@@ -35,12 +35,13 @@ mdf.Crus=1+0.1.*talent.Crusade;
 mdf.RoL=5.*talent.RuleofLaw;
 % mdf.EG %NYI
 
-%% Meta Gems and Enchants
+%% Meta Gems, Enchants, Plate Spec
 %Similar to talents, I'd like to incorporate these directly into the
 %calculations.  I'm leaving the section here to remind myself to check for
 %Armsman implementation down the line
 mdf.ameta=1+0.02.*gear.armormeta;
 mdf.cmeta=1+0.03.*gear.critmeta;
+mdf.plate=1+0.05.*gear.isplate;
 
 %%Standard Professions
 %(passive bonuses, independent of gearing choices)
@@ -96,8 +97,8 @@ extra.blo=extra.itm.blo.*ipconv.blo     + extra.val.blo;
 
 %% Primary stats
 player.str=floor(base.stats.str.*mdf.BoK)+floor((gear.str+mdf.SoE+extra.str).*mdf.BoK);
-player.sta=floor((base.stats.sta+mdf.mining).*(1+(mdf.TbtL./40)).*mdf.BoK)+ ...
-    floor((gear.sta+mdf.PWF+extra.sta).*(1+(mdf.TbtL./40)).*mdf.BoK);
+player.sta=floor((base.stats.sta+mdf.mining).*(1+(mdf.TbtL./40)).*mdf.BoK.*mdf.plate)+ ...
+    floor((gear.sta+mdf.PWF+extra.sta).*(1+(mdf.TbtL./40)).*mdf.BoK.*mdf.plate);
 player.agi=floor(base.stats.agi.*mdf.BoK)+floor((gear.agi+mdf.SoE+extra.agi).*mdf.BoK);
 player.int=floor(base.stats.int.*mdf.BoK)+floor((gear.int+extra.int).*mdf.BoK);
 % player.spi=floor(base.stats.spi.*mdf.BoK)+floor((gear.spi+extra.spi).*mdf.BoK);
@@ -108,21 +109,17 @@ player.armorystr=base.stats.str+gear.str; %TODO fix/delete
 %hit points
 player.hitpoints=base.health+10.*(player.sta-18)+gear.health;
 
-%armor
+%armor and physical damage reduction
 player.armor=gear.barmor.*mdf.Tough.*mdf.ameta ...
     +gear.earmor+player.agi.*2+mdf.Devo;
+player.armor_c=400+85*npc.lvl+4.5*85*(npc.lvl-59);
+player.phdr=player.armor./(player.armor+player.armor_c);
 
-%Vengeance - first initialize a "damage dealt" tracker in case we haven't
-%already.  This could be defaulted to 0 if we want, for now I've set it to
-%player.hitpoints so it'll be much larger than the minimum required
-if exist('target.dmgdealt')==0 target.dmgdealt=player.hitpoints; end
+%resistance and spell damage reduction
+player.resistance=0; %TODO : fix it (buff etc.)
+player.resist_c=400;
+player.spdr=player.resistance./(player.resistance+player.resist_c);
 
-%now calculate the max ap contribution and the current one.  For most
-%cases, we'll want it fixed at vengapmax.  However, if we do any real
-%combat simulating, we can initialize target.dmgdealt separately and
-%track it, giving real-time vengeance AP data.
-player.vengapmax=player.hitpoints.*2.*mdf.VengAP; %max of 10% hitpoints
-player.vengap=min([player.vengapmax;mdf.VengAP.*target.dmgdealt]);
 
 %% Hit Rating (TODO check HePr later on)
 player.phhit=(gear.hit+extra.hit)./cnv.hit_phhit+mdf.HePr;
@@ -232,7 +229,7 @@ mdf.Jcrit=1+(mdf.phcritmulti-1).*player.Jcrit./100;
 mdf.WoGcrit=1+(mdf.spcritmulti-1).*player.WoGcrit./100;
 
 %% SP and AP
-player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+player.vengap).*mdf.UnRage);
+%AP gets computed later on, in the Vengeance subsection
 player.sp=gear.sp+extra.sp+floor(player.str.*(mdf.TbtL./10))+player.int./cnv.int_sp;
 %for future use in case our spellpower and "holy spell power" are both
 %relevant.  hsp is what we get from TbtL, and only affects damage.  We're
@@ -289,27 +286,27 @@ target.block=npc.block.*npc.blockflag.*(1-exec.behind);
 
 target.spmiss=max([(npc.spmiss-player.sphit);zeros(size(player.sphit))]);
 target.resrdx=(100-npc.presist)./100;
-%%%%%%%%%%%%%%%% EJ Armor calcs
+%%%%%%%%%%%%%%%% Armor calcs
 %since Armor Penetration is being removed from gear, we'll set ArPen to
 %zero for now.  Once we know if/how this is implemented for us, we can fix
 %it.
-ArPen=0;
-
+player.ArPr=0;
 %Armor Penetration Constant C
-C=400+85*base.lvl+4.5*85*(base.lvl-59);
-
+target.armor_c=400+85*base.lvl+4.5*85*(base.lvl-59);
 %debuffed armor
 target.dbfarmor=npc.armor.*mdf.Sund.*mdf.ST;
-
 %Armor penetration cap (max amount of armor that can be removed)
-ArPenCap=min([target.dbfarmor;(target.dbfarmor+C)/3]);
-
-%Armor Penetration Rating in %, up to a max of 100%
-ArP=min([ArPen./cnv.arpen_arpen;100.*ones(size(ArPen))]);
-
+target.ArP_cap=min([target.dbfarmor;(target.dbfarmor+target.armor_c)/3]);
+%Armor Penetration (%)
+target.ArP=min([player.ArPr./cnv.arpen_arpen;100.*ones(size(player.ArPr))]);
 %Boss Armor and DR formulas
-target.armor=floor(target.dbfarmor - ArP./100.*min([target.dbfarmor; ArPenCap]));
-target.phdr=target.armor./(target.armor+C);
+target.armor=floor(target.dbfarmor - target.ArP./100.*min([target.dbfarmor;target.ArP_cap]));
+target.phdr=target.armor./(target.armor+target.armor_c);
+
+%Vengeance AP correction
+player.VengAP=min([15.*mdf.VengAP.*(npc.out.phys.*(1-player.phdr)./target.swing ...
+    +npc.out.spell.*(1-player.spdr)./npc.cast);0.1.*player.hitpoints]).*exec.timein;
+player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+player.VengAP).*mdf.UnRage);
 
 %% Weapon Details
 player.wdamage=gear.avgdmg+player.ap./14.*gear.swing;

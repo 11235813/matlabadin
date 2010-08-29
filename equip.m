@@ -1,37 +1,38 @@
-function [item] = equip(iref)
+function [obj]=equip(iref,type)
 %The equip() function is the intermediary between the item database and the
 %equipped gear set.  Proper use would be something like:
 % egs.mainhand=equip('Last Laugh');
 %or
-% egs.mainhand=equip(40402);
+% egs.mainhand=equip(40402,'iid');
 %Which would equip Last Laugh in the mainhand slot.
 %
-%equip() first checks for the type of input argument.  For a numeric input,
-%it loads idb(iref) and returns the structure (the stats) as item.  For a
-%text input, it searches through idb until it finds the item number with
+%equip() first checks for the type of input argument. If the input is numeric,
+%it then checks for 'iid'/'sid' input types, then loads iid(iref) or sid(iref).
+%For a text input, it searches through idb until it finds the item number with
 %a name string that matches iref, and then returns the stats.
 %IMPORTANT : Note that it is much faster to reference an item
 %by inum (item_id, as parsed by armory) than by its name.
 
 global idb
+if nargin<2 type='i'; end;
 
 %character input (i.e. iref='Last Laugh')
 if ischar(iref)
-    
-   gi=length(idb);
-   while gi>0 && not(strcmp(idb(gi).name,iref))
-       gi=gi-1;
-   end 
-   if gi>0
-    item=idb(gi);
-   else
+    gi=length(idb);
+    while gi>0 && not(strcmp(idb(gi).name,iref))
+        gi=gi-1;
+    end
+    if gi>0 && (strcmp(type,'iid')||strcmp(type,'i'))
+        obj=idb.iid(gi);       
+    elseif gi>0 && (strcmp(type,'sid')||strcmp(type,'s'))
+        obj=idb.sid(gi);  
+    else
        %Oops, we typed 'Last Laff'
-       error(['equip_call failed to find item ' iref ' in gear database'])
-   end
-   
+       error(['equip_call failed to find item ''iref'' in gear database']);
+    end
 %numeric input (iref=40402)   
-elseif isnumeric(iref)
-   
-    item=idb(iref);
-    
+elseif isnumeric(iref) && (strcmp(type,'iid')||strcmp(type,'i'))
+    obj=idb.iid(iref);
+elseif isnumeric(iref) && (strcmp(type,'sid')||strcmp(type,'s'))
+    obj=idb.sid(iref);
 end

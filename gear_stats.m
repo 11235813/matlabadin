@@ -44,3 +44,6 @@ gear.tooldps=egs(15).tooldps;
 %meta gems
 gear.armormeta= egs(1).armormeta;
 gear.critmeta = egs(1).critmeta;
+
+%plate spec
+gear.isplate=sum([egs.atype])==8;
