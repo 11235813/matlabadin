@@ -7,9 +7,6 @@ use Sigrie;
 
 # list of item ids to parse
 my @items = qw(
-  50862 50763 50860 50968 49904 49907 50802 50978 47731 49118
-  50760 50794 47664
-  
   51265 51266 51267 51268 51269 50682 50466 51901 50991 50625
   50622 50404 50356 54571 50708 50729 50461
   
@@ -32,6 +29,25 @@ my %corrections = (
   47664 => { dodge => 200 }, # almost always up
 );
 
+# slot numbers by name
+my %slots = (
+  'Head'      => 1,
+  'Neck'      => 2,
+  'Shoulders' => 3,
+  'Back'      => 4,
+  'Chest'     => 5,
+  'Wrist'     => 6,
+  'Hand'      => 7,
+  'Waist'     => 8,
+  'Legs'      => 9,
+  'Feet'      => 10,
+  'Finger'    => 11,
+  'Trinket'   => 13,
+  'One-Hand'  => 15,
+  'Off Hand'  => 16,
+  'Relic'     => 17,
+);
+
 # attributes about which we care
 my @attrs = qw(
   name      wtype     ilvl      tooldps  
@@ -39,7 +55,8 @@ my @attrs = qw(
   agi       int       spi       hit      
   crit      exp       haste     mast     
   dodge     parry     block     barmor   
-  earmor
+  earmor    msock     rsock     bsock     
+  ysock
 );
 
 foreach my $id (@items) {
@@ -55,7 +72,7 @@ foreach my $id (@items) {
   foreach (@attrs) {
     next unless $item{$_};
     
-    print "idb($id).$_=";
+    print "idb.iid($id).$_=";
     if ($item{$_} =~ /[^0-9.]/) {
       $item{$_} =~ s/'/''/g;
       print "'$item{$_}'";
@@ -63,6 +80,15 @@ foreach my $id (@items) {
       print $item{$_} + 0;
     }
     print ";\n";
+  }
+  
+  # misc stats
+  print "idb.iid($id).slot=$slots{$item{slot}};\n" if $item{slot};
+  print "idb.iid($id).atype=1;\n" if $item{atype} and $item{atype} eq 'Plate';
+  
+  if ($item{sbstat}) {
+    print "idb.iid($id).sb.$item{sbstat}=$item{sbval};\n";
+    print "idb.iid($id).sb.active=[" . join(' ', map $_ || 0, @item{qw{rsock ysock bsock}}) . "];\n";
   }
   
   print "\n";
