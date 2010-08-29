@@ -5,10 +5,11 @@ function [npc] = npc_model(base,varargin)
 %lvl - desired level of npc(s), integer  [83]
 %type - type of target, logical (1 for demon/undead, 0 for the rest) [0] 
 %swing - swing timer of npc(s), float  [1.5]
+%cast - average time between casts, float [5]
 %phflag - parry-haste flag, logical [0]
 %blockflag - block flag, logical [0]
-%outphys - physical output damage rate, float [1000]
-%outspell - spell output damage rate, float [1000]
+%outphys - physical output damage event, float [1.5.*10.^5]
+%outspell - spell output damage event, float [0.5.*10.^5]
 %(Important : outphys/outspell are the raw values, pre-mitigation)
 
 %Outputs:
@@ -17,7 +18,7 @@ function [npc] = npc_model(base,varargin)
 
 %% Input handling
 %populate all entries with empty arrays
-npc.lvl=[];npc.type=[];npc.swing=[];npc.phflag=[];npc.blockflag=[];npc.out.phys=[];npc.out.spell=[];
+npc.lvl=[];npc.type=[];npc.swing=[];npc.cast=[];npc.phflag=[];npc.blockflag=[];npc.out.phys=[];npc.out.spell=[];
 %start filling entries with inputs
 if nargin>1
     for i=1:2:length(varargin)
@@ -30,6 +31,8 @@ if nargin>1
                 npc.type=value;
             case 'swing'
                 npc.swing=value;
+            case 'cast'
+                npc.cast=value;
             case 'phflag'
                 npc.phflag=value;
             case 'blockflag'
@@ -49,10 +52,11 @@ end
 if isempty(npc.lvl)==1 npc.lvl=83; end;
 if isempty(npc.type)==1 npc.type=0; end;
 if isempty(npc.swing)==1 npc.swing=1.5; end;
-if isempty(npc.phflag)==1 npc.phflag=0; end;  %nil by default (probably redundant)
-if isempty(npc.blockflag)==1 npc.blockflag=0; end;  %change default to 1 later on when it's implemented
-if isempty(npc.out.phys)==1 npc.out.phys=1000; end;
-if isempty(npc.out.spell)==1 npc.out.spell=1000; end;
+if isempty(npc.cast)==1 npc.cast=1.5; end;
+if isempty(npc.phflag)==1 npc.phflag=0; end; %nil by default (probably redundant)
+if isempty(npc.blockflag)==1 npc.blockflag=0; end; %change default to 1 later on when it's implemented
+if isempty(npc.out.phys)==1 npc.out.phys=1.5.*10.^5; end;
+if isempty(npc.out.spell)==1 npc.out.spell=0.5.*10.^5; end;
 
 
 %% Start building npc structure
