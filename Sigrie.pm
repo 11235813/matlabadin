@@ -21,8 +21,10 @@ my %parsers = (
   slot      => qr{>(
     Head      | Neck      | Shoulders | Back      |
     Chest     | Wrist     | Hand      | Waist     |
-    Legs      | Feet      | Finger    | Trinket
+    Legs      | Feet      | Finger    | Trinket   |
+    One-Hand  | Off\sHand | Relic
   )<}x,
+  atype     => qr{>(Plate|Mail|Leather|Cloth)<},
   heroic    => qr{>(Heroic)<},
   str       => qr{>\+(\d+) Strength<},
   sta       => qr{>\+(\d+) Stamina<},
@@ -113,14 +115,14 @@ sub get_item {
   # matches rather than the matches themselves
   for (qw{Meta Red Yellow Blue}) {
     my @matches = ($tooltip =~ />$_ Socket</g);
-    my $key = 'sock_' . lc(substr($_, 0, 4));
+    my $key = lc(substr($_, 0, 1)) . 'sock';
     $item{$key} = scalar @matches;
   }
   
   # get the socket bonus and what stat it is
   if ($tooltip =~ /Socket Bonus: <a .*?>\+(\d+) (.*?)</) {
-    $item{sock_val} = $1;
-    $item{sock_stat} = $stat_names{$2};
+    $item{sbval} = $1;
+    $item{sbstat} = $stat_names{$2};
   }
   
   return %item;
