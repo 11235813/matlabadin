@@ -99,6 +99,7 @@
 
 
 %% Initialize Item database
+clear global idb;  %temporary fix for weird re-initialization issue
 global idb
 %initialize the structure array with a fake item
 idb.iid=struct('name','Sample Item', ...
