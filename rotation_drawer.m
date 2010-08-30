@@ -7,7 +7,7 @@ function [ output_args ] = rotation_drawer( rs , figno)
 %           empty GCD
 %rs.names   is a cell array of strings representing the names of the
 %           abilities in the sequence.  ex: {'CS','Jud','Exo',...}
-%rs.cds     is an integer array containing the cooldowns of the abilities.
+%rs.cds     is a double array containing the cooldowns of the abilities.
 %           ex: rs.cds=[4.5 8 15 15]
 %rs.order   is an optional integer array representing the display order of
 %           the abilities - the earlier abilities are drawn first.  ex:
@@ -15,7 +15,8 @@ function [ output_args ] = rotation_drawer( rs , figno)
 %           two abilities
 %rs.times   is an optional double array containing the times at which each
 %           spell is cast.  If left empty, it will simply assume 1.5s GCDs
-%
+%rs.gcds    is a double array containing the gcd incurred by the abilities.
+%           if omitted, the simulation assumes 1.5 for all gcds.
 %An optional second input "figno" can be added to specify the figure number
 %of the output.
 
@@ -29,6 +30,10 @@ end
 if length(rs.cds)<max(rs.seq)
     warning('One or more cooldowns unspecified, defaulting to 0')
     rs.cds(length(rs.cds)+1:max(rs.seq))=0;
+end
+if isfield(rs,'gcds')==0 
+    warning('GCDs unspecified, defaulting to 1.5')
+    rs.gcds=1.5.*ones(length(rs.cds));
 end
 
 if isfield(rs,'times')==0 || length(rs.times)~=length(rs.seq)
@@ -65,11 +70,11 @@ for m=1:length(rs.seq)
     end
     %create ability use rectangle for non-empties
     if rs.seq(m)>0
-    rectangle('Position',[time(m) -rs.order(rs.seq(m)) 1.5 0.8], ...
+    rectangle('Position',[time(m) -rs.order(rs.seq(m)) rs.gcds(rs.seq(m)) 0.8], ...
               'LineWidth',2, ...
               'FaceColor',[1 0 0])
     %now for empties
-    else
+    elseif m~=length(rs.seq)
     rectangle('Position',[time(m) 0 time(min([m+1 length(time)]))-time(m) 0.8], ...
               'LineWidth',2, ...
               'FaceColor',[1 0 0])
