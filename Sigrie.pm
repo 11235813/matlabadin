@@ -45,11 +45,11 @@ my %parsers = (
 
 # stat name translations
 my %stat_names = (
-  Strength => 'str',
-  Stamina => 'sta',
-  Agility => 'agi',
-  Intellect => 'int',
-  Spirit => 'spi',
+  'strength' => 'str',
+  'stamina' => 'sta',
+  'agility' => 'agi',
+  'intellect' => 'int',
+  'spirit' => 'spi',
   'hit rating ' => 'hit',
   'critical strike rating' => 'crit',
   'haste rating' => 'haste',
@@ -122,7 +122,7 @@ sub get_item {
   # get the socket bonus and what stat it is
   if ($tooltip =~ /Socket Bonus: <a .*?>\+(\d+) (.*?)</) {
     $item{sbval} = $1;
-    $item{sbstat} = $stat_names{$2};
+    $item{sbstat} = $stat_names{lc $2};
   }
   
   return %item;
