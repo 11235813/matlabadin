@@ -89,6 +89,19 @@ idb.iid(50466).slot=4;
 idb.iid(50466).sb.sta=6;
 idb.iid(50466).sb.active=[0 1 0];
 
+idb.iid(51901).name='Gargoyle Spit Bracers (Heroic)';
+idb.iid(51901).ilvl=264;
+idb.iid(51901).str=82;
+idb.iid(51901).sta=124;
+idb.iid(51901).dodge=68;
+idb.iid(51901).barmor=1156;
+idb.iid(51901).earmor=204;
+idb.iid(51901).ysock=1;
+idb.iid(51901).slot=6;
+idb.iid(51901).atype=1;
+idb.iid(51901).sb.sta=6;
+idb.iid(51901).sb.active=[0 1 0];
+
 idb.iid(50991).name='Verdigris Chain Belt';
 idb.iid(50991).ilvl=264;
 idb.iid(50991).str=120;
@@ -253,6 +266,8 @@ idb.iid(58483).sta=299;
 idb.iid(58483).mast=233;
 idb.iid(58483).bsock=1;
 idb.iid(58483).slot=13;
+idb.iid(58483).sb.crit=10;
+idb.iid(58483).sb.active=[0 0 1];
 
 idb.iid(52352).name='Figurine - Earthen Guardian';
 idb.iid(52352).ilvl=346;
