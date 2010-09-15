@@ -7,9 +7,10 @@ function [ rs ] = prio_sim(pri,varargin)
 %temporarily put here to make testing easier
 %% Input handling
 
-%import priority queue models and cooldowns
+%import priority queue models, cooldowns, and modifiers
 prio=evalin('base','prio');
 cd=evalin('base','cd');
+mdf=evalin('base','mdf');
 
 %if no arguments
 if nargin<1
@@ -52,6 +53,7 @@ if isempty(hopo)==1 hopo=0; end;
 clear t damage label spell casttime
 
 dmg=evalin('base','dmg');
+crit=evalin('base','crit');
 
 %% simulation starts here
 %initialize gcd and egcd
@@ -63,6 +65,11 @@ ccd.CS=0;
 ccd.AS=0;
 ccd.HoWr=0;
 ccd.Jud=0;
+ccd.Cons=0;
+
+%duration variable for buff-like effects
+dur.SD=0;
+sdflag=0;
 
 %evaluate setup conditionals
 for m=1:length(pri.setup)
@@ -93,20 +100,34 @@ for m=1:N
 
             %check each conditional in order
             if eval(char(pri.cond(n)))
-
                 %if true, do stuff
-                damage(qq)=eval(['dmg.' char(pri.cast(n))]);
-                spell{qq}=char(pri.cast(n));
-                label{qq}=char(pri.labels(n));
+                
+                %action/cast id for convenience
+                aid=pri.cast(n);
+                
+                damage(qq)=pri.dmg(aid);
+                spell{qq}=char(pri.castname(aid));
+                label{qq}=char(pri.labels(aid));
                 casttime(qq)=t(m);
-                seq(qq)=pri.ids(n);
-                qq=qq+1;
-
+                seq(qq)=pri.ids(aid);
+%                 cast(qq)=aid;
+                color(qq)=0;
+                
+                %Sacred Duty handling
+                if dur.SD>0 && strcmp(char(pri.castname(aid)),'ShieldoftheRighteous')
+                    damage(qq)=crit.ShieldoftheRighteous;
+                    color(qq)=1;
+                end
+                
                 %perform actions
-                eval(char(pri.action(n)));
+                eval(char(pri.action(aid)));
+                eval(char(pri.spaction(n)));
                 
                 %reset gcd
-                gcd=pri.gcds(n);
+                gcd=pri.gcds(aid);
+                
+                %increment counter
+                qq=qq+1;
                 
                 %break out of for
                 break
@@ -124,6 +145,7 @@ for m=1:N
        label{qq}='Empty';
        casttime(qq)=t(m);
        seq(qq)=0;
+       cast(qq)=0;
        qq=qq+1;
        egcd=1.5; 
     end
@@ -133,6 +155,7 @@ for m=1:N
     ccd.AS=ccd.AS-dt; 
     ccd.Jud=ccd.Jud-dt;
     ccd.HoWr=ccd.HoWr-dt;
+    dur.SD=dur.SD-dt;
     gcd=gcd-dt;
     egcd=egcd-dt;
     
@@ -148,6 +171,7 @@ for m=1:N
     ccd.AS=round(ccd.AS.*factor)./factor;
     ccd.Jud=round(ccd.Jud.*factor)./factor;
     ccd.HoWr=round(ccd.HoWr.*factor)./factor;
+    dur.SD=round(dur.SD.*factor)./factor;dur.SD=max([dur.SD 0]);
     gcd=round(gcd.*factor)./factor;
     egcd=round(egcd.*factor)./factor;
     
@@ -164,6 +188,8 @@ rs.seq=seq;
 rs.names(pri.ids)=pri.labels;
 rs.cds(pri.ids)=pri.cds;
 rs.times=casttime;
+rs.color=color;
+% rs.cast=cast;
 % rs.gcds=prio.gcds;
 
 rotation_drawer(rs,1);

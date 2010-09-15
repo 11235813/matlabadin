@@ -25,11 +25,11 @@ mdf.HalGro=1+0.2.*talent.HallowedGround; %Cons output
 mdf.Sanct=2.*talent.Sanctuary; %crit reduction for now
 mdf.WotL=0.1.*talent.WrathoftheLightbringer; %incorporates both effects
 mdf.Reck=0.1.*talent.Reckoning;  %this will probably end up in the parryhaste module
-% mdf.GC %grand crusader is NIY, we'll code it later on
+mdf.GC=0.1.*talent.GrandCrusader;
 mdf.Vind=1-0.05.*talent.Vindication; %damage reduction
 mdf.HolySh=15.*talent.HolyShield;
 % mdf.GbtL %NYI
-mdf.SacDut=5.*talent.SacredDuty; %incorporates both effects
+mdf.SacDut=0.25.*talent.SacredDuty; 
 mdf.EfaE=0.2.*talent.EyeforanEye; %proc chance
 mdf.Crus=1+0.1.*talent.Crusade;
 mdf.RoL=5.*talent.RuleofLaw;
