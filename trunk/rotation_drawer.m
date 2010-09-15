@@ -17,6 +17,9 @@ function [ output_args ] = rotation_drawer( rs , figno)
 %           spell is cast.  If left empty, it will simply assume 1.5s GCDs
 %rs.gcds    is a double array containing the gcd incurred by the abilities.
 %           if omitted, the simulation assumes 1.5 for all gcds.
+%rs.color   optional array containing the desired face color for each cast.
+%           the default is 0, currently limited to 0 & 1 until I add more
+%           colors
 %An optional second input "figno" can be added to specify the figure number
 %of the output.
 
@@ -41,6 +44,14 @@ if isfield(rs,'times')==0 || length(rs.times)~=length(rs.seq)
 else
     time=rs.times;
 end
+
+if isfield(rs,'color')==0
+    warning('Face colors unspecified, defaulting all to red')
+    rs.color=zeros(size(rs.seq));
+end
+
+rs.colors=[[1 0 0];[0 0 1]; [1 0.5 1]];  %red, blue, green
+
 rs.labels=rs.names(rs.order);
 rs.labels={'Empty' rs.labels{:}};
 rs.labels=fliplr(rs.labels);
@@ -72,7 +83,7 @@ for m=1:length(rs.seq)
     if rs.seq(m)>0
     rectangle('Position',[time(m) -rs.order(rs.seq(m)) rs.gcds(rs.seq(m)) 0.8], ...
               'LineWidth',2, ...
-              'FaceColor',[1 0 0])
+              'FaceColor',rs.colors(rs.color(m)+1,:))
     %now for empties
     elseif m~=length(rs.seq)
     rectangle('Position',[time(m) 0 time(min([m+1 length(time)]))-time(m) 0.8], ...

@@ -59,6 +59,7 @@ dps.Melee=          dmg.Melee./player.wswing;
 mdf.ShoR=   20.*(player.hopo==1)+60.*(player.hopo==2)+120.*(player.hopo==3);  %need to initialize this
 raw.ShieldoftheRighteous= (mdf.ShoR./100.*player.ap).*mdf.spdmg; %inherent is NYI
 dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.mehit.*mdf.phcrit.*target.resrdx;  %until we know if it can be dodged or parried
+crit.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.mehit.*mdf.phcritmulti.*target.resrdx;
 
 %% Ranged abilities
 
