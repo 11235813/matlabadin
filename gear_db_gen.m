@@ -382,3 +382,52 @@ idb.iid(56121).ilvl=333;
 idb.iid(56121).dodge=252;
 idb.iid(56121).slot=13;
 
+idb.iid(62351).name='Felsen''s Ring of Resolve';
+idb.iid(62351).ilvl=346;
+idb.iid(62351).str=168;
+idb.iid(62351).sta=252;
+idb.iid(62351).mast=112;
+idb.iid(62351).dodge=112;
+idb.iid(62351).slot=11;
+
+idb.iid(62432).name='Gryphon Rider''s Boots';
+idb.iid(62432).ilvl=359;
+idb.iid(62432).str=253;
+idb.iid(62432).sta=380;
+idb.iid(62432).mast=159;
+idb.iid(62432).parry=139;
+idb.iid(62432).barmor=2355;
+idb.iid(62432).ysock=1;
+idb.iid(62432).slot=10;
+idb.iid(62432).atype=1;
+idb.iid(62432).sb.parry=10;
+idb.iid(62432).sb.active=[0 1 0];
+
+idb.iid(62428).name='Crown of Wings';
+idb.iid(62428).ilvl=346;
+idb.iid(62428).str=196;
+idb.iid(62428).sta=454;
+idb.iid(62428).exp=137;
+idb.iid(62428).dodge=242;
+idb.iid(62428).barmor=2680;
+idb.iid(62428).msock=1;
+idb.iid(62428).slot=1;
+idb.iid(62428).atype=1;
+idb.iid(62428).sb.dodge=30;
+idb.iid(62428).sb.active=[0 0 0];
+
+idb.iid(62449).name='Sandguard Bracers';
+idb.iid(62449).ilvl=359;
+idb.iid(62449).str=136;
+idb.iid(62449).sta=286;
+idb.iid(62449).exp=111;
+idb.iid(62449).dodge=190;
+idb.iid(62449).barmor=1499;
+idb.iid(62449).slot=6;
+idb.iid(62449).atype=1;
+
+idb.iid(62471).name='Mirror of Broken Images';
+idb.iid(62471).ilvl=359;
+idb.iid(62471).dodge=321;
+idb.iid(62471).slot=13;
+
