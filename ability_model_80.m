@@ -48,7 +48,7 @@ dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.mehit.*mdf.CScrit;
 raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.spdmg.*(mdf.Crus+0); %placeholder for 2T10
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.mehit.*mdf.phcrit;
 %placeholder for aoe portion
-raw.HammerNova=   ((584+874)/2).*mdf.spdmg.*mdf.Crus;  %Base damage is lvl 80, TODO: fix
+raw.HammerNova=   ((523+783)/2).*mdf.spdmg.*mdf.Crus;  %Base damage is lvl 80, TODO: fix
 dmg.HammerNova=   raw.HammerNova.*mdf.sphit.*mdf.spcrit.*target.resrdx;  %assuming it's treated as spell
 
 %Melee attacks
@@ -65,7 +65,7 @@ crit.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.mehit.*mdf.phcritmulti.
 %% Ranged abilities
 
 %Avenger's Shield
-raw.AvengersShield= ((2802+3424)/2).*mdf.spdmg;
+raw.AvengersShield= ((2512+3070)/2).*mdf.spdmg;
 dmg.AvengersShield= raw.AvengersShield.*mdf.rahit.*mdf.phcrit.*target.resrdx;                
 
 %Judgement - damage depends on seal.  raw.SealJud contains the Judgement
@@ -77,7 +77,7 @@ dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
 crit.Judgement=     raw.Judgement.*mdf.rahit.*mdf.phcritmulti.*target.resrdx;  
 
 %Hammer of Wrath
-raw.HammerofWrath=  ((1254+1384)/2 + 0.15.*player.hsp + 0.15.*player.ap).*mdf.spdmg;
+raw.HammerofWrath=  ((1124+1242)/2 + 0.15.*player.hsp + 0.15.*player.ap).*mdf.spdmg;
 dmg.HammerofWrath= raw.HammerofWrath.*mdf.rahit.*mdf.HoWcrit.*target.resrdx;
 
 %% Spell abilities
@@ -88,7 +88,7 @@ dmg.Consecration =  raw.Consecration.*mdf.spcrit.*target.resrdx;
 
 %Exorcism
 mdf.Exorcrit=mdf.spcrit.*(1-min([npc.type;1]))+mdf.spcritmulti.*min([npc.type;1]); %tracking npc type
-raw.Exorcism=       (1135+1267)/2 + 0.15.*max([player.hsp; player.ap]).*mdf.spdmg;
+raw.Exorcism=       (1018+1136)/2 + 0.15.*max([player.hsp; player.ap]).*mdf.spdmg;
 dmg.Exorcism=       raw.Exorcism.*mdf.sphit.*mdf.Exorcrit.*target.resrdx;
 
 %Hand of Reckoning  /TODO probably unnecessary
@@ -100,5 +100,5 @@ raw.HolyShield=     0.*mdf.spdmg;
 dmg.HolyShield=     raw.HolyShield.*mdf.sphit.*target.resrdx;
 
 %Holy Wrath
-raw.HolyWrath=      (2401 + 0.3.*player.hsp).*mdf.spdmg;
+raw.HolyWrath=      (2153 + 0.3.*player.hsp).*mdf.spdmg;
 dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit.*target.resrdx;

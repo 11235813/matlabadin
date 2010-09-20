@@ -31,13 +31,14 @@ holy(1,1)=talent.ArbiteroftheLight;holy(1,2)=talent.Divinity;holy(1,3)=talent.Ju
 
 
 %% Prot
-talent.ProtectoroftheInnocent=3;
+talent.ProtectoroftheInnocent=0;
 talent.SealsofthePure=3;
-talent.ImprovedHammerofJustice=0;
+talent.EternalGlory=2;
 
 talent.JudgementsoftheJust=2;
 talent.Toughness=3;
-talent.GuardiansFavor=0;
+talent.ImprovedHammerofJustice=0;
+
 
 talent.HallowedGround=0;
 talent.Sanctuary=3;
@@ -60,8 +61,8 @@ talent.ArdentDefender=1;
 
 
 prot=zeros(7,4);
-prot(1,1)=talent.ProtectoroftheInnocent;prot(1,2)=talent.SealsofthePure;prot(1,3)=talent.ImprovedHammerofJustice;
-prot(2,1)=talent.JudgementsoftheJust;prot(2,2)=talent.Toughness;prot(2,3)=talent.GuardiansFavor;
+prot(1,1)=talent.ProtectoroftheInnocent;prot(1,2)=talent.SealsofthePure;prot(1,3)=talent.EternalGlory;
+prot(2,1)=talent.JudgementsoftheJust;prot(2,2)=talent.Toughness;prot(2,3)=talent.ImprovedHammerofJustice;
 prot(3,1)=talent.HallowedGround;prot(3,2)=talent.Sanctuary;prot(3,3)=talent.HammeroftheRighteous;prot(3,4)=talent.WrathoftheLightbringer;
 prot(4,1)=talent.Reckoning;prot(4,2)=talent.ShieldoftheRighteous;prot(4,3)=talent.GrandCrusader;prot(4,4)=talent.DivineGuardian;
 prot(5,1)=talent.Vindication;prot(5,2)=talent.HolyShield;prot(5,3)=talent.GuardedbytheLight;
