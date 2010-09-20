@@ -23,7 +23,7 @@ mdf.JotJ=1+0.1.*talent.JudgementsoftheJust;
 mdf.Tough=1+floor(3.4.*talent.Toughness)./100;
 mdf.HalGro=1+0.2.*talent.HallowedGround; %Cons output
 mdf.Sanct=2.*talent.Sanctuary; %crit reduction for now
-mdf.WotL=0.1.*talent.WrathoftheLightbringer; %incorporates both effects
+mdf.WotL=0.15.*talent.WrathoftheLightbringer; %incorporates both effects
 mdf.Reck=0.1.*talent.Reckoning;  %this will probably end up in the parryhaste module
 mdf.GC=0.1.*talent.GrandCrusader;
 mdf.Vind=1-0.05.*talent.Vindication; %damage reduction
@@ -197,7 +197,7 @@ player.aacrit=base.phcrit + ...                                %base physical cr
 player.HWcrit=player.spcrit+mdf.WotL.*100;          %WotL
 player.HoWcrit=player.phcrit+mdf.WotL.*100;         %WotL
 player.CScrit=player.phcrit+mdf.RoL;                %RoL
-player.Jcrit=player.phcrit+mdf.AotL+100.*mdf.WotL;  %AotL, WotL
+player.Jcrit=player.phcrit+mdf.AotL;                %AotL
 player.WoGcrit=player.spcrit+mdf.RoL;               %RoL
 
 %enforce crit caps for two-roll
