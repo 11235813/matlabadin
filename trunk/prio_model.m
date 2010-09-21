@@ -2,7 +2,7 @@
 %executed by the priority simulator module.
 
 %define base cooldowns - this section may be moved to ability recalc
-cd.CS=4.5;cd.Jud=8;cd.AS=15;cd.HoWr=15;cd.Cons=30;
+cd.CS=4.5;cd.Jud=8;cd.AS=15;cd.HoWr=15;cd.Cons=30.*mdf.glyphCons;
 
 
 prio(1).name='Sample FCFS';

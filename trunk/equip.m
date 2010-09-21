@@ -18,14 +18,17 @@ if nargin<2 type='i'; end;
 
 %character input (i.e. iref='Last Laugh')
 if ischar(iref)
-    gi=length(idb);
-    while gi>0 && not(strcmp(idb(gi).name,iref))
+    gi=length(idb.iid);gj=length(idb.sid);
+    while gi>0 && not(strcmp(idb.iid(gi).name,iref))
         gi=gi-1;
+    end
+    while gj>0 && not(strcmp(idb.sid(gj).name,iref))
+        gj=gj-1;
     end
     if gi>0 && (strcmp(type,'iid')||strcmp(type,'i'))
         obj=idb.iid(gi);       
-    elseif gi>0 && (strcmp(type,'sid')||strcmp(type,'s'))
-        obj=idb.sid(gi);  
+    elseif gj>0 && (strcmp(type,'sid')||strcmp(type,'s'))
+        obj=idb.sid(gj);  
     else
        %Oops, we typed 'Last Laff'
        error(['equip_call failed to find item ''iref'' in gear database']);

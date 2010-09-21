@@ -16,13 +16,15 @@ mdf.threat=1.43.*1.8;
 mdf.VengAP=0.05.*talent.Vengeance;
 mdf.TbtL=6.*talent.TouchedbytheLight; %incorporates all effects
 mdf.AotL=6.*talent.ArbiteroftheLight;
+mdf.BlazLi=1+0.1.*talent.BlazingLight; %Exo output
 mdf.JotP=1+0.03.*talent.JudgementsofthePure;
 mdf.PotI=1+0.2.*talent.ProtectoroftheInnocent; %RA output
 mdf.SotP=1+0.05.*talent.SealsofthePure;
+% mdf.EG %NYI
 mdf.JotJ=1+0.1.*talent.JudgementsoftheJust;
 mdf.Tough=1+floor(3.4.*talent.Toughness)./100;
 mdf.HalGro=1+0.2.*talent.HallowedGround; %Cons output
-mdf.Sanct=2.*talent.Sanctuary; %crit reduction for now
+mdf.Sanct=1-floor(3.4.*talent.Sanctuary)./100; %damage reduction
 mdf.WotL=0.15.*talent.WrathoftheLightbringer; %incorporates both effects
 mdf.Reck=0.1.*talent.Reckoning;  %this will probably end up in the parryhaste module
 mdf.GC=0.1.*talent.GrandCrusader;
@@ -33,15 +35,27 @@ mdf.SacDut=0.25.*talent.SacredDuty;
 mdf.EfaE=0.2.*talent.EyeforanEye; %proc chance
 mdf.Crus=1+0.1.*talent.Crusade;
 mdf.RoL=5.*talent.RuleofLaw;
-% mdf.EG %NYI
-
-%% Meta Gems, Enchants, Plate Spec
+%glyphs
+mdf.glyphCS=5.*glyph.CrusaderStrike;             %CS crit chance
+mdf.glyphExo=1+0.2.*glyph.Exorcism;              %Exo output /TODO check DoT mechanics
+mdf.glyphHotR=1+0.1.*glyph.HammeroftheRighteous; %HotR output
+mdf.glyphJ=1+0.1.*glyph.Judgement;               %J output
+mdf.glyphSoT=10.*glyph.SealofTruth;              %expertise bonus
+mdf.glyphSotR=1+0.1.*glyph.ShieldoftheRighteous; %SotR output
+mdf.glyphWoG=1+0.1.*glyph.WordofGlory;           %WoG output
+mdf.glyphCons=1+0.2.*glyph.Consecration;         %Consecration output (and cooldown)
+mdf.glyphAS=1+0.3.*glyph.FocusedShield;          %AS output
+ 
+%% Meta Gems, Enchants, Plate Spec, Tier Bonus
 %Similar to talents, I'd like to incorporate these directly into the
 %calculations.  I'm leaving the section here to remind myself to check for
 %Armsman implementation down the line
 mdf.ameta=1+0.02.*gear.armormeta;
 mdf.cmeta=1+0.03.*gear.critmeta;
 mdf.plate=1+0.05.*gear.isplate;
+mdf.t10x2=1+0.2.*gear.tierbonus(1); %HotR output
+mdf.t11x2=1+0.1.*gear.tierbonus(3); %CS output
+mdf.t11x4=1+0.5.*gear.tierbonus(4); %GoAK duration
 
 %%Standard Professions
 %(passive bonuses, independent of gearing choices)
@@ -72,6 +86,23 @@ mdf.ISB=5.*buff.ISB;
 mdf.Sund=1-0.12.*buff.Sund;
 mdf.ST=1-0.2.*buff.ST;
 
+%% Consumables
+consum.str=sum([buff.flask.str;buff.belixir.str;buff.gelixir.str;buff.food.str]);
+consum.sta=sum([buff.flask.sta;buff.belixir.sta;buff.gelixir.sta;buff.food.sta]);
+consum.agi=sum([buff.flask.agi;buff.belixir.agi;buff.gelixir.agi;buff.food.agi]);
+consum.int=sum([buff.flask.int;buff.belixir.int;buff.gelixir.int;buff.food.int]);
+consum.ap=sum([buff.flask.ap;buff.belixir.ap;buff.gelixir.ap;buff.food.ap]);
+consum.sp=sum([buff.flask.sp;buff.belixir.sp;buff.gelixir.sp;buff.food.sp]);
+consum.hit=sum([buff.flask.hit;buff.belixir.hit;buff.gelixir.hit;buff.food.hit]);
+consum.exp=sum([buff.flask.exp;buff.belixir.exp;buff.gelixir.exp;buff.food.exp]);
+consum.crit=sum([buff.flask.crit;buff.belixir.crit;buff.gelixir.crit;buff.food.crit]);
+consum.haste=sum([buff.flask.haste;buff.belixir.haste;buff.gelixir.haste;buff.food.haste]);
+consum.mast=sum([buff.flask.mast;buff.belixir.mast;buff.gelixir.mast;buff.food.mast]);
+consum.dodge=sum([buff.flask.dodge;buff.belixir.dodge;buff.gelixir.dodge;buff.food.dodge]);
+consum.parry=sum([buff.flask.parry;buff.belixir.parry;buff.gelixir.parry;buff.food.parry]);
+consum.earmor=sum([buff.flask.earmor;buff.belixir.earmor;buff.gelixir.earmor;buff.food.earmor]);
+consum.health=sum([buff.flask.health;buff.belixir.health;buff.gelixir.health;buff.food.health]);
+
 %% Extras
 %this section is a way to incorporate extra amounts of different stats to
 %compare itemization benefits
@@ -96,22 +127,22 @@ extra.mas=extra.itm.mas.*ipconv.mas     + extra.val.mas;
 extra.blo=extra.itm.blo.*ipconv.blo     + extra.val.blo;
 
 %% Primary stats
-player.str=floor(base.stats.str.*mdf.BoK)+floor((gear.str+mdf.SoE+extra.str).*mdf.BoK);
+player.str=floor(base.stats.str.*mdf.BoK)+floor((gear.str+mdf.SoE+extra.str+consum.str).*mdf.BoK);
 player.sta=floor((base.stats.sta+mdf.mining).*(1+(mdf.TbtL./40)).*mdf.BoK.*mdf.plate)+ ...
-    floor((gear.sta+mdf.PWF+extra.sta).*(1+(mdf.TbtL./40)).*mdf.BoK.*mdf.plate);
-player.agi=floor(base.stats.agi.*mdf.BoK)+floor((gear.agi+mdf.SoE+extra.agi).*mdf.BoK);
-player.int=floor(base.stats.int.*mdf.BoK)+floor((gear.int+extra.int).*mdf.BoK);
+    floor((gear.sta+mdf.PWF+extra.sta+consum.sta).*(1+(mdf.TbtL./40)).*mdf.BoK.*mdf.plate);
+player.agi=floor(base.stats.agi.*mdf.BoK)+floor((gear.agi+mdf.SoE+extra.agi+consum.agi).*mdf.BoK);
+player.int=floor(base.stats.int.*mdf.BoK)+floor((gear.int+extra.int+consum.int).*mdf.BoK);
 % player.spi=floor(base.stats.spi.*mdf.BoK)+floor((gear.spi+extra.spi).*mdf.BoK);
 
 %armory strength
 player.armorystr=base.stats.str+gear.str; %TODO fix/delete
 
 %hit points
-player.hitpoints=base.health+10.*(player.sta-18)+gear.health;
+player.hitpoints=base.health+10.*(player.sta-18)+gear.health+consum.health;
 
 %armor and physical damage reduction
 player.armor=gear.barmor.*mdf.Tough.*mdf.ameta ...
-    +gear.earmor+player.agi.*2+mdf.Devo;
+    +gear.earmor+mdf.Devo+consum.earmor;
 player.armor_c=400+85*npc.lvl+4.5*85*(npc.lvl-59);
 player.phdr=player.armor./(player.armor+player.armor_c);
 
@@ -122,8 +153,8 @@ player.spdr=player.resistance./(player.resistance+player.resist_c);
 
 
 %% Hit Rating (TODO check HePr later on)
-player.phhit=(gear.hit+extra.hit)./cnv.hit_phhit+mdf.HePr;
-player.sphit=(gear.hit+extra.hit)./cnv.hit_sphit+mdf.TbtL+mdf.HePr;
+player.phhit=(gear.hit+extra.hit+consum.hit)./cnv.hit_phhit+mdf.HePr;
+player.sphit=(gear.hit+extra.hit+consum.hit)./cnv.hit_sphit+mdf.TbtL+mdf.HePr;
 
 
 %% Expertise
@@ -133,15 +164,15 @@ elseif (base.race==2 && strcmp(egs(15).wtype,'mac'))
         base.exp=5;
 end
 
-player.exp=(base.exp + (gear.exp+extra.exp)./cnv.exp_exp);
+player.exp=base.exp+((gear.exp+extra.exp+consum.exp)./cnv.exp_exp)+mdf.glyphSoT;
 
 %% Haste 
 player.phhaste=100.*( ...
-    (1 + (gear.haste+extra.haste)./cnv.haste_phhaste./100).* ...
+    (1 + (gear.haste+extra.haste+consum.haste)./cnv.haste_phhaste./100).* ...
     mdf.JotP.*mdf.WF ...
     -1);
 player.sphaste=100.*(...
-    (1+(gear.haste+extra.haste)./cnv.haste_sphaste./100).* ...
+    (1+(gear.haste+extra.haste+consum.haste)./cnv.haste_sphaste./100).* ...
     mdf.JotP.*mdf.WoA ...
     -1);
 player.spgcd=max([1.5./(1+player.sphaste./100);ones(size(player.sphaste))]);
@@ -172,31 +203,31 @@ mdf.spcritmulti=1.5.*mdf.cmeta; %for spells
 
 
 %melee abilities ("physical crit")
-player.phcrit=base.phcrit + ...                                %base physical crit
-    player.agi./cnv.agi_phcrit + ...                           %AGI
-    (gear.crit+mdf.skinning+extra.crit)./cnv.crit_phcrit + ... %crit rating
-    mdf.LotP ...                                               %buffs
-    -npc.phcritsupp;                                           %crit suppression
+player.phcrit=base.phcrit + ...                                            %base physical crit
+    player.agi./cnv.agi_phcrit + ...                                       %AGI
+    (gear.crit+mdf.skinning+extra.crit+consum.crit)./cnv.crit_phcrit + ... %crit rating
+    mdf.LotP ...                                                           %buffs
+    -npc.phcritsupp;                                                       %crit suppression
 
 %spell abilities ("spell crit")
-player.spcrit=base.spcrit + ...                                %base spell crit
-    player.int./cnv.int_spcrit + ...                           %INT
-    (gear.crit+mdf.skinning+extra.crit)./cnv.crit_spcrit + ... %crit rating
-    mdf.LotP+mdf.ISB+mdf.Focus ...                             %buffs
-    -npc.spcritsupp;                                           %crit suppression
+player.spcrit=base.spcrit + ...                                            %base spell crit
+    player.int./cnv.int_spcrit + ...                                       %INT
+    (gear.crit+mdf.skinning+extra.crit+consum.crit)./cnv.crit_spcrit + ... %crit rating
+    mdf.LotP+mdf.ISB+mdf.Focus ...                                         %buffs
+    -npc.spcritsupp;                                                       %crit suppression
 
 %regular melee attacks (one-roll system)
 %this gets modified again after boss stats to enforce crit cap
-player.aacrit=base.phcrit + ...                                %base physical crit
-    player.agi./cnv.agi_phcrit + ...                           %AGI
-    (gear.crit+mdf.skinning+extra.crit)./cnv.crit_phcrit + ... %crit rating
-    mdf.LotP ...                                               %buffs
-    -npc.phcritsupp;                                           %crit suppression
+player.aacrit=base.phcrit + ...                                            %base physical crit
+    player.agi./cnv.agi_phcrit + ...                                       %AGI
+    (gear.crit+mdf.skinning+extra.crit+consum.crit)./cnv.crit_phcrit + ... %crit rating
+    mdf.LotP ...                                                           %buffs
+    -npc.phcritsupp;                                                       %crit suppression
 
 %explicit crit for non-standard abilities
 player.HWcrit=player.spcrit+mdf.WotL.*100;          %WotL
 player.HoWcrit=player.phcrit+mdf.WotL.*100;         %WotL
-player.CScrit=player.phcrit+mdf.RoL;                %RoL
+player.CScrit=player.phcrit+mdf.RoL+mdf.glyphCS;    %RoL, glyph
 player.Jcrit=player.phcrit+mdf.AotL;                %AotL
 player.WoGcrit=player.spcrit+mdf.RoL;               %RoL
 
@@ -230,18 +261,18 @@ mdf.WoGcrit=1+(mdf.spcritmulti-1).*player.WoGcrit./100;
 
 %% SP and AP
 %AP gets computed later on, in the Vengeance subsection
-player.sp=gear.sp+extra.sp+floor(player.str.*(mdf.TbtL./10))+player.int./cnv.int_sp;
+player.sp=gear.sp+extra.sp+consum.sp+floor(player.str.*(mdf.TbtL./10))+player.int./cnv.int_sp;
 %for future use in case our spellpower and "holy spell power" are both
 %relevant.  hsp is what we get from TbtL, and only affects damage.  We're
 %back to the old 2.x "spell power" and "healing power" modle, it seems.
 player.hsp=player.sp;  
 
 %% Mastery
-player.mast=base.mast+gear.mast;
+player.mast=base.mast+gear.mast+consum.mast;
 
 %% Avoidance and Blocking
 %TODO: update avoid_dr
-avoiddr=avoid_dr(gear.dodge,gear.parry,player.agi-base.stats.agi); %DR for dodge/parry
+avoiddr=avoid_dr(gear.dodge+consum.dodge,gear.parry+consum.parry,player.agi-base.stats.agi); %DR for dodge/parry
 
 player.miss=base.miss-0.04.*npc.skillgap;
 player.dodge=base.dodge+base.stats.agi./cnv.agi_dodge+avoiddr.dodgedr-0.04.*npc.skillgap;
@@ -304,9 +335,10 @@ target.armor=floor(target.dbfarmor - target.ArP./100.*min([target.dbfarmor;targe
 target.phdr=target.armor./(target.armor+target.armor_c);
 
 %Vengeance AP correction
-player.VengAP=min([15.*mdf.VengAP.*(npc.out.phys.*(1-player.phdr)./target.swing ...
-    +npc.out.spell.*(1-player.spdr)./npc.cast);0.1.*player.hitpoints]).*exec.timein;
-player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+player.VengAP).*mdf.UnRage);
+% player.VengAP=min([15.*mdf.VengAP.*(npc.out.phys.*(1-player.phdr)./target.swing ...
+%     +npc.out.spell.*(1-player.spdr)./npc.cast);0.1.*player.hitpoints]).*exec.timein;
+player.VengAP=0.095.*player.hitpoints; %temporary
+player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+player.VengAP+consum.ap).*mdf.UnRage);
 
 %% Weapon Details
 player.wdamage=gear.avgdmg+player.ap./14.*gear.swing;
