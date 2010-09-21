@@ -25,10 +25,14 @@ talent.ArbiteroftheLight=0;
 talent.Divinity=0;
 talent.JudgementsofthePure=0;
 
-%potential integer matrix for later use
+talent.ClarityofPurpose=0;
+talent.LastWord=0;
+talent.BlazingLight=0;
+
 holy=zeros(2,3);
 holy(1,1)=talent.ArbiteroftheLight;holy(1,2)=talent.Divinity;holy(1,3)=talent.JudgementsofthePure;
-
+holy(2,1)=talent.ClarityofPurpose;holy(2,2)=talent.LastWord;holy(2,3)=talent.BlazingLight;
+talentpoints.holy=sum(sum(holy));
 
 %% Prot
 talent.ProtectoroftheInnocent=0;
@@ -38,7 +42,6 @@ talent.EternalGlory=2;
 talent.JudgementsoftheJust=2;
 talent.Toughness=3;
 talent.ImprovedHammerofJustice=0;
-
 
 talent.HallowedGround=0;
 talent.Sanctuary=3;
@@ -59,7 +62,6 @@ talent.SacredDuty=2;
 
 talent.ArdentDefender=1;
 
-
 prot=zeros(7,4);
 prot(1,1)=talent.ProtectoroftheInnocent;prot(1,2)=talent.SealsofthePure;prot(1,3)=talent.EternalGlory;
 prot(2,1)=talent.JudgementsoftheJust;prot(2,2)=talent.Toughness;prot(2,3)=talent.ImprovedHammerofJustice;
@@ -68,23 +70,48 @@ prot(4,1)=talent.Reckoning;prot(4,2)=talent.ShieldoftheRighteous;prot(4,3)=talen
 prot(5,1)=talent.Vindication;prot(5,2)=talent.HolyShield;prot(5,3)=talent.GuardedbytheLight;
 prot(6,1)=talent.ShieldoftheTemplar;prot(6,2)=talent.SacredDuty;
 prot(7,1)=talent.ArdentDefender;
-protpoints=sum(sum(prot));
+talentpoints.prot=sum(sum(prot));
 
 %% Ret
-%tier 1
 talent.EyeforanEye=0;
 talent.Crusade=3;
-talent.ImprovedJudgement=0;
+talent.ImprovedJudgement=2;
 
-%tier 2
-talent.EternalGlory=0;
-talent.RuleofLaw=2;
+talent.GuardiansFavor=0;
+talent.RuleofLaw=3;
 talent.PursuitofJustice=2;
 
 ret=zeros(2,3);
 ret(1,1)=talent.EyeforanEye;ret(1,2)=talent.Crusade;ret(1,3)=talent.ImprovedJudgement;
-ret(2,1)=talent.EternalGlory;ret(2,2)=talent.RuleofLaw;ret(2,3)=talent.PursuitofJustice;
+ret(2,1)=talent.GuardiansFavor;ret(2,2)=talent.RuleofLaw;ret(2,3)=talent.PursuitofJustice;
+talentpoints.ret=sum(sum(ret));
 
 
-%% Glyphs
-%Coming soon
+%% Glyphs (logical)
+% Prime
+glyph.CrusaderStrike=0;
+glyph.Exorcism=0;
+glyph.HammeroftheRighteous=0;
+glyph.Judgement=0;
+glyph.SealofTruth=0;
+glyph.ShieldoftheRighteous=0;
+glyph.WordofGlory=0;
+% Major
+glyph.AsceticCrusader=0;
+glyph.Consecration=0;
+glyph.DazingShield=0;
+glyph.DivineProtection=0;
+glyph.FocusedShield=0;
+glyph.HammerofJustice=0;
+glyph.HammerofWrath=0;
+glyph.HolyWrath=0;
+glyph.HandofSalvation=0;
+glyph.TurnEvil=0;
+% Minor
+glyph.BlessingofKings=0;
+glyph.BlessingofMight=0;
+glyph.Insight=0;
+glyph.Justice=0;
+glyph.LayonHands=0;
+glyph.Righteousness=0;
+glyph.Truth=0;

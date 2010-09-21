@@ -26,7 +26,7 @@
 
 %The currently-equipped set is called the Equipped Gear Set, and stored in
 %structure egs.  The fields of egs are identical to the fields of idb:
-%egs.name       (Item Name)
+%egs.name       (item name)
 %egs.atype      (logical : 1 for plate, 0 for the other armor types)
 %egs.wtype      (axe/mac/swo; non-weapons are ignored)
 %egs.ilvl       (item level)
@@ -51,6 +51,8 @@
 %egs.health 	(extra HP, mainly for enchants/buffs)
 %egs.armormeta  (logical : armor meta gem)
 %egs.critmeta   (logical : crit meta gem)
+%egs.istier     (logical : [tier10 tier11 tier12 tier13], undefined if not a tier set item)
+%egs.isproc     (spell ID of the associated proc, undefined if none)
 
 %However, egs only has 17 slots, corresponding to the 17 relevant slots on
 %the paper doll. Ammo (0), Shirt(18), Tabard (19) are ignored.
@@ -101,7 +103,7 @@
 %% Initialize Item database
 clear global idb;  %temporary fix for weird re-initialization issue
 global idb
-%initialize the structure array with a fake item
+%initialize the substructure arrays
 idb.iid=struct('name','Sample Item', ...
                'atype',0, ...
                'wtype','swo', ...
@@ -128,7 +130,9 @@ idb.iid=struct('name','Sample Item', ...
                'earmor',0, ...
                'health',0, ...
                'armormeta',0, ...
-               'critmeta',0);
+               'critmeta',0, ...
+               'istier',0, ...
+               'isproc',0);
 idb.sid=struct('name','Sample Item', ...
                'atype',0, ...
                'wtype','swo', ...
@@ -155,7 +159,9 @@ idb.sid=struct('name','Sample Item', ...
                'earmor',0, ...
                'health',0, ...
                'armormeta',0, ...
-               'critmeta',0);
+               'critmeta',0, ...
+               'istier',0, ...
+               'isproc',0);
 
 %% Begin adding items
 %NOTE: Since defense is being removed, I'm just ignoring it.  We'll
@@ -176,6 +182,7 @@ idb.iid(51266).critmeta=0;
 idb.iid(51266).armormeta=1;
 idb.iid(51266).dodge=128;
 idb.iid(51266).parry=88;
+idb.iid(51266).istier=[1 0 0 0];
 
 idb.iid(51265).name='Sanctified Lightsworn Chestguard (Heroic)';
 idb.iid(51265).atype=1;
@@ -187,6 +194,7 @@ idb.iid(51265).sta=251+30+15+9;
 idb.iid(51265).agi=0+10;
 idb.iid(51265).dodge=56;
 idb.iid(51265).parry=96;
+idb.iid(51265).istier=[1 0 0 0];
 
 idb.iid(51267).name='Sanctified Lightsworn Handguards (Heroic)';
 idb.iid(51267).atype=1;
@@ -197,6 +205,7 @@ idb.iid(51267).str=103;
 idb.iid(51267).sta=192+30;
 idb.iid(51267).dodge=68;
 idb.iid(51267).hit=69;
+idb.iid(51267).istier=[1 0 0 0];
 
 idb.iid(51268).name='Sanctified Lightsworn Legguards (Heroic)';
 idb.iid(51268).atype=1;
@@ -206,6 +215,7 @@ idb.iid(51268).str=139;
 idb.iid(51268).sta=251+30+30;
 idb.iid(51268).dodge=106;
 idb.iid(51268).exp=93;
+idb.iid(51268).istier=[1 0 0 0];
 
 idb.iid(51269).name='Sanctified Lightsworn Shoulderguards (Heroic)';
 idb.iid(51269).atype=1;
@@ -215,6 +225,7 @@ idb.iid(51269).str=136;
 idb.iid(51269).sta=192+30;
 idb.iid(51269).dodge=99;
 idb.iid(51269).parry=71;
+idb.iid(51269).istier=[1 0 0 0];
 
 %% Neck 
 idb.iid(50682).name='Bile-Encrusted Medallion (Heroic)';
@@ -299,6 +310,7 @@ idb.iid(50708).swing=1.8;
 idb.iid(50708).avgdmg=(315+587)/2;
 idb.iid(50708).sta=94+30;
 idb.iid(50708).str=115;
+idb.iid(50708).isproc=71873;
 
 %% Shields
 idb.iid(50729).name='Icecrown Glacial Wall (Heroic)';
@@ -312,12 +324,17 @@ idb.iid(50729).parry=72;
 %% Librams
 idb.iid(50461).name='Libram of the Eternal Tower';
 idb.iid(50461).dodge=219;
+idb.iid(50461).isproc=71194;
 
 %% Enchant section - to be written.  
 %Enchants work exactly the same way that items do.  There is an idb
 %structure that contains all of the relevant enchants, according to the
 %spell_id value. Since it has the same form, we can use the same equip()
 %function.
+
+%% generic (multiple slots)
+idb.sid(78166).name='Heavy Savage Armor Kit';
+idb.sid(78166).sta=44;
 
 %% Head
 idb.sid(59955).name='Arcanum of the Stalwart Protector';
@@ -346,6 +363,22 @@ idb.sid(59941).dodge=20;
 idb.sid(62384).name='Greater Inscription of the Gladiator';
 idb.sid(62384).sta=30;
 
+idb.sid(86847).name='Inscription of Unbreakable Quartz';
+idb.sid(86847).sta=45;
+idb.sid(86847).dodge=20;
+
+idb.sid(86898).name='Inscription of Charged Lodestone';
+idb.sid(86898).int=30;
+idb.sid(86898).haste=20;
+
+idb.sid(86900).name='Inscription of Jagged Stone';
+idb.sid(86900).str=30;
+idb.sid(86900).crit=20;
+
+idb.sid(86909).name='Inscription of Shattered Crystal';
+idb.sid(86909).agi=30;
+idb.sid(86909).mast=20;
+
 idb.sid(86854).name='Greater Inscription of Unbreakable Quartz';
 idb.sid(86854).sta=75;
 idb.sid(86854).dodge=25;
@@ -362,17 +395,17 @@ idb.sid(86907).name='Greater Inscription of Shattered Crystal';
 idb.sid(86907).agi=50;
 idb.sid(86907).mast=25;
 
-idb.sid(86402).name='Inscription of the Earth Prince';
-idb.sid(86402).sta=195;
-idb.sid(86402).dodge=25;
+idb.sid(86375).name='Swiftsteel Inscription';
+idb.sid(86375).agi=130;
+idb.sid(86375).mast=25;
 
 idb.sid(86401).name='Lionsmane Inscription';
 idb.sid(86401).str=130;
 idb.sid(86401).crit=25;
 
-idb.sid(86375).name='Swiftsteel Inscription';
-idb.sid(86375).agi=130;
-idb.sid(86375).mast=25;
+idb.sid(86402).name='Inscription of the Earth Prince';
+idb.sid(86402).sta=195;
+idb.sid(86402).dodge=25;
 
 idb.sid(86403).name='Felfire Inscription';
 idb.sid(86403).int=130;
@@ -411,11 +444,11 @@ idb.sid(62256).sta=40;
 idb.sid(85007).name='Draconic Embossment - Stamina';
 idb.sid(85007).sta=195;
 
-idb.sid(85009).name='Draconic Embossment - Strength';
-idb.sid(85009).sta=130;
-
 idb.sid(85008).name='Draconic Embossment - Agility';
 idb.sid(85008).sta=130;
+
+idb.sid(85009).name='Draconic Embossment - Strength';
+idb.sid(85009).sta=130;
 
 idb.sid(85010).name='Draconic Embossment - Intellect';
 idb.sid(85010).sta=130;
@@ -451,18 +484,34 @@ idb.sid(74220).exp=50;
 idb.sid(74198).name='Enchant Gloves - Haste';
 idb.sid(74198).haste=50;
 
+idb.sid(82175).name='Synapse Springs';
+idb.sid(82175).int=480;
+idb.sid(82175).isproc=82174;
+
+idb.sid(82177).name='Quickflip Deflection Plates';
+idb.sid(82177).earmor=1500;
+idb.sid(82177).isproc=82176;
+
 %% Legs
 idb.sid(60581).name='Frosthide Leg Armor';
 idb.sid(60581).sta=55;
 idb.sid(60581).agi=22;
 
-idb.sid(99998).name='Charscale Leg Reinforcements'; %TODO check later on
-idb.sid(99998).sta=145;
-idb.sid(99998).agi=55;
+idb.sid(78169).name='Scorched Leg Armor';
+idb.sid(78169).ap=110;
+idb.sid(78169).crit=45;
 
-idb.sid(99999).name='Dragonscale Leg Reinforcements'; %TODO check later on
-idb.sid(99999).ap=190;
-idb.sid(99999).crit=55;
+idb.sid(78170).name='Twilight Leg Armor';
+idb.sid(78170).sta=85;
+idb.sid(78170).agi=45;
+
+idb.sid(78171).name='Dragonscale Leg Armor';
+idb.sid(78171).ap=190;
+idb.sid(78171).crit=55;
+
+idb.sid(78172).name='Charscale Leg Armor';
+idb.sid(78172).sta=145;
+idb.sid(78172).agi=55;
 
 %% Feet
 idb.sid(47901).name='Enchant Boots - Tuskarr''s Vitality';
@@ -525,3 +574,103 @@ idb.sid(74226).block=40;
 
 idb.sid(74235).name='Enchant Shield - Superior Intellect';
 idb.sid(74235).int=35;
+
+
+%% Consumables (invoked by buff_model)
+%note that Mixology modifiers (placeholders for now) are stored in .isproc fields
+% Flasks
+idb.sid(79469).name='Flask of Steelskin';
+idb.sid(79469).sta=300;
+idb.sid(79469).isproc=1;
+
+idb.sid(79470).name='Flask of the Draconic Mind';
+idb.sid(79470).int=300;
+idb.sid(79470).isproc=1;
+
+idb.sid(79471).name='Flask of the Winds';
+idb.sid(79471).agi=300;
+idb.sid(79471).isproc=1;
+
+idb.sid(79472).name='Flask of Titanic Strength';
+idb.sid(79472).str=300;
+idb.sid(79472).isproc=1;
+
+% Battle Elixirs
+idb.sid(79477).name='Elixir of the Cobra';
+idb.sid(79477).crit=225;
+idb.sid(79477).isproc=1;
+
+idb.sid(79481).name='Impossible Accuracy';
+idb.sid(79481).hit=225;
+idb.sid(79481).isproc=1;
+
+idb.sid(79632).name='Mighty Speed';
+idb.sid(79632).haste=225;
+idb.sid(79632).isproc=1;
+
+idb.sid(79635).name='Elixir of the Master';
+idb.sid(79635).mast=225;
+idb.sid(79635).isproc=1;
+
+% Guardian Elixirs
+idb.sid(79474).name='Elixir of the Naga';
+idb.sid(79474).exp=225;
+idb.sid(79474).isproc=1;
+
+idb.sid(79480).name='Elixir of Deep Earth';
+idb.sid(79480).earmor=900;
+idb.sid(79480).isproc=1;
+
+% Potions
+idb.sid(79475).name='Earthen Potion';
+idb.sid(79475).earmor=8750;
+
+idb.sid(79476).name='Volcanic Potion';
+idb.sid(79476).int=1250;
+
+idb.sid(79633).name='Tol''vir Agility';
+idb.sid(79633).agi=1250;
+
+idb.sid(79634).name='Golem''s Strength';
+idb.sid(79634).str=1250;
+
+% Food
+idb.sid(87584).name='Beer-Basted Crocolisk';
+idb.sid(87584).sta=90;
+idb.sid(87584).str=90;
+
+idb.sid(87586).name='Placeholder1';
+idb.sid(87586).sta=90;
+idb.sid(87586).agi=90;
+
+idb.sid(87587).name='Placeholder2';
+idb.sid(87587).sta=90;
+idb.sid(87587).int=90;
+
+idb.sid(87594).name='Placeholder3';
+idb.sid(87594).sta=90;
+idb.sid(87594).mast=90;
+
+idb.sid(87595).name='Grilled Dragon';
+idb.sid(79634).sta=90;
+idb.sid(79634).hit=90;
+
+idb.sid(87597).name='Baked Rockfish';
+idb.sid(87597).sta=90;
+idb.sid(87597).crit=90;
+
+idb.sid(87599).name='Basilisk Liverdog';
+idb.sid(87599).sta=90;
+idb.sid(87599).haste=90;
+
+idb.sid(87601).name='Placeholder4';
+idb.sid(87601).sta=90;
+idb.sid(87601).dodge=90;
+
+idb.sid(87602).name='Placeholder5';
+idb.sid(87602).sta=90;
+idb.sid(87602).parry=90;
+
+idb.sid(87637).name='Placeholder6';
+idb.sid(87637).sta=90;
+idb.sid(87637).exp=90;

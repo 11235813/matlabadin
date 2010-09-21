@@ -21,7 +21,7 @@ gear_sample;
 gear_stats
 
 %activate buffs
-buff_model
+buff=buff_model;
 
 %calculate final stats
 stat_model
