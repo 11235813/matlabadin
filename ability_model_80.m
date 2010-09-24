@@ -41,7 +41,7 @@ dmg.SealofJustice=          raw.SealofJustice.*target.resrdx;
 %% Melee abilities
 
 %Crusader Strike
-raw.CrusaderStrike= player.wdamage.*mdf.phdmg.*mdf.Crus.*(1+2.*mdf.WotL).*mdf.t11x2;
+raw.CrusaderStrike= 1.2.*player.wdamage.*mdf.phdmg.*mdf.Crus.*(1+2.*mdf.WotL).*mdf.t11x2;
 dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.mehit.*mdf.CScrit;
 
 %Hammer of the Righteous

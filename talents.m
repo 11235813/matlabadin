@@ -22,7 +22,7 @@ talent.JudgementsoftheWise=1;
 
 %% Holy
 talent.ArbiteroftheLight=0;
-talent.Divinity=0;
+talent.ProtectoroftheInnocent=0;
 talent.JudgementsofthePure=0;
 
 talent.ClarityofPurpose=0;
@@ -30,12 +30,12 @@ talent.LastWord=0;
 talent.BlazingLight=0;
 
 holy=zeros(2,3);
-holy(1,1)=talent.ArbiteroftheLight;holy(1,2)=talent.Divinity;holy(1,3)=talent.JudgementsofthePure;
+holy(1,1)=talent.ArbiteroftheLight;holy(1,2)=talent.ProtectoroftheInnocent;holy(1,3)=talent.JudgementsofthePure;
 holy(2,1)=talent.ClarityofPurpose;holy(2,2)=talent.LastWord;holy(2,3)=talent.BlazingLight;
 talentpoints.holy=sum(sum(holy));
 
 %% Prot
-talent.ProtectoroftheInnocent=0;
+talent.Divinity=0;
 talent.SealsofthePure=3;
 talent.EternalGlory=2;
 
@@ -63,7 +63,7 @@ talent.SacredDuty=2;
 talent.ArdentDefender=1;
 
 prot=zeros(7,4);
-prot(1,1)=talent.ProtectoroftheInnocent;prot(1,2)=talent.SealsofthePure;prot(1,3)=talent.EternalGlory;
+prot(1,1)=talent.Divinity;prot(1,2)=talent.SealsofthePure;prot(1,3)=talent.EternalGlory;
 prot(2,1)=talent.JudgementsoftheJust;prot(2,2)=talent.Toughness;prot(2,3)=talent.ImprovedHammerofJustice;
 prot(3,1)=talent.HallowedGround;prot(3,2)=talent.Sanctuary;prot(3,3)=talent.HammeroftheRighteous;prot(3,4)=talent.WrathoftheLightbringer;
 prot(4,1)=talent.Reckoning;prot(4,2)=talent.ShieldoftheRighteous;prot(4,3)=talent.GrandCrusader;prot(4,4)=talent.DivineGuardian;
