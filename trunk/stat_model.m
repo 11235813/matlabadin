@@ -18,7 +18,6 @@ mdf.TbtL=6.*talent.TouchedbytheLight; %incorporates all effects
 mdf.AotL=6.*talent.ArbiteroftheLight;
 mdf.BlazLi=1+0.1.*talent.BlazingLight; %Exo output
 mdf.JotP=1+0.03.*talent.JudgementsofthePure;
-mdf.PotI=1+0.2.*talent.ProtectoroftheInnocent; %RA output
 mdf.SotP=1+0.05.*talent.SealsofthePure;
 % mdf.EG %NYI
 mdf.JotJ=1+0.1.*talent.JudgementsoftheJust;
@@ -83,7 +82,7 @@ mdf.ToW=10.*buff.ToW; %does it stack with FMT?
 mdf.HePr=buff.HePr;
 mdf.ArcTac=1+0.03.*buff.ArcTac;
 mdf.LotP=5.*buff.LotP;
-mdf.WF=1+0.2.*buff.WF;
+mdf.WF=1+0.1.*buff.WF;
 mdf.WoA=1+0.05.*buff.WoA;
 mdf.BL=1+0.3.*buff.BL;
 mdf.Devo=1000.*buff.Devo;
