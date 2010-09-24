@@ -59,8 +59,18 @@ mdf.t11x4=1+0.5.*gear.tierbonus(4); %GoAK duration
 
 %%Standard Professions
 %(passive bonuses, independent of gearing choices)
-if (base.prof1==1 || base.prof2==1) mdf.mining=120; else mdf.mining=0; end;
-if (base.prof1==2 || base.prof2==2) mdf.skinning=80; else mdf.skinning=0; end;
+if (isempty(base.prof)==0&&(max(strcmpi('Min',strread(base.prof,'%s')))==1 ...
+        ||max(strcmpi('Mining',strread(base.prof,'%s')))==1))
+    mdf.mining=120;
+else
+    mdf.mining=0;
+end
+if (isempty(base.prof)==0&&(max(strcmpi('Skin',strread(base.prof,'%s')))==1 ...
+        ||max(strcmpi('Skinning',strread(base.prof,'%s')))==1))
+    mdf.skinning=80;
+else
+    mdf.skinning=0;
+end
 
 %% Raid Buffs
 mdf.BoK=1+0.05.*buff.BoK;
@@ -87,21 +97,47 @@ mdf.Sund=1-0.12.*buff.Sund;
 mdf.ST=1-0.2.*buff.ST;
 
 %% Consumables
-consum.str=sum([buff.flask.str;buff.belixir.str;buff.gelixir.str;buff.food.str]);
-consum.sta=sum([buff.flask.sta;buff.belixir.sta;buff.gelixir.sta;buff.food.sta]);
-consum.agi=sum([buff.flask.agi;buff.belixir.agi;buff.gelixir.agi;buff.food.agi]);
-consum.int=sum([buff.flask.int;buff.belixir.int;buff.gelixir.int;buff.food.int]);
-consum.ap=sum([buff.flask.ap;buff.belixir.ap;buff.gelixir.ap;buff.food.ap]);
-consum.sp=sum([buff.flask.sp;buff.belixir.sp;buff.gelixir.sp;buff.food.sp]);
-consum.hit=sum([buff.flask.hit;buff.belixir.hit;buff.gelixir.hit;buff.food.hit]);
-consum.exp=sum([buff.flask.exp;buff.belixir.exp;buff.gelixir.exp;buff.food.exp]);
-consum.crit=sum([buff.flask.crit;buff.belixir.crit;buff.gelixir.crit;buff.food.crit]);
-consum.haste=sum([buff.flask.haste;buff.belixir.haste;buff.gelixir.haste;buff.food.haste]);
-consum.mast=sum([buff.flask.mast;buff.belixir.mast;buff.gelixir.mast;buff.food.mast]);
-consum.dodge=sum([buff.flask.dodge;buff.belixir.dodge;buff.gelixir.dodge;buff.food.dodge]);
-consum.parry=sum([buff.flask.parry;buff.belixir.parry;buff.gelixir.parry;buff.food.parry]);
-consum.earmor=sum([buff.flask.earmor;buff.belixir.earmor;buff.gelixir.earmor;buff.food.earmor]);
-consum.health=sum([buff.flask.health;buff.belixir.health;buff.gelixir.health;buff.food.health]);
+%Mixology bonus (the specific values are stored in gear_db's .isproc fields) 
+if (isempty(base.prof)==0&&(max(strcmpi('Alch',strread(base.prof,'%s')))==1 ...
+        ||max(strcmpi('Alchemy',strread(base.prof,'%s')))==1))
+    mdf.mixo(1)=buff.flask.isproc;
+    mdf.mixo(2)=buff.belixir.isproc;
+    mdf.mixo(3)=buff.gelixir.isproc;
+else
+    mdf.mixo(1)=1;
+    mdf.mixo(2)=1;
+    mdf.mixo(3)=1;
+end
+consum.str=sum([buff.flask.str.*mdf.mixo(1); ...
+    buff.belixir.str.*mdf.mixo(2);buff.gelixir.str.*mdf.mixo(3);buff.food.str]);
+consum.sta=sum([buff.flask.sta.*mdf.mixo(1); ...
+    buff.belixir.sta.*mdf.mixo(2);buff.gelixir.sta.*mdf.mixo(3);buff.food.sta]);
+consum.agi=sum([buff.flask.agi.*mdf.mixo(1); ...
+    buff.belixir.agi.*mdf.mixo(2);buff.gelixir.agi.*mdf.mixo(3);buff.food.agi]);
+consum.int=sum([buff.flask.int.*mdf.mixo(1); ...
+    buff.belixir.int.*mdf.mixo(2);buff.gelixir.int.*mdf.mixo(3);buff.food.int]);
+consum.ap=sum([buff.flask.ap.*mdf.mixo(1); ...
+    buff.belixir.ap.*mdf.mixo(2);buff.gelixir.ap.*mdf.mixo(3);buff.food.ap]);
+consum.sp=sum([buff.flask.sp.*mdf.mixo(1); ...
+    buff.belixir.sp.*mdf.mixo(2);buff.gelixir.sp.*mdf.mixo(3);buff.food.sp]);
+consum.hit=sum([buff.flask.hit.*mdf.mixo(1); ...
+    buff.belixir.hit.*mdf.mixo(2);buff.gelixir.hit.*mdf.mixo(3);buff.food.hit]);
+consum.exp=sum([buff.flask.exp.*mdf.mixo(1); ...
+    buff.belixir.exp.*mdf.mixo(2);buff.gelixir.exp.*mdf.mixo(3);buff.food.exp]);
+consum.crit=sum([buff.flask.crit.*mdf.mixo(1); ...
+    buff.belixir.crit.*mdf.mixo(2);buff.gelixir.crit.*mdf.mixo(3);buff.food.crit]);
+consum.haste=sum([buff.flask.haste.*mdf.mixo(1); ...
+    buff.belixir.haste.*mdf.mixo(2);buff.gelixir.haste.*mdf.mixo(3);buff.food.haste]);
+consum.mast=sum([buff.flask.mast.*mdf.mixo(1); ...
+    buff.belixir.mast.*mdf.mixo(2);buff.gelixir.mast.*mdf.mixo(3);buff.food.mast]);
+consum.dodge=sum([buff.flask.dodge.*mdf.mixo(1); ...
+    buff.belixir.dodge.*mdf.mixo(2);buff.gelixir.dodge.*mdf.mixo(3);buff.food.dodge]);
+consum.parry=sum([buff.flask.parry.*mdf.mixo(1); ...
+    buff.belixir.parry.*mdf.mixo(2);buff.gelixir.parry.*mdf.mixo(3);buff.food.parry]);
+consum.earmor=sum([buff.flask.earmor.*mdf.mixo(1); ...
+    buff.belixir.earmor.*mdf.mixo(2);buff.gelixir.earmor.*mdf.mixo(3);buff.food.earmor]);
+consum.health=sum([buff.flask.health.*mdf.mixo(1); ...
+    buff.belixir.health.*mdf.mixo(2);buff.gelixir.health.*mdf.mixo(3);buff.food.health]);
 
 %% Extras
 %this section is a way to incorporate extra amounts of different stats to
@@ -158,9 +194,11 @@ player.sphit=(gear.hit+extra.hit+consum.hit)./cnv.hit_sphit+mdf.TbtL+mdf.HePr;
 
 
 %% Expertise
-if (base.race==1 && (strcmp(egs(15).wtype,'swo') || strcmp(egs(15).wtype,'mac')))
+if ((strcmpi('Human',base.race)||strcmpi('Hum',base.race)) ...
+        &&(strcmp(egs(15).wtype,'swo')||strcmp(egs(15).wtype,'mac')))
         base.exp=3;
-elseif (base.race==2 && strcmp(egs(15).wtype,'mac'))
+elseif ((strcmpi('Human',base.race)||strcmpi('Hum',base.race)) ...
+        &&strcmp(egs(15).wtype,'mac'))
         base.exp=5;
 end
 
@@ -280,8 +318,8 @@ player.parry=base.parry+avoiddr.parrydr-0.04.*npc.skillgap;
 
 %at the moment, we don't have Redoubt to worry about, so we shouldnt' need
 %dynamic effects for block chance (hopefully?)
-player.block=base.block+mdf.HolySh+gear.block./cnv.block_block ...
-    +player.mast./cnv.mast_block-0.04.*npc.skillgap;
+player.block=base.block+16.*(talentpoints.prot>=30)+mdf.HolySh ...
+    +gear.block./cnv.block_block+player.mast./cnv.mast_block-0.04.*npc.skillgap;
 
 %check for bounding issues, based on the attack table
 player.miss=max([player.miss;zeros(size(player.miss))]);

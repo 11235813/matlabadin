@@ -12,14 +12,27 @@ function [base] = player_model(varargin)
 %their own variables so that it's easy to do matrix operations on them.
 
 %Inputs [default value] :
-%race=1/2/3/4/5, corresponding to human/dwarf/draenai/blood elf/tauren (respectively) [1]
-%prof1=0/1/2 (1-mining, 2-skinning, 0-anything else) [0]
-%prof2=0/1/2 (1-mining, 2-skinning, 0-anything else) [0]
+%race - player's race ['Human']
+%prof - primary professions; individual entries are separated by whitespaces ['BS JC']
+%List of profession entries :
+%'' (professionless)
+%'Alchemy','Alch'
+%'Blacksmiting','BS'
+%'Enchanting','Ench'
+%'Engineering','Eng'
+%'Herbalism','Herb'
+%'Inscription','Insc'
+%'Jewelcrafting','JC'
+%'Leatherworking','LW'
+%'Mining','Min'
+%'Skinning','Skin'
+%'Tailoring','Tail'
+%All arguments are case-insenstive.
 
 
 %% Input handling
 %populate all entries with empty arrays
-base.race=[];base.prof1=[];base.prof2=[];
+base.race=[];base.prof=0;
 %start filling entries with inputs
 if nargin>0
     for i=1:2:length(varargin)
@@ -28,17 +41,14 @@ if nargin>0
         switch name
             case 'race'
                 base.race=value;
-            case 'prof1'
-                base.prof1=value;
-            case 'prof2'
-                base.prof2=value;
+            case 'prof'
+                base.prof=value;
         end
     end
 end
 %default values of the input arguments
-if isempty(base.race)==1 base.race=1; end;
-if isempty(base.prof1)==1 base.prof1=0; end;
-if isempty(base.prof2)==1 base.prof2=0; end;
+if isempty(base.race)==1 base.race='Human'; end;
+if isnumeric(base.prof)==1 base.prof='BS JC'; end; %workaround for prof=='' 
 
 
 %% Start building base structure
@@ -49,11 +59,25 @@ primary_stats=[151 143  90  98 108;
                152 142  87  99 107;
                148 141  92 102 104;
                100 100 100 100 100];
-base.stats.str=primary_stats(base.race,1);
-base.stats.sta=primary_stats(base.race,2);
-base.stats.agi=primary_stats(base.race,3);
-base.stats.int=primary_stats(base.race,4);    
-base.stats.spi=primary_stats(base.race,5);
+%runtime string-numerical conversion
+if strcmpi('Human',base.race)||strcmpi('Hum',base.race)
+    race=1;
+elseif strcmpi('Dwarf',base.race)||strcmpi('Dwa',base.race)
+    race=2;
+elseif strcmpi('Draenai',base.race)||strcmpi('Drae',base.race)
+    race=3;
+elseif strcmpi('Blood Elf',base.race)||strcmpi('Belf',base.race)
+    race=4;
+elseif strcmpi('Tauren',base.race)||strcmpi('Taur',base.race)
+    race=5;
+else
+    error('Class input is unrecognized.');
+end
+base.stats.str=primary_stats(race,1);
+base.stats.sta=primary_stats(race,2);
+base.stats.agi=primary_stats(race,3);
+base.stats.int=primary_stats(race,4);    
+base.stats.spi=primary_stats(race,5);
 
 base.lvl=80;
 base.ap=3.*base.lvl;       %class specific
