@@ -2,8 +2,8 @@ clear;
 %load gear database
 gear_db;
 
-%invoke player model. race : 1=human, 2=dwarf, 3=draenei, 4=belf, 5=tauren.
-base=player_model('race',1);
+%invoke player model
+base=player_model;
 
 %invoke npc model
 npc=npc_model(base,'lvl',83);
@@ -20,7 +20,7 @@ gear_sample;
 %calculate relevant stats
 gear_stats
 
-%activate buffs
+%activate buffs and consumables
 buff=buff_model;
 
 %calculate final stats
