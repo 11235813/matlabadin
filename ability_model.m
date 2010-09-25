@@ -12,20 +12,20 @@ player.hopo=3;  %placeholder for now, this may get moved elsewhere
 %Seal of Truth, using old SoVeng model, assumes a 5-stack
 raw.SealofTruth=    0.16.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
 raw.SealJud(1)=    (1+0.22.*player.hsp+0.14.*player.ap).*1.5.*mdf.glyphJ; 
-dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx;
-dps.SealofTruth=    dmg.SealofTruth./player.wswing;
+dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
+dps.SealofTruth=    dmg.SealofTruth./player.wswing; %TODO : fix
 
 %Censure (prev. Holy Vengeance), damage for a 5 stack over 15 seconds
-mdf.Censcrit=1+(mdf.spcritmulti-1).*player.phcrit./100; %physical, 1.5 base multiplier
+mdf.Censcrit=1+(mdf.phcritmulti-1).*player.phcrit./100; %physical, 2.0 base multiplier
 raw.Censure=        (0.013.*player.hsp+0.025.*player.ap).*5.*5.*mdf.spdmg;
-dmg.Censure=        raw.Censure.*mdf.Censcrit.*target.resrdx;
+dmg.Censure=        raw.Censure.*mdf.Censcrit.*target.resrdx; %automatical connect
 dps.Censure=        dmg.Censure./(5.*cens.NetTick);
 
 %Seal of Righteousness
 raw.SealofRighteousness=    gear.swing.*(0.011.*player.ap+0.022.*player.hsp).* ...
                             mdf.spdmg.*mdf.SotP;
 raw.SealJud(2)=             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
-dmg.SealofRighteousness=    raw.SealofRighteousness.*target.resrdx;
+dmg.SealofRighteousness=    raw.SealofRighteousness.*target.resrdx; %automatical connect
 
 %Seal of Insight
 raw.SealofInsight=          0;
@@ -36,7 +36,7 @@ dmg.SealofInsight=          raw.SealofInsight.*target.resrdx;
 raw.SealofJustice=          gear.swing.*(0.005.*player.ap+0.01.*player.hsp) ...
                             .*mdf.spdmg.*mdf.SotP;
 raw.SealJud(4)=             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
-dmg.SealofJustice=          raw.SealofJustice.*target.resrdx;
+dmg.SealofJustice=          raw.SealofJustice.*target.resrdx.*mdf.sphit.*mdf.spcrit; %spell hit/crit
 
 %% Melee abilities
 
@@ -48,9 +48,9 @@ dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.mehit.*mdf.CScrit;
 %TODO check 2pt10 (both components) 
 raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR;
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.mehit.*mdf.phcrit;
-%placeholder for aoe portion
+%the aoe rolls only if physical connects
 raw.HammerNova=   ((584+874)./2).*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR; %523+783 base @ 80
-dmg.HammerNova=   raw.HammerNova.*mdf.sphit.*mdf.spcrit.*target.resrdx; %assuming it's treated as spell
+dmg.HammerNova=   raw.HammerNova.*(mdf.mehit.*mdf.sphit).*mdf.spcrit.*target.resrdx; %spell hit/crit
 
 %Melee attacks
 raw.Melee=          player.wdamage.*mdf.phdmg;
@@ -60,7 +60,7 @@ dps.Melee=          dmg.Melee./player.wswing;
 %Shield of the Righteous
 mdf.ShoR=   20.*(player.hopo==1)+60.*(player.hopo==2)+120.*(player.hopo==3);  %need to initialize this
 raw.ShieldoftheRighteous= (mdf.ShoR./100.*player.ap).*mdf.spdmg.*mdf.glyphSotR;
-dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.mehit.*mdf.phcrit.*target.resrdx;  %until we know if it can be dodged or parried
+dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.mehit.*mdf.phcrit.*target.resrdx;  %melee hit
 crit.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.mehit.*mdf.phcritmulti.*target.resrdx;
 
 %% Ranged abilities
@@ -85,7 +85,7 @@ dmg.HammerofWrath= raw.HammerofWrath.*mdf.rahit.*mdf.HoWcrit.*target.resrdx;
 
 %Consecration
 raw.Consecration =  (8.*(0+0.027.*player.hsp+0.027.*player.ap)).*mdf.spdmg.*mdf.HalGro.*mdf.glyphCons;
-dmg.Consecration =  raw.Consecration.*mdf.spcrit.*target.resrdx;
+dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 
 %Exorcism
 mdf.Exorcrit=mdf.spcrit.*(1-min([npc.type;1]))+mdf.spcritmulti.*min([npc.type;1]); %tracking npc type
@@ -102,5 +102,5 @@ raw.HolyShield=     0.*mdf.spdmg;
 dmg.HolyShield=     raw.HolyShield.*mdf.sphit.*target.resrdx;
 
 %Holy Wrath
-raw.HolyWrath=      (2401+0.3.*player.hsp).*mdf.spdmg;  %2153 base @ 80
+raw.HolyWrath=      (2401./exec.npccount+0.3.*player.hsp).*mdf.spdmg;  %2153 base @ 80
 dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit.*target.resrdx;
