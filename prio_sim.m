@@ -1,4 +1,4 @@
-function [ rs ] = prio_sim(pri,varargin)
+function [ sequence ] = prio_sim(pri,varargin)
 %prio_sim does the grunt work of evaluating the result of a priority queue
 %defined in prio_model.
 %"pri" can be the current priority structure being executed or an integer.
@@ -11,6 +11,16 @@ function [ rs ] = prio_sim(pri,varargin)
 prio=evalin('base','prio');
 cd=evalin('base','cd');
 mdf=evalin('base','mdf');
+%the rest are all needed for damage calculations
+dmg=evalin('base','dmg');
+crit=evalin('base','crit');
+player=evalin('base','player');
+target=evalin('base','target');
+cens=evalin('base','cens');
+gear=evalin('base','gear');
+exec=evalin('base','exec');
+npc=evalin('base','npc');
+
 
 %if no arguments
 if nargin<1
@@ -50,10 +60,8 @@ if isempty(dt)==1 dt=0.1; end;  %work in timesteps of 0.1 second for now, can ad
 if isempty(hopo)==1 hopo=0; end;
 
 %maintenance, in case we're running this several times
-clear t damage label spell casttime
+clear t sequence
 
-dmg=evalin('base','dmg');
-crit=evalin('base','crit');
 
 %% simulation starts here
 %initialize gcd and egcd
@@ -69,7 +77,8 @@ ccd.Cons=0;
 
 %duration variable for buff-like effects
 dur.SD=0;
-sdflag=0;
+dur.Inq=0;
+% sdflag=0;  %deprecated
 
 %evaluate setup conditionals
 for m=1:length(pri.setup)
@@ -105,22 +114,64 @@ for m=1:N
                 %action/cast id for convenience
                 aid=pri.cast(n);
                 
-                damage(qq)=pri.dmg(aid);
-                spell{qq}=char(pri.castname(aid));
-                label{qq}=char(pri.labels(aid));
-                casttime(qq)=t(m);
-                seq(qq)=pri.ids(aid);
-%                 cast(qq)=aid;
-                color(qq)=0;
+                %recording what happens - in the end we'll want to know:
+                %   -what was cast 
+                %   -the timestamp of the cast (for plotting)
+                %   -Status of buffs (SD & Inq)
+                %   -Hit/Miss for ShoR (so that we can properly evaluate damage later)
                 
-                %Sacred Duty handling
-                if dur.SD>0 && strcmp(char(pri.castname(aid)),'ShieldoftheRighteous')
-                    damage(qq)=crit.ShieldoftheRighteous;
-                    color(qq)=1;
-                end
+                %the sequence structure will track all of these
+                sequence.castid(qq)=aid;
+                sequence.casttime(qq)=t(m);
+                sequence.SD(qq)=dur.SD;
+                sequence.Inq(qq)=dur.Inq;
+                sequence.hopo(qq)=hopo;
+                sequence.spellname{qq}=char(pri.castname(aid));
+                sequence.label{qq}=char(pri.labels(aid));
+                sequence.seq(qq)=pri.ids(aid);
+                sequence.color(qq)=0; %placeholder for later
+                
+                
+                
+                %i want to handle damage after-the-fact, but I'll leave
+                %this here for now in case we decide it's relevant.
+                sequence.damage(qq)=pri.dmg(aid);
+                
+%                 spell{qq}=char(pri.castname(aid));
+%                 label{qq}=char(pri.labels(aid));
+%                 casttime(qq)=t(m);
+%                 seq(qq)=pri.ids(aid);
+% %                 cast(qq)=aid;
+%                 color(qq)=0;
+                
+                
                 
                 %perform actions
                 eval(char(pri.action(aid)));
+                
+                %ShoR handling
+                if strcmp(char(pri.castname(aid)),'ShieldoftheRighteous')
+                    %check for misses
+                    if rand<target.avoid/100
+                        sequence.shormiss(qq)=1;
+                        hopo=1;        %check this, conflicting reports from Flex & Marble
+                        sequence.damage(qq)=0;
+                        sequence.color(qq)=2;
+
+                        %Sacred Duty handling
+                    elseif dur.SD>0
+                        sequence.damage(qq)=crit.ShieldoftheRighteous;
+                        sequence.color(qq)=1;
+                        dur.SD=0;
+                        sequence.shormiss(qq)=0;
+                    else
+                        sequence.shormiss(qq)=0;
+                    end
+                else
+                    sequence.shormiss(qq)=0;
+                end
+                
+                %special actions (performed last)
                 eval(char(pri.spaction(n)));
                 
                 %reset gcd
@@ -140,24 +191,43 @@ for m=1:N
     %we only want this to fire about once per gcd, so we use the egcd
     %variable to limit it
     if gcd<=0 && egcd<=0
-       damage(qq)=0;
-       spell{qq}='Empty';
-       label{qq}='Empty';
-       casttime(qq)=t(m);
-       seq(qq)=0;
-       cast(qq)=0;
+        
+       sequence.damage(qq)=0;
+       sequence.castid(qq)=0;
+       sequence.casttime(qq)=t(m);
+       sequence.SD(qq)=dur.SD;
+       sequence.Inq(qq)=dur.Inq;
+       sequence.hopo(qq)=hopo;
+       sequence.spellname{qq}='Empty';
+       sequence.label{qq}='Empty';
+       sequence.seq(qq)=0;
+       sequence.color(qq)=2;
+       sequence.shormiss(qq)=0;
+       
        qq=qq+1;
        egcd=1.5; 
     end
     
-    %reduce cooldowns
+    %reduce cooldowns   TODO: Implement generic ccd array
     ccd.CS=ccd.CS-dt;
     ccd.AS=ccd.AS-dt; 
     ccd.Jud=ccd.Jud-dt;
     ccd.HoWr=ccd.HoWr-dt;
-    dur.SD=dur.SD-dt;
+    ccd.Cons=ccd.Cons-dt;
     gcd=gcd-dt;
     egcd=egcd-dt;
+    
+    %reduce durations
+    dur.SD=max([dur.SD-dt 0]);
+    dur.Inq=max([dur.Inq-dt 0]);
+    
+    %modifiers
+    mdf.Inq=1.3.*sign(dur.Inq);
+    mdf.SDcrit=1.*sign(dur.SD);
+    
+    %recalculate ability damages - probably not necessary if we're not
+    %going to track damages locally
+    ability_model;
     
     %kludgy fix for numerical errors - 
     %after subtraction @ dt=0.1, AS sits at 3.6554e-14.  Depending on dt,
@@ -177,22 +247,48 @@ for m=1:N
     
 end
 
+sequence.totaltime=m*dt;
+
+
+%determine weighting coefficients for each spell
+% sequence.coeff(1)=sum((sequence.castid==1).*not(sequence.shormiss).*(sequence.SD==0))... %# ShoR hits
+%                  +(sequence.castid==1).*not(sequence.shormiss).*(sequence.SD==1)... %# ShoR crits
+%                  
+                   
+for mm=1:length(pri.labels)
+    %if we're evaluating a ShoR
+    if sum(strcmp(char(pri.labels{mm}),{'3ShoR';'2ShoR';'1ShoR'}))>0
+        sequence.effcasts(mm)=sum((1.3.*(sequence.Inq>0)+(sequence.Inq==0)).* ...  %Inq handling, probably irrelevant for ShoR
+            ((sequence.castid==mm).*not(sequence.shormiss).*(sequence.SD==0)+... %# ShoR hits
+            (sequence.castid==mm).*not(sequence.shormiss).*(sequence.SD>0).*mdf.phcritmulti./mdf.phcrit) ... %# ShoR crits, weighted appropriately
+            ); 
+    
+    else %everythign else is easier - just Inq
+        sequence.effcasts(mm)=sum((sequence.castid==mm).*(1.3.*(sequence.Inq>0)+(sequence.Inq==0)));
+    end
+end
+
+sequence.coeff=sequence.effcasts./sequence.totaltime;
+sequence.empties=sum(sequence.castid==0);
+
 %fix dimensions
-damage=damage';
-spell=spell';
-label=label';
-casttime=casttime';
+% damage=damage';
+% spell=spell';
+% label=label';
+% casttime=casttime';
 
+%this is from the old version, leaving it here so that I can re-code the
+%rotation drawing module later on
 %create rotation structure
-rs.seq=seq;
-rs.names(pri.ids)=pri.labels;
-rs.cds(pri.ids)=pri.cds;
-rs.times=casttime;
-rs.color=color;
-% rs.cast=cast;
-% rs.gcds=prio.gcds;
+% rs.seq=seq;
+% rs.names(pri.ids)=pri.labels;
+% rs.cds(pri.ids)=pri.cds;
+% rs.times=casttime;
+% rs.color=color;
+% % rs.cast=cast;
+% % rs.gcds=prio.gcds;
 
-rotation_drawer(rs,1);
+% rotation_drawer(rs,1);
 
 %more debugging code
 % figure(2);plot(t,cas,t,ccs);

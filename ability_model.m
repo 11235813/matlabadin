@@ -17,7 +17,7 @@ dps.SealofTruth=    dmg.SealofTruth./player.wswing; %TODO : fix
 
 %Censure (prev. Holy Vengeance), damage for a 5 stack over 15 seconds
 mdf.Censcrit=1+(mdf.phcritmulti-1).*player.phcrit./100; %physical, 2.0 base multiplier
-raw.Censure=        (0.013.*player.hsp+0.025.*player.ap).*5.*5.*mdf.spdmg;
+raw.Censure=        (0.013.*player.hsp+0.025.*player.ap).*5.*5.*mdf.SotP.*mdf.spdmg;
 dmg.Censure=        raw.Censure.*mdf.Censcrit.*target.resrdx; %automatical connect
 dps.Censure=        dmg.Censure./(5.*cens.NetTick);
 
