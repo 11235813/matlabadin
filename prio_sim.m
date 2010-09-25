@@ -11,15 +11,15 @@ function [ sequence ] = prio_sim(pri,varargin)
 prio=evalin('base','prio');
 cd=evalin('base','cd');
 mdf=evalin('base','mdf');
+target=evalin('base','target');  %needed for ShoR
 %the rest are all needed for damage calculations
-dmg=evalin('base','dmg');
-crit=evalin('base','crit');
-player=evalin('base','player');
-target=evalin('base','target');
-cens=evalin('base','cens');
-gear=evalin('base','gear');
-exec=evalin('base','exec');
-npc=evalin('base','npc');
+% dmg=evalin('base','dmg');
+% crit=evalin('base','crit');
+% player=evalin('base','player');
+% cens=evalin('base','cens');
+% gear=evalin('base','gear');
+% exec=evalin('base','exec');
+% npc=evalin('base','npc');
 
 
 %if no arguments
@@ -135,16 +135,8 @@ for m=1:N
                 
                 %i want to handle damage after-the-fact, but I'll leave
                 %this here for now in case we decide it's relevant.
-                sequence.damage(qq)=pri.dmg(aid);
-                
-%                 spell{qq}=char(pri.castname(aid));
-%                 label{qq}=char(pri.labels(aid));
-%                 casttime(qq)=t(m);
-%                 seq(qq)=pri.ids(aid);
-% %                 cast(qq)=aid;
-%                 color(qq)=0;
-                
-                
+%                 sequence.damage(qq)=pri.dmg(aid);
+            
                 
                 %perform actions
                 eval(char(pri.action(aid)));
@@ -155,12 +147,12 @@ for m=1:N
                     if rand<target.avoid/100
                         sequence.shormiss(qq)=1;
                         hopo=1;        %check this, conflicting reports from Flex & Marble
-                        sequence.damage(qq)=0;
+%                         sequence.damage(qq)=0;
                         sequence.color(qq)=2;
 
                         %Sacred Duty handling
                     elseif dur.SD>0
-                        sequence.damage(qq)=crit.ShieldoftheRighteous;
+%                         sequence.damage(qq)=crit.ShieldoftheRighteous;
                         sequence.color(qq)=1;
                         dur.SD=0;
                         sequence.shormiss(qq)=0;
@@ -192,7 +184,7 @@ for m=1:N
     %variable to limit it
     if gcd<=0 && egcd<=0
         
-       sequence.damage(qq)=0;
+%        sequence.damage(qq)=0;
        sequence.castid(qq)=0;
        sequence.casttime(qq)=t(m);
        sequence.SD(qq)=dur.SD;
@@ -227,7 +219,7 @@ for m=1:N
     
     %recalculate ability damages - probably not necessary if we're not
     %going to track damages locally
-    ability_model;
+%     ability_model;
     
     %kludgy fix for numerical errors - 
     %after subtraction @ dt=0.1, AS sits at 3.6554e-14.  Depending on dt,
@@ -251,16 +243,13 @@ sequence.totaltime=m*dt;
 
 
 %determine weighting coefficients for each spell
-% sequence.coeff(1)=sum((sequence.castid==1).*not(sequence.shormiss).*(sequence.SD==0))... %# ShoR hits
-%                  +(sequence.castid==1).*not(sequence.shormiss).*(sequence.SD==1)... %# ShoR crits
-%                  
                    
 for mm=1:length(pri.labels)
     %if we're evaluating a ShoR
     if sum(strcmp(char(pri.labels{mm}),{'3ShoR';'2ShoR';'1ShoR'}))>0
         sequence.effcasts(mm)=sum((1.3.*(sequence.Inq>0)+(sequence.Inq==0)).* ...  %Inq handling, probably irrelevant for ShoR
-            ((sequence.castid==mm).*not(sequence.shormiss).*(sequence.SD==0)+... %# ShoR hits
-            (sequence.castid==mm).*not(sequence.shormiss).*(sequence.SD>0).*mdf.phcritmulti./mdf.phcrit) ... %# ShoR crits, weighted appropriately
+            ((sequence.castid==mm).*not(sequence.shormiss).*(sequence.SD==0).*mdf.phcrit+... %# ShoR hits/crits
+            (sequence.castid==mm).*not(sequence.shormiss).*(sequence.SD>0).*mdf.phcritmulti) ... %# ShoR SD crits
             ); 
     
     else %everythign else is easier - just Inq
@@ -271,11 +260,8 @@ end
 sequence.coeff=sequence.effcasts./sequence.totaltime;
 sequence.empties=sum(sequence.castid==0);
 
-%fix dimensions
-% damage=damage';
-% spell=spell';
-% label=label';
-% casttime=casttime';
+sequence.damage=pri.damage.*sequence.effcasts;
+sequence.dps=pri.damage.*sequence.coeff;
 
 %this is from the old version, leaving it here so that I can re-code the
 %rotation drawing module later on
