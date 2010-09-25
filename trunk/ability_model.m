@@ -11,32 +11,32 @@ player.hopo=3;  %placeholder for now, this may get moved elsewhere
 
 %Seal of Truth, using old SoVeng model, assumes a 5-stack
 raw.SealofTruth=    0.16.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
-raw.SealJud(1)=    (1+0.22.*player.hsp+0.14.*player.ap).*1.5.*mdf.glyphJ; 
-dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
+raw.SealJud(1)=    (1+0.22.*player.hsp+0.14.*player.ap).*1.5.*mdf.glyphJ.*target.resrdx; 
+dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit; %automatical connect
 dps.SealofTruth=    dmg.SealofTruth./player.wswing; %TODO : fix
 
 %Censure (prev. Holy Vengeance), damage for a 5 stack over 15 seconds
 mdf.Censcrit=1+(mdf.phcritmulti-1).*player.phcrit./100; %physical, 2.0 base multiplier
-raw.Censure=        (0.013.*player.hsp+0.025.*player.ap).*5.*5.*mdf.SotP.*mdf.spdmg;
-dmg.Censure=        raw.Censure.*mdf.Censcrit.*target.resrdx; %automatical connect
+raw.Censure=        (0.013.*player.hsp+0.025.*player.ap).*5.*5.*mdf.SotP.*mdf.spdmg.*target.resrdx;
+dmg.Censure=        raw.Censure.*mdf.Censcrit; %automatical connect
 dps.Censure=        dmg.Censure./(5.*cens.NetTick);
 
 %Seal of Righteousness
 raw.SealofRighteousness=    gear.swing.*(0.011.*player.ap+0.022.*player.hsp).* ...
-                            mdf.spdmg.*mdf.SotP;
+                            mdf.spdmg.*mdf.SotP.*target.resrdx;
 raw.SealJud(2)=             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
-dmg.SealofRighteousness=    raw.SealofRighteousness.*target.resrdx; %automatical connect
+dmg.SealofRighteousness=    raw.SealofRighteousness; %automatical connect
 
 %Seal of Insight
-raw.SealofInsight=          0;
+raw.SealofInsight=          0.*target.resrdx;
 raw.SealJud(3)=             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
-dmg.SealofInsight=          raw.SealofInsight.*target.resrdx;
+dmg.SealofInsight=          raw.SealofInsight;
 
 %Seal of Justice
 raw.SealofJustice=          gear.swing.*(0.005.*player.ap+0.01.*player.hsp) ...
-                            .*mdf.spdmg.*mdf.SotP;
+                            .*mdf.spdmg.*mdf.SotP.*target.resrdx;
 raw.SealJud(4)=             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
-dmg.SealofJustice=          raw.SealofJustice.*target.resrdx.*mdf.sphit.*mdf.spcrit; %spell hit/crit
+dmg.SealofJustice=          raw.SealofJustice.*mdf.sphit.*mdf.spcrit; %spell hit/crit
 
 %% Melee abilities
 
@@ -49,8 +49,8 @@ dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.mehit.*mdf.CScrit;
 raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR;
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.mehit.*mdf.phcrit;
 %the aoe rolls only if physical connects
-raw.HammerNova=   ((584+874)./2).*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR; %523+783 base @ 80
-dmg.HammerNova=   raw.HammerNova.*(mdf.mehit.*mdf.sphit).*mdf.spcrit.*target.resrdx; %spell hit/crit
+raw.HammerNova=   ((584+874)./2).*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR.*target.resrdx; %523+783 base @ 80
+dmg.HammerNova=   raw.HammerNova.*(mdf.mehit.*mdf.sphit).*mdf.spcrit; %spell hit/crit
 
 %Melee attacks
 raw.Melee=          player.wdamage.*mdf.phdmg;
@@ -59,48 +59,45 @@ dps.Melee=          dmg.Melee./player.wswing;
 
 %Shield of the Righteous
 mdf.ShoR=   20.*(player.hopo==1)+60.*(player.hopo==2)+120.*(player.hopo==3);  %need to initialize this
-raw.ShieldoftheRighteous= (mdf.ShoR./100.*player.ap).*mdf.spdmg.*mdf.glyphSotR;
-dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.mehit.*mdf.phcrit.*target.resrdx;  %melee hit
-crit.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.mehit.*mdf.phcritmulti.*target.resrdx;
+raw.ShieldoftheRighteous= (mdf.ShoR./100.*player.ap).*mdf.spdmg.*mdf.glyphSotR.*target.resrdx;
+dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.mehit.*mdf.phcrit;  %melee hit
+crit.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.mehit.*mdf.phcritmulti;
 
 %% Ranged abilities
 
 %Avenger's Shield
-raw.AvengersShield= ((2802+3424)./2+0.42.*player.ap+0.22.*player.hsp).*mdf.spdmg.*mdf.glyphAS; %2512+3070 base @ 80
-dmg.AvengersShield= raw.AvengersShield.*mdf.rahit.*mdf.phcrit.*target.resrdx;                
+raw.AvengersShield= ((2802+3424)./2+0.42.*player.ap+0.22.*player.hsp).*mdf.spdmg.*mdf.glyphAS.*target.resrdx; %2512+3070 base @ 80
+dmg.AvengersShield= raw.AvengersShield.*mdf.rahit.*mdf.phcrit;                
 
 %Judgement - damage depends on seal.  raw.SealJud contains the Judgement
 %damage values for each seal. The seal of choice is defined in execution_model. 
-raw.Judgement=      raw.SealJud(exec.seal).*mdf.spdmg.*(1+2.*mdf.WotL);
-dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
-%for Sacred Duty handling, may implement this for every ability eventually
-%/tlitp : don't like dedicated crit structures
-crit.Judgement=     raw.Judgement.*mdf.rahit.*mdf.phcritmulti.*target.resrdx;  
+raw.Judgement=      raw.SealJud(exec.seal).*mdf.spdmg.*(1+2.*mdf.WotL).*target.resrdx;
+dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit;
 
 %Hammer of Wrath
-raw.HammerofWrath=  ((1254+1384)./2 + 0.15.*player.hsp + 0.15.*player.ap).*mdf.spdmg; %1124+1242 base @ 80
-dmg.HammerofWrath= raw.HammerofWrath.*mdf.rahit.*mdf.HoWcrit.*target.resrdx;
+raw.HammerofWrath=  ((1254+1384)./2 + 0.15.*player.hsp + 0.15.*player.ap).*mdf.spdmg.*target.resrdx; %1124+1242 base @ 80
+dmg.HammerofWrath= raw.HammerofWrath.*mdf.rahit.*mdf.HoWcrit;
 
 %% Spell abilities
 
 %Consecration
-raw.Consecration =  (8.*(0+0.027.*player.hsp+0.027.*player.ap)).*mdf.spdmg.*mdf.HalGro.*mdf.glyphCons;
-dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
+raw.Consecration =  (8.*(0+0.027.*player.hsp+0.027.*player.ap)).*mdf.spdmg.*mdf.HalGro.*mdf.glyphCons.*target.resrdx;
+dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit; %spell hit/crit
 
 %Exorcism
 mdf.Exorcrit=mdf.spcrit.*(1-min([npc.type;1]))+mdf.spcritmulti.*min([npc.type;1]); %tracking npc type
 raw.Exorcism=       ((1135+1267)./2 + 0.15.*max([player.hsp;player.ap])) ...   %1018+1136 base @ 80
-                    .*mdf.spdmg.*mdf.BlazLi.*mdf.glyphExo;
-dmg.Exorcism=       raw.Exorcism.*mdf.sphit.*mdf.Exorcrit.*target.resrdx;
+                    .*mdf.spdmg.*mdf.BlazLi.*mdf.glyphExo.*target.resrdx;
+dmg.Exorcism=       raw.Exorcism.*mdf.sphit.*mdf.Exorcrit;
 
 %Hand of Reckoning /TODO probably unnecessary
-raw.HandofReckoning=0.*mdf.spdmg;
-dmg.HandofReckoning=raw.HandofReckoning.*mdf.sphit.*mdf.spcrit.*target.resrdx;
+raw.HandofReckoning=0.*mdf.spdmg.*target.resrdx;
+dmg.HandofReckoning=raw.HandofReckoning.*mdf.sphit.*mdf.spcrit;
 
 %Holy Shield /TODO probably redundant
-raw.HolyShield=     0.*mdf.spdmg; 
-dmg.HolyShield=     raw.HolyShield.*mdf.sphit.*target.resrdx;
+raw.HolyShield=     0.*mdf.spdmg.*target.resrdx; 
+dmg.HolyShield=     raw.HolyShield.*mdf.sphit;
 
 %Holy Wrath
-raw.HolyWrath=      (2401./exec.npccount+0.3.*player.hsp).*mdf.spdmg;  %2153 base @ 80
-dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit.*target.resrdx;
+raw.HolyWrath=      (2401./exec.npccount+0.3.*player.hsp).*mdf.spdmg.*target.resrdx;  %2153 base @ 80
+dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit;
