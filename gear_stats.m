@@ -49,7 +49,7 @@ gear.critmeta = egs(1).critmeta;
 gear.isplate=sum([egs.atype])==8;
 
 %tier bonus
-gear.istier=sum([egs.istier]);
+gear.istier=sum(reshape([egs.istier],4,length([egs.istier])/4)');
 gear.tierbonus=zeros(2,4); %t10-t13 for now
 %format :
 % t10 t11 t12 t13
