@@ -20,7 +20,7 @@ mdf.BlazLi=1+0.1.*talent.BlazingLight; %Exo output
 mdf.JotP=1+0.03.*talent.JudgementsofthePure;
 mdf.SotP=1+0.05.*talent.SealsofthePure;
 % mdf.EG %NYI
-mdf.JotJ=1+0.1.*talent.JudgementsoftheJust;
+mdf.JotJ=0.1.*talent.JudgementsoftheJust;
 mdf.Tough=1+floor(3.4.*talent.Toughness)./100;
 mdf.HalGro=1+0.2.*talent.HallowedGround; %Cons output
 mdf.Sanct=1-floor(3.4.*talent.Sanctuary)./100; %damage reduction
@@ -345,7 +345,7 @@ player.avoidpct=player.avoid./100;
 %redundant target.block so that we can refer to it without having to remember
 %that it doesn't get modified by player stats.
 
-target.swing=npc.swing.*mdf.JotJ;
+target.swing=npc.swing.*(1+mdf.JotJ.*(isempty(exec.seal)==0));
 
 target.miss=max([(npc.phmiss-player.phhit);zeros(size(player.phhit))]);
 target.dodge=max([(npc.dodge-0.25.*player.exp);zeros(size(player.exp))]);
