@@ -135,7 +135,7 @@ idb.iid=struct('name','Empty Slot', ...
                'isproc',0);
 idb.sid=struct('name','Empty Slot', ...
                'atype',0, ...
-               'wtype','swo', ...
+               'wtype','swo', ... 
                'ilvl',0, ...
                'tooldps',0, ...
                'swing',0, ...
@@ -235,6 +235,24 @@ idb.iid(50682).str=102;
 idb.iid(50682).sta=141+30;
 idb.iid(50682).dodge=73;
 
+idb.iid(55888).name='Darkhowl Amulet';
+idb.iid(55888).ilvl=333;
+idb.iid(55888).str=114;
+idb.iid(55888).sta=224;
+idb.iid(55888).exp=76;
+idb.iid(55888).dodge=149;
+% idb.iid(55888).slot=2;
+
+%% Shoulder
+idb.iid(56124).name='Earthshape Pauldrons';
+idb.iid(56124).ilvl=333;
+idb.iid(56124).str=199;
+idb.iid(56124).sta=298;
+idb.iid(56124).mast=133;
+idb.iid(56124).dodge=133;
+idb.iid(56124).barmor=2346;
+idb.iid(56124).atype=1;
+
 %% Cloaks
 idb.iid(50466).name='Sentinel''s Winter Cloak';
 idb.iid(50466).ilvl=264;
@@ -243,6 +261,15 @@ idb.iid(50466).earmor=716-idb.iid(50466).barmor;
 idb.iid(50466).str=90;
 idb.iid(50466).sta=124+30;
 idb.iid(50466).dodge=72;
+
+idb.iid(56219).name='Shroud of Dark Memories';
+idb.iid(56219).ilvl=333;
+idb.iid(56219).str=114;
+idb.iid(56219).sta=224;
+idb.iid(56219).exp=76;
+idb.iid(56219).dodge=149;
+idb.iid(56219).barmor=572;
+% idb.iid(56219).slot=4;
 
 %% Bracers
 idb.iid(51901).name='Gargoyle Spit Bracers (Heroic)';
@@ -253,6 +280,26 @@ idb.iid(51901).earmor=1360-idb.iid(51901).barmor;
 idb.iid(51901).str=82;
 idb.iid(51901).sta=124+30;
 idb.iid(51901).dodge=68;
+
+idb.iid(55992).name='Armguards of Unearthly Light';
+idb.iid(55992).ilvl=333;
+idb.iid(55992).str=114;
+idb.iid(55992).sta=224;
+idb.iid(55992).hit=76;
+idb.iid(55992).dodge=149;
+idb.iid(55992).barmor=1369;
+% idb.iid(55992).slot=6;
+idb.iid(55992).atype=1;
+
+%% Gloves
+idb.iid(56099).name='Fingers of Light';
+idb.iid(56099).ilvl=333;
+idb.iid(56099).str=199;
+idb.iid(56099).sta=298;
+idb.iid(56099).mast=133;
+idb.iid(56099).parry=133;
+idb.iid(56099).barmor=1955;
+idb.iid(56099).atype=1;
 
 
 %% Belts
@@ -292,6 +339,14 @@ idb.iid(50404).dodge=84;
 idb.iid(50404).hit=55;
 idb.iid(50404).earmor=2400.*0.03;
 
+idb.iid(56111).name='Temple Band';
+idb.iid(56111).ilvl=333;
+idb.iid(56111).str=149;
+idb.iid(56111).sta=224;
+idb.iid(56111).mast=100;
+idb.iid(56111).dodge=100;
+% idb.iid(56111).slot=11;
+
 %% Trinkets
 idb.iid(50356).name='Corroded Skeleton Key';
 idb.iid(50356).ilvl=264;
@@ -301,7 +356,19 @@ idb.iid(54571).name='Sindragosa''s Flawless Fang';
 idb.iid(54571).ilvl=264;
 idb.iid(54571).sta=228;
 
+idb.iid(56121).name='Throngus''s Finger';
+idb.iid(56121).ilvl=333;
+idb.iid(56121).dodge=252;
+% idb.iid(56121).slot=13;
+
 %% Weapons
+idb.iid(44638).name='Dalaran Sword';
+idb.iid(44638).ilvl=80;
+idb.iid(44638).wtype='swo';
+idb.iid(44638).tooldps=43.0;
+idb.iid(44638).swing=1.4;
+idb.iid(44638).avgdmg=(42+79)/2;
+
 idb.iid(50708).name='Last Word (Heroic)';
 idb.iid(50708).ilvl=277;
 idb.iid(50708).wtype='mac';
@@ -312,6 +379,17 @@ idb.iid(50708).sta=94+30;
 idb.iid(50708).str=115;
 idb.iid(50708).isproc=71873;
 
+idb.iid(63799).name='Mace of the Gullet';
+idb.iid(63799).ilvl=333;
+idb.iid(63799).wtype='mac';
+idb.iid(63799).tooldps=362.7;
+idb.iid(63799).swing=2.6;
+idb.iid(63799).avgdmg=(660+1226)/2;
+idb.iid(63799).sta=172;
+idb.iid(63799).str=115;
+idb.iid(63799).exp=82;
+idb.iid(63799).mast=67;
+
 %% Shields
 idb.iid(50729).name='Icecrown Glacial Wall (Heroic)';
 idb.iid(50729).ilvl=277;
@@ -320,6 +398,16 @@ idb.iid(50729).str=102;
 idb.iid(50729).sta=141+30;
 idb.iid(50729).dodge=68;
 idb.iid(50729).parry=72;
+
+idb.iid(56096).name='Bulwark of the Primordial Mound';
+idb.iid(56096).ilvl=333;
+idb.iid(56096).str=114;
+idb.iid(56096).sta=224;
+idb.iid(56096).hit=76;
+idb.iid(56096).dodge=149;
+idb.iid(56096).barmor=11504;
+% idb.iid(56096).slot=16;
+
 
 %% Librams
 idb.iid(50461).name='Libram of the Eternal Tower';
