@@ -178,8 +178,9 @@ player.hitpoints=base.health+10.*(player.sta-18)+gear.health+consum.health;
 %armor and physical damage reduction
 player.armor=gear.barmor.*mdf.Tough.*mdf.ameta ...
     +gear.earmor+mdf.Devo+consum.earmor;
-player.armor_c=400+85*npc.lvl+4.5*85*(npc.lvl-59);
-player.phdr=player.armor./(player.armor+player.armor_c);
+player.armor_c=2167.5*npc.lvl-158167.5; %85
+player.armor_c=467.5*npc.lvl-22167.5;
+player.phdr=min([player.armor./(player.armor+player.armor_c);0.75]);
 
 %resistance and spell damage reduction
 player.resistance=0; %TODO : fix it (buff etc.)
@@ -262,11 +263,11 @@ player.aacrit=base.phcrit + ...                                            %base
     -npc.phcritsupp;                                                       %crit suppression
 
 %explicit crit for non-standard abilities
-player.HWcrit=player.spcrit+mdf.WotL.*100;          %WotL
-player.HoWcrit=player.phcrit+mdf.WotL.*100;         %WotL
-player.CScrit=player.phcrit+mdf.RoL+mdf.glyphCS;    %RoL, glyph
-player.Jcrit=player.phcrit+mdf.AotL;                %AotL
-player.WoGcrit=player.spcrit+mdf.RoL;               %RoL
+player.HWcrit=player.spcrit+mdf.WotL.*100;           %WotL
+player.HoWcrit=player.phcrit++mdf.RoL+mdf.WotL.*100; %RoL, WotL
+player.CScrit=player.phcrit+mdf.RoL+mdf.glyphCS;     %RoL, glyph
+player.Jcrit=player.phcrit+mdf.AotL;                 %AotL
+player.WoGcrit=player.spcrit+mdf.RoL;                %RoL
 
 %enforce crit caps for two-roll
 player.phcrit=max([min([player.phcrit;100.*ones(size(player.phcrit))]); ...
@@ -305,7 +306,7 @@ player.sp=gear.sp+extra.sp+consum.sp+floor(player.str.*(mdf.TbtL./10))+player.in
 player.hsp=player.sp;  
 
 %% Mastery
-player.mast=base.mast+gear.mast+consum.mast;
+player.mast=base.mast+((gear.mast+extra.mas+consum.mast)./cnv.mast_mast);
 
 %% Avoidance and Blocking
 %TODO: update avoid_dr
@@ -318,7 +319,7 @@ player.parry=base.parry+avoiddr.parrydr-0.04.*npc.skillgap;
 %at the moment, we don't have Redoubt to worry about, so we shouldnt' need
 %dynamic effects for block chance (hopefully?)
 player.block=base.block+16.*(talentpoints.prot>=30)+mdf.HolySh ...
-    +gear.block./cnv.block_block+player.mast./cnv.mast_block-0.04.*npc.skillgap;
+    +gear.block./cnv.block_block+2.*player.mast-0.04.*npc.skillgap;
 
 %check for bounding issues, based on the attack table
 player.miss=max([player.miss;zeros(size(player.miss))]);
@@ -360,7 +361,8 @@ target.resrdx=(100-npc.presist)./100;
 %it.
 player.ArPr=0;
 %Armor Penetration Constant C
-target.armor_c=400+85*base.lvl+4.5*85*(base.lvl-59);
+target.armor_c=2167.5*base.lvl-158167.5; %85
+target.armor_c=467.5*base.lvl-22167.5;
 %debuffed armor
 target.dbfarmor=npc.armor.*mdf.Sund.*mdf.ST;
 %Armor penetration cap (max amount of armor that can be removed)

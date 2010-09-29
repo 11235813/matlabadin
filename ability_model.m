@@ -38,20 +38,35 @@ raw.SealofJustice=          gear.swing.*(0.005.*player.ap+0.01.*player.hsp) ...
 raw.SealJud(4)=             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
 dmg.SealofJustice=          raw.SealofJustice.*mdf.sphit.*mdf.spcrit; %spell hit/crit
 
-%for net calculations
-dmg.seals=[dmg.SealofTruth dmg.SealofRighteousness dmg.SealofInsight dmg.SealofJustice];
+%exhaustive listing of seal/judgement damage (for net calculations)
+if isempty(exec.seal)==1
+    dmg.seal=0;
+    raw.Judgement=0;
+elseif strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)
+    dmg.seal=dmg.SealofInsight;
+    raw.Judgement=raw.SealJud(3);
+elseif strcmpi('Justice',exec.seal)||strcmpi('SoJ',exec.seal)
+    dmg.seal=dmg.SealofJustice;
+    raw.Judgement=raw.SealJud(4);
+elseif strcmpi('Righteousness',exec.seal)||strcmpi('SoR',exec.seal)
+    dmg.seal=dmg.SealofRighteousness;
+    raw.Judgement=raw.SealJud(2);
+elseif strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
+    dmg.seal=dmg.SealofTruth;
+    raw.Judgement=raw.SealJud(1);
+end
 %% Melee abilities
 
 %Crusader Strike
 raw.CrusaderStrike= 1.2.*player.wdamage.*mdf.phdmg.*mdf.Crus.*(1+2.*mdf.WotL).*mdf.t11x2;
 dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.mehit.*mdf.CScrit;
-net.CrusaderStrike= dmg.CrusaderStrike+dmg.seals(exec.seal).*mdf.mehit;
+net.CrusaderStrike= dmg.CrusaderStrike+dmg.seal.*mdf.mehit;
 
 %Hammer of the Righteous
 %TODO check 2pt10 (both components) 
 raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR;
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.mehit.*mdf.phcrit;
-net.HammeroftheRighteous= dmg.HammeroftheRighteous+dmg.seals(exec.seal).*mdf.mehit;
+net.HammeroftheRighteous= dmg.HammeroftheRighteous+dmg.seal.*mdf.mehit;
 %the aoe rolls only if physical connects
 raw.HammerNova=   ((584+874)./2).*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR.*target.resrdx; %523+783 base @ 80
 dmg.HammerNova=   raw.HammerNova.*(mdf.mehit.*mdf.sphit).*mdf.spcrit; %spell hit/crit
@@ -61,13 +76,13 @@ net.HammerNova=   dmg.HammerNova;  %TODO: does this proc seals?
 raw.Melee=          player.wdamage.*mdf.phdmg;
 dmg.Melee=          raw.Melee.*mdf.aamodel;
 dps.Melee=          dmg.Melee./player.wswing;
-net.Melee=          dmg.Melee+dmg.seals(exec.seal).*mdf.mehit;  %Assume seal procs from glances are full strength - TODO: Is this correct?
+net.Melee=          dmg.Melee+dmg.seal.*mdf.mehit;  %Assume seal procs from glances are full strength - TODO: Is this correct?
 
 %Shield of the Righteous
 mdf.ShoR=   20.*(player.hopo==1)+60.*(player.hopo==2)+120.*(player.hopo==3);  %need to initialize this
 raw.ShieldoftheRighteous= (mdf.ShoR./100.*player.ap).*mdf.spdmg.*mdf.glyphSotR.*target.resrdx;
 dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.mehit.*mdf.phcrit;  %melee hit
-net.ShieldoftheRighteous= dmg.ShieldoftheRighteous + dmg.seals(exec.seal).*mdf.mehit;
+net.ShieldoftheRighteous= dmg.ShieldoftheRighteous + dmg.seal.*mdf.mehit;
 % crit.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.mehit.*mdf.phcritmulti;
 
 %% Ranged abilities
@@ -79,9 +94,9 @@ net.AvengersShield= dmg.AvengersShield; %doesn't proc seals
 
 %Judgement - damage depends on seal.  raw.SealJud contains the Judgement
 %damage values for each seal. The seal of choice is defined in execution_model. 
-raw.Judgement=      raw.SealJud(exec.seal).*mdf.spdmg.*(1+2.*mdf.WotL).*target.resrdx;
+raw.Judgement=      raw.Judgement.*mdf.spdmg.*(1+2.*mdf.WotL).*target.resrdx;
 dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit;
-net.Judgement=      dmg.Judgement+dmg.seals(exec.seal).*mdf.rahit;
+net.Judgement=      dmg.Judgement+dmg.seal.*mdf.rahit;
 
 %Hammer of Wrath
 raw.HammerofWrath=  ((1254+1384)./2 + 0.15.*player.hsp + 0.15.*player.ap).*mdf.spdmg.*target.resrdx; %1124+1242 base @ 80
