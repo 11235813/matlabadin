@@ -32,7 +32,7 @@ function [base] = player_model(varargin)
 
 %% Input handling
 %populate all entries with empty arrays
-base.race=[];base.prof=0;
+base.race=[];base.prof=0;base.lvl=85;
 %start filling entries with inputs
 if nargin>0
     for i=1:2:length(varargin)
@@ -43,6 +43,8 @@ if nargin>0
                 base.race=value;
             case 'prof'
                 base.prof=value;
+            case {'level','lvl'}
+                base.lvl=value;
         end
     end
 end
@@ -79,7 +81,6 @@ base.stats.agi=primary_stats(race,3);
 base.stats.int=primary_stats(race,4);    
 base.stats.spi=primary_stats(race,5);
 
-base.lvl=80;
 base.ap=3.*base.lvl;       %class specific
 base.sp=0;
 base.mast=0;

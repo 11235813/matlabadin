@@ -381,7 +381,7 @@ target.phdr=target.armor./(target.armor+target.armor_c);
 %Vengeance AP correction
 % player.VengAP=min([15.*mdf.VengAP.*(npc.out.phys.*(1-player.phdr)./target.swing ...
 %     +npc.out.spell.*(1-player.spdr)./npc.cast);0.1.*player.hitpoints]).*exec.timein;
-player.VengAP=0.095.*player.hitpoints; %temporary
+player.VengAP=0.095.*player.hitpoints.*exec.timein; %temporary
 player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+player.VengAP+consum.ap).*mdf.UnRage);
 
 %% Weapon Details

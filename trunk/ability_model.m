@@ -11,7 +11,7 @@ player.hopo=3;  %placeholder for now, this may get moved elsewhere
 
 %Seal of Truth, using old SoVeng model, assumes a 5-stack
 raw.SealofTruth=    0.16.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
-raw.SealJud(1)=    (1+0.22.*player.hsp+0.14.*player.ap).*1.5.*mdf.glyphJ.*target.resrdx; 
+raw.JoT        =    (1+0.22.*player.hsp+0.14.*player.ap).*1.5.*mdf.glyphJ.*target.resrdx; 
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit; %automatical connect
 dps.SealofTruth=    dmg.SealofTruth./player.wswing; %TODO : fix
 
@@ -24,18 +24,18 @@ dps.Censure=        dmg.Censure./(5.*cens.NetTick);
 %Seal of Righteousness
 raw.SealofRighteousness=    gear.swing.*(0.011.*player.ap+0.022.*player.hsp).* ...
                             mdf.spdmg.*mdf.SotP.*target.resrdx;
-raw.SealJud(2)=             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
+raw.JoR       =             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
 dmg.SealofRighteousness=    raw.SealofRighteousness; %automatical connect
 
 %Seal of Insight
 raw.SealofInsight=          0.*target.resrdx;
-raw.SealJud(3)=             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
+raw.JoI       =             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
 dmg.SealofInsight=          raw.SealofInsight;
 
 %Seal of Justice
 raw.SealofJustice=          gear.swing.*(0.005.*player.ap+0.01.*player.hsp) ...
                             .*mdf.spdmg.*mdf.SotP.*target.resrdx;
-raw.SealJud(4)=             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
+raw.JoJ       =             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
 dmg.SealofJustice=          raw.SealofJustice.*mdf.sphit.*mdf.spcrit; %spell hit/crit
 
 %exhaustive listing of seal/judgement damage (for net calculations)
@@ -44,16 +44,16 @@ if isempty(exec.seal)==1
     raw.Judgement=0;
 elseif strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)
     dmg.activeseal=dmg.SealofInsight;
-    raw.Judgement=raw.SealJud(3);
+    raw.Judgement=raw.JoI;
 elseif strcmpi('Justice',exec.seal)||strcmpi('SoJ',exec.seal)
     dmg.activeseal=dmg.SealofJustice;
-    raw.Judgement=raw.SealJud(4);
+    raw.Judgement=raw.JoJ;
 elseif strcmpi('Righteousness',exec.seal)||strcmpi('SoR',exec.seal)
     dmg.activeseal=dmg.SealofRighteousness;
-    raw.Judgement=raw.SealJud(2);
+    raw.Judgement=raw.JoR;
 elseif strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
     dmg.activeseal=dmg.SealofTruth;
-    raw.Judgement=raw.SealJud(1);
+    raw.Judgement=raw.JoT;
 end
 %% Melee abilities
 
@@ -68,7 +68,7 @@ raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.spdmg.*mdf.Crus.*mdf.t10x2.
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.mehit.*mdf.phcrit;
 net.HammeroftheRighteous= dmg.HammeroftheRighteous+dmg.activeseal.*mdf.mehit;
 %the aoe rolls only if physical connects
-raw.HammerNova=   ((584+874)./2).*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR.*target.resrdx; %523+783 base @ 80
+raw.HammerNova=   ((584+874)./2).*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR.*target.resrdx; %2512+3070 base @ 80
 dmg.HammerNova=   raw.HammerNova.*(mdf.mehit.*mdf.sphit).*mdf.spcrit; %spell hit/crit
 net.HammerNova=   dmg.HammerNova;  %TODO: does this proc seals?
 
