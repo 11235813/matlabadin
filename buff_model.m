@@ -72,7 +72,7 @@ buff.HePr=((mode==0&&(isempty(excl)||max(strcmpi('HePr',strread(excl,'%s')))==0)
 buff.ArcTac=((mode==0&&(isempty(excl)||max(strcmpi('ArcTac',strread(excl,'%s')))==0))||mode==3);
 %global crit : Leader of the Pack / Rampage / Moonkin Aura / Elemental Oath / Honor Among Thieves
 buff.LotP=((mode==0&&(isempty(excl)||max(strcmpi('LotP',strread(excl,'%s')))==0))||mode==3);
-%physical haste : Windfury Totem / Improved Icy Talons
+%physical attack speed : Windfury Totem / Improved Icy Talons
 buff.WF=((mode==0&&(isempty(excl)||max(strcmpi('WF',strread(excl,'%s')))==0))||mode==3);
 %spell haste : Wrath of Air Totem / Improved Moonkin Form
 buff.WoA=((mode==0&&(isempty(excl)||max(strcmpi('WoA',strread(excl,'%s')))==0))||mode==3);
