@@ -10,11 +10,18 @@ function [exec] = execution_model(varargin)
 %seal - seal choice; 1-SoT,2-SoR,3-SoI,4-SoJ [1]
 %Outputs:
 %exec - structure containing relevant parameters
+%List of seal entries :
+%'' (no active seal)
+%'Insight','SoI'
+%'Justice','SoJ'
+%'Righteousness','SoR'
+%'Truth','SoT'
+%All seal arguments are case-insenstive.
 
 
 %% Input handling
 %populate all entries with empty arrays
-exec.npccount=[];exec.timein=[];exec.timeout=[];exec.behind=[];exec.seal=[];
+exec.npccount=[];exec.timein=[];exec.timeout=[];exec.behind=[];exec.seal=0;
 %start filling entries with inputs
 if nargin>0
     for i=1:2:length(varargin)
@@ -39,4 +46,5 @@ if isempty(exec.npccount)==1 exec.npccount=1; end;
 if isempty(exec.timein)==1 exec.timein=1; end;
 if isempty(exec.timeout)==1 exec.timeout=1; end;
 if isempty(exec.behind)==1 exec.behind=0; end;
-if isempty(exec.seal)==1 exec.seal=1; end;
+if isnumeric(exec.seal)==1 exec.seal='Truth'; end; %workaround for seal==''
+end
