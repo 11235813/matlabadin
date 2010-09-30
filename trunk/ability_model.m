@@ -64,11 +64,11 @@ net.CrusaderStrike= dmg.CrusaderStrike+dmg.activeseal.*mdf.mehit;
 
 %Hammer of the Righteous
 %TODO check 2pt10 (both components) 
-raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR;
+raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR;
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.mehit.*mdf.phcrit;
 net.HammeroftheRighteous= dmg.HammeroftheRighteous+dmg.activeseal.*mdf.mehit;
 %the aoe rolls only if physical connects
-raw.HammerNova=   ((584+874)./2).*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR.*target.resrdx; %2512+3070 base @ 80
+raw.HammerNova=   ((584+874)./2+0.3577.*player.hsp).*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR.*target.resrdx; %523+783 base @ 80
 dmg.HammerNova=   raw.HammerNova.*(mdf.mehit.*mdf.sphit).*mdf.spcrit; %spell hit/crit
 net.HammerNova=   dmg.HammerNova;  %TODO: does this proc seals?
 
@@ -106,7 +106,7 @@ net.HammerofWrath= dmg.HammerofWrath;  %doesnt' proc seals
 %% Spell abilities
 
 %Consecration
-raw.Consecration =  (8.*(0+0.027.*player.hsp+0.027.*player.ap)).*mdf.spdmg.*mdf.HalGro.*mdf.glyphCons.*target.resrdx;
+raw.Consecration =  (8.*(101.2+0.0338.*player.hsp+0.0338.*player.ap)).*mdf.spdmg.*mdf.HalGro.*mdf.glyphCons.*target.resrdx;
 dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit; %spell hit/crit
 net.Consecration =  dmg.Consecration;
 
@@ -126,6 +126,6 @@ raw.HolyShield=     0.*mdf.spdmg.*target.resrdx;
 dmg.HolyShield=     raw.HolyShield.*mdf.sphit;
 
 %Holy Wrath
-raw.HolyWrath=      (2401./exec.npccount+0.3.*player.hsp).*mdf.spdmg.*target.resrdx;  %2153 base @ 80
+raw.HolyWrath=      (2501./exec.npccount+0.3.*player.hsp).*mdf.spdmg.*target.resrdx;  %2153 base @ 80
 dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit;
 net.HolyWrath=      dmg.HolyWrath;

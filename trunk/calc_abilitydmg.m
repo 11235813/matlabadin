@@ -7,14 +7,20 @@ base=player_model('lvl',85,'race','Human','prof','');
 npc=npc_model(base);
 egs=ddb.gearset{1};  %85
 
+% %spellpower weapoin/shield
+% egs(15)=equip(56433);%main hand
+% egs(16)=equip(55880);%off hand
+
+
 %lvl 80
 % base=player_model('lvl',80,'race','Human','prof','');
 % npc=npc_model(base);
 % egs=ddb.gearset{2};  %80
 
 
-tree=ddb.talentset{1};  %85 and 80 (drop EG/GbtL @ 80)
-
+talent=ddb.talentset{1};  %85 and 80 (drop EG/GbtL @ 80)
+% talent.ret(1,2)=3;
+% taletn.holy(1,3)=1;
 
 %execution
 exec=execution_model('npccount',1,'timein',0,'timeout',1,'seal','Truth');
@@ -26,6 +32,18 @@ talents
 gear_stats
 %calculate final stats
 stat_model
+
+
+%Debugging for odd gear sets
+% old.ap=player.ap;old.hsp=player.hsp;
+% player.ap=5511;
+% player.hsp=1683;
+% gear.swing=2.6;
+% player.wdamage=(1683+2250)/2;
+% player.wdamage=gear.avgdmg+player.ap./14.*gear.swing;
+
+
+
 %calculate ability damages - uncomment appropriate level model
 ability_model
 % ability_model_80
@@ -74,6 +92,16 @@ thr_summary=[char(dmg_labels) spacer int2str(dmg_vals.*mdf.threat)];
 all_summary=[char(dmg_labels) spacer int2str(raw_vals) spacer int2str(dmg_vals) spacer int2str(dmg_vals.*mdf.threat)]
 
 
+%ras' human data
+data1=[1231 1476 520 3605 2601 0 1354 204 57 24 1005*5/6 1645 231 842 776]';
+
+%kierly's human data
+% data1=[627 215 1140 3764 1612 0 1527 22.5 95 41 216*5 210*10 26 1452 90.4]';
+
+%neziah's human data
+% data1=[6325 3333 2950 6179 2126 0 0 362 0 0 931*5 426*10 635 1610 1503]';
+    
+data2=[raw_summary spacer int2str(data1) spacer int2str(data1-raw_vals) spacer int2str(100.*(data1-raw_vals)./raw_vals)]
 %% Put glyph section here
 
 
