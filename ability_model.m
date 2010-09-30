@@ -76,7 +76,7 @@ net.HammerNova=   dmg.HammerNova;  %TODO: does this proc seals?
 raw.Melee=          player.wdamage.*mdf.phdmg;
 dmg.Melee=          raw.Melee.*mdf.aamodel;
 dps.Melee=          dmg.Melee./player.wswing;
-net.Melee=          dmg.Melee+dmg.activeseal.*mdf.mehit;  %Assume seal procs from glances are full strength - TODO: Is this correct?
+net.Melee=          dmg.Melee+dmg.activeseal.*mdf.mehit;
 
 %Shield of the Righteous
 mdf.ShoR=   20.*(player.hopo==1)+60.*(player.hopo==2)+120.*(player.hopo==3);  %need to initialize this

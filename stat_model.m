@@ -323,7 +323,7 @@ player.parry=base.parry+avoiddr.parrydr-0.04.*npc.skillgap;
 
 %at the moment, we don't have Redoubt to worry about, so we shouldnt' need
 %dynamic effects for block chance (hopefully?)
-player.block=base.block+16.*(talentpoints.prot>=30)+mdf.HolySh ...
+player.block=base.block+16.*(talent.protpoints>=30)+mdf.HolySh ...
     +gear.block./cnv.block_block+2.*player.mast-0.04.*npc.skillgap;
 
 %check for bounding issues, based on the attack table

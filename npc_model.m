@@ -49,7 +49,7 @@ if isempty(npc.lvl)==0 && (npc.lvl<base.lvl)
     error('Npc_model failed to initialize : npc.lvl below the level cap.');
 end
 %default values of the input arguments
-if isempty(npc.lvl)==1 npc.lvl=83; end;
+if isempty(npc.lvl)==1 npc.lvl=base.lvl+3; end;
 if isempty(npc.type)==1 npc.type=0; end;
 if isempty(npc.swing)==1 npc.swing=1.5; end;
 if isempty(npc.cast)==1 npc.cast=1.5; end;

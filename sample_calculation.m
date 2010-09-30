@@ -7,7 +7,7 @@ def_db;
 base=player_model('race','Human');
 
 %invoke npc model
-npc=npc_model(base,'lvl',83);
+npc=npc_model(base);
 
 %invoke execution_model
 exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','SoT');
