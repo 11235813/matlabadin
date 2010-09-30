@@ -373,6 +373,18 @@ idb.iid(50708).sta=94+30;
 idb.iid(50708).str=115;
 idb.iid(50708).isproc=71873;
 
+idb.iid(56433).name='Blade of the Burning Sun';
+idb.iid(56433).ilvl=346;
+idb.iid(56433).wtype='swo';
+idb.iid(56433).tooldps=41.7;
+idb.iid(56433).swing=1.60;
+idb.iid(56433).avgdmg=(1+132)/2;
+idb.iid(56433).sta=172;
+idb.iid(56433).int=115;
+idb.iid(56433).sp=1532;
+idb.iid(56433).haste=67;
+idb.iid(56433).crit=82;
+
 idb.iid(63799).name='Mace of the Gullet';
 idb.iid(63799).ilvl=333;
 idb.iid(63799).wtype='mac';
@@ -392,6 +404,14 @@ idb.iid(50729).str=102;
 idb.iid(50729).sta=141+30;
 idb.iid(50729).dodge=68;
 idb.iid(50729).parry=72;
+
+idb.iid(55880).name='Zora''s Ward';
+idb.iid(55880).ilvl=333;
+idb.iid(55880).barmor=11504;
+idb.iid(55880).sta=224;
+idb.iid(55880).int=149;
+idb.iid(55880).haste=107;
+idb.iid(55880).mast=87;
 
 idb.iid(56096).name='Bulwark of the Primordial Mound';
 idb.iid(56096).ilvl=333;

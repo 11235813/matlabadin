@@ -47,6 +47,10 @@ tempegs(16)=equip(1);
 
 ddb.gearset{2}=tempegs;
 
+%Naked
+tempegs(15)=equip(1);
+ddb.gearset{3}=tempegs;
+
 
 
 %% Talent Specs

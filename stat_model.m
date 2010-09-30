@@ -304,7 +304,7 @@ mdf.WoGcrit=1+(mdf.spcritmulti-1).*player.WoGcrit./100;
 
 %% SP and AP
 %AP gets computed later on, in the Vengeance subsection
-player.sp=gear.sp+extra.sp+consum.sp+floor(player.str.*(mdf.TbtL./10))+player.int./cnv.int_sp;
+player.sp=gear.sp+extra.sp+consum.sp+floor(player.str.*(mdf.TbtL./10))+(player.int-10)./cnv.int_sp;
 %for future use in case our spellpower and "holy spell power" are both
 %relevant.  hsp is what we get from TbtL, and only affects damage.  We're
 %back to the old 2.x "spell power" and "healing power" modle, it seems.
@@ -366,8 +366,11 @@ target.resrdx=(100-npc.presist)./100;
 %it.
 player.ArPr=0;
 %Armor Penetration Constant C
-target.armor_c=2167.5*base.lvl-158167.5; %85
-target.armor_c=467.5*base.lvl-22167.5;
+if base.lvl==80
+    target.armor_c=467.5*base.lvl-22167.5;
+else
+    target.armor_c=2167.5*base.lvl-158167.5; %85
+end
 %debuffed armor
 target.dbfarmor=npc.armor.*mdf.Sund.*mdf.ST;
 %Armor penetration cap (max amount of armor that can be removed)
