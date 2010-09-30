@@ -4,15 +4,9 @@
 %values are loaded into the individual talents.  This gives us an easy and
 %compact way to store and load default builds.
 
-%TODO: I've stored talents in the tree matrices by absolute position in the
-%Nx4 grid of the talent tree.  Does it make more sense to do this, or to
-%use relative addressing?  In other words, Sacred Duty is in slot (6,2),
-%but it's the first talent of tier 6.  Should it be stored in
-%tree.prot(6,2) or tree.prot(6,1)?  The former has the advantage of the
-%matrix representation looking like the tree, while the latter puts all of
-%the zeros at the end of a row.
-
-%talents are stored in the "talent" structure, in the form
+%Talents are stored in the tree matrices by absolute position in the
+%Nx4 grid of the talent tree.
+%Individual talents entries are stored in the "talent" structure, in the form
 %talent.TalentName, which would return the number of points spent in
 %TalentName.  
 
@@ -31,97 +25,76 @@ talent.TouchedbytheLight=1;
 talent.JudgementsoftheWise=1;
 
 %% Holy
-if exist('tree')==0 || isfield(tree,'holy')==0
-    tree.holy=zeros(2,4);
-    tree.holy=[...
-        0 0 0 0; ...
-        0 0 0 0];
+if exist('talent')==0||isfield(talent,'holy')==0
+    talent.holy=zeros(2,4);
+    talent.holy=[0 0 0 0; ...
+                 0 0 0 0];
 end
+talent.ArbiteroftheLight=talent.holy(1,1);
+talent.ProtectoroftheInnocent=talent.holy(1,2);
+talent.JudgementsofthePure=talent.holy(1,3);
 
-talent.ArbiteroftheLight=tree.holy(1,1);
-talent.ProtectoroftheInnocent=tree.holy(1,2);
-talent.JudgementsofthePure=tree.holy(1,3);
+talent.ClarityofPurpose=talent.holy(2,1);
+talent.LastWord=talent.holy(2,2);
+talent.BlazingLight=talent.holy(2,3);
 
-talent.ClarityofPurpose=tree.holy(2,1);
-talent.LastWord=tree.holy(2,2);
-talent.BlazingLight=tree.holy(2,3);
-
-% holy=zeros(2,3);
-% holy(1,1)=talent.ArbiteroftheLight;holy(1,2)=talent.ProtectoroftheInnocent;holy(1,3)=talent.JudgementsofthePure;
-% holy(2,1)=talent.ClarityofPurpose;holy(2,2)=talent.LastWord;holy(2,3)=talent.BlazingLight;
-talentpoints.holy=sum(sum(tree.holy));
+talent.holypoints=sum(sum(talent.holy));
 
 %% Prot
-if exist('tree')==0 || isfield(tree,'prot')==0
-    tree.prot=zeros(7,4);
-    tree.prot=[...
-        3 2 0 0; ...
-        2 3 0 0; ...
-        0 3 1 2; ...
-        2 1 2 0; ...
-        1 1 0 1; ...
-        0 2 3 0; ...
-        0 1 0 0];
+if exist('talent')==0||isfield(talent,'prot')==0
+    talent.prot=zeros(7,4);
+    talent.prot=[3 2 0 0; ...
+                 2 3 0 0; ...
+                 0 3 1 2; ...
+                 2 1 2 0; ...
+                 1 1 0 1; ...
+                 0 2 3 0; ...
+                 0 1 0 0];
 end
-       
-talent.Divinity=tree.prot(1,1);
-talent.SealsofthePure=tree.prot(1,2);
-talent.EternalGlory=tree.prot(1,3);
+talent.Divinity=talent.prot(1,1);
+talent.SealsofthePure=talent.prot(1,2);
+talent.EternalGlory=talent.prot(1,3);
 
-talent.JudgementsoftheJust=tree.prot(2,1);
-talent.Toughness=tree.prot(2,2);
-talent.ImprovedHammerofJustice=tree.prot(2,3);
+talent.JudgementsoftheJust=talent.prot(2,1);
+talent.Toughness=talent.prot(2,2);
+talent.ImprovedHammerofJustice=talent.prot(2,3);
 
-talent.HallowedGround=tree.prot(3,1);
-talent.Sanctuary=tree.prot(3,2);
-talent.HammeroftheRighteous=tree.prot(3,3);
-talent.WrathoftheLightbringer=tree.prot(3,4);
+talent.HallowedGround=talent.prot(3,1);
+talent.Sanctuary=talent.prot(3,2);
+talent.HammeroftheRighteous=talent.prot(3,3);
+talent.WrathoftheLightbringer=talent.prot(3,4);
 
-talent.Reckoning=tree.prot(4,1);
-talent.ShieldoftheRighteous=tree.prot(4,2);
-talent.GrandCrusader=tree.prot(4,3);
-talent.DivineGuardian=tree.prot(4,4);
+talent.Reckoning=talent.prot(4,1);
+talent.ShieldoftheRighteous=talent.prot(4,2);
+talent.GrandCrusader=talent.prot(4,3);
+talent.DivineGuardian=talent.prot(4,4);
 
-talent.Vindication=tree.prot(5,1);
-talent.HolyShield=tree.prot(5,2);
-talent.GuardedbytheLight=tree.prot(5,3);
+talent.Vindication=talent.prot(5,1);
+talent.HolyShield=talent.prot(5,2);
+talent.GuardedbytheLight=talent.prot(5,3);
 
-talent.ShieldoftheTemplar=tree.prot(6,2);
-talent.SacredDuty=tree.prot(6,3);
+talent.ShieldoftheTemplar=talent.prot(6,2);
+talent.SacredDuty=talent.prot(6,3);
 
-talent.ArdentDefender=tree.prot(7,2);
+talent.ArdentDefender=talent.prot(7,2);
 
-% prot=zeros(7,4);
-% prot(1,1)=talent.Divinity;prot(1,2)=talent.SealsofthePure;prot(1,3)=talent.EternalGlory;
-% prot(2,1)=talent.JudgementsoftheJust;prot(2,2)=talent.Toughness;prot(2,3)=talent.ImprovedHammerofJustice;
-% prot(3,1)=talent.HallowedGround;prot(3,2)=talent.Sanctuary;prot(3,3)=talent.HammeroftheRighteous;prot(3,4)=talent.WrathoftheLightbringer;
-% prot(4,1)=talent.Reckoning;prot(4,2)=talent.ShieldoftheRighteous;prot(4,3)=talent.GrandCrusader;prot(4,4)=talent.DivineGuardian;
-% prot(5,1)=talent.Vindication;prot(5,2)=talent.HolyShield;prot(5,3)=talent.GuardedbytheLight;
-% prot(6,1)=talent.ShieldoftheTemplar;prot(6,2)=talent.SacredDuty;
-% prot(7,1)=talent.ArdentDefender;
-talentpoints.prot=sum(sum(tree.prot));
+talent.protpoints=sum(sum(talent.prot));
 
 %% Ret
-if exist('tree')==0 || isfield(tree,'ret')==0
-    tree.ret=zeros(2,4);
-    tree.ret=[...
-        0 3 2 0; ...
-        0 3 0 2];
+if exist('talent')==0 || isfield(talent,'ret')==0
+    talent.ret=zeros(2,4);
+    talent.ret=[0 3 2 0; ...
+                0 3 0 2];
 end
-       
-       
-talent.EyeforanEye=tree.ret(1,1);
-talent.Crusade=tree.ret(1,2);
-talent.ImprovedJudgement=tree.ret(1,3);
+talent.EyeforanEye=talent.ret(1,1);
+talent.Crusade=talent.ret(1,2);
+talent.ImprovedJudgement=talent.ret(1,3);
 
-talent.GuardiansFavor=tree.ret(2,1);
-talent.RuleofLaw=tree.ret(2,2);
-talent.PursuitofJustice=tree.ret(2,4);
+talent.GuardiansFavor=talent.ret(2,1);
+talent.RuleofLaw=talent.ret(2,2);
+talent.PursuitofJustice=talent.ret(2,4);
 
-% ret=zeros(2,3);
-% ret(1,1)=talent.EyeforanEye;ret(1,2)=talent.Crusade;ret(1,3)=talent.ImprovedJudgement;
-% ret(2,1)=talent.GuardiansFavor;ret(2,2)=talent.RuleofLaw;ret(2,3)=talent.PursuitofJustice;
-talentpoints.ret=sum(sum(tree.ret));
+talent.retpoints=sum(sum(talent.ret));
 
 
 %% Glyphs (logical)

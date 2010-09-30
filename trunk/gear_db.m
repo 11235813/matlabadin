@@ -241,7 +241,6 @@ idb.iid(55888).str=114;
 idb.iid(55888).sta=224;
 idb.iid(55888).exp=76;
 idb.iid(55888).dodge=149;
-% idb.iid(55888).slot=2;
 
 %% Shoulder
 idb.iid(56124).name='Earthshape Pauldrons';
@@ -269,7 +268,6 @@ idb.iid(56219).sta=224;
 idb.iid(56219).exp=76;
 idb.iid(56219).dodge=149;
 idb.iid(56219).barmor=572;
-% idb.iid(56219).slot=4;
 
 %% Bracers
 idb.iid(51901).name='Gargoyle Spit Bracers (Heroic)';
@@ -288,7 +286,6 @@ idb.iid(55992).sta=224;
 idb.iid(55992).hit=76;
 idb.iid(55992).dodge=149;
 idb.iid(55992).barmor=1369;
-% idb.iid(55992).slot=6;
 idb.iid(55992).atype=1;
 
 %% Gloves
@@ -300,7 +297,6 @@ idb.iid(56099).mast=133;
 idb.iid(56099).parry=133;
 idb.iid(56099).barmor=1955;
 idb.iid(56099).atype=1;
-
 
 %% Belts
 idb.iid(50991).name='Verdigris Chain Belt';
@@ -345,7 +341,6 @@ idb.iid(56111).str=149;
 idb.iid(56111).sta=224;
 idb.iid(56111).mast=100;
 idb.iid(56111).dodge=100;
-% idb.iid(56111).slot=11;
 
 %% Trinkets
 idb.iid(50356).name='Corroded Skeleton Key';
@@ -359,7 +354,6 @@ idb.iid(54571).sta=228;
 idb.iid(56121).name='Throngus''s Finger';
 idb.iid(56121).ilvl=333;
 idb.iid(56121).dodge=252;
-% idb.iid(56121).slot=13;
 
 %% Weapons
 idb.iid(44638).name='Dalaran Sword';
@@ -367,14 +361,14 @@ idb.iid(44638).ilvl=80;
 idb.iid(44638).wtype='swo';
 idb.iid(44638).tooldps=43.0;
 idb.iid(44638).swing=1.4;
-idb.iid(44638).avgdmg=(42+79)/2;
+idb.iid(44638).avgdmg=(42+79)./2;
 
 idb.iid(50708).name='Last Word (Heroic)';
 idb.iid(50708).ilvl=277;
 idb.iid(50708).wtype='mac';
 idb.iid(50708).tooldps=250.6;
 idb.iid(50708).swing=1.8;
-idb.iid(50708).avgdmg=(315+587)/2;
+idb.iid(50708).avgdmg=(315+587)./2;
 idb.iid(50708).sta=94+30;
 idb.iid(50708).str=115;
 idb.iid(50708).isproc=71873;
@@ -384,7 +378,7 @@ idb.iid(63799).ilvl=333;
 idb.iid(63799).wtype='mac';
 idb.iid(63799).tooldps=362.7;
 idb.iid(63799).swing=2.6;
-idb.iid(63799).avgdmg=(660+1226)/2;
+idb.iid(63799).avgdmg=(660+1226)./2;
 idb.iid(63799).sta=172;
 idb.iid(63799).str=115;
 idb.iid(63799).exp=82;
@@ -406,15 +400,13 @@ idb.iid(56096).sta=224;
 idb.iid(56096).hit=76;
 idb.iid(56096).dodge=149;
 idb.iid(56096).barmor=11504;
-% idb.iid(56096).slot=16;
-
 
 %% Librams
 idb.iid(50461).name='Libram of the Eternal Tower';
 idb.iid(50461).dodge=219;
 idb.iid(50461).isproc=71194;
 
-%% Enchant section - to be written.  
+%% Enchant section  
 %Enchants work exactly the same way that items do.  There is an idb
 %structure that contains all of the relevant enchants, according to the
 %spell_id value. Since it has the same form, we can use the same equip()

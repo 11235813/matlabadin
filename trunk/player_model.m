@@ -12,6 +12,7 @@ function [base] = player_model(varargin)
 %their own variables so that it's easy to do matrix operations on them.
 
 %Inputs [default value] :
+%level - player's level [80]
 %race - player's race ['Human']
 %prof - primary professions; individual entries are separated by whitespaces ['BS JC']
 %List of profession entries :
@@ -32,7 +33,7 @@ function [base] = player_model(varargin)
 
 %% Input handling
 %populate all entries with empty arrays
-base.race=[];base.prof=0;base.lvl=85;
+base.race=[];base.prof=0;base.lvl=[];
 %start filling entries with inputs
 if nargin>0
     for i=1:2:length(varargin)
@@ -49,6 +50,7 @@ if nargin>0
     end
 end
 %default values of the input arguments
+if isempty(base.lvl)==1 base.lvl=80; end;
 if isempty(base.race)==1 base.race='Human'; end;
 if isnumeric(base.prof)==1 base.prof='BS JC'; end; %workaround for prof=='' 
 
@@ -73,7 +75,7 @@ elseif strcmpi('Blood Elf',base.race)||strcmpi('Belf',base.race)
 elseif strcmpi('Tauren',base.race)||strcmpi('Taur',base.race)
     race=5;
 else
-    error('Class input is unrecognized.');
+    error('Invalid race input.');
 end
 base.stats.str=primary_stats(race,1);
 base.stats.sta=primary_stats(race,2);

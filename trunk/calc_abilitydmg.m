@@ -3,21 +3,21 @@ gear_db;
 def_db;
 
 % lvl 85
-base=player_model;
-npc=npc_model(base,'lvl',88);
+base=player_model('lvl',85,'race','Human','prof','');
+npc=npc_model(base);
 egs=ddb.gearset{1};  %85
 
 %lvl 80
-% base=player_model('lvl',80);
-% npc=npc_model(base,'lvl',83);
+% base=player_model('lvl',80,'race','Human','prof','');
+% npc=npc_model(base);
 % egs=ddb.gearset{2};  %80
 
 
 tree=ddb.talentset{1};  %85 and 80 (drop EG/GbtL @ 80)
 
 
-%execution. seal : 1=truth, 2=righteousness, 3=insight, 4=justice.
-exec=execution_model('npccount',1,'timein',0,'timeout',1,'seal',1);
+%execution
+exec=execution_model('npccount',1,'timein',0,'timeout',1,'seal','Truth');
 %activate buffs
 buff=buff_model('mode',1);
 %invoke talents & glyphs
