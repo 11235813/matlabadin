@@ -18,7 +18,7 @@ mdf.TbtL=6.*talent.TouchedbytheLight; %incorporates all effects
 mdf.AotL=6.*talent.ArbiteroftheLight;
 mdf.BlazLi=1+0.1.*talent.BlazingLight; %Exo output
 mdf.JotP=1+0.03.*talent.JudgementsofthePure;
-mdf.SotP=1+0.05.*talent.SealsofthePure;
+mdf.SotP=1+0.06.*talent.SealsofthePure;
 % mdf.EG %NYI
 mdf.JotJ=0.1.*talent.JudgementsoftheJust;
 mdf.Tough=1+floor(3.4.*talent.Toughness)./100;
