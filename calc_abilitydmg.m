@@ -20,7 +20,7 @@ egs=ddb.gearset{1};  %85
 
 talent=ddb.talentset{1};  %85 and 80 (drop EG/GbtL @ 80)
 % talent.ret(1,2)=3;
-% taletn.holy(1,3)=1;
+% talent.holy(1,3)=1;
 
 %execution
 exec=execution_model('npccount',1,'timein',0,'timeout',1,'seal','Truth');
@@ -95,8 +95,10 @@ all_summary=[char(dmg_labels) spacer int2str(raw_vals) spacer int2str(dmg_vals) 
 %ras' human data
 data1=[1231 1476 520 3605 2601 0 1354 204 57 24 1005*5/6 1645 231 842 776]';
 
-%kierly's human data
+%kierly's human data, 2 sets, 3rd is combined
 % data1=[627 215 1140 3764 1612 0 1527 22.5 95 41 216*5 210*10 26 1452 90.4]';
+% data1=[0   218 1242 3854    0 0    0 22.7 95 41 223*5   0*10  0    0 92]';
+% data1=[627 215 1242 3764 1612 0 1527 22.7 95 41 223*5 210*10 26 1452 90.4]';
 
 %neziah's human data
 % data1=[6325 3333 2950 6179 2126 0 0 362 0 0 931*5 426*10 635 1610 1503]';
