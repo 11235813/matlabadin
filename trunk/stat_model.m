@@ -389,6 +389,7 @@ player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+player.VengAP+consu
 
 %% Weapon Details
 player.wdamage=gear.avgdmg+player.ap./14.*gear.swing;
+player.ndamage=gear.avgdmg+player.ap./14.*2.4; %hardcoded since we can't use daggers
 player.wswing=gear.swing./mdf.phhaste;
 player.wdps=player.wdamage./player.wswing;
 

@@ -58,13 +58,13 @@ end
 %% Melee abilities
 
 %Crusader Strike
-raw.CrusaderStrike= 1.2.*player.wdamage.*mdf.phdmg.*mdf.Crus.*(1+2.*mdf.WotL).*mdf.t11x2;
+raw.CrusaderStrike= 1.2.*player.ndamage.*mdf.phdmg.*mdf.Crus.*(1+2.*mdf.WotL).*mdf.t11x2;
 dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.mehit.*mdf.CScrit;
 net.CrusaderStrike= dmg.CrusaderStrike+dmg.activeseal.*mdf.mehit;
 
 %Hammer of the Righteous
 %TODO check 2pt10 (both components) 
-raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR;
+raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR;  %not ap-normalized?
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.mehit.*mdf.phcrit;
 net.HammeroftheRighteous= dmg.HammeroftheRighteous+dmg.activeseal.*mdf.mehit;
 %the aoe rolls only if physical connects
