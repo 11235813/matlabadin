@@ -17,7 +17,7 @@ mdf.VengAP=0.05.*talent.Vengeance;
 mdf.TbtL=6.*talent.TouchedbytheLight; %incorporates all effects
 mdf.AotL=6.*talent.ArbiteroftheLight;
 mdf.BlazLi=1+0.1.*talent.BlazingLight; %Exo output
-mdf.JotP=1+0.03.*talent.JudgementsofthePure;
+mdf.JotP=0.03.*talent.JudgementsofthePure;
 mdf.SotP=1+0.06.*talent.SealsofthePure;
 % mdf.EG %NYI
 mdf.JotJ=0.1.*talent.JudgementsoftheJust;
@@ -79,7 +79,6 @@ mdf.ArcInt=100.*buff.ArcInt;
 mdf.UnRage=1+0.1.*buff.UnRage;
 mdf.FMT=6.*buff.FMT; %does it stack with ToW?
 mdf.ToW=10.*buff.ToW; %does it stack with FMT?
-mdf.HePr=buff.HePr;
 mdf.ArcTac=1+0.03.*buff.ArcTac;
 mdf.LotP=5.*buff.LotP;
 mdf.WF=1+0.1.*buff.WF;
@@ -173,7 +172,8 @@ player.int=floor(base.stats.int.*mdf.BoK)+floor((gear.int+extra.int+consum.int).
 player.armorystr=base.stats.str+gear.str; %TODO fix/delete
 
 %hit points
-player.hitpoints=base.health+10.*(player.sta-18)+gear.health+consum.health;
+player.hitpoints=base.health.*(1+0.05.*(strcmpi('Tauren',base.race)||strcmpi('Taur',base.race))) ...
+    +10.*(player.sta-18)+gear.health+consum.health;
 
 %armor and physical damage reduction
 player.armor=gear.barmor.*mdf.Tough.*mdf.ameta ...
@@ -188,9 +188,11 @@ player.resist_c=400;
 player.spdr=player.resistance./(player.resistance+player.resist_c);
 
 
-%% Hit Rating (TODO check HePr later on)
-player.phhit=(gear.hit+extra.hit+consum.hit)./cnv.hit_phhit+mdf.HePr;
-player.sphit=(gear.hit+extra.hit+consum.hit)./cnv.hit_sphit+mdf.TbtL+mdf.HePr;
+%% Hit Rating
+player.phhit=(gear.hit+extra.hit+consum.hit)./cnv.hit_phhit ...
+    +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
+player.sphit=(gear.hit+extra.hit+consum.hit)./cnv.hit_sphit+mdf.TbtL ...
+    +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
 
 
 %% Expertise
@@ -207,15 +209,15 @@ player.exp=base.exp+((gear.exp+extra.exp+consum.exp)./cnv.exp_exp)+mdf.glyphSoT;
 %% Haste 
 player.phhaste=100.*( ...
     (1 + (gear.haste+extra.haste+consum.haste)./cnv.haste_phhaste./100).* ...
-    mdf.JotP.*mdf.WF ...
+    (1+mdf.JotP.*(isempty(exec.seal)==0)).*mdf.WF ...
     -1);
 player.sphaste=100.*(...
     (1+(gear.haste+extra.haste+consum.haste)./cnv.haste_sphaste./100).* ...
-    mdf.JotP.*mdf.WoA ...
+    (1+mdf.JotP.*(isempty(exec.seal)==0)).*mdf.WoA ...
     -1);
 player.effhaste=100.*( ...
     (1 + (gear.haste+extra.haste+consum.haste)./cnv.haste_phhaste./100) ...
-    .*mdf.JotP ...
+    .*(1+mdf.JotP.*(isempty(exec.seal)==0)) ...
     -1); %"true" physical haste, lowering the GCD
 player.phgcd=max([1.5./(1+player.effhaste./100);ones(size(player.effhaste))]);
 player.spgcd=max([1.5./(1+player.sphaste./100);ones(size(player.sphaste))]);
@@ -388,8 +390,8 @@ player.VengAP=0.095.*player.hitpoints.*exec.timein; %temporary
 player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+player.VengAP+consum.ap).*mdf.UnRage);
 
 %% Weapon Details
-player.wdamage=gear.avgdmg+player.ap./14.*gear.swing;
-player.ndamage=gear.avgdmg+player.ap./14.*2.4; %hardcoded since we can't use daggers
+player.wdamage=gear.avgdmg+player.ap./14.*gear.swing; %not normalized : AA, Reck, phys HotR
+player.ndamage=gear.avgdmg+player.ap./14.*2.4; %normalized attacks (hardcoded)
 player.wswing=gear.swing./mdf.phhaste;
 player.wdps=player.wdamage./player.wswing;
 
