@@ -28,7 +28,7 @@ function [base] = player_model(varargin)
 %'Mining','Min'
 %'Skinning','Skin'
 %'Tailoring','Tail'
-%All arguments are case-insenstive.
+%Race/profession arguments are case-insenstive.
 
 
 %% Input handling
@@ -79,7 +79,7 @@ if strcmpi('Human',base.race)||strcmpi('Hum',base.race)
     race=1;
 elseif strcmpi('Dwarf',base.race)||strcmpi('Dwa',base.race)
     race=2;
-elseif strcmpi('Draenai',base.race)||strcmpi('Drae',base.race)
+elseif strcmpi('Draenei',base.race)||strcmpi('Drae',base.race)
     race=3;
 elseif strcmpi('Blood Elf',base.race)||strcmpi('Belf',base.race)
     race=4;

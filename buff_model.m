@@ -66,8 +66,6 @@ buff.UnRage=((mode==0&&(isempty(excl)||max(strcmpi('UnRage',strread(excl,'%s')))
 buff.FMT=((mode==0&&(isempty(excl)||max(strcmpi('FMT',strread(excl,'%s')))==0))||mode==3);
 %greater multiplicative SP : Totem of Wrath / Demonic Pact
 buff.ToW=((mode==0&&(isempty(excl)||max(strcmpi('ToW',strread(excl,'%s')))==0))||mode==3);
-%global hit : Heroic Presence (Draenei) /TODO check it up later
-buff.HePr=((mode==0&&(isempty(excl)||max(strcmpi('HePr',strread(excl,'%s')))==0))||mode==3);
 %global damage dealt : Communion / Ferocious Inspiration / Arcane Tactics
 buff.ArcTac=((mode==0&&(isempty(excl)||max(strcmpi('ArcTac',strread(excl,'%s')))==0))||mode==3);
 %global crit : Leader of the Pack / Rampage / Moonkin Aura / Elemental Oath / Honor Among Thieves

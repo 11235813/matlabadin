@@ -27,7 +27,7 @@ raw.SealofRighteousness=    gear.swing.*(0.011.*player.ap+0.022.*player.hsp).* .
 raw.JoR       =             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
 dmg.SealofRighteousness=    raw.SealofRighteousness; %automatical connect
 
-%Seal of Insight
+%Seal of Insight (15 PPM, not haste-normalized)
 raw.SealofInsight=          0.*target.resrdx;
 raw.JoI       =             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
 dmg.SealofInsight=          raw.SealofInsight;
@@ -64,13 +64,13 @@ net.CrusaderStrike= dmg.CrusaderStrike+dmg.activeseal.*mdf.mehit;
 
 %Hammer of the Righteous
 %TODO check 2pt10 (both components) 
-raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR;  %not ap-normalized?
+raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR;
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.mehit.*mdf.phcrit;
 net.HammeroftheRighteous= dmg.HammeroftheRighteous+dmg.activeseal.*mdf.mehit;
 %the aoe rolls only if physical connects
 raw.HammerNova=   ((584+874)./2+0.3577.*player.hsp).*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR.*target.resrdx; %523+783 base @ 80
 dmg.HammerNova=   raw.HammerNova.*(mdf.mehit.*mdf.sphit).*mdf.spcrit; %spell hit/crit
-net.HammerNova=   dmg.HammerNova;  %TODO: does this proc seals?
+net.HammerNova=   dmg.HammerNova;  %aoe doesn't proc seals
 
 %Melee attacks
 raw.Melee=          player.wdamage.*mdf.phdmg;
@@ -92,8 +92,7 @@ raw.AvengersShield= ((2802+3424)./2+0.42.*player.ap+0.22.*player.hsp).*mdf.spdmg
 dmg.AvengersShield= raw.AvengersShield.*mdf.rahit.*mdf.phcrit;                
 net.AvengersShield= dmg.AvengersShield; %doesn't proc seals
 
-%Judgement - damage depends on seal.  raw.SealJud contains the Judgement
-%damage values for each seal. The seal of choice is defined in execution_model. 
+%Judgement (the seal of choice is defined in execution_model) 
 raw.Judgement=      raw.Judgement.*mdf.spdmg.*(1+2.*mdf.WotL).*target.resrdx;
 dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit;
 net.Judgement=      dmg.Judgement+dmg.activeseal.*mdf.rahit;
@@ -101,7 +100,7 @@ net.Judgement=      dmg.Judgement+dmg.activeseal.*mdf.rahit;
 %Hammer of Wrath
 raw.HammerofWrath= ((1254+1384)./2 + 0.15.*player.hsp + 0.15.*player.ap).*mdf.spdmg.*target.resrdx; %1124+1242 base @ 80
 dmg.HammerofWrath= raw.HammerofWrath.*mdf.rahit.*mdf.HoWcrit;
-net.HammerofWrath= dmg.HammerofWrath;  %doesnt' proc seals
+net.HammerofWrath= dmg.HammerofWrath;  %doesn't proc seals
 
 %% Spell abilities
 

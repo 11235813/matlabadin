@@ -75,7 +75,7 @@ npc.parry=5+npc.skillgap.*(0.1+0.5.*skillflag);
 npc.block=5+npc.skillgap.*0.1;
 
 npc.glance=6.*(1+0.2.*npc.skillgap);
-npc.glancerdx=max([npc.skillgap+10.*skillflag;5]); %average damage reduction (5/5/15/25)
+npc.glancerdx=max([npc.skillgap+10.*skillflag;5]); %average damage reduction (5/5/10/25)
 npc.phcritsupp=0.12.*npc.skillgap+3.*skillflag; %melee crit supp
 
 %spell
