@@ -17,22 +17,27 @@ if (dodge<0 || parry<0 || agi<0) error('At least one of the input arguments is n
 
 %% Constants
 %rating conversions
-cnv.dodge_dodge=45.25018635;
+cnv.dodge_dodge=176.71890258; %85
+cnv.dodge_dodge=45.25018692;
+cnv.parry_parry=176.71890258; %85
 cnv.parry_parry=45.25018722;
 %DR coefficients (k)
 drcoeff.plate=0.956;
 drcoeff.druid=0.972;
 drcoeff.rogue=0.988;
 %Caps (c)
-drcap.Pdodge=88.129021;  %plate
-drcap.Pparry=47.003525;  %plate
+drcap.Pdodge=65.631440;  %plate
+drcap.Pparry=65.631440;  %plate
 drcap.Ddodge=116.890707; %druid
 drcap.Rdodge=145.560408; %rogue
 drcap.Rparry=145.560408; %rogue
 %Agility to dodge conversions (without! BoK)
-cnv.agi_dodge(1)=59.88023952; %paladin
-cnv.agi_dodge(2)=84.74576271; %deathknight, warrior
-cnv.agi_dodge(3)=47.84688995; %druid, rogue
+cnv.agi_dodge(1)=304.50769251; %paladin (85)
+cnv.agi_dodge(1)=51.97800000;  %paladin
+cnv.agi_dodge(2)=430.69315711; %deathknight, warrior (85)
+cnv.agi_dodge(2)=73.54996004;  %deathknight, warrior
+cnv.agi_dodge(3)=243.58302440; %druid, rogue (85)
+cnv.agi_dodge(3)=41.58731440;  %druid, rogue
 
 
 %% Class choice
