@@ -227,6 +227,21 @@ idb.iid(51269).dodge=99;
 idb.iid(51269).parry=71;
 idb.iid(51269).istier=[1 0 0 0];
 
+%% Head
+
+%TODO: find iid
+idb.iid(00101).name='Helm of Setesh';
+idb.iid(00101).atype=1;
+idb.iid(00101).ilvl=333;
+idb.iid(00101).barmor=2542;
+idb.iid(00101).str=191+10;
+idb.iid(00101).sta=401+32+15;
+idb.iid(00101).dodge=208;
+idb.iid(00101).exp=97;
+idb.iid(00101).critmeta=0;
+idb.iid(00101).armormeta=1;
+idb.iid(00101).istier=[0 0 0 0];
+
 %% Neck 
 idb.iid(50682).name='Bile-Encrusted Medallion (Heroic)';
 idb.iid(50682).ilvl=277;
@@ -269,6 +284,18 @@ idb.iid(56219).exp=76;
 idb.iid(56219).dodge=149;
 idb.iid(56219).barmor=572;
 
+%% Chest
+%TODO: find iid
+idb.iid(00102).name='Breastplate of the Witness';
+idb.iid(00102).ilvl=333;
+idb.iid(00102).barmor=3128;
+idb.iid(00102).str=268;
+idb.iid(00102).sta=401;
+idb.iid(00102).parry=191;
+idb.iid(00102).dodge=157;
+idb.iid(00102).atype=1;
+idb.iid(00102).istier=[0 0 0 0];
+
 %% Bracers
 idb.iid(51901).name='Gargoyle Spit Bracers (Heroic)';
 idb.iid(51901).atype=1;
@@ -309,6 +336,27 @@ idb.iid(50991).sta=157+15+30+30+9;
 idb.iid(50991).agi=0+10;
 idb.iid(50991).parry=95;
 
+%TODO: find iid
+idb.iid(00103).name='Sand Dune Belt';
+idb.iid(00103).atype=1;
+idb.iid(00103).ilvl=333;
+idb.iid(00103).barmor=1760;
+idb.iid(00103).str=151;
+idb.iid(00103).sta=298;
+idb.iid(00103).exp=101;
+idb.iid(00103).dodge=199;
+
+%% Legs
+%TODO: find iid
+idb.iid(00103).name='Stone-Wrapped Greaves';
+idb.iid(00103).atype=1;
+idb.iid(00103).ilvl=333;
+idb.iid(00103).barmor=2737;
+idb.iid(00103).str=248;
+idb.iid(00103).sta=401+30+30+15;
+idb.iid(00103).parry=158+20+10;
+idb.iid(00103).dodge=138;
+
 %% Boots
 idb.iid(50625).name='Grinning Skull Greatboots (Heroic)';
 idb.iid(50625).atype=1;
@@ -318,6 +366,15 @@ idb.iid(50625).str=103;
 idb.iid(50625).sta=180+30+30;
 idb.iid(50625).dodge=127;
 idb.iid(50625).exp=61;
+
+%TODO: find iid
+idb.iid(10104).name='Ramkahen Front Boots';
+idb.iid(10104).atype=1;
+idb.iid(10104).ilvl=333;
+idb.iid(10104).sta=151;
+idb.iid(10104).str=298;
+idb.iid(10104).dodge=199;
+idb.iid(10104).hit=101;
 
 %% Rings
 idb.iid(50622).name='Devium''s Eternally Cold Ring (Heroic)';
@@ -342,6 +399,14 @@ idb.iid(56111).sta=224;
 idb.iid(56111).mast=100;
 idb.iid(56111).dodge=100;
 
+%TODO: find iid
+idb.iid(10105).name='Ring of Three Lights';
+idb.iid(10105).ilvl=333;
+idb.iid(10105).str=149;
+idb.iid(10105).sta=224;
+idb.iid(10105).parry=100;
+idb.iid(10105).mast=100;
+
 %% Trinkets
 idb.iid(50356).name='Corroded Skeleton Key';
 idb.iid(50356).ilvl=264;
@@ -354,6 +419,12 @@ idb.iid(54571).sta=228;
 idb.iid(56121).name='Throngus''s Finger';
 idb.iid(56121).ilvl=333;
 idb.iid(56121).dodge=252;
+
+%TODO: find iid
+idb.iid(10106).name='Impetuous Query';
+idb.iid(10106).ilvl=333;
+idb.iid(10106).mast=252;
+idb.iid(10106).parry=1260*10/60;
 
 %% Weapons
 idb.iid(44638).name='Dalaran Sword';
@@ -425,6 +496,15 @@ idb.iid(56096).barmor=11504;
 idb.iid(50461).name='Libram of the Eternal Tower';
 idb.iid(50461).dodge=219;
 idb.iid(50461).isproc=71194;
+
+%TODO: find iid
+idb.iid(10107).name='Blackblood Freedom Standard';
+idb.iid(10107).ilvl=318;
+idb.iid(10107).str=73;
+idb.iid(10107).sta=110;
+idb.iid(10107).exp=40;
+idb.iid(10107).mast=54;
+
 
 %% Enchant section  
 %Enchants work exactly the same way that items do.  There is an idb

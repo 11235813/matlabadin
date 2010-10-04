@@ -145,33 +145,35 @@ for m=1:N
                 if strcmp(char(pri.castname(aid)),'ShieldoftheRighteous')
                     %check for misses
                     if rand<target.avoid/100
+                        %if we miss, set the flag and color 
                         sequence.shormiss(qq)=1;
-                        hopo=1;        %check this, conflicting reports from Flex & Marble
-%                         sequence.damage(qq)=0;
                         sequence.color(qq)=2;
+                        %sacred duty cleared at end of if statement
 
-                        %Sacred Duty handling
-                    elseif dur.SD>0
-%                         sequence.damage(qq)=crit.ShieldoftheRighteous;
+                    elseif dur.SD>0  %otherwise, we hit - check for SD crits
                         sequence.color(qq)=1;
-                        dur.SD=0;
                         sequence.shormiss(qq)=0;
-                    else
+
+                    else %no SD, just a regular hit
                         sequence.shormiss(qq)=0;
                     end
-                else
+
+                    %clear SD, regardless of outcome
+                    dur.SD=0;
+
+                else %not ShoR, mark as not a miss (irrelevant really)
                     sequence.shormiss(qq)=0;
                 end
-                
+
                 %special actions (performed last)
                 eval(char(pri.spaction(n)));
-                
+
                 %reset gcd
                 gcd=pri.gcds(aid);
-                
+
                 %increment counter
                 qq=qq+1;
-                
+
                 %break out of for
                 break
             end
@@ -239,12 +241,12 @@ for m=1:N
     
 end
 
-sequence.totaltime=m*dt;
 
 
 %determine weighting coefficients for each spell
 %Helpful constants                   
 Inqmod=(1.3.*(sequence.Inq>0)+(sequence.Inq==0));
+sequence.totaltime=m*dt;
 
 for mm=1:length(pri.labels)
     %if we're evaluating a ShoR
@@ -277,10 +279,12 @@ sequence.effcasts(mm+1)=sum(sequence.sealcasts);
 sequence.coeff=sequence.effcasts./sequence.totaltime;
 sequence.empties=sum(sequence.castid==0);
 
-sequence.damage=[pri.damage pri.sealdamage].*sequence.effcasts;
+sequence.dmg=[pri.damage pri.sealdamage].*sequence.effcasts;
 sequence.dps=[pri.damage pri.sealdamage].*sequence.coeff;
-
 sequence.net=pri.damage.*sequence.coeff(1:mm)+pri.sealdamage.*sequence.sealcasts./sequence.totaltime;
+sequence.sumdps=sum(sequence.dps);
+
+sequence.name=pri.name;
 
 %this is from the old version, leaving it here so that I can re-code the
 %rotation drawing module later on

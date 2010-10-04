@@ -59,18 +59,17 @@ if isnumeric(base.prof)==1 base.prof='BS JC'; end; %workaround for prof==''
 if base.lvl==80
 %racial base stats (lvl 80)
 %the format is STR-STA-AGI-INT-SPI
-primary_stats=[151 143  90  98 108;
-               153 146  86  97 104;
-               152 142  87  99 107;
-               148 141  92 102 104;
+primary_stats=[151 143  90  98 108;  %TODO: UPDATE
+               156 165  86  97 104;  %updated
+               152 142  87  99 107;  %TODO: UPDATE
+               148 141  92 102 104;  %TODO: UPDATE
                100 100 100 100 100]; %TODO: UPDATE
 else
 %racial base stats (lvl 85)
 %the format is STR-STA-AGI-INT-SPI  
-%ONLY HUMAN/DWARF VALUES UPDATED TO 85 SO FAR
 primary_stats=[164 179  97 106 117;  %updated
                169 180  93 105 113;  %updated
-               152 142  87  99 107;  %TODO: UPDATE
+               165 179  94 106 116;  %updated
                148 141  92 102 104;  %TODO: UPDATE
                100 100 100 100 100]; %TODO: UPDATE
 end
