@@ -13,7 +13,7 @@ function [avoiddr] =  avoid_dr(dodge,parry,agi,class)
 %function.
 
 %%sanity check
-if (dodge<0 || parry<0 || agi<0) error('At least one of the input arguments is negative. Please recheck them.'); end;
+if (min(dodge)<0 || min(parry)<0 || min(agi)<0) error('At least one of the input arguments is negative. Please recheck them.'); end;
 
 %% Constants
 %rating conversions

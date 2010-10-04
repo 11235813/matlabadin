@@ -330,13 +330,24 @@ player.block=base.block+16.*(talent.protpoints>=30)+mdf.HolySh ...
     +gear.block./cnv.block_block+2.*player.mast-0.04.*npc.skillgap;
 
 %check for bounding issues, based on the attack table
+%separated into two stages so that it works with arrays more easily.
+%First, enforce minimum of 0
 player.miss=max([player.miss;zeros(size(player.miss))]);
-player.dodge=min([max([player.dodge;zeros(size(player.dodge))]); ...
-    (100-player.miss).*ones(size(player.dodge))]);
-player.parry=min([max([player.parry;zeros(size(player.parry))]); ...
-    (100-player.miss-player.dodge).*ones(size(player.parry))]);
-player.block=min([max([player.block;zeros(size(player.block))]); ...
-    (100-player.miss-player.dodge-player.parry).*ones(size(player.block))]);
+player.dodge=max([player.dodge;zeros(size(player.dodge))]);
+player.parry=max([player.parry;zeros(size(player.parry))]);
+player.block=max([player.block;zeros(size(player.block))]);
+
+%next, enforce maxima
+avsize=max([size(player.miss); size(player.parry); size(player.dodge); size(player.block)]);
+
+player.dodge=min([player.dodge.*ones(avsize); ...
+    (100-player.miss).*ones(avsize)]);
+player.parry=min([player.parry.*ones(avsize); ...
+    (100-player.miss-player.dodge).*ones(avsize)]);
+player.block=min([player.block.*ones(avsize); ...
+    (100-player.miss-player.dodge-player.parry).*ones(avsize)]);
+
+
 
 player.avoid=player.miss+player.dodge+player.parry;
 player.avoidpct=player.avoid./100;
