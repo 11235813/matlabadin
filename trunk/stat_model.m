@@ -7,7 +7,6 @@
 %can be called independently by other functions/simulations.  We'll call
 %that file here
 stat_conversions
-mdf.threat=1.43.*1.8;
 
 %% Talents & Glyphs
 %I'm going to try and minimize the number of duplicate variables we have.
@@ -85,6 +84,7 @@ mdf.WF=1+0.1.*buff.WF;
 mdf.WoA=1+0.05.*buff.WoA;
 mdf.BL=1+0.3.*buff.BL;
 mdf.Devo=1000.*buff.Devo;
+mdf.RF=1+1.25.*buff.RF;
 mdf.Focus=3.*buff.Focus;
 %% Raid Debufs
 mdf.SavCom=1+0.04.*buff.SavCom;
