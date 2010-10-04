@@ -88,6 +88,8 @@ buff.AW=((mode==0&&(isempty(excl)||max(strcmpi('AW',strread(excl,'%s')))==0))||m
 buff.JotW=((mode==0&&(isempty(excl)||max(strcmpi('JotW',strread(excl,'%s')))==0))||mode==2||mode==3);
 %Divine Plea
 buff.DivPlea=((mode==0&&(isempty(excl)||max(strcmpi('DivPlea',strread(excl,'%s')))==0))||mode==2||mode==3);
+%Righteous Fury
+buff.RF=((mode==0&&(isempty(excl)||max(strcmpi('RF',strread(excl,'%s')))==0))||mode==2||mode==3);
 %Focus Magic (disabled by default, even in exhaustive mode)
 buff.Focus=0;
 
