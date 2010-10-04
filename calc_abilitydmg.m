@@ -3,9 +3,9 @@ gear_db;
 def_db;
 
 % lvl 85
-base=player_model('lvl',85,'race','Human','prof','');
+base=player_model('lvl',80,'race','Dwarf','prof','');
 npc=npc_model(base);
-egs=ddb.gearset{1};  %85
+egs=ddb.gearset{2};  %85
 
 % %spellpower weapoin/shield
 % egs(15)=equip(56433);%main hand
@@ -45,8 +45,8 @@ stat_model
 
 
 %calculate ability damages - uncomment appropriate level model
-ability_model
-% ability_model_80
+% ability_model
+ability_model_80
 
 %generate a damage summary array
 %% Summary
@@ -102,6 +102,9 @@ data1=[1231 1476 520 3605 2601 0 1354 204 57 24 1005*5/6 1645 231 842 776]';
 
 %neziah's human data
 % data1=[6325 3333 2950 6179 2126 0 0 362 0 0 931*5 426*10 635 1610 1503]';
+
+%Arianne's lvl 80 Dwarf data (dal swd)
+data1=[644 171 276 3093 3*790 0 1142 20.3 16.3 7 87.6*5 129*10 20.3 711 67.1]';
     
 data2=[raw_summary spacer int2str(data1) spacer int2str(data1-raw_vals) spacer int2str(100.*(data1-raw_vals)./raw_vals)]
 %% Put glyph section here
