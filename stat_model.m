@@ -398,11 +398,18 @@ player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+player.VengAP+consu
 %% Weapon Details
 player.wdamage=gear.avgdmg+player.ap./14.*gear.swing; %not normalized : AA, Reck, phys HotR
 player.ndamage=gear.avgdmg+player.ap./14.*2.4; %normalized attacks (hardcoded)
-player.wswing=gear.swing./mdf.phhaste;
+player.bswing=gear.swing./mdf.phhaste;
+
+%Reckoning first-order approx
+mdf.ReckUptime=1-(1-mdf.Reck.*player.block./100).^(min([8.*ones(size(player.bswing)); 4.*player.bswing])./target.swing);
+mdf.ReckUptime=max([mdf.ReckUptime; zeros(size(mdf.ReckUptime))]);
+mdf.ReckUptime=min([mdf.ReckUptime; ones(size(mdf.ReckUptime))]);
+
+player.wswing=player.bswing./(1+mdf.ReckUptime);
 player.wdps=player.wdamage./player.wswing;
 
 %alternate values during bloodlust-type effects
-bl.wswing=gear.swing./mdf.blphhaste;
+bl.wswing=gear.swing./mdf.blphhaste./(1+mdf.ReckUptime);
 bl.wdps=player.wdamage./bl.wswing;
 
 %% Parryhaste corrections
