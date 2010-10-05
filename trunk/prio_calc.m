@@ -56,7 +56,9 @@ for m=1:length(rdata)
 	padps(m)=padps(m)+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
     
 
-    li(m,:)=[rdata(m).name repmat(' ',1,45-length(rdata(m).name)) int2str(int32(rdata(m).sumdps+padps(m)))];
+    li(m,:)=[rdata(m).name repmat(' ',1,45-length(rdata(m).name))  ...
+        int2str(int32(rdata(m).sumdps+rdata(m).padps)) ...
+        repmat(' ',1,8-length(int2str(rdata(m).empties))) int2str(rdata(m).empties)];
 end
 li
 

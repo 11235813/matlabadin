@@ -273,15 +273,31 @@ for mm=1:length(pri.labels)
     end
 end
 
-%seals from ShoR
+%seals 
 sequence.effcasts(mm+1)=sum(sequence.sealcasts);
 
 sequence.coeff=sequence.effcasts./sequence.totaltime;
 sequence.empties=sum(sequence.castid==0);
 
+% %"passive" dps (melee+seals+censure) - in case I decide to move this here
+% 
+% sequence.padps=0;
+%     
+% %assume a 5-stack of SoT (if applicable).
+% if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
+%     sequence.padps=sequence.padps+dps.Censure.*(1+sum(Inqmod)./length(Inqmod));
+% 
+% end
+% 
+% %aa and seal damage
+% sequence.padps=sequence.padps+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+sum(Inqmod)./length(Inqmod))./player.wswing;
+
+
+
 sequence.dmg=[pri.damage pri.sealdamage].*sequence.effcasts;
 sequence.dps=[pri.damage pri.sealdamage].*sequence.coeff;
 sequence.net=pri.damage.*sequence.coeff(1:mm)+pri.sealdamage.*sequence.sealcasts./sequence.totaltime;
+% sequence.sumdps=sum(sequence.dps)+sequence.padps;
 sequence.sumdps=sum(sequence.dps);
 
 sequence.name=pri.name;
