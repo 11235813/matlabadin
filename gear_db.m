@@ -240,7 +240,6 @@ idb.iid(00101).dodge=208;
 idb.iid(00101).exp=97;
 idb.iid(00101).critmeta=0;
 idb.iid(00101).armormeta=1;
-idb.iid(00101).istier=[0 0 0 0];
 
 %% Neck 
 idb.iid(50682).name='Bile-Encrusted Medallion (Heroic)';
@@ -285,16 +284,14 @@ idb.iid(56219).dodge=149;
 idb.iid(56219).barmor=572;
 
 %% Chest
-%TODO: find iid
-idb.iid(00102).name='Breastplate of the Witness';
-idb.iid(00102).ilvl=333;
-idb.iid(00102).barmor=3128;
-idb.iid(00102).str=268;
-idb.iid(00102).sta=401;
-idb.iid(00102).parry=191;
-idb.iid(00102).dodge=157;
-idb.iid(00102).atype=1;
-idb.iid(00102).istier=[0 0 0 0];
+idb.iid(66933).name='Breastplate of the Witness';
+idb.iid(66933).ilvl=333;
+idb.iid(66933).barmor=3128;
+idb.iid(66933).str=268;
+idb.iid(66933).sta=401;
+idb.iid(66933).parry=191;
+idb.iid(66933).dodge=157;
+idb.iid(66933).atype=1;
 
 %% Bracers
 idb.iid(51901).name='Gargoyle Spit Bracers (Heroic)';
@@ -497,13 +494,12 @@ idb.iid(50461).name='Libram of the Eternal Tower';
 idb.iid(50461).dodge=219;
 idb.iid(50461).isproc=71194;
 
-%TODO: find iid
-idb.iid(10107).name='Blackblood Freedom Standard';
-idb.iid(10107).ilvl=318;
-idb.iid(10107).str=73;
-idb.iid(10107).sta=110;
-idb.iid(10107).exp=40;
-idb.iid(10107).mast=54;
+idb.iid(63888).name='Blackblood Freedom Standard';
+idb.iid(63888).ilvl=318;
+idb.iid(63888).str=73;
+idb.iid(63888).sta=110;
+idb.iid(63888).exp=40;
+idb.iid(63888).mast=54;
 
 
 %% Enchant section  
