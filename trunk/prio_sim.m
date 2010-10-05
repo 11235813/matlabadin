@@ -245,18 +245,18 @@ end
 
 %determine weighting coefficients for each spell
 %Helpful constants                   
-Inqmod=(1.3.*(sequence.Inq>0)+(sequence.Inq==0));
+Inqmod=(0.3.*(sequence.Inq>0));
 sequence.totaltime=m*dt;
 
 for mm=1:length(pri.labels)
     %if we're evaluating a ShoR
     if sum(strcmp(char(pri.labels{mm}),{'3ShoR';'2ShoR';'1ShoR'}))>0
         sequence.shorflag(mm)=1;
-        sequence.effcasts(mm)=sum(Inqmod.* ...  %Inq handling, probably irrelevant for ShoR
+        sequence.effcasts(mm)=sum((1+Inqmod).* ...  %Inq handling, probably irrelevant for ShoR
             ((sequence.castid==mm).*not(sequence.shormiss).*(sequence.SD==0).*mdf.phcrit+... %# ShoR hits/crits
             (sequence.castid==mm).*not(sequence.shormiss).*(sequence.SD>0).*mdf.phcritmulti) ... %# ShoR SD crits
             ); 
-        sequence.sealcasts(mm)=sum(Inqmod.* ...  %Inq handling, probably irrelevant for ShoR
+        sequence.sealcasts(mm)=sum((1+Inqmod).* ...  %Inq handling, probably irrelevant for ShoR
             ((sequence.castid==mm).*not(sequence.shormiss).*(sequence.SD==0)+... %# ShoR hits/crits
             (sequence.castid==mm).*not(sequence.shormiss).*(sequence.SD>0)) ... %# ShoR SD crits
             ); 
@@ -267,7 +267,7 @@ for mm=1:length(pri.labels)
     
     else %everything else is easier - just Inq
         sequence.shorflag(mm)=0;
-        sequence.effcasts(mm)=sum((sequence.castid==mm).*Inqmod);
+        sequence.effcasts(mm)=sum((sequence.castid==mm).*(1+Inqmod.*pri.inqeffect(mm)));
         sequence.numcasts(mm)=sum((sequence.castid==mm));
         sequence.sealcasts(mm)=pri.procsseals(mm).*pri.sealhit(mm).*sequence.effcasts(mm);
     end

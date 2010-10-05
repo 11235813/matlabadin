@@ -39,10 +39,24 @@ end
 %% save for later use (good for generic stuff, saves computation time)
 save prio_data cmat rdata
 
-
+%% incorporate non-GCD effects
+clear li padmg
 for m=1:length(rdata)
-    li(m,:)=[rdata(m).name repmat(' ',1,30-length(rdata(m).name)) int2str(int32(rdata(m).sumdps))];
+    padps(m)=0;
+    %account for Inq
+    Inqmod=sum(rdata(m).Inq>0)./length(rdata(m).Inq);
+    
+    %assume a 5-stack of SoT (if applicable).
+    if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
+        padps(m)=padps(m)+dps.Censure.*(1+0.3.*Inqmod);
+    
+    end
+    
+    %aa and seal damage
+	padps(m)=padps(m)+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
+    
+
+    li(m,:)=[rdata(m).name repmat(' ',1,45-length(rdata(m).name)) int2str(int32(rdata(m).sumdps+padps(m)))];
 end
 li
 
-% [rdata.sumdps]./1e3
