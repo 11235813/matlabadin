@@ -73,8 +73,8 @@ talent.Vindication=talent.prot(5,1);
 talent.HolyShield=talent.prot(5,2);
 talent.GuardedbytheLight=talent.prot(5,3);
 
-talent.ShieldoftheTemplar=talent.prot(6,2);
-talent.SacredDuty=talent.prot(6,3);
+talent.SacredDuty=talent.prot(6,2);
+talent.ShieldoftheTemplar=talent.prot(6,3);
 
 talent.ArdentDefender=talent.prot(7,2);
 
@@ -98,30 +98,44 @@ talent.retpoints=sum(sum(talent.ret));
 
 
 %% Glyphs (logical)
+if exist('glyph')==0 || isfield(glyph,'prime')==0
+    glyph.prime=[1 0 0 1 0 1 0];
+end
+
 % Prime
-glyph.CrusaderStrike=0;
-glyph.Exorcism=0;
-glyph.HammeroftheRighteous=0;
-glyph.Judgement=0;
-glyph.SealofTruth=0;
-glyph.ShieldoftheRighteous=0;
-glyph.WordofGlory=0;
+glyph.CrusaderStrike=glyph.prime(1);
+glyph.Exorcism=glyph.prime(2);
+glyph.HammeroftheRighteous=glyph.prime(3);
+glyph.Judgement=glyph.prime(4);
+glyph.SealofTruth=glyph.prime(5);
+glyph.ShieldoftheRighteous=glyph.prime(6);
+glyph.WordofGlory=glyph.prime(7);
+
+if exist('glyph')==0 || isfield(glyph,'major')==0
+    glyph.major=[0 0 0 0 1 0 0 0 0 0];
+end
+
 % Major
-glyph.AsceticCrusader=0;
-glyph.Consecration=0;
-glyph.DazingShield=0;
-glyph.DivineProtection=0;
-glyph.FocusedShield=0;
-glyph.HammerofJustice=0;
-glyph.HammerofWrath=0;
-glyph.HolyWrath=0;
-glyph.HandofSalvation=0;
-glyph.TurnEvil=0;
+glyph.AsceticCrusader=glyph.major(1);
+glyph.Consecration=glyph.major(2);
+glyph.DazingShield=glyph.major(3);
+glyph.DivineProtection=glyph.major(4);
+glyph.FocusedShield=glyph.major(5);
+glyph.HammerofJustice=glyph.major(6);
+glyph.HammerofWrath=glyph.major(7);
+glyph.HolyWrath=glyph.major(8);
+glyph.HandofSalvation=glyph.major(9);
+glyph.TurnEvil=glyph.major(10);
+
+if exist('glyph')==0 || isfield(glyph,'minor')==0
+    glyph.minor=[0 0 0 0 0 0 0];
+end
+
 % Minor
-glyph.BlessingofKings=0;
-glyph.BlessingofMight=0;
-glyph.Insight=0;
-glyph.Justice=0;
-glyph.LayonHands=0;
-glyph.Righteousness=0;
-glyph.Truth=0;
+glyph.BlessingofKings=glyph.minor(1);
+glyph.BlessingofMight=glyph.minor(2);
+glyph.Insight=glyph.minor(3);
+glyph.Justice=glyph.minor(4);
+glyph.LayonHands=glyph.minor(5);
+glyph.Righteousness=glyph.minor(6);
+glyph.Truth=glyph.minor(7);
