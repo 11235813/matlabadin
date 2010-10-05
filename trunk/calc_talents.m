@@ -25,58 +25,74 @@ points(1)=1;
 name{1}='Base';
 
 %SotP
-tree(2)=tree(1);
-tree(2).prot(1,2)=0;
-points(2)=tree(1).prot(1,2);
-name{2}='SotP';
+k=2;
+tree(k)=tree(1);
+tree(k).prot(1,2)=0;
+points(k)=tree(1).prot(1,2);
+name{k}='SotP';
 
 %Hallowed Ground
-tree(3)=tree(1);
-tree(3).prot(3,1)=0;
-points(3)=tree(1).prot(3,1);
-name{3}='Hallowed Ground';
+k=k+1;
+tree(k)=tree(1);
+tree(k).prot(3,1)=0;
+points(k)=tree(1).prot(3,1);
+name{k}='Hallowed Ground';
 
 %WotL
-tree(4)=tree(1);
-tree(4).prot(3,4)=0;
-points(4)=tree(1).prot(3,4);
-name{4}='WotL';
+k=k+1;
+tree(k)=tree(1);
+tree(k).prot(3,4)=0;
+points(k)=tree(1).prot(3,4);
+name{k}='WotL';
 
 %Reck
-tree(5)=tree(1);
-tree(5).prot(4,1)=0;
-points(5)=tree(1).prot(4,1);
-name{5}='Reck';
+k=k+1;
+tree(k)=tree(1);
+tree(k).prot(4,1)=0;
+points(k)=tree(1).prot(4,1);
+name{k}='Reck';
 
 %Grand Crusader
-tree(6)=tree(1);
-tree(6).prot(4,3)=0;
-points(6)=tree(1).prot(4,3);
-name{6}='Grand Crusader';
+k=k+1;
+tree(k)=tree(1);
+tree(k).prot(4,3)=0;
+points(k)=tree(1).prot(4,3);
+name{k}='Grand Crusader';
+
+%Sacred duty
+k=k+1;
+tree(k)=tree(1);
+tree(k).prot(6,2)=0;
+points(k)=tree(1).prot(6,2);
+name{k}='Sacred Duty';
 
 %Arbiter of the Light
-tree(7)=tree(1);
-tree(7).holy(1,1)=0;
-points(7)=tree(1).holy(1,1);
-name{7}='Arbiter of the Light';
+k=k+1;
+tree(k)=tree(1);
+tree(k).holy(1,1)=0;
+points(k)=tree(1).holy(1,1);
+name{k}='Arbiter of the Light';
 
 %JotP
-tree(8)=tree(1);
-tree(8).holy(1,3)=0;
-points(8)=tree(1).holy(1,3);
-name{8}='JotP';
+k=k+1;
+tree(k)=tree(1);
+tree(k).holy(1,3)=0;
+points(k)=tree(1).holy(1,3);
+name{k}='JotP';
 
 %Crusade
-tree(9)=tree(1);
-tree(9).ret(1,2)=0;
-points(9)=tree(1).ret(1,2);
-name{9}='Crusade';
+k=k+1;
+tree(k)=tree(1);
+tree(k).ret(1,2)=0;
+points(k)=tree(1).ret(1,2);
+name{k}='Crusade';
 
 %RoL
-tree(10)=tree(1);
-tree(10).ret(2,2)=0;
-points(10)=tree(1).ret(2,2);
-name{10}='RoL';
+k=k+1;
+tree(k)=tree(1);
+tree(k).ret(2,2)=0;
+points(k)=tree(1).ret(2,2);
+name{k}='RoL';
 
 
 
