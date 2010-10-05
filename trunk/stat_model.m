@@ -270,11 +270,13 @@ player.aacrit=base.phcrit + ...                                            %base
     -npc.phcritsupp;                                                       %crit suppression
 
 %explicit crit for non-standard abilities
-player.HWcrit=player.spcrit+mdf.WotL.*100;           %WotL
-player.HoWcrit=player.phcrit++mdf.RoL+mdf.WotL.*100; %RoL, WotL
-player.CScrit=player.phcrit+mdf.RoL+mdf.glyphCS;     %RoL, glyph
-player.Jcrit=player.phcrit+mdf.AotL;                 %AotL
-player.WoGcrit=player.spcrit+mdf.RoL;                %RoL
+player.HWcrit=player.spcrit+mdf.WotL.*100;       %WotL
+player.HoWcrit=player.phcrit+mdf.WotL.*100;      %WotL
+player.CScrit=player.phcrit+mdf.RoL+mdf.glyphCS; %RoL, glyph
+player.Jcrit=player.phcrit+mdf.AotL;             %AotL
+player.WoGcrit=player.spcrit+mdf.RoL;            %RoL
+player.HotRphcrit=player.phcrit+mdf.RoL;         %RoL /TODO check
+player.HotRspcrit=player.spcrit+mdf.RoL;         %RoL /TODO check
 
 %enforce crit caps for two-roll
 player.phcrit=max([min([player.phcrit;100.*ones(size(player.phcrit))]); ...
@@ -292,6 +294,10 @@ player.Jcrit=max([min([player.Jcrit;100.*ones(size(player.Jcrit))]); ...
     zeros(size(player.Jcrit))]);
 player.WoGcrit=max([min([player.WoGcrit;100.*ones(size(player.WoGcrit))]); ...
     zeros(size(player.WoGcrit))]);
+player.HotRphcrit=max([min([player.HotRphcrit;100.*ones(size(player.HotRphcrit))]); ...
+    zeros(size(player.HotRphcrit))]);
+player.HotRspcrit=max([min([player.HotRspcrit;100.*ones(size(player.HotRspcrit))]); ...
+    zeros(size(player.HotRspcrit))]);
 
 
 %Crit modifier values
@@ -303,6 +309,8 @@ mdf.HoWcrit=1+(mdf.phcritmulti-1).*player.HoWcrit./100;
 mdf.CScrit=1+(mdf.phcritmulti-1).*player.CScrit./100;
 mdf.Jcrit=1+(mdf.phcritmulti-1).*player.Jcrit./100;
 mdf.WoGcrit=1+(mdf.spcritmulti-1).*player.WoGcrit./100;
+mdf.HotRphcrit=1+(mdf.phcritmulti-1).*player.HotRphcrit./100;
+mdf.HotRspcrit=1+(mdf.spcritmulti-1).*player.HotRspcrit./100;
 
 %% SP and AP
 %AP gets computed later on, in the Vengeance subsection
@@ -362,9 +370,9 @@ target.swing=npc.swing.*(1+mdf.JotJ.*(isempty(exec.seal)==0));
 
 target.miss=max([(npc.phmiss-player.phhit);zeros(size(player.phhit))]);
 target.dodge=max([(npc.dodge-0.25.*player.exp);zeros(size(player.exp))]);
-target.parry=max([(npc.parry.*(1-exec.behind)-0.25.*player.exp);zeros(size(player.exp))]);
+target.parry=max([(npc.parry.*(exec.behind==0)-0.25.*player.exp);zeros(size(player.exp))]);
 target.avoid=target.miss+target.dodge+target.parry;
-target.block=npc.block.*npc.blockflag.*(1-exec.behind);
+target.block=npc.block.*npc.blockflag.*(exec.behind==0);
 
 target.spmiss=max([(npc.spmiss-player.sphit);zeros(size(player.sphit))]);
 target.resrdx=(100-npc.presist)./100;
@@ -427,9 +435,20 @@ mdf.sphit=1-target.spmiss./100;
 player.aacrit=max([min([player.aacrit.*ones(size(target.avoid+npc.glance+target.block)); ...
     (100-target.avoid-npc.glance-target.block)]);zeros(size(player.aacrit))]);
 mdf.glancerdx=1-npc.glancerdx./100;
+mdf.blockrdx=0.7;
 mdf.aamodel=(mdf.mehit) ...                   %hit
     +(mdf.glancerdx-1).*npc.glance./100 ...   %glancing
+    +(mdf.blockrdx-1).*target.block./100 ...  %block
     +(mdf.phcritmulti-1).*player.aacrit./100; %crit
+%enforce block events for two-roll systems (assuming no critical blocks) /TODO check
+mdf.memodel=mdf.mehit-target.block./100;
+mdf.ramodel=mdf.rahit-target.block./100;
+mdf.blockmodel=mdf.blockrdx.*target.block./100
+% assuming crit blocks
+% mdf.memodel=mdf.mehit+(mdf.blockrdx-1).*target.block./100;
+% mdf.ramodel=mdf.rahit+(mdf.blockrdx-1).*target.block./100;
+% scrap .blockmodel
+% multiply .xmodel with .xcrit in [AM]
 
 %% PPM-based uptimes
 %this section will have to wait until we know which attacks survive, what

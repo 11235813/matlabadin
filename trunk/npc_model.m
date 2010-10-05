@@ -54,7 +54,7 @@ if isempty(npc.type)==1 npc.type=0; end;
 if isempty(npc.swing)==1 npc.swing=1.5; end;
 if isempty(npc.cast)==1 npc.cast=1.5; end;
 if isempty(npc.phflag)==1 npc.phflag=0; end; %nil by default (probably redundant)
-if isempty(npc.blockflag)==1 npc.blockflag=0; end; %change default to 1 later on when it's implemented
+if isempty(npc.blockflag)==1 npc.blockflag=1; end;
 if isempty(npc.out.phys)==1 npc.out.phys=1.5.*10.^5; end;
 if isempty(npc.out.spell)==1 npc.out.spell=0.5.*10.^5; end;
 
