@@ -97,9 +97,9 @@ raw.Judgement=      raw.Judgement.*mdf.spdmg.*(1+2.*mdf.WotL).*target.resrdx;
 dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit;
 net.Judgement=      dmg.Judgement+dmg.activeseal.*mdf.rahit;
 
-%Hammer of Wrath
+%Hammer of Wrath (can be blocked)
 raw.HammerofWrath= ((1254+1384)./2 + 0.15.*player.hsp + 0.15.*player.ap).*mdf.spdmg.*target.resrdx; %1124+1242 base @ 80
-dmg.HammerofWrath= raw.HammerofWrath.*mdf.rahit.*mdf.HoWcrit;
+dmg.HammerofWrath= raw.HammerofWrath.*(mdf.ramodel.*mdf.HoWcrit+mdf.blockmodel);
 net.HammerofWrath= dmg.HammerofWrath;  %doesn't proc seals
 
 %% Spell abilities
