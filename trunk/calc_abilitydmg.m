@@ -3,7 +3,7 @@ gear_db;
 def_db;
 
 % lvl 85
-base=player_model('lvl',80,'race','Dwarf','prof','');
+base=player_model('lvl',80,'race','Human','prof','');
 npc=npc_model(base);
 egs=ddb.gearset{2};  %85
 
@@ -85,11 +85,12 @@ dmg_vals=[round(dmg.ShieldoftheRighteous);
     round(dmg.HammerNova);
     round(dmg.Melee)];
 
+mdf.RF=3;
 spacer=repmat(' ',size(raw_vals,1),2);
 raw_summary=[char(dmg_labels) spacer int2str(raw_vals)];
 dmg_summary=[char(dmg_labels) spacer int2str(dmg_vals)];
-thr_summary=[char(dmg_labels) spacer int2str(dmg_vals.*mdf.threat)];
-all_summary=[char(dmg_labels) spacer int2str(raw_vals) spacer int2str(dmg_vals) spacer int2str(dmg_vals.*mdf.threat)]
+thr_summary=[char(dmg_labels) spacer int2str(dmg_vals.*mdf.RF)];
+all_summary=[char(dmg_labels) spacer int2str(raw_vals) spacer int2str(dmg_vals) spacer int2str(dmg_vals.*mdf.RF)];
 
 
 %ras' human data
@@ -105,6 +106,9 @@ data1=[1231 1476 520 3605 2601 0 1354 204 57 24 1005*5/6 1645 231 842 776]';
 
 %Arianne's lvl 80 Dwarf data (dal swd)
 data1=[644 171 276 3093 3*790 0 1142 20.3 16.3 7 87.6*5 129*10 20.3 711 67.1]';
+
+%towellie's lvl 80 human data
+data1=[601 198 284 3102 1166 0 0 20.0 0 0 86*5 130*10 25.5 795 70.5]';
     
 data2=[raw_summary spacer int2str(data1) spacer int2str(data1-raw_vals) spacer int2str(100.*(data1-raw_vals)./raw_vals)]
 %% Put glyph section here
