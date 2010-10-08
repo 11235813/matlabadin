@@ -56,7 +56,7 @@ end
 
 %default values of the input arguments
 if isempty(N)==1 N=300; end;  %number of timesteps to evaluate
-if isempty(dt)==1 dt=0.1; end;  %work in timesteps of 0.1 second for now, can adjust this later
+if isempty(dt)==1 dt=0.5; end;  %work in timesteps of 0.5 second for now, can adjust this later
 if isempty(hopo)==1 hopo=0; end;
 
 %maintenance, in case we're running this several times
@@ -216,8 +216,8 @@ for m=1:N
     dur.Inq=max([dur.Inq-dt 0]);
     
     %modifiers
-    mdf.Inq=1.3.*sign(dur.Inq);
-    mdf.SDcrit=1.*sign(dur.SD);
+%     mdf.Inq=1.3.*sign(dur.Inq);
+%     mdf.SDcrit=1.*sign(dur.SD);
     
     %recalculate ability damages - probably not necessary if we're not
     %going to track damages locally
@@ -252,20 +252,26 @@ for mm=1:length(pri.labels)
     %if we're evaluating a ShoR
     if sum(strcmp(char(pri.labels{mm}),{'3ShoR';'2ShoR';'1ShoR'}))>0
         sequence.shorflag(mm)=1;
-        sequence.effcasts(mm)=sum((1+Inqmod).* ...  %Inq handling, probably irrelevant for ShoR
+        sequence.numcasts(mm)=sum((sequence.castid==mm).*not(sequence.shormiss)); 
+        sequence.effcasts(mm)=sum((1+Inqmod).* ...  %Inq handling
             ((sequence.castid==mm).*not(sequence.shormiss).*(sequence.SD==0).*mdf.phcrit+... %# ShoR hits/crits
             (sequence.castid==mm).*not(sequence.shormiss).*(sequence.SD>0).*mdf.phcritmulti) ... %# ShoR SD crits
             ); 
-        sequence.sealcasts(mm)=sum((1+Inqmod).* ...  %Inq handling, probably irrelevant for ShoR
+        sequence.sealcasts(mm)=sum((1+Inqmod).* ...  %Inq handling
             ((sequence.castid==mm).*not(sequence.shormiss).*(sequence.SD==0)+... %# ShoR hits/crits
             (sequence.castid==mm).*not(sequence.shormiss).*(sequence.SD>0)) ... %# ShoR SD crits
             ); 
-        sequence.numcasts(mm)=sum( ...
-            ((sequence.castid==mm).*not(sequence.shormiss).*(sequence.SD==0)+... %# ShoR hits/crits
-            (sequence.castid==mm).*not(sequence.shormiss).*(sequence.SD>0)) ... %# ShoR SD crits
-            ); 
+        
+    elseif strcmp(char(pri.labels{mm}),'HaNova')==1
+        %HotR base is taken care of in 'everything else'
+        %HammerNova gets counted every time HotR is cast
+        sequence.shorflag(mm)=0;
+        tempmm=find(strcmp(pri.castname,'HammeroftheRighteous'));
+        sequence.effcasts(mm)=sum((sequence.castid==tempmm).*(1+Inqmod.*pri.inqeffect(mm)));
+        sequence.numcasts(mm)=sum((sequence.castid==tempmm));
+        sequence.sealcasts(mm)=0; %does not proc seals
     
-    else %everything else is easier - just Inq
+    else %everything else is easier - just Inq handling to worry about
         sequence.shorflag(mm)=0;
         sequence.effcasts(mm)=sum((sequence.castid==mm).*(1+Inqmod.*pri.inqeffect(mm)));
         sequence.numcasts(mm)=sum((sequence.castid==mm));
@@ -292,15 +298,20 @@ sequence.empties=sum(sequence.castid==0);
 % %aa and seal damage
 % sequence.padps=sequence.padps+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+sum(Inqmod)./length(Inqmod))./player.wswing;
 
+%for the moment, only worry about this if damage values are scalars
+%later on we might 
+if min(size(pri.damage))==1
 
+    sequence.dmg=[pri.damage; pri.sealdamage]'.*sequence.effcasts;
+    sequence.dps=[pri.damage; pri.sealdamage]'.*sequence.coeff;
+    sequence.net=pri.damage'.*sequence.coeff(1:mm)+pri.sealdamage.*sequence.sealcasts./sequence.totaltime;
+    % sequence.sumdps=sum(sequence.dps)+sequence.padps;
+    sequence.sumdps=sum(sequence.dps);
 
-sequence.dmg=[pri.damage pri.sealdamage].*sequence.effcasts;
-sequence.dps=[pri.damage pri.sealdamage].*sequence.coeff;
-sequence.net=pri.damage.*sequence.coeff(1:mm)+pri.sealdamage.*sequence.sealcasts./sequence.totaltime;
-% sequence.sumdps=sum(sequence.dps)+sequence.padps;
-sequence.sumdps=sum(sequence.dps);
+end
 
 sequence.name=pri.name;
+sequence.pri=pri;
 
 %this is from the old version, leaving it here so that I can re-code the
 %rotation drawing module later on

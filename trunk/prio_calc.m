@@ -20,7 +20,7 @@ ability_model_80
 prio_model;
 
 %% Generate coefficients for each priority queue
-N=30000;  %set long enough to get stochastic data for each sim
+N=10000;  %set long enough to get stochastic data for each sim
 wb=waitbar(0,'Calculating');
 for k=1:length(prio)
     
@@ -56,7 +56,7 @@ for m=1:length(rdata)
 	padps(m)=padps(m)+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
     
 
-    li(m,:)=[rdata(m).name repmat(' ',1,45-length(rdata(m).name))  ...
+    li(m,:)=[int2str(m) repmat(' ',1,4-length(int2str(m))) rdata(m).name repmat(' ',1,45-length(rdata(m).name))  ...
         int2str(int32(rdata(m).sumdps+padps(m))) ...
         repmat(' ',1,8-length(int2str(rdata(m).empties))) int2str(rdata(m).empties)];
 end
