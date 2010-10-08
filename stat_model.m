@@ -443,7 +443,7 @@ mdf.aamodel=(mdf.mehit) ...                   %hit
 %enforce block events for two-roll systems (no critical blocks)
 mdf.memodel=mdf.mehit-target.block./100;
 mdf.ramodel=mdf.rahit-target.block./100;
-mdf.blockmodel=mdf.blockrdx.*target.block./100
+mdf.blockmodel=mdf.blockrdx.*target.block./100;
 
 %% PPM-based uptimes
 %this section will have to wait until we know which attacks survive, what
