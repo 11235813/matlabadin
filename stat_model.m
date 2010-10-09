@@ -24,7 +24,6 @@ mdf.Tough=1+0.03.*(talent.Toughness==1)+0.06.*(talent.Toughness==2)+0.1.*(talent
 mdf.HalGro=1+0.2.*talent.HallowedGround; %Cons output
 mdf.Sanct=1-(0.03.*(talent.Sanctuary==1)+0.06.*(talent.Sanctuary==2)+0.1.*(talent.Sanctuary==3)); %damage reduction
 mdf.WotL=0.15.*talent.WrathoftheLightbringer; %incorporates both effects
-% mdf.Reck=0.1.*talent.Reckoning;  %this will probably end up in the parryhaste module
 mdf.GC=0.1.*talent.GrandCrusader;
 mdf.Vind=1-0.05.*talent.Vindication; %damage reduction
 mdf.HolySh=15.*talent.HolyShield;
