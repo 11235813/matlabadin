@@ -102,3 +102,7 @@ temptree.ret=[0 3 2 0; 0 0 0 0];
 ddb.talentset{2}=temptree;
 
 %% Glyphs
+tempglyphs.prime=[0 0 0 0 0 0 0];
+tempglyphs.minor=[0 0 0 0 0 0 0];
+tempglyphs.major=[0 0 0 0 0 0 0 0 0 0];
+ddb.glyphset{1}=tempglyphs;

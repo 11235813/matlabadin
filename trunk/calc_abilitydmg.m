@@ -4,9 +4,9 @@ def_db;
 
 % lvl 85
 base=player_model('lvl',80,'race','Human','prof','');
-npc=npc_model(base);
+npc=npc_model(base,'lvl',80);
 egs=ddb.gearset{2};  %85
-
+glyph=ddb.glyphset{1}; %no glyphs
 % %spellpower weapoin/shield
 % egs(15)=equip(56433);%main hand
 % egs(16)=equip(55880);%off hand
@@ -19,7 +19,7 @@ egs=ddb.gearset{2};  %85
 
 
 talent=ddb.talentset{1};  %85 and 80 (drop EG/GbtL @ 80)
-% talent.ret(1,2)=3;
+% talent.ret(1,2)=3; %3/3 crusade
 % talent.holy(1,3)=1;
 
 %execution
@@ -36,12 +36,16 @@ stat_model
 
 %Debugging for odd gear sets
 % old.ap=player.ap;old.hsp=player.hsp;
-% player.ap=5511;
-% player.hsp=1683;
-% gear.swing=2.6;
-% player.wdamage=(1683+2250)/2;
-% player.wdamage=gear.avgdmg+player.ap./14.*gear.swing;
-
+player.ap=810;
+player.hsp=265;
+% player.ap=3179;
+% player.hsp=889;
+% gear.swing=1.6;
+% gear.avgdmg=(200+373)/2;
+% player.wdamage=(690+921)/2;
+% gear.avgdmg=player.wdamage-player.ap./14.*gear.swing;
+player.wdamage=gear.avgdmg+player.ap./14.*gear.swing;
+player.ndamage=gear.avgdmg+player.ap./14.*2.4;
 
 
 %calculate ability damages - uncomment appropriate level model
@@ -94,7 +98,7 @@ all_summary=[char(dmg_labels) spacer int2str(raw_vals) spacer int2str(dmg_vals) 
 
 
 %ras' human data
-data1=[1231 1476 520 3605 2601 0 1354 204 57 24 1005*5/6 1645 231 842 776]';
+% data1=[1231 1476 520 3605 2601 0 1354 204 57 24 1005*5/6 1645 231 842 776]';
 
 %kierly's human data, 2 sets, 3rd is combined
 % data1=[627 215 1140 3764 1612 0 1527 22.5 95 41 216*5 210*10 26 1452 90.4]';
@@ -105,11 +109,29 @@ data1=[1231 1476 520 3605 2601 0 1354 204 57 24 1005*5/6 1645 231 842 776]';
 % data1=[6325 3333 2950 6179 2126 0 0 362 0 0 931*5 426*10 635 1610 1503]';
 
 %Arianne's lvl 80 Dwarf data (dal swd)
-data1=[644 171 276 3093 3*790 0 1142 20.3 16.3 7 87.6*5 129*10 20.3 711 67.1]';
+% data1=[644 171 276 3093 3*790 0 1142 20.3 16.3 7 87.6*5 129*10 20.3 711 67.1]';
 
 %towellie's lvl 80 human data
-data1=[601 198 284 3102 1166 0 0 20.0 0 0 86*5 130*10 25.5 795 70.5]';
-    
+% data1=[601 198 284 3102 1166 0 0 20.0 0 0 86*5 130*10 25.5 795 70.5]';
+
+%redleg's lvl 80 human data
+% data1=[662 175 291 3169 2351 0 0 21.3 16.1 6.9 92*5 133.7*10 20.8 799 69.3]';
+%run2 with 810 ap/ 265 sp
+data1=[978 236 412 3160 2312 0 0 25 24.5 10.6 131*5 143*10 25.8 791.2 86.1]';
+
+%towellie's data set 3680 AP / 1129 SP / (690+921)/2; 
+% data1=[0 0 1835 4606 0 0 0 145 0 0 598*5 0 179 1318 496]';
+
+%Klaud BE data
+% data1=[104.2*6 173.8 270.3 3038 1157 0 0 20.1 0 0 85.2*5 128.4*10 0 0 68.2]';
+% data1=[326*2 0 268.3 3031 1158*2 0 0 19.8 0 0 84.9*5 0 20.6 752.6 68.8]';
+
+%arcand data sets, 
+%#1 (2890 AP 889 SP Shiver)
+%#2 (3179 AP  889 SP  Shiver)
+% data1=[3112 1075.4 1442.9 4194.3 1072 0 0 109.9 0 0 465.6*5 0 0 0 381.8]';
+% data1=[3821 1164.5 1540 4304.5 1073 0 0 114.6 0 0 499.2*5 0 151 1211.2 395.4]';
+
 data2=[raw_summary spacer int2str(data1) spacer int2str(data1-raw_vals) spacer int2str(100.*(data1-raw_vals)./raw_vals)]
 %% Put glyph section here
 
