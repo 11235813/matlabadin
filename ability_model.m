@@ -110,7 +110,7 @@ dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit; %spell hit/crit
 net.Consecration =  dmg.Consecration;
 
 %Exorcism
-mdf.Exorcrit=mdf.spcrit.*(1-min([npc.type;1]))+mdf.spcritmulti.*min([npc.type;1]); %tracking npc type
+mdf.Exorcrit=mdf.spcrit.*(npc.type==0)+mdf.spcritmulti.*(npc.type==1); %tracking npc type
 raw.Exorcism=       ((1135+1267)./2 + 0.15.*max([player.hsp;player.ap])) ...   %1018+1136 base @ 80
                     .*mdf.spdmg.*mdf.BlazLi.*mdf.glyphExo.*target.resrdx;
 dmg.Exorcism=       raw.Exorcism.*mdf.sphit.*mdf.Exorcrit;

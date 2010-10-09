@@ -12,7 +12,7 @@ function [base] = player_model(varargin)
 %their own variables so that it's easy to do matrix operations on them.
 
 %Inputs [default value] :
-%level - player's level [80]
+%level - player's level [85]
 %race - player's race ['Human']
 %prof - primary professions; individual entries are separated by whitespaces ['BS JC']
 %List of profession entries :
@@ -95,7 +95,7 @@ base.stats.spi=primary_stats(race,5);
 
 base.ap=3.*base.lvl;       %class specific
 base.sp=0;
-base.mast=0;
+base.mast=8;               %spec-specific, not class-specific
 base.miss=5;
 base.dodge=3.6520;
 base.parry=5;

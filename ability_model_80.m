@@ -57,19 +57,19 @@ elseif strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
 end
 %% Melee abilities
 
-%Crusader Strike
+%Crusader Strike (can be blocked)
 raw.CrusaderStrike= 1.2.*player.ndamage.*mdf.phdmg.*mdf.Crus.*(1+2.*mdf.WotL).*mdf.t11x2;
-dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.mehit.*mdf.CScrit;
+dmg.CrusaderStrike= raw.CrusaderStrike.*(mdf.memodel.*mdf.CScrit+mdf.blockmodel);
 net.CrusaderStrike= dmg.CrusaderStrike+dmg.activeseal.*mdf.mehit;
 
-%Hammer of the Righteous
-%TODO check 2pt10 (both components) 
+%Hammer of the Righteous /TODO check 2pt10 (both components)
+%physical (can be blocked)
 raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR;
-dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.mehit.*mdf.phcrit;
+dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*(mdf.memodel.*mdf.HotRphcrit+mdf.blockmodel);
 net.HammeroftheRighteous= dmg.HammeroftheRighteous+dmg.activeseal.*mdf.mehit;
 %the aoe rolls only if physical connects
 raw.HammerNova=   ((523+783)./2+0.3577.*player.hsp).*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR.*target.resrdx; %523+783 base @ 80
-dmg.HammerNova=   raw.HammerNova.*(mdf.mehit.*mdf.sphit).*mdf.spcrit; %spell hit/crit
+dmg.HammerNova=   raw.HammerNova.*(mdf.mehit.*mdf.sphit).*mdf.HotRspcrit; %spell hit/crit
 net.HammerNova=   dmg.HammerNova;  %aoe doesn't proc seals
 
 %Melee attacks
@@ -78,18 +78,18 @@ dmg.Melee=          raw.Melee.*mdf.aamodel;
 dps.Melee=          dmg.Melee./player.wswing;
 net.Melee=          dmg.Melee+dmg.activeseal.*mdf.mehit;
 
-%Shield of the Righteous
+%Shield of the Righteous (can be blocked)
 mdf.ShoR=   20.*(player.hopo==1)+60.*(player.hopo==2)+120.*(player.hopo==3);  %need to initialize this
 raw.ShieldoftheRighteous= (mdf.ShoR./100.*player.ap).*mdf.spdmg.*mdf.glyphSotR.*target.resrdx;
-dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.mehit.*mdf.phcrit;  %melee hit
+dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*(mdf.memodel.*mdf.phcrit+mdf.blockmodel); %melee hit
 net.ShieldoftheRighteous= dmg.ShieldoftheRighteous+dmg.activeseal.*mdf.mehit;
 % crit.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.mehit.*mdf.phcritmulti;
 
 %% Ranged abilities
 
-%Avenger's Shield
+%Avenger's Shield (can be blocked)
 raw.AvengersShield= ((2512+3070)./2+0.42.*player.ap+0.22.*player.hsp).*mdf.spdmg.*mdf.glyphAS.*target.resrdx; %2512+3070 base @ 80
-dmg.AvengersShield= raw.AvengersShield.*mdf.rahit.*mdf.phcrit;                
+dmg.AvengersShield= raw.AvengersShield.*(mdf.ramodel.*mdf.phcrit+mdf.blockmodel);              
 net.AvengersShield= dmg.AvengersShield; %doesn't proc seals
 
 %Judgement (the seal of choice is defined in execution_model) 
@@ -97,9 +97,9 @@ raw.Judgement=      raw.Judgement.*mdf.spdmg.*(1+2.*mdf.WotL).*target.resrdx;
 dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit;
 net.Judgement=      dmg.Judgement+dmg.activeseal.*mdf.rahit;
 
-%Hammer of Wrath
+%Hammer of Wrath (can be blocked)
 raw.HammerofWrath= ((1124+1242)./2 + 0.15.*player.hsp + 0.15.*player.ap).*mdf.spdmg.*target.resrdx; %1124+1242 base @ 80
-dmg.HammerofWrath= raw.HammerofWrath.*mdf.rahit.*mdf.HoWcrit;
+dmg.HammerofWrath= raw.HammerofWrath.*(mdf.ramodel.*mdf.HoWcrit+mdf.blockmodel);
 net.HammerofWrath= dmg.HammerofWrath;  %doesn't proc seals
 
 %% Spell abilities
@@ -110,7 +110,7 @@ dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit; %spell hit/crit
 net.Consecration =  dmg.Consecration;
 
 %Exorcism
-mdf.Exorcrit=mdf.spcrit.*(1-min([npc.type;1]))+mdf.spcritmulti.*min([npc.type;1]); %tracking npc type
+mdf.Exorcrit=mdf.spcrit.*(npc.type==0)+mdf.spcritmulti.*(npc.type==1); %tracking npc type
 raw.Exorcism=       ((1018+1136)./2 + 0.15.*max([player.hsp;player.ap])) ...   %1018+1136 base @ 80
                     .*mdf.spdmg.*mdf.BlazLi.*mdf.glyphExo.*target.resrdx;
 dmg.Exorcism=       raw.Exorcism.*mdf.sphit.*mdf.Exorcrit;
