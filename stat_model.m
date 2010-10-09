@@ -24,7 +24,7 @@ mdf.Tough=1+0.03.*(talent.Toughness==1)+0.06.*(talent.Toughness==2)+0.1.*(talent
 mdf.HalGro=1+0.2.*talent.HallowedGround; %Cons output
 mdf.Sanct=1-(0.03.*(talent.Sanctuary==1)+0.06.*(talent.Sanctuary==2)+0.1.*(talent.Sanctuary==3)); %damage reduction
 mdf.WotL=0.15.*talent.WrathoftheLightbringer; %incorporates both effects
-mdf.Reck=0.1.*talent.Reckoning;  %this will probably end up in the parryhaste module
+% mdf.Reck=0.1.*talent.Reckoning;  %this will probably end up in the parryhaste module
 mdf.GC=0.1.*talent.GrandCrusader;
 mdf.Vind=1-0.05.*talent.Vindication; %damage reduction
 mdf.HolySh=15.*talent.HolyShield;
@@ -397,22 +397,18 @@ player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+player.VengAP+consu
 %% Weapon Details
 player.wdamage=gear.avgdmg+player.ap./14.*gear.swing; %not normalized (AA, Reck, phys HotR)
 player.ndamage=gear.avgdmg+player.ap./14.*2.4; %normalized attacks (hardcoded)
-player.bswing=gear.swing./mdf.phhaste;
-
-%Reckoning first-order approx
-mdf.ReckUptime=1-(1-mdf.Reck.*player.block./100).^(min([8.*ones(size(player.bswing)); 4.*player.bswing])./target.swing);
-mdf.ReckUptime=max([mdf.ReckUptime; zeros(size(mdf.ReckUptime))]);
-mdf.ReckUptime=min([mdf.ReckUptime; ones(size(mdf.ReckUptime))]);
-
-player.wswing=player.bswing./(1+mdf.ReckUptime);
+player.swing=gear.swing./mdf.phhaste;
+%PHR corrections
+phr=phr_model(exec,player.swing,target.swing,player.parry,player.block,talent.Reckoning);
+player.reck=phr.reck;   %store ru
+player.wswing=phr.phrs; %store st
 player.wdps=player.wdamage./player.wswing;
-
 %alternate values during bloodlust-type effects
-bl.wswing=gear.swing./mdf.blphhaste./(1+mdf.ReckUptime);
+phr=phr_model(exec,gear.swing./mdf.blphhaste,target.swing,player.parry,player.block,talent.Reckoning);
+bl.reck=phr.reck;   %store ru
+bl.wswing=phr.phrs; %store st
 bl.wdps=player.wdamage./bl.wswing;
 
-%% Parryhaste corrections
-%ignoring this for now until we know how/if parryhaste is implemented
 
 %% Other dynamic or inter-dependent corrections 
 %Hit & Damage modifier values
