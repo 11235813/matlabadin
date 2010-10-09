@@ -20,9 +20,9 @@ mdf.JotP=0.03.*talent.JudgementsofthePure;
 mdf.SotP=1+0.06.*talent.SealsofthePure;
 % mdf.EG %NYI
 mdf.JotJ=0.1.*talent.JudgementsoftheJust;
-mdf.Tough=1+floor(3.4.*talent.Toughness)./100;
+mdf.Tough=0.03.*(talent.Toughness==1)+0.06.*(talent.Toughness==2)+0.1.*(talent.Toughness==3);
 mdf.HalGro=1+0.2.*talent.HallowedGround; %Cons output
-mdf.Sanct=1-floor(3.4.*talent.Sanctuary)./100; %damage reduction
+mdf.Sanct=1-(0.03.*(talent.Sanctuary==1)+0.06.*(talent.Sanctuary==2)+0.1.*(talent.Sanctuary==3)); %damage reduction
 mdf.WotL=0.15.*talent.WrathoftheLightbringer; %incorporates both effects
 mdf.Reck=0.1.*talent.Reckoning;  %this will probably end up in the parryhaste module
 mdf.GC=0.1.*talent.GrandCrusader;
@@ -334,8 +334,8 @@ player.parry=base.parry+avoiddr.parrydr-0.04.*npc.skillgap;
 
 %at the moment, we don't have Redoubt to worry about, so we shouldnt' need
 %dynamic effects for block chance (hopefully?)
-player.block=base.block+16.*(talent.protpoints>=30)+mdf.HolySh ...
-    +gear.block./cnv.block_block+2.*player.mast-0.04.*npc.skillgap;
+player.block=base.block+gear.block./cnv.block_block ...
+    +mdf.HolySh+2.*player.mast-0.04.*npc.skillgap; %TODO : fix HS
 
 %check for bounding issues, based on the attack table
 player.miss=max([player.miss;zeros(size(player.miss))]);
@@ -376,26 +376,17 @@ target.block=npc.block.*npc.blockflag.*(exec.behind==0);
 
 target.spmiss=max([(npc.spmiss-player.sphit);zeros(size(player.sphit))]);
 target.resrdx=(100-npc.presist)./100;
-%%%%%%%%%%%%%%%% Armor calcs
-%since Armor Penetration is being removed from gear, we'll set ArPen to
-%zero for now.  Once we know if/how this is implemented for us, we can fix
-%it.
-player.ArPr=0;
+
+%% Armor calcs
 %Armor Penetration Constant C
 if base.lvl==80
-    target.armor_c=467.5*base.lvl-22167.5;
-else
-    target.armor_c=2167.5*base.lvl-158167.5; %85
+    mdf.boss_acoeff=467.5*base.lvl-22167.5;
+elseif base.lvl>81
+    mdf.boss_acoeff=2167.5*base.lvl-158167.5; %85
 end
-%debuffed armor
-target.dbfarmor=npc.armor.*mdf.Sund.*mdf.ST;
-%Armor penetration cap (max amount of armor that can be removed)
-target.ArP_cap=min([target.dbfarmor;(target.dbfarmor+target.armor_c)/3]);
-%Armor Penetration (%)
-target.ArP=min([player.ArPr./cnv.arpen_arpen;100.*ones(size(player.ArPr))]);
 %Boss Armor and DR formulas
-target.armor=floor(target.dbfarmor - target.ArP./100.*min([target.dbfarmor;target.ArP_cap]));
-target.phdr=target.armor./(target.armor+target.armor_c);
+target.armor=npc.armor.*mdf.ST.*((290+mdf.Sund.*10)./300);
+target.phdr=target.armor./(target.armor+mdf.boss_acoeff);
 
 %Vengeance AP correction
 % player.VengAP=min([15.*mdf.VengAP.*(npc.out.phys.*(1-player.phdr)./target.swing ...
@@ -404,7 +395,7 @@ player.VengAP=0.095.*player.hitpoints.*exec.timein; %temporary
 player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+player.VengAP+consum.ap).*mdf.UnRage);
 
 %% Weapon Details
-player.wdamage=gear.avgdmg+player.ap./14.*gear.swing; %not normalized : AA, Reck, phys HotR
+player.wdamage=gear.avgdmg+player.ap./14.*gear.swing; %not normalized (AA, Reck, phys HotR)
 player.ndamage=gear.avgdmg+player.ap./14.*2.4; %normalized attacks (hardcoded)
 player.bswing=gear.swing./mdf.phhaste;
 
