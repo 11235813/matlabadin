@@ -20,7 +20,7 @@ mdf.JotP=0.03.*talent.JudgementsofthePure;
 mdf.SotP=1+0.06.*talent.SealsofthePure;
 % mdf.EG %NYI
 mdf.JotJ=0.1.*talent.JudgementsoftheJust;
-mdf.Tough=0.03.*(talent.Toughness==1)+0.06.*(talent.Toughness==2)+0.1.*(talent.Toughness==3);
+mdf.Tough=1+0.03.*(talent.Toughness==1)+0.06.*(talent.Toughness==2)+0.1.*(talent.Toughness==3);
 mdf.HalGro=1+0.2.*talent.HallowedGround; %Cons output
 mdf.Sanct=1-(0.03.*(talent.Sanctuary==1)+0.06.*(talent.Sanctuary==2)+0.1.*(talent.Sanctuary==3)); %damage reduction
 mdf.WotL=0.15.*talent.WrathoftheLightbringer; %incorporates both effects
@@ -385,7 +385,7 @@ elseif base.lvl>81
     mdf.boss_acoeff=2167.5*base.lvl-158167.5; %85
 end
 %Boss Armor and DR formulas
-target.armor=npc.armor.*mdf.ST.*((290+mdf.Sund.*10)./300);
+target.armor=npc.armor.*mdf.Sund.*((290+mdf.ST.*10)./300);
 target.phdr=target.armor./(target.armor+mdf.boss_acoeff);
 
 %Vengeance AP correction
