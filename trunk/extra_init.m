@@ -10,7 +10,6 @@ extra.ap=0;
 extra.sp=0;
 extra.has=0;
 extra.mas=0;
-extra.blo=0;
 
 clear temp
 temp=extra;

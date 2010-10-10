@@ -29,7 +29,6 @@ gear.health=sum([egs.health]);
 
 gear.dodge=sum([egs.dodge]);
 gear.parry=sum([egs.parry]);
-gear.block=sum([egs.block]);
 gear.barmor=sum([egs.barmor]);
 gear.earmor=sum([egs.earmor]);
 
