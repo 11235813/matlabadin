@@ -125,6 +125,6 @@ raw.HolyShield=     0.*mdf.spdmg.*target.resrdx;
 dmg.HolyShield=     raw.HolyShield.*mdf.sphit;
 
 %Holy Wrath
-raw.HolyWrath=      (2420./exec.npccount+0.3.*player.hsp).*mdf.spdmg.*target.resrdx;  %2153 base @ 80
+raw.HolyWrath=      ((2154+0.3.*player.hsp)./exec.npccount+0.3.*player.hsp).*mdf.spdmg.*target.resrdx;  %2153 base @ 80
 dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit;
 net.HolyWrath=      dmg.HolyWrath;
