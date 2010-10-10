@@ -45,7 +45,6 @@
 %egs.mast       (mastery)
 %egs.dodge
 %egs.parry
-%egs.block      (block rating)
 %egs.barmor 	(base AC)
 %egs.earmor 	(extra AC)
 %egs.health 	(extra HP, mainly for enchants/buffs)
@@ -125,7 +124,6 @@ idb.iid=struct('name','Empty Slot', ...
                'ap',0, ...
                'dodge',0, ...
                'parry',0, ...
-               'block',0, ...
                'barmor',0, ...
                'earmor',0, ...
                'health',0, ...
@@ -154,7 +152,6 @@ idb.sid=struct('name','Empty Slot', ...
                'ap',0, ...
                'dodge',0, ...
                'parry',0, ...
-               'block',0, ...
                'barmor',0, ...
                'earmor',0, ...
                'health',0, ...
@@ -228,18 +225,16 @@ idb.iid(51269).parry=71;
 idb.iid(51269).istier=[1 0 0 0];
 
 %% Head
-
-%TODO: find iid
-idb.iid(00101).name='Helm of Setesh';
-idb.iid(00101).atype=1;
-idb.iid(00101).ilvl=333;
-idb.iid(00101).barmor=2542;
-idb.iid(00101).str=191+10;
-idb.iid(00101).sta=401+32+15;
-idb.iid(00101).dodge=208;
-idb.iid(00101).exp=97;
-idb.iid(00101).critmeta=0;
-idb.iid(00101).armormeta=1;
+idb.iid(57861).name='Helm of Setesh';
+idb.iid(57861).atype=1;
+idb.iid(57861).ilvl=333;
+idb.iid(57861).barmor=2542;
+idb.iid(57861).str=191+10;
+idb.iid(57861).sta=401+32+15;
+idb.iid(57861).dodge=208;
+idb.iid(57861).exp=97;
+idb.iid(57861).critmeta=0;
+idb.iid(57861).armormeta=1;
 
 %% Neck 
 idb.iid(50682).name='Bile-Encrusted Medallion (Heroic)';
@@ -333,26 +328,24 @@ idb.iid(50991).sta=157+15+30+30+9;
 idb.iid(50991).agi=0+10;
 idb.iid(50991).parry=95;
 
-%TODO: find iid
-idb.iid(00103).name='Sand Dune Belt';
-idb.iid(00103).atype=1;
-idb.iid(00103).ilvl=333;
-idb.iid(00103).barmor=1760;
-idb.iid(00103).str=151;
-idb.iid(00103).sta=298;
-idb.iid(00103).exp=101;
-idb.iid(00103).dodge=199;
+idb.iid(55867).name='Sand Dune Belt';
+idb.iid(55867).atype=1;
+idb.iid(55867).ilvl=333;
+idb.iid(55867).barmor=1760;
+idb.iid(55867).str=151;
+idb.iid(55867).sta=298;
+idb.iid(55867).exp=101;
+idb.iid(55867).dodge=199;
 
 %% Legs
-%TODO: find iid
-idb.iid(00103).name='Stone-Wrapped Greaves';
-idb.iid(00103).atype=1;
-idb.iid(00103).ilvl=333;
-idb.iid(00103).barmor=2737;
-idb.iid(00103).str=248;
-idb.iid(00103).sta=401+30+30+15;
-idb.iid(00103).parry=158+20+10;
-idb.iid(00103).dodge=138;
+idb.iid(62355).name='Stone-Wrapped Greaves';
+idb.iid(62355).atype=1;
+idb.iid(62355).ilvl=333;
+idb.iid(62355).barmor=2737;
+idb.iid(62355).str=248;
+idb.iid(62355).sta=401+30+30+15;
+idb.iid(62355).parry=158+20+10;
+idb.iid(62355).dodge=138;
 
 %% Boots
 idb.iid(50625).name='Grinning Skull Greatboots (Heroic)';
@@ -364,14 +357,13 @@ idb.iid(50625).sta=180+30+30;
 idb.iid(50625).dodge=127;
 idb.iid(50625).exp=61;
 
-%TODO: find iid
-idb.iid(10104).name='Ramkahen Front Boots';
-idb.iid(10104).atype=1;
-idb.iid(10104).ilvl=333;
-idb.iid(10104).sta=151;
-idb.iid(10104).str=298;
-idb.iid(10104).dodge=199;
-idb.iid(10104).hit=101;
+idb.iid(66909).name='Ramkahen Front Boots';
+idb.iid(66909).atype=1;
+idb.iid(66909).ilvl=333;
+idb.iid(66909).sta=151;
+idb.iid(66909).str=298;
+idb.iid(66909).dodge=199;
+idb.iid(66909).hit=101;
 
 %% Rings
 idb.iid(50622).name='Devium''s Eternally Cold Ring (Heroic)';
@@ -396,13 +388,12 @@ idb.iid(56111).sta=224;
 idb.iid(56111).mast=100;
 idb.iid(56111).dodge=100;
 
-%TODO: find iid
-idb.iid(10105).name='Ring of Three Lights';
-idb.iid(10105).ilvl=333;
-idb.iid(10105).str=149;
-idb.iid(10105).sta=224;
-idb.iid(10105).parry=100;
-idb.iid(10105).mast=100;
+idb.iid(55873).name='Ring of Three Lights';
+idb.iid(55873).ilvl=333;
+idb.iid(55873).str=149;
+idb.iid(55873).sta=224;
+idb.iid(55873).parry=100;
+idb.iid(55873).mast=100;
 
 %% Trinkets
 idb.iid(50356).name='Corroded Skeleton Key';
@@ -417,11 +408,10 @@ idb.iid(56121).name='Throngus''s Finger';
 idb.iid(56121).ilvl=333;
 idb.iid(56121).dodge=252;
 
-%TODO: find iid
-idb.iid(10106).name='Impetuous Query';
-idb.iid(10106).ilvl=333;
-idb.iid(10106).mast=252;
-idb.iid(10106).parry=1260*10/60;
+idb.iid(55881).name='Impetuous Query';
+idb.iid(55881).ilvl=333;
+idb.iid(55881).mast=252;
+idb.iid(55881).isproc=92199;
 
 %% Weapons
 idb.iid(44638).name='Dalaran Sword';
@@ -507,6 +497,8 @@ idb.iid(63888).mast=54;
 %structure that contains all of the relevant enchants, according to the
 %spell_id value. Since it has the same form, we can use the same equip()
 %function.
+%Note that several entries have the generator's 'name' field, instead
+%of the effect's. See the Arcanum entries, for a few examples.
 
 %% generic (multiple slots)
 idb.sid(78166).name='Heavy Savage Armor Kit';
@@ -516,19 +508,19 @@ idb.sid(78166).sta=44;
 idb.sid(59955).name='Arcanum of the Stalwart Protector';
 idb.sid(59955).sta=37;
 
-idb.sid(86931).name='Earthen Ring';
+idb.sid(86931).name='Arcanum of the Earthen Ring';
 idb.sid(86931).sta=90;
 idb.sid(86931).dodge=35;
 
-idb.sid(86932).name='Guardian of Hyjal';
+idb.sid(86932).name='Arcanum of Hyjal';
 idb.sid(86932).int=60;
 idb.sid(86932).crit=35;
 
-idb.sid(86933).name='Dragonmaw/Wildhammer';
+idb.sid(86933).name='Arcanum of the Dragonmaw/Wildhammer';
 idb.sid(86933).str=60;
 idb.sid(86933).mast=35;
 
-idb.sid(86934).name='Ramhaken';
+idb.sid(86934).name='Arcanum of the Ramhaken';
 idb.sid(86934).agi=60;
 idb.sid(86934).haste=35;
 
@@ -738,6 +730,24 @@ idb.sid(59619).name='Enchant Weapon - Accuracy';
 idb.sid(59619).hit=25;
 idb.sid(59619).crit=25;
 
+idb.sid(74195).name='Enchant Weapon - Mending';
+idb.sid(74195).isproc=74194;
+
+idb.sid(74211).name='Enchant Weapon - Elemental Slayer';
+idb.sid(74211).isproc=74208;
+
+idb.sid(74223).name='Enchant Weapon - Hurricane';
+idb.sid(74223).isproc=74221;
+
+idb.sid(74242).name='Enchant Weapon - Power Torrent';
+idb.sid(74242).isproc=74241;
+
+idb.sid(74244).name='Enchant Weapon - Windwalk';
+idb.sid(74244).isproc=74243;
+
+idb.sid(74246).name='Enchant Weapon - Landslide';
+idb.sid(74246).isproc=74245;
+
 %% Shield
 idb.sid(34009).name='Enchant Shield - Major Stamina';
 idb.sid(34009).sta=18;
@@ -745,8 +755,9 @@ idb.sid(34009).sta=18;
 idb.sid(74207).name='Enchant Shield - Protection';
 idb.sid(74207).earmor=160;
 
-idb.sid(74226).name='Enchant Shield - Blocking';
-idb.sid(74226).block=40;
+%TODO fix
+% idb.sid(74226).name='Enchant Shield - Blocking';
+% idb.sid(74226).block=40;
 
 idb.sid(74235).name='Enchant Shield - Superior Intellect';
 idb.sid(74235).int=35;
@@ -776,11 +787,11 @@ idb.sid(79477).name='Elixir of the Cobra';
 idb.sid(79477).crit=225;
 idb.sid(79477).isproc=1;
 
-idb.sid(79481).name='Impossible Accuracy';
+idb.sid(79481).name='Elixir of Impossible Accuracy';
 idb.sid(79481).hit=225;
 idb.sid(79481).isproc=1;
 
-idb.sid(79632).name='Mighty Speed';
+idb.sid(79632).name='Elixir of Mighty Speed';
 idb.sid(79632).haste=225;
 idb.sid(79632).isproc=1;
 
@@ -804,10 +815,10 @@ idb.sid(79475).earmor=8750;
 idb.sid(79476).name='Volcanic Potion';
 idb.sid(79476).int=1250;
 
-idb.sid(79633).name='Tol''vir Agility';
+idb.sid(79633).name='Potion of the Tol''vir';
 idb.sid(79633).agi=1250;
 
-idb.sid(79634).name='Golem''s Strength';
+idb.sid(79634).name='Golemblood Potion';
 idb.sid(79634).str=1250;
 
 % Food
@@ -815,15 +826,15 @@ idb.sid(87584).name='Beer-Basted Crocolisk';
 idb.sid(87584).sta=90;
 idb.sid(87584).str=90;
 
-idb.sid(87586).name='Placeholder1';
+idb.sid(87586).name='Skewered Eel';
 idb.sid(87586).sta=90;
 idb.sid(87586).agi=90;
 
-idb.sid(87587).name='Placeholder2';
+idb.sid(87587).name='Severed Sagefish Head';
 idb.sid(87587).sta=90;
 idb.sid(87587).int=90;
 
-idb.sid(87594).name='Placeholder3';
+idb.sid(87594).name='Lavascale Minestrone';
 idb.sid(87594).sta=90;
 idb.sid(87594).mast=90;
 
@@ -839,14 +850,14 @@ idb.sid(87599).name='Basilisk Liverdog';
 idb.sid(87599).sta=90;
 idb.sid(87599).haste=90;
 
-idb.sid(87601).name='Placeholder4';
+idb.sid(87601).name='Mushroom Sauce Mudfish';
 idb.sid(87601).sta=90;
 idb.sid(87601).dodge=90;
 
-idb.sid(87602).name='Placeholder5';
+idb.sid(87602).name='Blackbelly Sushi';
 idb.sid(87602).sta=90;
 idb.sid(87602).parry=90;
 
-idb.sid(87637).name='Placeholder6';
+idb.sid(87637).name='Crocolisk Au Gratin';
 idb.sid(87637).sta=90;
 idb.sid(87637).exp=90;

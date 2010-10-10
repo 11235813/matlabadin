@@ -157,7 +157,6 @@ extra.ap=extra.itm.ap.*ipconv.ap        + extra.val.ap;
 extra.sp=extra.itm.sp.*ipconv.sp        + extra.val.sp;
 extra.has=extra.itm.has.*ipconv.has     + extra.val.has;
 extra.mas=extra.itm.mas.*ipconv.mas     + extra.val.mas;
-extra.blo=extra.itm.blo.*ipconv.blo     + extra.val.blo;
 
 %% Primary stats
 player.str=floor(base.stats.str.*mdf.BoK)+floor((gear.str+mdf.SoE+extra.str+consum.str).*mdf.BoK);
@@ -333,8 +332,7 @@ player.parry=base.parry+avoiddr.parrydr-0.04.*npc.skillgap;
 
 %at the moment, we don't have Redoubt to worry about, so we shouldnt' need
 %dynamic effects for block chance (hopefully?)
-player.block=base.block+gear.block./cnv.block_block ...
-    +mdf.HolySh+2.*player.mast-0.04.*npc.skillgap; %TODO : fix HS
+player.block=base.block+mdf.HolySh+2.*player.mast-0.04.*npc.skillgap; %TODO : fix HS
 
 %check for bounding issues, based on the attack table
 player.miss=max([player.miss;zeros(size(player.miss))]);

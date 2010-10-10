@@ -34,8 +34,6 @@ cnv.haste_phhaste=128.05715942; %85
 cnv.haste_phhaste=32.78998947;
 cnv.haste_sphaste=128.05715942; %85
 cnv.haste_sphaste=32.78998947;
-% todo : fix arpen later on
-cnv.arpen_arpen=13.99572719;
 
 %defensive conversions
 cnv.dodge_dodge=176.71890258; %85
@@ -44,8 +42,6 @@ cnv.agi_dodge=304.50769251; %85
 cnv.agi_dodge=51.97800000;
 cnv.parry_parry=176.71890258; %85
 cnv.parry_parry=45.25018692;
-cnv.block_block=88.35944366; %85
-cnv.block_block=22.62509346;
 cnv.mast_mast=179.28004455; %85
 cnv.mast_mast=45.90598678;
 
@@ -61,4 +57,3 @@ ipconv.ap=2;
 ipconv.sp=7/6;
 ipconv.has=1;
 ipconv.mas=1;
-ipconv.blo=1;
