@@ -3,7 +3,7 @@ gear_db;
 def_db;
 
 % lvl 85
-base=player_model('lvl',80,'race','Human','prof','');
+base=player_model('lvl',80,'race','Belf','prof','');
 npc=npc_model(base,'lvl',80);
 egs=ddb.gearset{2};  %85
 glyph=ddb.glyphset{1}; %no glyphs
@@ -23,7 +23,7 @@ talent=ddb.talentset{1};  %85 and 80 (drop EG/GbtL @ 80)
 % talent.holy(1,3)=1;
 
 %execution
-exec=execution_model('npccount',1,'timein',0,'timeout',1,'seal','Truth');
+exec=execution_model('npccount',2,'timein',0,'timeout',1,'seal','Truth');
 %activate buffs
 buff=buff_model('mode',1);
 %invoke talents & glyphs
@@ -36,16 +36,16 @@ stat_model
 
 %Debugging for odd gear sets
 % old.ap=player.ap;old.hsp=player.hsp;
-player.ap=810;
-player.hsp=265;
+% player.ap=1010;
+% player.hsp=421;
 % player.ap=3179;
 % player.hsp=889;
 % gear.swing=1.6;
 % gear.avgdmg=(200+373)/2;
 % player.wdamage=(690+921)/2;
 % gear.avgdmg=player.wdamage-player.ap./14.*gear.swing;
-player.wdamage=gear.avgdmg+player.ap./14.*gear.swing;
-player.ndamage=gear.avgdmg+player.ap./14.*2.4;
+% player.wdamage=gear.avgdmg+player.ap./14.*gear.swing;
+% player.ndamage=gear.avgdmg+player.ap./14.*2.4;
 
 
 %calculate ability damages - uncomment appropriate level model
@@ -124,7 +124,7 @@ data1=[978 236 412 3160 2312 0 0 25 24.5 10.6 131*5 143*10 25.8 791.2 86.1]';
 
 %Klaud BE data
 % data1=[104.2*6 173.8 270.3 3038 1157 0 0 20.1 0 0 85.2*5 128.4*10 0 0 68.2]';
-% data1=[326*2 0 268.3 3031 1158*2 0 0 19.8 0 0 84.9*5 0 20.6 752.6 68.8]';
+data1=[326*2 0 268.3 3031 1158*2 0 0 19.8 0 0 84.9*5 0 20.6 752.6 68.8]';
 
 %arcand data sets, 
 %#1 (2890 AP 889 SP Shiver)
@@ -132,6 +132,17 @@ data1=[978 236 412 3160 2312 0 0 25 24.5 10.6 131*5 143*10 25.8 791.2 86.1]';
 % data1=[3112 1075.4 1442.9 4194.3 1072 0 0 109.9 0 0 465.6*5 0 0 0 381.8]';
 % data1=[3821 1164.5 1540 4304.5 1073 0 0 114.6 0 0 499.2*5 0 151 1211.2 395.4]';
 
+%klaud BE data - 1010 AP /497 SP / DS
+% data1=[0 272.9 604.2 0 1300.7 0 0 28.7 0 0 176.9*5 0 31.1 837.6 98.6]';
+%klaud BE data - 2020 AP / 981 SP / DS
+% data1=[0 478.4 1191.9 0 1518.5 1640.3 0 46.8 0 0 353.4*5 0 47.9 1031.5 160.6]';
+%klaud BE HoW data - 1010 AP / 421 SP / DS
+% data1=[0 0 0 0 0 1413.4 0 31.3 0 0 190.8*5 0 0 0 142.9]';
+%klaud BE HoW data - naked / DS
+% data1=[0 0 0 0 0 1325.6 0 0 0 0 0 0 0 0 116.8]';
+
+
+%[ShoR CS Jud AS HW HoW Exor SoT SoR SoJ Cens Cons HotR HaNova melee]
 data2=[raw_summary spacer int2str(data1) spacer int2str(data1-raw_vals) spacer int2str(100.*(data1-raw_vals)./raw_vals)]
 %% Put glyph section here
 
