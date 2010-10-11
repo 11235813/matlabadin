@@ -52,27 +52,28 @@ if isempty(food)==1 food=87584; end;
 
 
 %% Buffs
-%5% stats, resistance : Blessing of Kings / Mark of the Wild
+%5% stats, resistance : Blessing of Kings / Mark of the Wild / Embrace of the Shale Spider
 buff.BoK=((mode==0&&(isempty(excl)||max(strcmpi('BoK',strread(excl,'%s')))==0))||mode==2||mode==3);
-%agility&strength : Strength of Earth / Horn of Winter / Battle Shout
+%agility&strength : Strength of Earth / Horn of Winter / Battle Shout / Roar of Courage
 buff.SoE=((mode==0&&(isempty(excl)||max(strcmpi('SoE',strread(excl,'%s')))==0))||mode==3);
-%stamina : Power word Fortitude / Commanding Shout
+%stamina : Power word Fortitude / Commanding Shout / Blood Pact / Quiraji Fortitude
 buff.PWF=((mode==0&&(isempty(excl)||max(strcmpi('PWF',strread(excl,'%s')))==0))||mode==3);
-%mana : Arcane Intellect / Fel Intelligence
-buff.ArcInt=((mode==0&&(isempty(excl)||max(strcmpi('ArcInt',strread(excl,'%s')))==0))||mode==3);
+%mana : Arcane Brilliance / Fel Intelligence
+buff.FelInt=((mode==0&&(isempty(excl)||max(strcmpi('FelInt',strread(excl,'%s')))==0))||mode==3);
 %multiplicative AP : Unleashed Rage / Blessing of Might / Trueshot Aura / Abomination's Might
 buff.UnRage=((mode==0&&(isempty(excl)||max(strcmpi('UnRage',strread(excl,'%s')))==0))||mode==3);
-%lesser multiplicative SP : Flametongue Totem
-buff.FMT=((mode==0&&(isempty(excl)||max(strcmpi('FMT',strread(excl,'%s')))==0))||mode==3);
+%lesser multiplicative SP : Flametongue Totem / Arcane Brilliance
+buff.FMT=((mode==0&&(isempty(excl)||max(strcmpi('FMT',strread(excl,'%s')))==0 ...
+    ||max(strcmpi('FelInt',strread(excl,'%s')))==0))||mode==3);
 %greater multiplicative SP : Totem of Wrath / Demonic Pact
 buff.ToW=((mode==0&&(isempty(excl)||max(strcmpi('ToW',strread(excl,'%s')))==0))||mode==3);
-%global damage dealt : Communion / Ferocious Inspiration / Arcane Tactics
+%global damage dealt : Sanctified Retribution / Ferocious Inspiration / Arcane Tactics
 buff.ArcTac=((mode==0&&(isempty(excl)||max(strcmpi('ArcTac',strread(excl,'%s')))==0))||mode==3);
 %global crit : Leader of the Pack / Rampage / Moonkin Aura / Elemental Oath / Honor Among Thieves
 buff.LotP=((mode==0&&(isempty(excl)||max(strcmpi('LotP',strread(excl,'%s')))==0))||mode==3);
-%physical attack speed : Windfury Totem / Improved Icy Talons
+%physical attack speed : Windfury Totem / Improved Icy Talons / Hunting Party
 buff.WF=((mode==0&&(isempty(excl)||max(strcmpi('WF',strread(excl,'%s')))==0))||mode==3);
-%spell haste : Wrath of Air Totem / Improved Moonkin Form
+%spell haste : Wrath of Air Totem / Improved Moonkin Form / Mind Quickening
 buff.WoA=((mode==0&&(isempty(excl)||max(strcmpi('WoA',strread(excl,'%s')))==0))||mode==3);
 %active haste : Bloodlust / Heroism / Time Warp
 buff.BL=((mode==0&&(isempty(excl)||max(strcmpi('BL',strread(excl,'%s')))==0))||mode==3);
@@ -100,7 +101,7 @@ buff.SavCom=((mode==0&&(isempty(excl)||max(strcmpi('SavCom',strread(excl,'%s')))
 buff.Hemo=((mode==0&&(isempty(excl)||max(strcmpi('Hemo',strread(excl,'%s')))==0))||mode==3);
 %spell damage taken : Ebon Plaguebringer / Earth and Moon / Curse of the Elements / Master Poisoner
 buff.CoE=((mode==0&&(isempty(excl)||max(strcmpi('CoE',strread(excl,'%s')))==0))||mode==3);
-%spell crit : Improved Scorch / Improved Shadowbolt
+%spell crit : Critical Mass / Improved Shadowbolt
 buff.ISB=((mode==0&&(isempty(excl)||max(strcmpi('ISB',strread(excl,'%s')))==0))||mode==3);
 %multiplicative armor : Sunder Armor / Expose Armor / Faerie Fire / Scorpid Venom
 buff.Sund=((mode==0&&(isempty(excl)||max(strcmpi('Sund',strread(excl,'%s')))==0))||mode==3);

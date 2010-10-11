@@ -102,7 +102,7 @@ base.parry=5;
 base.block=5;
 base.phcrit=0.652;         %class dependent
 base.spcrit=3.3355;        %class dependent
-base.health=6934;          %class and level dependent
-base.mana=4394;            %class and level dependent
+base.health=6934;          %class and level dependent /TODO
+base.mana=4394;            %class and level dependent /TODO
 base.exp=0;                %overridden in stats_recalc based on weapon type
 end

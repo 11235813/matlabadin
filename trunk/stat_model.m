@@ -70,10 +70,11 @@ else
 end
 
 %% Raid Buffs
+mdf.buffscale=125.*(base.lvl==80)+443.*(base.lvl==85); %level scaling
 mdf.BoK=1+0.05.*buff.BoK;
-mdf.SoE=100.*buff.SoE;
-mdf.PWF=100.*buff.PWF;
-mdf.ArcInt=100.*buff.ArcInt;
+mdf.SoE=round(1.24.*mdf.buffscale).*buff.SoE;
+mdf.PWF=round(1.32.*mdf.buffscale).*buff.PWF;
+mdf.FelInt=round(4.8.*mdf.buffscale).*buff.FelInt; %only mana
 mdf.UnRage=1+0.1.*buff.UnRage;
 mdf.FMT=6.*buff.FMT; %does it stack with ToW?
 mdf.ToW=10.*buff.ToW; %does it stack with FMT?
@@ -82,7 +83,7 @@ mdf.LotP=5.*buff.LotP;
 mdf.WF=1+0.1.*buff.WF;
 mdf.WoA=1+0.05.*buff.WoA;
 mdf.BL=1+0.3.*buff.BL;
-mdf.Devo=1000.*buff.Devo;
+mdf.Devo=round(9.2.*mdf.buffscale).*buff.Devo;
 mdf.RF=1+1.25.*buff.RF;
 mdf.Focus=3.*buff.Focus;
 %% Raid Debufs
@@ -197,9 +198,9 @@ player.sphit=(gear.hit+extra.hit+consum.hit)./cnv.hit_sphit+mdf.TbtL ...
 if ((strcmpi('Human',base.race)||strcmpi('Hum',base.race)) ...
         &&(strcmp(egs(15).wtype,'swo')||strcmp(egs(15).wtype,'mac')))
         base.exp=3;
-elseif ((strcmpi('Human',base.race)||strcmpi('Hum',base.race)) ...
+elseif ((strcmpi('Dwarf',base.race)||strcmpi('Dwa',base.race)) ...
         &&strcmp(egs(15).wtype,'mac'))
-        base.exp=5;
+        base.exp=3;
 end
 
 player.exp=base.exp+((gear.exp+extra.exp+consum.exp)./cnv.exp_exp)+mdf.glyphSoT;
