@@ -68,7 +68,7 @@ raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*mdf.Crus.*mdf.t10x2.
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*(mdf.memodel.*mdf.HotRphcrit+mdf.blockmodel);
 net.HammeroftheRighteous= dmg.HammeroftheRighteous+dmg.activeseal.*mdf.mehit;
 %the aoe rolls only if physical connects
-raw.HammerNova=   ((523+783)./2+0.3577.*player.hsp).*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR.*target.resrdx; %523+783 base @ 80
+raw.HammerNova=   ((523+783)./2+0.187.*player.ap).*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR.*target.resrdx; %523+783 base @ 80
 dmg.HammerNova=   raw.HammerNova.*(mdf.mehit.*mdf.sphit).*mdf.HotRspcrit; %spell hit/crit
 net.HammerNova=   dmg.HammerNova;  %aoe doesn't proc seals
 
