@@ -110,10 +110,16 @@ gear_stats
 stat_model
 ability_model_80
 prio_model
+rot.consflag=1;
+rotation_model
 
 %run sim
-seq1=prio_sim(10,'N',90000);
+% seq1=prio_sim(10,'N',90000);
+%or not
+seq1=rot;
 
+%these calculations are done in rotation_model as well, but we repeat them
+%here so that the file works properly for the outputs of prio_sim
 %active DPS
 acdps(1)=sum(pridmg.*seq1.coeff);
       
@@ -134,7 +140,8 @@ padps(1)=padps(1)+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.w
 %now calculate total DPS
 totdps(1)=acdps(1)+padps(1);
 
-for m=2:length(tree)-2  %everything except GC & SD
+% for m=2:length(tree)-2  %everything except GC & SD
+for m=2:length(tree) %everything
    
 
     clear talent
@@ -146,6 +153,8 @@ for m=2:length(tree)-2  %everything except GC & SD
     %calculate final stats
     stat_model
     ability_model_80
+    rotation_model;seq1=rot;
+    
     
     %active dps
     acdps(m)=sum(pridmg.*seq1.coeff);
@@ -173,43 +182,69 @@ end
 
 %TODO: fix prio_sim to make it possible to do Sacred Duty without
 %re-simming
+% 
+% wb=waitbar(0,'Calculating GC');
+% for m=length(tree)-1:length(tree)
+%     
+%     clear talent
+%     talent=tree(m);
+%     %invoke talents & glyphs
+%     talents
+%     %calculate relevant stats
+%     gear_stats
+%     %calculate final stats
+%     stat_model
+%     ability_model_80
+% 
+%     seq2(m)=prio_sim(10,'N',90000);
+%     waitbar(m/length(tree),wb)
+%     
+%     acdps(m)=sum(pridmg.*seq2(m).coeff)
+% 
+%     padps(m)=0;
+%     %account for Inq
+%     Inqmod=sum(seq2(m).Inq>0)./length(seq2(m).Inq);
+% 
+%     %assume a 5-stack of SoT (if applicable).
+%     if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
+%         padps(m)=padps(m)+dps.Censure.*(1+0.3.*Inqmod);
+% 
+%     end
+% 
+%     %aa and seal damage
+%     padps(m)=padps(m)+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
+% 
+%     totdps(m)=acdps(m)+padps(m);
+% 
+% end
+% close(wb)
 
-wb=waitbar(0,'Calculating GC');
-for m=length(tree)-1:length(tree)
-    
-    clear talent
-    talent=tree(m);
-    %invoke talents & glyphs
-    talents
-    %calculate relevant stats
-    gear_stats
-    %calculate final stats
-    stat_model
-    ability_model_80
+dpsppt=(totdps(1)-totdps')./points';
 
-    seq2(m)=prio_sim(10,'N',90000);
-    waitbar(m/length(tree),wb)
-    
-    acdps(m)=sum(pridmg.*seq2(m).coeff)
-
-    padps(m)=0;
-    %account for Inq
-    Inqmod=sum(seq2(m).Inq>0)./length(seq2(m).Inq);
-
-    %assume a 5-stack of SoT (if applicable).
-    if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
-        padps(m)=padps(m)+dps.Censure.*(1+0.3.*Inqmod);
-
-    end
-
-    %aa and seal damage
-    padps(m)=padps(m)+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
-
-    totdps(m)=acdps(m)+padps(m);
-
-end
+%% table output
+[char(name) repmat(' ',length(name),5) num2str(dpsppt,'%2.1f')]
 
 
-close(wb)    
+%% plots
+figure(30)
+set(gcf,'Position',[428 128 728 378])
+bar20=barh(dpsppt(2:length(dpsppt)),'BarWidth',0.5,'BarLayout','stacked');
+% set(bar20(2),'FaceColor',[0.749 0.749 0]);
+ylim([0.5 10.5])
+set(gca,'YTickLabel',name(2:length(name)))
+% legend('Unglyphed','Glyphed','Location','NorthEast')
+xlabel('DPS per point')
+% ylabel('Damage')
 
-[char(name) repmat(' ',length(name),5) num2str((totdps(1)-totdps')./points','%2.1f')]
+%sorted
+[dpspptsorted ind]=sort(dpsppt)
+
+figure(31)
+
+set(gcf,'Position',[428 128 728 378])
+bar20=barh(dpspptsorted(2:length(dpsppt)),'BarWidth',0.5,'BarLayout','stacked');
+% set(bar20(2),'FaceColor',[0.749 0.749 0]);
+ylim([0.5 10.5])
+set(gca,'YTickLabel',name(ind(2:length(name))))
+% legend('Unglyphed','Glyphed','Location','NorthEast')
+xlabel('DPS per point')

@@ -84,7 +84,7 @@ talent.protpoints=sum(sum(talent.prot));
 if exist('talent')==0 || isfield(talent,'ret')==0
     talent.ret=zeros(2,4);
     talent.ret=[0 3 2 0; ...
-                0 3 0 2];
+                0 0 0 0];
 end
 talent.EyeforanEye=talent.ret(1,1);
 talent.Crusade=talent.ret(1,2);

@@ -105,7 +105,7 @@ xlabel('Ability')
 ylabel('Damage')
 % 
 % 
-figure(40)
+figure(21)
 set(gcf,'Position',[428 128 728 378])
 bar40=bar(netplot(kk,:),'BarWidth',0.5,'BarLayout','stacked');
 set(bar40(2),'FaceColor',[0.749 0.749 0]);
