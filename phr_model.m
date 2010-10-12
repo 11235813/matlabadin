@@ -31,10 +31,12 @@ elseif floor(parry_opps)==1
             -binopdf(2,floor(parry_opps)+1,parry)).*int_opps(2);
     end
 else
+    tmp1=1-binopdf(0,floor(parry_opps),parry)-binopdf(1,floor(parry_opps),parry);
+    tmp2=1-binopdf(0,floor(parry_opps)+1,parry)-binopdf(1,floor(parry_opps)+1,parry);
     c=(0.24.*binopdf(1,floor(parry_opps),parry) ...
-        +0.272.*binopdf(2,floor(parry_opps),parry)).*int_opps(1) ...
+        +0.272.*tmp1).*int_opps(1) ...
         +(0.24.*binopdf(1,floor(parry_opps)+1,parry) ...
-        +0.272.*binopdf(2,floor(parry_opps)+1,parry)).*int_opps(2);
+        +0.272.*tmp2).*int_opps(2);
 end
 phr.ph=(Ra+c.*Rb.*exec.timein)./Ra;
 phr.phs=1./(Ra.*phr.ph);
