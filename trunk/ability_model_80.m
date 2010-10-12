@@ -128,3 +128,51 @@ dmg.HolyShield=     raw.HolyShield.*mdf.sphit;
 raw.HolyWrath=      ((2154+0.3.*player.hsp)./exec.npccount+0.3.*player.hsp).*mdf.spdmg.*target.resrdx;  %2153 base @ 80
 dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit;
 net.HolyWrath=      dmg.HolyWrath;
+
+
+%% Consolidated arrays
+val.raw=[round(raw.ShieldoftheRighteous); 
+    round(raw.CrusaderStrike); 
+    round(raw.Judgement); 
+    round(raw.AvengersShield); 
+    round(raw.HolyWrath); 
+    round(raw.HammerofWrath); 
+    round(raw.Exorcism); 
+    round(raw.SealofTruth); 
+    round(raw.SealofRighteousness); 
+    round(raw.SealofJustice); 
+    round(raw.Censure); 
+    round(raw.Consecration); 
+    round(raw.HammeroftheRighteous);
+    round(raw.HammerNova);
+    round(raw.Melee)];
+
+val.dmg=[round(dmg.ShieldoftheRighteous); 
+    round(dmg.CrusaderStrike); 
+    round(dmg.Judgement); 
+    round(dmg.AvengersShield); 
+    round(dmg.HolyWrath); 
+    round(dmg.HammerofWrath); 
+    round(dmg.Exorcism); 
+    round(dmg.SealofTruth); 
+    round(dmg.SealofRighteousness); 
+    round(dmg.SealofJustice); 
+    round(dmg.Censure); 
+    round(dmg.Consecration); 
+    round(dmg.HammeroftheRighteous);
+    round(dmg.HammerNova);
+    round(dmg.Melee)];
+
+val.net=[round(net.ShieldoftheRighteous); 
+    round(net.CrusaderStrike); 
+    round(net.Judgement); 
+    round(net.AvengersShield); 
+    round(net.HolyWrath); 
+    round(net.HammerofWrath); 
+    round(net.Exorcism); 
+    0; 0; 0;
+    round(dmg.Censure); 
+    round(net.Consecration); 
+    round(net.HammeroftheRighteous);
+    round(net.HammerNova);
+    round(net.Melee)];

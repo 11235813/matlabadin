@@ -101,6 +101,12 @@ temptree.prot=[3 2 0 0; 2 3 2 0; 2 3 1 2; 2 1 2 0; 1 1 0 0; 0 2 3 0; 0 1 0 0];
 temptree.ret=[0 3 2 0; 0 0 0 0];
 ddb.talentset{2}=temptree;
 
+%0/31/5 spec for baseline calcs
+temptree.prot=[3 2 0 0; 2 3 0 0; 2 3 1 2; 2 1 2 0; 1 1 0 0; 0 2 3 0; 0 1 0 0];
+temptree.ret=[0 3 2 0; 0 0 0 0];
+ddb.talentset{3}=temptree;
+
+
 %% Glyphs
 tempglyphs.prime=[0 0 0 0 0 0 0];
 tempglyphs.minor=[0 0 0 0 0 0 0];

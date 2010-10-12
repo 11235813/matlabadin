@@ -174,11 +174,12 @@ idb.iid(51266).ilvl=277;
 idb.iid(51266).barmor=2239;
 idb.iid(51266).str=183;
 idb.iid(51266).sta=243+32+15+12;
-idb.iid(51266).agi=0+10;
+idb.iid(51266).agi=0;
 idb.iid(51266).critmeta=0;
 idb.iid(51266).armormeta=1;
-idb.iid(51266).dodge=128;
-idb.iid(51266).parry=88;
+idb.iid(51266).dodge=128-51;
+idb.iid(51266).mast=51;
+idb.iid(51266).parry=88+10;
 idb.iid(51266).istier=[1 0 0 0];
 
 idb.iid(51265).name='Sanctified Lightsworn Chestguard (Heroic)';
@@ -188,9 +189,10 @@ idb.iid(51265).barmor=2756;
 idb.iid(51265).earmor=3140-idb.iid(51265).barmor;
 idb.iid(51265).str=183;
 idb.iid(51265).sta=251+30+15+9;
-idb.iid(51265).agi=0+10;
+idb.iid(51265).agi=0;
 idb.iid(51265).dodge=56;
-idb.iid(51265).parry=96;
+idb.iid(51265).parry=96+10-38;
+idb.iid(51265).mast=38;
 idb.iid(51265).istier=[1 0 0 0];
 
 idb.iid(51267).name='Sanctified Lightsworn Handguards (Heroic)';
@@ -200,8 +202,9 @@ idb.iid(51267).barmor=1723;
 idb.iid(51267).earmor=2051-idb.iid(51265).barmor;
 idb.iid(51267).str=103;
 idb.iid(51267).sta=192+30;
-idb.iid(51267).dodge=68;
+idb.iid(51267).dodge=68-27;
 idb.iid(51267).hit=69;
+idb.iid(51267).mast=27;
 idb.iid(51267).istier=[1 0 0 0];
 
 idb.iid(51268).name='Sanctified Lightsworn Legguards (Heroic)';
@@ -210,7 +213,8 @@ idb.iid(51268).ilvl=277;
 idb.iid(51268).barmor=2412;
 idb.iid(51268).str=139;
 idb.iid(51268).sta=251+30+30;
-idb.iid(51268).dodge=106;
+idb.iid(51268).dodge=106-42;
+idb.iid(51268).mast=42;
 idb.iid(51268).exp=93;
 idb.iid(51268).istier=[1 0 0 0];
 
@@ -220,8 +224,9 @@ idb.iid(51269).ilvl=277;
 idb.iid(51269).barmor=2067;
 idb.iid(51269).str=136;
 idb.iid(51269).sta=192+30;
-idb.iid(51269).dodge=99;
+idb.iid(51269).dodge=99-39;
 idb.iid(51269).parry=71;
+idb.iid(51269).mast=39;
 idb.iid(51269).istier=[1 0 0 0];
 
 %% Head
@@ -242,7 +247,8 @@ idb.iid(50682).ilvl=277;
 idb.iid(50682).earmor=216;
 idb.iid(50682).str=102;
 idb.iid(50682).sta=141+30;
-idb.iid(50682).dodge=73;
+idb.iid(50682).dodge=73-29;
+idb.iid(50682).mast=29;
 
 idb.iid(55888).name='Darkhowl Amulet';
 idb.iid(55888).ilvl=333;
@@ -268,7 +274,8 @@ idb.iid(50466).barmor=556;
 idb.iid(50466).earmor=716-idb.iid(50466).barmor;
 idb.iid(50466).str=90;
 idb.iid(50466).sta=124+30;
-idb.iid(50466).dodge=72;
+idb.iid(50466).dodge=72-28;
+idb.iid(50466).mast=28;
 
 idb.iid(56219).name='Shroud of Dark Memories';
 idb.iid(56219).ilvl=333;
@@ -296,7 +303,8 @@ idb.iid(51901).barmor=1156;
 idb.iid(51901).earmor=1360-idb.iid(51901).barmor;
 idb.iid(51901).str=82;
 idb.iid(51901).sta=124+30;
-idb.iid(51901).dodge=68;
+idb.iid(51901).dodge=68-27;
+idb.iid(51901).mast=27;
 
 idb.iid(55992).name='Armguards of Unearthly Light';
 idb.iid(55992).ilvl=333;
@@ -326,7 +334,8 @@ idb.iid(50991).earmor=1674-idb.iid(50991).barmor;
 idb.iid(50991).str=120;
 idb.iid(50991).sta=157+15+30+30+9;
 idb.iid(50991).agi=0+10;
-idb.iid(50991).parry=95;
+idb.iid(50991).parry=95-38;
+idb.iid(50991).mast=38;
 
 idb.iid(55867).name='Sand Dune Belt';
 idb.iid(55867).atype=1;
@@ -354,7 +363,8 @@ idb.iid(50625).ilvl=277;
 idb.iid(50625).barmor=1895;
 idb.iid(50625).str=103;
 idb.iid(50625).sta=180+30+30;
-idb.iid(50625).dodge=127;
+idb.iid(50625).dodge=127-50;
+idb.iid(50625).mast=50;
 idb.iid(50625).exp=61;
 
 idb.iid(66909).name='Ramkahen Front Boots';
@@ -371,13 +381,15 @@ idb.iid(50622).ilvl=277;
 idb.iid(50622).earmor=216;
 idb.iid(50622).str=102;
 idb.iid(50622).sta=141+30;
-idb.iid(50622).dodge=73;
+idb.iid(50622).dodge=73-29;
+idb.iid(50622).mast=29;
 
 idb.iid(50404).name='Ashen Band of Endless Courage';
 idb.iid(50404).ilvl=277;
 idb.iid(50404).str=68;
 idb.iid(50404).sta=130+30;
-idb.iid(50404).dodge=84;
+idb.iid(50404).dodge=84-33;
+idb.iid(50404).mast=33;
 idb.iid(50404).hit=55;
 idb.iid(50404).earmor=2400.*0.03;
 
@@ -461,7 +473,8 @@ idb.iid(50729).barmor=7699;
 idb.iid(50729).str=102;
 idb.iid(50729).sta=141+30;
 idb.iid(50729).dodge=68;
-idb.iid(50729).parry=72;
+idb.iid(50729).parry=72-28;
+idb.iid(50729).mast=28;
 
 idb.iid(55880).name='Zora''s Ward';
 idb.iid(55880).ilvl=333;
@@ -481,8 +494,12 @@ idb.iid(56096).barmor=11504;
 
 %% Librams
 idb.iid(50461).name='Libram of the Eternal Tower';
-idb.iid(50461).dodge=219;
-idb.iid(50461).isproc=71194;
+idb.iid(50461).str=51;
+idb.iid(50461).sta=77+15;
+idb.iid(50461).parry=34+10;
+idb.iid(50461).dodge=34-13;
+idb.iid(50461).mast=13;
+
 
 idb.iid(63888).name='Blackblood Freedom Standard';
 idb.iid(63888).ilvl=318;

@@ -20,7 +20,7 @@ ability_model_80
 prio_model;
 
 %% Generate coefficients for each priority queue
-N=30000;  %set long enough to get stochastic data for each sim
+N=90000;  %set long enough to get stochastic data for each sim
 dt=0.5;
 wb=waitbar(0,'Calculating');
 tic
