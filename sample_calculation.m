@@ -4,7 +4,7 @@ gear_db;
 def_db;
 
 %invoke player model
-base=player_model('race','Human');
+base=player_model('race','Human','lvl',80);
 
 %invoke npc model
 npc=npc_model(base);
