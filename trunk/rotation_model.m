@@ -27,7 +27,7 @@ cols(1,:)=[1 0];
 for m=2:50;temp=p*cols(m-1,1)+cols(m-1,2);cols(m,:)=[temp 1-temp];end;
 P=cols(length(cols),1);
 
-rot.numcasts=[2.*(1+mdf.mehit.*mdf.SacDut.*(mdf.phcritmulti./mdf.phcrit-1));... %ShoR
+rot.numcasts=[2.*(mdf.phcrit+mdf.mehit.*mdf.SacDut.*(mdf.phcritmulti-mdf.phcrit));... %ShoR
     6;...                                            %CS
     2;...                                            %J
     2*P;...                                          %AS
@@ -39,7 +39,7 @@ rot.numcasts=[2.*(1+mdf.mehit.*mdf.SacDut.*(mdf.phcritmulti./mdf.phcrit-1));... 
     6.*mdf.mehit+2.*mdf.rahit.*(mdf.JotJ>0);...      %seal
     0];                                             %hammer nova
 
-rot.coeff=rot.numcasts./(18+1.5.*rot.xtragcd);
+rot.coeff=rot.numcasts./(18+1.5.*2.*rot.xtragcd);
 rot.acdps=sum(pridmg.*rot.coeff);
 
 rot.padps=0;
