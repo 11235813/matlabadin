@@ -76,8 +76,8 @@ mdf.SoE=round(1.24.*mdf.buffscale).*buff.SoE;
 mdf.PWF=round(1.32.*mdf.buffscale).*buff.PWF;
 mdf.FelInt=round(4.8.*mdf.buffscale).*buff.FelInt; %only mana
 mdf.UnRage=1+0.1.*buff.UnRage;
-mdf.FMT=6.*buff.FMT; %does it stack with ToW?
-mdf.ToW=10.*buff.ToW; %does it stack with FMT?
+mdf.FMT=1+0.06.*buff.FMT;
+mdf.TW=1+0.1.*buff.TW;
 mdf.ArcTac=1+0.03.*buff.ArcTac;
 mdf.LotP=5.*buff.LotP;
 mdf.WF=1+0.1.*buff.WF;
@@ -313,7 +313,8 @@ mdf.HotRspcrit=1+(mdf.spcritmulti-1).*player.HotRspcrit./100;
 
 %% SP and AP
 %AP gets computed later on, in the Vengeance subsection
-player.sp=gear.sp+extra.sp+consum.sp+floor(player.str.*(mdf.TbtL./10))+(player.int-10)./cnv.int_sp;
+player.sp=floor((gear.sp+extra.sp+consum.sp+floor(player.str.*(mdf.TbtL./10)) ...
+    +(player.int-10).*cnv.int_sp).*max([mdf.FMT;mdf.TW])); %TODO : check it
 %for future use in case our spellpower and "holy spell power" are both
 %relevant.  hsp is what we get from TbtL, and only affects damage.  We're
 %back to the old 2.x "spell power" and "healing power" modle, it seems.
@@ -324,7 +325,7 @@ player.mast=base.mast+((gear.mast+extra.mas+consum.mast)./cnv.mast_mast);
 
 %% Avoidance and Blocking
 %TODO: update avoid_dr
-avoiddr=avoid_dr(gear.dodge+consum.dodge,gear.parry+consum.parry ...
+avoiddr=avoid_dr(base,gear.dodge+consum.dodge,gear.parry+consum.parry ...
     +floor((player.str-base.stats.str)./4),player.agi-base.stats.agi); %DR for dodge/parry
 
 player.miss=base.miss-0.04.*npc.skillgap;
@@ -390,7 +391,8 @@ target.phdr=target.armor./(target.armor+mdf.boss_acoeff);
 % player.VengAP=min([15.*mdf.VengAP.*(npc.out.phys.*(1-player.phdr)./target.swing ...
 %     +npc.out.spell.*(1-player.spdr)./npc.cast);0.1.*player.hitpoints]).*exec.timein;
 player.VengAP=0.095.*player.hitpoints.*exec.timein; %temporary
-player.ap=floor((base.ap+gear.ap+2.*(player.str-10)+extra.ap+player.VengAP+consum.ap).*mdf.UnRage);
+player.ap=floor((base.ap+gear.ap+(player.str-10).*cnv.str_ap+extra.ap ...
+    +player.VengAP+consum.ap).*mdf.UnRage);
 
 %% Weapon Details
 player.wdamage=gear.avgdmg+player.ap./14.*gear.swing; %not normalized (AA, Reck, phys HotR)
