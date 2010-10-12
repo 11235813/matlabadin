@@ -176,3 +176,10 @@ val.net=[round(net.ShieldoftheRighteous);
     round(net.HammeroftheRighteous);
     round(net.HammerNova);
     round(net.Melee)];
+
+
+%damage array for priority calculations
+pridmg  =[raw.ShieldoftheRighteous;dmg.CrusaderStrike;dmg.Judgement;...
+          dmg.AvengersShield;dmg.HolyWrath;dmg.Consecration;...
+          dmg.HammeroftheRighteous;dmg.ShieldoftheRighteous./2; ...  
+          0;dmg.activeseal;dmg.HammerNova];  
