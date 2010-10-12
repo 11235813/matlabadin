@@ -1,4 +1,4 @@
-function [avoiddr] =  avoid_dr(dodge,parry,agi,class)
+function [avoiddr] =  avoid_dr(base,dodge,parry,agi,class)
 %AVOID_DR calculates the amount of avoidance received from all sources
 %after diminishing returns.  It takes four inputs, in order:
 %dodge  = dodge rating from gear
@@ -17,10 +17,8 @@ if (min(dodge)<0 || min(parry)<0 || min(agi)<0) error('At least one of the input
 
 %% Constants
 %rating conversions
-cnv.dodge_dodge=176.71890258; %85
-cnv.dodge_dodge=45.25018692;
-cnv.parry_parry=176.71890258; %85
-cnv.parry_parry=45.25018722;
+cnv.dodge_dodge=176.71890258.*(base.lvl==85)+45.25018692.*(base.lvl==80);
+cnv.parry_parry=176.71890258.*(base.lvl==85)+45.25018722.*(base.lvl==80);
 %DR coefficients (k)
 drcoeff.plate=0.956;
 drcoeff.druid=0.972;
@@ -32,34 +30,31 @@ drcap.Ddodge=116.890707; %druid
 drcap.Rdodge=145.560408; %rogue
 drcap.Rparry=145.560408; %rogue
 %Agility to dodge conversions (without! BoK)
-cnv.agi_dodge(1)=304.50769251; %paladin (85)
-cnv.agi_dodge(1)=51.97800000;  %paladin
-cnv.agi_dodge(2)=430.69315711; %deathknight, warrior (85)
-cnv.agi_dodge(2)=73.54996004;  %deathknight, warrior
-cnv.agi_dodge(3)=243.58302440; %druid, rogue (85)
-cnv.agi_dodge(3)=41.58731440;  %druid, rogue
+cnv.agi_dodge(1)=304.50769251.*(base.lvl==85)+51.97800000.*(base.lvl==80);  %paladin
+cnv.agi_dodge(2)=430.69315711.*(base.lvl==85)+73.54996004.*(base.lvl==80);  %deathknight, warrior
+cnv.agi_dodge(3)=243.58302440.*(base.lvl==85)+41.58731440.*(base.lvl==80);  %druid, rogue
 
 
 %% Class choice
 %by default, this simulation assumes a paladin.  A fourth, optional argument
 %allows for other classes to be specified.  
-if nargin<4 || (nargin==4 && (strcmp(class,'Paladin') || strcmp(class,'paladin') || strcmp(class,'pally') || strcmp(class,'pal')))
+if nargin<5 || (nargin==5 && (strcmp(class,'Paladin') || strcmp(class,'paladin') || strcmp(class,'pally') || strcmp(class,'pal')))
     avoiddr.k=drcoeff.plate;
     avoiddr.c_dodge=drcap.Pdodge;
     avoiddr.c_parry=drcap.Pparry;
     avoiddr.agi_dodge=cnv.agi_dodge(1);
-elseif nargin==4 && (strcmp(class,'Warrior') || strcmp(class,'warrior') || strcmp(class,'warr') || strcmp(class,'war') || ...
+elseif nargin==5 && (strcmp(class,'Warrior') || strcmp(class,'warrior') || strcmp(class,'warr') || strcmp(class,'war') || ...
                       strcmp(class,'Death Knight') || strcmp(class,'death knight') || strcmp(class,'DeathKnight') || strcmp(class,'deathknight') || strcmp(class,'dk')) || strcmp(class,'dwdk')
     avoiddr.k=drcoeff.plate;
     avoiddr.c_dodge=drcap.Pdodge;
     avoiddr.c_parry=drcap.Pparry;
     avoiddr.agi_dodge=cnv.agi_dodge(2);
-elseif nargin==4 && (strcmp(class,'Druid') || strcmp(class,'druid') || strcmp(class,'dru') || strcmp(class,'drood'))
+elseif nargin==5 && (strcmp(class,'Druid') || strcmp(class,'druid') || strcmp(class,'dru') || strcmp(class,'drood'))
     avoiddr.k=drcoeff.druid;
     avoiddr.c_dodge=drcap.Ddodge;
     avoiddr.c_parry=[];
     avoiddr.agi_dodge=cnv.agi_dodge(3);
-elseif nargin==4 && (strcmp(class,'Rogue') || strcmp(class,'rogue') || strcmp(class,'rog'))
+elseif nargin==5 && (strcmp(class,'Rogue') || strcmp(class,'rogue') || strcmp(class,'rog'))
     avoiddr.k=drcoeff.rogue;
     avoiddr.c_dodge=drcap.Rdodge;
     avoiddr.c_parry=drcap.Rparry;
