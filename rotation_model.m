@@ -1,73 +1,54 @@
 %% Sample Rotation module
-%Assume fixed rotation of CS-HotR-X-CS-Jud-X, where X is filled with HW,
-%AS, Cons, or HS.  
+%939 is simple enough that we can model it analytically, which makes a lot
+%of things faster.
+%Assume fixed rotation of 
+% CS-J-CS-AS-CS-ShoR-
+% CS-J-CS-X-CS-ShoR- (repeat)
 
-%Each cycle is 9 seconds.  We'll want HS cast every other cycle (ever 18s)
-%since it has a 20s duration.
-%Thus our rotation is roughly:
-%CS-HotR-HS
-%CS-Jud-X
-%CS-HotR-X
-%CS-Jud-X (if we're lucky).
+%This cycle is 18 seconds, plus time to account for ShoR misses
+%In that time, we get 
+%6 CS
+%2 J
+%1 AS
+%2 ShoR
+%1 "X" that could be AS, HW, or potentially Cons
 
-%With the current state of abilities, Cons
-%isn't even worth casting on a single target (even at 45 seconds, it's less
-%than just about everything else).
-%              SealofTruth: 576.3107
-%                  Censure: 5.3629e+003
-%      SealofRighteousness: 475.9103
-%            SealofInsight: 0
-%            SealofJustice: 0
-%           CrusaderStrike: 1.3315e+003
-%     HammeroftheRighteous: 6.1882e+003
-%                    Melee: 1.4574e+003
-%           AvengersShield: 2.1058e+003
-%                Judgement: 2.0858e+003
-%            HammerofWrath: 2.8015e+003
-%             Consecration: 372.4645
-%                 Exorcism: 1.1861e+003
-%          HandofReckoning: 3.5697e+003
-%               HolyShield: 95.7796
-%                HolyWrath: 3.5947e+003
+%set to 1 if you want to cast Cons in slot X (max once every 4th X,
+%regardless of glyph)
+if isfield('rot','consflag')==0
+    rot.consflag=0;
+end
 
-%Given this data set, we'd want to fill the X's with:
-%  HW > HoW > AS > Cons 
-%Note that while AS and HW are both better than Judgement, we'll get
-%some guaranteed crits due to Sacred Duty that will increase Judgement's
-%net damage.  So even when GC procs, it's not worth pushing AS up one slot,
-%since it'll still get cast before the next CS.  It may make sense to cast
-%HW sooner, provided it doesn't end up causing pushback down the line.
+tempn=[1:15];
+rot.xtragcd=mdf.mehit.*sum(tempn.*(1-mdf.mehit).^(tempn-1))-1;
 
-%For the moment, we'll assume that we get one GC proc, such that we get one
-%HW and two AS's in the rotation above:
-%CS-HotR-HS
-%CS-Jud-AS
-%CS-HotR-HW
-%CS-Jud-AS
-%Note that since AS is a 20-second cooldown, at worst we end up with one
-%"empty" spot in the rotation.
+p=1-(1-mdf.GC).^3;q=1-p;
+cols(1,:)=[1 0];
+for m=2:50;temp=p*cols(m-1,1)+cols(m-1,2);cols(m,:)=[temp 1-temp];end;
+P=cols(length(cols),1);
 
-%So, in 18 seconds, we get
-%4x CS
-%2x HotR
-%2x Jud
-%1x HW
-%2x AS
-%Melee damage
-%Seal procs
-%Censure damage
-%Holy Shield damage (ignored for now)
+rot.numcasts=[2.*(1+mdf.mehit.*mdf.SacDut.*(mdf.phcritmulti./mdf.phcrit-1));... %ShoR
+    6;...                                            %CS
+    2;...                                            %J
+    2*P;...                                          %AS
+    max([2*(1-P)-0.5.*rot.consflag; 0]);...          %HW
+    0.5.*rot.consflag;...                            %Cons
+    0;...                                            %HotR
+    0;...                                            %2ShoR
+    0;...                                            %Inq
+    6.*mdf.mehit+2.*mdf.rahit.*(mdf.JotJ>0);...      %seal
+    0];                                             %hammer nova
 
-% rot1.dmg=   4.*dmg.CrusaderStrike + ...
-%             2.*dmg.HammeroftheRighteous + ...
-%             2.*(1-player.HRcrit./100).*dmg.Judgement + ... 
-%                 player.HRcrit./100.*crit.Judgement + ...  %auto-crit due to HotR
-%             1.*dmg.HolyWrath + ...
-%             2.*dmg.AvengersShield + ...
-%             18.*dps.Melee + ...
-%             18.*dps.SealofTruth + ...
-%             18.*dps.Censure;
-%         
-% rot1.dps=rot1.dmg./18;
-% rot1.tps=rot1.dps.*mdf.threat;
-placeholder.placeholder=0;
+rot.coeff=rot.numcasts./(18+1.5.*rot.xtragcd);
+rot.acdps=sum(pridmg.*rot.coeff);
+
+rot.padps=0;
+if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
+    rot.padps=rot.padps+dps.Censure;
+end
+
+%aa and seal damage
+rot.padps=rot.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing;
+
+rot.totdps=rot.acdps+rot.padps
+
