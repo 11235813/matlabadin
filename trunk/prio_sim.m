@@ -175,9 +175,11 @@ for m=1:N
                     elseif dur.SD>0  %otherwise, we hit - check for SD crits
 %                         sequence.color(qq)=1;
                         sequence.shormiss(qq)=0;
+                        hopo=0;
 
                     else %no SD, just a regular hit
                         sequence.shormiss(qq)=0;
+                        hopo=0;
                     end
                       
                     dur.SD=0;

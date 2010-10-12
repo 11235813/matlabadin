@@ -23,13 +23,14 @@ gear_stats
 buff=buff_model;
 
 %invoke talents & glyphs
+talent=ddb.talentset{3};
 talents
 
 %calculate final stats
 stat_model
 
 %calculate ability damages
-ability_model
+ability_model_80
 
 %rotation 
 rotation_model
