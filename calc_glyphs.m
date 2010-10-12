@@ -77,7 +77,7 @@ glyph=gtree(1);
 talents
 %calculate relevant stats
 gear_stats
-gear.exp=0;
+gear.exp=99;consum.exp=0;
 %calculate final stats
 stat_model
 ability_model_80
@@ -128,7 +128,7 @@ for m=2:length(gtree) %everything
     talents
     %calculate relevant stats
     gear_stats
-    gear.exp=0;
+    gear.exp=99;consum.exp=0;
     %calculate final stats
     stat_model
     ability_model_80
