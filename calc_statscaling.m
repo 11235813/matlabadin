@@ -36,7 +36,7 @@ talents
 gear_stats
 %adjustments to make sure that nothing is capped
 gear.hit=min([gear.hit; 150.*ones(size(gear.hit))]);
-gear.exp=min([gear.exp; 150.*ones(size(gear.exp))]);
+gear.exp=min([gear.exp; 90.*ones(size(gear.exp))]);
 gear.mast=min([gear.mast; 400.*ones(size(gear.mast))]);
 
 %calculate final stats
