@@ -5,10 +5,9 @@ extra.int=0;
 extra.hit=0;
 extra.crit=0;
 extra.exp=0;
-extra.haste=0;
 extra.ap=0;
 extra.sp=0;
-extra.has=0;
+extra.haste=0;
 extra.mas=0;
 
 clear temp

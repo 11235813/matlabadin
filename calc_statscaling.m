@@ -39,26 +39,41 @@ stat_model
 ability_model_80
 rotation_model
 
-
-%% everything is set up, now for the meat
+%arrays for varying things
 vary=1:1000;
 novary=zeros(size(vary));
+stat={'exp';'hit';'str';'ap';'sta';'crit';'agi';'haste';'mas';'sp';'int'};
+M=length(stat);  %number of "extra" stats
+dstat=10.*ones(1,M);
 
+
+%% Strength graph
+
+extra_init;
 
 extra.val.str=vary;
 
-extra.itm.str=0;
 
-stat_model;ability_model_80;rotation_model;cmat=rot.coeff';
+for m=1:M
+    %set each stat to dstat extra
+    eval(char(['extra.itm.' stat{m} '=dstat(m);']))
 
-dps0=cmat*pridmg;
+    stat_model;ability_model_80;rotation_model;cmat=rot.coeff';
 
-extra.itm.str=10;
+    dps1(m,:)=cmat*pridmg;
+    
+    
+    
+    %set each stat back to 0 extra
+    eval(char(['extra.itm.' stat{m} '=0;']))
 
-stat_model;ability_model_80;rotation_model;cmat=rot.coeff';
+    stat_model;ability_model_80;rotation_model;cmat=rot.coeff';
 
-dps=cmat*pridmg;
+    dps0(m,:)=cmat*pridmg;
 
-%this matrix contains the scaling of each rotation with different stats
-% rotscale=cmat*adam;  
+end
+diffdps=dps1-dps0;
 
+figure(50)
+plot(player.armorystr',diffdps')
+legend(stat)

@@ -156,7 +156,7 @@ extra.crit=extra.itm.crit.*ipconv.crit	+ extra.val.crit;
 extra.exp=extra.itm.exp.*ipconv.exp  	+ extra.val.exp;
 extra.ap=extra.itm.ap.*ipconv.ap        + extra.val.ap;
 extra.sp=extra.itm.sp.*ipconv.sp        + extra.val.sp;
-extra.has=extra.itm.has.*ipconv.has     + extra.val.has;
+extra.haste=extra.itm.haste.*ipconv.has     + extra.val.haste;
 extra.mas=extra.itm.mas.*ipconv.mas     + extra.val.mas;
 
 %% Primary stats
@@ -168,7 +168,7 @@ player.int=floor(base.stats.int.*mdf.BoK)+floor((gear.int+extra.int+consum.int).
 % player.spi=floor(base.stats.spi.*mdf.BoK)+floor((gear.spi+extra.spi).*mdf.BoK);
 
 %armory strength
-player.armorystr=base.stats.str+gear.str; %TODO fix/delete
+player.armorystr=base.stats.str+gear.str+extra.str; %TODO fix/delete
 
 %hit points
 player.hitpoints=base.health.*(1+0.05.*(strcmpi('Tauren',base.race)||strcmpi('Taur',base.race))) ...
