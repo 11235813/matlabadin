@@ -237,7 +237,7 @@ xlabel('DPS per point')
 % ylabel('Damage')
 
 %sorted
-[dpspptsorted ind]=sort(dpsppt)
+[dpspptsorted ind]=sort(dpsppt);
 
 figure(31)
 

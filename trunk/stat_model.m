@@ -342,13 +342,13 @@ player.dodge=max([player.dodge;zeros(size(player.dodge))]);
 player.parry=max([player.parry;zeros(size(player.parry))]);
 player.block=max([player.block;zeros(size(player.block))]);
 
-player.avsize=max([size(player.miss);size(player.parry);size(player.dodge);size(player.block)]);
-player.dodge=min([player.dodge.*ones(player.avsize); ...
-    (100-player.miss).*ones(player.avsize)]);
-player.parry=min([player.parry.*ones(player.avsize); ...
-    (100-player.miss-player.dodge).*ones(player.avsize)]);
-player.block=min([player.block.*ones(player.avsize); ...
-    (100-player.miss-player.dodge-player.parry).*ones(player.avsize)]);
+player.size.av=max([size(player.miss);size(player.parry);size(player.dodge);size(player.block)]);
+player.dodge=min([player.dodge.*ones(player.size.av); ...
+    (100-player.miss).*ones(player.size.av)]);
+player.parry=min([player.parry.*ones(player.size.av); ...
+    (100-player.miss-player.dodge).*ones(player.size.av)]);
+player.block=min([player.block.*ones(player.size.av); ...
+    (100-player.miss-player.dodge-player.parry).*ones(player.size.av)]);
 
 player.avoid=player.miss+player.dodge+player.parry;
 player.avoidpct=player.avoid./100;
@@ -419,8 +419,9 @@ mdf.spdmg=mdf.CoE.*mdf.ArcTac;
 mdf.sphit=1-target.spmiss./100;
 
 %enforce one-roll system for auto-attacks
-player.aacrit=max([min([player.aacrit.*ones(size(target.avoid+npc.glance+target.block)); ...
-    (100-target.avoid-npc.glance-target.block)]);zeros(size(player.aacrit))]);
+player.size.hit=max([size(player.phhit);size(player.sphit);size(player.exp)]);
+player.aacrit=max([min([player.aacrit.*ones(player.size.hit); ...
+    (100-target.avoid-npc.glance-target.block)]);zeros(player.size.hit)]);
 mdf.glancerdx=1-npc.glancerdx./100;
 mdf.blockrdx=0.7;
 mdf.aamodel=(mdf.mehit) ...                   %hit

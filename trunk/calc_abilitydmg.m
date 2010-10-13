@@ -82,6 +82,7 @@ vals.glyph(3)=tempvals(3,4); %Jud
 vals.glyph(4)=tempval2(4); %AS
 vals.glyph(7)=tempvals(7,2); %Exor
 vals.glyph(13)=tempvals(13,3); %HotR
+vals.glyph(14)=tempvals(14,3); %HaNova
 
 %% text arrays
 spacer=repmat(' ',size(vals.raw,1),3);
