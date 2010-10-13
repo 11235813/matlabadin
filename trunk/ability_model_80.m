@@ -131,6 +131,9 @@ net.HolyWrath=      dmg.HolyWrath;
 
 
 %% Consolidated arrays
+val.length=max([length(dmg.Consecration) length(dmg.CrusaderStrike)]);
+val.zero=zeros(1,val.length);
+
 val.raw=[round(raw.ShieldoftheRighteous); 
     round(raw.CrusaderStrike); 
     round(raw.Judgement); 
@@ -170,7 +173,7 @@ val.net=[round(net.ShieldoftheRighteous);
     round(net.HolyWrath); 
     round(net.HammerofWrath); 
     round(net.Exorcism); 
-    0; 0; 0;
+    val.zero; val.zero; val.zero;
     round(dmg.Censure); 
     round(net.Consecration); 
     round(net.HammeroftheRighteous);
@@ -182,4 +185,4 @@ val.net=[round(net.ShieldoftheRighteous);
 pridmg  =[raw.ShieldoftheRighteous;dmg.CrusaderStrike;dmg.Judgement;...
           dmg.AvengersShield;dmg.HolyWrath;dmg.Consecration;...
           dmg.HammeroftheRighteous;dmg.ShieldoftheRighteous./2; ...  
-          0;dmg.activeseal;dmg.HammerNova];  
+          val.zero;dmg.activeseal.*ones(size(val.zero));dmg.HammerNova];  
