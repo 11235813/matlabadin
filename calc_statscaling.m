@@ -23,7 +23,7 @@ def_db;
 base=player_model('lvl',80,'race','Human','prof','');
 npc=npc_model(base);
 gear_sample
-glyph=ddb.glyphset{1}; %no glyphs
+% glyph=ddb.glyphset{1}; %no glyphs
 talent=ddb.talentset{3};  %0/31/5
 
 %execution
