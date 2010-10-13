@@ -34,46 +34,154 @@ buff=buff_model('mode',3);
 talents
 %calculate relevant stats
 gear_stats
+%adjustments to make sure that nothing is capped
+gear.hit=min([gear.hit; 150.*ones(size(gear.hit))]);
+gear.exp=min([gear.exp; 150.*ones(size(gear.exp))]);
+gear.mast=min([gear.mast; 400.*ones(size(gear.mast))]);
+
 %calculate final stats
 stat_model
 ability_model_80
 rotation_model
 
-%arrays for varying things
-vary=1:1000;
-novary=zeros(size(vary));
-stat={'exp';'hit';'str';'ap';'sta';'crit';'agi';'haste';'mas';'sp';'int'};
+
+stat={'exp';'hit';'str';'crit';'ap';'sta';'agi';'haste';'mas';'sp';'int'};
 M=length(stat);  %number of "extra" stats
-dstat=10.*ones(1,M);
+
+dstat=[10 10 20 10 10 20 10 10 10 10 10];
 
 
 %% Strength graph
 
+%reset extra structure
 extra_init;
-
-extra.val.str=vary;
+extra.val.str=-100+[1:1000];
 
 
 for m=1:M
     %set each stat to dstat extra
     eval(char(['extra.itm.' stat{m} '=dstat(m);']))
 
-    stat_model;ability_model_80;rotation_model;cmat=rot.coeff';
+    stat_model;ability_model_80;rotation_model;
 
-    dps1(m,:)=cmat*pridmg;
-    
+    dps1s(m,:)=rot.coeff'*pridmg+rot.padps;
+    dps1s2(m,:)=rot2.coeff'*pridmg+rot2.padps;    
     
     
     %set each stat back to 0 extra
     eval(char(['extra.itm.' stat{m} '=0;']))
 
-    stat_model;ability_model_80;rotation_model;cmat=rot.coeff';
+    stat_model;ability_model_80;rotation_model;
 
-    dps0(m,:)=cmat*pridmg;
+    dps0s(m,:)=rot.coeff'*pridmg+rot.padps;
+    dps0s2(m,:)=rot2.coeff'*pridmg+rot2.padps;
 
 end
-diffdps=dps1-dps0;
+diffdpsS=(dps1s-dps0s).*10./repmat(dstat',1,size(dps1s,2));
+diffdpsS2=(dps1s2-dps0s2).*10./repmat(dstat',1,size(dps1s2,2));
+xS=player.armorystr';
 
 figure(50)
-plot(player.armorystr',diffdps')
-legend(stat)
+set(gcf,'Position',[290    92   706   414])
+plot(xS,diffdpsS')
+xlim([min(player.armorystr) max(player.armorystr)])
+legend(stat,'Location','NorthEast')
+xlabel('Armory Strength')
+ylabel('DPS per 10 itemization points')
+
+%% Hit graph
+%reset extra structure
+extra_init;
+extra.val.hit=-max(gear.hit)+[0:350];
+for m=1:M
+    %set each stat to dstat extra
+    eval(char(['extra.itm.' stat{m} '=dstat(m);']))
+
+    stat_model;ability_model_80;rotation_model;
+
+    dps1h(m,:)=sum(rot.coeff.*pridmg)+rot.padps;
+    dps1h2(m,:)=sum(rot2.coeff.*pridmg)+rot2.padps;
+    
+    %set each stat back to 0 extra
+    eval(char(['extra.itm.' stat{m} '=0;']))
+
+    stat_model;ability_model_80;rotation_model;
+    
+    dps0h(m,:)=sum(rot.coeff.*pridmg)+rot.padps;
+    dps0h2(m,:)=sum(rot2.coeff.*pridmg)+rot2.padps;
+
+end
+diffdpsH=(dps1h-dps0h).*10./repmat(dstat',1,size(dps1h,2));
+diffdpsH2=(dps1h2-dps0h2).*10./repmat(dstat',1,size(dps1h2,2));
+xH=player.phhit';
+
+figure(51)
+set(gcf,'Position',[290    92   706   414])
+plot(xH,diffdpsH')
+xlim([min(player.phhit) max(player.phhit)])
+legend(stat,'Location','NorthEast')
+xlabel('Melee hit % against lvl 80')
+ylabel('DPS per 10 itemization points')
+
+
+%% Exp graph
+%reset extra structure
+extra_init;
+extra.val.exp=-max(gear.exp)+0:400;
+for m=1:M
+    %set each stat to dstat extra
+    eval(char(['extra.itm.' stat{m} '=dstat(m);']))
+
+    stat_model;ability_model_80;rotation_model;
+
+    dps1e(m,:)=sum(rot.coeff.*pridmg)+rot.padps;
+    dps1e2(m,:)=sum(rot2.coeff.*pridmg)+rot2.padps;
+    
+    %set each stat back to 0 extra
+    eval(char(['extra.itm.' stat{m} '=0;']))
+
+    stat_model;ability_model_80;rotation_model;
+
+    dps0e(m,:)=sum(rot.coeff.*pridmg)+rot.padps;
+    dps0e2(m,:)=sum(rot2.coeff.*pridmg)+rot2.padps;
+
+end
+diffdpsE=(dps1e-dps0e).*10./repmat(dstat',1,size(dps1e,2));
+diffdpsE2=(dps1e2-dps0e2).*10./repmat(dstat',1,size(dps1e2,2));
+xE=player.exp';
+
+figure(52)
+set(gcf,'Position',[290    92   706   414])
+plot(xE,diffdpsE')
+xlim([min(player.exp) max(player.exp)])
+legend(stat,'Location','NorthEast')
+xlabel('Expertise skill')
+ylabel('DPS per 10 itemization points')
+
+
+%% HotR Plots
+
+
+figure(60)
+set(gcf,'Position',[290    92   706   414])
+plot(xS,diffdpsS2')
+xlim([min(xS) max(xS)])
+legend(stat,'Location','NorthEast')
+xlabel('Armory Strength')
+ylabel('DPS per 10 itemization points')
+
+figure(61)
+set(gcf,'Position',[290    92   706   414])
+plot(xH,diffdpsH2')
+xlim([min(xH) max(xH)])
+legend(stat,'Location','NorthEast')
+xlabel('Melee hit % against lvl 80')
+ylabel('DPS per 10 itemization points')
+
+figure(62)
+set(gcf,'Position',[290    92   706   414])
+plot(xE,diffdpsE2')
+xlim([min(xE) max(xE)])
+legend(stat,'Location','NorthEast')
+xlabel('Expertise skill')
+ylabel('DPS per 10 itemization points')

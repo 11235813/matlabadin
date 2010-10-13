@@ -99,7 +99,7 @@ talent.retpoints=sum(sum(talent.ret));
 
 %% Glyphs (logical)
 if exist('glyph')==0 || isfield(glyph,'prime')==0
-    glyph.prime=[1 0 0 1 0 1 0];
+    glyph.prime=[0 0 1 0 1 1 0];
 end
 
 % Prime
