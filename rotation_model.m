@@ -40,7 +40,7 @@ rot.numcasts=[2.*(mdf.phcrit+mdf.mehit.*mdf.SacDut.*(mdf.phcritmulti-mdf.phcrit)
     0];                                             %hammer nova
 
 rot.coeff=rot.numcasts./(18+1.5.*2.*rot.xtragcd);
-rot.acdps=sum(pridmg.*rot.coeff);
+rot.acdps=sum(rot.coeff'*pridmg);
 
 rot.padps=0;
 if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
@@ -58,7 +58,7 @@ rot.Inq=0;
 
 %% AoE rotation - assuming we replace CS with HotR and cast Cons every 36s
 
-aoe.Inq=1; %keep this up at all times
+aoe.Inq=0; %not until 81
 aoe.Inqmod=(1+0.3.*aoe.Inq).*[1 0 1 1 1 1 0 1 0 1 1]';
 aoe.numcasts=[0;...   
               0;...
@@ -73,7 +73,7 @@ aoe.numcasts=[0;...
               6];                                             %hammer nova
           
 aoe.coeff=aoe.numcasts./18;          
-aoe.acdps=sum(pridmg.*aoe.coeff.*aoe.Inqmod);
+aoe.acdps=sum((aoe.coeff.*aoe.Inqmod)'*pridmg);
 
 aoe.padps=0;
 if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
