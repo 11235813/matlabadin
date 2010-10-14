@@ -111,7 +111,7 @@ net.Consecration =  dmg.Consecration;
 
 %Exorcism
 mdf.Exorcrit=mdf.spcrit.*(npc.type==0)+mdf.spcritmulti.*(npc.type==1); %tracking npc type
-raw.Exorcism=       ((1018+1136)./2 + 0.22.*max([player.hsp;player.ap])) ...   %1018+1136 base @ 80
+raw.Exorcism=       ((1018+1136)./2 + 0.225.*max([player.hsp;player.ap])) ...   %1018+1136 base @ 80
                     .*mdf.spdmg.*mdf.BlazLi.*mdf.glyphExo.*target.resrdx;
 dmg.Exorcism=       raw.Exorcism.*mdf.sphit.*mdf.Exorcrit;
 net.Exorcism=       dmg.Exorcism;
