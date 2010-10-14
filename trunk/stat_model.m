@@ -84,7 +84,7 @@ mdf.WF=1+0.1.*buff.WF;
 mdf.WoA=1+0.05.*buff.WoA;
 mdf.BL=1+0.3.*buff.BL;
 mdf.Devo=round(9.2.*mdf.buffscale).*buff.Devo;
-mdf.RF=1+1.25.*buff.RF;
+mdf.RF=1+2.*buff.RF;
 mdf.Focus=3.*buff.Focus;
 %% Raid Debufs
 mdf.SavCom=1+0.04.*buff.SavCom;
@@ -380,7 +380,7 @@ target.resrdx=(100-npc.presist)./100;
 %Armor Penetration Constant C
 if base.lvl==80
     mdf.boss_acoeff=467.5*base.lvl-22167.5;
-elseif base.lvl>81
+elseif base.lvl>80
     mdf.boss_acoeff=2167.5*base.lvl-158167.5; %85
 end
 %Boss Armor and DR formulas
