@@ -22,9 +22,9 @@ dmg.Censure=        raw.Censure.*mdf.Censcrit; %automatical connect
 dps.Censure=        dmg.Censure./(5.*cens.NetTick);
 
 %Seal of Righteousness
-raw.SealofRighteousness=    gear.swing.*(0.011.*player.ap+0.022.*player.hsp).* ...
+raw.SealofRighteousness=    gear.swing.*(0.0115.*player.ap+0.0235.*player.hsp).* ...
                             mdf.spdmg.*mdf.SotP.*target.resrdx;
-raw.JoR       =             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
+raw.JoR       =             (1+0.32.*player.hsp+0.2.*player.ap).*mdf.glyphJ;
 dmg.SealofRighteousness=    raw.SealofRighteousness; %automatical connect
 
 %Seal of Insight (15 PPM, not haste-normalized)
@@ -111,7 +111,7 @@ net.Consecration =  dmg.Consecration;
 
 %Exorcism
 mdf.Exorcrit=mdf.spcrit.*(npc.type==0)+mdf.spcritmulti.*(npc.type==1); %tracking npc type
-raw.Exorcism=       ((1135+1267)./2 + 0.225.*max([player.hsp;player.ap])) ...   %1018+1136 base @ 80
+raw.Exorcism=       ((1702+1901)./2 + 0.225.*max([player.hsp;player.ap])) ...   %1527+1704 base @ 80
                     .*mdf.spdmg.*mdf.BlazLi.*mdf.glyphExo.*target.resrdx;
 dmg.Exorcism=       raw.Exorcism.*mdf.sphit.*mdf.Exorcrit;
 net.Exorcism=       dmg.Exorcism;
