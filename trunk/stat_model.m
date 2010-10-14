@@ -313,8 +313,8 @@ mdf.HotRspcrit=1+(mdf.spcritmulti-1).*player.HotRspcrit./100;
 
 %% SP and AP
 %AP gets computed later on, in the Vengeance subsection
-player.sp=floor((gear.sp+extra.sp+consum.sp+floor(player.str.*(mdf.TbtL./10)) ...
-    +(player.int-10).*cnv.int_sp).*max([mdf.FMT;mdf.TW])); %TODO : check it
+player.sp=floor((base.sp+gear.sp+extra.sp+consum.sp+floor(player.str.*(mdf.TbtL./10)) ...
+    +(player.int-10).*cnv.int_sp).*max([mdf.FMT;mdf.TW]));
 %for future use in case our spellpower and "holy spell power" are both
 %relevant.  hsp is what we get from TbtL, and only affects damage.  We're
 %back to the old 2.x "spell power" and "healing power" modle, it seems.

@@ -64,13 +64,13 @@ primary_stats=[151 143  90  98 108;  %updated
                152 143  87  98 107;  %updated
                148 143  92 101 103;  %updated
                100 100 100 100 100]; %TODO: UPDATE
-else
+elseif base.lvl==85
 %racial base stats (lvl 85)
 %the format is STR-STA-AGI-INT-SPI  
-primary_stats=[164 179  97 106 117;  %updated
-               169 180  93 105 113;  %updated
-               165 179  94 106 116;  %updated
-               148 141  92 102 104;  %TODO: UPDATE
+primary_stats=[164 156  97 106 117;  %updated
+               169 157  93 105 113;  %updated
+               165 156  94 106 116;  %updated
+               161 156  99 109 104;  %updated
                100 100 100 100 100]; %TODO: UPDATE
 end
 %runtime string-numerical conversion
@@ -102,7 +102,7 @@ base.parry=5;
 base.block=5;
 base.phcrit=0.652;         %class dependent
 base.spcrit=3.3355;        %class dependent
-base.health=6934;          %class and level dependent /TODO
-base.mana=4394;            %class and level dependent /TODO
+base.health=8121.*(base.lvl==80)+43285.*(base.lvl==85); %class and level dependent
+base.mana=4394.*(base.lvl==80)+23422.*(base.lvl==85);   %class and level dependent
 base.exp=0;                %overridden in stats_recalc based on weapon type
 end
