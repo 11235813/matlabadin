@@ -67,7 +67,7 @@ npc.skillgap=5.*(npc.lvl-base.lvl);
 skillflag=npc.skillgap>10; %temporary variable
 
 %physical
-npc.armor=305.*npc.lvl-14672; %TODO : check for 85+
+npc.armor=295.*npc.lvl-13983;
 
 npc.phmiss=5+npc.skillgap.*(0.1+0.1.*skillflag);
 npc.dodge=5+npc.skillgap.*0.1;

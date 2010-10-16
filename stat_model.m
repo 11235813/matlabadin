@@ -174,12 +174,9 @@ player.armorystr=base.stats.str+gear.str+extra.str; %TODO fix/delete
 player.hitpoints=base.health.*(1+0.05.*(strcmpi('Tauren',base.race)||strcmpi('Taur',base.race))) ...
     +10.*(player.sta-18)+gear.health+consum.health;
 
-%armor and physical damage reduction
+%armor
 player.armor=gear.barmor.*mdf.Tough.*mdf.ameta ...
     +gear.earmor+mdf.Devo+consum.earmor;
-player.armor_c=2167.5*npc.lvl-158167.5; %85
-player.armor_c=467.5*npc.lvl-22167.5;
-player.phdr=min([player.armor./(player.armor+player.armor_c);0.75]);
 
 %resistance and spell damage reduction
 player.resistance=0; %TODO : fix it (buff etc.)
@@ -377,15 +374,18 @@ target.spmiss=max([(npc.spmiss-player.sphit);zeros(size(player.sphit))]);
 target.resrdx=(100-npc.presist)./100;
 
 %% Armor calcs
-%Armor Penetration Constant C
+%armor constant
 if base.lvl==80
-    mdf.boss_acoeff=467.5*base.lvl-22167.5;
+    player.acoeff=467.5*npc.lvl-22167.5;
+    target.acoeff=467.5*base.lvl-22167.5;
 elseif base.lvl>80
-    mdf.boss_acoeff=2167.5*base.lvl-158167.5; %85
+    player.acoeff=2167.5*npc.lvl-158167.5;
+    target.acoeff=2167.5*base.lvl-158167.5;
 end
-%Boss Armor and DR formulas
-target.armor=npc.armor.*mdf.Sund.*((290+mdf.ST.*10)./300);
-target.phdr=target.armor./(target.armor+mdf.boss_acoeff);
+%damage reduction
+player.phdr=min([player.armor./(player.armor+player.acoeff);0.75]);
+target.armor=npc.armor.*mdf.Sund.*((290+mdf.ST.*10)./300); %fix ST
+target.phdr=target.armor./(target.armor+target.acoeff);
 
 %Vengeance AP correction
 % player.VengAP=min([15.*mdf.VengAP.*(npc.out.phys.*(1-player.phdr)./target.swing ...
