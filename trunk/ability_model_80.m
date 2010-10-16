@@ -58,7 +58,7 @@ end
 %% Melee abilities
 
 %Crusader Strike (can be blocked)
-raw.CrusaderStrike= 1.2.*player.ndamage.*mdf.phdmg.*mdf.Crus.*(1+2.*mdf.WotL).*mdf.t11x2;
+raw.CrusaderStrike= 1.5.*player.ndamage.*mdf.phdmg.*(mdf.Crus+2.*mdf.WotL).*mdf.t11x2;
 dmg.CrusaderStrike= raw.CrusaderStrike.*(mdf.memodel.*mdf.CScrit+mdf.blockmodel);
 net.CrusaderStrike= dmg.CrusaderStrike+dmg.activeseal.*mdf.mehit;
 
@@ -98,7 +98,7 @@ dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit;
 net.Judgement=      dmg.Judgement+dmg.activeseal.*mdf.rahit;
 
 %Hammer of Wrath (can be blocked)
-raw.HammerofWrath= (4330 + 0.42.*player.hsp + 0.42.*player.ap).*mdf.spdmg.*target.resrdx; %1124+1242 base @ 80
+raw.HammerofWrath= ((4386+4847)./2 + 0.15.*player.hsp + 0.15.*player.ap).*mdf.spdmg.*target.resrdx; %4386+4847 base @ 80
 dmg.HammerofWrath= raw.HammerofWrath.*(mdf.ramodel.*mdf.HoWcrit+mdf.blockmodel);
 net.HammerofWrath= dmg.HammerofWrath;  %doesn't proc seals
 
@@ -111,7 +111,7 @@ net.Consecration =  dmg.Consecration;
 
 %Exorcism
 mdf.Exorcrit=mdf.spcrit.*(npc.type==0)+mdf.spcritmulti.*(npc.type==1); %tracking npc type
-raw.Exorcism=       ((1527+1704)./2 + 0.225.*max([player.hsp;player.ap])) ...   %1527+1704 base @ 80
+raw.Exorcism=       ((1985+2215)./2 + 0.15.*max([player.hsp;player.ap])) ...   %1985+2215 base @ 80
                     .*mdf.spdmg.*mdf.BlazLi.*mdf.glyphExo.*target.resrdx;
 dmg.Exorcism=       raw.Exorcism.*mdf.sphit.*mdf.Exorcrit;
 net.Exorcism=       dmg.Exorcism;
@@ -125,7 +125,7 @@ raw.HolyShield=     0.*mdf.spdmg.*target.resrdx;
 dmg.HolyShield=     raw.HolyShield.*mdf.sphit;
 
 %Holy Wrath
-raw.HolyWrath=      ((2154+0.3.*player.hsp)./exec.npccount+0.3.*player.hsp).*mdf.spdmg.*target.resrdx;  %2153 base @ 80
+raw.HolyWrath=      ((2800+0.3.*player.hsp)./exec.npccount+0.3.*player.hsp).*mdf.spdmg.*target.resrdx;  %2800 base @ 80
 dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit;
 net.HolyWrath=      dmg.HolyWrath;
 
