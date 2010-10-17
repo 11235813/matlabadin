@@ -64,25 +64,28 @@ for m=1:length(glyph.prime)
     talents
     stat_model
     ability_model_80
-    tempvals(:,m)=val.dmg;
+    tempvalp(:,m)=val.dmg;
 end
 
-%and AS glyph
-glyph.prime=zeros(size(glyph.prime));glyph.major=zeros(size(glyph.major));
-talents
-glyph.FocusedShield=1;
-stat_model
-ability_model_80
-tempval2=val.dmg;
+% AS/cons glyphs
+for m=1:length(glyph.major)
+    glyph.prime=zeros(size(glyph.prime));glyph.major=zeros(size(glyph.major));
+    glyph.major(m)=1;
+    talents
+    stat_model
+    ability_model_80
+    tempvalm(:,m)=val.dmg;
+end
 
 %now pick out ability damages and sort them into glyph_vals
-vals.glyph(1)=tempvals(1,6); %ShoR glyph
-vals.glyph(2)=tempvals(2,1); %CS
-vals.glyph(3)=tempvals(3,4); %Jud
-vals.glyph(4)=tempval2(4); %AS
-vals.glyph(7)=tempvals(7,2); %Exor
-vals.glyph(13)=tempvals(13,3); %HotR
-vals.glyph(14)=tempvals(14,3); %HaNova
+vals.glyph(1)=tempvalp(1,6); %ShoR glyph
+vals.glyph(2)=tempvalp(2,1); %CS
+vals.glyph(3)=tempvalp(3,4); %Jud
+vals.glyph(4)=tempvalm(5,4); %AS
+vals.glyph(7)=tempvalp(7,2); %Exor
+vals.glyph(12)=tempvalm(12,2); %Cons
+vals.glyph(13)=tempvalp(13,3); %HotR
+vals.glyph(14)=tempvalp(14,3); %HaNova
 
 %% text arrays
 spacer=repmat(' ',size(vals.raw,1),3);
@@ -93,13 +96,13 @@ dmgarray=[char(dmg_labels) spacer int2str([vals.raw vals.dmg vals.glyph])]
 %% Code for plots
 dmgplot=[vals.dmg max([vals.glyph-vals.dmg zeros(size(vals.glyph))],2)];
 netplot=[vals.net max([vals.glyph-vals.dmg zeros(size(vals.glyph))],2)];
-kk=[1:7 11:12 14];
+kk=[1:7 11:14];
 
 figure(20)
 set(gcf,'Position',[428 128 728 378])
 bar20=bar(dmgplot(kk,:),'BarWidth',0.5,'BarLayout','stacked');
 set(bar20(2),'FaceColor',[0.749 0.749 0]);
-xlim([0.5 10.5])
+xlim([0.5 11.5])
 set(gca,'XTickLabel',dmg_labels(kk))
 legend('Unglyphed','Glyphed','Location','NorthEast')
 xlabel('Ability')
@@ -110,7 +113,7 @@ figure(21)
 set(gcf,'Position',[428 128 728 378])
 bar40=bar(netplot(kk,:),'BarWidth',0.5,'BarLayout','stacked');
 set(bar40(2),'FaceColor',[0.749 0.749 0]);
-xlim([0.5 10.5])
+xlim([0.5 11.5])
 set(gca,'XTickLabel',dmg_labels(kk))
 legend('Unglyphed','Glyphed','Location','NorthEast')
 xlabel('Ability')
