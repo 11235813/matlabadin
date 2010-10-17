@@ -3,7 +3,7 @@ gear_db;
 def_db;
 
 
-base=player_model('lvl',80,'race','Human','prof','');
+base=player_model('lvl',80,'race','Belf','prof','');
 npc=npc_model(base);
 gear_sample
 talent=ddb.talentset{3};  %0/31/5
@@ -75,8 +75,9 @@ weaplist3=[49296; %Singed Viskag
           51916; %FGC (H)
           51893; %Gutbuster(H)
           50412; %BvB
-          50012; %Havoc's Call
-          50672; %BvB (H)          
+          50012; %Havoc's Call 
+          51522; %Wrathful
+          50672; %BvB (H)   
           50737; %Havoc's Call (heroic)
           ];
 weaplist=[weaplist1;weaplist2;weaplist3];

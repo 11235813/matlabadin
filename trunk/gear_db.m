@@ -957,6 +957,16 @@ idb.iid(45463).agi=52;
 idb.iid(45463).hit=37;
 idb.iid(45463).exp=29;
 
+idb.iid(51522).name='Wrathful Gladiator''s Longblade';
+idb.iid(51522).wtype='swo';
+idb.iid(51522).ilvl=277;
+idb.iid(51522).tooldps=250.6;
+idb.iid(51522).swing=2.6;
+idb.iid(51522).avgdmg=(521+782)/2;
+idb.iid(51522).sta=118+30; %socket
+idb.iid(51522).crit=44;
+idb.iid(51522).ap=141+8; %socket
+
 %spellpower weapons
 idb.iid(51932).name='Frost Needle (Heroic)';
 idb.iid(51932).wtype='swo';
