@@ -73,10 +73,11 @@ weaplist3=[49296; %Singed Viskag
           47156; %STormpike Cleaver (H)
           51858; %Soulbreaker (H)
           51916; %FGC (H)
+          51521; %Wrathful Slicer
           51893; %Gutbuster(H)
           50412; %BvB
           50012; %Havoc's Call 
-          51522; %Wrathful
+          51522; %Wrathful Longblade
           50672; %BvB (H)   
           50737; %Havoc's Call (heroic)
           ];
@@ -124,6 +125,7 @@ figure(70)
 set(gcf,'Position',[2240 88 724 860])
 bar70=barh(y,dps,'BarWidth',0.5,'BarLayout','stacked');
 xlim([0.99.*min(dps) 1.01.*max(dps)])
+ylim(0.5+[0 max(y)])
 set(gca,'YTick',y,'YTickLabel',pinfo.labels)
 xlabel('DPS')
 title('All by ilvl & category - CS rotation')
@@ -143,6 +145,7 @@ figure(72)
 set(gcf,'Position',[2240 88 724 860])
 bar72=barh(y,dps2,'BarWidth',0.5,'BarLayout','stacked');
 xlim([0.99.*min(dps2) 1.01.*max(dps2)])
+ylim(0.5+[0 max(y)])
 set(gca,'YTick',y,'YTickLabel',pinfo.labels)
 xlabel('DPS')
 title('All by ilvl & category - HotR rotation')
