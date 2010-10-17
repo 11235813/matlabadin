@@ -967,10 +967,21 @@ idb.iid(51522).sta=118+30; %socket
 idb.iid(51522).crit=44;
 idb.iid(51522).ap=141+8; %socket
 
+idb.iid(51521).name='Wrathful Gladiator''s Slicer';
+idb.iid(51521).wtype='swo';
+idb.iid(51521).ilvl=264;
+idb.iid(51521).tooldps=226.8;
+idb.iid(51521).swing=2.6;
+idb.iid(51521).avgdmg=(471+708)/2;
+idb.iid(51521).sta=104+30; %socket
+idb.iid(51521).crit=44;
+idb.iid(51521).ap=123+8; %socket
+
+
 %spellpower weapons
 idb.iid(51932).name='Frost Needle (Heroic)';
 idb.iid(51932).wtype='swo';
-idb.iid(51932).ilvl=277;
+idb.iid(51932).ilvl=264;
 idb.iid(51932).tooldps=113.4;
 idb.iid(51932).swing=1.8;
 idb.iid(51932).avgdmg=(142+266)/2;
@@ -982,7 +993,7 @@ idb.iid(51932).sp=928;
 
 idb.iid(50771).name='Frost Needle';
 idb.iid(50771).wtype='swo';
-idb.iid(50771).ilvl=264;
+idb.iid(50771).ilvl=251;
 idb.iid(50771).tooldps=102.8;
 idb.iid(50771).swing=1.8;
 idb.iid(50771).avgdmg=(129+241)/2;
