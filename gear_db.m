@@ -981,6 +981,19 @@ idb.iid(50771).hit=49;
 idb.iid(50771).haste=54;
 idb.iid(50771).sp=823;
 
+%lol
+idb.iid(40345).name='Broken Promise';
+idb.iid(40345).wtype='swo';
+idb.iid(40345).ilvl=213;
+idb.iid(40345).tooldps=156.7;
+idb.iid(40345).swing=2.5;
+idb.iid(40345).avgdmg=(274+510)/2;
+idb.iid(40345).dodge=43;
+idb.iid(40345).hit=16;
+idb.iid(40345).exp=20;
+idb.iid(40345).str=29;
+idb.iid(40345).sta=64;
+
 %cata weapons
 idb.iid(56433).name='Blade of the Burning Sun';
 idb.iid(56433).ilvl=346;
