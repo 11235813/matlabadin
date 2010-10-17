@@ -27,7 +27,8 @@ egs(1).mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
 % rotation_model
 
 
-weaplist1=[47810; %CG
+weaplist1=[40345; %Broken Promise
+          47810; %CG
           50290; %Falric
           50268; %Rimefang
           45110; %Titanguard
@@ -132,7 +133,8 @@ figure(71)
 set(gcf,'Position',[2240 88 724 579])
 bar71=barh(x71,'BarWidth',0.5,'BarLayout','stacked');
 xlim([0.99.*min(x71) 1.01.*max(x71)])
-set(gca,'YTick',y,'YTickLabel',pinfo.labels(k71,:))
+ylim(0.5+[0 max(y1)])
+set(gca,'YTick',y1,'YTickLabel',pinfo.labels(k71,:))
 xlabel('DPS')
 title('Tank weapons, sorted by DPS')
 
