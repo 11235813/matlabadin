@@ -375,13 +375,10 @@ target.resrdx=(100-npc.presist)./100;
 
 %% Armor calcs
 %armor constant
-if base.lvl==80
-    player.acoeff=467.5*npc.lvl-22167.5;
-    target.acoeff=467.5*base.lvl-22167.5;
-elseif base.lvl>80
-    player.acoeff=2167.5*npc.lvl-158167.5;
-    target.acoeff=2167.5*base.lvl-158167.5;
-end
+player.acoeff=(467.5*npc.lvl-22167.5).*(npc.lvl==80) ...
+    +(2167.5*npc.lvl-158167.5).*(npc.lvl>80);
+target.acoeff=(467.5*base.lvl-22167.5).*(base.lvl==80) ...
+    +(2167.5*base.lvl-158167.5).*(base.lvl>80);
 %damage reduction
 player.phdr=min([player.armor./(player.armor+player.acoeff);0.75]);
 target.armor=npc.armor.*mdf.Sund.*((290+mdf.ST.*10)./300); %fix ST

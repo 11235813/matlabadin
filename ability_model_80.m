@@ -10,7 +10,7 @@ player.hopo=3;  %placeholder for now, this may get moved elsewhere
 %done first so Judgement can be properly defined
 
 %Seal of Truth, using old SoVeng model, assumes a 5-stack
-raw.SealofTruth=    0.16.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
+raw.SealofTruth=    0.20.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
 raw.JoT        =    (1+0.22.*player.hsp+0.14.*player.ap).*1.5.*mdf.glyphJ.*target.resrdx; 
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit; %automatical connect
 dps.SealofTruth=    dmg.SealofTruth./player.wswing; %TODO : fix
@@ -66,11 +66,11 @@ net.CrusaderStrike= dmg.CrusaderStrike+dmg.activeseal.*mdf.mehit;
 %physical (can be blocked)
 raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR;
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*(mdf.memodel.*mdf.HotRphcrit+mdf.blockmodel);
-net.HammeroftheRighteous= dmg.HammeroftheRighteous+dmg.activeseal.*mdf.mehit;
+net.HammeroftheRighteous= dmg.HammeroftheRighteous; %doesn't proc seals
 %the aoe rolls only if physical connects
 raw.HammerNova=   ((523+783)./2+0.187.*player.ap).*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR.*target.resrdx; %523+783 base @ 80
 dmg.HammerNova=   raw.HammerNova.*(mdf.mehit.*mdf.sphit).*mdf.HotRspcrit; %spell hit/crit
-net.HammerNova=   dmg.HammerNova;  %aoe doesn't proc seals
+net.HammerNova=   dmg.HammerNova;  %doesn't proc seals
 
 %Melee attacks
 raw.Melee=          player.wdamage.*mdf.phdmg;
