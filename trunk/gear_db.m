@@ -258,6 +258,15 @@ idb.iid(55888).exp=76;
 idb.iid(55888).dodge=149;
 
 %% Shoulder
+idb.iid(50660).name='Boneguard Commander''s Pauldrons';
+idb.iid(50660).ilvl=277;
+idb.iid(50660).barmor=2067;
+idb.iid(50660).str=136;
+idb.iid(50660).sta=180+15+30+9;
+idb.iid(50660).dodge=99-39+10;
+idb.iid(50660).mast=39;
+idb.iid(50660).parry=63;
+
 idb.iid(56124).name='Earthshape Pauldrons';
 idb.iid(56124).ilvl=333;
 idb.iid(56124).str=199;
@@ -276,6 +285,15 @@ idb.iid(50466).str=90;
 idb.iid(50466).sta=124+30;
 idb.iid(50466).dodge=72-28;
 idb.iid(50466).mast=28;
+
+idb.iid(50718).name='Royal Crimson Cloak (Heroic)';
+idb.iid(50718).ilvl=277;
+idb.iid(50718).barmor=599;
+idb.iid(50718).str=78;
+idb.iid(50718).sta=141+30;
+idb.iid(50718).dodge=102-40;
+idb.iid(50718).hit=44;
+idb.iid(50718).mast=40;
 
 idb.iid(56219).name='Shroud of Dark Memories';
 idb.iid(56219).ilvl=333;
@@ -316,6 +334,15 @@ idb.iid(55992).barmor=1369;
 idb.iid(55992).atype=1;
 
 %% Gloves
+idb.iid(50716).name='Taldaram''s Plated Fists (Heroic)';
+idb.iid(50716).ilvl=277;
+idb.iid(50716).barmor=1723;
+idb.iid(50716).str=136;
+idb.iid(50716).sta=180+15+30+9;
+idb.iid(50716).dodge=91-36;
+idb.iid(50716).mast=36;
+idb.iid(50716).parry=71+10;
+
 idb.iid(56099).name='Fingers of Light';
 idb.iid(56099).ilvl=333;
 idb.iid(56099).str=199;
@@ -336,6 +363,16 @@ idb.iid(50991).sta=157+15+30+30+9;
 idb.iid(50991).agi=0+10;
 idb.iid(50991).parry=95-38;
 idb.iid(50991).mast=38;
+
+idb.iid(50691).name='Belt of Broken Bones (Heroic)';
+idb.iid(50691).atype=1;
+idb.iid(50691).ilvl=277;
+idb.iid(50691).barmor=1550;
+idb.iid(50691).str=136;
+idb.iid(50691).sta=180+15+30+30+9;
+idb.iid(50691).dodge=91-36;
+idb.iid(50691).parry=71;
+idb.iid(50691).mast=36;
 
 idb.iid(55867).name='Sand Dune Belt';
 idb.iid(55867).atype=1;
@@ -415,6 +452,10 @@ idb.iid(50356).sta=228;
 idb.iid(54571).name='Sindragosa''s Flawless Fang';
 idb.iid(54571).ilvl=264;
 idb.iid(54571).sta=228;
+
+idb.iid(50364).name='Sindragosa''s Flawless Fang (Heroic)';
+idb.iid(50364).ilvl=277;
+idb.iid(50364).sta=258;
 
 idb.iid(56121).name='Throngus''s Finger';
 idb.iid(56121).ilvl=333;
@@ -1068,8 +1109,8 @@ idb.iid(56096).barmor=11504;
 %% Librams
 idb.iid(50461).name='Libram of the Eternal Tower';
 idb.iid(50461).str=51;
-idb.iid(50461).sta=77+15;
-idb.iid(50461).parry=34+10;
+idb.iid(50461).sta=77+30;
+idb.iid(50461).parry=34;
 idb.iid(50461).dodge=34-13;
 idb.iid(50461).mast=13;
 

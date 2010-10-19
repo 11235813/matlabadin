@@ -37,7 +37,7 @@ rot.numcasts=[2.*(mdf.phcrit+mdf.mehit.*mdf.SacDut.*(mdf.phcritmulti-mdf.phcrit)
     0.*rot.val.ones;...                                            %HotR
     0.*rot.val.ones;...                                            %2ShoR
     0.*rot.val.ones;...                                            %Inq
-    6.*mdf.mehit+2.*mdf.rahit.*(mdf.JotJ>0).*rot.val.ones;...      %seal
+    8.*mdf.mehit+2.*mdf.rahit.*(mdf.JotJ>0).*rot.val.ones;...      %seal (CS+ShoR+J)
     0.*rot.val.ones];                                             %hammer nova
 
 rot.coeff=rot.numcasts./repmat((18+1.5.*2.*rot.xtragcd),size(rot.numcasts,1),1);
@@ -67,7 +67,7 @@ rot2.numcasts=[2.*(mdf.phcrit+mdf.mehit.*mdf.SacDut.*(mdf.phcritmulti-mdf.phcrit
     6.*rot.val.ones;...                                            %HotR
     0.*rot.val.ones;...                                            %2ShoR
     0.*rot.val.ones;...                                            %Inq
-    6.*mdf.mehit+2.*mdf.rahit.*(mdf.JotJ>0).*rot.val.ones;...      %seal
+    2.*mdf.mehit+2.*mdf.rahit.*(mdf.JotJ>0).*rot.val.ones;...      %seal (ShoR+J)
     6.*rot.val.ones];                                             %hammer nova
 
 rot2.coeff=rot2.numcasts./repmat((18+1.5.*2.*rot.xtragcd),size(rot2.numcasts,1),1);
