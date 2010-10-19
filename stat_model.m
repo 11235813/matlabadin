@@ -171,8 +171,8 @@ player.int=floor(base.stats.int.*mdf.BoK)+floor((gear.int+extra.int+consum.int).
 player.armorystr=base.stats.str+gear.str+extra.str; %TODO fix/delete
 
 %hit points
-player.hitpoints=base.health.*(1+0.05.*(strcmpi('Tauren',base.race)||strcmpi('Taur',base.race))) ...
-    +10.*(player.sta-18)+gear.health+consum.health;
+player.hitpoints=(base.health.*(1+0.05.*(strcmpi('Tauren',base.race)||strcmpi('Taur',base.race))) ...
+    +10.*(player.sta-18)+gear.health+consum.health).*exec.sow;
 
 %armor
 player.armor=gear.barmor.*mdf.Tough.*mdf.ameta ...
