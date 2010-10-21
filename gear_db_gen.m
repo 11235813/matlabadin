@@ -672,6 +672,14 @@ idb.iid(45463).agi=52;
 idb.iid(45463).hit=37;
 idb.iid(45463).exp=29;
 
+idb.iid(49303).name='Gleaming Quel''Serrar';
+idb.iid(49303).wtype='swo';
+idb.iid(49303).ilvl=232;
+idb.iid(49303).tooldps=179;
+idb.iid(49303).swing=2;
+idb.iid(49303).avgdmg=358;
+idb.iid(49303).sta=65;
+
 idb.iid(55059).name='Hardened Elementium Girdle';
 idb.iid(55059).ilvl=359;
 idb.iid(55059).str=253;
@@ -713,12 +721,15 @@ idb.iid(52352).ilvl=346;
 idb.iid(52352).sta=197;
 
 idb.iid(56549).name='Twilight Dragonscale Cloak';
-idb.iid(56549).ilvl=359;
-idb.iid(56549).str=190;
-idb.iid(56549).sta=286;
-idb.iid(56549).mast=145;
-idb.iid(56549).dodge=96;
-idb.iid(56549).barmor=625;
+idb.iid(56549).ilvl=346;
+idb.iid(56549).str=128;
+idb.iid(56549).sta=252;
+idb.iid(56549).mast=112;
+idb.iid(56549).dodge=112;
+idb.iid(56549).barmor=580;
+idb.iid(56549).bsock=1;
+idb.iid(56549).sb.sta=15;
+idb.iid(56549).sb.active=[0 0 1];
 
 idb.iid(62351).name='Felsen''s Ring of Resolve';
 idb.iid(62351).ilvl=346;
@@ -817,9 +828,10 @@ idb.iid(58103).dodge=142;
 idb.iid(58103).parry=142;
 idb.iid(58103).barmor=2680;
 idb.iid(58103).msock=1;
+idb.iid(58103).ysock=1;
 idb.iid(58103).atype=1;
 idb.iid(58103).sb.sta=45;
-idb.iid(58103).sb.active=[0 0 0];
+idb.iid(58103).sb.active=[0 1 0];
 
 idb.iid(58105).name='Numbing Handguards';
 idb.iid(58105).ilvl=346;
@@ -862,9 +874,10 @@ idb.iid(60354).mast=208;
 idb.iid(60354).parry=168;
 idb.iid(60354).barmor=3426;
 idb.iid(60354).rsock=1;
+idb.iid(60354).bsock=1;
 idb.iid(60354).atype=1;
 idb.iid(60354).sb.sta=30;
-idb.iid(60354).sb.active=[1 0 0];
+idb.iid(60354).sb.active=[1 0 1];
 
 idb.iid(60355).name='Reinforced Sapphirium Handguards';
 idb.iid(60355).ilvl=359;
@@ -886,9 +899,10 @@ idb.iid(60356).hit=113;
 idb.iid(60356).dodge=281;
 idb.iid(60356).barmor=2784;
 idb.iid(60356).msock=1;
+idb.iid(60356).ysock=1;
 idb.iid(60356).atype=1;
 idb.iid(60356).sb.sta=45;
-idb.iid(60356).sb.active=[0 0 0];
+idb.iid(60356).sb.active=[0 1 0];
 
 idb.iid(60357).name='Reinforced Sapphirium Legguards';
 idb.iid(60357).ilvl=359;
@@ -898,9 +912,10 @@ idb.iid(60357).dodge=188;
 idb.iid(60357).parry=188;
 idb.iid(60357).barmor=2998;
 idb.iid(60357).rsock=1;
+idb.iid(60357).bsock=1;
 idb.iid(60357).atype=1;
 idb.iid(60357).sb.sta=30;
-idb.iid(60357).sb.active=[1 0 0];
+idb.iid(60357).sb.active=[1 0 1];
 
 idb.iid(60358).name='Reinforced Sapphirium Shoulderguards';
 idb.iid(60358).ilvl=359;
@@ -991,4 +1006,60 @@ idb.iid(59233).str=136;
 idb.iid(59233).sta=286;
 idb.iid(59233).exp=111;
 idb.iid(59233).dodge=190;
+
+idb.iid(59347).name='Mace of Acrid Death';
+idb.iid(59347).wtype='mac';
+idb.iid(59347).ilvl=359;
+idb.iid(59347).tooldps=462.3;
+idb.iid(59347).swing=2.6;
+idb.iid(59347).avgdmg=1202;
+idb.iid(59347).str=146;
+idb.iid(59347).sta=219;
+idb.iid(59347).mast=97;
+idb.iid(59347).parry=97;
+
+idb.iid(59505).name='Gravitational Pull';
+idb.iid(59505).ilvl=359;
+idb.iid(59505).str=183;
+idb.iid(59505).sta=380;
+idb.iid(59505).exp=108;
+idb.iid(59505).mast=243;
+idb.iid(59505).barmor=2141;
+idb.iid(59505).ysock=1;
+idb.iid(59505).atype=1;
+idb.iid(59505).sb.mast=10;
+idb.iid(59505).sb.active=[0 1 0];
+
+idb.iid(59344).name='Dragon Bone Warhelm';
+idb.iid(59344).ilvl=359;
+idb.iid(59344).str=259;
+idb.iid(59344).sta=512;
+idb.iid(59344).exp=113;
+idb.iid(59344).mast=281;
+idb.iid(59344).barmor=2784;
+idb.iid(59344).msock=1;
+idb.iid(59344).rsock=1;
+idb.iid(59344).atype=1;
+idb.iid(59344).sb.sta=45;
+idb.iid(59344).sb.active=[1 0 0];
+
+idb.iid(59317).name='Legguards of the Unseeing';
+idb.iid(59317).ilvl=359;
+idb.iid(59317).str=239;
+idb.iid(59317).sta=512;
+idb.iid(59317).exp=133;
+idb.iid(59317).parry=321;
+idb.iid(59317).barmor=2998;
+idb.iid(59317).rsock=1;
+idb.iid(59317).ysock=1;
+idb.iid(59317).atype=1;
+idb.iid(59317).sb.sta=30;
+idb.iid(59317).sb.active=[1 1 0];
+
+idb.iid(59319).name='Ironstar Amulet';
+idb.iid(59319).ilvl=359;
+idb.iid(59319).str=145;
+idb.iid(59319).sta=286;
+idb.iid(59319).hit=96;
+idb.iid(59319).dodge=190;
 
