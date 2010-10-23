@@ -35,9 +35,8 @@ stat_model
 % player.ndamage=gear.avgdmg+player.ap./14.*2.4;
 
 
-%calculate ability damages - uncomment appropriate level model
-% ability_model
-ability_model_80
+%calculate ability output
+ability_model
 
 %generate a damage summary array
 %% Summary
@@ -63,7 +62,7 @@ for m=1:length(glyph.prime)
     glyph.prime(m)=1;
     talents
     stat_model
-    ability_model_80
+    ability_model
     tempvalp(:,m)=val.dmg;
 end
 
@@ -73,7 +72,7 @@ for m=1:length(glyph.major)
     glyph.major(m)=1;
     talents
     stat_model
-    ability_model_80
+    ability_model
     tempvalm(:,m)=val.dmg;
 end
 

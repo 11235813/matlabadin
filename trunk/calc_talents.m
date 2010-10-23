@@ -108,7 +108,7 @@ talents
 gear_stats
 %calculate final stats
 stat_model
-ability_model_80
+ability_model
 prio_model
 rot.consflag=1;
 rotation_model
@@ -152,7 +152,7 @@ for m=2:length(tree) %everything
     gear_stats
     %calculate final stats
     stat_model
-    ability_model_80
+    ability_model
     rotation_model;seq1=rot;
     
     
@@ -194,7 +194,7 @@ end
 %     gear_stats
 %     %calculate final stats
 %     stat_model
-%     ability_model_80
+%     ability_model
 % 
 %     seq2(m)=prio_sim(10,'N',90000);
 %     waitbar(m/length(tree),wb)

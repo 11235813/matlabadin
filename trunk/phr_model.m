@@ -42,27 +42,18 @@ phr.ph=(Ra+c.*Rb.*exec.timein)./Ra;
 phr.phs=1./(Ra.*phr.ph);
 
 %% Reckoning
-if rp==0||exec.timein==0
+if (numel(rp)==1&&rp==0) || (numel(exec.timein)==1&&exec.timein==0)
     phr.reck=0;
 else
-    if (8./phr.phs)>=3
-        if (8./phr.phs)>4
-            int1=1-(1./(phr.phs.*Rb.*exec.npccount.*log(rk))) ...
-                .*(rk.^((3+1).*Rb.*exec.npccount.*phr.phs) ...
-                -rk.^(3.*Rb.*exec.npccount.*phr.phs));
-            phr.reck=int1.*exec.timein;
-        else
-            k=(8./phr.phs)-3;
-            int1=k-(1./(phr.phs.*Rb.*exec.npccount.*log(rk))) ...
-                .*(rk.^((3+k).*Rb.*exec.npccount.*phr.phs) ...
-                -rk.^(3.*Rb.*exec.npccount.*phr.phs));
-            int2=(1-k).*(1-rk.^(8.*Rb.*exec.npccount));
-            phr.reck=(int1+int2).*exec.timein;
-        end
-    else
-        int1=1-rk.^(8.*Rb.*exec.npccount);
-        phr.reck=int1.*exec.timein;
-    end
+   upt=@(x) 1-rk.^(floor(min(8,(x+min(3,8.*(Ra.*phr.ph)))./(Ra.*phr.ph)).*Rb) ...
+       +(exec.npccount>1).*(min(8,(x+min(3,8.*(Ra.*phr.ph)))./(Ra.*phr.ph)).*Rb) ...
+       .*(exec.npccount-1));
+   if numel([exec.npccount exec.timein ps bs pb rp])>6
+       phr.reck=quadv(upt,0,1,'tol',1.e-8);
+   else
+       phr.reck=quadl(upt,0,1,'tol',1.e-8);
+   end
 end
+phr.reck=phr.reck.*exec.timein;
 phr.phrs=phr.phs./(1+phr.reck);
 end

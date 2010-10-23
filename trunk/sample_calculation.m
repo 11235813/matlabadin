@@ -30,7 +30,7 @@ talents
 stat_model
 
 %calculate ability damages
-ability_model_80
+ability_model
 
 %rotation 
 rotation_model
