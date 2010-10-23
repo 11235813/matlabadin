@@ -26,9 +26,8 @@ gear.swing=1.7;
 player.wdamage=(677+877)/2;
 
 
-%calculate ability damages - uncomment appropriate level model
-ability_model_80
-% ability_model
+%calculate ability output
+ability_model
 
 %generate a damage summary array
 %% Summary

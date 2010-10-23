@@ -80,7 +80,7 @@ gear_stats
 gear.exp=99;consum.exp=0;
 %calculate final stats
 stat_model
-ability_model_80
+ability_model
 prio_model
 rot.consflag=1;
 rotation_model
@@ -131,7 +131,7 @@ for m=2:length(gtree) %everything
     gear.exp=99;consum.exp=0;
     %calculate final stats
     stat_model
-    ability_model_80
+    ability_model
     rotation_model;
     seq1=rot;
     seq2=aoe;

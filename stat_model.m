@@ -13,7 +13,7 @@ stat_conversions
 %Thus, whenever possible I'm going to bake the talent variable into the
 %relevant stat calculation.  Ideally, this section will end up empty?
 mdf.VengAP=0.05.*talent.Vengeance;
-mdf.TbtL=6.*talent.TouchedbytheLight; %incorporates all effects
+mdf.TbtL=8.*talent.TouchedbytheLight; %incorporates all effects
 mdf.AotL=6.*talent.ArbiteroftheLight;
 mdf.BlazLi=1+0.1.*talent.BlazingLight; %Exo output
 mdf.JotP=0.03.*talent.JudgementsofthePure;

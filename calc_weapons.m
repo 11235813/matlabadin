@@ -23,7 +23,7 @@ egs(1).exp=max([egs(1).exp 0])-(player.exp-18).*cnv.exp_exp;
 egs(1).mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
 
 %calculate final stats
-% ability_model_80
+% ability_model
 % rotation_model
 
 
@@ -97,7 +97,7 @@ for m=1:M
     %calculate DPS
     gear_stats    
     stat_model
-    ability_model_80
+    ability_model
     rotation_model;
 
     dps1(m)=rot.coeff'*pridmg+rot.padps;

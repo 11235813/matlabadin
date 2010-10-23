@@ -30,9 +30,10 @@ drcap.Ddodge=116.890707; %druid
 drcap.Rdodge=145.560408; %rogue
 drcap.Rparry=145.560408; %rogue
 %Agility to dodge conversions (without! BoK)
-cnv.agi_dodge(1)=304.50769251.*(base.lvl==85)+51.97800000.*(base.lvl==80);  %paladin
-cnv.agi_dodge(2)=430.69315711.*(base.lvl==85)+73.54996004.*(base.lvl==80);  %deathknight, warrior
-cnv.agi_dodge(3)=243.58302440.*(base.lvl==85)+41.58731440.*(base.lvl==80);  %druid, rogue
+cnv.agi_dodge(1)=304.50762639.*(base.lvl==85)+51.97802369.*(base.lvl==80);  %paladin
+cnv.agi_dodge(2)=430.69289874.*(base.lvl==85)+73.54996249.*(base.lvl==80);  %deathknight, warrior
+cnv.agi_dodge(3)=243.58281085.*(base.lvl==85)+41.58730423.*(base.lvl==80);  %druid
+cnv.agi_dodge(4)=243.51637648.*(base.lvl==85)+41.57364309.*(base.lvl==80);  %rogue
 
 
 %% Class choice
@@ -58,7 +59,7 @@ elseif nargin==5 && (strcmp(class,'Rogue') || strcmp(class,'rogue') || strcmp(cl
     avoiddr.k=drcoeff.rogue;
     avoiddr.c_dodge=drcap.Rdodge;
     avoiddr.c_parry=drcap.Rparry;
-    avoiddr.agi_dodge=cnv.agi_dodge(3);
+    avoiddr.agi_dodge=cnv.agi_dodge(4);
 else
     error('Class string not understood!  Please use the full name of the class (e.g. paladin).')
 end

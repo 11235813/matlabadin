@@ -41,7 +41,7 @@ gear.mast=min([gear.mast; 400.*ones(size(gear.mast))]);
 
 %calculate final stats
 stat_model
-ability_model_80
+ability_model
 rotation_model
 
 
@@ -62,7 +62,7 @@ for m=1:M
     %set each stat to dstat extra
     eval(char(['extra.itm.' stat{m} '=dstat(m);']))
 
-    stat_model;ability_model_80;rotation_model;
+    stat_model;ability_model;rotation_model;
 
     dps1s(m,:)=rot.coeff'*pridmg+rot.padps;
     dps1s2(m,:)=rot2.coeff'*pridmg+rot2.padps;    
@@ -71,7 +71,7 @@ for m=1:M
     %set each stat back to 0 extra
     eval(char(['extra.itm.' stat{m} '=0;']))
 
-    stat_model;ability_model_80;rotation_model;
+    stat_model;ability_model;rotation_model;
 
     dps0s(m,:)=rot.coeff'*pridmg+rot.padps;
     dps0s2(m,:)=rot2.coeff'*pridmg+rot2.padps;
@@ -97,7 +97,7 @@ for m=1:M
     %set each stat to dstat extra
     eval(char(['extra.itm.' stat{m} '=dstat(m);']))
 
-    stat_model;ability_model_80;rotation_model;
+    stat_model;ability_model;rotation_model;
 
     dps1h(m,:)=sum(rot.coeff.*pridmg)+rot.padps;
     dps1h2(m,:)=sum(rot2.coeff.*pridmg)+rot2.padps;
@@ -105,7 +105,7 @@ for m=1:M
     %set each stat back to 0 extra
     eval(char(['extra.itm.' stat{m} '=0;']))
 
-    stat_model;ability_model_80;rotation_model;
+    stat_model;ability_model;rotation_model;
     
     dps0h(m,:)=sum(rot.coeff.*pridmg)+rot.padps;
     dps0h2(m,:)=sum(rot2.coeff.*pridmg)+rot2.padps;
@@ -132,7 +132,7 @@ for m=1:M
     %set each stat to dstat extra
     eval(char(['extra.itm.' stat{m} '=dstat(m);']))
 
-    stat_model;ability_model_80;rotation_model;
+    stat_model;ability_model;rotation_model;
 
     dps1e(m,:)=sum(rot.coeff.*pridmg)+rot.padps;
     dps1e2(m,:)=sum(rot2.coeff.*pridmg)+rot2.padps;
@@ -140,7 +140,7 @@ for m=1:M
     %set each stat back to 0 extra
     eval(char(['extra.itm.' stat{m} '=0;']))
 
-    stat_model;ability_model_80;rotation_model;
+    stat_model;ability_model;rotation_model;
 
     dps0e(m,:)=sum(rot.coeff.*pridmg)+rot.padps;
     dps0e2(m,:)=sum(rot2.coeff.*pridmg)+rot2.padps;
