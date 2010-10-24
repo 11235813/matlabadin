@@ -14,7 +14,7 @@ player.hopo=3;  %placeholder for now, this may get moved elsewhere
 
 %Seal of Truth, using old SoVeng model, assumes a 5-stack
 raw.SealofTruth=    0.20.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
-raw.JoT        =    (1+0.2755.*player.hsp+0.2.*player.ap).*1.5.*mdf.glyphJ; 
+raw.JoT        =    (1+0.2755.*player.hsp+0.1855.*player.ap).*1.5; 
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
 dps.SealofTruth=    dmg.SealofTruth./player.wswing; %TODO : fix
 
@@ -27,18 +27,18 @@ dps.Censure=        dmg.Censure./(5.*cens.NetTick);
 %Seal of Righteousness
 raw.SealofRighteousness=    gear.swing.*(0.0115.*player.ap+0.0235.*player.hsp).* ...
                             mdf.spdmg.*mdf.SotP;
-raw.JoR       =             (1+0.32.*player.hsp+0.2.*player.ap).*mdf.glyphJ;
+raw.JoR       =             (1+0.32.*player.hsp+0.2.*player.ap);
 dmg.SealofRighteousness=    raw.SealofRighteousness.*target.resrdx; %automatical connect
 
 %Seal of Insight (15 PPM, not haste-normalized)
 raw.SealofInsight=          0;
-raw.JoI       =             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
+raw.JoI       =             (1+0.25.*player.hsp+0.16.*player.ap);
 dmg.SealofInsight=          raw.SealofInsight;
 
 %Seal of Justice
 raw.SealofJustice=          gear.swing.*(0.005.*player.ap+0.01.*player.hsp) ...
                             .*mdf.spdmg.*mdf.SotP;
-raw.JoJ       =             (1+0.25.*player.hsp+0.16.*player.ap).*mdf.glyphJ;
+raw.JoJ       =             (1+0.25.*player.hsp+0.16.*player.ap);
 dmg.SealofJustice=          raw.SealofJustice.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 
 %exhaustive listing of seal/judgement damage (for net calculations)
@@ -99,7 +99,7 @@ dmg.AvengersShield= raw.AvengersShield.*(mdf.ramodel.*mdf.phcrit+mdf.blockmodel)
 net.AvengersShield= dmg.AvengersShield; %doesn't proc seals
 
 %Judgement (the seal of choice is defined in execution_model) 
-raw.Judgement=      raw.Judgement.*mdf.spdmg.*(1+2.*mdf.WotL);
+raw.Judgement=      raw.Judgement.*mdf.spdmg.*(1+2.*mdf.WotL).*mdf.glyphJ;
 dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
 net.Judgement=      dmg.Judgement+dmg.activeseal.*mdf.rahit;
 
@@ -134,7 +134,7 @@ raw.HolyShield=     0;
 dmg.HolyShield=     raw.HolyShield.*mdf.sphit.*target.resrdx;
 
 %Holy Wrath
-raw.HolyWrath=      (2200./exec.npccount+0.5.*player.hsp).*mdf.spdmg;
+raw.HolyWrath=      ((2156+0.39.*player.hsp)./exec.npccount+0.39.*player.hsp).*mdf.spdmg;
 raw.HolyWrath=      raw.HolyWrath.*mdf.spellscale;
 dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit.*target.resrdx;
 net.HolyWrath=      dmg.HolyWrath;

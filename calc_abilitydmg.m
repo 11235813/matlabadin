@@ -80,7 +80,7 @@ end
 vals.glyph(1)=tempvalp(1,6); %ShoR glyph
 vals.glyph(2)=tempvalp(2,1); %CS
 vals.glyph(3)=tempvalp(3,4); %Jud
-vals.glyph(4)=tempvalm(5,4); %AS
+vals.glyph(4)=tempvalm(4,5); %AS
 vals.glyph(7)=tempvalp(7,2); %Exor
 vals.glyph(12)=tempvalm(12,2); %Cons
 vals.glyph(13)=tempvalp(13,3); %HotR
