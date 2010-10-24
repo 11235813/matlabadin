@@ -14,13 +14,13 @@ player.hopo=3;  %placeholder for now, this may get moved elsewhere
 
 %Seal of Truth, using old SoVeng model, assumes a 5-stack
 raw.SealofTruth=    0.20.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
-raw.JoT        =    (1+0.22.*player.hsp+0.14.*player.ap).*1.5.*mdf.glyphJ; 
+raw.JoT        =    (1+0.2755.*player.hsp+0.2.*player.ap).*1.5.*mdf.glyphJ; 
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
 dps.SealofTruth=    dmg.SealofTruth./player.wswing; %TODO : fix
 
 %Censure (prev. Holy Vengeance), damage for a 5 stack over 15 seconds
 mdf.Censcrit=1+(mdf.phcritmulti-1).*player.phcrit./100; %physical, 2.0 base multiplier
-raw.Censure=        (0.013.*player.hsp+0.025.*player.ap).*5.*5.*mdf.SotP.*mdf.spdmg;
+raw.Censure=        (0.016.*player.hsp+0.0335.*player.ap).*5.*5.*mdf.SotP.*mdf.spdmg;
 dmg.Censure=        raw.Censure.*mdf.Censcrit.*target.resrdx; %automatical connect
 dps.Censure=        dmg.Censure./(5.*cens.NetTick);
 
@@ -71,7 +71,7 @@ raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*mdf.Crus.*mdf.t10x2.
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*(mdf.memodel.*mdf.HotRphcrit+mdf.blockmodel);
 net.HammeroftheRighteous=   dmg.HammeroftheRighteous; %doesn't proc seals
 %the aoe rolls only if physical connects
-raw.HammerNova=   ((523+783)./2+0.187.*player.ap).*mdf.spdmg.*mdf.Crus.*mdf.t10x2.*mdf.glyphHotR;
+raw.HammerNova=   ((523+783)./2+0.187.*player.ap).*mdf.spdmg.*mdf.Crus; %.*mdf.t10x2.*mdf.glyphHotR;
 raw.HammerNova=   raw.HammerNova.*mdf.spellscale;
 dmg.HammerNova=   raw.HammerNova.*(mdf.mehit.*mdf.sphit).*mdf.HotRspcrit.*target.resrdx; %spell hit/crit
 net.HammerNova=   dmg.HammerNova;  %doesn't proc seals
@@ -119,7 +119,7 @@ net.Consecration =  dmg.Consecration;
 
 %Exorcism
 mdf.Exorcrit=mdf.spcrit.*(npc.type==0)+mdf.spcritmulti.*(npc.type==1); %tracking npc type
-raw.Exorcism=       ((1985+2215)./2 + 0.15.*max([player.hsp;player.ap])) ...
+raw.Exorcism=       ((1985+2215)./2 + 0.2.*max([player.hsp;player.ap])) ...
                     .*mdf.spdmg.*mdf.BlazLi.*mdf.glyphExo;
 raw.Exorcism=       raw.Exorcism.*mdf.spellscale;
 dmg.Exorcism=       raw.Exorcism.*mdf.sphit.*mdf.Exorcrit.*target.resrdx;
@@ -134,7 +134,7 @@ raw.HolyShield=     0;
 dmg.HolyShield=     raw.HolyShield.*mdf.sphit.*target.resrdx;
 
 %Holy Wrath
-raw.HolyWrath=      ((2800+0.3.*player.hsp)./exec.npccount+0.3.*player.hsp).*mdf.spdmg;
+raw.HolyWrath=      (2200./exec.npccount+0.5.*player.hsp).*mdf.spdmg;
 raw.HolyWrath=      raw.HolyWrath.*mdf.spellscale;
 dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit.*target.resrdx;
 net.HolyWrath=      dmg.HolyWrath;
