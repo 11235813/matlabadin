@@ -21,6 +21,14 @@ stat_model
 egs(1).hit=max([egs(1).hit 0])-(player.phhit-4).*cnv.hit_phhit;
 egs(1).exp=max([egs(1).exp 0])-(player.exp-18).*cnv.exp_exp;
 egs(1).mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
+helm1=egs(1);
+
+%repeat for 8% hit and exp soft-cap
+egs(1).hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
+egs(1).exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
+egs(1).mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
+helm2=egs(1);
+
 
 %calculate final stats
 % ability_model
@@ -32,10 +40,12 @@ weaplist1=[40345; %Broken Promise
           50290; %Falric
           50268; %Rimefang
           45110; %Titanguard
+          49303; %Gleaming QS
           45876; %Shiver          
           45442; %Sorthalis
           47967; %CG (H)
           48714; %Honor of the Fallen
+          49495; %Burnished QS
           51010; %Facelifter
           50760; %Bonebreaker
           51795; %Troggbane
@@ -49,12 +59,23 @@ weaplist1=[40345; %Broken Promise
           50738; %Mithrios (H)
           ];
 
-weaplist2=[50771; %Frost Needle
+weaplist2=[51004; %Lockjaw
+           50771; %Frost Needle
+           51798; %Valius
            51932; %Frost Needle (H)
+           51875; %Lockjaw (H)
+           50028; %Trauma
+           51944; %Valius (H)
+           50068; %Rigormortis
+           50428; %Royal Scepter of terenas
+           50685; %Trauma (H)
+           50704; %Rigormortis (H)
+           50734; %Royal Scepter of Terenas (H)
           ];
       
           
-weaplist3=[49296; %Singed Viskag
+weaplist3=[49128; %HHM sword
+          49296; %Singed Viskag
           50191; %Nighttime
           47808; %The Lion's Maw
           47816; %The Grinder
@@ -94,14 +115,27 @@ for m=1:M
     %store useful info for plots
     pinfo.name{m}=egs(15).name;
     pinfo.ilvl(m)=egs(15).ilvl;
-    %calculate DPS
+    
+    %calculate DPS below caps
+    egs(1)=helm1;
     gear_stats    
     stat_model
     ability_model
     rotation_model;
 
-    dps1(m)=rot.coeff'*pridmg+rot.padps;
-    dps2(m)=rot2.coeff'*pridmg+rot2.padps;    
+    dps1(m,1)=rot.coeff'*pridmg+rot.padps;
+    dps2(m,1)=rot2.coeff'*pridmg+rot2.padps;    
+    
+    
+    %calculate DPS at caps
+    egs(1)=helm2;
+    gear_stats    
+    stat_model
+    ability_model
+    rotation_model;
+
+    dps1(m,2)=rot.coeff'*pridmg+rot.padps;
+    dps2(m,2)=rot2.coeff'*pridmg+rot2.padps;    
 end
 
 
@@ -111,41 +145,51 @@ pinfo.labels=[pinfo.name repmat(' ',length(pinfo.ilvl),2) int2str(pinfo.ilvl')];
 %HotR table
 dps=dps2;
 'HotR table'
-[pinfo.labels repmat(' ',length(dps),3) int2str(round(dps'))]
+[pinfo.labels repmat(' ',length(dps),3) int2str(round(dps))]
 
 
 dps=dps1;
 'CS table'
-[pinfo.labels repmat(' ',length(dps),3) int2str(round(dps'))]
+[pinfo.labels repmat(' ',length(dps),3) int2str(round(dps))]
 
 y1=1:M1;y2=M1+1+[1:M2];y3=max(y2)+1+[1:M3];
 y=[y1 y2 y3];
 
+dps1p=[dps1(:,1) diff(dps1')'];
+
 figure(70)
-set(gcf,'Position',[2240 88 724 860])
-bar70=barh(y,dps,'BarWidth',0.5,'BarLayout','stacked');
-xlim([0.99.*min(dps) 1.01.*max(dps)])
+set(gcf,'Position',[-1000 12 724 936])
+bar70=barh(y,dps1p,'BarWidth',0.5,'BarLayout','stacked');
+set(bar70(2),'FaceColor',[0.749 0.749 0]);
+xlim([0.99.*min(min(dps1)) 1.01.*max(max(dps1))])
 ylim(0.5+[0 max(y)])
 set(gca,'YTick',y,'YTickLabel',pinfo.labels)
 xlabel('DPS')
 title('All by ilvl & category - CS rotation')
+legend('4% hit 18 exp','8% hit 26 exp','Location','Best')
 
 
-[x71 k71]=sort(dps(1:M1));y71=y1(k71);
+[x71 k71]=sort(dps(1:M1,1));y71=y1(k71);
 figure(71)
-set(gcf,'Position',[2240 88 724 579])
-bar71=barh(x71,'BarWidth',0.5,'BarLayout','stacked');
-xlim([0.99.*min(x71) 1.01.*max(x71)])
+% set(gcf,'Position',[2240 88 724 579])
+bar71=barh(dps(k71,:),'BarWidth',0.5,'BarLayout','stacked');
+set(bar71(2),'FaceColor',[0.749 0.749 0]);
+xlim([0.99.*min(dps1(k71,1)) 1.01.*max(dps1(k71,2))])
 ylim(0.5+[0 max(y1)])
 set(gca,'YTick',y1,'YTickLabel',pinfo.labels(k71,:))
 xlabel('DPS')
 title('Tank weapons, sorted by DPS')
+legend('4% hit 18 exp','8% hit 26 exp','Location','Best')
+
+dps2p=[dps2(:,1) diff(dps2')'];
 
 figure(72)
-set(gcf,'Position',[2240 88 724 860])
-bar72=barh(y,dps2,'BarWidth',0.5,'BarLayout','stacked');
-xlim([0.99.*min(dps2) 1.01.*max(dps2)])
+set(gcf,'Position',[-1000 12 724 936])
+bar72=barh(y,dps2p,'BarWidth',0.5,'BarLayout','stacked');
+set(bar72(2),'FaceColor',[0.749 0.749 0]);
+xlim([0.99.*min(min(dps2)) 1.01.*max(max(dps2))])
 ylim(0.5+[0 max(y)])
 set(gca,'YTick',y,'YTickLabel',pinfo.labels)
 xlabel('DPS')
 title('All by ilvl & category - HotR rotation')
+legend('4% hit 18 exp','8% hit 26 exp','Location','Best')
