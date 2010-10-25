@@ -14,7 +14,7 @@ player.hopo=3;  %placeholder for now, this may get moved elsewhere
 
 %Seal of Truth, using old SoVeng model, assumes a 5-stack
 raw.SealofTruth=    0.20.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
-raw.JoT        =    (1+0.2755.*player.hsp+0.1855.*player.ap).*1.5; 
+raw.JoT        =    (1+0.2755.*player.hsp+0.185.*player.ap).*1.5; 
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
 dps.SealofTruth=    dmg.SealofTruth./player.wswing; %TODO : fix
 
@@ -134,7 +134,7 @@ raw.HolyShield=     0;
 dmg.HolyShield=     raw.HolyShield.*mdf.sphit.*target.resrdx;
 
 %Holy Wrath
-raw.HolyWrath=      ((2156+0.39.*player.hsp)./exec.npccount+0.39.*player.hsp).*mdf.spdmg;
+raw.HolyWrath=      ((2153+0.39.*player.hsp)./exec.npccount+0.39.*player.hsp).*mdf.spdmg;
 raw.HolyWrath=      raw.HolyWrath.*mdf.spellscale;
 dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit.*target.resrdx;
 net.HolyWrath=      dmg.HolyWrath;

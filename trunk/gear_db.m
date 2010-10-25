@@ -774,6 +774,14 @@ idb.iid(51010).sta=92;
 idb.iid(51010).exp=36;
 idb.iid(51010).parry=62;
 
+idb.iid(49495).name='Burnished Quel''Serrar';
+idb.iid(49495).wtype='swo';
+idb.iid(49495).ilvl=245;
+idb.iid(49495).tooldps=196.7;
+idb.iid(49495).swing=2;
+idb.iid(49495).avgdmg=(275+512)/2;
+idb.iid(49495).sta=74;
+
 idb.iid(47967).name='Crusader''s Glory (Heroic)';
 idb.iid(47967).wtype='swo';
 idb.iid(47967).ilvl=245;
@@ -987,6 +995,14 @@ idb.iid(45110).sta=78;
 idb.iid(45110).hit=29;
 idb.iid(45110).parry=51;
 
+idb.iid(49303).name='Gleaming Quel''Serrar';
+idb.iid(49303).wtype='swo';
+idb.iid(49303).ilvl=232;
+idb.iid(49303).tooldps=179;
+idb.iid(49303).swing=2;
+idb.iid(49303).avgdmg=358;
+idb.iid(49303).sta=65;
+
 idb.iid(45463).name='Vulmir, the Northern Tempest';
 idb.iid(45463).wtype='mac';
 idb.iid(45463).ilvl=232;
@@ -1043,6 +1059,115 @@ idb.iid(50771).hit=49;
 idb.iid(50771).haste=54;
 idb.iid(50771).sp=823;
 
+idb.iid(50704).name='Rigormortis (Heroic)';
+idb.iid(50704).wtype='swo';
+idb.iid(50704).ilvl=277;
+idb.iid(50704).tooldps=125.3;
+idb.iid(50704).swing=1.8;
+idb.iid(50704).avgdmg=(157+294)/2;
+idb.iid(50704).sta=143+30;
+idb.iid(50704).hit=50;
+idb.iid(50704).haste=66;
+idb.iid(50704).sp=1047+5;
+
+idb.iid(50068).name='Rigormortis';
+idb.iid(50068).wtype='swo';
+idb.iid(50068).ilvl=264;
+idb.iid(50068).tooldps=113.4;
+idb.iid(50068).swing=1.8;
+idb.iid(50068).avgdmg=(142+266)/2;
+idb.iid(50068).sta=126;
+idb.iid(50068).hit=59;
+idb.iid(50068).haste=59;
+idb.iid(50068).sp=928;
+
+idb.iid(51004).name='Lockjaw';
+idb.iid(51004).wtype='mac';
+idb.iid(51004).ilvl=251;
+idb.iid(51004).tooldps=102.8;
+idb.iid(51004).swing=2.2;
+idb.iid(51004).avgdmg=(158+295)/2;
+idb.iid(51004).sta=114;
+idb.iid(51004).spi=52;
+idb.iid(51004).haste=52;
+idb.iid(51004).sp=823;
+
+idb.iid(51875).name='Lockjaw (Heroic)';
+idb.iid(51875).wtype='mac';
+idb.iid(51875).ilvl=264;
+idb.iid(51875).tooldps=113.4;
+idb.iid(51875).swing=2.2;
+idb.iid(51875).avgdmg=(174+325)/2;
+idb.iid(51875).sta=117;
+idb.iid(51875).spi=58;
+idb.iid(51875).str=20;
+idb.iid(51875).haste=51;
+idb.iid(51875).sp=928;
+
+idb.iid(51798).name='Valius, Gavel of the Lightbringer';
+idb.iid(51798).wtype='mac';
+idb.iid(51798).ilvl=258;
+idb.iid(51798).tooldps=108.3;
+idb.iid(51798).avgdmg=(166+310)/2;
+idb.iid(51798).swing=2.2;
+idb.iid(51798).sta=120;
+idb.iid(51798).spi=56;
+idb.iid(51798).crit=56;
+idb.iid(51798).sp=878;
+
+idb.iid(51944).name='Valius, Gavel of the Lightbringer (Heroic)';
+idb.iid(51944).wtype='mac';
+idb.iid(51944).ilvl=271;
+idb.iid(51944).tooldps=119.6;
+idb.iid(51944).avgdmg=(184+343)/2;
+idb.iid(51944).swing=2.2;
+idb.iid(51944).sta=123;
+idb.iid(51944).spi=62;
+idb.iid(51944).str=20;
+idb.iid(51944).crit=55;
+idb.iid(51944).sp=990+5;
+
+idb.iid(50028).name='Trauma';
+idb.iid(50028).wtype='mac';
+idb.iid(50028).ilvl=264;
+idb.iid(50028).tooldps=113.4;
+idb.iid(50028).avgdmg=(142+266)/2;
+idb.iid(50028).swing=1.8;
+idb.iid(50028).sta=99;
+idb.iid(50028).sp=928;
+
+idb.iid(50685).name='Trauma (Heroic)';
+idb.iid(50685).wtype='mac';
+idb.iid(50685).ilvl=277;
+idb.iid(50685).tooldps=125.3;
+idb.iid(50685).avgdmg=(157+294)/2;
+idb.iid(50685).swing=1.8;
+idb.iid(50685).sta=89+30;
+idb.iid(50685).sp=1047;
+
+idb.iid(50428).name='Royal Scepter of Terenas II';
+idb.iid(50428).wtype='mac';
+idb.iid(50428).ilvl=271;
+idb.iid(50428).tooldps=119.6;
+idb.iid(50428).avgdmg=(150+280)/2;
+idb.iid(50428).swing=1.8;
+idb.iid(50428).sta=133;
+idb.iid(50428).crit=63;
+idb.iid(50428).haste=63;
+idb.iid(50428).sp=992;
+
+idb.iid(50734).name='Royal Scepter of Terenas II (Heroic)';
+idb.iid(50734).wtype='mac';
+idb.iid(50734).ilvl=284;
+idb.iid(50734).tooldps=132.4;
+idb.iid(50734).avgdmg=(166+310)/2;
+idb.iid(50734).swing=1.8;
+idb.iid(50734).sta=152;
+idb.iid(50734).str=20;
+idb.iid(50734).crit=55;
+idb.iid(50734).haste=71;
+idb.iid(50734).sp=1118+5;
+
 %lol
 idb.iid(40345).name='Broken Promise';
 idb.iid(40345).wtype='swo';
@@ -1055,6 +1180,17 @@ idb.iid(40345).hit=16;
 idb.iid(40345).exp=20;
 idb.iid(40345).str=29;
 idb.iid(40345).sta=64;
+
+idb.iid(49128).name='The Horseman''s Baleful Blade';
+idb.iid(49128).wtype='swo';
+idb.iid(49128).ilvl=200;
+idb.iid(49128).tooldps=143.5;
+idb.iid(49128).swing=2.7;
+idb.iid(49128).avgdmg=(271+504)/2;
+idb.iid(49128).agi=26;
+idb.iid(49128).sta=72;
+idb.iid(49128).hit=26;
+idb.iid(49128).exp=26;
 
 %cata weapons
 idb.iid(56433).name='Blade of the Burning Sun';
