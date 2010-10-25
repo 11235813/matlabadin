@@ -14,7 +14,7 @@ player.hopo=3;  %placeholder for now, this may get moved elsewhere
 
 %Seal of Truth, using old SoVeng model, assumes a 5-stack
 raw.SealofTruth=    0.20.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
-raw.JoT        =    (1+0.2755.*player.hsp+0.185.*player.ap).*1.5; 
+raw.JoT        =    (1+0.2861.*player.hsp+0.1823.*player.ap).*1.5; 
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
 dps.SealofTruth=    dmg.SealofTruth./player.wswing; %TODO : fix
 
@@ -99,7 +99,7 @@ dmg.AvengersShield= raw.AvengersShield.*(mdf.ramodel.*mdf.phcrit+mdf.blockmodel)
 net.AvengersShield= dmg.AvengersShield; %doesn't proc seals
 
 %Judgement (the seal of choice is defined in execution_model) 
-raw.Judgement=      raw.Judgement.*mdf.spdmg.*(1+2.*mdf.WotL).*mdf.glyphJ;
+raw.Judgement=      raw.Judgement.*mdf.spdmg.*(mdf.glyphJ+2.*mdf.WotL);
 dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
 net.Judgement=      dmg.Judgement+dmg.activeseal.*mdf.rahit;
 
