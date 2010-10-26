@@ -2,7 +2,7 @@
 %executed by the priority simulator module.
 
 %define base cooldowns - this section may be moved to ability recalc
-cd.CS=3;cd.Jud=8;cd.AS=15;cd.HW=15;cd.Cons=30.*mdf.glyphCons;
+cd.CS=3;cd.Jud=8;cd.AS=15;cd.HW=15;cd.Cons=30.*mdf.glyphCons;cd.HoW=6;
 
 hopo=0;sdflag=0;
 
@@ -14,13 +14,13 @@ hopo=0;sdflag=0;
 %where n is the HoPo strength.  This is a temporary fix (I think) for
 %handling priority queues where we have both 3ShoR and 2ShoR.
 priodefault.name='Default Set';
-priodefault.alabel={'3ShoR';'CS';'Jud';'AS';'HW';'Cons';'HotR';'2ShoR';'Inq'};
-priodefault.cds=[0 cd.CS cd.Jud cd.AS cd.HW cd.Cons cd.CS 0 0];
+priodefault.alabel={'3ShoR';'CS';'Jud';'AS';'HW';'Cons';'HotR';'2ShoR';'Inq';'HoW'};
+priodefault.cds=[0 cd.CS cd.Jud cd.AS cd.HW cd.Cons cd.CS 0 0 cd.HoW];
 %define gcd lengths
-priodefault.gcds=[1.5 1.5 1.5 1.5 player.spgcd player.spgcd 1.5 1.5 player.spgcd];
-priodefault.gcds=[1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5];
-priodefault.ids=[1 2 3 4 5 6 2 1 7];  %id numbers for generating figures - 0 is not plotted
-priodefault.adtype=[1 0 1 1 1 1 0 1 0];  %1 for Holy, 0 for phys/other
+priodefault.gcds=[1.5 1.5 1.5 1.5 player.spgcd player.spgcd 1.5 1.5 player.spgcd 1.5];
+priodefault.gcds=[1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5];
+priodefault.ids=[1 2 3 4 5 6 2 1 7 8];  %id numbers for generating figures - 0 is not plotted
+priodefault.adtype=[1 0 1 1 1 1 0 1 0 1];  %1 for Holy, 0 for phys/other
 
 % priodefault.aname={'ShieldoftheRighteous'; ...
 %                   'CrusaderStrike'; ...
@@ -42,7 +42,8 @@ priodefault.admg  =[raw.ShieldoftheRighteous;...
                     dmg.Consecration;...
                     dmg.HammeroftheRighteous;...
                     dmg.ShieldoftheRighteous./2; ...    %fix this later
-                    0];
+                    0;...
+                    dmg.HammerofWrath];
 
 %procs to watch
 priodefault.plabel={exec.seal;'HaNova'};
@@ -50,8 +51,8 @@ priodefault.pdmg=[dmg.activeseal;dmg.HammerNova];
 priodefault.pdtype=[1 1];
                 
 %proc triggers
-priodefault.ptrig=[1 1 mdf.JotJ>1 0 0 0 1 1 0; ...
-                   0 0 0          0 0 0 1 0 0];
+priodefault.ptrig=[1 1 mdf.JotJ>1 0 0 0 1 1 0 0; ...
+                   0 0 0          0 0 0 1 0 0 0];
 priodefault.phit=[1 mdf.mehit mdf.rahit 0 0 0 mdf.mehit 1 0]; %shor misses accounted for in code        
 
 
@@ -70,7 +71,8 @@ priodefault.action={'0;';...
                 'ccd.Cons=cd.Cons;';...
                 'ccd.CS=cd.CS;hopo=min([3 hopo+1]);if rand<mdf.GC.*mdf.mehit ccd.AS=0; end;';...  %should be identical to CS
                 '0;';...         
-                'hopo=0;dur.Inq=12;'};
+                'hopo=0;dur.Inq=12;';...
+                'ccd.HoW=cd.HoW;'};
 
 clear prio            
 %Now we start the rotation-specific priority code.  Note that we invoke
