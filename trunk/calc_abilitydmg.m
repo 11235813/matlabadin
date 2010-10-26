@@ -37,6 +37,7 @@ stat_model
 
 %calculate ability output
 ability_model
+rotation_model
 
 %generate a damage summary array
 %% Summary
