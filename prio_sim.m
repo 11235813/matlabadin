@@ -76,6 +76,7 @@ cd.Jud=pri.cds(3);
 cd.AS=pri.cds(4);
 cd.HW=pri.cds(5);
 cd.Cons=pri.cds(6);
+cd.HoW=pri.cds(10);
 
 %set "current cooldown" for all relevant spells 
 % ccd=zeros(size(cd));
@@ -85,6 +86,7 @@ ccd.AS=0;
 ccd.HW=0;
 ccd.Jud=0;
 ccd.Cons=0;
+ccd.HoW=0;
 
 %duration variable for buff-like effects
 dur.SD=0;
