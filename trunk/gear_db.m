@@ -1294,6 +1294,7 @@ idb.sid(86934).haste=35;
 %% Shoulder
 idb.sid(59941).name='Greater Inscription of the Pinnacle';
 idb.sid(59941).dodge=20;
+idb.sid(59941).sta=22;
 
 idb.sid(62384).name='Greater Inscription of the Gladiator';
 idb.sid(62384).sta=30;

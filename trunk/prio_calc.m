@@ -16,7 +16,7 @@ gear_stats
 talents
 
 stat_model
-ability_model_80
+ability_model
 prio_model;
 
 %% Generate coefficients for each priority queue
@@ -60,10 +60,10 @@ for m=1:length(rdata)
 end
 
 %% construct damage arrays
-pridmg  =[raw.ShieldoftheRighteous;dmg.CrusaderStrike;dmg.Judgement;...
-          dmg.AvengersShield;dmg.HolyWrath;dmg.Consecration;...
-          dmg.HammeroftheRighteous;dmg.ShieldoftheRighteous./2; ...  
-          0;dmg.activeseal;dmg.HammerNova];      
+% pridmg  =[raw.ShieldoftheRighteous;dmg.CrusaderStrike;dmg.Judgement;...
+%           dmg.AvengersShield;dmg.HolyWrath;dmg.Consecration;...
+%           dmg.HammeroftheRighteous;dmg.ShieldoftheRighteous./2; ...  
+%           0;dmg.activeseal;dmg.HammerNova];      
 
 % %alternative vector for skipping Consecration damage
 % altdmg  =[raw.ShieldoftheRighteous;dmg.CrusaderStrike;dmg.Judgement;...
