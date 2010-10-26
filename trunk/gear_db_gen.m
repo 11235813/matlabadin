@@ -718,7 +718,7 @@ idb.iid(58483).sb.active=[0 0 1];
 
 idb.iid(52352).name='Figurine - Earthen Guardian';
 idb.iid(52352).ilvl=346;
-idb.iid(52352).sta=197;
+idb.iid(52352).sta=427;
 
 idb.iid(56549).name='Twilight Dragonscale Cloak';
 idb.iid(56549).ilvl=346;
@@ -1062,4 +1062,16 @@ idb.iid(59319).str=145;
 idb.iid(59319).sta=286;
 idb.iid(59319).hit=96;
 idb.iid(59319).dodge=190;
+
+idb.iid(59486).name='Battleplate of the Apocalypse';
+idb.iid(59486).ilvl=359;
+idb.iid(59486).str=239;
+idb.iid(59486).sta=512;
+idb.iid(59486).hit=173;
+idb.iid(59486).parry=281;
+idb.iid(59486).barmor=3426;
+idb.iid(59486).ysock=2;
+idb.iid(59486).atype=1;
+idb.iid(59486).sb.parry=20;
+idb.iid(59486).sb.active=[0 2 0];
 
