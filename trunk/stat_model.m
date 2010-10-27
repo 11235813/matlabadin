@@ -187,7 +187,9 @@ player.spdr=player.resistance./(player.resistance+player.resist_c);
 %% Hit Rating
 player.phhit=(gear.hit+extra.hit+consum.hit)./cnv.hit_phhit ...
     +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
-player.sphit=(gear.hit+extra.hit+consum.hit)./cnv.hit_sphit+mdf.TbtL ...
+player.sphit=(gear.hit+extra.hit+consum.hit)./cnv.hit_sphit ...
+    +(8.*(talent.TouchedbytheLight==1&&base.lvl==85)) ...
+    +0.*mdf.TbtL.*base.lvl==80 ... %it's bugged on 4.0 live
     +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
 
 
@@ -331,7 +333,8 @@ player.parry=base.parry+avoiddr.parrydr-0.04.*npc.skillgap;
 
 %at the moment, we don't have Redoubt to worry about, so we shouldnt' need
 %dynamic effects for block chance (hopefully?)
-player.block=base.block+mdf.HolySh+2.*player.mast-0.04.*npc.skillgap; %TODO : fix HS
+player.block=base.block+mdf.HolySh+(3.*(base.lvl==85)+2.*(base.lvl==80)).*player.mast ...
+    -0.04.*npc.skillgap; %TODO : fix HS
 
 %check for bounding issues, based on the attack table
 player.miss=max([player.miss;zeros(size(player.miss))]);
