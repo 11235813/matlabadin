@@ -35,7 +35,7 @@ mdf.RoL=5.*talent.RuleofLaw;
 %glyphs
 mdf.glyphCS=5.*glyph.CrusaderStrike;             %CS crit chance
 mdf.glyphExo=1+0.2.*glyph.Exorcism;              %Exo output /TODO check DoT mechanics
-mdf.glyphHotR=1+0.1.*glyph.HammeroftheRighteous; %HotR output
+mdf.glyphHotR=0.1.*glyph.HammeroftheRighteous; %HotR output
 mdf.glyphJ=1+0.1.*glyph.Judgement;               %J output
 mdf.glyphSoT=10.*glyph.SealofTruth;              %expertise bonus
 mdf.glyphSotR=1+0.1.*glyph.ShieldoftheRighteous; %SotR output
@@ -50,7 +50,7 @@ mdf.glyphAS=1+0.3.*glyph.FocusedShield;          %AS output
 mdf.ameta=1+0.02.*gear.armormeta;
 mdf.cmeta=1+0.03.*gear.critmeta;
 mdf.plate=1+0.05.*gear.isplate;
-mdf.t10x2=1+0.2.*gear.tierbonus(1); %HotR output
+mdf.t10x2=0.2.*gear.tierbonus(1); %HotR output
 mdf.t11x2=1+0.1.*gear.tierbonus(3); %CS output
 mdf.t11x4=1+0.5.*gear.tierbonus(4); %GoAK duration
 
