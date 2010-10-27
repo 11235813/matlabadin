@@ -49,9 +49,9 @@ else
        +(exec.npccount>1).*(min(8,(x+min(3,8.*(Ra.*phr.ph)))./(Ra.*phr.ph)).*Rb) ...
        .*(exec.npccount-1));
    if numel([exec.npccount exec.timein ps bs pb rp])>6
-       phr.reck=quadv(upt,0,1,'tol',1.e-8);
+       phr.reck=quadv(upt,0,1,1.e-8);
    else
-       phr.reck=quadl(upt,0,1,'tol',1.e-8);
+       phr.reck=quadl(upt,0,1,1.e-8);
    end
 end
 phr.reck=phr.reck.*exec.timein;
