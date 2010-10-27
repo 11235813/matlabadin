@@ -113,32 +113,9 @@ prio_model
 rot.consflag=1;
 rotation_model
 
-%run sim
-% seq1=prio_sim(10,'N',90000);
-%or not
-seq1=rot;
-
-%these calculations are done in rotation_model as well, but we repeat them
-%here so that the file works properly for the outputs of prio_sim
-%active DPS
-acdps(1)=sum(pridmg.*seq1.coeff);
-      
-%calculate passive damage sources
-padps(1)=0;
-%account for Inq
-Inqmod=sum(seq1.Inq>0)./length(seq1.Inq);
-
-%assume a 5-stack of SoT (if applicable).
-if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
-    padps(1)=padps(1)+dps.Censure.*(1+0.3.*Inqmod);
-
-end
-
-%aa and seal damage
-padps(1)=padps(1)+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
-
 %now calculate total DPS
-totdps(1)=acdps(1)+padps(1);
+totdps(1)=rot.totdps;
+totdps1(1)=rot1.totdps;
 
 % for m=2:length(tree)-2  %everything except GC & SD
 for m=2:length(tree) %everything
@@ -153,25 +130,11 @@ for m=2:length(tree) %everything
     %calculate final stats
     stat_model
     ability_model
-    rotation_model;seq1=rot;
+    rotation_model
     
+    totdps(m)=rot.totdps;
+    totdps1(m)=rot1.totdps;
     
-    %active dps
-    acdps(m)=sum(pridmg.*seq1.coeff);
-    padps(m)=0;
-    %account for Inq
-    Inqmod=sum(seq1.Inq>0)./length(seq1.Inq);
-
-    %assume a 5-stack of SoT (if applicable).
-    if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
-        padps(m)=padps(m)+dps.Censure.*(1+0.3.*Inqmod);
-
-    end
-
-    %aa and seal damage
-    padps(m)=padps(m)+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
-
-    totdps(m)=acdps(m)+padps(m);
 end
 
 
@@ -220,16 +183,20 @@ end
 % close(wb)
 
 dpsppt=(totdps(1)-totdps')./points';
+dpsppt1=(totdps1(1)-totdps1')./points';
 
 %% table output
-[char(name) repmat(' ',length(name),5) num2str(dpsppt,'%2.1f')]
+spacer=repmat(' ',length(name),5);
+[char(name)  spacer num2str(dpsppt,'%2.1f') spacer num2str(dpsppt1,'%2.1f')]
 
 
 %% plots
+dpsplot=[dpsppt dpsppt1-dpsppt];
+
 figure(30)
 set(gcf,'Position',[428 128 728 378])
-bar20=barh(dpsppt(2:length(dpsppt)),'BarWidth',0.5,'BarLayout','stacked');
-% set(bar20(2),'FaceColor',[0.749 0.749 0]);
+bar30=barh(dpsplot(2:length(dpsplot),:),'BarWidth',0.5,'BarLayout','stacked');
+set(bar30(2),'FaceColor',[0.749 0.749 0]);
 ylim([0.5 10.5])
 set(gca,'YTickLabel',name(2:length(name)))
 % legend('Unglyphed','Glyphed','Location','NorthEast')
@@ -238,12 +205,12 @@ xlabel('DPS per point')
 
 %sorted
 [dpspptsorted ind]=sort(dpsppt);
-
+dpsplotsorted=dpsplot(ind,:);
 figure(31)
 
 set(gcf,'Position',[428 128 728 378])
-bar20=barh(dpspptsorted(2:length(dpsppt)),'BarWidth',0.5,'BarLayout','stacked');
-% set(bar20(2),'FaceColor',[0.749 0.749 0]);
+bar31=barh(dpsplotsorted(2:length(dpsppt),:),'BarWidth',0.5,'BarLayout','stacked');
+set(bar31(2),'FaceColor',[0.749 0.749 0]);
 ylim([0.5 10.5])
 set(gca,'YTickLabel',name(ind(2:length(name))))
 % legend('Unglyphed','Glyphed','Location','NorthEast')
