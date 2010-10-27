@@ -158,7 +158,7 @@ y=[y1 y2 y3];
 dps1p=[dps1(:,1) diff(dps1')'];
 
 figure(70)
-set(gcf,'Position',[-1000 12 724 936])
+set(gcf,'Position',[2200 12 724 936])
 bar70=barh(y,dps1p,'BarWidth',0.5,'BarLayout','stacked');
 set(bar70(2),'FaceColor',[0.749 0.749 0]);
 xlim([0.99.*min(min(dps1)) 1.01.*max(max(dps1))])
@@ -172,7 +172,7 @@ legend('4% hit 18 exp','8% hit 26 exp','Location','Best')
 [x71 k71]=sort(dps(1:M1,1));y71=y1(k71);
 figure(71)
 % set(gcf,'Position',[2240 88 724 579])
-bar71=barh(dps(k71,:),'BarWidth',0.5,'BarLayout','stacked');
+bar71=barh(dps1p(k71,:),'BarWidth',0.5,'BarLayout','stacked');
 set(bar71(2),'FaceColor',[0.749 0.749 0]);
 xlim([0.99.*min(dps1(k71,1)) 1.01.*max(dps1(k71,2))])
 ylim(0.5+[0 max(y1)])
@@ -184,7 +184,7 @@ legend('4% hit 18 exp','8% hit 26 exp','Location','Best')
 dps2p=[dps2(:,1) diff(dps2')'];
 
 figure(72)
-set(gcf,'Position',[-1000 12 724 936])
+set(gcf,'Position',[2200 12 724 936])
 bar72=barh(y,dps2p,'BarWidth',0.5,'BarLayout','stacked');
 set(bar72(2),'FaceColor',[0.749 0.749 0]);
 xlim([0.99.*min(min(dps2)) 1.01.*max(max(dps2))])
