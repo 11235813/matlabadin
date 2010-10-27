@@ -80,7 +80,7 @@ for m=1:length(rdata);name{m,:}=rdata(m).name;end
 %calculate empty %
 % for m=1:length(rdata);temp=find(rdata(m).castid==0);epct(m)=100.*(sum(rdata(m).casttime(temp+1)-rdata(m).casttime(temp)))./rdata(m).totaltime;end;
 spacer=repmat(' ',length(rdata),3);
-li=[int2str([1:length(rdata)]') spacer char(name) spacer int2str(cmat*pridmg+padps') spacer int2str([rdata.empties]') spacer num2str([rdata.emptypct]','%3.1f')];
+li=[spacer int2str([1:length(rdata)]') spacer char(name) spacer int2str(cmat*pridmg+padps') spacer int2str([rdata.empties]') spacer num2str([rdata.emptypct]','%3.1f')];
 % for m=1:length(rdata)
 %     li(m,:)=[int2str(m) repmat(' ',1,4-length(int2str(m))) rdata(m).name ...
 %         repmat(' ',1,45-length(rdata(m).name))  int2str(int32(rdata(m).dps+padps(m))) ...
