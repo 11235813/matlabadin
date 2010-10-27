@@ -202,6 +202,6 @@ pridmg  =[raw.ShieldoftheRighteous.*val.ones;
           dmg.HammeroftheRighteous.*val.ones;
           dmg.ShieldoftheRighteous./2.*val.ones;
           val.zero;
+          dmg.HammerofWrath.*val.ones;
           dmg.activeseal.*val.ones;
-          dmg.HammerNova.*val.ones;
-          dmg.HammerofWrath.*val.ones];  
+          dmg.HammerNova.*val.ones];  

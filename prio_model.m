@@ -51,7 +51,7 @@ priodefault.pdmg=[dmg.activeseal;dmg.HammerNova];
 priodefault.pdtype=[1 1];
                 
 %proc triggers
-priodefault.ptrig=[1 1 mdf.JotJ>1 0 0 0 1 1 0 0; ...
+priodefault.ptrig=[1 1 mdf.JotJ>0 0 0 0 1 1 0 0; ...
                    0 0 0          0 0 0 1 0 0 0];
 priodefault.phit=[1 mdf.mehit mdf.rahit 0 0 0 mdf.mehit 1 0 1]; %shor misses accounted for in code        
 
