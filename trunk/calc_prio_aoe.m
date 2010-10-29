@@ -11,6 +11,7 @@ buff=buff_model;
 % egs=ddb.gearset{4}; % premade gear
 gear_sample
 talent=ddb.talentset{2}; %0/31/5 with all damage-relevant prot talents
+glyph.major=[0 1 0 0 0 0 0 0 0 0];
 gear_stats
 talents
 
