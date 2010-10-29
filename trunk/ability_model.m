@@ -192,7 +192,7 @@ val.net=[round(net.ShieldoftheRighteous).*val.ones;
     round(net.Melee).*val.ones];
 
 
-%damage array for priority calculations
+%damage arrays for priority calculations
 pridmg  =[raw.ShieldoftheRighteous.*val.ones;
           dmg.CrusaderStrike.*val.ones;
           dmg.Judgement.*val.ones;
@@ -205,3 +205,16 @@ pridmg  =[raw.ShieldoftheRighteous.*val.ones;
           dmg.HammerofWrath.*val.ones;
           dmg.activeseal.*val.ones;
           dmg.HammerNova.*val.ones];  
+
+aoedmg  =[raw.ShieldoftheRighteous.*val.ones;
+          dmg.CrusaderStrike.*val.ones;
+          dmg.Judgement.*val.ones;
+          dmg.AvengersShield.*min([exec.npccount; 3]).*val.ones;
+          dmg.HolyWrath.*exec.npccount.*val.ones;
+          dmg.Consecration.*min([exec.npccount; 10]).*val.ones;  %hand-wavy AoE damage cap
+          dmg.HammeroftheRighteous.*val.ones;
+          dmg.ShieldoftheRighteous./2.*val.ones;
+          val.zero;
+          dmg.HammerofWrath.*val.ones;
+          dmg.activeseal.*val.ones;
+          dmg.HammerNova.*min([exec.npccount; 10]).*val.ones];   %and again

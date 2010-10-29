@@ -24,9 +24,9 @@ N=90000;  %set long enough to get stochastic data for each sim
 dt=0.5;
 wb=waitbar(0,'Calculating');
 tic
-for k=1:length(prio)
+for k=1:k1
     
-    waitbar(k/length(prio),wb)
+    waitbar(k/k1,wb)
     rdata(k)=prio_sim(k,'N',N,'dt',dt);
     
 end
