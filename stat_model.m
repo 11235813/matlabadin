@@ -429,9 +429,8 @@ mdf.aamodel=(mdf.mehit) ...                   %hit
     +(mdf.blockrdx-1).*target.block./100 ...  %block
     +(mdf.phcritmulti-1).*player.aacrit./100; %crit
 %enforce block events for two-roll systems (no critical blocks)
-mdf.memodel=mdf.mehit-target.block./100;
-mdf.ramodel=mdf.rahit-target.block./100;
-mdf.blockmodel=mdf.blockrdx.*target.block./100;
+mdf.memodel=mdf.mehit+(mdf.blockrdx-1).*target.block./100;
+mdf.ramodel=mdf.rahit+(mdf.blockrdx-1).*target.block./100;
 
 %% PPM-based uptimes
 %this section will have to wait until we know which attacks survive, what
