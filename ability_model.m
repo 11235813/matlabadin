@@ -20,7 +20,7 @@ dps.SealofTruth=    dmg.SealofTruth./player.wswing; %TODO : fix
 
 %Censure (prev. Holy Vengeance), damage for a 5 stack over 15 seconds
 mdf.Censcrit=1+(mdf.phcritmulti-1).*player.phcrit./100; %physical, 2.0 base multiplier
-raw.Censure=        (0.016.*player.hsp+0.0335.*player.ap).*5.*5.*mdf.SotP.*mdf.spdmg;
+raw.Censure=        (0.016.*player.hsp+0.035.*player.ap).*5.*5.*mdf.SotP.*mdf.spdmg;
 dmg.Censure=        raw.Censure.*mdf.Censcrit.*target.resrdx; %automatical connect
 dps.Censure=        dmg.Censure./(5.*cens.NetTick);
 
@@ -104,7 +104,7 @@ dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
 net.Judgement=      dmg.Judgement+dmg.activeseal.*mdf.rahit;
 
 %Hammer of Wrath (can be blocked)
-raw.HammerofWrath= (4500 + 0.53.*player.hsp + 0.17.*player.ap).*mdf.spdmg;
+raw.HammerofWrath= (4585 + 0.51.*player.hsp + 0.15.*player.ap).*mdf.spdmg;
 raw.HameerofWrath= raw.HammerofWrath.*mdf.spellscale;
 dmg.HammerofWrath= raw.HammerofWrath.*mdf.ramodel.*mdf.HoWcrit.*target.resrdx;
 net.HammerofWrath= dmg.HammerofWrath;  %doesn't proc seals
