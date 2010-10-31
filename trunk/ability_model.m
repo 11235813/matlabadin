@@ -62,13 +62,13 @@ end
 
 %Crusader Strike (can be blocked)
 raw.CrusaderStrike= 1.5.*player.ndamage.*mdf.phdmg.*(mdf.Crus+2.*mdf.WotL).*mdf.t11x2;
-dmg.CrusaderStrike= raw.CrusaderStrike.*(mdf.memodel.*mdf.CScrit+mdf.blockmodel);
+dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.memodel.*mdf.CScrit;
 net.CrusaderStrike= dmg.CrusaderStrike+dmg.activeseal.*mdf.mehit;
 
 %Hammer of the Righteous /TODO check 2pt10 (both components)
 %physical (can be blocked)
 raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*(mdf.Crus+mdf.t10x2+mdf.glyphHotR);
-dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*(mdf.memodel.*mdf.HotRphcrit+mdf.blockmodel);
+dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.memodel.*mdf.HotRphcrit;
 net.HammeroftheRighteous=   dmg.HammeroftheRighteous; %doesn't proc seals
 %the aoe rolls only if physical connects
 raw.HammerNova=   ((523+783)./2+0.187.*player.ap).*mdf.spdmg.*mdf.Crus; %.*mdf.t10x2.*mdf.glyphHotR;
@@ -85,8 +85,8 @@ net.Melee=          dmg.Melee+dmg.activeseal.*mdf.mehit;
 %Shield of the Righteous (can be blocked)
 mdf.ShoR=   20.*(player.hopo==1)+60.*(player.hopo==2)+120.*(player.hopo==3);  %need to initialize this
 raw.ShieldoftheRighteous= (mdf.ShoR./100.*player.ap).*mdf.spdmg.*mdf.glyphSotR;
-dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*(mdf.memodel.*mdf.phcrit ...
-                          +mdf.blockmodel).*target.resrdx; %melee hit
+dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit ...
+                          .*target.resrdx; %melee hit
 net.ShieldoftheRighteous= dmg.ShieldoftheRighteous+dmg.activeseal.*mdf.mehit;
 % crit.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.mehit.*mdf.phcritmulti;
 
@@ -95,7 +95,7 @@ net.ShieldoftheRighteous= dmg.ShieldoftheRighteous+dmg.activeseal.*mdf.mehit;
 %Avenger's Shield (can be blocked)
 raw.AvengersShield= ((2512+3070)./2+0.42.*player.ap+0.22.*player.hsp).*mdf.spdmg.*mdf.glyphAS;
 raw.AvengersShield= raw.AvengersShield.*mdf.spellscale;
-dmg.AvengersShield= raw.AvengersShield.*(mdf.ramodel.*mdf.phcrit+mdf.blockmodel).*target.resrdx;              
+dmg.AvengersShield= raw.AvengersShield.*mdf.ramodel.*mdf.phcrit.*target.resrdx;              
 net.AvengersShield= dmg.AvengersShield; %doesn't proc seals
 
 %Judgement (the seal of choice is defined in execution_model) 
@@ -106,7 +106,7 @@ net.Judgement=      dmg.Judgement+dmg.activeseal.*mdf.rahit;
 %Hammer of Wrath (can be blocked)
 raw.HammerofWrath= (4500 + 0.53.*player.hsp + 0.17.*player.ap).*mdf.spdmg;
 raw.HameerofWrath= raw.HammerofWrath.*mdf.spellscale;
-dmg.HammerofWrath= raw.HammerofWrath.*(mdf.ramodel.*mdf.HoWcrit+mdf.blockmodel).*target.resrdx;
+dmg.HammerofWrath= raw.HammerofWrath.*mdf.ramodel.*mdf.HoWcrit.*target.resrdx;
 net.HammerofWrath= dmg.HammerofWrath;  %doesn't proc seals
 
 %% Spell abilities
