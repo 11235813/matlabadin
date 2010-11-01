@@ -1075,3 +1075,42 @@ idb.iid(59486).atype=1;
 idb.iid(59486).sb.parry=20;
 idb.iid(59486).sb.active=[0 2 0];
 
+idb.iid(59444).name='Akmin-kurai, Dominion''s Shield';
+idb.iid(59444).ilvl=359;
+idb.iid(59444).str=190;
+idb.iid(59444).sta=286;
+idb.iid(59444).mast=127;
+idb.iid(59444).parry=127;
+idb.iid(59444).barmor=11896;
+
+idb.iid(59356).name='Pauldrons of the Apocalypse';
+idb.iid(59356).ilvl=359;
+idb.iid(59356).str=193;
+idb.iid(59356).sta=380;
+idb.iid(59356).exp=108;
+idb.iid(59356).parry=233;
+idb.iid(59356).barmor=2570;
+idb.iid(59356).ysock=1;
+idb.iid(59356).atype=1;
+idb.iid(59356).sb.sta=15;
+idb.iid(59356).sb.active=[0 1 0];
+
+idb.iid(59117).name='Jumbotron Power Belt';
+idb.iid(59117).ilvl=359;
+idb.iid(59117).str=253;
+idb.iid(59117).sta=380;
+idb.iid(59117).mast=159;
+idb.iid(59117).dodge=139;
+idb.iid(59117).barmor=1927;
+idb.iid(59117).ysock=1;
+idb.iid(59117).atype=1;
+idb.iid(59117).sb.sta=15;
+idb.iid(59117).sb.active=[0 1 0];
+
+idb.iid(59442).name='Rage of Ages';
+idb.iid(59442).ilvl=359;
+idb.iid(59442).str=190;
+idb.iid(59442).sta=286;
+idb.iid(59442).hit=127;
+idb.iid(59442).mast=127;
+
