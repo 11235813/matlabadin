@@ -13,14 +13,14 @@ player.hopo=3;  %placeholder for now, this may get moved elsewhere
 %done first so Judgement can be properly defined
 
 %Seal of Truth, using old SoVeng model, assumes a 5-stack
-raw.SealofTruth=    0.20.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
+raw.SealofTruth=    0.21.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
 raw.JoT        =    (1+0.2861.*player.hsp+0.1823.*player.ap).*1.5; 
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
 dps.SealofTruth=    dmg.SealofTruth./player.wswing; %TODO : fix
 
 %Censure (prev. Holy Vengeance), damage for a 5 stack over 15 seconds
 mdf.Censcrit=1+(mdf.phcritmulti-1).*player.phcrit./100; %physical, 2.0 base multiplier
-raw.Censure=        (0.016.*player.hsp+0.035.*player.ap).*5.*5.*mdf.SotP.*mdf.spdmg;
+raw.Censure=        (0.017.*player.hsp+0.033.*player.ap).*5.*5.*mdf.SotP.*mdf.spdmg;
 dmg.Censure=        raw.Censure.*mdf.Censcrit.*target.resrdx; %automatical connect
 dps.Censure=        dmg.Censure./(5.*cens.NetTick);
 
