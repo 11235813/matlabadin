@@ -1114,3 +1114,69 @@ idb.iid(59442).sta=286;
 idb.iid(59442).hit=127;
 idb.iid(59442).mast=127;
 
+idb.iid(59347).name='Mace of Acrid Death';
+idb.iid(59347).wtype='mac';
+idb.iid(59347).ilvl=359;
+idb.iid(59347).tooldps=462.3;
+idb.iid(59347).swing=2.6;
+idb.iid(59347).avgdmg=1202;
+idb.iid(59347).str=146;
+idb.iid(59347).sta=219;
+idb.iid(59347).mast=97;
+idb.iid(59347).parry=97;
+
+idb.iid(55069).name='Elementium Earthguard';
+idb.iid(55069).ilvl=359;
+idb.iid(55069).str=190;
+idb.iid(55069).sta=286;
+idb.iid(55069).hit=127;
+idb.iid(55069).mast=127;
+idb.iid(55069).barmor=11896;
+
+idb.iid(59444).name='Akmin-kurai, Dominion''s Shield';
+idb.iid(59444).ilvl=359;
+idb.iid(59444).str=190;
+idb.iid(59444).sta=286;
+idb.iid(59444).mast=127;
+idb.iid(59444).parry=127;
+idb.iid(59444).barmor=11896;
+
+idb.iid(59521).name='Soul Blade';
+idb.iid(59521).wtype='swo';
+idb.iid(59521).ilvl=359;
+idb.iid(59521).tooldps=462.3;
+idb.iid(59521).swing=2.6;
+idb.iid(59521).avgdmg=1202;
+idb.iid(59521).str=146;
+idb.iid(59521).sta=219;
+idb.iid(59521).hit=97;
+idb.iid(59521).mast=97;
+
+idb.iid(63501).name='Thunder Wall Greaves';
+idb.iid(63501).ilvl=359;
+idb.iid(63501).sta=30;
+idb.iid(63501).barmor=2998;
+idb.iid(63501).rsock=1;
+idb.iid(63501).ysock=1;
+idb.iid(63501).atype=1;
+idb.iid(63501).sb.sta=30;
+idb.iid(63501).sb.active=[1 1 0];
+
+idb.iid(63491).name='Thunder Wall Belt';
+idb.iid(63491).ilvl=359;
+idb.iid(63491).sta=15;
+idb.iid(63491).barmor=1927;
+idb.iid(63491).rsock=1;
+idb.iid(63491).atype=1;
+idb.iid(63491).sb.sta=15;
+idb.iid(63491).sb.active=[1 0 0];
+
+idb.iid(63489).name='Permafrost Signet';
+idb.iid(63489).ilvl=359;
+
+idb.iid(63494).name='Planetary Band';
+idb.iid(63494).ilvl=359;
+
+idb.iid(63499).name='Cloudburst Ring';
+idb.iid(63499).ilvl=359;
+
