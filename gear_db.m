@@ -1516,6 +1516,21 @@ idb.sid(74244).isproc=74243;
 idb.sid(74246).name='Enchant Weapon - Landslide';
 idb.sid(74246).isproc=74245;
 
+idb.sid(60621).name='Enchant Weapon - Greater Potency';
+idb.sid(60621).ap=50;
+
+idb.sid(27972).name='Enchant Weapon - Potency';
+idb.sid(27972).str=20;
+
+idb.sid(38995).name='Enchant Weapon - Exceptional Agility';
+idb.sid(38995).agi=26;
+
+idb.sid(59621).name='Enchant Weapon - Berserking';
+idb.sid(59621).ap=180;
+
+idb.sid(41976).name='Titanium Weapon Chain';
+idb.sid(41976).hit=28;
+
 %% Shield
 idb.sid(34009).name='Enchant Shield - Major Stamina';
 idb.sid(34009).sta=18;
@@ -1629,3 +1644,35 @@ idb.sid(87602).parry=90;
 idb.sid(87637).name='Crocolisk Au Gratin';
 idb.sid(87637).sta=90;
 idb.sid(87637).exp=90;
+
+idb.sid(43000).name='Dragonfin Filet';
+idb.sid(43000).sta=40;
+idb.sid(43000).str=40;
+
+idb.sid(42999).name='Blackened Dragonfin';
+idb.sid(42999).sta=40;
+idb.sid(42999).agi=40;
+
+idb.sid(42994).name='Rhinolicious Wormsteak';
+idb.sid(42994).sta=40;
+idb.sid(42994).exp=40;
+
+idb.sid(42996).name='Snapper Extreme';
+idb.sid(42996).sta=40;
+idb.sid(42996).hit=40;
+
+idb.sid(34766).name='Poached Northern Sculpin';
+idb.sid(34766).sta=40;
+idb.sid(34766).ap=80;
+
+idb.sid(43015).name='Fish Feast';
+idb.sid(43015).sta=40;
+idb.sid(43015).ap=80;
+idb.sid(43015).sp=46;
+
+idb.sid(34767).name='Firecracker Salmon'
+idb.sid(34767).sta=40;
+idb.sid(34767).sp=46;
+
+idb.sid(1000000).name='baseline'; %needed for baseline in enchant/food calculations
+idb.sid(1000000).hit=0;
