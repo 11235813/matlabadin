@@ -1670,9 +1670,6 @@ idb.sid(43015).sta=40;
 idb.sid(43015).ap=80;
 idb.sid(43015).sp=46;
 
-idb.sid(34767).name='Firecracker Salmon'
+idb.sid(34767).name='Firecracker Salmon';
 idb.sid(34767).sta=40;
 idb.sid(34767).sp=46;
-
-idb.sid(1000000).name='baseline'; %needed for baseline in enchant/food calculations
-idb.sid(1000000).hit=0;
