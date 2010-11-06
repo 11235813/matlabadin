@@ -276,7 +276,7 @@ Iamod=(1+0.3.*pri.adtype'*(sequence.Inq>0));
 Ipmod=(1+0.3.*pri.pdtype'*(sequence.Inq>0));
 sequence.totaltime=double(m*dt);
 sequence.eamatrix=sequence.amatrix.*Iamod;
-sequence.epmatrix=ones(2,1)*sum(pri.phit'*ones(1,size(sequence.amatrix,2)).*sequence.amatrix).*sequence.pmatrix;
+sequence.epmatrix=ones(2,1)*sum(pri.phit'*ones(1,size(sequence.amatrix,2)).*sequence.amatrix).*sequence.pmatrix.*Ipmod;
 
 %fix for ShoR crit handling
 ShoRmod=(sequence.SD>0).*mdf.phcritmulti + (sequence.SD==0).*mdf.phcrit;

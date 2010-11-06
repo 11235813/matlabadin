@@ -44,15 +44,16 @@ save prio_data_aoe cmat rdata
 
 %% Create damage array for different mob numbers
 for mm=1:5
+    nmobs=mm+1;
     %re-run relevant modules for mm+1 mobs
-    exec=execution_model('npccount',mm+1,'timein',1,'timeout',1,'seal','SoT');
+    exec=execution_model('npccount',nmobs,'timein',1,'timeout',1,'seal','SoT');
     stat_model;ability_model;
     
     %store coefficients for total damage done
-    dmgarray.total(:,mm)=aoedmg;
+    dmgarray.target(:,mm)=pridmg;
     
     %store coefficients for "guaranteed" damage per mob - HW/Cons/HotR
-    dmgarray.permob(:,mm)=aoedmg.*[zeros(4,1); 1; 1; zeros(5,1); 1]./exec.npccount; 
+    dmgarray.permob(:,mm)=aoedmg.*[zeros(3,1); nmobs<=3; 1; 1; zeros(5,1); 1]./exec.npccount; 
 end
 
 %% incorporate non-GCD damage sources
@@ -73,16 +74,16 @@ for m=1:length(rdata)
 end
 
 %% construct damage arrays
-dmgarray.tabletot=cmat*dmgarray.total;
+dmgarray.tabletar=cmat*dmgarray.target;
 dmgarray.tableaoe=cmat*dmgarray.permob;
-dmgarray.padps=repmat(padps',1,size(dmgarray.tabletot,2));
+dmgarray.padps=repmat(padps',1,size(dmgarray.tabletar,2));
 
 %build name array
 for m=1:length(rdata);name{m,:}=rdata(m).name;end
 
 %% total damage (sum of all damage done to all mobs)
 spacer=repmat(' ',length(rdata),3);
-li=[spacer int2str([1:length(rdata)]') spacer char(name) spacer int2str(dmgarray.tabletot+dmgarray.padps) spacer int2str([rdata.empties]') spacer num2str([rdata.emptypct]','%3.1f')];
+li=[spacer int2str([1:length(rdata)]') spacer char(name) spacer int2str(dmgarray.tabletar+dmgarray.padps) spacer int2str([rdata.empties]') spacer num2str([rdata.emptypct]','%3.1f')];
 li
 
 %% "guaranteed" damage per mob - only counts HW, HaNova, Consecration
