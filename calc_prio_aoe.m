@@ -61,16 +61,16 @@ clear li padmg
 for m=1:length(rdata)
     padps(m)=0;
     %account for Inq
-    Inqmod=sum(rdata(m).Inq>0)./length(rdata(m).Inq);
+    Inqmod(m)=sum(rdata(m).Inq>0)./length(rdata(m).Inq);
     
     %assume a 5-stack of SoT (if applicable).
     if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
-        padps(m)=padps(m)+dps.Censure.*(1+0.3.*Inqmod);
+        padps(m)=padps(m)+dps.Censure.*(1+0.3.*Inqmod(m));
     
     end
     
     %aa and seal damage
-	padps(m)=padps(m)+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
+	padps(m)=padps(m)+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+0.3.*Inqmod(m))./player.wswing;
 end
 
 %% construct damage arrays
@@ -81,11 +81,16 @@ dmgarray.padps=repmat(padps',1,size(dmgarray.tabletar,2));
 %build name array
 for m=1:length(rdata);name{m,:}=rdata(m).name;end
 
-%% total damage (sum of all damage done to all mobs)
+%% target damage (damage done to primary target)
 spacer=repmat(' ',length(rdata),3);
 li=[spacer int2str([1:length(rdata)]') spacer char(name) spacer int2str(dmgarray.tabletar+dmgarray.padps) spacer int2str([rdata.empties]') spacer num2str([rdata.emptypct]','%3.1f')];
-li
+li;
 
 %% "guaranteed" damage per mob - only counts HW, HaNova, Consecration
 li2=[spacer int2str([1:length(rdata)]') spacer char(name) spacer int2str(dmgarray.tableaoe) spacer int2str([rdata.empties]') spacer num2str([rdata.emptypct]','%3.1f')];
+li2;
+
+%% "target dmg for 4 mbos + guaranteed" damage per mob
+li2=[spacer int2str([1:length(rdata)]') spacer char(name) spacer int2str(dmgarray.tabletar(:,3)+padps') spacer int2str(dmgarray.tableaoe) spacer num2str(100.*Inqmod','%3.0f') repmat('%',length(Inqmod),1) spacer int2str([rdata.empties]') spacer num2str([rdata.emptypct]','%3.1f')];
 li2
+

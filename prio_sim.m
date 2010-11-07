@@ -152,9 +152,6 @@ for m=1:N
                 %cast time
                 sequence.casttime(qq)=t(m);
                 
-                %SD/Inq duration
-                sequence.SD(qq)=dur.SD;
-                sequence.Inq(qq)=dur.Inq;
                 
                 %holy power
                 sequence.hopo(qq)=hopo;
@@ -191,6 +188,10 @@ for m=1:N
 
                 %perform actions
                 eval(char(pri.action(aid)));
+                
+                %SD/Inq duration (done here so that uptime % is correct)
+                sequence.SD(qq)=dur.SD;
+                sequence.Inq(qq)=dur.Inq;
                 
                 %special actions (performed last)
                 eval(char(pri.spaction(n)));
