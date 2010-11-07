@@ -30,7 +30,7 @@ stat_model
 %set melee hit to 4%, expertise to 18, mastery to 390 (16.5 mastery);
 %do this by altering helm stats
 egs(1).hit=max([egs(1).hit 0])-(player.phhit-4).*cnv.hit_phhit;
-egs(1).exp=max([egs(1).exp 0])-(player.exp-18).*cnv.exp_exp;
+egs(1).exp=max([egs(1).exp 0])-(player.exp-16).*cnv.exp_exp;
 egs(1).mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
 helm1=egs(1);
 
@@ -134,7 +134,7 @@ y=[y1 y2];
 dps1p=[dps1(sortall,:)];
 
 figure(80)
-bar80=barh(y,dps1p,'BarWidth',1.5,'BarLayout','grouped');
+bar80=barh(y,dps1p,'BarWidth',1,'BarLayout','grouped');
 set(bar80(2),'FaceColor',[0.749 0.749 0]);
 xlim([0.99.*min(min(dps1)) 1.01.*max(max(dps1))])
 ylim(0.5+[0 max(y)])

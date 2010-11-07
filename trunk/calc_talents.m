@@ -11,7 +11,7 @@ base=player_model('lvl',80,'race','Human','prof','');
 npc=npc_model(base);
 gear_sample
 exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth');
-buff=buff_model('mode',1);
+buff=buff_model('mode',3);
 
 
 %% set up our tree configurations
