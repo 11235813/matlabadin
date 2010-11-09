@@ -1075,7 +1075,7 @@ idb.iid(59486).atype=1;
 idb.iid(59486).sb.parry=20;
 idb.iid(59486).sb.active=[0 2 0];
 
-idb.iid(59444).name='Akmin-kurai, Dominion''s Shield';
+idb.iid(59444).name='Akmin-Kurai, Dominion''s Shield';
 idb.iid(59444).ilvl=359;
 idb.iid(59444).str=190;
 idb.iid(59444).sta=286;
@@ -1133,7 +1133,7 @@ idb.iid(55069).hit=127;
 idb.iid(55069).mast=127;
 idb.iid(55069).barmor=11896;
 
-idb.iid(59444).name='Akmin-kurai, Dominion''s Shield';
+idb.iid(59444).name='Akmin-Kurai, Dominion''s Shield';
 idb.iid(59444).ilvl=359;
 idb.iid(59444).str=190;
 idb.iid(59444).sta=286;
@@ -1179,4 +1179,355 @@ idb.iid(63494).ilvl=359;
 
 idb.iid(63499).name='Cloudburst Ring';
 idb.iid(63499).ilvl=359;
+
+idb.iid(60229).name='War-Torn Crushers';
+idb.iid(60229).ilvl=379;
+idb.iid(60229).str=306;
+idb.iid(60229).sta=458;
+idb.iid(60229).dodge=184;
+idb.iid(60229).parry=144;
+idb.iid(60229).barmor=2497;
+idb.iid(60229).rsock=1;
+idb.iid(60229).bsock=1;
+idb.iid(60229).atype=1;
+idb.iid(60229).sb.sta=30;
+idb.iid(60229).sb.active=[1 0 1];
+
+idb.iid(60227).name='Caelestrasz''s Will';
+idb.iid(60227).ilvl=379;
+idb.iid(60227).str=229;
+idb.iid(60227).sta=344;
+idb.iid(60227).mast=128;
+idb.iid(60227).dodge=138;
+idb.iid(60227).ysock=1;
+idb.iid(60227).sb.sta=15;
+idb.iid(60227).sb.active=[0 1 0];
+
+idb.iid(65036).name='Mace of Acrid Death (Heroic)';
+idb.iid(65036).wtype='mac';
+idb.iid(65036).ilvl=372;
+idb.iid(65036).tooldps=521.9;
+idb.iid(65036).swing=2.6;
+idb.iid(65036).avgdmg=1357;
+idb.iid(65036).str=165;
+idb.iid(65036).sta=248;
+idb.iid(65036).mast=110;
+idb.iid(65036).parry=110;
+
+idb.iid(68130).name='Stormwake the Tempest''s Reach';
+idb.iid(68130).wtype='swo';
+idb.iid(68130).ilvl=372;
+idb.iid(68130).tooldps=521.9;
+idb.iid(68130).swing=2.6;
+idb.iid(68130).avgdmg=1357;
+
+idb.iid(65103).name='Soul Blade (Heroic)';
+idb.iid(65103).wtype='swo';
+idb.iid(65103).ilvl=372;
+idb.iid(65103).tooldps=521.9;
+idb.iid(65103).swing=2.6;
+idb.iid(65103).avgdmg=1357;
+idb.iid(65103).str=165;
+idb.iid(65103).sta=248;
+idb.iid(65103).hit=110;
+idb.iid(65103).mast=110;
+
+idb.iid(65023).name='Akmin-Kurai, Dominion''s Shield (Heroic)';
+idb.iid(65023).ilvl=372;
+idb.iid(65023).str=215;
+idb.iid(65023).sta=322;
+idb.iid(65023).mast=143;
+idb.iid(65023).parry=143;
+idb.iid(65023).barmor=12103;
+
+idb.iid(65380).name='Thunder Wall Greaves';
+idb.iid(65380).ilvl=372;
+idb.iid(65380).sta=30;
+idb.iid(65380).barmor=3114;
+idb.iid(65380).rsock=1;
+idb.iid(65380).ysock=1;
+idb.iid(65380).atype=1;
+idb.iid(65380).sb.sta=30;
+idb.iid(65380).sb.active=[1 1 0];
+
+idb.iid(65370).name='Thunder Wall Belt (Heroic)';
+idb.iid(65370).ilvl=372;
+idb.iid(65370).sta=15;
+idb.iid(65370).barmor=2002;
+idb.iid(65370).rsock=1;
+idb.iid(65370).atype=1;
+idb.iid(65370).sb.sta=15;
+idb.iid(65370).sb.active=[1 0 0];
+
+idb.iid(65075).name='Massacre Treads (Heroic)';
+idb.iid(65075).ilvl=372;
+idb.iid(65075).str=266;
+idb.iid(65075).sta=429;
+idb.iid(65075).exp=171;
+idb.iid(65075).mast=191;
+idb.iid(65075).barmor=2447;
+idb.iid(65075).bsock=1;
+idb.iid(65075).atype=1;
+idb.iid(65075).sb.str=10;
+idb.iid(65075).sb.active=[0 0 1];
+
+idb.iid(65119).name='Gravitational Pull (Heroic)';
+idb.iid(65119).ilvl=372;
+idb.iid(65119).str=207;
+idb.iid(65119).sta=429;
+idb.iid(65119).exp=125;
+idb.iid(65119).mast=276;
+idb.iid(65119).barmor=2224;
+idb.iid(65119).ysock=1;
+idb.iid(65119).atype=1;
+idb.iid(65119).sb.mast=10;
+idb.iid(65119).sb.active=[0 1 0];
+
+idb.iid(65038).name='Dragon Bone Warhelm (Heroic)';
+idb.iid(65038).ilvl=372;
+idb.iid(65038).str=293;
+idb.iid(65038).sta=578;
+idb.iid(65038).exp=135;
+idb.iid(65038).mast=325;
+idb.iid(65038).barmor=2891;
+idb.iid(65038).msock=1;
+idb.iid(65038).rsock=1;
+idb.iid(65038).atype=1;
+idb.iid(65038).sb.sta=45;
+idb.iid(65038).sb.active=[1 0 0];
+
+idb.iid(65131).name='Battleplate of the Apocalypse (Heroic)';
+idb.iid(65131).ilvl=372;
+idb.iid(65131).str=273;
+idb.iid(65131).sta=578;
+idb.iid(65131).hit=195;
+idb.iid(65131).parry=325;
+idb.iid(65131).barmor=3559;
+idb.iid(65131).ysock=2;
+idb.iid(65131).atype=1;
+idb.iid(65131).sb.parry=20;
+idb.iid(65131).sb.active=[0 2 0];
+
+idb.iid(65051).name='Molten Tantrum Boots (Heroic)';
+idb.iid(65051).ilvl=372;
+idb.iid(65051).str=286;
+idb.iid(65051).sta=429;
+idb.iid(65051).mast=147;
+idb.iid(65051).dodge=185;
+idb.iid(65051).barmor=2447;
+idb.iid(65051).ysock=1;
+idb.iid(65051).atype=1;
+idb.iid(65051).sb.sta=15;
+idb.iid(65051).sb.active=[0 1 0];
+
+idb.iid(65096).name='Daybreaker Helm (Heroic)';
+idb.iid(65096).ilvl=372;
+idb.iid(65096).str=385;
+idb.iid(65096).sta=578;
+idb.iid(65096).mast=197;
+idb.iid(65096).parry=197;
+idb.iid(65096).barmor=2891;
+idb.iid(65096).msock=1;
+idb.iid(65096).ysock=1;
+idb.iid(65096).atype=1;
+idb.iid(65096).sb.mast=30;
+idb.iid(65096).sb.active=[0 1 0];
+
+idb.iid(65061).name='Legguards of the Unseeing (Heroic)';
+idb.iid(65061).ilvl=372;
+idb.iid(65061).str=273;
+idb.iid(65061).sta=578;
+idb.iid(65061).exp=155;
+idb.iid(65061).parry=365;
+idb.iid(65061).barmor=3114;
+idb.iid(65061).rsock=1;
+idb.iid(65061).ysock=1;
+idb.iid(65061).atype=1;
+idb.iid(65061).sb.sta=30;
+idb.iid(65061).sb.active=[1 1 0];
+
+idb.iid(65101).name='Heaving Plates of Protection (Heroic)';
+idb.iid(65101).ilvl=372;
+idb.iid(65101).str=286;
+idb.iid(65101).sta=429;
+idb.iid(65101).mast=191;
+idb.iid(65101).parry=151;
+idb.iid(65101).barmor=2669;
+idb.iid(65101).bsock=1;
+idb.iid(65101).atype=1;
+idb.iid(65101).sb.mast=10;
+idb.iid(65101).sb.active=[0 0 1];
+
+idb.iid(65027).name='Pauldrons of the Apocalypse (Heroic)';
+idb.iid(65027).ilvl=372;
+idb.iid(65027).str=217;
+idb.iid(65027).sta=429;
+idb.iid(65027).exp=125;
+idb.iid(65027).parry=266;
+idb.iid(65027).barmor=2669;
+idb.iid(65027).ysock=1;
+idb.iid(65027).atype=1;
+idb.iid(65027).sb.sta=15;
+idb.iid(65027).sb.active=[0 1 0];
+
+idb.iid(65086).name='Jumbotron Power Belt (Heroic)';
+idb.iid(65086).ilvl=372;
+idb.iid(65086).str=286;
+idb.iid(65086).sta=429;
+idb.iid(65086).mast=181;
+idb.iid(65086).dodge=161;
+idb.iid(65086).barmor=2002;
+idb.iid(65086).ysock=1;
+idb.iid(65086).atype=1;
+idb.iid(65086).sb.sta=15;
+idb.iid(65086).sb.active=[0 1 0];
+
+idb.iid(65143).name='Bracers of Impossible Strength';
+idb.iid(65143).ilvl=372;
+idb.iid(65143).str=215;
+idb.iid(65143).sta=322;
+idb.iid(65143).mast=143;
+idb.iid(65143).parry=143;
+idb.iid(65143).barmor=1557;
+idb.iid(65143).atype=1;
+
+idb.iid(65382).name='Cloudburst Ring (Heroic)';
+idb.iid(65382).ilvl=372;
+
+idb.iid(65367).name='Mistral Circle (Heroic)';
+idb.iid(65367).ilvl=372;
+
+idb.iid(65372).name='Permafrost Signet (Heroic)';
+idb.iid(65372).ilvl=372;
+
+idb.iid(65373).name='Planetary Band (Heroic)';
+idb.iid(65373).ilvl=372;
+
+idb.iid(65070).name='Bile-O-Tron Nut (Heroic)';
+idb.iid(65070).ilvl=372;
+idb.iid(65070).str=153;
+idb.iid(65070).sta=322;
+idb.iid(65070).exp=126;
+idb.iid(65070).dodge=215;
+
+idb.iid(65025).name='Rage of Ages (Heroic)';
+idb.iid(65025).ilvl=372;
+idb.iid(65025).str=215;
+idb.iid(65025).sta=322;
+idb.iid(65025).hit=143;
+idb.iid(65025).mast=143;
+
+idb.iid(65059).name='Ironstar Amulet (Heroic)';
+idb.iid(65059).ilvl=372;
+idb.iid(65059).str=163;
+idb.iid(65059).sta=322;
+idb.iid(65059).hit=109;
+idb.iid(65059).dodge=215;
+
+idb.iid(65072).name='Heart of Rage (Heroic)';
+idb.iid(65072).ilvl=372;
+idb.iid(65072).exp=363;
+
+idb.iid(65048).name='Symbiotic Worm (Heroic)';
+idb.iid(65048).ilvl=372;
+
+idb.iid(65109).name='Vial of Stolen Memories (Heroic)';
+idb.iid(65109).ilvl=372;
+idb.iid(65109).sta=544;
+
+idb.iid(65010).name='Ironstar''s Impenetrable Cover (Heroic)';
+idb.iid(65010).ilvl=372;
+idb.iid(65010).str=215;
+idb.iid(65010).sta=322;
+idb.iid(65010).dodge=143;
+idb.iid(65010).parry=143;
+idb.iid(65010).barmor=673;
+
+idb.iid(65224).name='Reinforced Sapphirium Chestguard (Heroic)';
+idb.iid(65224).ilvl=372;
+idb.iid(65224).str=385;
+idb.iid(65224).sta=578;
+idb.iid(65224).mast=237;
+idb.iid(65224).parry=197;
+idb.iid(65224).barmor=3559;
+idb.iid(65224).rsock=1;
+idb.iid(65224).bsock=1;
+idb.iid(65224).atype=1;
+idb.iid(65224).sb.sta=30;
+idb.iid(65224).sb.active=[1 0 1];
+
+idb.iid(65225).name='Reinforced Sapphirium Handguards (Heroic)';
+idb.iid(65225).ilvl=372;
+idb.iid(65225).str=217;
+idb.iid(65225).sta=429;
+idb.iid(65225).mast=171;
+idb.iid(65225).parry=171;
+idb.iid(65225).barmor=2224;
+idb.iid(65225).bsock=1;
+idb.iid(65225).atype=1;
+idb.iid(65225).sb.mast=10;
+idb.iid(65225).sb.active=[0 0 1];
+
+idb.iid(65226).name='Reinforced Sapphirium Faceguard (Heroic)';
+idb.iid(65226).ilvl=372;
+idb.iid(65226).str=293;
+idb.iid(65226).sta=578;
+idb.iid(65226).hit=135;
+idb.iid(65226).dodge=325;
+idb.iid(65226).barmor=2891;
+idb.iid(65226).msock=1;
+idb.iid(65226).ysock=1;
+idb.iid(65226).atype=1;
+idb.iid(65226).sb.sta=45;
+idb.iid(65226).sb.active=[0 1 0];
+
+idb.iid(65227).name='Reinforced Sapphirium Legguards (Heroic)';
+idb.iid(65227).ilvl=372;
+idb.iid(65227).str=385;
+idb.iid(65227).sta=578;
+idb.iid(65227).dodge=217;
+idb.iid(65227).parry=217;
+idb.iid(65227).barmor=3114;
+idb.iid(65227).rsock=1;
+idb.iid(65227).bsock=1;
+idb.iid(65227).atype=1;
+idb.iid(65227).sb.sta=30;
+idb.iid(65227).sb.active=[1 0 1];
+
+idb.iid(65228).name='Reinforced Sapphirium Shoulderguards (Heroic)';
+idb.iid(65228).ilvl=372;
+idb.iid(65228).str=217;
+idb.iid(65228).sta=429;
+idb.iid(65228).hit=145;
+idb.iid(65228).dodge=246;
+idb.iid(65228).barmor=2669;
+idb.iid(65228).rsock=1;
+idb.iid(65228).atype=1;
+idb.iid(65228).sb.sta=15;
+idb.iid(65228).sb.active=[1 0 0];
+
+idb.iid(67143).name='Cataclysm World Drop Epic Tank Chest';
+idb.iid(67143).ilvl=359;
+idb.iid(67143).str=239;
+idb.iid(67143).sta=512;
+idb.iid(67143).hit=173;
+idb.iid(67143).parry=281;
+idb.iid(67143).barmor=3426;
+idb.iid(67143).ysock=2;
+idb.iid(67143).atype=1;
+idb.iid(67143).sb.parry=20;
+idb.iid(67143).sb.active=[0 2 0];
+
+idb.iid(67144).name='Cataclysm World Drop Epic Tank Shoulders';
+idb.iid(67144).ilvl=359;
+idb.iid(67144).str=253;
+idb.iid(67144).sta=380;
+idb.iid(67144).mast=169;
+idb.iid(67144).parry=129;
+idb.iid(67144).barmor=2570;
+idb.iid(67144).bsock=1;
+idb.iid(67144).atype=1;
+idb.iid(67144).sb.mast=10;
+idb.iid(67144).sb.active=[0 0 1];
+
 
