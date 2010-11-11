@@ -104,7 +104,7 @@ dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
 net.Judgement=      dmg.Judgement+dmg.activeseal.*mdf.rahit;
 
 %Hammer of Wrath (can be blocked)
-raw.HammerofWrath= (4585 + 0.51.*player.hsp + 0.15.*player.ap).*mdf.spdmg;
+raw.HammerofWrath= (4614 + 0.50.*player.hsp + 0.15.*player.ap).*mdf.spdmg;
 raw.HameerofWrath= raw.HammerofWrath.*mdf.spellscale;
 dmg.HammerofWrath= raw.HammerofWrath.*mdf.ramodel.*mdf.HoWcrit.*target.resrdx;
 net.HammerofWrath= dmg.HammerofWrath;  %doesn't proc seals
