@@ -17,8 +17,8 @@ if (min(dodge)<0 || min(parry)<0 || min(agi)<0) error('At least one of the input
 
 %% Constants
 %rating conversions
-cnv.dodge_dodge=176.71890258.*(base.lvl==85)+45.25018692.*(base.lvl==80);
-cnv.parry_parry=176.71890258.*(base.lvl==85)+45.25018722.*(base.lvl==80);
+cnv.dodge_dodge=176.71890258.*(base.lvl==85);
+cnv.parry_parry=176.71890258.*(base.lvl==85);
 %DR coefficients (k)
 drcoeff.plate=0.956;
 drcoeff.druid=0.972;
@@ -30,10 +30,10 @@ drcap.Ddodge=116.890707; %druid
 drcap.Rdodge=145.560408; %rogue
 drcap.Rparry=145.560408; %rogue
 %Agility to dodge conversions (without! BoK)
-cnv.agi_dodge(1)=304.50762639.*(base.lvl==85)+51.97802369.*(base.lvl==80);  %paladin
-cnv.agi_dodge(2)=430.69289874.*(base.lvl==85)+73.54996249.*(base.lvl==80);  %deathknight, warrior
-cnv.agi_dodge(3)=243.58281085.*(base.lvl==85)+41.58730423.*(base.lvl==80);  %druid
-cnv.agi_dodge(4)=243.51637648.*(base.lvl==85)+41.57364309.*(base.lvl==80);  %rogue
+cnv.agi_dodge(1)=304.50762639.*(base.lvl==85);  %paladin
+cnv.agi_dodge(2)=430.69289874.*(base.lvl==85);  %deathknight, warrior
+cnv.agi_dodge(3)=243.58281085.*(base.lvl==85);  %druid
+cnv.agi_dodge(4)=243.51637648.*(base.lvl==85);  %rogue
 
 
 %% Class choice

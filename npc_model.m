@@ -2,7 +2,7 @@ function [npc] = npc_model(base,varargin)
 %NPC_MODEL creates an npc model based on the input arguments.  It accepts
 %the following property/value pairs as inputs:
 %Inputs [default value]:
-%lvl - desired level of npc(s), integer  [83]
+%lvl - desired level of npc(s), integer  [88]
 %type - type of target, logical (1 for demon/undead, 0 for the rest) [0] 
 %swing - swing timer of npc(s), float  [1.5]
 %cast - average time between casts, float [5]

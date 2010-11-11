@@ -3,17 +3,11 @@
 %account all sources.  It's divided into sections according to topic.
 
 %% Rating/Stat conversions 
-%have been moved to a separate file so that they
-%can be called independently by other functions/simulations.  We'll call
-%that file here
 stat_conversions
 
 %% Talents & Glyphs
-%I'm going to try and minimize the number of duplicate variables we have.
-%Thus, whenever possible I'm going to bake the talent variable into the
-%relevant stat calculation.  Ideally, this section will end up empty?
 mdf.VengAP=0.05.*talent.Vengeance;
-mdf.TbtL=6.*talent.TouchedbytheLight; %incorporates all effects
+mdf.TbtL=6.*talent.TouchedbytheLight; %without the +hit mdf
 mdf.AotL=6.*talent.ArbiteroftheLight;
 mdf.BlazLi=1+0.1.*talent.BlazingLight; %Exo output
 mdf.JotP=0.03.*talent.JudgementsofthePure;
@@ -35,7 +29,7 @@ mdf.RoL=5.*talent.RuleofLaw;
 %glyphs
 mdf.glyphCS=5.*glyph.CrusaderStrike;             %CS crit chance
 mdf.glyphExo=1+0.2.*glyph.Exorcism;              %Exo output /TODO check DoT mechanics
-mdf.glyphHotR=0.1.*glyph.HammeroftheRighteous; %HotR output
+mdf.glyphHotR=0.1.*glyph.HammeroftheRighteous;   %HotR output
 mdf.glyphJ=1+0.1.*glyph.Judgement;               %J output
 mdf.glyphSoT=10.*glyph.SealofTruth;              %expertise bonus
 mdf.glyphSotR=1+0.1.*glyph.ShieldoftheRighteous; %SotR output
@@ -44,15 +38,11 @@ mdf.glyphCons=1+0.2.*glyph.Consecration;         %Consecration output (and coold
 mdf.glyphAS=1+0.3.*glyph.FocusedShield;          %AS output
  
 %% Meta Gems, Enchants, Plate Spec, Tier Bonus
-%Similar to talents, I'd like to incorporate these directly into the
-%calculations.  I'm leaving the section here to remind myself to check for
-%Armsman implementation down the line
-mdf.ameta=1+0.02.*gear.armormeta;
-mdf.cmeta=1+0.03.*gear.critmeta;
+%%%%%%%%%%% META
+mdf.meta=1+0.02.*(gear.meta(1)==1)+0.01.*(gear.meta(2)==1)+0.03.*(gear.meta(3)==1);
 mdf.plate=1+0.05.*gear.isplate;
-mdf.t10x2=0.2.*gear.tierbonus(1); %HotR output
-mdf.t11x2=1+0.1.*gear.tierbonus(3); %CS output
-mdf.t11x4=1+0.5.*gear.tierbonus(4); %GoAK duration
+mdf.t11x2=1+0.1.*gear.tierbonus(1); %CS output
+mdf.t11x4=1+0.5.*gear.tierbonus(2); %GoAK duration
 
 %%Standard Professions
 %(passive bonuses, independent of gearing choices)
@@ -70,7 +60,7 @@ else
 end
 
 %% Raid Buffs
-mdf.buffscale=125.*(base.lvl==80)+443.*(base.lvl==85); %level scaling
+mdf.buffscale=443.*(base.lvl==85); %level scaling
 mdf.BoK=1+0.05.*buff.BoK;
 mdf.SoE=round(1.24.*mdf.buffscale).*buff.SoE;
 mdf.PWF=round(1.32.*mdf.buffscale).*buff.PWF;
@@ -171,11 +161,11 @@ player.int=floor(base.stats.int.*mdf.BoK)+floor((gear.int+extra.int+consum.int).
 player.armorystr=base.stats.str+gear.str+extra.str; %TODO fix/delete
 
 %hit points
-player.hitpoints=(base.health.*(1+0.05.*(strcmpi('Tauren',base.race)||strcmpi('Taur',base.race))) ...
-    +10.*(player.sta-18)+gear.health+consum.health).*exec.sow;
+player.hitpoints=base.health.*(1+0.05.*(strcmpi('Tauren',base.race)||strcmpi('Taur',base.race))) ...
+    +14.*(player.sta-18)+gear.health+consum.health;
 
 %armor
-player.armor=gear.barmor.*mdf.Tough.*mdf.ameta ...
+player.armor=gear.barmor.*mdf.Tough.*mdf.meta ...
     +gear.earmor+mdf.Devo+consum.earmor;
 
 %resistance and spell damage reduction
@@ -188,8 +178,7 @@ player.spdr=player.resistance./(player.resistance+player.resist_c);
 player.phhit=(gear.hit+extra.hit+consum.hit)./cnv.hit_phhit ...
     +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
 player.sphit=(gear.hit+extra.hit+consum.hit)./cnv.hit_sphit ...
-    +(8.*(talent.TouchedbytheLight==1&&base.lvl==85)) ...
-    +0.*mdf.TbtL.*base.lvl==80 ... %it's bugged on 4.0 live
+    +(8.*(talent.TouchedbytheLight==1)) ...
     +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
 
 
@@ -201,7 +190,6 @@ elseif ((strcmpi('Dwarf',base.race)||strcmpi('Dwa',base.race)) ...
         &&strcmp(egs(15).wtype,'mac'))
         base.exp=3;
 end
-
 player.exp=base.exp+((gear.exp+extra.exp+consum.exp)./cnv.exp_exp)+mdf.glyphSoT;
 
 %% Haste 
@@ -213,11 +201,6 @@ player.sphaste=100.*(...
     (1+(gear.haste+extra.haste+consum.haste)./cnv.haste_sphaste./100).* ...
     (1+mdf.JotP.*(isempty(exec.seal)==0)).*mdf.WoA ...
     -1);
-player.effhaste=100.*( ...
-    (1 + (gear.haste+extra.haste+consum.haste)./cnv.haste_phhaste./100) ...
-    .*(1+mdf.JotP.*(isempty(exec.seal)==0)) ...
-    -1); %"true" physical haste, lowering the GCD
-player.phgcd=max([1.5./(1+player.effhaste./100);ones(size(player.effhaste))]);
 player.spgcd=max([1.5./(1+player.sphaste./100);ones(size(player.sphaste))]);
 
 mdf.phhaste=(1+player.phhaste./100);
@@ -234,15 +217,15 @@ mdf.blsphaste=(1+bl.sphaste./100);
 %haste scaling for DoT effects
 cens.BaseTick=3; %seconds
 cens.BaseDur=15; %seconds
-cens.NetTick=cens.BaseTick./mdf.sphaste; %confirmed to scale only with spell haste (b12644)
+cens.NetTick=cens.BaseTick./mdf.sphaste; %spell haste
 cens.NumTicks=round(cens.BaseDur./cens.BaseTick.*mdf.sphaste); 
 cens.NetDur=cens.NumTicks.*cens.NetTick;
 
 
 %% Crit
 %multipliers
-mdf.phcritmulti=2.*mdf.cmeta;   %for physical attacks
-mdf.spcritmulti=1.5.*mdf.cmeta; %for spells
+mdf.phcritm=2.*mdf.meta;   %for physical attacks
+mdf.spcritm=1.5.*mdf.meta; %for spells
 
 
 %melee abilities ("physical crit")
@@ -299,16 +282,16 @@ player.HotRspcrit=max([min([player.HotRspcrit;100.*ones(size(player.HotRspcrit))
 
 
 %Crit modifier values
-mdf.phcrit=1+(mdf.phcritmulti-1).*player.phcrit./100;
-mdf.spcrit=1+(mdf.spcritmulti-1).*player.spcrit./100;
+mdf.phcrit=1+(mdf.phcritm-1).*player.phcrit./100;
+mdf.spcrit=1+(mdf.spcritm-1).*player.spcrit./100;
 
-mdf.HWcrit=1+(mdf.spcritmulti-1).*player.HWcrit./100;
-mdf.HoWcrit=1+(mdf.phcritmulti-1).*player.HoWcrit./100;
-mdf.CScrit=1+(mdf.phcritmulti-1).*player.CScrit./100;
-mdf.Jcrit=1+(mdf.phcritmulti-1).*player.Jcrit./100;
-mdf.WoGcrit=1+(mdf.spcritmulti-1).*player.WoGcrit./100;
-mdf.HotRphcrit=1+(mdf.phcritmulti-1).*player.HotRphcrit./100;
-mdf.HotRspcrit=1+(mdf.spcritmulti-1).*player.HotRspcrit./100;
+mdf.HWcrit=1+(mdf.spcritm-1).*player.HWcrit./100;
+mdf.HoWcrit=1+(mdf.phcritm-1).*player.HoWcrit./100;
+mdf.CScrit=1+(mdf.phcritm-1).*player.CScrit./100;
+mdf.Jcrit=1+(mdf.phcritm-1).*player.Jcrit./100;
+mdf.WoGcrit=1+(mdf.spcritm-1).*player.WoGcrit./100;
+mdf.HotRphcrit=1+(mdf.phcritm-1).*player.HotRphcrit./100;
+mdf.HotRspcrit=1+(mdf.spcritm-1).*player.HotRspcrit./100;
 
 %% SP and AP
 %AP gets computed later on, in the Vengeance subsection
@@ -333,8 +316,7 @@ player.parry=base.parry+avoiddr.parrydr-0.04.*npc.skillgap;
 
 %at the moment, we don't have Redoubt to worry about, so we shouldnt' need
 %dynamic effects for block chance (hopefully?)
-player.block=base.block+mdf.HolySh+(3.*(base.lvl==85)+2.*(base.lvl==80)).*player.mast ...
-    -0.04.*npc.skillgap; %TODO : fix HS
+player.block=base.block+2.25.*player.mast-0.04.*npc.skillgap;
 
 %check for bounding issues, based on the attack table
 player.miss=max([player.miss;zeros(size(player.miss))]);
@@ -378,19 +360,15 @@ target.resrdx=(100-npc.presist)./100;
 
 %% Armor calcs
 %armor constant
-player.acoeff=(467.5*npc.lvl-22167.5).*(npc.lvl==80) ...
-    +(2167.5*npc.lvl-158167.5).*(npc.lvl>80);
-target.acoeff=(467.5*base.lvl-22167.5).*(base.lvl==80) ...
-    +(2167.5*base.lvl-158167.5).*(base.lvl>80);
+player.acoeff=2167.5*npc.lvl-158167.5;
+target.acoeff=2167.5*base.lvl-158167.5;
 %damage reduction
 player.phdr=min([player.armor./(player.armor+player.acoeff);0.75]);
 target.armor=npc.armor.*mdf.Sund.*((290+mdf.ST.*10)./300); %fix ST
 target.phdr=target.armor./(target.armor+target.acoeff);
 
 %Vengeance AP correction
-% player.VengAP=min([15.*mdf.VengAP.*(npc.out.phys.*(1-player.phdr)./target.swing ...
-%     +npc.out.spell.*(1-player.spdr)./npc.cast);0.1.*player.hitpoints]).*exec.timein;
-player.VengAP=0.095.*player.hitpoints.*exec.timein; %temporary
+player.VengAP=(0.1.*exec.veng).*player.hitpoints.*exec.timein; %TODO
 player.ap=floor((base.ap+gear.ap+(player.str-10).*cnv.str_ap+extra.ap ...
     +player.VengAP+consum.ap).*mdf.UnRage);
 
