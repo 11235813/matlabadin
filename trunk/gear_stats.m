@@ -41,54 +41,41 @@ gear.wtype=egs(15).wtype;
 gear.tooldps=egs(15).tooldps;
 
 %meta gems
-gear.armormeta= egs(1).armormeta;
-gear.critmeta = egs(1).critmeta;
+gear.meta= egs(1).sock(4);
 
 %plate spec
-gear.isplate=sum([egs.atype])==8;
+gear.isplate=(sum([egs.atype])==8);
 
 %tier bonus
-gear.istier=sum(reshape([egs.istier],4,length([egs.istier])/4)');
-gear.tierbonus=zeros(2,4); %t10-t13 for now
+gear.istier=sum(reshape([egs.istier],3,length([egs.istier])/3)');
+gear.tierbonus=zeros(2,3); %t11-t13 for now
 %format :
-% t10 t11 t12 t13
-%[  0   0   0   0; %2p
-%   0   0   0   0] %4p
-if gear.istier(1)>=4             %4p t10
+% t11 t12 t13
+%[  0   0   0; %2p
+%   0   0   0] %4p
+if gear.istier(1)>=4             %4p t11
     gear.tierbonus(1)=1;
     gear.tierbonus(2)=1;
-elseif gear.istier(2)>=4         %4p t11
+elseif gear.istier(2)>=4         %4p t12
     gear.tierbonus(3)=1;
     gear.tierbonus(4)=1;
-elseif gear.istier(3)>=4         %4p t12
+elseif gear.istier(3)>=4         %4p t13
     gear.tierbonus(5)=1;
     gear.tierbonus(6)=1;
-elseif gear.istier(4)>=4         %4p t13
-    gear.tierbonus(7)=1;
-    gear.tierbonus(8)=1;
 else
-    if gear.istier(1)>=2         %2p t10
+    if gear.istier(1)>=2         %2p t11
         gear.tierbonus(1)=1;
-        if gear.istier(2)>=2     %2p t10,11
+        if gear.istier(2)>=2     %2p t11,t12
             gear.tierbonus(3)=1;
-        elseif gear.istier(3)>=2 %2p t10,t12
+        elseif gear.istier(3)>=2 %2p t11,t13
             gear.tierbonus(5)=1;
-        elseif gear.istier(4)>=2 %2p t10,t13
-            gear.tierbonus(7)=1;
         end
-    elseif gear.istier(2)>=2     %2p t11
+    elseif gear.istier(2)>=2     %2p t12
         gear.tierbonus(3)=1;
-        if gear.istier(3)>=2     %2p t11,t12
+        if gear.istier(3)>=2     %2p t12,t13
             gear.tierbonus(5)=1;
-        elseif gear.istier(4)>=2 %2p t11,t13
-            gear.tierbonus(7)=1;
         end
-    elseif gear.istier(3)>=2     %2p t12
+    elseif gear.istier(3)>=2     %2p t13
         gear.tierbonus(5)=1;
-        if gear.istier(4)>=2     %2p t12,t13
-            gear.tierbonus(7)=1;
-        end
-    elseif gear.istier(4)>=2     %2p t13
-        gear.tierbonus(7)=1;
     end
 end

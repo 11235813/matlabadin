@@ -4,13 +4,13 @@ gear_db;
 def_db;
 
 %invoke player model
-base=player_model('race','Human','lvl',80);
+base=player_model('race','Human');
 
 %invoke npc model
 npc=npc_model(base);
 
 %invoke execution_model
-exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','SoT');
+exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','SoT','veng',0.8);
 
 
 %load gear set

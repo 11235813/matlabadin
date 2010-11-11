@@ -8,7 +8,7 @@ function [exec] = execution_model(varargin)
 %fdur NYI
 %behind - attacking from behind, logical [0]
 %seal - seal choice; 1-SoT,2-SoR,3-SoI,4-SoJ [1]
-%sow - Strength of Wrynn; 1.0-1.3 depending on value
+%veng - average strength of Vengeance; float (0 to 1) [0.8]
 %Outputs:
 %exec - structure containing relevant parameters
 %List of seal entries :
@@ -22,7 +22,7 @@ function [exec] = execution_model(varargin)
 
 %% Input handling
 %populate all entries with empty arrays
-exec.npccount=[];exec.timein=[];exec.timeout=[];exec.behind=[];exec.seal=0;exec.sow=[];
+exec.npccount=[];exec.timein=[];exec.timeout=[];exec.behind=[];exec.seal=0;exec.veng=[];
 %start filling entries with inputs
 if nargin>0
     for i=1:2:length(varargin)
@@ -39,8 +39,8 @@ if nargin>0
                exec.behind=value;
             case 'seal'
                exec.seal=value;
-            case 'sow'
-               exec.sow=value;
+            case 'veng'
+               exec.veng=value;
         end
     end
 end
@@ -50,5 +50,5 @@ if isempty(exec.timein)==1 exec.timein=1; end;
 if isempty(exec.timeout)==1 exec.timeout=1; end;
 if isempty(exec.behind)==1 exec.behind=0; end;
 if isnumeric(exec.seal)==1 exec.seal='Truth'; end; %workaround for seal==''
-if isempty(exec.sow)==1 exec.sow=1; end;
+if isempty(exec.veng)==1 exec.veng=0.8; end;
 end
