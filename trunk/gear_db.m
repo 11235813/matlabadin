@@ -543,3 +543,220 @@ idb.sid(87602).parry=90;
 idb.sid(87637).name='Crocolisk Au Gratin';
 idb.sid(87637).sta=90;
 idb.sid(87637).exp=90;
+
+%% Gems
+% Red
+idb.iid(52206).name='Bold Inferno Ruby';
+idb.iid(52206).str=40;
+idb.iid(52206).sock=[0 1 0 0 1 0];
+
+idb.iid(52212).name='Delicate Inferno Ruby';
+idb.iid(52212).agi=40;
+idb.iid(52212).sock=[0 1 0 0 1 0];
+
+idb.iid(52216).name='Flashing Inferno Ruby';
+idb.iid(52216).parry=40;
+idb.iid(52216).sock=[0 1 0 0 1 0];
+
+idb.iid(52230).name='Precise Inferno Ruby';
+idb.iid(52230).exp=40;
+idb.iid(52230).sock=[0 1 0 0 1 0];
+
+idb.iid(52255).name='Bold Chimera''s Eye';
+idb.iid(52255).str=67;
+idb.iid(52255).sock=[0 1 0 0 1 0];
+
+idb.iid(52258).name='Delicate Chimera''s Eye';
+idb.iid(52258).agi=67;
+idb.iid(52258).sock=[0 1 0 0 1 0];
+
+idb.iid(52259).name='Flashing Chimera''s Eye';
+idb.iid(52259).parry=67;
+idb.iid(52259).sock=[0 1 0 0 1 0];
+
+idb.iid(52260).name='Precise Chimera''s Eye';
+idb.iid(52260).exp=67;
+idb.iid(52260).sock=[0 1 0 0 1 0];
+
+% Orange
+idb.iid(52204).name='Adept Ember Topaz';
+idb.iid(52204).agi=20;
+idb.iid(52204).mast=20;
+idb.iid(52204).sock=[0 1 1 0 1 0];
+
+idb.iid(52215).name='Fine Ember Topaz';
+idb.iid(52215).parry=20;
+idb.iid(52215).mast=20;
+idb.iid(52215).sock=[0 1 1 0 1 0];
+
+idb.iid(52222).name='Inscribed Ember Topaz';
+idb.iid(52222).str=20;
+idb.iid(52222).crit=20;
+idb.iid(52222).sock=[0 1 1 0 1 0];
+
+idb.iid(52224).name='Keen Ember Topaz';
+idb.iid(52224).exp=20;
+idb.iid(52224).mast=20;
+idb.iid(52224).sock=[0 1 1 0 1 0];
+
+idb.iid(52229).name='Polished Ember Topaz';
+idb.iid(52229).agi=20;
+idb.iid(52229).dodge=20;
+idb.iid(52229).sock=[0 1 1 0 1 0];
+
+idb.iid(52240).name='Skillful Ember Topaz';
+idb.iid(52240).str=20;
+idb.iid(52240).mast=20;
+idb.iid(52240).sock=[0 1 1 0 1 0];
+
+idb.iid(52249).name='Resolute Ember Topaz';
+idb.iid(52249).exp=20;
+idb.iid(52249).dodge=20;
+idb.iid(52249).sock=[0 1 1 0 1 0];
+
+% Yellow
+idb.iid(52219).name='Fractured Amberjewel';
+idb.iid(52219).mast=40;
+idb.iid(52219).sock=[0 0 1 0 1 0];
+
+idb.iid(52247).name='Subtle Amberjewel';
+idb.iid(52247).dodge=40;
+idb.iid(52247).sock=[0 0 1 0 1 0];
+
+idb.iid(52265).name='Subtle Chimera''s Eye';
+idb.iid(52265).dodge=67;
+idb.iid(52265).sock=[0 0 1 0 1 0];
+
+idb.iid(52269).name='Fractured Chimera''s Eye';
+idb.iid(52269).mast=67;
+idb.iid(52269).sock=[0 0 1 0 1 0];
+
+% Green
+idb.iid(52227).name='Nimble Dream Emerald';
+idb.iid(52227).dodge=20;
+idb.iid(52227).hit=20;
+idb.iid(52227).sock=[0 0 1 1 1 0];
+
+idb.iid(52231).name='Puissant Dream Emerald';
+idb.iid(52231).mast=20;
+idb.iid(52231).sta=30;
+idb.iid(52231).sock=[0 0 1 1 1 0];
+
+idb.iid(52233).name='Regal Dream Emerald';
+idb.iid(52233).dodge=20;
+idb.iid(52233).sta=30;
+idb.iid(52233).sock=[0 0 1 1 1 0];
+
+idb.iid(52237).name='Sensei''s Dream Emerald';
+idb.iid(52237).mast=20;
+idb.iid(52237).hit=20;
+idb.iid(52237).sock=[0 0 1 1 1 0];
+
+% Blue
+idb.iid(52235).name='Rigid Ocean Sapphire';
+idb.iid(52235).hit=40;
+idb.iid(52235).sock=[0 0 0 1 1 0];
+
+idb.iid(52242).name='Solid Ocean Sapphire';
+idb.iid(52242).sta=60;
+idb.iid(52242).sock=[0 0 0 1 1 0];
+
+idb.iid(52261).name='Solid Chimera''s Eye';
+idb.iid(52261).sta=101;
+idb.iid(52261).sock=[0 0 0 1 1 0];
+
+idb.iid(52264).name='Rigid Chimera''s Eye';
+idb.iid(52264).hit=67;
+idb.iid(52264).sock=[0 0 0 1 1 0];
+
+% Purple
+idb.iid(52203).name='Accurate Demonseye';
+idb.iid(52203).exp=20;
+idb.iid(52203).hit=20;
+idb.iid(52203).sock=[0 1 0 1 1 0];
+
+idb.iid(52210).name='Defender''s Demonseye';
+idb.iid(52210).parry=20;
+idb.iid(52210).sta=30;
+idb.iid(52210).sock=[0 1 0 1 1 0];
+
+idb.iid(52213).name='Etched Demonseye';
+idb.iid(52213).str=20;
+idb.iid(52213).hit=20;
+idb.iid(52213).sock=[0 1 0 1 1 0];
+
+idb.iid(52220).name='Glinting Demonseye';
+idb.iid(52220).agi=20;
+idb.iid(52220).hit=20;
+idb.iid(52220).sock=[0 1 0 1 1 0];
+
+idb.iid(52221).name='Guardian''s Demonseye';
+idb.iid(52221).exp=20;
+idb.iid(52221).sta=30;
+idb.iid(52221).sock=[0 1 0 1 1 0];
+
+idb.iid(52234).name='Retaliating Demonseye';
+idb.iid(52234).parry=20;
+idb.iid(52234).hit=20;
+idb.iid(52234).sock=[0 1 0 1 1 0];
+
+idb.iid(52238).name='Shifting Demonseye';
+idb.iid(52238).agi=20;
+idb.iid(52238).sta=30;
+idb.iid(52238).sock=[0 1 0 1 1 0];
+
+idb.iid(52243).name='Sovereign Demonseye';
+idb.iid(52243).str=20;
+idb.iid(52243).sta=30;
+idb.iid(52243).sock=[0 1 0 1 1 0];
+
+% Meta
+idb.iid(52291).name='Chaotic Shadowspirit Diamond';
+idb.iid(52291).crit=54;
+idb.iid(52291).isproc=44797;
+idb.iid(52291).sock=[1 0 0 0 0 0];
+
+idb.iid(52293).name='Eternal Shadowspirit Diamond';
+idb.iid(52293).sta=81;
+idb.iid(52293).isproc=55283;
+idb.iid(52293).sock=[1 0 0 0 0 0];
+
+idb.iid(52294).name='Austere Shadowspirit Diamond';
+idb.iid(52294).sta=81;
+idb.iid(52294).isproc=55344;
+idb.iid(52294).sock=[1 0 0 0 0 0];
+
+idb.iid(52295).name='Effulgent Shadowspirit Diamond';
+idb.iid(52295).sta=81;
+idb.iid(52295).isproc=55345;
+idb.iid(52295).sock=[1 0 0 0 0 0];
+
+idb.iid(52299).name='Powerful Shadowspirit Diamond';
+idb.iid(52299).sta=81;
+idb.iid(52299).isproc=55358;
+idb.iid(52299).sock=[1 0 0 0 0 0];
+
+% Cogwheel
+idb.iid(59477).name='Subtle Cogwheel';
+idb.iid(59477).dodge=208;
+idb.iid(59477).sock=[0 0 0 0 0 1];
+
+idb.iid(59478).name='Smooth Cogwheel';
+idb.iid(59478).crit=208;
+idb.iid(59478).sock=[0 0 0 0 0 1];
+
+idb.iid(59480).name='Fractured Cogwheel';
+idb.iid(59480).mast=208;
+idb.iid(59480).sock=[0 0 0 0 0 1];
+
+idb.iid(59489).name='Precise Cogwheel';
+idb.iid(59489).exp=208;
+idb.iid(59489).sock=[0 0 0 0 0 1];
+
+idb.iid(59491).name='Flashing Cogwheel';
+idb.iid(59491).parry=208;
+idb.iid(59491).sock=[0 0 0 0 0 1];
+
+idb.iid(59493).name='Rigid Cogwheel';
+idb.iid(59493).hit=208;
+idb.iid(59493).sock=[0 0 0 0 0 1];
