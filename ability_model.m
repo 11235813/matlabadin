@@ -98,7 +98,7 @@ dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
 net.Judgement=      dmg.Judgement+dmg.activeseal.*mdf.rahit;
 
 %Hammer of Wrath (can be blocked)
-raw.HammerofWrath= (4015 + 0.14.*player.hsp + 0.515.*player.ap).*mdf.spdmg;
+raw.HammerofWrath= (4015 + 0.117.*player.hsp + 0.39.*player.ap).*mdf.spdmg;
 dmg.HammerofWrath= raw.HammerofWrath.*mdf.ramodel.*mdf.HoWcrit.*target.resrdx;
 net.HammerofWrath= dmg.HammerofWrath;  %doesn't proc seals
 
@@ -125,7 +125,7 @@ raw.HolyShield=     0;
 dmg.HolyShield=     raw.HolyShield.*mdf.sphit.*target.resrdx;
 
 %Holy Wrath
-raw.HolyWrath=      ((2402+0.305.*player.hsp)./exec.npccount+0.305.*player.hsp).*mdf.spdmg;
+raw.HolyWrath=      ((2402+0.61.*player.hsp)./exec.npccount).*mdf.spdmg;
 dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit.*target.resrdx;
 net.HolyWrath=      dmg.HolyWrath;
 
