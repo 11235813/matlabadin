@@ -58,17 +58,17 @@ end
 %% Melee abilities
 
 %Crusader Strike (can be blocked)
-raw.CrusaderStrike= 1.15.*player.ndamage.*mdf.phdmg.*(mdf.Crus+2.*mdf.WotL).*mdf.t11x2;
+raw.CrusaderStrike= 1.15.*player.ndamage.*mdf.phdmg.*(1+mdf.Crus+(10./3).*mdf.WotL+mdf.t11x2);
 dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.memodel.*mdf.CScrit;
 net.CrusaderStrike= dmg.CrusaderStrike+dmg.activeseal.*mdf.mehit;
 
 %Hammer of the Righteous
 %physical (can be blocked)
-raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*(mdf.Crus+mdf.glyphHotR);
+raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*(1+mdf.Crus+mdf.glyphHotR);
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.memodel.*mdf.HotRphcrit;
 net.HammeroftheRighteous=   dmg.HammeroftheRighteous; %doesn't proc seals
 %the aoe rolls only if physical connects
-raw.HammerNova=   ((728+0.187.*player.ap).*mdf.spdmg.*mdf.Crus.*mdf.glyphHotR;
+raw.HammerNova=   ((728+0.187.*player.ap).*mdf.spdmg.*(1+mdf.Crus+mdf.glyphHotR);
 dmg.HammerNova=   raw.HammerNova.*(mdf.mehit.*mdf.sphit).*mdf.HotRspcrit.*target.resrdx; %spell hit/crit
 net.HammerNova=   dmg.HammerNova;  %doesn't proc seals
 
@@ -93,7 +93,7 @@ dmg.AvengersShield= raw.AvengersShield.*mdf.ramodel.*mdf.phcrit.*target.resrdx;
 net.AvengersShield= dmg.AvengersShield; %doesn't proc seals
 
 %Judgement (the seal of choice is defined in execution_model) 
-raw.Judgement=      raw.Judgement.*mdf.spdmg.*(mdf.glyphJ+2.*mdf.WotL);
+raw.Judgement=      raw.Judgement.*mdf.spdmg.*(1+mdf.glyphJ+(10./3).*mdf.WotL);
 dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
 net.Judgement=      dmg.Judgement+dmg.activeseal.*mdf.rahit;
 
@@ -105,7 +105,7 @@ net.HammerofWrath= dmg.HammerofWrath;  %doesn't proc seals
 %% Spell abilities
 
 %Consecration
-raw.Consecration =  (810+0.26.*player.hsp+0.26.*player.ap).*mdf.spdmg.*mdf.HalGro.*mdf.glyphCons;
+raw.Consecration =  (810+0.26.*player.hsp+0.26.*player.ap).*mdf.spdmg.*(1+mdf.HalGro+mdf.glyphCons);
 dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 net.Consecration =  dmg.Consecration;
 

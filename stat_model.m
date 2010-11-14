@@ -15,33 +15,33 @@ mdf.SotP=1+0.06.*talent.SealsofthePure;
 % mdf.EG %NYI
 mdf.JotJ=0.1.*talent.JudgementsoftheJust;
 mdf.Tough=1+0.03.*(talent.Toughness==1)+0.06.*(talent.Toughness==2)+0.1.*(talent.Toughness==3);
-mdf.HalGro=1+0.2.*talent.HallowedGround; %Cons output
+mdf.HalGro=0.2.*talent.HallowedGround; %Cons output
 mdf.Sanct=1-(0.03.*(talent.Sanctuary==1)+0.06.*(talent.Sanctuary==2)+0.1.*(talent.Sanctuary==3)); %damage reduction
 mdf.WotL=0.15.*talent.WrathoftheLightbringer; %incorporates both effects
 mdf.GC=0.1.*talent.GrandCrusader;
 mdf.Vind=1-0.05.*talent.Vindication; %damage reduction
-mdf.HolySh=15.*talent.HolyShield;
+mdf.HolySh=10.*talent.HolyShield;
 % mdf.GbtL %NYI
 mdf.SacDut=0.25.*talent.SacredDuty; 
 mdf.EfaE=0.2.*talent.EyeforanEye; %proc chance
-mdf.Crus=1+0.1.*talent.Crusade;
+mdf.Crus=0.1.*talent.Crusade;
 mdf.RoL=5.*talent.RuleofLaw;
 %glyphs
 mdf.glyphCS=5.*glyph.CrusaderStrike;             %CS crit chance
 mdf.glyphExo=1+0.2.*glyph.Exorcism;              %Exo output /TODO check DoT mechanics
 mdf.glyphHotR=0.1.*glyph.HammeroftheRighteous;   %HotR output
-mdf.glyphJ=1+0.1.*glyph.Judgement;               %J output
+mdf.glyphJ=0.1.*glyph.Judgement;               %J output
 mdf.glyphSoT=10.*glyph.SealofTruth;              %expertise bonus
 mdf.glyphSotR=1+0.1.*glyph.ShieldoftheRighteous; %SotR output
 mdf.glyphWoG=1+0.1.*glyph.WordofGlory;           %WoG output
-mdf.glyphCons=1+0.2.*glyph.Consecration;         %Consecration output (and cooldown)
+mdf.glyphCons=0.2.*glyph.Consecration;         %Consecration output (and cooldown)
 mdf.glyphAS=1+0.3.*glyph.FocusedShield;          %AS output
  
 %% Meta Gems, Enchants, Plate Spec, Tier Bonus
 %%%%%%%%%%% META
 mdf.meta=1+0.02.*(gear.meta(1)==1)+0.01.*(gear.meta(2)==1)+0.03.*(gear.meta(3)==1);
 mdf.plate=1+0.05.*gear.isplate;
-mdf.t11x2=1+0.1.*gear.tierbonus(1); %CS output
+mdf.t11x2=0.1.*gear.tierbonus(1); %CS output
 mdf.t11x4=1+0.5.*gear.tierbonus(2); %GoAK duration
 
 %%Standard Professions
