@@ -68,7 +68,7 @@ raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*(1+mdf.Crus+mdf.glyp
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.memodel.*mdf.HotRphcrit;
 net.HammeroftheRighteous=   dmg.HammeroftheRighteous; %doesn't proc seals
 %the aoe rolls only if physical connects
-raw.HammerNova=   ((728+0.187.*player.ap).*mdf.spdmg.*(1+mdf.Crus+mdf.glyphHotR);
+raw.HammerNova=   ((728.8813374+0.18.*player.ap).*mdf.spdmg.*(1+mdf.Crus+mdf.glyphHotR);
 dmg.HammerNova=   raw.HammerNova.*(mdf.mehit.*mdf.sphit).*mdf.HotRspcrit.*target.resrdx; %spell hit/crit
 net.HammerNova=   dmg.HammerNova;  %doesn't proc seals
 
@@ -87,7 +87,7 @@ net.ShieldoftheRighteous= dmg.ShieldoftheRighteous+dmg.activeseal.*mdf.mehit;
 %% Ranged abilities
 
 %Avenger's Shield (can be blocked)
-raw.AvengersShield= (3113+0.42.*player.ap+0.22.*player.hsp).*mdf.spdmg.*mdf.glyphAS;
+raw.AvengersShield= (3113.187994+0.419.*player.ap+0.21.*player.hsp).*mdf.spdmg.*mdf.glyphAS;
 raw.AvengersShield= raw.AvengersShield.*mdf.spellscale;
 dmg.AvengersShield= raw.AvengersShield.*mdf.ramodel.*mdf.phcrit.*target.resrdx;              
 net.AvengersShield= dmg.AvengersShield; %doesn't proc seals
@@ -98,14 +98,14 @@ dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
 net.Judgement=      dmg.Judgement+dmg.activeseal.*mdf.rahit;
 
 %Hammer of Wrath (can be blocked)
-raw.HammerofWrath= (4015 + 0.117.*player.hsp + 0.39.*player.ap).*mdf.spdmg;
+raw.HammerofWrath= (4015.02439+0.117.*player.hsp+0.39.*player.ap).*mdf.spdmg;
 dmg.HammerofWrath= raw.HammerofWrath.*mdf.ramodel.*mdf.HoWcrit.*target.resrdx;
 net.HammerofWrath= dmg.HammerofWrath;  %doesn't proc seals
 
 %% Spell abilities
 
 %Consecration
-raw.Consecration =  (810+0.26.*player.hsp+0.26.*player.ap).*mdf.spdmg.*(1+mdf.HalGro+mdf.glyphCons);
+raw.Consecration =  (813.2998299+0.27.*player.hsp+0.27.*player.ap).*mdf.spdmg.*(1+mdf.HalGro+mdf.glyphCons);
 dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 net.Consecration =  dmg.Consecration;
 
@@ -116,6 +116,11 @@ raw.Exorcism=       (2741+0.344.*max([player.hsp;player.ap])) ...
 dmg.Exorcism=       raw.Exorcism.*mdf.sphit.*mdf.Exorcrit.*target.resrdx;
 net.Exorcism=       dmg.Exorcism;
 
+%Holy Wrath
+raw.HolyWrath=      ((2435.781339+0.61.*player.hsp)./exec.npccount).*mdf.spdmg; %check base, 2402/2435
+dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit.*target.resrdx;
+net.HolyWrath=      dmg.HolyWrath;
+
 %Hand of Reckoning
 raw.HandofReckoning=0;
 dmg.HandofReckoning=raw.HandofReckoning.*mdf.sphit.*mdf.spcrit.*target.resrdx;
@@ -123,11 +128,6 @@ dmg.HandofReckoning=raw.HandofReckoning.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 %Holy Shield
 raw.HolyShield=     0; 
 dmg.HolyShield=     raw.HolyShield.*mdf.sphit.*target.resrdx;
-
-%Holy Wrath
-raw.HolyWrath=      ((2402+0.61.*player.hsp)./exec.npccount).*mdf.spdmg;
-dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit.*target.resrdx;
-net.HolyWrath=      dmg.HolyWrath;
 
 
 %% Consolidated arrays
