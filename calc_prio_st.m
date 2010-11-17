@@ -5,7 +5,7 @@
 clear;
 gear_db;
 def_db;
-base=player_model('lvl',80,'race','Human');
+base=player_model('race','Human');
 npc=npc_model(base);
 exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','SoT');
 buff=buff_model;

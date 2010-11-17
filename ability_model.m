@@ -92,10 +92,12 @@ raw.AvengersShield= raw.AvengersShield.*mdf.spellscale;
 dmg.AvengersShield= raw.AvengersShield.*mdf.ramodel.*mdf.phcrit.*target.resrdx;              
 net.AvengersShield= dmg.AvengersShield; %doesn't proc seals
 
-%Judgement (the seal of choice is defined in execution_model) 
+%Judgement (the seal of choice is defined in execution_model)
+mdf.jseals=(mdf.JotJ>0)&&(strcmpi('Righteousness',exec.seal)||strcmpi('SoR',exec.seal) ...
+    ||strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)); %JotJ procs only R/T
 raw.Judgement=      raw.Judgement.*mdf.spdmg.*(1+mdf.glyphJ+(10./3).*mdf.WotL);
 dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
-net.Judgement=      dmg.Judgement+dmg.activeseal.*mdf.rahit;
+net.Judgement=      dmg.Judgement+mdf.jseals.*dmg.activeseal.*mdf.rahit;
 
 %Hammer of Wrath (can be blocked)
 raw.HammerofWrath= (4015.02439+0.117.*player.hsp+0.39.*player.ap).*mdf.spdmg;
