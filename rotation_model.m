@@ -13,9 +13,8 @@
 %2 SotR
 %1 "X" that could be AS, HW, or potentially Cons
 
-
-[temphit tempn]=meshgrid(mdf.mehit,[1:15]);
-rot.xtragcd=mdf.mehit.*sum(tempn.*(1-temphit).^(tempn-1))-1;
+%extra GCD cost of missed SotR
+rot.xtragcd=1./mdf.mehit-1;
 
 p=1-(1-mdf.GC).^3;q=1-p;
 cols(1,:)=[1 0];
