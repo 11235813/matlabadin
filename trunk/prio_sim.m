@@ -11,7 +11,7 @@ function [ sequence ] = prio_sim(pri,varargin)
 prio=evalin('base','prio');
 % cd=evalin('base','cd');
 mdf=evalin('base','mdf');
-target=evalin('base','target');  %needed for ShoR
+target=evalin('base','target');  %needed for SotR
 %the rest are all needed for damage calculations
 % dmg=evalin('base','dmg');
 % crit=evalin('base','crit');
@@ -106,7 +106,7 @@ sequence.castid=zeros(1,L);
 sequence.SD=zeros(1,L);
 sequence.Inq=zeros(1,L);
 sequence.hopo=zeros(1,L);
-sequence.shormiss=zeros(1,L);
+sequence.sotrmiss=zeros(1,L);
 t=zeros(1,N);
 
 %counter for spell casts
@@ -139,7 +139,7 @@ for m=1:N
                 %   -the timestamp of the cast (for plotting)
                 %   -Status of buffs (SD & Inq)
                 %   -any procs that should occur
-                %   -Hit/Miss for ShoR (so that we can properly evaluate damage later)                
+                %   -Hit/Miss for SotR (so that we can properly evaluate damage later)                
                 %the sequence structure will track all of these
                 
                 %ability usage and proc triggers
@@ -162,28 +162,28 @@ for m=1:N
                 
                                
                 %ShoR handling
-                if sum(strcmp(char(pri.alabel(aid)),{'3ShoR';'2ShoR';'1ShoR'}))>0
+                if sum(strcmp(char(pri.alabel(aid)),{'3SotR';'2SotR';'1SotR'}))>0
                     %check for misses
                     if rand<target.avoid/100
                         %if we miss, set the flag and color and nullify
                         %procs
-                        sequence.shormiss(qq)=1;
+                        sequence.sotrmiss(qq)=1;
                         sequence.pmatrix(:,qq)=zeros(size(sequence.pmatrix(:,qq)));
 %                         sequence.color(qq)=2;
 
                     elseif dur.SD>0  %otherwise, we hit - check for SD crits
 %                         sequence.color(qq)=1;
-                        sequence.shormiss(qq)=0;
+                        sequence.sotrmiss(qq)=0;
                         hopo=0;
 
                     else %no SD, just a regular hit
-                        sequence.shormiss(qq)=0;
+                        sequence.sotrmiss(qq)=0;
                         hopo=0;
                     end
                       
                     dur.SD=0;
-                else %not shor, mark as a miss (irrelevant, but necessary if we guessed array lengths incorrectly)
-                    sequence.shormiss(qq)=0;
+                else %not SotR, mark as a miss (irrelevant, but necessary if we guessed array lengths incorrectly)
+                    sequence.sotrmiss(qq)=0;
                 end
 
                 %perform actions
@@ -223,7 +223,7 @@ for m=1:N
        sequence.label{qq}='Empty';
 %        sequence.seq(qq)=0;
 %        sequence.color(qq)=2;
-       sequence.shormiss(qq)=0;
+       sequence.sotrmiss(qq)=0;
        
        %necessary to make sure amatrix and pmatrix are the correct length
        %in some cases
@@ -279,9 +279,9 @@ sequence.totaltime=double(m*dt);
 sequence.eamatrix=sequence.amatrix.*Iamod;
 sequence.epmatrix=ones(2,1)*sum(pri.phit'*ones(1,size(sequence.amatrix,2)).*sequence.amatrix).*sequence.pmatrix.*Ipmod;
 
-%fix for ShoR crit handling
-ShoRmod=(sequence.SD>0).*mdf.phcritmulti + (sequence.SD==0).*mdf.phcrit;
-sequence.eamatrix(1,:)=sequence.eamatrix(1,:).*not(sequence.shormiss).*ShoRmod;
+%fix for SotR crit handling
+SotRmod=(sequence.SD>0).*mdf.phcritm + (sequence.SD==0).*mdf.phcrit;
+sequence.eamatrix(1,:)=sequence.eamatrix(1,:).*not(sequence.sotrmiss).*SotRmod;
 
 sequence.numcasts=sum([sequence.amatrix; sequence.pmatrix]')';
 sequence.effcasts=sum([sequence.eamatrix; sequence.epmatrix]')';
