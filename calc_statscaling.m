@@ -20,7 +20,7 @@ gear_db;
 def_db;
 
 % lvl 85
-base=player_model('lvl',80,'race','Human','prof','');
+base=player_model('race','Human','prof','');
 npc=npc_model(base);
 gear_sample
 % glyph=ddb.glyphset{1}; %no glyphs

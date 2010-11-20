@@ -15,7 +15,7 @@ dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical con
 dps.SealofTruth=    dmg.SealofTruth./player.wswing; %TODO : fix
 
 %Censure (fully stacked, full duration)
-mdf.Censcrit=1+(mdf.phcritmulti-1).*player.phcrit./100; %physical, 2.0 base multiplier
+mdf.Censcrit=1+(mdf.phcritm-1).*player.phcrit./100; %physical, 2.0 base multiplier
 raw.Censure=        (0.050.*player.hsp+0.0965.*player.ap).*5.*mdf.SotP.*mdf.spdmg;
 dmg.Censure=        raw.Censure.*mdf.Censcrit.*target.resrdx; %automatical connect
 dps.Censure=        dmg.Censure./(5.*cens.NetTick);
@@ -79,7 +79,8 @@ dps.Melee=          dmg.Melee./player.wswing;
 net.Melee=          dmg.Melee+dmg.activeseal.*mdf.mehit;
 
 %Shield of the Righteous (can be blocked)
-raw.ShieldoftheRighteous= player.hopo.*(1220+0.2.*player.ap).*mdf.spdmg.*mdf.glyphSotR;
+raw.ShieldoftheRighteous= (610.4895857.*((player.hopo==1)+3.*(player.hopo==2)+6.*(player.hopo==3)) ...
+                          +0.2.*player.ap.*player.hopo).*mdf.spdmg.*mdf.glyphSotR;
 dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit ...
                           .*target.resrdx; %melee hit
 net.ShieldoftheRighteous= dmg.ShieldoftheRighteous+dmg.activeseal.*mdf.mehit;
@@ -88,7 +89,6 @@ net.ShieldoftheRighteous= dmg.ShieldoftheRighteous+dmg.activeseal.*mdf.mehit;
 
 %Avenger's Shield (can be blocked)
 raw.AvengersShield= (3113.187994+0.419.*player.ap+0.21.*player.hsp).*mdf.spdmg.*mdf.glyphAS;
-raw.AvengersShield= raw.AvengersShield.*mdf.spellscale;
 dmg.AvengersShield= raw.AvengersShield.*mdf.ramodel.*mdf.phcrit.*target.resrdx;              
 net.AvengersShield= dmg.AvengersShield; %doesn't proc seals
 
@@ -112,14 +112,14 @@ dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spe
 net.Consecration =  dmg.Consecration;
 
 %Exorcism
-mdf.Exorcrit=mdf.spcrit.*(npc.type==0)+mdf.spcritmulti.*(npc.type==1); %tracking npc type
+mdf.Exorcrit=mdf.spcrit.*(npc.type==0)+mdf.spcritm.*(npc.type==1); %tracking npc type
 raw.Exorcism=       (2741+0.344.*max([player.hsp;player.ap])) ...
                     .*(mdf.spdmg.*mdf.BlazLi+mdf.glyphExo); %the glyph only boosts base damage
 dmg.Exorcism=       raw.Exorcism.*mdf.sphit.*mdf.Exorcrit.*target.resrdx;
 net.Exorcism=       dmg.Exorcism;
 
 %Holy Wrath
-raw.HolyWrath=      ((2435.781339+0.61.*player.hsp)./exec.npccount).*mdf.spdmg; %check base, 2402/2435
+raw.HolyWrath=      ((2435.781339+0.61.*player.hsp)./exec.npccount).*mdf.spdmg;
 dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit.*target.resrdx;
 net.HolyWrath=      dmg.HolyWrath;
 
