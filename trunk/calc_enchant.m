@@ -11,7 +11,7 @@ gear_db;
 def_db;
 
 %standard stuff
-base=player_model('lvl',80,'race','Belf','prof','');
+base=player_model('race','Belf','prof','');
 npc=npc_model(base);
 gear_sample
 talent=ddb.talentset{3};  %0/31/5

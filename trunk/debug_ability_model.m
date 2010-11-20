@@ -2,8 +2,8 @@ clear;
 gear_db;def_db;
 
 %player and dummy
-base=player_model('lvl',80,'race','Human','prof','');
-npc=npc_model(base,'lvl',83);
+base=player_model('race','Human','prof','');
+npc=npc_model(base);
 
 
 %execution. seal : 1=truth, 2=righteousness, 3=insight, 4=justice.

@@ -7,7 +7,7 @@ gear_db;
 def_db;
 
 
-base=player_model('lvl',80,'race','Human','prof','');
+base=player_model('race','Human','prof','');
 npc=npc_model(base);
 gear_sample
 exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth');
