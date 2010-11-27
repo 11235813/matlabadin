@@ -28,13 +28,13 @@ mdf.Crus=0.1.*talent.Crusade;
 mdf.RoL=5.*talent.RuleofLaw;
 %glyphs
 mdf.glyphCS=5.*glyph.CrusaderStrike;             %CS crit chance
-mdf.glyphExo=1+0.2.*glyph.Exorcism;              %Exo output /TODO check DoT mechanics
+mdf.glyphExo=0.2.*glyph.Exorcism;              %Exo output /TODO check DoT mechanics
 mdf.glyphHotR=0.1.*glyph.HammeroftheRighteous;   %HotR output
 mdf.glyphJ=0.1.*glyph.Judgement;               %J output
 mdf.glyphSoT=10.*glyph.SealofTruth;              %expertise bonus
 mdf.glyphSotR=1+0.1.*glyph.ShieldoftheRighteous; %SotR output
 mdf.glyphWoG=1+0.1.*glyph.WordofGlory;           %WoG output
-mdf.glyphCons=0.2.*glyph.Consecration;         %Consecration output (and cooldown)
+mdf.glyphCons=1+0.2.*glyph.Consecration;         %Consecration output (and cooldown)
 mdf.glyphAS=1+0.3.*glyph.FocusedShield;          %AS output
  
 %% Meta Gems, Enchants, Plate Spec, Tier Bonus
