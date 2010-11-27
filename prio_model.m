@@ -14,7 +14,7 @@ hopo=0;sdflag=0;
 %where n is the HoPo strength.  This is a temporary fix (I think) for
 %handling priority queues where we have both 3ShoR and 2ShoR.
 priodefault.name='Default Set';
-priodefault.alabel={'3ShoR';'CS';'Jud';'AS';'HW';'Cons';'HotR';'2ShoR';'Inq';'HoW'};
+priodefault.alabel={'3SotR';'CS';'Jud';'AS';'HW';'Cons';'HotR';'2SotR';'Inq';'HoW'};
 priodefault.cds=[0 cd.CS cd.Jud cd.AS cd.HW cd.Cons cd.CS 0 0 cd.HoW];
 %define gcd lengths
 priodefault.gcds=[1.5 1.5 1.5 1.5 player.spgcd player.spgcd 1.5 1.5 player.spgcd 1.5];

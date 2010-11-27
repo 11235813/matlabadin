@@ -68,7 +68,7 @@ raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*(1+mdf.Crus+mdf.glyp
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.memodel.*mdf.HotRphcrit;
 net.HammeroftheRighteous=   dmg.HammeroftheRighteous; %doesn't proc seals
 %the aoe rolls only if physical connects
-raw.HammerNova=   ((728.8813374+0.18.*player.ap).*mdf.spdmg.*(1+mdf.Crus+mdf.glyphHotR);
+raw.HammerNova=   (728.8813374+0.18.*player.ap).*mdf.spdmg.*(1+mdf.Crus+mdf.glyphHotR);
 dmg.HammerNova=   raw.HammerNova.*(mdf.mehit.*mdf.sphit).*mdf.HotRspcrit.*target.resrdx; %spell hit/crit
 net.HammerNova=   dmg.HammerNova;  %doesn't proc seals
 
@@ -79,8 +79,8 @@ dps.Melee=          dmg.Melee./player.wswing;
 net.Melee=          dmg.Melee+dmg.activeseal.*mdf.mehit;
 
 %Shield of the Righteous (can be blocked)
-raw.ShieldoftheRighteous= (610.4895857.*((player.hopo==1)+3.*(player.hopo==2)+6.*(player.hopo==3)) ...
-                          +0.2.*player.ap.*player.hopo).*mdf.spdmg.*mdf.glyphSotR;
+mdf.hpscale=(player.hopo==1)+3.*(player.hopo==2)+6.*(player.hopo==3);
+raw.ShieldoftheRighteous= ((610.4895857+0.1.*player.ap).*mdf.hpscale).*mdf.spdmg.*mdf.glyphSotR;
 dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit ...
                           .*target.resrdx; %melee hit
 net.ShieldoftheRighteous= dmg.ShieldoftheRighteous+dmg.activeseal.*mdf.mehit;
