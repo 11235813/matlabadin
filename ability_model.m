@@ -15,9 +15,8 @@ dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical con
 dps.SealofTruth=    dmg.SealofTruth./player.wswing; %TODO : fix
 
 %Censure (fully stacked, full duration)
-mdf.Censcrit=1+(mdf.phcritm-1).*player.phcrit./100; %physical, 2.0 base multiplier
 raw.Censure=        (0.050.*player.hsp+0.0965.*player.ap).*5.*mdf.SotP.*mdf.spdmg;
-dmg.Censure=        raw.Censure.*mdf.Censcrit.*target.resrdx; %automatical connect
+dmg.Censure=        raw.Censure.*mdf.phcrit.*target.resrdx; %automatical connect, phys crit/CM
 dps.Censure=        dmg.Censure./(5.*cens.NetTick);
 
 %Seal of Righteousness
@@ -107,7 +106,7 @@ net.HammerofWrath= dmg.HammerofWrath;  %doesn't proc seals
 %% Spell abilities
 
 %Consecration
-raw.Consecration =  (813.2998299+0.27.*player.hsp+0.27.*player.ap).*mdf.spdmg.*(1+mdf.HalGro+mdf.glyphCons);
+raw.Consecration =  (813.2998299+0.27.*player.hsp+0.27.*player.ap).*mdf.spdmg.*(1+mdf.HalGro).*mdf.glyphCons;
 dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 net.Consecration =  dmg.Consecration;
 
@@ -119,7 +118,7 @@ dmg.Exorcism=       raw.Exorcism.*mdf.sphit.*mdf.Exorcrit.*target.resrdx;
 net.Exorcism=       dmg.Exorcism;
 
 %Holy Wrath
-raw.HolyWrath=      ((2435.781339+0.61.*player.hsp)./exec.npccount).*mdf.spdmg;
+raw.HolyWrath=      ((2402.8+0.61.*player.hsp)./exec.npccount).*mdf.spdmg;
 dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit.*target.resrdx;
 net.HolyWrath=      dmg.HolyWrath;
 
