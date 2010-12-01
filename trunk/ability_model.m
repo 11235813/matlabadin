@@ -20,7 +20,7 @@ dmg.Censure=        raw.Censure.*mdf.phcrit.*target.resrdx; %automatical connect
 dps.Censure=        dmg.Censure./(5.*cens.NetTick);
 
 %Seal of Righteousness
-raw.SealofRighteousness=    gear.swing.*(0.0115.*player.ap+0.0235.*player.hsp).* ...
+raw.SealofRighteousness=    gear.swing.*(0.011.*player.ap+0.022.*player.hsp).* ...
                             mdf.spdmg.*mdf.SotP;
 raw.JoR       =             (1+0.32.*player.hsp+0.2.*player.ap);
 dmg.SealofRighteousness=    raw.SealofRighteousness.*target.resrdx; %automatical connect
@@ -79,7 +79,7 @@ net.Melee=          dmg.Melee+dmg.activeseal.*mdf.mehit;
 
 %Shield of the Righteous (can be blocked)
 mdf.hpscale=(player.hopo==1)+3.*(player.hopo==2)+6.*(player.hopo==3);
-raw.ShieldoftheRighteous= ((610.4895857+0.1.*player.ap).*mdf.hpscale).*mdf.spdmg.*mdf.glyphSotR;
+raw.ShieldoftheRighteous= ((610.2+0.1.*player.ap).*mdf.hpscale).*mdf.spdmg.*mdf.glyphSotR;
 dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit ...
                           .*target.resrdx; %melee hit
 net.ShieldoftheRighteous= dmg.ShieldoftheRighteous+dmg.activeseal.*mdf.mehit;
@@ -112,8 +112,8 @@ net.Consecration =  dmg.Consecration;
 
 %Exorcism
 mdf.Exorcrit=mdf.spcrit.*(npc.type==0)+mdf.spcritm.*(npc.type==1); %tracking npc type
-raw.Exorcism=       (2741+0.344.*max([player.hsp;player.ap])) ...
-                    .*(mdf.spdmg.*mdf.BlazLi+mdf.glyphExo); %the glyph only boosts base damage
+raw.Exorcism=       (2741+0.344.*max([player.hsp;player.ap])).*mdf.spdmg ...
+                    .*(mdf.BlazLi+mdf.glyphExo); %DoT is based on base damage
 dmg.Exorcism=       raw.Exorcism.*mdf.sphit.*mdf.Exorcrit.*target.resrdx;
 net.Exorcism=       dmg.Exorcism;
 
