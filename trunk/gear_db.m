@@ -222,26 +222,14 @@ idb.sid(86931).name='Arcanum of the Earthen Ring';
 idb.sid(86931).sta=90;
 idb.sid(86931).dodge=35;
 
-idb.sid(86932).name='Arcanum of Hyjal';
-idb.sid(86932).int=60;
-idb.sid(86932).crit=35;
-
 idb.sid(86933).name='Arcanum of the Dragonmaw/Wildhammer';
 idb.sid(86933).str=60;
 idb.sid(86933).mast=35;
-
-idb.sid(86934).name='Arcanum of the Ramhaken';
-idb.sid(86934).agi=60;
-idb.sid(86934).haste=35;
 
 %% Shoulder
 idb.sid(86847).name='Inscription of Unbreakable Quartz';
 idb.sid(86847).sta=45;
 idb.sid(86847).dodge=20;
-
-idb.sid(86898).name='Inscription of Charged Lodestone';
-idb.sid(86898).int=30;
-idb.sid(86898).haste=20;
 
 idb.sid(86900).name='Inscription of Jagged Stone';
 idb.sid(86900).str=30;
@@ -254,10 +242,6 @@ idb.sid(86909).mast=20;
 idb.sid(86854).name='Greater Inscription of Unbreakable Quartz';
 idb.sid(86854).sta=75;
 idb.sid(86854).dodge=25;
-
-idb.sid(86899).name='Greater Inscription of Charged Lodestone';
-idb.sid(86899).int=50;
-idb.sid(86899).haste=25;
 
 idb.sid(86901).name='Greater Inscription of Jagged Stone';
 idb.sid(86901).str=50;
@@ -279,19 +263,12 @@ idb.sid(86402).name='Inscription of the Earth Prince';
 idb.sid(86402).sta=195;
 idb.sid(86402).dodge=25;
 
-idb.sid(86403).name='Felfire Inscription';
-idb.sid(86403).int=130;
-idb.sid(86403).haste=25;
-
 %% Cloak
 idb.sid(74234).name='Enchant Cloak - Protection';
 idb.sid(74234).earmor=250;
 
 idb.sid(74247).name='Enchant Cloak - Greater Critical Strike';
 idb.sid(74247).crit=65;
-
-idb.sid(74240).name='Enchant Cloak - Greater Intellect';
-idb.sid(74240).int=50;
 
 %% Chest
 idb.sid(74251).name='Enchant Chest - Greater Stamina';
@@ -310,14 +287,8 @@ idb.sid(62256).sta=40;
 idb.sid(85007).name='Draconic Embossment - Stamina';
 idb.sid(85007).sta=195;
 
-idb.sid(85008).name='Draconic Embossment - Agility';
-idb.sid(85008).sta=130;
-
 idb.sid(85009).name='Draconic Embossment - Strength';
 idb.sid(85009).sta=130;
-
-idb.sid(85010).name='Draconic Embossment - Intellect';
-idb.sid(85010).sta=130;
 
 idb.sid(74229).name='Enchant Bracer - Dodge';
 idb.sid(74229).dodge=50;
@@ -331,9 +302,6 @@ idb.sid(74239).exp=50;
 idb.sid(74248).name='Enchant Bracer - Greater Critical Strike';
 idb.sid(74248).crit=65;
 
-idb.sid(74256).name='Enchant Bracer - Greater Speed';
-idb.sid(74256).haste=65;
-
 %% Hands
 idb.sid(74254).name='Enchant Gloves - Mighty Strength';
 idb.sid(74254).str=50;
@@ -344,15 +312,10 @@ idb.sid(74255).mast=65;
 idb.sid(74220).name='Enchant Gloves - Greater Expertise';
 idb.sid(74220).exp=50;
 
-idb.sid(74198).name='Enchant Gloves - Haste';
-idb.sid(74198).haste=50;
-
 idb.sid(82175).name='Synapse Springs';
-idb.sid(82175).int=480;
 idb.sid(82175).isproc=82174;
 
 idb.sid(82177).name='Quickflip Deflection Plates';
-idb.sid(82177).earmor=1500;
 idb.sid(82177).isproc=82176;
 
 %% Legs
@@ -391,21 +354,12 @@ idb.sid(74238).mast=50;
 idb.sid(74236).name='Enchant Boots - Precision';
 idb.sid(74236).hit=50;
 
-idb.sid(74199).name='Enchant Boots - Haste';
-idb.sid(74199).haste=50;
-
 %% Rings
 idb.sid(74218).name='Enchant Ring - Greater Stamina';
 idb.sid(74218).sta=75;
 
 idb.sid(74215).name='Enchant Ring - Strength';
 idb.sid(74215).str=50;
-
-idb.sid(74216).name='Enchant Ring - Agility';
-idb.sid(74216).agi=50;
-
-idb.sid(74217).name='Enchant Ring - Intellect';
-idb.sid(74217).int=50;
 
 %% Weapon
 idb.sid(59619).name='Enchant Weapon - Accuracy';
@@ -437,12 +391,8 @@ idb.sid(34009).sta=18;
 idb.sid(74207).name='Enchant Shield - Protection';
 idb.sid(74207).earmor=160;
 
-%TODO fix
-% idb.sid(74226).name='Enchant Shield - Blocking';
-% idb.sid(74226).block=40;
-
-idb.sid(74235).name='Enchant Shield - Superior Intellect';
-idb.sid(74235).int=35;
+idb.sid(74226).name='Enchant Shield - Blocking';
+idb.sid(74226).mast=36.071; %40 block rating
 
 
 %% Consumables (invoked by buff_model)
@@ -451,14 +401,6 @@ idb.sid(74235).int=35;
 idb.sid(79469).name='Flask of Steelskin';
 idb.sid(79469).sta=300;
 idb.sid(79469).isproc=1;
-
-idb.sid(79470).name='Flask of the Draconic Mind';
-idb.sid(79470).int=300;
-idb.sid(79470).isproc=1;
-
-idb.sid(79471).name='Flask of the Winds';
-idb.sid(79471).agi=300;
-idb.sid(79471).isproc=1;
 
 idb.sid(79472).name='Flask of Titanic Strength';
 idb.sid(79472).str=300;
@@ -472,10 +414,6 @@ idb.sid(79477).isproc=1;
 idb.sid(79481).name='Elixir of Impossible Accuracy';
 idb.sid(79481).hit=225;
 idb.sid(79481).isproc=1;
-
-idb.sid(79632).name='Elixir of Mighty Speed';
-idb.sid(79632).haste=225;
-idb.sid(79632).isproc=1;
 
 idb.sid(79635).name='Elixir of the Master';
 idb.sid(79635).mast=225;
@@ -492,29 +430,15 @@ idb.sid(79480).isproc=1;
 
 % Potions
 idb.sid(79475).name='Earthen Potion';
-idb.sid(79475).earmor=8750;
-
-idb.sid(79476).name='Volcanic Potion';
-idb.sid(79476).int=1250;
-
-idb.sid(79633).name='Potion of the Tol''vir';
-idb.sid(79633).agi=1250;
+idb.sid(79475).earmor=4800;
 
 idb.sid(79634).name='Golemblood Potion';
-idb.sid(79634).str=1250;
+idb.sid(79634).str=1200;
 
 % Food
 idb.sid(87584).name='Beer-Basted Crocolisk';
 idb.sid(87584).sta=90;
 idb.sid(87584).str=90;
-
-idb.sid(87586).name='Skewered Eel';
-idb.sid(87586).sta=90;
-idb.sid(87586).agi=90;
-
-idb.sid(87587).name='Severed Sagefish Head';
-idb.sid(87587).sta=90;
-idb.sid(87587).int=90;
 
 idb.sid(87594).name='Lavascale Minestrone';
 idb.sid(87594).sta=90;
@@ -527,10 +451,6 @@ idb.sid(79634).hit=90;
 idb.sid(87597).name='Baked Rockfish';
 idb.sid(87597).sta=90;
 idb.sid(87597).crit=90;
-
-idb.sid(87599).name='Basilisk Liverdog';
-idb.sid(87599).sta=90;
-idb.sid(87599).haste=90;
 
 idb.sid(87601).name='Mushroom Sauce Mudfish';
 idb.sid(87601).sta=90;
@@ -735,28 +655,3 @@ idb.iid(52299).name='Powerful Shadowspirit Diamond';
 idb.iid(52299).sta=81;
 idb.iid(52299).isproc=55358;
 idb.iid(52299).sock=[1 0 0 0 0 0];
-
-% Cogwheel
-idb.iid(59477).name='Subtle Cogwheel';
-idb.iid(59477).dodge=208;
-idb.iid(59477).sock=[0 0 0 0 0 1];
-
-idb.iid(59478).name='Smooth Cogwheel';
-idb.iid(59478).crit=208;
-idb.iid(59478).sock=[0 0 0 0 0 1];
-
-idb.iid(59480).name='Fractured Cogwheel';
-idb.iid(59480).mast=208;
-idb.iid(59480).sock=[0 0 0 0 0 1];
-
-idb.iid(59489).name='Precise Cogwheel';
-idb.iid(59489).exp=208;
-idb.iid(59489).sock=[0 0 0 0 0 1];
-
-idb.iid(59491).name='Flashing Cogwheel';
-idb.iid(59491).parry=208;
-idb.iid(59491).sock=[0 0 0 0 0 1];
-
-idb.iid(59493).name='Rigid Cogwheel';
-idb.iid(59493).hit=208;
-idb.iid(59493).sock=[0 0 0 0 0 1];
