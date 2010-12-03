@@ -3,11 +3,11 @@ gear_db;
 def_db;
 
 % lvl 85
-base=player_model('lvl',80,'race','Human','prof','');
+base=player_model('lvl',85,'race','Human','prof','');
 npc=npc_model(base);
 gear_sample
 glyph=ddb.glyphset{1}; %no glyphs
-talent=ddb.talentset{3};  %0/31/5
+talent=ddb.talentset{3};  %0/31/10
 
 %execution
 exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth');
