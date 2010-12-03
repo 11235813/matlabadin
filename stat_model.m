@@ -39,7 +39,12 @@ mdf.glyphAS=1+0.3.*glyph.FocusedShield;          %AS output
  
 %% Meta Gems, Enchants, Plate Spec, Tier Bonus
 %%%%%%%%%%% META
-mdf.meta=1+0.02.*(gear.meta(1)==1)+0.01.*(gear.meta(2)==1)+0.03.*(gear.meta(3)==1);
+mdf.meta_armor=1+0.02.*(gear.meta==1);
+mdf.meta_block=1+0.01.*(gear.meta==2);
+mdf.meta_crit=1+0.03.*(gear.meta==3);
+mdf.meta_spell=1+0.02.*(gear.meta==4);
+mdf.meta_stun=1+0.10.*(gear.meta==5);
+
 mdf.plate=1+0.05.*gear.isplate;
 mdf.t11x2=0.1.*gear.tierbonus(1); %CS output
 mdf.t11x4=1+0.5.*gear.tierbonus(2); %GoAK duration
@@ -165,7 +170,7 @@ player.hitpoints=base.health.*(1+0.05.*(strcmpi('Tauren',base.race)||strcmpi('Ta
     +14.*(player.sta-18)+gear.health+consum.health;
 
 %armor
-player.armor=gear.barmor.*mdf.Tough.*mdf.meta ...
+player.armor=gear.barmor.*mdf.Tough.*mdf.meta_armor ...
     +gear.earmor+mdf.Devo+consum.earmor;
 
 %resistance and spell damage reduction
@@ -224,8 +229,8 @@ cens.NetDur=cens.NumTicks.*cens.NetTick;
 
 %% Crit
 %multipliers
-mdf.phcritm=2.*mdf.meta;   %for physical attacks
-mdf.spcritm=1.5.*mdf.meta; %for spells
+mdf.phcritm=2.*mdf.meta_crit;   %for physical attacks
+mdf.spcritm=1.5.*mdf.meta_crit; %for spells
 
 
 %melee abilities ("physical crit")
