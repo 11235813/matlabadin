@@ -194,6 +194,7 @@ idb.iid(60356).socket='MY';
 idb.iid(60356).sbstat='sta';
 idb.iid(60356).sbval=45;
 idb.iid(60356).atype=1;
+idb.iid(60356).istier=[1 0 0];
 
 idb.iid(65226).name='Reinforced Sapphirium Faceguard (Heroic)';
 idb.iid(65226).ilvl=372;
@@ -206,6 +207,7 @@ idb.iid(65226).socket='MY';
 idb.iid(65226).sbstat='sta';
 idb.iid(65226).sbval=45;
 idb.iid(65226).atype=1;
+idb.iid(65226).istier=[1 0 0];
 
 
 %% Neck 
@@ -250,6 +252,7 @@ idb.iid(60358).socket='R';
 idb.iid(60358).sbstat='sta';
 idb.iid(60358).sbval=15;
 idb.iid(60358).atype=1;
+idb.iid(60358).istier=[1 0 0];
 
 idb.iid(65228).name='Reinforced Sapphirium Shoulderguards (Heroic)';
 idb.iid(65228).ilvl=372;
@@ -262,6 +265,7 @@ idb.iid(65228).socket='R';
 idb.iid(65228).sbstat='sta';
 idb.iid(65228).sbval=15;
 idb.iid(65228).atype=1;
+idb.iid(65228).istier=[1 0 0];
 
 
 %% Cloaks
@@ -311,6 +315,7 @@ idb.iid(60354).socket='RB';
 idb.iid(60354).sbstat='sta';
 idb.iid(60354).sbval=30;
 idb.iid(60354).atype=1;
+idb.iid(60354).istier=[1 0 0];
 
 idb.iid(65224).name='Reinforced Sapphirium Chestguard (Heroic)';
 idb.iid(65224).ilvl=372;
@@ -323,7 +328,7 @@ idb.iid(65224).socket='RB';
 idb.iid(65224).sbstat='sta';
 idb.iid(65224).sbval=30;
 idb.iid(65224).atype=1;
-
+idb.iid(65224).istier=[1 0 0];
 
 
 %% Bracers
@@ -375,6 +380,7 @@ idb.iid(60355).socket='B';
 idb.iid(60355).sbstat='mast';
 idb.iid(60355).sbval=10;
 idb.iid(60355).atype=1;
+idb.iid(60355).istier=[1 0 0];
 
 idb.iid(65225).name='Reinforced Sapphirium Handguards (Heroic)';
 idb.iid(65225).ilvl=372;
@@ -387,6 +393,7 @@ idb.iid(65225).socket='B';
 idb.iid(65225).sbstat='mast';
 idb.iid(65225).sbval=10;
 idb.iid(65225).atype=1;
+idb.iid(65225).istier=[1 0 0];
 
 
 %% Belts
@@ -426,10 +433,25 @@ idb.iid(60357).socket='RB';
 idb.iid(60357).sbstat='sta';
 idb.iid(60357).sbval=30;
 idb.iid(60357).atype=1;
+idb.iid(60357).istier=[1 0 0];
+
+idb.iid(65227).name='Reinforced Sapphirium Legguards (Heroic)';
+idb.iid(65227).ilvl=372;
+idb.iid(65227).str=385;
+idb.iid(65227).sta=578;
+idb.iid(65227).dodge=217;
+idb.iid(65227).parry=217;
+idb.iid(65227).barmor=3114;
+idb.iid(65227).socket='RB';
+idb.iid(65227).sbstat='sta';
+idb.iid(65227).sbval=30;
+idb.iid(65227).atype=1;
+idb.iid(65227).istier=[1 0 0];
 
 
 %% Boots
 
+% Boots of Sullen Rock (H) = Gryphon's Rider Boots (A)
 idb.iid(62418).name='Boots of Sullen Rock';
 idb.iid(62418).ilvl=359;
 idb.iid(62418).str=253;
@@ -488,11 +510,13 @@ idb.iid(59515).name='Vial of Stolen Memories';
 idb.iid(59515).ilvl=359;
 idb.iid(59515).sta=482;
 
-idb.iid(62468).name='Unsolvable Riddle';
-idb.iid(62468).ilvl=359;
-idb.iid(56406).mast=321;
+% Mirror of Broken Images (H) =  Unsolvable Riddle (A) 
+idb.iid(62466).name='Mirror of Broken Images';
+idb.iid(62466).ilvl=359;
+idb.iid(56466).mast=321;
 
-%% Weaponsidb.iid(55067).name='Elementium Bonesplitter';
+%% Weapons
+idb.iid(55067).name='Elementium Bonesplitter';
 idb.iid(55067).wtype='axe';
 idb.iid(55067).ilvl=346;
 idb.iid(55067).tooldps=409.4;

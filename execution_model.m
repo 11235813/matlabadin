@@ -8,7 +8,7 @@ function [exec] = execution_model(varargin)
 %fdur NYI
 %behind - attacking from behind, logical [0]
 %seal - seal choice; 1-SoT,2-SoR,3-SoI,4-SoJ [1]
-%veng - average strength of Vengeance; float (0 to 1) [0.8]
+%veng - average strength of Vengeance; float (0 to 1) [0.5]
 %Outputs:
 %exec - structure containing relevant parameters
 %List of seal entries :
@@ -50,5 +50,5 @@ if isempty(exec.timein)==1 exec.timein=1; end;
 if isempty(exec.timeout)==1 exec.timeout=1; end;
 if isempty(exec.behind)==1 exec.behind=0; end;
 if isnumeric(exec.seal)==1 exec.seal='Truth'; end; %workaround for seal==''
-if isempty(exec.veng)==1 exec.veng=0.8; end;
+if isempty(exec.veng)==1 exec.veng=0.5; end;
 end
