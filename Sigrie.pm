@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use LWP::UserAgent;
-my $ua = new LWP::UserAgent;
+my $ua = LWP::UserAgent->new(timeout => 3);
 
 # Regexen for extracting stats from tooltips
 my %parsers = (
@@ -67,14 +67,14 @@ sub get_item {
   my $response = $ua->get("http://db.mmo-champion.com/i/$id/tooltip/js");
   if ($response->is_error) {
     print STDERR "Error getting item $id:", $response->status_line, "\n";
-    next;
+    return undef;
   }
 
   # weed out the useless bits
   my ($tooltip) = $response->content =~ m/tooltip: '(.*)',/;
   unless ($tooltip) {
     print STDERR "Error parsing item $id\n";
-    next;
+    return undef;
   }
 
   # unencode entities
@@ -111,13 +111,13 @@ sub get_item {
     }
   }
   
-  # we can't use the normal parsers for sockets because we need a count of 
-  # matches rather than the matches themselves
-  for (qw{Meta Red Yellow Blue}) {
-    my @matches = ($tooltip =~ />$_ Socket</g);
-    my $key = lc(substr($_, 0, 1)) . 'sock';
-    $item{$key} = scalar @matches;
+  # make socket string
+  while ($tooltip =~ />([MRYBP])\w+ Socket</g) {
+    $item{socket} .= $1;
   }
+  
+  # relics have their prismatic sockets marked as red
+  $item{socket} =~ y/R/P/ if $item{slot} and $item{slot} eq 'Relic';
   
   # get the socket bonus and what stat it is
   if ($tooltip =~ /Socket Bonus: <a .*?>\+(\d+) (.*?)</) {

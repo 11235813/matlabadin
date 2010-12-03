@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Sigrie;
+use Getopt::Long;
 
 # list of item ids to parse
 my @items = ();
@@ -91,7 +92,6 @@ push @items, qw(65023 67477); #372
 # Relic
 push @items, qw(56279 56337 62243 63480); #346
 push @items, qw(64674 64676); #359
-);
 
 # corrections to items
 my %corrections = (
@@ -124,20 +124,37 @@ my @attrs = qw(
   agi       int       spi       hit      
   crit      exp       haste     mast     
   dodge     parry     block     barmor   
-  earmor    msock     rsock     bsock     
-  ysock
+  earmor    socket    sbstat    sbval
 );
 
+my $verbose = 0;
+
+GetOptions(
+  verbose => \$verbose,
+);
+
+sub notef { printf STDERR @_ if $verbose; }
+
+my $count = @items;
+my $progress = 0;
 foreach my $id (@items) {
+  notef "\r%4u / %4u  %3u%%", $progress++, $count, $progress / $count * 100;
+  
   # get the item
-  my %item = Sigrie::get_item($id);
+  my %item;
+  
+  for (1 .. 5) {
+    %item = Sigrie::get_item($id);
+    last if %item;
+    print STDERR "Retrying item $id\n";
+  }
   
   # apply item corrections
   if (my $hash = $corrections{$id}) {
     $item{$_} = $hash->{$_} for keys %$hash;
   }
   
-  # print out the attributes we care about, skipping any that are 0
+  # print out the attributes about which we care, skipping any that are null
   foreach (@attrs) {
     next unless $item{$_};
     
@@ -151,14 +168,9 @@ foreach my $id (@items) {
     print ";\n";
   }
   
-  # misc stats
-  # print "idb.iid($id).slot=$slots{$item{slot}};\n" if $item{slot};
+  # atype = 1 if item is plate (is this still useful?)
   print "idb.iid($id).atype=1;\n" if $item{atype} and $item{atype} eq 'Plate';
   
-  if ($item{sbstat}) {
-    print "idb.iid($id).sb.$item{sbstat}=$item{sbval};\n";
-    print "idb.iid($id).sb.active=[" . join(' ', map $_ || 0, @item{qw{rsock ysock bsock}}) . "];\n";
-  }
   
   print "\n";
 }
