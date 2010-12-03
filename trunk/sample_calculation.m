@@ -10,29 +10,28 @@ base=player_model('race','Human');
 npc=npc_model(base);
 
 %invoke execution_model
-exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','SoT','veng',0.8);
+exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','SoT','veng',0.5);
 
 
 %load gear set
-gear_sample;
+gear_sample
 
 %calculate relevant stats
-gear_stats
+gear_stats;
 
 %activate buffs and consumables
 buff=buff_model;
 
 %invoke talents & glyphs
-talent=ddb.talentset{3};
-talents
+talent=ddb.talentset{3};talents;
 
 %calculate final stats
-stat_model
+stat_model;
 
 %calculate ability damages
-ability_model
+ability_model;
 
 %rotation 
-rotation_model
+rotation_model;
 
 warning('Success!')

@@ -1,74 +1,46 @@
 %% Gear_Sample, by slot
 
 %%Items (1-17)
-%head
-egs(1)=equip(51266);  %Sanctified Lightsworn Faceguard (Heroic)
-%neck
-egs(2)=equip(50682);  %Bile Encrusted Medallion (H)
-%shoulders
-egs(3)=equip(51269); %Sanctified Lightsworn Shoulders (Heroic)
-%back
-egs(4)=equip(50466);  %Sentinel's Winter Cloak
-%chest
-egs(5)=equip(51265); %Sanctified Lightsworn Chest (Heroic)
-%wrists
-egs(6)=equip(51901); %Gargoyle Spit (H)
-%hands
-egs(7)=equip(51267);  %Sanctified Lightsworn (H)
-%waist
-egs(8)=equip(50991); %Verdigris
-%legs
-egs(9)=equip(51268); %Sanctified Lightsworn (H)
-%feet
-egs(10)=equip(50625); %Grinning Skull (H)
-%finger0
-egs(11)=equip(50622); %Deviums (H)
-%finger1
-egs(12)=equip(50404); %Ashen (H)
-%trinket0
-egs(13)=equip(50356);  %Skeleton Key
-%trinket1
-egs(14)=equip(54571);  %Flawless Fang
-%main hand
-egs(15)=equip(50708);  %Last Word (Heroic)
-%off hand
-egs(16)=equip(50729);  %IGW (Heroic)
-%ranged
-egs(17)=equip(50461); %Eternal Tower
+egs(1)=equip(58103);  %Helm of the Proud
+egs(1)=socket(egs(1),gem.meta,gem.yel,1);
+egs(2)=equip(57932); %Lustrous Eye
+egs(3)=equip(58104);%Sunburnt Pauldrons
+egs(3)=socket(egs(3),gem.blu,0); %red socket, blue gem, no bonus
+egs(4)=equip(56549); %Twilight Dragonscale
+egs(4)=socket(egs(4),gem.blu,1);
+egs(5)=equip(58101); %Chestplate of the Steadfast
+egs(5)=socket(egs(5),gem.yel,gem.blu,1);
+egs(6)=equip(57870); %Alpha Bracers
+egs(6)=socket(egs(6),gem.yel,1);
+egs(7)=equip(58105); %Numbing Handguards
+egs(7)=socket(egs(7),gem.blu,1);
+egs(8)=equip(55059); %Hardened Elementium
+egs(8)=enhance(egs(8),equip(76168,'s')); %Belt Buckle
+egs(8)=socket(egs(8),gem.blu,0);
+egs(9)=equip(58102); %Greaves of Splendor
+egs(9)=socket(egs(9),gem.yel,gem.blu,1);
+egs(10)=equip(62418); %Gryphon Rider's Boots
+egs(10)=socket(egs(10),gem.yel,1);
+egs(11)=equip(62440); %Red Rock Band
+egs(12)=equip(62351); %Felsen's Ring
+egs(13)=equip(56347); %Leaden Despair
+egs(14)=equip(56406); %Impetuous Query
+egs(15)=equip(56346); %Elementium Fang
+egs(16)=equip(57926); %Shield of hte Four Grey Towers
+egs(17)=equip(64676); %Relic of Khaz
+egs(17)=socket(egs(17),gem.blu,0);
 
 
 %%Enchants (21-37)
-%head
-egs(21)=equip(59955,'s');
-%neck
-% egs(22)=equip(2);
-%shoulders
-egs(23)=equip(59941,'s');
-%back
-egs(24)=equip(47672,'s');
-%chest
-egs(25)=equip(47900,'s');
-%wrists
-egs(26)=equip(62256,'s');
-%hands
-egs(27)=equip(50909,'s');
-%waist
-% egs(28)=equip(4);
-%legs
-egs(29)=equip(60581,'s');
-%feet
-egs(30)=equip(47901,'s');
-%finger0
-egs(31)=equip(59636,'s');
-%finger1
-egs(32)=equip(59636,'s');
-%trinket0
-% egs(33)=equip(2);
-%trinket1
-% egs(34)=equip(2);
-%main hand
-egs(35)=equip(59619,'s');
-%off hand
-egs(36)=equip(34009,'s');
-%ranged
-% egs(37)=equip(4);
+egs(21)=equip(86931,'s');%Earthen Ring
+egs(23)=equip(86847,'s');%Unbreakable Quartz
+egs(24)=equip(74234,'s');%Protection
+egs(25)=equip(74251,'s');%Greater STamina
+egs(26)=equip(74229,'s');%Dodge
+egs(27)=equip(74255,'s');%Greater Mastery
+egs(29)=equip(78172,'s');%Charscale
+egs(30)=equip(74238,'s');%Mastery
+egs(31)=equip(74218,'s');%finger0
+egs(32)=equip(74218,'s');%finger1
+egs(35)=equip(74244,'s');%Windwalk?
+egs(36)=equip(74226,'s');%Blocking (mastery)

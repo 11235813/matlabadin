@@ -67,9 +67,9 @@ end
 %% Raid Buffs
 mdf.buffscale=443.*(base.lvl==85); %level scaling
 mdf.BoK=1+0.05.*buff.BoK;
-mdf.SoE=round(1.24.*mdf.buffscale).*buff.SoE;
-mdf.PWF=round(1.32.*mdf.buffscale).*buff.PWF;
-mdf.FelInt=round(4.8.*mdf.buffscale).*buff.FelInt; %only mana
+mdf.SoE=floor(1.24.*mdf.buffscale).*buff.SoE;
+mdf.PWF=floor(1.32.*mdf.buffscale).*buff.PWF;
+mdf.FelInt=floor(4.8.*mdf.buffscale).*buff.FelInt; %only mana
 mdf.UnRage=1+0.1.*buff.UnRage;
 mdf.FMT=1+0.06.*buff.FMT;
 mdf.TW=1+0.1.*buff.TW;
@@ -78,7 +78,7 @@ mdf.LotP=5.*buff.LotP;
 mdf.WF=1+0.1.*buff.WF;
 mdf.WoA=1+0.05.*buff.WoA;
 mdf.BL=1+0.3.*buff.BL;
-mdf.Devo=round(9.2.*mdf.buffscale).*buff.Devo;
+mdf.Devo=floor(9.2.*mdf.buffscale).*buff.Devo;
 mdf.RF=1+2.*buff.RF;
 mdf.Focus=3.*buff.Focus;
 %% Raid Debufs
@@ -407,10 +407,10 @@ player.aacrit=max([min([player.aacrit.*ones(player.size.hit); ...
     (100-target.avoid-npc.glance-target.block)]);zeros(player.size.hit)]);
 mdf.glancerdx=1-npc.glancerdx./100;
 mdf.blockrdx=0.7;
-mdf.aamodel=(mdf.mehit) ...                   %hit
-    +(mdf.glancerdx-1).*npc.glance./100 ...   %glancing
-    +(mdf.blockrdx-1).*target.block./100 ...  %block
-    +(mdf.phcritmulti-1).*player.aacrit./100; %crit
+mdf.aamodel=(mdf.mehit) ...                  %hit
+    +(mdf.glancerdx-1).*npc.glance./100 ...  %glancing
+    +(mdf.blockrdx-1).*target.block./100 ... %block
+    +(mdf.phcritm-1).*player.aacrit./100;    %crit
 %enforce block events for two-roll systems (no critical blocks)
 mdf.memodel=mdf.mehit+(mdf.blockrdx-1).*target.block./100;
 mdf.ramodel=mdf.rahit+(mdf.blockrdx-1).*target.block./100;
