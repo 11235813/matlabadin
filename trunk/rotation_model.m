@@ -14,24 +14,36 @@
 %1 "X" that could be AS, HW, or potentially Cons
 
 %extra GCD cost of missed SotR
-rot.xtragcd=1./mdf.mehit-1;
+rot.xtragcd=(1./mdf.mehit)-1;
 
-p=1-(1-mdf.GC).^3;q=1-p;
-cols(1,:)=[1 0];
-for mmmm=2:50;temp=p*cols(mmmm-1,1)+cols(mmmm-1,2);cols(mmmm,:)=[temp 1-temp];end;
-P=mean(cols(length(cols)-1:length(cols),1));
+%probability of at least one GrCr proc from 3 CS/HotR casts
+q.CS=binopdf(0,3,mdf.mehit) ...                  %no connects
+    +binopdf(1,3,mdf.mehit).*(1-mdf.GrCr) ...    %one connects, no proc
+    +binopdf(2,3,mdf.mehit).*(1-mdf.GrCr).^2 ... %two connects, no procs
+    +binopdf(3,3,mdf.mehit).*(1-mdf.GrCr).^3;    %three connects, no procs
+p.CS=1-q.CS;
+q.HotR=(1-mdf.GrCr).^3;
+p.HotR=1-q.HotR;
+%compute average AS cast count
+cols(1,:,1)=[1 0];cols(1,:,2)=[1 0];
+for mmmm=2:50
+tmpvar.CS=p.CS.*cols(mmmm-1,1,1)+cols(mmmm-1,2,1);cols(mmmm,:,1)=[tmpvar.CS 1-tmpvar.CS];
+tmpvar.HotR=p.HotR.*cols(mmmm-1,1,2)+cols(mmmm-1,2,2);cols(mmmm,:,2)=[tmpvar.HotR 1-tmpvar.HotR];
+end
+P.CS=mean(cols(length(cols)-1:length(cols),1,1));
+P.HotR=mean(cols(length(cols)-1:length(cols),1,2));
 
 rot.val.ones=ones(size(mdf.mehit));
 rot.labels={'SotR';'CS';'J';'AS';'HW';'Cons';'HotR';'2SotR';'Inq';'Seal';'HaNova';'HoW'};
 %% HW>Cons
-rot.numcasts=[2.*(mdf.phcrit+mdf.mehit.*mdf.SacDut.*(mdf.phcritm-mdf.phcrit));... %SotR
+rot.numcasts=[2.*(mdf.phcrit+mdf.mehit.*(mdf.rahit.*mdf.SacDut).*(mdf.phcritm-mdf.phcrit));... %SotR
     6.*rot.val.ones;...                                            %CS
     2.*rot.val.ones;...                                            %J
-    2*P.*rot.val.ones;...                                          %AS
-    max([2*(1-P); 0]).*rot.val.ones;...                            %HW
+    2.*P.CS.*rot.val.ones;...                                      %AS
+    max([2.*(1-P.CS);0]).*rot.val.ones;...                         %HW
     0.*rot.val.ones;...                                            %Cons
     0.*rot.val.ones;...                                            %HotR
-    0.*rot.val.ones;...                                            %2ShoR
+    0.*rot.val.ones;...                                            %2SotR
     0.*rot.val.ones;...                                            %Inq
     0.*rot.val.ones;...                                            %HoW
     8.*mdf.mehit+2.*mdf.rahit.*mdf.jseals.*rot.val.ones;...        %seal (CS+SotR+J)
@@ -39,14 +51,14 @@ rot.numcasts=[2.*(mdf.phcrit+mdf.mehit.*mdf.SacDut.*(mdf.phcritm-mdf.phcrit));..
 
 %% Cons>HW
 rot1=rot;
-rot1.numcasts=[2.*(mdf.phcrit+mdf.mehit.*mdf.SacDut.*(mdf.phcritm-mdf.phcrit));... %SotR
+rot1.numcasts=[2.*(mdf.phcrit+mdf.mehit.*(mdf.rahit.*mdf.SacDut).*(mdf.phcritm-mdf.phcrit));... %SotR
     6.*rot.val.ones;...                                            %CS
     2.*rot.val.ones;...                                            %J
-    2*P.*rot.val.ones;...                                          %AS
-    max([2*(1-P)-0.5; 0]).*rot.val.ones;...                        %HW
+    2.*P.CS.*rot.val.ones;...                                      %AS
+    max([2.*(1-P.CS)-0.5;0]).*rot.val.ones;...                     %HW
     0.5.*rot.val.ones;...                                          %Cons
     0.*rot.val.ones;...                                            %HotR
-    0.*rot.val.ones;...                                            %2ShoR
+    0.*rot.val.ones;...                                            %2SotR
     0.*rot.val.ones;...                                            %Inq
     0.*rot.val.ones;...                                            %HoW
     8.*mdf.mehit+2.*mdf.rahit.*mdf.jseals.*rot.val.ones;...        %seal (CS+SotR+J)
@@ -82,14 +94,14 @@ rot1.Inq=0;
 % end
 
 %% Alternative rotation with HotR instead of CS
-rot2.numcasts=[2.*(mdf.phcrit+mdf.mehit.*mdf.SacDut.*(mdf.phcritm-mdf.phcrit));... %SotR
+rot2.numcasts=[2.*(mdf.phcrit+mdf.mehit.*(mdf.rahit.*mdf.SacDut).*(mdf.phcritm-mdf.phcrit));... %SotR
     0.*rot.val.ones;...                                            %CS
     2.*rot.val.ones;...                                            %J
-    2*P.*rot.val.ones;...                                          %AS
-    max([2*(1-P)-0.5; 0]).*rot.val.ones;...                        %HW
+    2.*P.HotR.*rot.val.ones;...                                    %AS
+    max([2.*(1-P.HotR)-0.5;0]).*rot.val.ones;...                   %HW
     0.5.*rot.val.ones;...                                          %Cons
     6.*rot.val.ones;...                                            %HotR
-    0.*rot.val.ones;...                                            %2ShoR
+    0.*rot.val.ones;...                                            %2SotR
     0.*rot.val.ones;...                                            %Inq
     0.*rot.val.ones;...                                            %HoW
     2.*mdf.mehit+2.*mdf.rahit.*mdf.jseals.*rot.val.ones;...        %seal (SotR+J)
@@ -105,7 +117,6 @@ end
 
 %aa and seal damage
 rot2.padps=rot2.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing;
-
 rot2.totdps=rot2.acdps+rot2.padps;
 
 %Inq handling
@@ -117,8 +128,8 @@ aoe.Inqmod=(1+0.3.*aoe.Inq).*[1 0 1 1 1 1 0 1 0 1 1 1]';
 aoe.numcasts=[0.*rot.val.ones;...                                     %SotR
               0.*rot.val.ones;...                                     %CS
               2.*rot.val.ones;...                                     %J
-              2*P.*rot.val.ones;...                                   %AS
-              max([2*(1-P)-0.5; 0]).*rot.val.ones;...                 %HW
+              2.*P.HotR.*rot.val.ones;...                             %AS
+              max([2.*(1-P.HotR)-0.5;0]).*rot.val.ones;...            %HW
               0.5.*rot.val.ones;...                                   %Cons
               6.*rot.val.ones;...                                     %HotR
               0.*rot.val.ones;...                                     %2SotR
@@ -137,7 +148,4 @@ end
 
 %aa and seal damage
 aoe.padps=aoe.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing;
-
 aoe.totdps=aoe.acdps+aoe.padps;
-
-
