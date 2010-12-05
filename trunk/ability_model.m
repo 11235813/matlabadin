@@ -63,12 +63,13 @@ net.CrusaderStrike= dmg.CrusaderStrike+dmg.activeseal.*mdf.mehit;
 
 %Hammer of the Righteous
 %physical (can be blocked)
+mdf.HotRmodel=1+(mdf.blockrdx-1).*target.block./100;
 raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*(1+mdf.Crus+mdf.glyphHotR);
-dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.memodel.*mdf.HotRphcrit;
+dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.HotRmodel.*mdf.HotRphcrit;
 net.HammeroftheRighteous=   dmg.HammeroftheRighteous; %doesn't proc seals
-%the aoe rolls only if physical connects
+%the physical component always connects, the nova rolls for hit only once
 raw.HammerNova=   (728.8813374+0.18.*player.ap).*mdf.spdmg.*(1+mdf.Crus+mdf.glyphHotR);
-dmg.HammerNova=   raw.HammerNova.*(mdf.mehit.*mdf.sphit).*mdf.HotRspcrit.*target.resrdx; %spell hit/crit
+dmg.HammerNova=   raw.HammerNova.*mdf.sphit.*mdf.HotRspcrit.*target.resrdx; %spell hit/crit
 net.HammerNova=   dmg.HammerNova;  %doesn't proc seals
 
 %Melee attacks
