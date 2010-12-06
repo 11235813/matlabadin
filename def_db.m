@@ -91,14 +91,16 @@ ddb.gearset{2}=tempegs;
 
 %% Talent Specs
 %0/31/10 spec for baseline calcs
-temptree.prot=[3 2 0 0; 2 3 0 0; 2 3 1 2; 2 1 2 0; 1 1 0 0; 0 2 3 0; 0 1 0 0];
+%http://www.wowhead.com/talent#sZGMhcRddkRucbG
+temptree.prot=[3 2 0 0; 2 3 0 0; 0 3 1 2; 2 1 2 0; 1 1 1 1; 0 2 3 0; 0 1 0 0];
 temptree.ret=[0 3 2 0; 0 3 0 2];
 ddb.talentset{1}=temptree;
 
-% %38 points in prot, 0 in holy/ret
-% temptree.holy=zeros(2,4);temptree.ret=zeros(2,4);temptree.prot=zeros(7,4);
-% temptree.prot=[3 2 2 0; 2 3 2 0; 2 3 1 2; 2 1 2 0; 1 1 2 1; 0 2 3 0; 0 1 0 0];
-% ddb.talentset{1}=temptree;
+%0/31/10 spec w/HG
+%http://www.wowhead.com/talent#sZGMhfRddoMucbG
+temptree.prot=[3 2 0 0; 2 3 0 0; 2 3 1 2; 2 1 2 0; 1 1 0 0; 0 2 3 0; 0 1 0 0];
+temptree.ret=[0 3 2 0; 0 3 0 2];
+ddb.talentset{2}=temptree;
 % 
 % temptree.prot=[3 2 0 0; 2 3 2 0; 2 3 1 2; 2 1 2 0; 1 1 0 0; 0 2 3 0; 0 1 0 0];
 % temptree.ret=[0 3 2 0; 0 0 0 0];

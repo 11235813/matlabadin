@@ -240,7 +240,7 @@ for m=1:N
     ccd.AS=ccd.AS-dt; 
     ccd.Jud=ccd.Jud-dt;
     ccd.HW=ccd.HW-dt;
-    ccd.HoW=ccd.HW-dt;
+    ccd.HoW=ccd.HoW-dt;
     ccd.Cons=ccd.Cons-dt;
     gcd=gcd-dt;
     egcd=egcd-dt;
@@ -263,6 +263,7 @@ for m=1:N
     ccd.AS=round(ccd.AS.*factor)./factor;
     ccd.Jud=round(ccd.Jud.*factor)./factor;
     ccd.HW=round(ccd.HW.*factor)./factor;
+    ccd.HoW=round(ccd.HoW.*factor)./factor;
     ccd.Cons=round(ccd.Cons.*factor)./factor;
     dur.SD=round(dur.SD.*factor)./factor;dur.SD=max([dur.SD 0]);
     gcd=round(gcd.*factor)./factor;
