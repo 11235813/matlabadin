@@ -162,7 +162,7 @@ for m=1:N
                 
                                
                 %ShoR handling
-                if sum(strcmp(char(pri.alabel(aid)),{'3SotR';'2SotR';'1SotR'}))>0
+                if sum(strcmp(char(pri.alabel(aid)),{'SotR';'2SotR';'1SotR'}))>0
                     %check for misses
                     if rand<target.avoid/100
                         %if we miss, set the flag and color and nullify
@@ -181,7 +181,7 @@ for m=1:N
                         hopo=0;
                     end
                       
-                    dur.SD=0;
+                    dur.SD=0.3;
                 else %not SotR, mark as a miss (irrelevant, but necessary if we guessed array lengths incorrectly)
                     sequence.sotrmiss(qq)=0;
                 end
@@ -240,6 +240,7 @@ for m=1:N
     ccd.AS=ccd.AS-dt; 
     ccd.Jud=ccd.Jud-dt;
     ccd.HW=ccd.HW-dt;
+    ccd.HoW=ccd.HW-dt;
     ccd.Cons=ccd.Cons-dt;
     gcd=gcd-dt;
     egcd=egcd-dt;

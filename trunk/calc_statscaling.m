@@ -22,12 +22,11 @@ def_db;
 % lvl 85
 base=player_model('race','Human','prof','');
 npc=npc_model(base);
-gear_sample
 % glyph=ddb.glyphset{1}; %no glyphs
-talent=ddb.talentset{3};  %0/31/5
-
+talent=ddb.talentset{1};  %0/31/10
+egs=ddb.gearset{2};
 %execution
-exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth');
+exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth','veng',0.8);
 %activate buffs
 buff=buff_model('mode',3);
 %invoke talents & glyphs
@@ -55,7 +54,7 @@ dstat=[10 10 20 10 10 20 10 10 10 10 10];
 
 %reset extra structure
 extra_init;
-extra.val.str=-100+[1:1000];
+extra.val.str=-100+[1:2:1500];
 
 
 for m=1:M
@@ -92,7 +91,7 @@ ylabel('DPS per 10 itemization points')
 %% Hit graph
 %reset extra structure
 extra_init;
-extra.val.hit=-max(gear.hit)+[0:350];
+extra.val.hit=-max(gear.hit)+0:round(10.*cnv.hit_phhit);
 for m=1:M
     %set each stat to dstat extra
     eval(char(['extra.itm.' stat{m} '=dstat(m);']))
@@ -127,7 +126,7 @@ ylabel('DPS per 10 itemization points')
 %% Exp graph
 %reset extra structure
 extra_init;
-extra.val.exp=-max(gear.exp)+0:400;
+extra.val.exp=-max(gear.exp)+0:round(45.*cnv.exp_exp);
 for m=1:M
     %set each stat to dstat extra
     eval(char(['extra.itm.' stat{m} '=dstat(m);']))

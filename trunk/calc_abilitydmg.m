@@ -5,12 +5,12 @@ def_db;
 % lvl 85
 base=player_model('lvl',85,'race','Human','prof','');
 npc=npc_model(base);
-gear_sample
-glyph=ddb.glyphset{1}; %no glyphs
-talent=ddb.talentset{3};  %0/31/10
+egs=ddb.gearset{2};  %1=pre-raid , 2=raid
+glyph=ddb.glyphset{3}; %SoT glyph only
+talent=ddb.talentset{1};  %0/31/10
 
 %execution
-exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth');
+exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth','veng',1);
 %activate buffs
 buff=buff_model('mode',3);
 %invoke talents & glyphs
@@ -20,6 +20,10 @@ gear_stats
 %calculate final stats
 stat_model
 
+%artificially inflating hit and expertise to 8% and 26
+% gear.hit=8*cnv.hit_phhit;
+% gear.exp=(26-10-base.exp)*cnv.exp_exp;
+% stat_model
 
 %Debugging for odd gear sets
 % old.ap=player.ap;old.hsp=player.hsp;
@@ -37,7 +41,7 @@ stat_model
 
 %calculate ability output
 ability_model
-rotation_model
+% rotation_model
 
 %generate a damage summary array
 %% Summary
@@ -60,6 +64,7 @@ vals.glyph=zeros(size(vals.raw));
 
 for m=1:length(glyph.prime)
     glyph.prime=zeros(size(glyph.prime));glyph.major=zeros(size(glyph.major));
+    glyph.prime(5)=1; %SoT
     glyph.prime(m)=1;
     talents
     stat_model
@@ -70,6 +75,7 @@ end
 % AS/cons glyphs
 for m=1:length(glyph.major)
     glyph.prime=zeros(size(glyph.prime));glyph.major=zeros(size(glyph.major));
+    glyph.prime(5)=1; %SoT
     glyph.major(m)=1;
     talents
     stat_model
@@ -94,8 +100,11 @@ dmgarray=[char(dmg_labels) spacer int2str([vals.raw vals.dmg vals.glyph])]
 
 
 %% Code for plots
-dmgplot=[vals.dmg max([vals.glyph-vals.dmg zeros(size(vals.glyph))],2)];
-netplot=[vals.net max([vals.glyph-vals.dmg zeros(size(vals.glyph))],2)];
+dmgplot=[vals.dmg max([vals.glyph-vals.dmg zeros(size(vals.glyph))],[],2)];
+netplot=[vals.net max([vals.glyph-vals.dmg zeros(size(vals.glyph))],[],2)];
+%fix for J (add raw.SotR)
+netplot2=netplot;
+netplot2(3,1)=netplot2(3,1)+raw.ShieldoftheRighteous*mdf.SacDut*mdf.rahit;
 kk=[1:7 11:14];
 
 figure(20)
@@ -103,7 +112,11 @@ set(gcf,'Position',[428 128 728 378])
 bar20=bar(dmgplot(kk,:),'BarWidth',0.5,'BarLayout','stacked');
 set(bar20(2),'FaceColor',[0.749 0.749 0]);
 xlim([0.5 11.5])
+maxy=ceil(max(sum(dmgplot,2))/5000)*5000;
+ylim([0 maxy])
+set(gca,'YTick',[0:5000:maxy],'YTickLabel',[int2str([0:5:maxy/1000]') repmat('k',1+maxy/5000,1)])
 set(gca,'XTickLabel',dmg_labels(kk))
+% set(gca,'YTick',[0:5
 legend('Unglyphed','Glyphed','Location','NorthEast')
 xlabel('Ability')
 ylabel('Damage')
@@ -114,8 +127,24 @@ set(gcf,'Position',[428 128 728 378])
 bar40=bar(netplot(kk,:),'BarWidth',0.5,'BarLayout','stacked');
 set(bar40(2),'FaceColor',[0.749 0.749 0]);
 xlim([0.5 11.5])
+maxy=ceil(max(sum(netplot,2))/5000)*5000;
+ylim([0 maxy])
+set(gca,'YTick',[0:5000:maxy],'YTickLabel',[int2str([0:5:maxy/1000]') repmat('k',1+maxy/5000,1)])
 set(gca,'XTickLabel',dmg_labels(kk))
 legend('Unglyphed','Glyphed','Location','NorthEast')
 xlabel('Ability')
 ylabel('Damage (including SoV procs)')
 % 
+% 
+figure(22)
+set(gcf,'Position',[428 128 728 378])
+bar40=bar(netplot2(kk,:),'BarWidth',0.5,'BarLayout','stacked');
+set(bar40(2),'FaceColor',[0.749 0.749 0]);
+xlim([0.5 11.5])
+maxy=ceil(max(sum(netplot2,2))/5000)*5000;
+ylim([0 maxy])
+set(gca,'YTick',[0:5000:maxy],'YTickLabel',[int2str([0:5:maxy/1000]') repmat('k',1+maxy/5000,1)])
+set(gca,'XTickLabel',dmg_labels(kk))
+legend('Unglyphed','Glyphed','Location','NorthEast')
+xlabel('Ability')
+ylabel('Damage (including SoV procs and Sacred Duty)')
