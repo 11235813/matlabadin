@@ -62,7 +62,7 @@ tempegs(1)=equip(60356);  %T11
 tempegs(1)=socket(tempegs(1),gem.meta,gem.yel,1);
 tempegs(2)=equip(59319); %Ironstar
 tempegs(3)=equip(60358); %T11
-tempegs(3)=socket(tempegs(3),gem.red,1);
+tempegs(3)=socket(tempegs(3),gem.blu,1);
 tempegs(4)=equip(62383); %Great Turtle
 tempegs(5)=equip(60354); %T11
 tempegs(5)=socket(tempegs(5),gem.red,gem.blu,1);
@@ -90,23 +90,34 @@ ddb.gearset{2}=tempegs;
 
 
 %% Talent Specs
-%38 points in prot, 0 in holy/ret
-temptree.holy=zeros(2,4);temptree.ret=zeros(2,4);temptree.prot=zeros(7,4);
-temptree.prot=[3 2 2 0; 2 3 2 0; 2 3 1 2; 2 1 2 0; 1 1 2 1; 0 2 3 0; 0 1 0 0];
-ddb.talentset{1}=temptree;
-
-temptree.prot=[3 2 0 0; 2 3 2 0; 2 3 1 2; 2 1 2 0; 1 1 0 0; 0 2 3 0; 0 1 0 0];
-temptree.ret=[0 3 2 0; 0 0 0 0];
-ddb.talentset{2}=temptree;
-
 %0/31/10 spec for baseline calcs
 temptree.prot=[3 2 0 0; 2 3 0 0; 2 3 1 2; 2 1 2 0; 1 1 0 0; 0 2 3 0; 0 1 0 0];
 temptree.ret=[0 3 2 0; 0 3 0 2];
-ddb.talentset{3}=temptree;
+ddb.talentset{1}=temptree;
+
+% %38 points in prot, 0 in holy/ret
+% temptree.holy=zeros(2,4);temptree.ret=zeros(2,4);temptree.prot=zeros(7,4);
+% temptree.prot=[3 2 2 0; 2 3 2 0; 2 3 1 2; 2 1 2 0; 1 1 2 1; 0 2 3 0; 0 1 0 0];
+% ddb.talentset{1}=temptree;
+% 
+% temptree.prot=[3 2 0 0; 2 3 2 0; 2 3 1 2; 2 1 2 0; 1 1 0 0; 0 2 3 0; 0 1 0 0];
+% temptree.ret=[0 3 2 0; 0 0 0 0];
+% ddb.talentset{2}=temptree;
 
 
 %% Glyphs
+%standard load-out
+tempglyphs.prime=[0 0 1 0 1 1 0];
+tempglyphs.minor=[0 1 0 0 1 0 0];
+tempglyphs.major=[0 0 0 0 0 0 0 0 0 0];
+ddb.glyphset{1}=tempglyphs;
+%no glyphs
 tempglyphs.prime=[0 0 0 0 0 0 0];
 tempglyphs.minor=[0 0 0 0 0 0 0];
 tempglyphs.major=[0 0 0 0 0 0 0 0 0 0];
-ddb.glyphset{1}=tempglyphs;
+ddb.glyphset{2}=tempglyphs;
+%just SoT
+tempglyphs.prime=[0 0 0 0 1 0 0];
+tempglyphs.minor=[0 0 0 0 0 0 0];
+tempglyphs.major=[0 0 0 0 0 0 0 0 0 0];
+ddb.glyphset{3}=tempglyphs;

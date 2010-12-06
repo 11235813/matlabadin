@@ -53,29 +53,33 @@ gear.tierbonus=zeros(2,3); %t11-t13 for now
 % t11 t12 t13
 %[  0   0   0; %2p
 %   0   0   0] %4p
-if gear.istier(1)>=4             %4p t11
-    gear.tierbonus(1)=1;
-    gear.tierbonus(2)=1;
-elseif gear.istier(2)>=4         %4p t12
-    gear.tierbonus(3)=1;
-    gear.tierbonus(4)=1;
-elseif gear.istier(3)>=4         %4p t13
-    gear.tierbonus(5)=1;
-    gear.tierbonus(6)=1;
-else
-    if gear.istier(1)>=2         %2p t11
+
+%check for presence of tier gear, if none, skip this section
+if numel(gear.istier)==3
+    if gear.istier(1)>=4             %4p t11
         gear.tierbonus(1)=1;
-        if gear.istier(2)>=2     %2p t11,t12
-            gear.tierbonus(3)=1;
-        elseif gear.istier(3)>=2 %2p t11,t13
-            gear.tierbonus(5)=1;
-        end
-    elseif gear.istier(2)>=2     %2p t12
+        gear.tierbonus(2)=1;
+    elseif gear.istier(2)>=4         %4p t12
         gear.tierbonus(3)=1;
-        if gear.istier(3)>=2     %2p t12,t13
+        gear.tierbonus(4)=1;
+    elseif gear.istier(3)>=4         %4p t13
+        gear.tierbonus(5)=1;
+        gear.tierbonus(6)=1;
+    else
+        if gear.istier(1)>=2         %2p t11
+            gear.tierbonus(1)=1;
+            if gear.istier(2)>=2     %2p t11,t12
+                gear.tierbonus(3)=1;
+            elseif gear.istier(3)>=2 %2p t11,t13
+                gear.tierbonus(5)=1;
+            end
+        elseif gear.istier(2)>=2     %2p t12
+            gear.tierbonus(3)=1;
+            if gear.istier(3)>=2     %2p t12,t13
+                gear.tierbonus(5)=1;
+            end
+        elseif gear.istier(3)>=2     %2p t13
             gear.tierbonus(5)=1;
         end
-    elseif gear.istier(3)>=2     %2p t13
-        gear.tierbonus(5)=1;
     end
 end
