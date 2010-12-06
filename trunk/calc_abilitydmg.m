@@ -7,7 +7,7 @@ base=player_model('lvl',85,'race','Human','prof','');
 npc=npc_model(base);
 egs=ddb.gearset{2};  %1=pre-raid , 2=raid
 glyph=ddb.glyphset{3}; %SoT glyph only
-talent=ddb.talentset{1};  %0/31/10
+talent=ddb.talentset{2};  %0/31/10 w/HG
 
 %execution
 exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth','veng',1);
@@ -133,7 +133,7 @@ set(gca,'YTick',[0:5000:maxy],'YTickLabel',[int2str([0:5:maxy/1000]') repmat('k'
 set(gca,'XTickLabel',dmg_labels(kk))
 legend('Unglyphed','Glyphed','Location','NorthEast')
 xlabel('Ability')
-ylabel('Damage (including SoV procs)')
+ylabel('Damage (including SoT procs)')
 % 
 % 
 figure(22)
@@ -147,4 +147,4 @@ set(gca,'YTick',[0:5000:maxy],'YTickLabel',[int2str([0:5:maxy/1000]') repmat('k'
 set(gca,'XTickLabel',dmg_labels(kk))
 legend('Unglyphed','Glyphed','Location','NorthEast')
 xlabel('Ability')
-ylabel('Damage (including SoV procs and Sacred Duty)')
+ylabel('Damage (including SoT procs and Sacred Duty)')
