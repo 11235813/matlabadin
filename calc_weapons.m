@@ -2,18 +2,16 @@ clear;
 gear_db;
 def_db;
 
-
 base=player_model('race','Belf','prof','');
 npc=npc_model(base);
-gear_sample
-talent=ddb.talentset{3};  %0/31/5
-exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth');
+egs=ddb.gearset{2};  %1=pre-raid , 2=raid
+glyph=ddb.glyphset{1}; %all relevant glyphs
+talent=ddb.talentset{2};  %0/31/10 w/HG
+exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth','veng',0.6);
 buff=buff_model('mode',3);
-%invoke talents & default glyphs
-talents
-
-gear_stats
-stat_model
+talents;
+gear_stats;
+stat_model;
 
 %adjustments to make sure that nothing is capped
 %set melee hit to 4%, expertise to 18, mastery to 390 (16.5 mastery);
@@ -29,78 +27,51 @@ egs(1).exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
 egs(1).mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
 helm2=egs(1);
 
-
-%calculate final stats
-% ability_model
-% rotation_model
-
-
-weaplist1=[40345; %Broken Promise
-          47810; %CG
-          50290; %Falric
-          50268; %Rimefang
-          45110; %Titanguard
-          49303; %Gleaming QS
-          45876; %Shiver          
-          45442; %Sorthalis
-          47967; %CG (H)
-          48714; %Honor of the Fallen
-          49495; %Burnished QS
-          51010; %Facelifter
-          50760; %Bonebreaker
-          51795; %Troggbane
-          47506; %Silverwing Defender 
-          51869; %Facelifter (H)
-          50179; %Last Word
-          51937; %Bonebreaker (H)
-          51947; %Troggbane (H)
-          49997; %Mithrios
-          50708; %Last Word (heroic)
-          50738; %Mithrios (H)
+weaplist1=[56346; %Elementium Fang (Heroic)
+           56364; %Axe of the Eclipse (Heroic)
+           56430; %Sun Strike (Heroic)
+           56459; %Mace of Transformed Bone (Heroic)
+           59347; %Mace of Acrid Death
+           59521; %Soul Blade
+           62457; %Ravening Slicer
+           63533; %Fang of Twilight
+           65036; %Mace of Acrid Death (Heroic)
+           65094; %Fang of Twilight (Heroic)
+           65103; %Soul Blade (Heroic)
+           65171; %Cookie''s Tenderizer (Heroic)
+           65173; %Thief''s Blade (Heroic)
+           67602; %Elementium Gutslicer
           ];
 
-weaplist2=[51004; %Lockjaw
-           50771; %Frost Needle
-           51798; %Valius
-           51932; %Frost Needle (H)
-           51875; %Lockjaw (H)
-           50028; %Trauma
-           51944; %Valius (H)
-           50068; %Rigormortis
-           50428; %Royal Scepter of terenas
-           50685; %Trauma (H)
-           50704; %Rigormortis (H)
-           50734; %Royal Scepter of Terenas (H)
+weaplist2=[55065; %Elementium Hammer
+           56312; %Torturer''s Mercy (Heroic)
+           56433; %Blade of the Burning Sun (Heroic)
+           57872; %Scepter of Power (Heroic)
+           59459; %Andoros, Fist of the Dragon King
+           59463; %Maldo''s Sword Cane
+           62459; %Shimmering Morningstar
+           63680; %Twilight''s Hammer
+           65013; %Maldo''s Sword Cane (Heroic)
+           65017; %Andoros, Fist of the Dragon King (Heroic)
+           65090; %Twilight''s Hammer (Heroic)
           ];
       
           
-weaplist3=[49128; %HHM sword
-          49296; %Singed Viskag
-          50191; %Nighttime
-          47808; %The Lion's Maw
-          47816; %The Grinder
-          50303; %Black Icicle
-          45947; %Serilas
-          45463; %Vulmir
-          49501; %Tempered Viskag
-          47973; %The Grinder (H)
-          47966; %Lion's Maw (H)
-          47148; %Stormpike Cleaver
-          51021; %Soulbreaker
-          50787; %FGC
-          50050; %Cudgel of Furious Justice
-          50810; %Gutbuster
-          47526; %Remorseless (H)
-          47156; %STormpike Cleaver (H)
-          51858; %Soulbreaker (H)
-          51916; %FGC (H)
-          51521; %Wrathful Slicer
-          51893; %Gutbuster(H)
-          50412; %BvB
-          50012; %Havoc's Call 
-          51522; %Wrathful Longblade
-          50672; %BvB (H)   
-          50737; %Havoc's Call (heroic)
+weaplist3=[55067; %Elementium Bonesplitter
+           56266; %Lightning Whelk Axe (Heroic)
+           56353; %Heavy Geode Mace (Heroic)
+           56384; %Resonant Kris (Heroic)
+           56396; %Hammer of Sparks (Heroic)
+           59333; %Lava Spine
+           59443; %Crul''korak, the Lightning''s Arc
+           64885; %Scimitar of the Sirocco
+           65024; %Crul''korak, the Lightning''s Arc (Heroic)
+           65047; %Lava Spine (Heroic)
+           65164; %Cruel Barb (Heroic)
+           65166; %Buzz Saw (Heroic)
+           65170; %Smite''s Reaver (Heroic)
+           67605; %Forged Elementium Mindcrusher
+           68161; %Krol Decapitator
           ];
 weaplist=[weaplist1;weaplist2;weaplist3];
           
@@ -118,9 +89,9 @@ for m=1:M
     
     %calculate DPS below caps
     egs(1)=helm1;
-    gear_stats    
-    stat_model
-    ability_model
+    gear_stats;  
+    stat_model;
+    ability_model;
     rotation_model;
 
     dps1(m,1)=rot.coeff'*pridmg+rot.padps;
@@ -129,15 +100,14 @@ for m=1:M
     
     %calculate DPS at caps
     egs(1)=helm2;
-    gear_stats    
-    stat_model
-    ability_model
+    gear_stats; 
+    stat_model;
+    ability_model;
     rotation_model;
 
     dps1(m,2)=rot.coeff'*pridmg+rot.padps;
     dps2(m,2)=rot2.coeff'*pridmg+rot2.padps;    
 end
-
 
 pinfo.name=char(pinfo.name);
 pinfo.labels=[pinfo.name repmat(' ',length(pinfo.ilvl),2) int2str(pinfo.ilvl')];

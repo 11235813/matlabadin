@@ -45,35 +45,35 @@ rot.val.zeros=zeros(size(mdf.mehit));
 rot.labels={'SotR';'CS';'J';'AS';'HW';'Cons';'HotR';'2SotR';'Inq';'Seal';'HaNova';'HoW'};
 
 
-%% SotR>CS>J>AS>Cons>HW
+%% SotR>CS>J>AS>Cons>HW (execute range : SotR>CS>J>HoW)
 rot.numcasts=[...
     2.*(mdf.phcrit+mdf.mehit.*(mdf.rahit.*mdf.SacDut).*(mdf.phcritm-mdf.phcrit));... %SotR
     6.*rot.val.ones;...                                            %CS
     2.*rot.val.ones;...                                            %J
-    2.*P.CS.*rot.val.ones;...                                      %AS
-    max([2.*(1-P.CS)-0.5;rot.val.zeros]).*rot.val.ones;...         %HW
-    0.5.*rot.val.ones;...                                          %Cons
+    (2.*P.CS.*0.81).*rot.val.ones;...                              %AS
+    (max([2.*(1-P.CS)-0.5;rot.val.zeros]).*0.81).*rot.val.ones;... %HW
+    (0.5.*0.81).*rot.val.ones;...                                  %Cons
     0.*rot.val.ones;...                                            %HotR
     0.*rot.val.ones;...                                            %2SotR
     0.*rot.val.ones;...                                            %Inq
-    0.*rot.val.ones;...                                            %HoW
+    (0+2.*0.19).*rot.val.ones;...                                  %HoW
     8.*mdf.mehit+2.*mdf.rahit.*mdf.jseals.*rot.val.ones;...        %seal (CS+SotR+J)
     0.*rot.val.ones];                                              %HammerNova
 
-%% Inq>SotR>HotR>AS>Cons>HW
+%% Inq>SotR>HotR>J>AS>Cons>HW (execute range : Inq>SotR>HotR>J>HoW)
 rot1=rot;
 rot1.numcasts=[...
     1.*(mdf.phcrit+mdf.mehit.*(mdf.rahit.*(1-(1-mdf.SacDut).^2)).*(mdf.phcritm-mdf.phcrit));... %SotR
     0.*rot.val.ones;...                                            %CS
     2.*rot.val.ones;...                                            %J
-    2.*P.CS.*rot.val.ones;...                                      %AS
-    max([2.*(1-P.CS)-0.5;rot.val.zeros]).*rot.val.ones;...                         %HW
-    0.5.*rot.val.ones;...                                            %Cons
+    (2.*P.CS.*0.81).*rot.val.ones;...                              %AS
+    (max([2.*(1-P.CS)-0.5;rot.val.zeros]).*0.81).*rot.val.ones;... %HW
+    (0.5.*0.81).*rot.val.ones;...                                  %Cons
     6.*rot.val.ones;...                                            %HotR
     0.*rot.val.ones;...                                            %2SotR
     1.*rot.val.ones;...                                            %Inq
-    0.*rot.val.ones;...                                            %HoW
-    1.*mdf.mehit+2.*mdf.rahit.*mdf.jseals.*rot.val.ones;...        %seal (CS+SotR+J)
+    (0+2.*0.19).*rot.val.ones;...                                  %HoW
+    1.*mdf.mehit+2.*mdf.rahit.*mdf.jseals.*rot.val.ones;...        %seal (SotR+J)
     6.*rot.val.ones];                                              %HammerNova
 
 %% Alternative rotation with HotR instead of CS
@@ -81,13 +81,13 @@ rot2=rot;
 rot2.numcasts=[2.*(mdf.phcrit+mdf.mehit.*(mdf.rahit.*mdf.SacDut).*(mdf.phcritm-mdf.phcrit));... %SotR
     0.*rot.val.ones;...                                            %CS
     2.*rot.val.ones;...                                            %J
-    2.*P.HotR.*rot.val.ones;...                                    %AS
-    max([2.*(1-P.HotR)-0.5;0]).*rot.val.ones;...                   %HW
-    0.5.*rot.val.ones;...                                          %Cons
+    (2.*P.HotR.*0.81).*rot.val.ones;...                            %AS
+    (max([2.*(1-P.HotR)-0.5;0]).*0.81).*rot.val.ones;...           %HW
+    (0.5.*0.81).*rot.val.ones;...                                  %Cons
     6.*rot.val.ones;...                                            %HotR
     0.*rot.val.ones;...                                            %2SotR
     0.*rot.val.ones;...                                            %Inq
-    0.*rot.val.ones;...                                            %HoW
+    (0+2.*0.19).*rot.val.ones;...                                  %HoW
     2.*mdf.mehit+2.*mdf.rahit.*mdf.jseals.*rot.val.ones;...        %seal (SotR+J)
     6.*rot.val.ones];                                              %HammerNova
 
@@ -111,8 +111,8 @@ aoe.numcasts=[0.*rot.val.ones;...                                     %SotR
 %Inq handling
 rot.Inq=0;
 rot1.Inq=(base.lvl==85);
-rot1.Inqmod=(1+0.3.*rot1.Inq.*[1 0 0.5 0.5 0.5 0.5 0 0 0 1 2/3 4/6]'); %uptime depends on ability
-rot1.InqUp=(1+0.3.*rot1.Inq.*2/3); %66.7% uptime
+rot1.Inqmod=(1+0.3.*rot1.Inq.*[1 0 0.5 0.5 0.5 0.5 0 0 0 0.5 2/3 4/6]'); %uptime depends on ability
+rot1.InqUp=(1+0.3.*rot1.Inq.*(12./(18+1.5.*rot.xtragcd)));
 rot2.Inq=0;
 aoe.Inq=(base.lvl==85);
 aoe.Inqmod=(1+0.3.*aoe.Inq.*[1 0 1 1 1 1 0 1 0 1 1 1]');
@@ -120,7 +120,7 @@ aoe.InqUp=(1+0.3.*aoe.Inq); %100% uptime
 
 %Generate weighting coefficients (# casts per second)
 rot.coeff=rot.numcasts./repmat((18+1.5.*2.*rot.xtragcd),size(rot.numcasts,1),1);
-rot1.coeff=rot1.numcasts.*repmat(rot1.Inqmod,1,size(rot.coeff,2))./repmat((18+1.5.*1.*rot.xtragcd),size(rot1.numcasts,1),1);
+rot1.coeff=rot1.numcasts.*repmat(rot1.Inqmod,1,size(rot.coeff,2))./repmat((18+1.5.*rot.xtragcd),size(rot1.numcasts,1),1);
 rot2.coeff=rot2.numcasts./repmat((18+1.5.*2.*rot.xtragcd),size(rot2.numcasts,1),1);
 aoe.coeff=aoe.numcasts.*repmat(aoe.Inqmod,1,size(rot.coeff,2))./18;    
 

@@ -10,11 +10,11 @@ base=player_model('race','Human');
 npc=npc_model(base);
 
 %invoke execution_model
-exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','SoT','veng',0.5);
+exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','SoT','veng',1.0);
 
 
 %load gear set
-gear_sample
+gear_sample;
 
 %calculate relevant stats
 gear_stats;
@@ -23,7 +23,7 @@ gear_stats;
 buff=buff_model;
 
 %invoke talents & glyphs
-talent=ddb.talentset{3};talents;
+talent=ddb.talentset{2};talents;
 
 %calculate final stats
 stat_model;
