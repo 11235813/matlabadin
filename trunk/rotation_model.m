@@ -25,37 +25,33 @@ p.CS=1-q.CS;
 q.HotR=(1-mdf.GrCr).^3;
 p.HotR=1-q.HotR;
 %compute average AS cast count
-cols(1,:,1)=[1 0];cols(1,:,2)=[1 0];
+% cols(1,:,1)=[1 0];cols(1,:,2)=[1 0];
+% for mmmm=2:50
+% tmprot.CS=p.CS.*cols(mmmm-1,1,1)+cols(mmmm-1,2,1);cols(mmmm,:,1)=[tmprot.CS 1-tmprot.CS];
+% tmprot.HotR=p.HotR.*cols(mmmm-1,1,2)+cols(mmmm-1,2,2);cols(mmmm,:,2)=[tmprot.HotR 1-tmprot.HotR];
+% end
+clear tmprot
+tmprot.CScols(1,:)=ones(size(q.CS));
+tmprot.HotRcols(1,:)=ones(size(q.HotR));
 for mmmm=2:50
-tmpvar.CS=p.CS.*cols(mmmm-1,1,1)+cols(mmmm-1,2,1);cols(mmmm,:,1)=[tmpvar.CS 1-tmpvar.CS];
-tmpvar.HotR=p.HotR.*cols(mmmm-1,1,2)+cols(mmmm-1,2,2);cols(mmmm,:,2)=[tmpvar.HotR 1-tmpvar.HotR];
+tmprot.CScols(mmmm,:)=p.CS.*tmprot.CScols(mmmm-1,:)+(1-tmprot.CScols(mmmm-1,:));
+tmprot.HotRcols(mmmm,:)=p.HotR.*tmprot.HotRcols(mmmm-1,:)+(1-tmprot.HotRcols(mmmm-1,:));
 end
-P.CS=mean(cols(length(cols)-1:length(cols),1,1));
-P.HotR=mean(cols(length(cols)-1:length(cols),1,2));
+P.CS=mean(tmprot.CScols(size(tmprot.CScols,1)-1:size(tmprot.CScols,1),:));
+P.HotR=mean(tmprot.HotRcols(size(tmprot.HotRcols,1)-1:size(tmprot.HotRcols,1),:));
 
 rot.val.ones=ones(size(mdf.mehit));
+rot.val.zeros=zeros(size(mdf.mehit));
 rot.labels={'SotR';'CS';'J';'AS';'HW';'Cons';'HotR';'2SotR';'Inq';'Seal';'HaNova';'HoW'};
-%% HW>Cons
-rot.numcasts=[2.*(mdf.phcrit+mdf.mehit.*(mdf.rahit.*mdf.SacDut).*(mdf.phcritm-mdf.phcrit));... %SotR
-    6.*rot.val.ones;...                                            %CS
-    2.*rot.val.ones;...                                            %J
-    2.*P.CS.*rot.val.ones;...                                      %AS
-    max([2.*(1-P.CS);0]).*rot.val.ones;...                         %HW
-    0.*rot.val.ones;...                                            %Cons
-    0.*rot.val.ones;...                                            %HotR
-    0.*rot.val.ones;...                                            %2SotR
-    0.*rot.val.ones;...                                            %Inq
-    0.*rot.val.ones;...                                            %HoW
-    8.*mdf.mehit+2.*mdf.rahit.*mdf.jseals.*rot.val.ones;...        %seal (CS+SotR+J)
-    0.*rot.val.ones];                                              %HammerNova
 
-%% Cons>HW
-rot1=rot;
-rot1.numcasts=[2.*(mdf.phcrit+mdf.mehit.*(mdf.rahit.*mdf.SacDut).*(mdf.phcritm-mdf.phcrit));... %SotR
+
+%% SotR>CS>J>AS>Cons>HW
+rot.numcasts=[...
+    2.*(mdf.phcrit+mdf.mehit.*(mdf.rahit.*mdf.SacDut).*(mdf.phcritm-mdf.phcrit));... %SotR
     6.*rot.val.ones;...                                            %CS
     2.*rot.val.ones;...                                            %J
     2.*P.CS.*rot.val.ones;...                                      %AS
-    max([2.*(1-P.CS)-0.5;0]).*rot.val.ones;...                     %HW
+    max([2.*(1-P.CS)-0.5;rot.val.zeros]).*rot.val.ones;...         %HW
     0.5.*rot.val.ones;...                                          %Cons
     0.*rot.val.ones;...                                            %HotR
     0.*rot.val.ones;...                                            %2SotR
@@ -64,36 +60,24 @@ rot1.numcasts=[2.*(mdf.phcrit+mdf.mehit.*(mdf.rahit.*mdf.SacDut).*(mdf.phcritm-m
     8.*mdf.mehit+2.*mdf.rahit.*mdf.jseals.*rot.val.ones;...        %seal (CS+SotR+J)
     0.*rot.val.ones];                                              %HammerNova
 
-rot.coeff=rot.numcasts./repmat((18+1.5.*2.*rot.xtragcd),size(rot.numcasts,1),1);
-rot1.coeff=rot1.numcasts./repmat((18+1.5.*2.*rot.xtragcd),size(rot1.numcasts,1),1);
-
-rot.acdps=sum(rot.coeff'*pridmg);
-rot1.acdps=sum(rot1.coeff'*pridmg);
-
-rot.padps=0;
-rot1.padps=0;
-if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
-    rot.padps=rot.padps+dps.Censure;
-    rot1.padps=rot1.padps+dps.Censure;
-end
-
-%aa and seal damage
-rot.padps=rot.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing;
-rot1.padps=rot1.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing;
-
-rot.totdps=rot.acdps+rot.padps;
-rot1.totdps=rot1.acdps+rot1.padps;
-
-%Inq handling
-rot.Inq=0;
-rot1.Inq=0;
-
-%coeffs for ability damage sim - will implement later
-% if length(rot.val.ones)==1
-%     rot.admgcoeffs=(rot.numcasts+[0 0 0 0 0 0.5 6 0 0 0 6 0]')./(18+1.5.*2.*rot.xtragcd);
-% end
+%% Inq>SotR>HotR>AS>Cons>HW
+rot1=rot;
+rot1.numcasts=[...
+    1.*(mdf.phcrit+mdf.mehit.*(mdf.rahit.*(1-(1-mdf.SacDut).^2)).*(mdf.phcritm-mdf.phcrit));... %SotR
+    0.*rot.val.ones;...                                            %CS
+    2.*rot.val.ones;...                                            %J
+    2.*P.CS.*rot.val.ones;...                                      %AS
+    max([2.*(1-P.CS)-0.5;rot.val.zeros]).*rot.val.ones;...                         %HW
+    0.5.*rot.val.ones;...                                            %Cons
+    6.*rot.val.ones;...                                            %HotR
+    0.*rot.val.ones;...                                            %2SotR
+    1.*rot.val.ones;...                                            %Inq
+    0.*rot.val.ones;...                                            %HoW
+    1.*mdf.mehit+2.*mdf.rahit.*mdf.jseals.*rot.val.ones;...        %seal (CS+SotR+J)
+    6.*rot.val.ones];                                              %HammerNova
 
 %% Alternative rotation with HotR instead of CS
+rot2=rot;
 rot2.numcasts=[2.*(mdf.phcrit+mdf.mehit.*(mdf.rahit.*mdf.SacDut).*(mdf.phcritm-mdf.phcrit));... %SotR
     0.*rot.val.ones;...                                            %CS
     2.*rot.val.ones;...                                            %J
@@ -107,24 +91,8 @@ rot2.numcasts=[2.*(mdf.phcrit+mdf.mehit.*(mdf.rahit.*mdf.SacDut).*(mdf.phcritm-m
     2.*mdf.mehit+2.*mdf.rahit.*mdf.jseals.*rot.val.ones;...        %seal (SotR+J)
     6.*rot.val.ones];                                              %HammerNova
 
-rot2.coeff=rot2.numcasts./repmat((18+1.5.*2.*rot.xtragcd),size(rot2.numcasts,1),1);
-rot2.acdps=sum(rot2.coeff'*pridmg);
-
-rot2.padps=0;
-if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
-    rot2.padps=rot2.padps+dps.Censure;
-end
-
-%aa and seal damage
-rot2.padps=rot2.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing;
-rot2.totdps=rot2.acdps+rot2.padps;
-
-%Inq handling
-rot2.Inq=0;
-
 %% AoE rotation - assuming we replace CS with HotR and cast Cons every 36s
-aoe.Inq=(base.lvl==85);
-aoe.Inqmod=(1+0.3.*aoe.Inq).*[1 0 1 1 1 1 0 1 0 1 1 1]';
+aoe=rot;
 aoe.numcasts=[0.*rot.val.ones;...                                     %SotR
               0.*rot.val.ones;...                                     %CS
               2.*rot.val.ones;...                                     %J
@@ -135,17 +103,62 @@ aoe.numcasts=[0.*rot.val.ones;...                                     %SotR
               0.*rot.val.ones;...                                     %2SotR
               2.*rot.val.ones;...                                     %Inq
               0.*rot.val.ones;...                                     %HoW
-              6.*mdf.mehit+2.*mdf.rahit.*mdf.jseals.*rot.val.ones;... %seal
+              2.*mdf.mehit+2.*mdf.rahit.*mdf.jseals.*rot.val.ones;... %seal
               6.*rot.val.ones];                                       %HammerNova
-          
-aoe.coeff=aoe.numcasts./18;          
-aoe.acdps=sum((aoe.coeff.*repmat(aoe.Inqmod,1,size(aoe.coeff,2)))'*pridmg);
 
+%% Postprocessing
+
+%Inq handling
+rot.Inq=0;
+rot1.Inq=(base.lvl==85);
+rot1.Inqmod=(1+0.3.*rot1.Inq.*[1 0 0.5 0.5 0.5 0.5 0 0 0 1 2/3 4/6]'); %uptime depends on ability
+rot1.InqUp=(1+0.3.*rot1.Inq.*2/3); %66.7% uptime
+rot2.Inq=0;
+aoe.Inq=(base.lvl==85);
+aoe.Inqmod=(1+0.3.*aoe.Inq.*[1 0 1 1 1 1 0 1 0 1 1 1]');
+aoe.InqUp=(1+0.3.*aoe.Inq); %100% uptime
+
+%Generate weighting coefficients (# casts per second)
+rot.coeff=rot.numcasts./repmat((18+1.5.*2.*rot.xtragcd),size(rot.numcasts,1),1);
+rot1.coeff=rot1.numcasts.*repmat(rot1.Inqmod,1,size(rot.coeff,2))./repmat((18+1.5.*1.*rot.xtragcd),size(rot1.numcasts,1),1);
+rot2.coeff=rot2.numcasts./repmat((18+1.5.*2.*rot.xtragcd),size(rot2.numcasts,1),1);
+aoe.coeff=aoe.numcasts.*repmat(aoe.Inqmod,1,size(rot.coeff,2))./18;    
+
+%Active DPS component is the weighted average of pridmg according to coeff
+% (# casts per second)*(dmg per cast) = (dmg per second due to active srcs)
+rot.acdps=sum(rot.coeff'*pridmg);
+rot1.acdps=sum(rot1.coeff'*pridmg);
+rot2.acdps=sum(rot2.coeff'*pridmg);
+aoe.acdps=sum(aoe.coeff'*aoedmg);
+
+%Initialize passive DPS component
+rot.padps=0;
+rot1.padps=0;
+rot2.padps=0;
 aoe.padps=0;
+
+%add Censure
 if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
-    aoe.padps=aoe.padps+dps.Censure;
+    rot.padps=rot.padps+dps.Censure;
+    rot1.padps=rot1.padps+dps.Censure.*rot1.InqUp;
+    rot2.padps=rot2.padps+dps.Censure;
+    aoe.padps=aoe.padps+dps.Censure.*aoe.InqUp;
 end
 
-%aa and seal damage
-aoe.padps=aoe.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing;
+
+%add AA damage and seal damage due to AA
+rot.padps=rot.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing;
+rot1.padps=rot1.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing.*rot1.InqUp;
+rot2.padps=rot2.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing;
+aoe.padps=aoe.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing.*aoe.InqUp;
+
+%Calculate Total Dps (sum of active and passive components)
+rot.totdps=rot.acdps+rot.padps;
+rot1.totdps=rot1.acdps+rot1.padps;
+rot2.totdps=rot2.acdps+rot2.padps;
 aoe.totdps=aoe.acdps+aoe.padps;
+
+%coeffs for ability damage sim - will implement later (maybe?)
+% if length(rot.val.ones)==1
+%     rot.admgcoeffs=(rot.numcasts+[0 0 0 0 0 0.5 6 0 0 0 6 0]')./(18+1.5.*2.*rot.xtragcd);
+% end

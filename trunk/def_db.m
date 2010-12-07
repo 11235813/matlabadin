@@ -110,8 +110,8 @@ ddb.talentset{2}=temptree;
 %% Glyphs
 %standard load-out
 tempglyphs.prime=[0 0 1 0 1 1 0];
-tempglyphs.minor=[0 1 0 0 1 0 0];
-tempglyphs.major=[0 0 0 0 0 0 0 0 0 0];
+tempglyphs.major=[0 1 0 0 1 0 0 0 0 0];
+tempglyphs.minor=[0 0 0 0 0 0 0];
 ddb.glyphset{1}=tempglyphs;
 %no glyphs
 tempglyphs.prime=[0 0 0 0 0 0 0];

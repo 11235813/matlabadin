@@ -201,7 +201,7 @@ pridmg  =[raw.ShieldoftheRighteous.*val.ones;
 aoedmg  =[raw.ShieldoftheRighteous.*val.ones;
           dmg.CrusaderStrike.*val.ones;
           dmg.Judgement.*val.ones;
-          dmg.AvengersShield.*min([exec.npccount; 1+2.*(mdf.glyphAS==1)]).*val.ones;
+          dmg.AvengersShield./mdf.glyphAS.*min([exec.npccount; 3]).*val.ones;
           dmg.HolyWrath.*exec.npccount.*val.ones;
           dmg.Consecration.*min([exec.npccount; 10]).*val.ones;  %hand-wavy AoE damage cap
           dmg.HammeroftheRighteous.*val.ones;

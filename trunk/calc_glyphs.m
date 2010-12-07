@@ -5,13 +5,12 @@
 clear;
 gear_db;
 def_db;
-
-
-base=player_model('race','Human','prof','');
+base=player_model('race','Human');
 npc=npc_model(base);
-gear_sample
-exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth');
-buff=buff_model('mode',1);
+exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth','veng',1);
+buff=buff_model;
+talent=ddb.talentset{1}; %0/31/10, no HG
+egs=ddb.gearset{2};  %1=pre-raid , 2=raid
 
 
 %% set up our glyph configurations
@@ -70,81 +69,93 @@ name{k}='AS';
 
 %Calculate a sequence for this build, we'll use this sequence for all of
 %the talents that don't have a direct effect on the rotation 
-%(i.e. all but GC).
-clear glyph
-glyph=gtree(1);
-%invoke talents & glyphs
-talents
-%calculate relevant stats
-gear_stats
-gear.exp=99;consum.exp=0;
-%calculate final stats
-stat_model
-ability_model
-rotation_model
 
-totdps(1)=rot.totdps;
-totdps1(1)=rot1.totdps;
-totdps2(1)=rot2.totdps;
-tabledps(1,:)=[totdps totdps];
+tmpvar.vengap=[1 1 0.3 0.3];
+tmpvar.hitcap=[0 1   0   1];
 
-% for m=2:length(tree)-2  %everything except GC & SD
-for m=2:length(gtree) %everything
-   
+for n=1:length(tmpvar.vengap);
 
-    clear glyph
-    glyph=gtree(m);
-    %invoke talents & glyphs
-    talents
-    %calculate relevant stats
-    gear_stats
-    gear.exp=99;consum.exp=0;
-    %calculate final stats
-    stat_model
-    ability_model
-    rotation_model;
-    
-    totdps(m)=rot.totdps;
-    totdps1(m)=rot1.totdps;
-    totdps2(m)=rot2.totdps;
-    
-    if strcmp(name(m),'HotR')
-        tabledps(m,:)=[totdps2(1) totdps2(m)];
-    elseif strcmp(name(m),'Cons')
-        tabledps(m,:)=[totdps1(1) totdps1(m)];
-    else
-        tabledps(m,:)=[totdps(1) totdps(m)];
+    exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth','veng',tmpvar.vengap(n));
+
+
+    for m=1:length(gtree) %everything
+
+
+        clear glyph
+        glyph=gtree(m);
+        %invoke talents & glyphs
+        talents
+        %calculate relevant stats
+        gear_stats
+
+        %artificially inflating hit and expertise to 8% and 36
+        if tmpvar.hitcap(n)==1
+            stat_conversions;stat_model;
+            gear.hit=8*cnv.hit_phhit;
+            gear.exp=(26-base.exp)*cnv.exp_exp;
+        end
+        %calculate final stats
+        stat_model
+        ability_model
+        rotation_model;
+
+        totdps(m)=rot.totdps;
+        totdps1(m)=rot1.totdps;
+        totdps2(m)=rot2.totdps;
+        totdpsa(m)=aoe.totdps;
+
+        if strcmp(name(m),'HotR')
+            tabledps(m,:)=[totdps2(m) totdps2(1)];
+            tabledps1(m,:)=[totdps1(m) totdps1(1)];
+            tabledpsa(m,:)=[totdpsa(m) totdpsa(1)];
+        else
+            tabledps(m,:)=[totdps(m) totdps(1)];
+            tabledps1(m,:)=[totdps1(m) totdps1(1)];
+            tabledpsa(m,:)=[totdpsa(m) totdpsa(1)];
+        end
+
     end
-    
+
+
+    dpspg=diff(tabledps,1,2);
+    dpspg1=diff(tabledps1,1,2);
+    dpspga=diff(tabledpsa,1,2);
+
+    dpspgall=[dpspg dpspg1];
+
+    %% table output
+    spacer= repmat(' ',length(name),5);    
+    tmpvar.header=[ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit,'%2.1f') '% hit, ' num2str(player.exp,'%2.1f') ' expertise'];
+    tmpvar.data=[char(name) spacer num2str(dpspg,'%2.1f') spacer num2str(dpspg1,'%2.1f')];
+    spacer2=repmat(' ',size(tmpvar.data,1),length(tmpvar.header)-length(tmpvar.data));
+    tmpvar.output=[tmpvar.header;[tmpvar.data spacer2]];
+    tmpvar.output
+
+
+    %% plots
+    % figure(40)
+    % set(gcf,'Position',[428 92 568 414])
+    % bar20=barh(dpspgall(2:length(dpspg),:),'BarWidth',1,'BarLayout','grouped');
+    % % set(bar20(2),'FaceColor',[0.749 0.749 0]);
+    % ylim([0.5 7.5])
+    % set(gca,'YTickLabel',name(2:length(name)))
+    % legend('9C9','ISH9','AoE (IH9)','Location','Best')
+    % xlabel('DPS')
+    % title([ num2str(player.phhit,'%2.1f') '% hit, ' num2str(player.exp,'%2.1f') ' expertise'])
+    % % ylabel('Damage')
+
+    %sorted
+    [dpspgsorted ind]=sort(dpspg);
+    dpsplotsorted=dpspgall(ind,:);
+
+    figure(40+n)
+
+    set(gcf,'Position',[428 92 568 414])
+    bar20=barh(dpsplotsorted(2:length(dpspg),:),'BarWidth',1,'BarLayout','grouped');
+    set(bar20(2),'FaceColor',[0.749 0.749 0]);
+    ylim([0.5 7.5])
+    set(gca,'YTickLabel',name(ind(2:length(name))))
+    legend('9C9','ISH9','Location','Best')
+    xlabel('DPS')
+    title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit,'%2.1f') '% hit, ' num2str(player.exp,'%2.1f') ' expertise'])
 end
-
-
-dpspg=-diff(tabledps')';
-
-%% table output
-[char(name) repmat(' ',length(name),5) num2str(dpspg,'%2.1f')]
-
-
-%% plots
-figure(40)
-set(gcf,'Position',[428 92 568 414])
-bar20=barh(dpspg(2:length(dpspg)),'BarWidth',0.5,'BarLayout','stacked');
-% set(bar20(2),'FaceColor',[0.749 0.749 0]);
-ylim([0.5 7.5])
-set(gca,'YTickLabel',name(2:length(name)))
-% legend('Unglyphed','Glyphed','Location','NorthEast')
-xlabel('DPS')
-% ylabel('Damage')
-
-%sorted
-[dpspgsorted ind]=sort(dpspg);
-
-figure(41)
-
-set(gcf,'Position',[428 92 568 414])
-bar20=barh(dpspgsorted(2:length(dpspg)),'BarWidth',0.5,'BarLayout','stacked');
-% set(bar20(2),'FaceColor',[0.749 0.749 0]);
-ylim([0.5 7.5])
-set(gca,'YTickLabel',name(ind(2:length(name))))
-% legend('Unglyphed','Glyphed','Location','NorthEast')
-xlabel('DPS')

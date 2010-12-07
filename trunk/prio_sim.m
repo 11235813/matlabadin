@@ -165,23 +165,30 @@ for m=1:N
                 if sum(strcmp(char(pri.alabel(aid)),{'SotR';'2SotR';'1SotR'}))>0
                     %check for misses
                     if rand<target.avoid/100
-                        %if we miss, set the flag and color and nullify
-                        %procs
+                        %if we miss, set the flag and color,
+                        %nullify procs and SD
                         sequence.sotrmiss(qq)=1;
                         sequence.pmatrix(:,qq)=zeros(size(sequence.pmatrix(:,qq)));
 %                         sequence.color(qq)=2;
-
-                    elseif dur.SD>0  %otherwise, we hit - check for SD crits
+                        
+                        %forces SD falloff before next time step to account
+                        %for using up the SD proc
+                        dur.SD=0.01; 
+                        
+                    %otherwise, we hit - check for SD crits
+                    elseif dur.SD>0  
 %                         sequence.color(qq)=1;
                         sequence.sotrmiss(qq)=0;
                         hopo=0;
+                        %set SD to a distinctive value that will fall off
+                        %in the next time step to use up SD proc
+                        dur.SD=0.31415; %pi/10 for kicks
 
                     else %no SD, just a regular hit
                         sequence.sotrmiss(qq)=0;
                         hopo=0;
                     end
                       
-                    dur.SD=0.3;
                 else %not SotR, mark as a miss (irrelevant, but necessary if we guessed array lengths incorrectly)
                     sequence.sotrmiss(qq)=0;
                 end
@@ -294,6 +301,10 @@ sequence.empties=sum(sequence.castid==0);
 temp=find(sequence.castid(1:length(sequence.castid)-1)==0); %all but last one
 sequence.emptytime=sum(sequence.casttime(temp+1)-sequence.casttime(temp));
 sequence.emptypct=100.*sequence.emptytime./sequence.totaltime;
+
+%informational fields
+sequence.smiss=sum(sequence.sotrmiss);
+sequence.ascast=sequence.numcasts(4);
 
 % %"passive" dps (melee+seals+censure) - in case I decide to move this here
 % 
