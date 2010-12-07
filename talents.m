@@ -84,7 +84,7 @@ talent.protpoints=sum(sum(talent.prot));
 if exist('talent')==0 || isfield(talent,'ret')==0
     talent.ret=zeros(2,4);
     talent.ret=[0 3 2 0; ...
-                0 0 0 0];
+                0 3 0 2];
 end
 talent.EyeforanEye=talent.ret(1,1);
 talent.Crusade=talent.ret(1,2);
@@ -99,7 +99,7 @@ talent.retpoints=sum(sum(talent.ret));
 
 %% Glyphs (logical)
 if exist('glyph')==0 || isfield(glyph,'prime')==0
-    glyph.prime=[1 0 0 0 1 1 0];
+    glyph.prime=[0 0 1 0 1 1 0];
 end
 
 % Prime
@@ -112,7 +112,7 @@ glyph.ShieldoftheRighteous=glyph.prime(6);
 glyph.WordofGlory=glyph.prime(7);
 
 if exist('glyph')==0 || isfield(glyph,'major')==0
-    glyph.major=[0 0 0 0 1 0 0 0 0 0];
+    glyph.major=[0 1 0 0 1 0 0 0 0 0];
 end
 
 % Major

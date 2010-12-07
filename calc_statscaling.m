@@ -2,7 +2,7 @@
 %stats
 
 
-
+%% Old comment section, irrelevant now
 %The construction of this module is that we have a coefficient matrix
 %(cmat) which is an NxM matrix of ability coefficients Cij for each of the
 %M abilities in N different rotations.  We thus want to construct an MxL
@@ -13,30 +13,27 @@
 %
 %When using rotation_model, cmat is 1xM, which simplifies a lot of things.
 
-
-%% construct adam
+%% Setup tasks
 clear;
 gear_db;
 def_db;
-
-% lvl 85
-base=player_model('race','Human','prof','');
+base=player_model('race','Human');
 npc=npc_model(base);
-% glyph=ddb.glyphset{1}; %no glyphs
+exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth','veng',1);
+buff=buff_model;
+egs=ddb.gearset{2};  %1=pre-raid , 2=raid
+glyph=ddb.glyphset{1}; %Default, HotR/SoT/ShoR, Cons/AS
 talent=ddb.talentset{1};  %0/31/10
 egs=ddb.gearset{2};
-%execution
-exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth','veng',0.8);
-%activate buffs
-buff=buff_model('mode',3);
-%invoke talents & glyphs
+
 talents
 %calculate relevant stats
 gear_stats
 %adjustments to make sure that nothing is capped
-gear.hit=min([gear.hit; 150.*ones(size(gear.hit))]);
-gear.exp=min([gear.exp; 90.*ones(size(gear.exp))]);
-gear.mast=min([gear.mast; 400.*ones(size(gear.mast))]);
+stat_conversions;
+gear.hit=min([gear.hit; (8*cnv.hit_phhit-30).*ones(size(gear.hit))]);
+gear.exp=min([gear.exp; ((26-13).*cnv.exp_exp-30).*ones(size(gear.exp))]);
+% gear.mast=min([gear.mast; 400.*ones(size(gear.mast))]);
 
 %calculate final stats
 stat_model
@@ -87,6 +84,7 @@ xlim([min(player.armorystr) max(player.armorystr)])
 legend(stat,'Location','NorthEast')
 xlabel('Armory Strength')
 ylabel('DPS per 10 itemization points')
+title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit,'%2.1f') '% hit, ' num2str(player.exp,'%2.1f') ' expertise'])
 
 %% Hit graph
 %reset extra structure
@@ -121,7 +119,7 @@ xlim([min(player.phhit) max(player.phhit)])
 legend(stat,'Location','NorthEast')
 xlabel('Melee hit % against lvl 80')
 ylabel('DPS per 10 itemization points')
-
+title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.exp(1),'%2.1f') ' expertise'])
 
 %% Exp graph
 %reset extra structure
@@ -156,7 +154,7 @@ xlim([min(player.exp) max(player.exp)])
 legend(stat,'Location','NorthEast')
 xlabel('Expertise skill')
 ylabel('DPS per 10 itemization points')
-
+title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit(1),'%2.1f') '% hit'])
 
 %% HotR Plots
 
@@ -168,7 +166,8 @@ xlim([min(xS) max(xS)])
 legend(stat,'Location','NorthEast')
 xlabel('Armory Strength')
 ylabel('DPS per 10 itemization points')
-
+title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit,'%2.1f') '% hit, ' num2str(player.exp,'%2.1f') ' expertise'])
+    
 figure(61)
 set(gcf,'Position',[290    92   706   414])
 plot(xH,diffdpsH2')
@@ -176,7 +175,8 @@ xlim([min(xH) max(xH)])
 legend(stat,'Location','NorthEast')
 xlabel('Melee hit % against lvl 80')
 ylabel('DPS per 10 itemization points')
-
+title([ num2str(exec.veng*100,'%2.1f') '% Veng, '  num2str(player.exp(1),'%2.1f') ' expertise'])
+    
 figure(62)
 set(gcf,'Position',[290    92   706   414])
 plot(xE,diffdpsE2')
@@ -184,3 +184,4 @@ xlim([min(xE) max(xE)])
 legend(stat,'Location','NorthEast')
 xlabel('Expertise skill')
 ylabel('DPS per 10 itemization points')
+title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit(1),'%2.1f') '% hit'])
