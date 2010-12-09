@@ -185,3 +185,15 @@ set(gca,'YTickLabel',name(ind(2:length(name))))
 legend('9C9','ISH9','AoE (IH9)','Location','Best')
 xlabel('DPS per point')
 title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit,'%2.1f') '% hit, ' num2str(player.exp,'%2.1f') ' expertise'])
+
+%for talent spec guide
+figure(32)
+set(gcf,'Position',[428 128 728 378])
+bar31=barh(dpsplotsorted(2:length(dpsppt),1),'BarWidth',0.5,'BarLayout','grouped');
+% set(bar31(2),'FaceColor',[0.749 0.749 0]);
+ylim([0.5 10.5])
+set(gca,'YTickLabel',name(ind(2:length(name))))
+legend('939','Location','Best')
+xlabel('DPS per point')
+title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit,'%2.1f') '% hit, ' ...
+    num2str(player.exp,'%2.1f') ' expertise'])

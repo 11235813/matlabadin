@@ -45,10 +45,10 @@ if nargin>1
         name=varargin{i};         
         value=varargin{i+1};
         switch name
-            case {'N'}
-                N=value;
             case {'dt'}
                 dt=value;
+            case {'N'}
+                N=value;
             case {'hopo', 'HP'}
                 hopo=value;
         end
@@ -56,10 +56,11 @@ if nargin>1
 end
 
 %default values of the input arguments
-if isempty(N)==1 N=300; end;  %number of timesteps to evaluate
 if isempty(dt)==1 dt=0.5; end;  %work in timesteps of 0.5 second for now, can adjust this later
+if isempty(N)==1 N=300; end;  %number of timesteps to evaluate
 if isempty(hopo)==1 hopo=0; end;
 
+M=floor(N.*1.5./dt);
 %maintenance, in case we're running this several times
 clear t sequence
 
@@ -306,47 +307,9 @@ sequence.emptypct=100.*sequence.emptytime./sequence.totaltime;
 sequence.smiss=sum(sequence.sotrmiss);
 sequence.ascast=sequence.numcasts(4);
 
-% %"passive" dps (melee+seals+censure) - in case I decide to move this here
-% 
-% sequence.padps=0;
-%     
-% %assume a 5-stack of SoT (if applicable).
-% if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
-%     sequence.padps=sequence.padps+dps.Censure.*(1+sum(Inqmod)./length(Inqmod));
-% 
-% end
-% 
-% %aa and seal damage
-% sequence.padps=sequence.padps+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+sum(Inqmod)./length(Inqmod))./player.wswing;
 
-%for the moment, only worry about this if damage values are scalars
-%later on we might 
-if min(size(pri.admg))==1
-
-    sequence.dmgbysrc=[pri.admg; pri.pdmg].*sequence.effcasts;
-    sequence.dpsbysrc=[pri.admg; pri.pdmg].*sequence.coeff;
-
-    sequence.dmg=sum(sequence.dmgbysrc);
-    sequence.dps=sum(sequence.dpsbysrc);
-
-end
+%all damage calculations now taken care of in postprocessing.
 
 sequence.name=pri.name;
 sequence.pri=pri;
-
-%this is from the old version, leaving it here so that I can re-code the
-%rotation drawing module later on
-%create rotation structure
-% rs.seq=seq;
-% rs.names(pri.ids)=pri.labels;
-% rs.cds(pri.ids)=pri.cds;
-% rs.times=casttime;
-% rs.color=color;
-% % rs.cast=cast;
-% % rs.gcds=prio.gcds;
-
-% rotation_drawer(rs,1);
-
-%more debugging code
-% figure(2);plot(t,cas,t,ccs);
 end
