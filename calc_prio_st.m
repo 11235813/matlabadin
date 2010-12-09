@@ -11,23 +11,23 @@ exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','SoT','veng',1);
 buff=buff_model;
 egs=ddb.gearset{2};  %1=pre-raid , 2=raid
 talent=ddb.talentset{1}; %0/31/10, no HG
-glyph=ddb.glyphset{1}; %Default, HotR/SoT/ShoR, Cons/AS
+glyph=ddb.glyphset{4}; %Default, SoT/ShoR/(HotR & CS), Cons/AS
 gear_stats
 talents
 
 stat_model
 
 %artificially inflating hit and expertise to 8% and 26
-% gear.hit=8*cnv.hit_phhit;
-% gear.exp=(26-10-base.exp)*cnv.exp_exp;
-% stat_model
+gear.hit=8*cnv.hit_phhit;
+gear.exp=(26-10-base.exp)*cnv.exp_exp;
+stat_model
 
 ability_model
 prio_model;
 
 %% Generate coefficients for each priority queue
-N=90000;  %set long enough to get stochastic data for each sim
-dt=0.5;
+N=30000;  %# GCDs, set long enough to get stochastic data for each sim
+dt=1.5;
 wb=waitbar(0,'Calculating');
 tic
 for k=1:k1
