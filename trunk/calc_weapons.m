@@ -147,7 +147,7 @@ set(bar71(2),'FaceColor',[0.749 0.749 0]);
 xlim([0.99.*min(dps1p(k71,1)) 1.01.*max(sum(dps1p(k71,:),2))])
 ylim(0.5+[0 max(y1)])
 set(gca,'YTick',y1,'YTickLabel',pinfo.labels(k71,:))
-xlabel('DPS')
+xlabel('DPS (thousands)')
 title('Tank weapons, sorted by DPS')
 legend('4% hit 18 exp','8% hit 26 exp','Location','Best')
 
@@ -160,6 +160,6 @@ set(bar72(2),'FaceColor',[0.749 0.749 0]);
 xlim([0.99.*min(min(dps2)) 1.01.*max(max(dps2))])
 ylim(0.5+[0 max(y)])
 set(gca,'YTick',y,'YTickLabel',pinfo.labels)
-xlabel('DPS')
+xlabel('DPS (thousands)')
 title('All by ilvl & category - HotR rotation')
 legend('4% hit 18 exp','8% hit 26 exp','Location','Best')
