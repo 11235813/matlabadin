@@ -5,17 +5,15 @@
 clear;
 gear_db;
 def_db;
+exec=execution_model('veng',1);
 base=player_model('race','Human');
 npc=npc_model(base);
-exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth','veng',1);
-buff=buff_model;
-egs=ddb.gearset{2};  %1=pre-raid , 2=raid
+egs=ddb.gearset{2}; %1=pre-raid , 2=raid
 glyph=ddb.glyphset{1}; %Default, HotR/SoT/ShoR, Cons/AS
-
+buff=buff_model;
 
 
 %% set up our tree configurations
-
 %base - unpossible build, contains a ridiculous # of points
 temptree.holy=[2 0 3 0; 0 0 0 0];
 temptree.prot=[3 2 2 0; 2 3 2 0; 2 3 1 2; 2 1 2 0; 1 1 2 1; 0 2 3 0; 0 1 0 0];
@@ -122,9 +120,9 @@ for m=1:length(tree) %everything
     clear talent
     talent=tree(m);
     %invoke talents & glyphs
-    talents
+    talents;
     %calculate relevant stats
-    gear_stats
+    gear_stats;
     
     %artificially inflating hit and expertise to 8% and 26
 %     stat_conversions;stat_model;
@@ -133,18 +131,18 @@ for m=1:length(tree) %everything
 
     %calculate final stats
     exec.npccount=1; %to reset from AoE
-    stat_model
-    ability_model
-    rotation_model
+    stat_model;
+    ability_model;
+    rotation_model;
     
     totdps(m)=rot.totdps;
     totdps1(m)=rot1.totdps;
     
     %calculate final stats
     exec.npccount=4; %to reset from AoE
-    stat_model
-    ability_model
-    rotation_model
+    stat_model;
+    ability_model;
+    rotation_model;
     totdpsa(m)=aoe.totdps;
     
 end

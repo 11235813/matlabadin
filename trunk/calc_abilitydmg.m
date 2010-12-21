@@ -2,23 +2,16 @@ clear;
 gear_db;
 def_db;
 
-% lvl 85
-base=player_model('lvl',85,'race','Human','prof','');
+exec=execution_model('veng',1); %should default to 1 for npccount/timein/timeout, 0 behind, Truth
+base=player_model('race','Human');
 npc=npc_model(base);
-egs=ddb.gearset{2};  %1=pre-raid , 2=raid
+egs=ddb.gearset{2}; %1=pre-raid , 2=raid
+gear_stats;
+talent=ddb.talentset{2}; %0/31/10 w/HG
 glyph=ddb.glyphset{3}; %SoT glyph only
-talent=ddb.talentset{2};  %0/31/10 w/HG
-
-%execution
-exec=execution_model('veng',1);  %should default to 1 for npccount/timein/timeout, 0 behind, Truth
-%activate buffs
-buff=buff_model('mode',3);
-%invoke talents & glyphs
-talents
-%calculate relevant stats
-gear_stats
-%calculate final stats
-stat_model
+talents;
+buff=buff_model;
+stat_model;
 
 %artificially inflating hit and expertise to 8% and 26
 % gear.hit=8*cnv.hit_phhit;
@@ -40,7 +33,7 @@ stat_model
 
 
 %calculate ability output
-ability_model
+ability_model;
 % rotation_model
 
 %generate a damage summary array
@@ -52,7 +45,6 @@ vals.raw=val.raw;  %raw damage
 vals.dmg=val.dmg;  %net damage after hit/crit
 vals.net=val.net;  %seal procs included
 
-mdf.RF=3;
 spacer=repmat(' ',size(vals.raw,1),2);
 raw_summary=[char(dmg_labels) spacer int2str(vals.raw)];
 dmg_summary=[char(dmg_labels) spacer int2str(vals.dmg)];
@@ -72,9 +64,9 @@ for m=1:size(vals.glyph,2)
     exec=execution_model('veng',temp.vap(m));
     gear.hit=temp.hit(m);
     gear.exp=temp.exp(m);
-    talents
-    stat_model
-    ability_model
+    talents;
+    stat_model;
+    ability_model;
     vals.glyph1(:,m)=val.dmg;
     vals.glyph2(:,m)=val.net;
 end

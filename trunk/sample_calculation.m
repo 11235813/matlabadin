@@ -12,9 +12,8 @@ npc=npc_model(base);
 %invoke execution_model
 exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','SoT','veng',1.0);
 
-
 %load gear set
-gear_sample;
+egs=ddb.gearset{2}; %1=pre-raid , 2=raid
 
 %calculate relevant stats
 gear_stats;
@@ -23,7 +22,9 @@ gear_stats;
 buff=buff_model;
 
 %invoke talents & glyphs
-talent=ddb.talentset{2};talents;
+talent=ddb.talentset{2};
+glyph=ddb.glyphset(1);
+talents;
 
 %calculate final stats
 stat_model;
