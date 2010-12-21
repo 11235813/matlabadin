@@ -17,18 +17,16 @@
 clear;
 gear_db;
 def_db;
+exec=execution_model('veng',1);
 base=player_model('race','Human');
 npc=npc_model(base);
-exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth','veng',1);
 buff=buff_model;
 egs=ddb.gearset{2};  %1=pre-raid , 2=raid
-glyph=ddb.glyphset{1}; %Default, HotR/SoT/ShoR, Cons/AS
+gear_stats;
 talent=ddb.talentset{1};  %0/31/10
-egs=ddb.gearset{2};
+glyph=ddb.glyphset{1}; %Default, HotR/SoT/ShoR, Cons/AS
+talents;
 
-talents
-%calculate relevant stats
-gear_stats
 %adjustments to make sure that nothing is capped
 stat_conversions;
 gear.hit=min([gear.hit; (8*cnv.hit_phhit-30).*ones(size(gear.hit))]);
@@ -36,9 +34,9 @@ gear.exp=min([gear.exp; ((26-13).*cnv.exp_exp-30).*ones(size(gear.exp))]);
 % gear.mast=min([gear.mast; 400.*ones(size(gear.mast))]);
 
 %calculate final stats
-stat_model
-ability_model
-rotation_model
+stat_model;
+ability_model;
+rotation_model;
 
 
 stat={'exp';'hit';'str';'crit';'ap';'sta';'agi';'haste';'mas';'sp';'int'};
@@ -60,8 +58,8 @@ for m=1:M
 
     stat_model;ability_model;rotation_model;
 
-    dps1s(m,:)=rot.coeff'*pridmg+rot.padps;
-    dps1s2(m,:)=rot2.coeff'*pridmg+rot2.padps;    
+    dps1s(m,:)=sum(rot.coeff.*pridmg)+rot.padps;
+    dps1s2(m,:)=sum(rot2.coeff.*pridmg)+rot2.padps;    
     
     
     %set each stat back to 0 extra
@@ -69,8 +67,8 @@ for m=1:M
 
     stat_model;ability_model;rotation_model;
 
-    dps0s(m,:)=rot.coeff'*pridmg+rot.padps;
-    dps0s2(m,:)=rot2.coeff'*pridmg+rot2.padps;
+    dps0s(m,:)=sum(rot.coeff.*pridmg)+rot.padps;
+    dps0s2(m,:)=sum(rot2.coeff.*pridmg)+rot2.padps;
 
 end
 diffdpsS=(dps1s-dps0s).*10./repmat(dstat',1,size(dps1s,2));

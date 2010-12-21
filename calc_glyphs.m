@@ -5,9 +5,9 @@
 clear;
 gear_db;
 def_db;
+exec=execution_model('veng',1);
 base=player_model('race','Human');
 npc=npc_model(base);
-exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth','veng',1);
 buff=buff_model;
 talent=ddb.talentset{1}; %0/31/10, no HG
 egs=ddb.gearset{2};  %1=pre-raid , 2=raid
@@ -84,9 +84,9 @@ for n=1:length(tmpvar.vengap);
         clear glyph
         glyph=gtree(m);
         %invoke talents & glyphs
-        talents
+        talents;
         %calculate relevant stats
-        gear_stats
+        gear_stats;
 
         %artificially inflating hit and expertise to 8% and 36
         if tmpvar.hitcap(n)==1
@@ -95,8 +95,8 @@ for n=1:length(tmpvar.vengap);
             gear.exp=(26-base.exp)*cnv.exp_exp;
         end
         %calculate final stats
-        stat_model
-        ability_model
+        stat_model;
+        ability_model;
         rotation_model;
 
         totdps(m)=rot.totdps;

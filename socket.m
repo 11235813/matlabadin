@@ -1,73 +1,121 @@
-function [item] = socket(item, varargin)
+function [item] = socket(item,varargin)
 % The function socket() takes an item and adds gems to it.  The syntax is
-% socket(item, gem1, [gem2, gem3,] bonus)
-% item is the slot of the item we're socketing or the item itself
-% gemN is the gem we're placing in socket N.  
-% bonus is a boolean flag for whether the socket bonus should be activated
-%
-% note that this function performs very limited error checking at the
-% moment.  Without storing the gemming history of the item, or reloading
-% the item from the database at the beginning, you can do some weird
-% things.  For now, I've kept it from being able to indefinitely add stats
-% to a gear by chain-resocketing by marking sockets as full, but that also
-% makes it incapable of replacing a gem in a socket.  
+% socket(item, gem1[, gem2, gem3]).
+% Inputs :
+% item - the equipped item or its corresponding slot
+% gemN - the IID of the N-th gem
+% 
+% Note : the equipped item is defined by its corresponding egs.
 
-%error checking on number of input arguments
-if nargin<3
-    error('socket() requires 3 or more inputs (slot, gem, and bonus)')
-elseif nargin>5
-    error('socket() requires 5 or fewer inputs (slot, 3x gem, and bonus)')
+%check the arguments
+if nargin<1||nargin>4
+    error('Socket() requires 1-4 arguments (item, plus 1-3 gems).');
 end
 
-%load the stats of the item from egs if we're passed a slot
-%TODO: would like to be able to call idb directly in
-%the future, which would require an "idb(#).iid" field.  As it stands
-%currently, there's no way to error-check that we haven't socketed an item
-%twice.
+%check for numeric inputs
 if isnumeric(item)
     slot=item;
     clear item;
-    item=evalin('base',['egs(' int2str(slot) ');']);
+    if ~(exist('egs','var'))
+        item=evalin('base',['tempegs(' int2str(slot) ');']);
+    else
+        item=evalin('base',['egs(' int2str(slot) ');']);
+    end
 end
-
-%store the last argument as the bonus flag
-bonus=varargin{nargin-1}; %last input
 
 %get number of sockets
 nsock=length(item.socket);
+%get gem inputs
+gemid=cell2mat(varargin);
+%track available sockets
+strack=isstrprop(item.socket,'lower');
 
-%for the gem inputs, load the stats and add them to the item
-for i=1:(nargin-2)
-    
-    %if we're not trying to over-socket
-    if i<=nsock 
-        %and the socket's not already full
-        if item.socket(i)~='X'
-            %apply the gem's bonuses, could call idb directly, but equip() lets us
-            %use gem names later on if we choose to for ease of reading the code.
-            item=enhance(item,equip(varargin{i}));
-            
-            %label socket as full
-            item.socket(i)='X';
-        
-        %if the socket IS full
-        elseif item.socket(i)=='X'
-            %Here we would put code to subtract the old gem and add the
-            %new, if we had any way of figuring out what the old gem was
-        end
+%sanity checks
+if max(strack)>0
+    getins=input('The item''s sockets are already filled.\nYou can reload the item by entering its IID : ');
+    if ~isempty(getins)
+        item=equip(getins);
+    else
+        return
     end
-    
+end
+if isempty(gemid)
+    warning('No gem inputs are specified.');
+elseif length(gemid)>nsock
+    warning('The number of gem inputs exceeds the number of available sockets.\nThe gems will be equipped in the order they are parsed, until the item''s sockets are filled.','\n');
+elseif length(gemid)<nsock
+    warning('Insufficient gem inputs.');
+end;
+
+%start filling the sockets
+if min([nsock nargin-1])>0
+    flag=zeros(min([nsock nargin-1]),min([nsock nargin-1]));jtrack=[];
+    for i=1:min([nsock nargin-1])
+        %exhaustive search for a color match
+        for j=1:min([nsock nargin-1])
+            if isempty(jtrack) jtmp=[];else jtmp=max([(j==jtrack(:))]);end;
+            if isempty(jtmp)||((~isempty(jtmp))&&jtmp==0)
+                jgem(j)=equip(gemid(j));
+                if jgem(j).socket=='P'
+                flag(i,:)=1;
+                jtrack=[jtrack j];
+                break
+                elseif (~isempty(strfind(item.socket(i),'R')))&&(~isempty(strfind(jgem(j).socket,'R')))
+                flag(i,:)=1;
+                jtrack=[jtrack j];
+                break
+                elseif (~isempty(strfind(item.socket(i),'Y')))&&(~isempty(strfind(jgem(j).socket,'Y')))
+                flag(i,:)=1;
+                jtrack=[jtrack j];
+                break
+                elseif (~isempty(strfind(item.socket(i),'B')))&&(~isempty(strfind(jgem(j).socket,'B')))
+                flag(i,:)=1;
+                jtrack=[jtrack j];
+                break
+                elseif (~isempty(strfind(item.socket(i),'M')))&&(~isempty(strfind(jgem(j).socket,'M')))
+                flag(i,:)=1;
+                jtrack=[jtrack j];
+                break
+                elseif (~isempty(strfind(item.socket(i),'P')))&&(~(exist('isprism','var')))
+                flag(i,:)=1;
+                jtrack=[jtrack j];
+                isprism=1; %render the P slot inactive for any other gem
+                break
+                else
+                flag(i,:)=0;
+                end
+            end
+        end
+        %store the item's socket colors
+        tmpsk=item.socket;
+        %add the gem's stats
+        item=enhance(item,equip(varargin{i}));
+        %tag the socket as being filled
+        tmpsk(i)=lower(tmpsk(i));
+        item.socket=tmpsk;
+    end
+else
+    flag=[0];
 end
 
-%check for socket bonus flag, if true, apply socket bonus
-if bonus
-    eval(['item.' item.sbstat '=item.' item.sbstat '+item.sbval;'])
+%check if the socket bonus is activated
+if (exist('isprism','var'))
+    %do nothing (workaround for belt buckle)
+elseif min([min(flag)]) && length(flag)==nsock
+    eval(['item.' item.sbstat '=item.' item.sbstat '+item.sbval;']);
+else
+    warning('The socket bonus is not activated.');
 end
 
 %if we were passed a slot, we want to go back and store the item in egs in
 %the base workspace.  Otherwise the function will just return item.
 if exist('slot','var')
     assignin('base','tempitem',item);
-    evalin('base',['egs(' int2str(slot) ')=tempitem;'])
+    if ~(exist('egs','var'))
+        evalin('base',['tempegs(' int2str(slot) ')=tempitem;']);
+    else
+        evalin('base',['egs(' int2str(slot) ')=tempitem;']);
+    end
     evalin('base','clear tempitem');
+end
 end

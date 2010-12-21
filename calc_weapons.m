@@ -2,15 +2,15 @@ clear;
 gear_db;
 def_db;
 
+exec=execution_model('veng',0.6);
 base=player_model('race','Belf','prof','');
 npc=npc_model(base);
 egs=ddb.gearset{2};  %1=pre-raid , 2=raid
-glyph=ddb.glyphset{1}; %all relevant glyphs
-talent=ddb.talentset{2};  %0/31/10 w/HG
-exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth','veng',0.6);
-buff=buff_model('mode',3);
-talents;
 gear_stats;
+talent=ddb.talentset{2};  %0/31/10 w/HG
+glyph=ddb.glyphset{1}; %all relevant glyphs
+talents;
+buff=buff_model;
 stat_model;
 
 %adjustments to make sure that nothing is capped
@@ -94,8 +94,8 @@ for m=1:M
     ability_model;
     rotation_model;
 
-    dps1(m,1)=rot.coeff'*pridmg+rot.padps;
-    dps2(m,1)=rot2.coeff'*pridmg+rot2.padps;    
+    dps1(m,1)=[sum(rot.coeff.*pridmg)]+rot.padps;
+    dps2(m,1)=[sum(rot2.coeff.*pridmg)]+rot2.padps;    
     
     
     %calculate DPS at caps
@@ -105,8 +105,8 @@ for m=1:M
     ability_model;
     rotation_model;
 
-    dps1(m,2)=rot.coeff'*pridmg+rot.padps;
-    dps2(m,2)=rot2.coeff'*pridmg+rot2.padps;    
+    dps1(m,2)=[sum(rot.coeff.*pridmg)]+rot.padps;
+    dps2(m,2)=[sum(rot2.coeff.*pridmg)]+rot2.padps;    
 end
 
 pinfo.name=char(pinfo.name);
