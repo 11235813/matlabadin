@@ -84,6 +84,15 @@ xlabel('Armory Strength')
 ylabel('DPS per 10 itemization points')
 title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit,'%2.1f') '% hit, ' num2str(player.exp,'%2.1f') ' expertise'])
 
+figure(60)
+set(gcf,'Position',[290    92   706   414])
+plot(xS,diffdpsS2')
+xlim([min(xS) max(xS)])
+legend(stat,'Location','NorthEast')
+xlabel('Armory Strength')
+ylabel('DPS per 10 itemization points')
+title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit,'%2.1f') '% hit, ' num2str(player.exp,'%2.1f') ' expertise'])
+    
 %% Hit graph
 %reset extra structure
 extra_init;
@@ -119,6 +128,15 @@ xlabel('Melee hit % against lvl 80')
 ylabel('DPS per 10 itemization points')
 title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.exp(1),'%2.1f') ' expertise'])
 
+figure(61)
+set(gcf,'Position',[290    92   706   414])
+plot(xH,diffdpsH2')
+xlim([min(xH) max(xH)])
+legend(stat,'Location','NorthEast')
+xlabel('Melee hit % against lvl 80')
+ylabel('DPS per 10 itemization points')
+title([ num2str(exec.veng*100,'%2.1f') '% Veng, '  num2str(player.exp(1),'%2.1f') ' expertise'])
+    
 %% Exp graph
 %reset extra structure
 extra_init;
@@ -154,27 +172,7 @@ xlabel('Expertise skill')
 ylabel('DPS per 10 itemization points')
 title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit(1),'%2.1f') '% hit'])
 
-%% HotR Plots
 
-
-figure(60)
-set(gcf,'Position',[290    92   706   414])
-plot(xS,diffdpsS2')
-xlim([min(xS) max(xS)])
-legend(stat,'Location','NorthEast')
-xlabel('Armory Strength')
-ylabel('DPS per 10 itemization points')
-title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit,'%2.1f') '% hit, ' num2str(player.exp,'%2.1f') ' expertise'])
-    
-figure(61)
-set(gcf,'Position',[290    92   706   414])
-plot(xH,diffdpsH2')
-xlim([min(xH) max(xH)])
-legend(stat,'Location','NorthEast')
-xlabel('Melee hit % against lvl 80')
-ylabel('DPS per 10 itemization points')
-title([ num2str(exec.veng*100,'%2.1f') '% Veng, '  num2str(player.exp(1),'%2.1f') ' expertise'])
-    
 figure(62)
 set(gcf,'Position',[290    92   706   414])
 plot(xE,diffdpsE2')
