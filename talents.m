@@ -98,11 +98,10 @@ talent.retpoints=sum(sum(talent.ret));
 
 
 %% Glyphs (logical)
-if exist('glyph')==0 || isfield(glyph,'prime')==0
-    glyph.prime=[0 0 1 0 1 1 0];
-end
-
 % Prime
+if exist('glyph')==0 || isfield(glyph,'prime')==0
+    glyph.prime=[0 0 1 0 1 1 0 0];
+end
 glyph.CrusaderStrike=glyph.prime(1);
 glyph.Exorcism=glyph.prime(2);
 glyph.HammeroftheRighteous=glyph.prime(3);
@@ -110,12 +109,12 @@ glyph.Judgement=glyph.prime(4);
 glyph.SealofTruth=glyph.prime(5);
 glyph.ShieldoftheRighteous=glyph.prime(6);
 glyph.WordofGlory=glyph.prime(7);
-
-if exist('glyph')==0 || isfield(glyph,'major')==0
-    glyph.major=[0 1 0 0 1 0 0 0 0 0];
-end
+glyph.SealofInsight=glyph.prime(8);
 
 % Major
+if exist('glyph')==0 || isfield(glyph,'major')==0
+    glyph.major=[0 1 0 0 1 0 0 0 0 0 0];
+end
 glyph.AsceticCrusader=glyph.major(1);
 glyph.Consecration=glyph.major(2);
 glyph.DazingShield=glyph.major(3);
@@ -126,12 +125,12 @@ glyph.HammerofWrath=glyph.major(7);
 glyph.HolyWrath=glyph.major(8);
 glyph.HandofSalvation=glyph.major(9);
 glyph.TurnEvil=glyph.major(10);
+glyph.LongWord=glyph.major(11);
 
+% Minor
 if exist('glyph')==0 || isfield(glyph,'minor')==0
     glyph.minor=[0 0 0 0 0 0 0];
 end
-
-% Minor
 glyph.BlessingofKings=glyph.minor(1);
 glyph.BlessingofMight=glyph.minor(2);
 glyph.Insight=glyph.minor(3);

@@ -21,4 +21,4 @@ item.earmor = sum([item.earmor enhancement.earmor]);
 item.health = sum([item.health enhancement.health]);
 item.socket = [item.socket enhancement.socket];
 item.meta = sum([item.meta enhancement.meta]);
-item.isproc = sum([item.isproc enhancement.isproc]);
+end

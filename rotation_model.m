@@ -178,43 +178,58 @@ rot2.acdps=[sum(rot2.coeff.*pridmg)];
 rot3.acdps=[sum(rot3.coeff.*pridmg)];
 rot4.acdps=[sum(rot4.coeff.*pridmg)];
 aoe.acdps=[sum(aoe.coeff.*aoedmg)];
+%and threat //TODO
+rot.actps=0;
+rot1.actps=0;
+rot2.actps=0;
+rot3.actps=0;
+rot4.actps=0;
+aoe.actps=0;
 
-%Initialize passive DPS component
-rot.padps=0;
-rot1.padps=0;
-rot2.padps=0;
-rot3.padps=0;
-rot4.padps=0;
-aoe.padps=0;
+%Initialize passive DPS/TPS
+rot.padps=0;rot.patps=0;
+rot1.padps=0;rot1.patps=0;
+rot2.padps=0;rot2.patps=0;
+rot3.padps=0;rot3.patps=0;
+rot4.padps=0;rot4.patps=0;
+aoe.padps=0;aoe.patps=0;
 
 %add Censure
 if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
-    rot.padps=rot.padps+dps.Censure;
-    rot1.padps=rot1.padps+dps.Censure.*rot1.InqUp;
-    rot2.padps=rot2.padps+dps.Censure;
-    rot3.padps=rot3.padps+dps.Censure.*rot3.InqUp;
-    rot4.padps=rot4.padps+dps.Censure.*rot4.InqUp;
-    aoe.padps=aoe.padps+dps.Censure.*aoe.InqUp;
+    rot.padps=rot.padps+dps.Censure;rot.patps=rot.patps+tps.Censure;
+    rot1.padps=rot1.padps+dps.Censure.*rot1.InqUp;rot1.patps=rot1.patps+tps.Censure.*rot1.InqUp;
+    rot2.padps=rot2.padps+dps.Censure;rot2.patps=rot2.patps+tps.Censure;
+    rot3.padps=rot3.padps+dps.Censure.*rot3.InqUp;rot3.patps=rot3.patps+tps.Censure.*rot3.InqUp;
+    rot4.padps=rot4.padps+dps.Censure.*rot4.InqUp;rot4.patps=rot4.patps+tps.Censure.*rot4.InqUp;
+    aoe.padps=aoe.padps+dps.Censure.*aoe.InqUp;aoe.patps=aoe.patps+tps.Censure.*aoe.InqUp;
 end
 
 
-%add AA damage and seal damage due to AA
+%add AA+seal output
 rot.padps=rot.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing;
+rot.patps=rot.patps+tps.Melee+threat.activeseal.*mdf.mehit./player.wswing;
 rot1.padps=rot1.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing.*rot1.InqUp;
+rot1.patps=rot1.patps+tps.Melee+threat.activeseal.*mdf.mehit./player.wswing.*rot1.InqUp;
 rot2.padps=rot2.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing;
+rot2.patps=rot2.patps+tps.Melee+threat.activeseal.*mdf.mehit./player.wswing;
 rot3.padps=rot3.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing.*rot3.InqUp;
+rot3.patps=rot3.patps+tps.Melee+threat.activeseal.*mdf.mehit./player.wswing.*rot3.InqUp;
 rot4.padps=rot4.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing.*rot4.InqUp;
+rot4.patps=rot4.patps+tps.Melee+threat.activeseal.*mdf.mehit./player.wswing.*rot4.InqUp;
 aoe.padps=aoe.padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing.*aoe.InqUp;
+aoe.patps=aoe.patps+tps.Melee+threat.activeseal.*mdf.mehit./player.wswing.*aoe.InqUp;
 
-%Calculate Total Dps (sum of active and passive components)
-rot.totdps=rot.acdps+rot.padps;
-rot1.totdps=rot1.acdps+rot1.padps;
-rot2.totdps=rot2.acdps+rot2.padps;
-rot3.totdps=rot3.acdps+rot3.padps;
-rot4.totdps=rot4.acdps+rot4.padps;
-aoe.totdps=aoe.acdps+aoe.padps;
+%total output
+rot.totdps=rot.acdps+rot.padps;rot.tottps=rot.actps+rot.patps;
+rot1.totdps=rot1.acdps+rot1.padps;rot1.tottps=rot1.actps+rot1.patps;
+rot2.totdps=rot2.acdps+rot2.padps;rot2.tottps=rot2.actps+rot2.patps;
+rot3.totdps=rot3.acdps+rot3.padps;rot3.tottps=rot3.actps+rot3.patps;
+rot4.totdps=rot4.acdps+rot4.padps;rot4.tottps=rot4.actps+rot4.patps;
+aoe.totdps=aoe.acdps+aoe.padps;aoe.tottps=aoe.actps+aoe.patps;
 
 %coeffs for ability damage sim - will implement later (maybe?)
 % if length(rot.val.ones)==1
 %     rot.admgcoeffs=(rot.numcasts+[0 0 0 0 0 0.5 6 0 0 0 6 0]')./(18+1.5.*2.*rot.xtragcd);
 % end
+
+clear mmmm

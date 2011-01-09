@@ -53,7 +53,6 @@
 %egs.sbstat     stat string for the socket bonus
 %egs.sbval      value of socket bonus
 %egs.istier     (logical : [tier11 tier12 tier13], undefined if not a tier set item)
-%egs.isproc     (spell ID of the associated proc, undefined if none)
 
 %However, egs only has 17 slots, corresponding to the 17 relevant slots on
 %the paper doll. Ammo (0), Shirt(18), Tabard (19) are ignored.
@@ -133,8 +132,7 @@ idb.iid=struct('name','Empty Slot', ...
                'meta',0, ...
                'sbstat','', ...
                'sbval',0, ...
-               'istier',[0 0 0], ...
-               'isproc',0);
+               'istier',[0 0 0]);
            
 idb.sid=struct('name','Empty Slot', ...
                'atype',0, ...
@@ -164,8 +162,7 @@ idb.sid=struct('name','Empty Slot', ...
                'meta',0, ...
                'sbstat','', ...
                'sbval',0, ...
-               'istier',[0 0 0], ...
-               'isproc',0);
+               'istier',[0 0 0]);
         
 %% Items
 
@@ -1253,10 +1250,8 @@ idb.sid(74220).name='Enchant Gloves - Greater Expertise';
 idb.sid(74220).exp=50;
 
 idb.sid(82175).name='Synapse Springs';
-idb.sid(82175).isproc=82174;
 
 idb.sid(82177).name='Quickflip Deflection Plates';
-idb.sid(82177).isproc=82176;
 
 %% Waist
 idb.sid(76168).name='Ebonsteel Belt Buckle';
@@ -1311,22 +1306,16 @@ idb.sid(59619).hit=25;
 idb.sid(59619).crit=25;
 
 idb.sid(74195).name='Enchant Weapon - Mending';
-idb.sid(74195).isproc=74194;
 
 idb.sid(74211).name='Enchant Weapon - Elemental Slayer';
-idb.sid(74211).isproc=74208;
 
 idb.sid(74223).name='Enchant Weapon - Hurricane';
-idb.sid(74223).isproc=74221;
 
 idb.sid(74242).name='Enchant Weapon - Power Torrent';
-idb.sid(74242).isproc=74241;
 
 idb.sid(74244).name='Enchant Weapon - Windwalk';
-idb.sid(74244).isproc=74243;
 
 idb.sid(74246).name='Enchant Weapon - Landslide';
-idb.sid(74246).isproc=74245;
 
 %% Shield
 idb.sid(34009).name='Enchant Shield - Major Stamina';
@@ -1340,45 +1329,41 @@ idb.sid(74226).mast=36.071; %40 block rating
 
 
 %% Consumables (invoked by buff_model)
-%note that Mixology modifiers (placeholders for now) are stored in .isproc fields
 % Flasks
 idb.sid(79469).name='Flask of Steelskin';
 idb.sid(79469).sta=300;
-idb.sid(79469).isproc=1;
 
 idb.sid(79472).name='Flask of Titanic Strength';
 idb.sid(79472).str=300;
-idb.sid(79472).isproc=1;
+
+idb.sid(79471).name='Flask of the Winds';
+idb.sid(79471).agi=300;
+
+idb.sid(79470).name='Flask of the Draconic Mind';
+idb.sid(79470).int=300;
 
 % Battle Elixirs
 idb.sid(79477).name='Elixir of the Cobra';
 idb.sid(79477).crit=225;
-idb.sid(79477).isproc=1;
 
 idb.sid(79481).name='Elixir of Impossible Accuracy';
 idb.sid(79481).hit=225;
-idb.sid(79481).isproc=1;
 
 idb.sid(79635).name='Elixir of the Master';
 idb.sid(79635).mast=225;
-idb.sid(79635).isproc=1;
 
 % Guardian Elixirs
 idb.sid(79474).name='Elixir of the Naga';
 idb.sid(79474).exp=225;
-idb.sid(79474).isproc=1;
 
 idb.sid(79480).name='Elixir of Deep Earth';
 idb.sid(79480).earmor=900;
-idb.sid(79480).isproc=1;
 
 % Potions
 idb.sid(79475).name='Earthen Potion';
-idb.sid(79475).isproc=79475;
 idb.sid(79475).earmor=4800;
 
 idb.sid(79634).name='Golemblood Potion';
-idb.sid(79634).isproc=79634;
 idb.sid(79634).str=1200;
 
 % Food
@@ -1587,29 +1572,24 @@ idb.iid(49110).socket='P';
 idb.iid(52291).name='Chaotic Shadowspirit Diamond';
 idb.iid(52291).crit=54;
 idb.iid(52291).meta=3;
-idb.iid(52291).isproc=44797;
 idb.iid(52291).socket='M';
 
 idb.iid(52293).name='Eternal Shadowspirit Diamond';
 idb.iid(52293).sta=81;
 idb.iid(52293).meta=2;
-idb.iid(52293).isproc=55283;
 idb.iid(52293).socket='M';
 
 idb.iid(52294).name='Austere Shadowspirit Diamond';
 idb.iid(52294).sta=81;
 idb.iid(52294).meta=1;
-idb.iid(52294).isproc=55344;
 idb.iid(52294).socket='M';
 
 idb.iid(52295).name='Effulgent Shadowspirit Diamond';
 idb.iid(52295).sta=81;
 idb.iid(52295).meta=4;
-idb.iid(52295).isproc=55345;
 idb.iid(52295).socket='M';
 
 idb.iid(52299).name='Powerful Shadowspirit Diamond';
 idb.iid(52299).sta=81;
 idb.iid(52299).meta=5;
-idb.iid(52299).isproc=55358;
 idb.iid(52299).socket='M';

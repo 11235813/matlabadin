@@ -16,8 +16,8 @@ egs=ddb.gearset{2};  %1=pre-raid , 2=raid
 %% set up our glyph configurations
 
 %base - unpossible build, contains all relevant glyphs
-tempglyph.prime=[1 1 1 1 1 1 1];
-tempglyph.major=[0 1 0 0 1 0 0 1 0 0];
+tempglyph.prime=[1 1 1 1 1 1 1 1];
+tempglyph.major=[0 1 0 0 1 0 0 1 0 0 1];
 
 gtree(1)=tempglyph;
 name{1}='Base';
