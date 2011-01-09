@@ -1,4 +1,8 @@
-%% Sample Rotation module
+%% Rotation module
+
+%TODO: I want to shift this over to an egs-style container.  In
+%other words, rot(1) instead of rot, rot(2) instead of rot2, and so forth.
+
 %939 is simple enough that we can model it analytically, which makes a lot
 %of things faster.
 %Assume fixed rotation of 
@@ -50,8 +54,9 @@ rot.val.zeros=zeros(1,max([length(mdf.mehit) length(val.zero)]));
 rot.labels={'SotR';'CS';'J';'AS';'HW';'Cons';'HotR';'2SotR';'Inq';'Seal';'HaNova';'HoW'};
 
 
-%% SotR>CS>J>AS>Cons>HW (execute range : SotR>CS>J>HoW)
-rot.numcasts=[2.*(mdf.phcrit+mdf.mehit.*mdf.sd1.*(mdf.phcritm-mdf.phcrit)).*rot.val.ones;... %SotR
+%% 9C9: SotR>CS>J>AS>Cons>HW (execute range : SotR>CS>J>HoW)
+rot.sotrfactor=(mdf.phcrit+mdf.mehit.*mdf.sd1.*(mdf.phcritm-mdf.phcrit));
+rot.ncasts=[2.*rot.val.ones;...                                             %SotR
     6.*rot.val.ones;...                                                     %CS
     2.*rot.val.ones;...                                                     %J
     (2.*P.CS.*0.81).*rot.val.ones;...                                       %AS
@@ -63,10 +68,12 @@ rot.numcasts=[2.*(mdf.phcrit+mdf.mehit.*mdf.sd1.*(mdf.phcritm-mdf.phcrit)).*rot.
     (2.*0.19).*rot.val.ones;...                                             %HoW
     (8.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*rot.val.ones;...               %seal (CS+SotR+J)
     0.*rot.val.ones];                                                       %HammerNova
+rot.numcasts=rot.ncasts;rot.numcasts(1,:)=rot.numcasts(1,:).*rot.sotrfactor;
 
-%% Inq>SotR>HotR>J>AS>Cons>HW (execute range : Inq>SotR>HotR>J>HoW)
+%% ISH9: Inq>SotR>HotR>J>AS>Cons>HW (execute range : Inq>SotR>HotR>J>HoW)
 rot1=rot;
-rot1.numcasts=[1.*(mdf.phcrit+mdf.mehit.*mdf.sd2.*(mdf.phcritm-mdf.phcrit)).*rot.val.ones;... %SotR
+rot1.sotrfactor=(mdf.phcrit+mdf.mehit.*mdf.sd2.*(mdf.phcritm-mdf.phcrit));
+rot1.ncasts=[1.*rot.val.ones;...                           %SotR
     0.*rot.val.ones;...                                    %CS
     2.*rot.val.ones;...                                    %J
     (2.*P.HotR.*0.81).*rot.val.ones;...                    %AS
@@ -78,10 +85,12 @@ rot1.numcasts=[1.*(mdf.phcrit+mdf.mehit.*mdf.sd2.*(mdf.phcritm-mdf.phcrit)).*rot
     (2.*0.19).*rot.val.ones;...                            %HoW
     (mdf.mehit+2.*mdf.rahit.*mdf.jseals).*rot.val.ones;... %seal (SotR+J)
     6.*rot.val.ones];                                      %HammerNova
+rot1.numcasts=rot1.ncasts;rot1.numcasts(1,:)=rot1.numcasts(1,:).*rot1.sotrfactor;
 
-%% Alternative rotation with HotR instead of CS
+%% 9H9: Alternative rotation with HotR instead of CS
 rot2=rot;
-rot2.numcasts=[2.*(mdf.phcrit+mdf.mehit.*mdf.sd1.*(mdf.phcritm-mdf.phcrit)).*rot.val.ones;... %SotR
+rot2.sotrfactor=(mdf.phcrit+mdf.mehit.*mdf.sd1.*(mdf.phcritm-mdf.phcrit));
+rot2.ncasts=[2.*rot.val.ones;...                              %SotR
     0.*rot.val.ones;...                                       %CS
     2.*rot.val.ones;...                                       %J
     (2.*P.HotR.*0.81).*rot.val.ones;...                       %AS
@@ -93,10 +102,12 @@ rot2.numcasts=[2.*(mdf.phcrit+mdf.mehit.*mdf.sd1.*(mdf.phcritm-mdf.phcrit)).*rot
     (2.*0.19).*rot.val.ones;...                               %HoW
     (2.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*rot.val.ones;... %seal (SotR+J)
     6.*rot.val.ones];                                         %HammerNova
+rot2.numcasts=rot2.ncasts;rot2.numcasts(1,:)=rot2.numcasts(1,:).*rot2.sotrfactor;
 
 %% Inq/SDSotR weaving (CS in Inq blocks, HotR in SotR blocks, cast SotR disregarding SD)
 rot3=rot;
-rot3.numcasts=[1.*(mdf.phcrit+mdf.mehit.*mdf.sd2.*(mdf.phcritm-mdf.phcrit)).*rot.val.ones;... %SotR
+rot3.sotrfactor=(mdf.phcrit+mdf.mehit.*mdf.sd2.*(mdf.phcritm-mdf.phcrit));
+rot3.ncasts=[1.*rot.val.ones;...                                               %SotR
     3.*rot.val.ones;...                                                        %CS
     2.*rot.val.ones;...                                                        %J
     ((P.CS+P.HotR).*0.81).*rot.val.ones;...                                    %AS
@@ -108,10 +119,12 @@ rot3.numcasts=[1.*(mdf.phcrit+mdf.mehit.*mdf.sd2.*(mdf.phcritm-mdf.phcrit)).*rot
     (2.*0.19).*rot.val.ones;...                                                %HoW
     (4.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*rot.val.ones;...                  %seal (CS+SotR+J)
     3.*rot.val.ones];                                                          %HammerNova
+rot3.numcasts=rot3.ncasts;rot3.numcasts(1,:)=rot3.numcasts(1,:).*rot3.sotrfactor;
 
 %% Inq/SDSotR weaving (CS in Inq blocks, HotR in SotR blocks, cast SotR only on SD)
 rot4=rot;
-rot4.numcasts=[1.*(mdf.phcrit+mdf.mehit.*(mdf.phcritm-mdf.phcrit)).*rot.val.ones;... %SotR
+rot4.sotrfactor=(mdf.phcrit+mdf.mehit.*(mdf.phcritm-mdf.phcrit));
+rot4.ncasts=[1.*rot.val.ones;...                                                   %SotR
     3.*rot.val.ones;...                                                            %CS
     ((1+mdf.sd2)./mdf.sd2).*rot.val.ones;...                                       %J
     ((P.CS+P.HotR./mdf.sd2).*0.81).*rot.val.ones;...                               %AS
@@ -123,10 +136,12 @@ rot4.numcasts=[1.*(mdf.phcrit+mdf.mehit.*(mdf.phcritm-mdf.phcrit)).*rot.val.ones
     (((1+mdf.sd2)./mdf.sd2).*0.19).*rot.val.ones;...                               %HoW
     (4.*mdf.mehit+((1+mdf.sd2)./mdf.sd2).*mdf.rahit.*mdf.jseals).*rot.val.ones;... %seal (CS+SotR+J)
     (3./mdf.sd2).*rot.val.ones];                                                   %HammerNova
+rot4.numcasts=rot4.ncasts;rot4.numcasts(1,:)=rot4.numcasts(1,:).*rot4.sotrfactor;
 
 %% AoE rotation - assuming we replace CS with HotR and cast Cons every 36s
 aoe=rot;
-aoe.numcasts=[0.*rot.val.ones;...                                       %SotR
+aoe.sotrfactor=1;
+aoe.ncasts=[0.*rot.val.ones;...                                         %SotR
               0.*rot.val.ones;...                                       %CS
               2.*rot.val.ones;...                                       %J
               2.*P.HotR.*rot.val.ones;...                               %AS
@@ -138,11 +153,13 @@ aoe.numcasts=[0.*rot.val.ones;...                                       %SotR
               0.*rot.val.ones;...                                       %HoW
               (2.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*rot.val.ones;... %seal
               6.*rot.val.ones];                                         %HammerNova
-
+aoe.numcasts=aoe.ncasts;
 %% Postprocessing
 
 %Inq handling
 rot.Inq=0;
+rot.Inqmod=ones(size(rot.numcasts));
+rot.Inqup=rot.val.zeros;
 
 rot1.Inq=(base.lvl==85);
 rot1.Inqmod=(1+0.3.*rot1.Inq.*[1.*rot.val.ones;0.*rot.val.ones;0.5.*rot.val.ones;0.5.*rot.val.ones;0.5.*rot.val.ones;0.5.*rot.val.ones;0.*rot.val.ones;0.*rot.val.ones;0.*rot.val.ones;0.5.*rot.val.ones;(mdf.mehit+mdf.rahit.*mdf.jseals)./(mdf.mehit+2.*mdf.rahit.*mdf.jseals).*rot.val.ones;4./6.*rot.val.ones]); %uptime depends on ability
@@ -169,6 +186,14 @@ rot2.coeff=rot2.numcasts./repmat((18+1.5.*2.*rot.xtragcd).*rot.val.ones,size(rot
 rot3.coeff=rot3.numcasts.*rot3.Inqmod./repmat((18+1.5.*rot.xtragcd).*rot.val.ones,size(rot3.numcasts,1),1);
 rot4.coeff=rot4.numcasts.*rot4.Inqmod./repmat((9.*((1+mdf.sd2)./mdf.sd2)+1.5.*rot.xtragcd).*rot.val.ones,size(rot4.numcasts,1),1);
 aoe.coeff=aoe.numcasts.*aoe.Inqmod./18;    
+
+%container for casts per second
+rot.cps=rot.ncasts./repmat((18+1.5.*2.*rot.xtragcd).*rot.val.ones,size(rot.numcasts,1),1);
+rot1.cps=rot1.ncasts./repmat((18+1.5.*rot.xtragcd).*rot.val.ones,size(rot1.numcasts,1),1);
+rot2.cps=rot2.ncasts./repmat((18+1.5.*2.*rot.xtragcd).*rot.val.ones,size(rot2.numcasts,1),1);
+rot3.cps=rot3.ncasts./repmat((18+1.5.*rot.xtragcd).*rot.val.ones,size(rot3.numcasts,1),1);
+rot4.cps=rot4.ncasts./repmat((9.*((1+mdf.sd2)./mdf.sd2)+1.5.*rot.xtragcd).*rot.val.ones,size(rot4.numcasts,1),1);
+aoe.cps=aoe.ncasts./18;
 
 %Active DPS component is the weighted average of pridmg according to coeff
 % (# casts per second)*(dmg per cast) = (dmg per second due to active srcs)
