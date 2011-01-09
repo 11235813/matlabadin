@@ -404,6 +404,18 @@ idb.iid(55059).dodge=169;
 idb.iid(55059).barmor=1927;
 idb.iid(55059).atype=1;
 
+idb.iid(59117).name='Jumbotron Power Belt';
+idb.iid(59117).ilvl=359;
+idb.iid(59117).str=253;
+idb.iid(59117).sta=380;
+idb.iid(59117).dodge=139;
+idb.iid(59117).mast=159;
+idb.iid(59117).barmor=1927;
+idb.iid(59117).socket='Y';
+idb.iid(59117).sbstat='sta';
+idb.iid(59117).sbval=15;
+idb.iid(59117).atype=1;
+
 
 %% Legs
 
@@ -1301,10 +1313,25 @@ idb.sid(74215).name='Enchant Ring - Strength';
 idb.sid(74215).str=50;
 
 %% Weapon
+%LK enchants
 idb.sid(59619).name='Enchant Weapon - Accuracy';
 idb.sid(59619).hit=25;
 idb.sid(59619).crit=25;
 
+idb.sid(38995).name='Enchant Weapon - Exceptional Agility';
+idb.sid(38995).agi=26;
+
+idb.sid(60621).name='Enchant Weapon - Greater Potency';
+idb.sid(60621).ap=50;
+
+idb.sid(27972).name='Enchant Weapon - Potency';
+idb.sid(27972).str=20;
+
+idb.sid(41976).name='Titanium Weapon Chain';
+idb.sid(41976).hit=28;
+
+
+%Cata enchants
 idb.sid(74195).name='Enchant Weapon - Mending';
 
 idb.sid(74211).name='Enchant Weapon - Elemental Slayer';
@@ -1376,8 +1403,8 @@ idb.sid(87594).sta=90;
 idb.sid(87594).mast=90;
 
 idb.sid(87595).name='Grilled Dragon';
-idb.sid(79634).sta=90;
-idb.sid(79634).hit=90;
+idb.sid(87595).sta=90;
+idb.sid(87595).hit=90;
 
 idb.sid(87597).name='Baked Rockfish';
 idb.sid(87597).sta=90;
@@ -1394,6 +1421,14 @@ idb.sid(87602).parry=90;
 idb.sid(87637).name='Crocolisk Au Gratin';
 idb.sid(87637).sta=90;
 idb.sid(87637).exp=90;
+
+idb.sid(62665).name='Basilisk Liverdog';
+idb.sid(62665).sta=90;
+idb.sid(62665).haste=90;
+
+idb.sid(62669).name='Skewered Eel';
+idb.sid(62669).sta=90;
+idb.sid(62669).agi=90;
 
 %% Gems (nota bene : mixt gems are counted twice, so a green one will be YB)
 % Red
