@@ -11,6 +11,7 @@ mdf.TbtL=6.*talent.TouchedbytheLight; %without the +hit mdf
 mdf.AotL=6.*talent.ArbiteroftheLight;
 mdf.BlazLi=1+0.1.*talent.BlazingLight; %Exo output
 mdf.JotP=0.03.*talent.JudgementsofthePure;
+mdf.Divin=(1+0.02.*talent.Divinity).^2;
 mdf.SotP=1+0.06.*talent.SealsofthePure;
 % mdf.EG %NYI
 mdf.JotJ=0.1.*talent.JudgementsoftheJust;
@@ -21,7 +22,7 @@ mdf.WotL=0.15.*talent.WrathoftheLightbringer; %incorporates both effects
 mdf.GrCr=0.1.*talent.GrandCrusader;
 mdf.Vind=1-0.05.*talent.Vindication; %damage reduction
 mdf.HolySh=10.*talent.HolyShield;
-% mdf.GbtL %NYI
+mdf.GbtL=1+0.05.*talent.GuardedbytheLight;
 mdf.SacDut=0.25.*talent.SacredDuty; 
 mdf.EfaE=0.2.*talent.EyeforanEye; %proc chance
 mdf.Crus=0.1.*talent.Crusade;
@@ -31,12 +32,13 @@ mdf.glyphCS=5.*glyph.CrusaderStrike;             %CS crit chance
 mdf.glyphExo=0.2.*glyph.Exorcism;                %Exo output /TODO check DoT mechanics
 mdf.glyphHotR=0.1.*glyph.HammeroftheRighteous;   %HotR output
 mdf.glyphJ=0.1.*glyph.Judgement;                 %J output
-mdf.glyphSoT=10.*glyph.SealofTruth;              %expertise bonus
 mdf.glyphSotR=1+0.1.*glyph.ShieldoftheRighteous; %SotR output
 mdf.glyphWoG=1+0.1.*glyph.WordofGlory;           %WoG output
 mdf.glyphCons=1+0.2.*glyph.Consecration;         %Consecration output (and cooldown)
 mdf.glyphAS=1+0.3.*glyph.FocusedShield;          %AS output
- 
+mdf.glyphSoT=10.*glyph.SealofTruth.*(strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)); %expertise bonus
+mdf.glyphSoI=1+0.05.*glyph.SealofTruth.*(strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)); %healing output
+
 %% Meta Gems, Enchants, Plate Spec, Tier Bonus
 %%%%%%%%%%% META
 mdf.meta_armor=1+0.02.*(gear.meta==1);
@@ -90,17 +92,35 @@ mdf.Sund=1-0.12.*buff.Sund;
 mdf.ST=1-0.2.*buff.ST;
 
 %% Consumables
-%Mixology bonus (the specific values are stored in gear_db's .isproc fields) 
+%apply Mixology bonus
 if (isempty(base.prof)==0&&(max(strcmpi('Alch',strread(base.prof,'%s')))==1 ...
         ||max(strcmpi('Alchemy',strread(base.prof,'%s')))==1))
-    mdf.mixo(1)=buff.flask.isproc;
-    mdf.mixo(2)=buff.belixir.isproc;
-    mdf.mixo(3)=buff.gelixir.isproc;
-else
-    mdf.mixo(1)=1;
-    mdf.mixo(2)=1;
-    mdf.mixo(3)=1;
+switch buff.flask.name
+    case 'Flask of Steelskin'
+        mdf.mixo(1)=420./300;
+    case {'Flask of Titanic Strength','Flask of the Winds','Flask of the Draconic Mind'}
+        mdf.mixo(1)=380./300;
+    otherwise
+        mdf.mixo(1)=1;
 end
+switch buff.belixir.name
+    case {'Elixir of the Cobra','Elixir of Impossible Accuracy','Elixir of the Master'}
+        mdf.mixo(2)=265./225;
+    otherwise
+        mdf.mixo(2)=1;
+end
+switch buff.gelixir.name
+    case 'Elixir of Deep Earth'
+        mdf.mixo(3)=1020./900;
+    case 'Elixir of the Naga'
+        mdf.mixo(3)=265./225;
+    otherwise
+        mdf.mixo(3)=1;
+end
+else
+    mdf.mixo=ones(1,3);
+end
+%get stats
 consum.str=sum([buff.flask.str.*mdf.mixo(1); ...
     buff.belixir.str.*mdf.mixo(2);buff.gelixir.str.*mdf.mixo(3);buff.food.str]);
 consum.sta=sum([buff.flask.sta.*mdf.mixo(1); ...
@@ -131,6 +151,9 @@ consum.earmor=sum([buff.flask.earmor.*mdf.mixo(1); ...
     buff.belixir.earmor.*mdf.mixo(2);buff.gelixir.earmor.*mdf.mixo(3);buff.food.earmor]);
 consum.health=sum([buff.flask.health.*mdf.mixo(1); ...
     buff.belixir.health.*mdf.mixo(2);buff.gelixir.health.*mdf.mixo(3);buff.food.health]);
+
+%support for healing abilities
+mdf.hthreat=0.5;
 
 %% Extras
 %this section is a way to incorporate extra amounts of different stats to
@@ -231,6 +254,7 @@ cens.NetDur=cens.NumTicks.*cens.NetTick;
 %multipliers
 mdf.phcritm=2.*mdf.meta_crit;   %for physical attacks
 mdf.spcritm=1.5.*mdf.meta_crit; %for spells
+mdf.hcritm=1.5;                 %the critical healing meta can be safely ignored
 
 
 %melee abilities ("physical crit")
@@ -247,6 +271,9 @@ player.spcrit=base.spcrit + ...                                            %base
     mdf.LotP+mdf.ISB+mdf.Focus ...                                         %buffs
     -npc.spcritsupp;                                                       %crit suppression
 
+%healing abilities ("heal crit")
+player.hcrit=player.spcrit-mdf.ISB+npc.spcritsupp;
+
 %regular melee attacks (one-roll system)
 %this gets modified again after boss stats to enforce crit cap
 player.aacrit=base.phcrit + ...                                            %base physical crit
@@ -260,7 +287,7 @@ player.HWcrit=player.spcrit+mdf.WotL.*100;       %WotL
 player.HoWcrit=player.phcrit+mdf.WotL.*100;      %WotL
 player.CScrit=player.phcrit+mdf.RoL+mdf.glyphCS; %RoL, glyph
 player.Jcrit=player.phcrit+mdf.AotL;             %AotL
-player.WoGcrit=player.spcrit+mdf.RoL;            %RoL
+player.WoGcrit=player.hcrit+mdf.RoL;             %RoL
 player.HotRphcrit=player.phcrit+mdf.RoL;         %RoL /TODO check
 player.HotRspcrit=player.spcrit+mdf.RoL;         %RoL /TODO check
 
@@ -269,6 +296,8 @@ player.phcrit=max([min([player.phcrit;100.*ones(size(player.phcrit))]); ...
     zeros(size(player.phcrit))]);
 player.spcrit=max([min([player.spcrit;100.*ones(size(player.spcrit))]); ...
     zeros(size(player.spcrit))]);
+player.hcrit=max([min([player.hcrit;100.*ones(size(player.hcrit))]); ...
+    zeros(size(player.hcrit))]);
 
 player.HWcrit=max([min([player.HWcrit;100.*ones(size(player.HWcrit))]); ...
     zeros(size(player.HWcrit))]);
@@ -294,7 +323,7 @@ mdf.HWcrit=1+(mdf.spcritm-1).*player.HWcrit./100;
 mdf.HoWcrit=1+(mdf.phcritm-1).*player.HoWcrit./100;
 mdf.CScrit=1+(mdf.phcritm-1).*player.CScrit./100;
 mdf.Jcrit=1+(mdf.phcritm-1).*player.Jcrit./100;
-mdf.WoGcrit=1+(mdf.spcritm-1).*player.WoGcrit./100;
+mdf.WoGcrit=1+(mdf.hcritm-1).*player.WoGcrit./100;
 mdf.HotRphcrit=1+(mdf.phcritm-1).*player.HotRphcrit./100;
 mdf.HotRspcrit=1+(mdf.spcritm-1).*player.HotRspcrit./100;
 
@@ -398,7 +427,7 @@ bl.wdps=player.wdamage./bl.wswing;
 mdf.phdmg=mdf.SavCom.*mdf.ArcTac.*(1-target.phdr);
 mdf.mehit=1-(target.miss+target.dodge+target.parry)./100;
 mdf.rahit=1-target.miss./100;
-mdf.spdmg=mdf.CoE.*mdf.ArcTac;
+mdf.spdmg=mdf.CoE.*mdf.ArcTac; %harmful only, healing does not benefit from these
 mdf.sphit=1-target.spmiss./100;
 
 %enforce one-roll system for auto-attacks

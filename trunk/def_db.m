@@ -107,23 +107,23 @@ ddb.talentset{2}=temptree;
 
 %% Glyphs
 %standard load-out
-tempglyphs.prime=[0 0 1 0 1 1 0];
-tempglyphs.major=[0 1 0 0 1 0 0 0 0 0];
+tempglyphs.prime=[0 0 1 0 1 1 0 0];
+tempglyphs.major=[0 1 0 0 1 0 0 0 0 0 0];
 tempglyphs.minor=[0 0 0 0 0 0 0];
 ddb.glyphset{1}=tempglyphs;
 %no glyphs
-tempglyphs.prime=[0 0 0 0 0 0 0];
+tempglyphs.prime=[0 0 0 0 0 0 0 0];
+tempglyphs.major=[0 0 0 0 0 0 0 0 0 0 0];
 tempglyphs.minor=[0 0 0 0 0 0 0];
-tempglyphs.major=[0 0 0 0 0 0 0 0 0 0];
 ddb.glyphset{2}=tempglyphs;
 %just SoT
-tempglyphs.prime=[0 0 0 0 1 0 0];
+tempglyphs.prime=[0 0 0 0 1 0 0 0];
+tempglyphs.major=[0 0 0 0 0 0 0 0 0 0 0];
 tempglyphs.minor=[0 0 0 0 0 0 0];
-tempglyphs.major=[0 0 0 0 0 0 0 0 0 0];
 ddb.glyphset{3}=tempglyphs;
 %standard load-out with both CS and HotR for prio sims
-tempglyphs.prime=[1 0 1 0 1 1 0];
-tempglyphs.major=[0 1 0 0 1 0 0 0 0 0];
+tempglyphs.prime=[1 0 1 0 1 1 0 0];
+tempglyphs.major=[0 1 0 0 1 0 0 0 0 0 0];
 tempglyphs.minor=[0 0 0 0 0 0 0];
 ddb.glyphset{4}=tempglyphs;
 
