@@ -402,8 +402,8 @@ target.armor=npc.armor.*mdf.Sund.*((290+mdf.ST.*10)./300); %fix ST
 target.phdr=target.armor./(target.armor+target.acoeff);
 
 %Vengeance, total AP
-player.VengAP=(0.1.*exec.veng.*base.health ...
-    .*(1+0.05.*(strcmpi('Tauren',base.race)||strcmpi('Taur',base.race)))+player.sta).*exec.timein;
+player.VengAP=(base.health.*(1+0.05.*(strcmpi('Tauren',base.race)||strcmpi('Taur',base.race)))+player.sta) ...
+    .*(0.1.*exec.veng).*exec.timein;
 player.ap=floor((base.ap+gear.ap+(player.str-10).*cnv.str_ap+extra.ap ...
     +player.VengAP+consum.ap).*mdf.UnRage);
 
