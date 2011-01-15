@@ -13,8 +13,8 @@ mdf.BlazLi=1+0.1.*talent.BlazingLight; %Exo output
 mdf.JotP=0.03.*talent.JudgementsofthePure;
 mdf.Divin=(1+0.02.*talent.Divinity).^2;
 mdf.SotP=1+0.06.*talent.SealsofthePure;
-% mdf.EG %NYI
-mdf.JotJ=0.1.*talent.JudgementsoftheJust;
+mdf.EG=0.15.*talent.EternalGlory;
+mdf.JotJ=1+0.1.*talent.JudgementsoftheJust.*(isempty(exec.seal)==0);
 mdf.Tough=1+0.03.*(talent.Toughness==1)+0.06.*(talent.Toughness==2)+0.1.*(talent.Toughness==3);
 mdf.HalGro=0.2.*talent.HallowedGround; %Cons output
 mdf.Sanct=1-(0.03.*(talent.Sanctuary==1)+0.06.*(talent.Sanctuary==2)+0.1.*(talent.Sanctuary==3)); %damage reduction
@@ -189,8 +189,7 @@ player.int=floor(base.stats.int.*mdf.BoK)+floor((gear.int+extra.int+consum.int).
 player.armorystr=base.stats.str+gear.str+extra.str; %TODO fix/delete
 
 %hit points
-player.hitpoints=base.health.*(1+0.05.*(strcmpi('Tauren',base.race)||strcmpi('Taur',base.race))) ...
-    +14.*(player.sta-18)+gear.health+consum.health;
+player.hitpoints=base.health+(14.*player.sta-260)+gear.health+consum.health;
 
 %armor
 player.armor=gear.barmor.*mdf.Tough.*mdf.meta_armor ...
@@ -381,7 +380,7 @@ player.avoidpct=player.avoid./100;
 %redundant target.block so that we can refer to it without having to remember
 %that it doesn't get modified by player stats.
 
-target.swing=npc.swing.*(1+mdf.JotJ.*(isempty(exec.seal)==0));
+target.swing=npc.swing.*mdf.JotJ;
 
 target.miss=max([(npc.phmiss-player.phhit);zeros(size(player.phhit))]);
 target.dodge=max([(npc.dodge-0.25.*player.exp);zeros(size(player.exp))]);
@@ -402,8 +401,7 @@ target.armor=npc.armor.*mdf.Sund.*((290+mdf.ST.*10)./300); %fix ST
 target.phdr=target.armor./(target.armor+target.acoeff);
 
 %Vengeance, total AP
-player.VengAP=(base.health.*(1+0.05.*(strcmpi('Tauren',base.race)||strcmpi('Taur',base.race)))+player.sta) ...
-    .*(0.1.*exec.veng).*exec.timein;
+player.VengAP=(0.1.*base.health+player.sta).*exec.veng.*exec.timein;
 player.ap=floor((base.ap+gear.ap+(player.str-10).*cnv.str_ap+extra.ap ...
     +player.VengAP+consum.ap).*mdf.UnRage);
 

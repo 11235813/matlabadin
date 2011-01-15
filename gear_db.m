@@ -1251,6 +1251,9 @@ idb.sid(74239).exp=50;
 idb.sid(74248).name='Enchant Bracer - Greater Critical Strike';
 idb.sid(74248).crit=65;
 
+idb.sid(96261).name='Enchant Bracer - Major Strength';
+idb.sid(96261).str=50;
+
 %% Hands
 idb.sid(74254).name='Enchant Gloves - Mighty Strength';
 idb.sid(74254).str=50;
@@ -1604,10 +1607,10 @@ idb.iid(49110).agi=10;
 idb.iid(49110).socket='P';
 
 % Meta
-idb.iid(52291).name='Chaotic Shadowspirit Diamond';
-idb.iid(52291).crit=54;
-idb.iid(52291).meta=3;
-idb.iid(52291).socket='M';
+idb.iid(68779).name='Chaotic Shadowspirit Diamond';
+idb.iid(68779).str=54;
+idb.iid(68779).meta=3;
+idb.iid(68779).socket='M';
 
 idb.iid(52293).name='Eternal Shadowspirit Diamond';
 idb.iid(52293).sta=81;

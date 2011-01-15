@@ -38,12 +38,12 @@ ability_model;
 
 %generate a damage summary array
 %% Summary
-dmg_labels={'ShoR';'CS';'JoT';'AS';'HW';'HoW';'Exor';'SoT';'SoR';'SoJ';'Cens';'Cons';'HotR';'HaNova';'Melee'};
+dmg_labels={'ShoR';'CS';'JoT';'AS';'HW';'HoW';'Exor';'SoT';'SoR';'SoJ';'Cens';'Cons';'HotR';'HaNova';'Melee';'WoG'};
 
 
 vals.raw=val.raw;  %raw damage
 vals.dmg=val.dmg;  %net damage after hit/crit
-vals.net=val.net;  %seal procs included
+vals.net=val.net{1};  %seal procs included
 
 spacer=repmat(' ',size(vals.raw,1),2);
 raw_summary=[char(dmg_labels) spacer int2str(vals.raw)];
@@ -68,8 +68,9 @@ for m=1:size(vals.glyph,2)
     stat_model;
     ability_model;
     vals.glyph1(:,m)=val.dmg;
-    vals.glyph2(:,m)=val.net;
+    vals.glyph2(:,m)=val.net(1);
 end
+vals.glyph2=cell2mat(vals.glyph2);
 
 % %now pick out ability damages and sort them into glyph_vals
 % vals.glyph(1)=tempvalp(1,6); %ShoR glyph

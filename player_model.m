@@ -54,6 +54,8 @@ if isempty(base.lvl)==1 base.lvl=85; end;
 if isempty(base.race)==1 base.race='Human'; end;
 if isnumeric(base.prof)==1 base.prof='BS JC'; end; %workaround for prof=='' 
 
+%enforce selected level
+if base.lvl<85 error('Player_model accepts only level 85 inputs'); end;
 
 %% Start building base structure
 if base.lvl==85
@@ -93,7 +95,7 @@ base.parry=5;
 base.block=5;
 base.phcrit=0.652;         %class dependent
 base.spcrit=3.3355;        %class dependent
-base.health=43285.*(base.lvl==85); %class and level dependent
-base.mana=23422.*(base.lvl==85);   %class and level dependent
+base.health=43285.*(1+0.05.*(strcmpi('Tauren',base.race)||strcmpi('Taur',base.race))); %class and level dependent
+base.mana=23422;                                                                       %class and level dependent
 base.exp=0;                %overridden in stats_recalc based on weapon type
 end
