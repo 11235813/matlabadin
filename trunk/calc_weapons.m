@@ -94,8 +94,8 @@ for m=1:M
     ability_model;
     rotation_model;
 
-    dps1(m,1)=[sum(rot.coeff.*pridmg)]+rot.padps;
-    dps2(m,1)=[sum(rot2.coeff.*pridmg)]+rot2.padps;    
+    dps1(m,1)=rot(1).totdps;
+    dps2(m,1)=rot(2).totdps;
     
     
     %calculate DPS at caps
@@ -105,8 +105,8 @@ for m=1:M
     ability_model;
     rotation_model;
 
-    dps1(m,2)=[sum(rot.coeff.*pridmg)]+rot.padps;
-    dps2(m,2)=[sum(rot2.coeff.*pridmg)]+rot2.padps;    
+    dps1(m,2)=rot(1).totdps;
+    dps2(m,2)=rot(2).totdps;
 end
 
 pinfo.name=char(pinfo.name);

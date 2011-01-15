@@ -99,10 +99,10 @@ for n=1:length(tmpvar.vengap);
         ability_model;
         rotation_model;
 
-        totdps(m)=rot.totdps;
-        totdps1(m)=rot1.totdps;
-        totdps2(m)=rot2.totdps;
-        totdpsa(m)=aoe.totdps;
+        totdps(m)=rot(1).totdps;
+        totdps1(m)=rot(2).totdps;
+        totdps2(m)=rot(3).totdps;
+        totdpsa(m)=rot(6).totdps;
 
         if strcmp(name(m),'HotR')
             tabledps(m,:)=[totdps2(m) totdps2(1)];
@@ -155,7 +155,7 @@ for n=1:length(tmpvar.vengap);
     set(bar20(2),'FaceColor',[0.749 0.749 0]);
     ylim([0.5 7.5])
     set(gca,'YTickLabel',name(ind(2:length(name))))
-    legend('9C9','ISH9','Location','Best')
+    legend('SCSC','IHSH','Location','Best')
     xlabel('DPS')
     title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit,'%2.1f') '% hit, ' num2str(player.exp,'%2.1f') ' expertise'])
 end

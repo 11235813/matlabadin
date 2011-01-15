@@ -135,15 +135,15 @@ for m=1:length(tree) %everything
     ability_model;
     rotation_model;
     
-    totdps(m)=rot.totdps;
-    totdps1(m)=rot1.totdps;
+    totdps(m)=rot(1).totdps;
+    totdps1(m)=rot(2).totdps;
     
     %calculate final stats
     exec.npccount=4; %to reset from AoE
     stat_model;
     ability_model;
     rotation_model;
-    totdpsa(m)=aoe.totdps;
+    totdpsa(m)=rot(6).totdps;
     
 end
 
@@ -166,7 +166,7 @@ bar30=barh(dpsplot(2:length(dpsplot),:),'BarWidth',1,'BarLayout','grouped');
 set(bar30(2),'FaceColor',[0.749 0.749 0]);
 ylim([0.5 10.5])
 set(gca,'YTickLabel',name(2:length(name)))
-legend('9C9','ISH9','AoE (IH9)','Location','Best')
+legend('SCSC','IHSH','IHIH (AoE)','Location','Best')
 xlabel('DPS per point')
 title([ num2str(player.phhit,'%2.1f') '% hit, ' num2str(player.exp,'%2.1f') ' expertise'])
 
@@ -180,7 +180,7 @@ bar31=barh(dpsplotsorted(2:length(dpsppt),:),'BarWidth',1,'BarLayout','grouped')
 set(bar31(2),'FaceColor',[0.749 0.749 0]);
 ylim([0.5 10.5])
 set(gca,'YTickLabel',name(ind(2:length(name))))
-legend('9C9','ISH9','AoE (IH9)','Location','Best')
+legend('SCSC','IHSH','IHIH (AoE)','Location','Best')
 xlabel('DPS per point')
 title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit,'%2.1f') '% hit, ' num2str(player.exp,'%2.1f') ' expertise'])
 
@@ -191,7 +191,7 @@ bar31=barh(dpsplotsorted(2:length(dpsppt),1),'BarWidth',0.5,'BarLayout','grouped
 % set(bar31(2),'FaceColor',[0.749 0.749 0]);
 ylim([0.5 10.5])
 set(gca,'YTickLabel',name(ind(2:length(name))))
-legend('939','Location','Best')
+legend('SCSC','Location','Best')
 xlabel('DPS per point')
 title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit,'%2.1f') '% hit, ' ...
     num2str(player.exp,'%2.1f') ' expertise'])

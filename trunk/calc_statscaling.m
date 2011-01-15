@@ -58,8 +58,8 @@ for m=1:M
 
     stat_model;ability_model;rotation_model;
 
-    dps1s(m,:)=sum(rot.coeff.*pridmg)+rot.padps;
-    dps1s2(m,:)=sum(rot2.coeff.*pridmg)+rot2.padps;    
+    dps1s(m,:)=rot(1).totdps;
+    dps1s2(m,:)=rot(3).totdps;
     
     
     %set each stat back to 0 extra
@@ -67,8 +67,8 @@ for m=1:M
 
     stat_model;ability_model;rotation_model;
 
-    dps0s(m,:)=sum(rot.coeff.*pridmg)+rot.padps;
-    dps0s2(m,:)=sum(rot2.coeff.*pridmg)+rot2.padps;
+    dps0s(m,:)=rot(1).totdps;
+    dps0s2(m,:)=rot(3).totdps;
 
 end
 diffdpsS=(dps1s-dps0s).*10./repmat(dstat',1,size(dps1s,2));
@@ -103,16 +103,16 @@ for m=1:M
 
     stat_model;ability_model;rotation_model;
 
-    dps1h(m,:)=sum(rot.coeff.*pridmg)+rot.padps;
-    dps1h2(m,:)=sum(rot2.coeff.*pridmg)+rot2.padps;
+    dps1h(m,:)=rot(1).totdps;
+    dps1h2(m,:)=rot(3).totdps;
     
     %set each stat back to 0 extra
     eval(char(['extra.itm.' stat{m} '=0;']))
 
     stat_model;ability_model;rotation_model;
     
-    dps0h(m,:)=sum(rot.coeff.*pridmg)+rot.padps;
-    dps0h2(m,:)=sum(rot2.coeff.*pridmg)+rot2.padps;
+    dps0h(m,:)=rot(1).totdps;
+    dps0h2(m,:)=rot(3).totdps;
 
 end
 diffdpsH=(dps1h-dps0h).*10./repmat(dstat',1,size(dps1h,2));
@@ -147,16 +147,16 @@ for m=1:M
 
     stat_model;ability_model;rotation_model;
 
-    dps1e(m,:)=sum(rot.coeff.*pridmg)+rot.padps;
-    dps1e2(m,:)=sum(rot2.coeff.*pridmg)+rot2.padps;
+    dps1e(m,:)=rot(1).totdps;
+    dps1e2(m,:)=rot(3).totdps;
     
     %set each stat back to 0 extra
     eval(char(['extra.itm.' stat{m} '=0;']))
 
     stat_model;ability_model;rotation_model;
 
-    dps0e(m,:)=sum(rot.coeff.*pridmg)+rot.padps;
-    dps0e2(m,:)=sum(rot2.coeff.*pridmg)+rot2.padps;
+    dps0e(m,:)=rot(1).totdps;
+    dps0e2(m,:)=rot(3).totdps;
 
 end
 diffdpsE=(dps1e-dps0e).*10./repmat(dstat',1,size(dps1e,2));
