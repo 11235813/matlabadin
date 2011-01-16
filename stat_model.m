@@ -317,6 +317,7 @@ player.HotRspcrit=max([min([player.HotRspcrit;100.*ones(size(player.HotRspcrit))
 %Crit modifier values
 mdf.phcrit=1+(mdf.phcritm-1).*player.phcrit./100;
 mdf.spcrit=1+(mdf.spcritm-1).*player.spcrit./100;
+mdf.hcrit=1+(mdf.hcritm-1).*player.hcrit./100;
 
 mdf.HWcrit=1+(mdf.spcritm-1).*player.HWcrit./100;
 mdf.HoWcrit=1+(mdf.phcritm-1).*player.HoWcrit./100;
