@@ -151,8 +151,10 @@ rot(4).InqUp=rot(4).InqUp+0.3.*(12./(18+1.5.*rot(4).xtragcd)).*rot(4).val.ones;
 
 
 %% ICIHSH framework (cast SotR only on SD)
+%with no points in Sacred Duty, the framework is reduced to ICSH
 rot(5).tag='ICIHSH';
 rot(5).xtragcd=(1./mdf.mehit)-1;
+if mdf.SacDut>0
 rot(5).sotrfactor=(mdf.phcrit+mdf.mehit.*(mdf.phcritm-mdf.phcrit));
 rot(5).ncasts=[1.*rot(5).val.ones;...                                                 %SotR
     3.*rot(5).val.ones;...                                                            %CS
@@ -167,11 +169,17 @@ rot(5).ncasts=[1.*rot(5).val.ones;...                                           
     (4.*mdf.mehit+((1+mdf.sd2)./mdf.sd2).*mdf.rahit.*mdf.jseals).*rot(5).val.ones;... %seal (CS+SotR+J)
     (3./mdf.sd2).*rot(5).val.ones;                                                    %HammerNova
     rot(5).val.zeros];                                                                %WoG
+rot(5).InqMod=rot(5).InqMod+0.3.*[rot(5).val.ones;rot(5).val.zeros;0.5./mdf.sd2.*rot(5).val.ones;0.5./mdf.sd2.*rot(5).val.ones;0.5./mdf.sd2.*rot(5).val.ones;0.5./mdf.sd2.*rot(5).val.ones;rot(5).val.zeros;rot(5).val.zeros;rot(5).val.zeros;0.5./mdf.sd2.*rot(5).val.ones;(2.*mdf.mehit+(1./mdf.sd2).*mdf.rahit.*mdf.jseals)./(4.*mdf.mehit+((1+mdf.sd2)./mdf.sd2).*mdf.rahit.*mdf.jseals).*rot(5).val.ones;rot(5).val.ones;rot(5).val.zeros]; %uptime depends on ability
+rot(5).InqUp=rot(5).InqUp+0.3.*((12./mdf.sd2)./(9.*((1+mdf.sd2)./mdf.sd2)+1.5.*rot(5).xtragcd)).*rot(5).val.ones;
+else
+rot(5).ncasts=rot(4).ncasts;
+rot(5).sotrfactor=rot(4).sotrfactor;
+rot(5).InqMod=rot(4).InqMod;
+rot(5).InqUp=rot(4).InqUp;
+end
 rot(5).cps=rot(5).ncasts./repmat((18+1.5.*rot(5).xtragcd).*rot(5).val.ones,size(rot(5).ncasts,1),1);
 tmpc{5}=rot(5).ncasts;tmpc{5}(1,:)=tmpc{5}(1,:).*rot(5).sotrfactor;
 tmpc{5}=tmpc{5}./repmat((18+1.5.*rot(5).xtragcd).*rot(5).val.ones,size(rot(5).ncasts,1),1);
-rot(5).InqMod=rot(5).InqMod+0.3.*[rot(5).val.ones;rot(5).val.zeros;0.5./mdf.sd2.*rot(5).val.ones;0.5./mdf.sd2.*rot(5).val.ones;0.5./mdf.sd2.*rot(5).val.ones;0.5./mdf.sd2.*rot(5).val.ones;rot(5).val.zeros;rot(5).val.zeros;rot(5).val.zeros;0.5./mdf.sd2.*rot(5).val.ones;(2.*mdf.mehit+(1./mdf.sd2).*mdf.rahit.*mdf.jseals)./(4.*mdf.mehit+((1+mdf.sd2)./mdf.sd2).*mdf.rahit.*mdf.jseals).*rot(5).val.ones;rot(5).val.ones;rot(5).val.zeros]; %uptime depends on ability
-rot(5).InqUp=rot(5).InqUp+0.3.*((12./mdf.sd2)./(9.*((1+mdf.sd2)./mdf.sd2)+1.5.*rot(5).xtragcd)).*rot(5).val.ones;
 
 
 %% IHIH framework (AoE)
