@@ -33,11 +33,11 @@ mdf.glyphExo=0.2.*glyph.Exorcism;                %Exo output /TODO check DoT mec
 mdf.glyphHotR=0.1.*glyph.HammeroftheRighteous;   %HotR output
 mdf.glyphJ=0.1.*glyph.Judgement;                 %J output
 mdf.glyphSotR=1+0.1.*glyph.ShieldoftheRighteous; %SotR output
-mdf.glyphWoG=1+0.1.*glyph.WordofGlory;           %WoG output
+mdf.glyphWoG=0.1.*glyph.WordofGlory;             %WoG output
 mdf.glyphCons=1+0.2.*glyph.Consecration;         %Consecration output (and cooldown)
 mdf.glyphAS=1+0.3.*glyph.FocusedShield;          %AS output
-mdf.glyphSoT=10.*glyph.SealofTruth.*(strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)); %expertise bonus
-mdf.glyphSoI=1+0.05.*glyph.SealofTruth.*(strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)); %healing output
+mdf.glyphSoT=10.*glyph.SealofTruth.*(strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal));     %expertise bonus
+mdf.glyphSoI=0.05.*glyph.SealofTruth.*(strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)); %healing output
 
 %% Meta Gems, Enchants, Plate Spec, Tier Bonus
 %%%%%%%%%%% META

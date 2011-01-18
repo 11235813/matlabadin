@@ -33,7 +33,7 @@ raw.SealofInsight=          0;
 raw.JoI          =          (1+0.25.*player.hsp+0.16.*player.ap);
 dmg.SealofInsight=          raw.SealofInsight;
 threat.SealofInsight=(15.*gear.swing./60).*0.15.*(player.hsp+player.ap).*mdf.Divin ...
-                     .*mdf.hthreat.*mdf.RF;
+                     .*mdf.hthreat.*mdf.RF./exec.npccount;
 
 %Seal of Justice
 raw.SealofJustice=          gear.swing.*(0.005.*player.ap+0.01.*player.hsp) ...
@@ -161,10 +161,10 @@ net.HolyWrath{2}=   threat.HolyWrath;
 %Word of Glory //TODO
 raw.WordofGlory=    0;
 dmg.WordofGlory=    raw.WordofGlory;
-threat.WordofGlory= (2133+0.21.*player.hsp+0.17.*player.ap).*player.hopo.*mdf.WoGcrit ...
-                    .*(1-exec.overh).*mdf.Divin.*mdf.glyphSoI.*mdf.glyphWoG.*mdf.GbtL.*mdf.hthreat ...
+threat.WordofGlory= (2133+0.2086.*player.hsp+0.1984.*player.ap).*player.hopo.*mdf.WoGcrit ...
+                    .*(1-exec.overh).*mdf.Divin.*mdf.GbtL.*(1+mdf.glyphWoG+mdf.glyphSoI).*mdf.hthreat ...
                     +5.5.*(exec.overh>0);
-threat.WordofGlory= threat.WordofGlory.*mdf.RF;
+threat.WordofGlory= threat.WordofGlory.*mdf.RF./exec.npccount;
 net.WordofGlory{1}= dmg.WordofGlory;
 net.WordofGlory{2}= threat.WordofGlory;
 
@@ -286,6 +286,7 @@ val.pthr=[threat.ShieldoftheRighteous{1}.*val.ones;
           threat.HammerNova.*val.ones;
           threat.WordofGlory.*val.ones];
 
+if (strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)) mdf.iseal=min([exec.npccount;10]); else mdf.iseal=1; end;
 val.athr=[threat.ShieldoftheRighteous{1}.*val.ones;
           threat.CrusaderStrike.*val.ones;
           threat.Judgement.*val.ones;
@@ -296,6 +297,6 @@ val.athr=[threat.ShieldoftheRighteous{1}.*val.ones;
           threat.ShieldoftheRighteous{2}./2.*val.ones;
           val.zeros;
           threat.HammerofWrath.*val.ones;
-          threat.activeseal.*val.ones;
+          threat.activeseal.*mdf.iseal.*val.ones;
           threat.HammerNova.*min([exec.npccount;10]).*val.ones;
-          threat.WordofGlory.*val.ones];
+          threat.WordofGlory.*min([exec.npccount;10]).*val.ones];
