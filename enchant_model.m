@@ -157,3 +157,4 @@ mend.effspc=1./(mend.stps.*(mend.effsicd+1./(mend.stps.*mend.spc)));
 %output
 mend.pps=mend.ptps.*mend.ppc+mend.stps.*mend.effspc;
 mend.hps=mend.hpp.*av.pps;
+mend.tps=mend.hps.*mdf.hthreat.*mdf.RF./exec.npccount;
