@@ -99,7 +99,7 @@ else
 end
 
 %check if the socket bonus is activated
-if (exist('isprism','var'))
+if (exist('isprism','var'))&&isempty(item.sbval)
     %do nothing (workaround for belt buckle)
 elseif min([min(flag)]) && length(flag)==nsock
     eval(['item.' item.sbstat '=item.' item.sbstat '+item.sbval;']);
