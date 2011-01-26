@@ -27,7 +27,7 @@ end
 nsock=length(item.socket);
 %get gem inputs
 gemid=cell2mat(varargin);
-%track available sockets
+%track available sockets - lowercase = filled, uppercase = empty
 strack=isstrprop(item.socket,'lower');
 
 %sanity checks
@@ -49,17 +49,21 @@ end;
 
 %start filling the sockets
 if min([nsock nargin-1])>0
+    %flag array for each socket; tracking of which gem we're on
     flag=zeros(min([nsock nargin-1]),min([nsock nargin-1]));jtrack=[];
     for i=1:min([nsock nargin-1])
         %exhaustive search for a color match
         for j=1:min([nsock nargin-1])
             if isempty(jtrack) jtmp=[];else jtmp=max([(j==jtrack(:))]);end;
             if isempty(jtmp)||((~isempty(jtmp))&&jtmp==0)
-                jgem(j)=equip(gemid(j));
+                %temporary container for current gem
+                jgem(j)=equip(gemid(j));  
+                %check if current gem is prismatic, if so set flag & track
                 if jgem(j).socket=='P'
                 flag(i,:)=1;
                 jtrack=[jtrack j];
                 break
+                %See if socket/gem colors match, if so set flag & track
                 elseif (~isempty(strfind(item.socket(i),'R')))&&(~isempty(strfind(jgem(j).socket,'R')))
                 flag(i,:)=1;
                 jtrack=[jtrack j];
@@ -76,11 +80,12 @@ if min([nsock nargin-1])>0
                 flag(i,:)=1;
                 jtrack=[jtrack j];
                 break
-                elseif (~isempty(strfind(item.socket(i),'P')))&&(~(exist('isprism','var')))
+                %if the socket is prismatic, set flag regardless of gem color
+                elseif (~isempty(strfind(item.socket(i),'P')))
                 flag(i,:)=1;
                 jtrack=[jtrack j];
-                isprism=1; %render the P slot inactive for any other gem
                 break
+                %otherwise, set flag to 0 to indicate mismatch
                 else
                 flag(i,:)=0;
                 end
@@ -99,8 +104,9 @@ else
 end
 
 %check if the socket bonus is activated
-if (exist('isprism','var'))&&isempty(item.sbval)
+if isempty(item.sbval)
     %do nothing (workaround for belt buckle)
+%else, check that all sockets are acceptably filled    
 elseif min([min(flag)]) && length(flag)==nsock
     eval(['item.' item.sbstat '=item.' item.sbstat '+item.sbval;']);
 else

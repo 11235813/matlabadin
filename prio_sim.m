@@ -8,20 +8,10 @@ function [ sequence ] = prio_sim(pri,varargin)
 %% Input handling
 
 %import priority queue models, cooldowns, and modifiers
+priolist=evalin('base','priolist');
 prio=evalin('base','prio');
-% cd=evalin('base','cd');
 mdf=evalin('base','mdf');
 target=evalin('base','target');  %needed for SotR
-%the rest are all needed for damage calculations
-% dmg=evalin('base','dmg');
-% crit=evalin('base','crit');
-% player=evalin('base','player');
-% cens=evalin('base','cens');
-% gear=evalin('base','gear');
-% exec=evalin('base','exec');
-% npc=evalin('base','npc');
-
-
 
 %if no arguments
 if nargin<1
@@ -34,6 +24,12 @@ if isnumeric(pri)
     clear pri
     pri=prio(tempint);
     clear tempint;
+end
+
+%temp array for identifiers and labels
+for m=1:length(priolist)
+    tmp.alabel{m}=priolist(m).alabel;
+    eval(['tmp.' priolist(m).alabel '=' int2str(m) ';']);
 end
 
 
@@ -71,28 +67,17 @@ gcd=0;
 egcd=0;
 
 %import cooldowns from prio
-% cd=pri.cds;
-cd.CS=pri.cds(2);
-cd.Jud=pri.cds(3);
-cd.AS=pri.cds(4);
-cd.HW=pri.cds(5);
-cd.Cons=pri.cds(6);
-cd.HoW=pri.cds(10);
+for m=1:length(priolist)
+    cd(m)=priolist(m).cd;
+end
 
 %set "current cooldown" for all relevant spells 
-% ccd=zeros(size(cd));
-
-ccd.CS=0;
-ccd.AS=0;
-ccd.HW=0;
-ccd.Jud=0;
-ccd.Cons=0;
-ccd.HoW=0;
+ccd=zeros(size(cd));
 
 %duration variable for buff-like effects
 dur.SD=0;
 dur.Inq=0;
-% sdflag=0;  %deprecated
+dur.EGicd=0;
 
 %evaluate setup conditionals
 for m=1:length(pri.setup)
@@ -101,13 +86,13 @@ end
 
 %preallocate arrays for speed
 L=round(N.*dt./1.5);
-sequence.amatrix=zeros(length(pri.alabel),L);
-sequence.pmatrix=zeros(length(pri.plabel),L);
+sequence.amatrix=zeros(length(priolist),L);
+sequence.hmatrix=ones(length(priolist),L);
+% sequence.ematrix=zeros(size(sequence.amatrix));
 sequence.castid=zeros(1,L);
 sequence.SD=zeros(1,L);
 sequence.Inq=zeros(1,L);
 sequence.hopo=zeros(1,L);
-sequence.sotrmiss=zeros(1,L);
 t=zeros(1,N);
 
 %counter for spell casts
@@ -118,9 +103,6 @@ for m=1:N
     %track time
     t(m)=(m-1).*dt;
     
-    %tracking code for debugging
-%     cas(m)=ccd.AS;
-%     ccs(m)=ccd.CS;
    
     %if gcd is up
     if gcd<=0;
@@ -129,73 +111,87 @@ for m=1:N
         for n=1:length(pri.cond)
 
             %check each cooldown and conditional in order
-            if eval(char(pri.cond(n)))
+            if ccd(pri.cast(n))<=0 && eval(char(pri.cond(n)))
                 %if true, do stuff
+                
+                %check for overbounding - occasionally we'll get an extra
+                %GCD or two because of partial empties.  This is a fix for
+                %the two larger arrays to keep them initialized properly.
+                %The other arrays should all auto-correct in the code
+                if qq>size(sequence.amatrix,2)
+                    sequence.amatrix(:,qq)=0;
+                    sequence.hmatrix(:,qq)=1;
+                end
                 
                 %action/cast id for convenience
                 aid=pri.cast(n);
                 
                 %recording what happens - in the end we'll want to know:
                 %   -what was cast 
-                %   -the timestamp of the cast (for plotting)
+                %   -the timestamp of the cast 
                 %   -Status of buffs (SD & Inq)
                 %   -any procs that should occur
                 %   -Hit/Miss for SotR (so that we can properly evaluate damage later)                
                 %the sequence structure will track all of these
                 
-                %ability usage and proc triggers
+                %ability usage
                 sequence.amatrix(aid,qq)=1;
-                sequence.label{qq}=char(pri.alabel(aid));                
+                sequence.label{qq}=char(priolist(aid).alabel);                
                 sequence.castid(qq)=aid;
                 
-                sequence.pmatrix(:,qq)=pri.ptrig(:,aid);
+                %procs triggered by ability
+                for o=1:length(priolist(aid).proctrig)
+                    if priolist(aid).proctrig(o)~=0
+                        sequence.amatrix(priolist(aid).proctrig(o),qq)=1;
+                        sequence.hmatrix(priolist(aid).proctrig(o),qq)=priolist(aid).prochit(o);
+                    end
+                end
                 
                 %cast time
                 sequence.casttime(qq)=t(m);
-                
-                
+                                
                 %holy power
                 sequence.hopo(qq)=hopo;
-                
-                %placeholders for later - related to rotation plots
-%                 sequence.seq(qq)=pri.ids(aid);
-%                 sequence.color(qq)=0; 
-                
-                               
-                %ShoR handling
-                if sum(strcmp(char(pri.alabel(aid)),{'SotR';'2SotR';'1SotR'}))>0
+                                               
+                %ShoR handling, check to see if this cast is SotR
+                if strfind(sequence.label{qq},'SotR')
+                    
                     %check for misses
                     if rand<target.avoid/100
-                        %if we miss, set the flag and color,
-                        %nullify procs and SD
-                        sequence.sotrmiss(qq)=1;
-                        sequence.pmatrix(:,qq)=zeros(size(sequence.pmatrix(:,qq)));
-%                         sequence.color(qq)=2;
-                        
-                        %forces SD falloff before next time step to account
+                        %if we miss, set the flag
+                        sequence.hmatrix(aid,qq)=0;
+                        %nullify procs
+                        for o=1:length(priolist(aid).proctrig)
+                            if priolist(aid).proctrig(o)~=0
+                                sequence.amatrix(priolist(aid).proctrig(o),qq)=0;
+                            end
+                        end
+                        %force SD falloff before next time step to account
                         %for using up the SD proc
-                        dur.SD=0.01; 
+                        dur.SD=-dt/10; 
                         
                     %otherwise, we hit - check for SD crits
                     elseif dur.SD>0  
-%                         sequence.color(qq)=1;
-                        sequence.sotrmiss(qq)=0;
+                        sequence.hmatrix(aid,qq)=1; 
                         hopo=0;
                         %set SD to a distinctive value that will fall off
                         %in the next time step to use up SD proc
-                        dur.SD=0.31415; %pi/10 for kicks
+                        dur.SD=dt/pi;
 
                     else %no SD, just a regular hit
-                        sequence.sotrmiss(qq)=0;
+                        sequence.hmatrix(aid,qq)=1;  
                         hopo=0;
                     end
                       
-                else %not SotR, mark as a miss (irrelevant, but necessary if we guessed array lengths incorrectly)
-                    sequence.sotrmiss(qq)=0;
+                else %not SotR, mark as a hit (irrelevant, but necessary if we guessed array lengths incorrectly)
+                    sequence.hmatrix(aid,qq)=1;
                 end
+                
+                %set cooldown
+                ccd(aid)=cd(aid);
 
-                %perform actions
-                eval(char(pri.action(aid)));
+                %perform default ability actions
+                eval(char(priolist(aid).action));
                 
                 %SD/Inq duration (done here so that uptime % is correct)
                 sequence.SD(qq)=dur.SD;
@@ -205,7 +201,7 @@ for m=1:N
                 eval(char(pri.spaction(n)));
 
                 %reset gcd
-                gcd=pri.gcds(aid);
+                gcd=priolist(aid).gcd;
 
                 %increment counter
                 qq=qq+1;
@@ -222,34 +218,25 @@ for m=1:N
     %variable to limit it
     if gcd<=0 && egcd<=0
         
-%        sequence.spellname{qq}='Empty';
+
        sequence.castid(qq)=0;
        sequence.casttime(qq)=t(m);
        sequence.SD(qq)=dur.SD;
        sequence.Inq(qq)=dur.Inq;
        sequence.hopo(qq)=hopo;
        sequence.label{qq}='Empty';
-%        sequence.seq(qq)=0;
-%        sequence.color(qq)=2;
-       sequence.sotrmiss(qq)=0;
+       sequence.hmatrix(:,qq)=1;
        
        %necessary to make sure amatrix and pmatrix are the correct length
-       %in some cases
-       sequence.amatrix(1,qq)=0;
-       sequence.pmatrix(1,qq)=0;
+       %in some cases (partial empties)
+       sequence.amatrix(:,qq)=0;
        
        qq=qq+1;
        egcd=1.5; 
     end
     
     %reduce cooldowns 
-%     ccd=ccd-dt;
-    ccd.CS=ccd.CS-dt;
-    ccd.AS=ccd.AS-dt; 
-    ccd.Jud=ccd.Jud-dt;
-    ccd.HW=ccd.HW-dt;
-    ccd.HoW=ccd.HoW-dt;
-    ccd.Cons=ccd.Cons-dt;
+    ccd=ccd-dt;
     gcd=gcd-dt;
     egcd=egcd-dt;
     
@@ -266,13 +253,7 @@ for m=1:N
     %dt=0.0001.  This is a patch-up job based on roundn() which is in the
     %mapping toolbox, and thus not necessarily available to Octave.
     factor=1e10;
-%     ccd=round(ccd.*factor)./factor;
-    ccd.CS=round(ccd.CS.*factor)./factor;
-    ccd.AS=round(ccd.AS.*factor)./factor;
-    ccd.Jud=round(ccd.Jud.*factor)./factor;
-    ccd.HW=round(ccd.HW.*factor)./factor;
-    ccd.HoW=round(ccd.HoW.*factor)./factor;
-    ccd.Cons=round(ccd.Cons.*factor)./factor;
+    ccd=round(ccd.*factor)./factor;
     dur.SD=round(dur.SD.*factor)./factor;dur.SD=max([dur.SD 0]);
     gcd=round(gcd.*factor)./factor;
     egcd=round(egcd.*factor)./factor;
@@ -282,19 +263,21 @@ end
 
 
 %determine weighting coefficients for each spell
-%Helpful constants                   
-Iamod=(1+0.3.*pri.adtype'*(sequence.Inq>0));
-Ipmod=(1+0.3.*pri.pdtype'*(sequence.Inq>0));
+%Inq modifier array
+sequence.Inqmod=(1+0.3.*[priolist.holy]'*(sequence.Inq>0));
+%SotR crit handling array
+sequence.SotRmod=ones(size(sequence.Inqmod));
+tmp.SotR=(sequence.SD>0).*mdf.phcritm + (sequence.SD<=0).*mdf.phcrit;
+for p=1:length(tmp.alabel); 
+    if strfind(tmp.alabel{p},'SotR'); 
+        sequence.SotRmod(p,:)=tmp.SotR;
+    end;
+end
+sequence.eamatrix=sequence.amatrix.*sequence.hmatrix.*sequence.Inqmod.*sequence.SotRmod;
 sequence.totaltime=double(m*dt);
-sequence.eamatrix=sequence.amatrix.*Iamod;
-sequence.epmatrix=ones(2,1)*sum(pri.phit'*ones(1,size(sequence.amatrix,2)).*sequence.amatrix).*sequence.pmatrix.*Ipmod;
 
-%fix for SotR crit handling
-SotRmod=(sequence.SD>0).*mdf.phcritm + (sequence.SD==0).*mdf.phcrit;
-sequence.eamatrix(1,:)=sequence.eamatrix(1,:).*not(sequence.sotrmiss).*SotRmod;
-
-sequence.numcasts=sum([sequence.amatrix; sequence.pmatrix]')';
-sequence.effcasts=sum([sequence.eamatrix; sequence.epmatrix]')';
+sequence.numcasts=sum(sequence.amatrix,2);
+sequence.effcasts=sum(sequence.eamatrix,2);
 
 
 sequence.coeff=sequence.effcasts./sequence.totaltime;
@@ -304,8 +287,8 @@ sequence.emptytime=sum(sequence.casttime(temp+1)-sequence.casttime(temp));
 sequence.emptypct=100.*sequence.emptytime./sequence.totaltime;
 
 %informational fields
-sequence.smiss=sum(sequence.sotrmiss);
-sequence.ascast=sequence.numcasts(4);
+sequence.smiss=sum(sum(sequence.hmatrix==0,2));
+sequence.ascast=sequence.numcasts(tmp.AS);
 
 
 %all damage calculations now taken care of in postprocessing.

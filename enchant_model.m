@@ -6,8 +6,12 @@ if exist('rot','var')==0
     rotation_model;
 end
 %for maximum flexibility, the rotation used is defined as 'seq'.  If this
-%hasn't been defined, default to 9C9
-pseq=rot(exec.pseq);
+%hasn't been defined (either in cfg or exec), default to 9C9
+if exist('cfg','var') && exist('c','var') && isfield(cfg(c),'rot')  %c always used as config index variable
+    pseq=rot(cfg(c).rot);tmpemod.rot=1;
+else
+    pseq=rot(exec.pseq);tmpemod.rot=0;
+end
 
 
 %% Windwalk
@@ -129,12 +133,17 @@ hu.dps=[];
 for j=0:450:900
     gear.haste=hstore+j;
     stat_model;ability_model;rotation_model;
-    hu.dps=[hu.dps rot.totdps];
+    if tmpemod.rot~=0
+        hu.dps=[hu.dps rot(cfg(c).rot).totdps];
+    else
+        warning('rotation defaulted to exec.pseq')
+        hu.dps=[hu.dps rot(exec.pseq).totdps];
+    end
 end
 hu.dps=hu.dps(1).*(htrack(6,1)-1)+hu.dps(2).*sum(htrack(6,2:3))+hu.dps(3).*htrack(6,4);
 %cleanup
 gear.haste=hstore;
-clear i j htrack hstore
+clear i j htrack hstore tmpemod
 
 
 %% Mending

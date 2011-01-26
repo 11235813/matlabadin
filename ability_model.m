@@ -32,8 +32,8 @@ threat.SealofRighteousness=dmg.SealofRighteousness.*mdf.RF;
 raw.SealofInsight=          0;
 raw.JoI          =          (1+0.25.*player.hsp+0.16.*player.ap);
 dmg.SealofInsight=          raw.SealofInsight;
-threat.SealofInsight=(15.*gear.swing./60).*0.15.*(player.hsp+player.ap).*mdf.Divin ...
-                     .*mdf.hthreat.*mdf.RF./exec.npccount;
+heal.SealofInsight=         (15.*gear.swing./60).*0.15.*(player.hsp+player.ap).*mdf.Divin;
+threat.SealofInsight=       heal.SealofInsight.*mdf.hthreat.*mdf.RF./exec.npccount;
 
 %Seal of Justice
 raw.SealofJustice=          gear.swing.*(0.005.*player.ap+0.01.*player.hsp) ...
@@ -161,10 +161,9 @@ net.HolyWrath{2}=   threat.HolyWrath;
 %Word of Glory //TODO
 raw.WordofGlory=    0;
 dmg.WordofGlory=    raw.WordofGlory;
-threat.WordofGlory= (2133+0.2086.*player.hsp+0.1984.*player.ap).*player.hopo.*mdf.WoGcrit ...
-                    .*(1-exec.overh).*mdf.Divin.*mdf.GbtL.*(1+mdf.glyphWoG+mdf.glyphSoI).*mdf.hthreat ...
-                    +5.5.*(exec.overh>0);
-threat.WordofGlory= threat.WordofGlory.*mdf.RF./exec.npccount;
+heal.WordofGlory= (2133+0.2086.*player.hsp+0.1984.*player.ap).*player.hopo.*mdf.WoGcrit ...
+                    .*(1-exec.overh).*mdf.Divin.*mdf.GbtL.*(1+mdf.glyphWoG+mdf.glyphSoI);
+threat.WordofGlory= (heal.WordofGlory.*mdf.hthreat+5.5.*(exec.overh>0)).*mdf.RF./exec.npccount;
 net.WordofGlory{1}= dmg.WordofGlory;
 net.WordofGlory{2}= threat.WordofGlory;
 
@@ -207,6 +206,9 @@ val.dmg=[round(dmg.ShieldoftheRighteous).*val.ones;
     round(dmg.HammerNova).*val.ones;
     round(dmg.Melee).*val.ones;
     round(dmg.WordofGlory).*val.ones];
+
+val.heal=[repmat(val.zeros,size(val.raw,1)-1,1);...
+          round(heal.WordofGlory).*val.ones];
 
 val.threat=[round(threat.ShieldoftheRighteous{2}).*val.ones; 
     round(threat.CrusaderStrike).*val.ones; 

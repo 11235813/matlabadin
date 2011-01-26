@@ -29,23 +29,25 @@ cfg(1).helm=egs(1);
 cfg(1).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
 cfg(1).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
 cfg(1).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
-cfg(1).rot=1;   %9C9
+cfg(1).rot=7;   %W39
+
+%939 rotation, low-hit set
+cfg(2).helm=cfg(1).helm;
+cfg(2).rot=1;
 
 %repeat for 8% hit and exp soft-cap
-cfg(2).helm=egs(1);
-cfg(2).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
-cfg(2).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
-cfg(2).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
-cfg(2).rot=1;   %9C9
+cfg(3).helm=egs(1);
+cfg(3).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
+cfg(3).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
+cfg(3).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
+cfg(3).rot=1;   %9C9
 
-%WoG rotation, low-hit set
-cfg(3).helm=cfg(1).helm;
-cfg(3).rot=2;  %index of rotation for future version
 
 %% List of passive effects to calculate
 
 
-enchant=[59619; %Accuracy
+enchant=[55057; %Pyrium Weapon Chain
+         59619; %Accuracy
          60621; %Greater Potency
          27972; %Potency
          38995; %Exceptional Agility
@@ -63,7 +65,7 @@ food=[87584; %90 str
 
   
   
-for n=1:2
+for c=1:3
 %% Passive enchants and foods
     %clear food buff
     buff=buff_model('mode',0,'food',0);
@@ -71,13 +73,12 @@ for n=1:2
     egs(35)=equip(1,'s');
 
     %record baseline dps
-    egs(1)=cfg(n).helm;
+    egs(1)=cfg(c).helm;
     gear_stats
     stat_model
     ability_model
     rotation_model;
-    seq=rot;
-    dps0(n)=seq.coeff'*pridmg+seq.padps;
+    dps0(c)=rot(cfg(c).rot).totdps;
 
     %enchants
     
@@ -99,7 +100,7 @@ for n=1:2
         seq=rot;
         
         %store DPS
-        dpse(m,n)=seq.coeff'*pridmg+seq.padps-dps0(n);
+        dpse(m,c)=rot(cfg(c).rot).totdps-dps0(c);
     end
 
     %foods
@@ -121,22 +122,22 @@ for n=1:2
         seq=rot;
 
         %store DPS
-        dpsf(m,n)=seq.coeff'*pridmg+seq.padps-dps0(n);
+        dpsf(m,c)=rot(cfg(c).rot).totdps-dps0(c);
     end
 
 %% Dynamic enchants
     enchant_model
       
     %Landslide
-    dpse(length(enchant)+1,n)=ls.dps;
+    dpse(length(enchant)+1,c)=ls.dps;
     pinfo.ename{length(enchant)+1}='Landslide';
     
     %Avalanche
-    dpse(length(enchant)+2,n)=av.dps;
+    dpse(length(enchant)+2,c)=av.dps;
     pinfo.ename{length(enchant)+2}='Avalanche';
     
     %Hurricane
-    dpse(length(enchant)+3,n)=hu.dps;
+    dpse(length(enchant)+3,c)=hu.dps;
     pinfo.ename{length(enchant)+3}='Hurricane';
     
 
@@ -149,7 +150,7 @@ M2=size(dpsf,1);
 %% Plotting 
 dps1=[dpse;dpsf];
 %sorting for plots
-si=1; %1 for low-hit, 2 for capped
+si=2; %1 for WoG, 2 for 939 low-hit, 3 for 939 capped
 [temp sorte]=sort(dpse(:,si));
 [temp sortf]=sort(dpsf(:,si));
 sortall=[sorte;sortf+M1;];
@@ -171,4 +172,4 @@ ylim(0.5+[0 max(y)])
 set(gca,'YTick',y,'YTickLabel',pinfo.labels)
 xlabel('DPS')
 title('Food & Enchant analysis, sorted by capped DPS')
-legend('2% hit 10 exp','8% hit 26 exp','Location','Best')
+legend('W39, 2% hit 10 exp','939, 2% hit 10 exp','939, 8% hit 26 exp','Location','Best')
