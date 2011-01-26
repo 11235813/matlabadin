@@ -1333,6 +1333,9 @@ idb.sid(27972).str=20;
 idb.sid(41976).name='Titanium Weapon Chain';
 idb.sid(41976).hit=28;
 
+idb.sid(55057).name='Pyrium Weapon Chain';
+idb.sid(55057).hit=40;
+
 
 %Cata enchants
 idb.sid(74195).name='Enchant Weapon - Mending';
