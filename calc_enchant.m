@@ -2,6 +2,7 @@
 %current version is lacking a lot of features but it should provide correct
 %results.
 
+%% Setup Tasks
 clear;
 gear_db;
 def_db;
@@ -20,9 +21,7 @@ talents;
 stat_model;
 
 %% Configurations
-%In the future, this section will define "configurations," which will
-%include fixing hit/expertise/mastery values and choosing rotation logic
-
+%W39 rotation, low-hit set
 %set melee hit to 2%, expertise to 10, mastery to 390 (16.5 mastery);
 %do this by altering helm stats
 cfg(1).helm=egs(1);
@@ -67,13 +66,15 @@ food=[87584; %90 str
   
 for c=1:3
 %% Passive enchants and foods
+    %set configuration variables
+    egs(1)=cfg(c).helm;
+    
     %clear food buff
     buff=buff_model('mode',0,'food',0);
     %clear weapon enchant
     egs(35)=equip(1,'s');
 
     %record baseline dps
-    egs(1)=cfg(c).helm;
     gear_stats
     stat_model
     ability_model

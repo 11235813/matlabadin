@@ -1,5 +1,5 @@
-%%CALC_TALENTS calculates DPS output in a variety of different talent
-%%configurations to determine DPS per talent point spent
+%%CALC_GLYPHS calculates DPS output in a variety of different glyph
+%%configurations to determine DPS per glyph
 
 %% Setup tasks
 clear;
@@ -14,7 +14,7 @@ egs=ddb.gearset{2};  %1=pre-raid , 2=raid
 
 %need to run these here so that the cfg structure can set hit and exp
 gear_stats;
-glyph=ddb.glyphset{1}; %Default, HotR/SoT/ShoR, Cons/AS
+glyph=ddb.glyphset{2}; %No glyphs
 talents;
 stat_model;
 ability_model;
@@ -74,9 +74,6 @@ name{k}='AS';
 
 
 %% Configurations
-%In the future, this section will define "configurations," which will
-%include fixing hit/expertise/mastery values and choosing rotation logic
-
 %set melee hit to 2%, expertise to 10, mastery to 390 (16.5 mastery);
 %do this by altering helm stats
 cfg(1).helm=egs(1);
@@ -93,19 +90,11 @@ cfg(2).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
 cfg(2).veng=1;
 
 
-%Calculate a sequence for this build, we'll use this sequence for all of
-%the talents that don't have a direct effect on the rotation 
-
-tmpvar.vengap=[1 1 0.3 0.3];
-tmpvar.hitcap=[0 1   0   1];
-
 %% sim 
 tabledps=zeros(length(gtree),length(rot),2);
 for c=1:length(cfg);
-
+    %set configuration variables
     exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','Truth','veng',cfg(c).veng);
-
-
     egs(1)=cfg(c).helm;
     gear_stats
     
@@ -170,5 +159,5 @@ for c=1:length(cfg);
     set(gca,'YTickLabel',name(ind(2:length(name))))
     legend('W39','939','IHSH','Location','Best')
     xlabel('DPS')
-    title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit,'%2.1f') '% hit, ' num2str(player.exp,'%2.1f') ' expertise'])
+    title([ num2str(exec.veng*100,'%2.1f') '% Veng, ' num2str(player.phhit,'%2.1f') '% hit, ' num2str(player.exp-10,'%2.1f') ' expertise'])
 end

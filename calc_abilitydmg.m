@@ -1,3 +1,7 @@
+%CALC_ABILITYDMG calculates the damage of each ability (glyphed and
+%un-glyphed) and generates plots
+
+%% Setup Tasks
 clear;
 gear_db;
 def_db;
@@ -7,95 +11,106 @@ base=player_model('race','Human');
 npc=npc_model(base);
 egs=ddb.gearset{2}; %1=pre-raid , 2=raid
 gear_stats;
-talent=ddb.talentset{2}; %0/31/10 w/HG
+talent=ddb.talentset{3}; %0/31/10 w/HG
 glyph=ddb.glyphset{3}; %SoT glyph only
 talents;
 buff=buff_model;
 stat_model;
 
-%artificially inflating hit and expertise to 8% and 26
-% gear.hit=8*cnv.hit_phhit;
-% gear.exp=(26-10-base.exp)*cnv.exp_exp;
-% stat_model
 
-%Debugging for odd gear sets
-% old.ap=player.ap;old.hsp=player.hsp;
-% player.ap=1010;
-% player.hsp=421;
-% player.ap=3179;
-% player.hsp=889;
-% gear.swing=1.6;
-% gear.avgdmg=(200+373)/2;
-% player.wdamage=(690+921)/2;
-% gear.avgdmg=player.wdamage-player.ap./14.*gear.swing;
-% player.wdamage=gear.avgdmg+player.ap./14.*gear.swing;
-% player.ndamage=gear.avgdmg+player.ap./14.*2.4;
+%% Configurations
+
+%set melee hit to 2%, expertise to 10, mastery to 390 (16.5 mastery);
+%do this by altering helm stats
+cfg(1).helm=egs(1);
+cfg(1).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
+cfg(1).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
+cfg(1).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
+cfg(1).veng=1;
+cfg(1).seal='Truth';
+
+%repeat for 8% hit and exp soft-cap
+cfg(2).helm=egs(1);
+cfg(2).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
+cfg(2).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
+cfg(2).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
+cfg(2).veng=1;
+cfg(2).seal='Truth';
+
+%low veng, low hit
+cfg(3).helm=cfg(1).helm;
+cfg(3).veng=0.3;
+cfg(3).seal='Truth';
+
+%low veng, hit-cap
+cfg(4).helm=cfg(2).helm;
+cfg(4).veng=0.3;
+cfg(4).seal='Truth';
+
+%high veng, low hit, SoI
+cfg(5).helm=cfg(1).helm;
+cfg(5).veng=1;
+cfg(5).seal='Insight';
 
 
-%calculate ability output
-ability_model;
-% rotation_model
-
-%generate a damage summary array
-%% Summary
-dmg_labels={'ShoR';'CS';'JoT';'AS';'HW';'HoW';'Exor';'SoT';'SoR';'SoJ';'Cens';'Cons';'HotR';'HaNova';'Melee';'WoG'};
-
-
-vals.raw=val.raw;  %raw damage
-vals.dmg=val.dmg;  %net damage after hit/crit
-vals.net=val.net{1};  %seal procs included
-
-spacer=repmat(' ',size(vals.raw,1),2);
-raw_summary=[char(dmg_labels) spacer int2str(vals.raw)];
-dmg_summary=[char(dmg_labels) spacer int2str(vals.dmg)];
-thr_summary=[char(dmg_labels) spacer int2str(vals.dmg.*mdf.RF)];
-all_summary=[char(dmg_labels) spacer int2str(vals.raw) spacer int2str(vals.dmg) spacer int2str(vals.dmg.*mdf.RF)];
+%labels for pretty-print output
+dmg_labels={'SotR';'CS';'JoT';'AS';'HW';'HoW';'Exor';'SoT';'SoR';'SoJ';'Cens';'Cons';'HotR';'HaNova';'Melee';'WoG'};
 
 %% glyphed vals
-vals.glyph=zeros(length(vals.raw),4);
-%invoke all glyphs
-glyph.prime=ones(size(glyph.prime));glyph.major=ones(size(glyph.major));
-temp.vap=[1 1 0.3 0.3];
-%artificially inflating hit and expertise to 8% and 26 for the last set
-temp.hit=[gear.hit 8*cnv.hit_phhit gear.hit 8*cnv.hit_phhit];
-temp.exp=[gear.exp (26-10-base.exp)*cnv.exp_exp gear.exp (26-10-base.exp)*cnv.exp_exp];
+tmpvar.raw=zeros(length(val.raw),length(cfg));
+tmpvar.dmg=zeros(size(tmpvar.raw));tmpvar.net=zeros(size(tmpvar.raw));
+tmpvar.glyph=zeros(length(val.raw),length(cfg));
 
-for m=1:size(vals.glyph,2)
-    exec=execution_model('veng',temp.vap(m));
-    gear.hit=temp.hit(m);
-    gear.exp=temp.exp(m);
+for c=1:length(cfg)
+    %set configuration variables
+    exec=execution_model('veng',cfg(c).veng,'seal',cfg(c).seal);
+    egs(1)=cfg(c).helm;
+    gear_stats;
+    
+    %values with only SoT glyph
+    glyph=ddb.glyphset{3}; 
     talents;
     stat_model;
     ability_model;
-    vals.glyph1(:,m)=val.dmg;
-    vals.glyph2(:,m)=val.net(1);
+    tmpvar.raw(:,c)=val.raw;  %raw damage
+    tmpvar.dmg(:,c)=val.dmg;  %net damage after hit/crit
+    tmpvar.heal(:,c)=val.heal;
+    tmpvar.thr(:,c)=val.threat; %threat after hit/crit
+    tmpvar.net(:,c)=val.net{1};  %seal procs included
+    tmpvar.netthr(:,c)=val.net{2}; %net threat per cast
+    
+    %values with all glyphs active
+    glyph.prime=ones(size(glyph.prime));glyph.major=ones(size(glyph.major));
+    talents;
+    stat_model;
+    ability_model;
+    tmpvar.glyphdmg(:,c)=val.dmg;
+    tmpvar.glyphthr(:,c)=val.threat;
+    tmpvar.glyphheal(:,c)=val.heal;
+    tmpvar.glyphnet(:,c)=val.net{1};
+    tmpvar.glyphnetthr(:,c)=val.net{2};
 end
-vals.glyph2=cell2mat(vals.glyph2);
 
-% %now pick out ability damages and sort them into glyph_vals
-% vals.glyph(1)=tempvalp(1,6); %ShoR glyph
-% vals.glyph(2)=tempvalp(2,1); %CS
-% vals.glyph(3)=tempvalp(3,4); %Jud
-% vals.glyph(4)=tempvalm(4,5); %AS
-% vals.glyph(7)=tempvalp(7,2); %Exor
-% vals.glyph(12)=tempvalm(12,2); %Cons
-% vals.glyph(13)=tempvalp(13,3); %HotR
-% vals.glyph(14)=tempvalp(14,3); %HaNova
 
 %% text arrays
-spacer=repmat(' ',size(vals.raw,1),3);
-dmgarray1=[char(dmg_labels) spacer int2str([vals.raw vals.dmg vals.net vals.glyph1(:,1)])]
-dmgarray2=[char(dmg_labels) spacer int2str(vals.glyph2)]
-
+spacer=repmat(' ',size(tmpvar.raw,1),3);
+arr1=[tmpvar.raw(:,1) tmpvar.dmg(:,1) tmpvar.net(:,1) tmpvar.glyphdmg(:,1)];
+ii=find(strcmp(cellstr(dmg_labels),'WoG'));
+arr1(ii,:)=[tmpvar.raw(ii,5) tmpvar.heal(ii,5) tmpvar.net(ii,5) tmpvar.glyphheal(ii,5)];
+dmgarray1=[char(dmg_labels) spacer int2str(arr1)]
+dmgarray2=[char(dmg_labels) spacer int2str(tmpvar.glyphnet)]
+thrarray1=[char(dmg_labels) spacer int2str(tmpvar.glyphthr)]
 
 
 %% Code for plots
-dmgplot=[vals.dmg max([vals.glyph1(:,1)-vals.dmg zeros(size(vals.glyph1(:,1)))],[],2)];
-netplot=[vals.net max([vals.glyph1(:,1)-vals.dmg zeros(size(vals.glyph1(:,1)))],[],2)];
+dmgplot=[tmpvar.dmg(:,1) max([tmpvar.glyphdmg(:,1)-tmpvar.dmg(:,1) zeros(size(tmpvar.glyphdmg(:,1)))],[],2)];
+netplot=[tmpvar.net(:,1) max([tmpvar.glyphdmg(:,1)-tmpvar.dmg(:,1) zeros(size(tmpvar.glyphdmg(:,1)))],[],2)];
 %fix for J (add raw.SotR)
 netplot2=netplot;
-netplot2(3,1)=netplot2(3,1)+raw.ShieldoftheRighteous*mdf.SacDut*mdf.rahit;
-kk=[1:7 11:14];
+jj=find(strcmp(cellstr(dmg_labels),'JoT'));ss=find(strcmp(cellstr(dmg_labels),'SotR'));
+netplot2(jj,1)=netplot2(jj,1)+dmgplot(ss,1)*mdf.SacDut*mdf.rahit;
+netplot2(jj,2)=netplot2(jj,2)+dmgplot(ss,2)*mdf.SacDut*mdf.rahit;
+kk=[1:7 11:14 16];
 
 figure(20)
 set(gcf,'Position',[428 128 728 378])
@@ -110,7 +125,7 @@ set(gca,'XTickLabel',dmg_labels(kk))
 legend('Unglyphed','Glyphed','Location','NorthEast')
 xlabel('Ability')
 ylabel('Damage')
-title('100% Vengeance')
+title('100% Vengeance, SoT')
 % 
 % 
 figure(21)
@@ -145,9 +160,9 @@ title('100% Vengeance')
 % 
 figure(23)
 set(gcf,'Position',[428 128 728 378])
-bar40=bar(vals.glyph2(kk,:),'BarWidth',1,'BarLayout','grouped');
+bar40=bar(tmpvar.glyphnet(kk,:),'BarWidth',1,'BarLayout','grouped');
 set(bar40(2),'FaceColor',[0.749 0.749 0]);
-xlim([0.5 11.5])
+xlim([0.5 12.5])
 maxy=ceil(max(sum(netplot2,2))/5000)*5000;
 ylim([0 maxy])
 set(gca,'YTick',[0:5000:maxy],'YTickLabel',[int2str([0:5:maxy/1000]') repmat('k',1+maxy/5000,1)])
