@@ -128,7 +128,7 @@ my @attrs = qw(
   crit      exp       haste     mast     
   dodge     parry     block     barmor   
   earmor    socket    sbstat    sbval
-  apower    spower
+  ap        sp
 );
 
 my $verbose = 0;
