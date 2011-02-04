@@ -39,6 +39,8 @@ my %parsers = (
   dodge     => qr{>Equip: Increases your dodge rating by (\d+)},
   parry     => qr{>Equip: Increases your parry rating by (\d+)},
   block     => qr{>Equip: Increases your shield block rating by (\d+)},
+  spower    => qr{>Equip: Increases spell power by (\d+)},
+  apower    => qr{>Equip: Increases attack power by (\d+)},
   armor     => qr{>(\d+) Armor},
   earmor    => qr{Armor \(\+(\d+)\)},
 );
@@ -58,6 +60,8 @@ my %stat_names = (
   'dodge rating' => 'dodge',
   'parry rating' => 'parry',
   'block rating' => 'block',
+  'spell power' => 'spower',
+  'attack power' => 'apower',
 );
 
 sub get_item {
