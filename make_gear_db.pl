@@ -93,6 +93,9 @@ push @items, qw(65023 67477); #372
 push @items, qw(56279 56337 62243 63480); #346
 push @items, qw(64674 64676); #359
 
+# override parsed items
+@items = @ARGV if @ARGV;
+
 # corrections to items
 my %corrections = (
 	# None at the moment
@@ -125,6 +128,7 @@ my @attrs = qw(
   crit      exp       haste     mast     
   dodge     parry     block     barmor   
   earmor    socket    sbstat    sbval
+  apower    spower
 );
 
 my $verbose = 0;
