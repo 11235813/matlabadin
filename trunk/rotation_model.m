@@ -34,26 +34,18 @@ mdf.sd1=mdf.rahit.*mdf.SacDut;
 mdf.sd2=mdf.rahit.*mdf.SacDut.*(2-mdf.rahit.*mdf.SacDut);
 
 %probability of at least one GrCr proc from 3 CS/HotR casts
-q.CS=binopdf(0,3,mdf.mehit) ...                  %no connects
+q.grcr=binopdf(0,3,mdf.mehit) ...                %no connects
     +binopdf(1,3,mdf.mehit).*(1-mdf.GrCr) ...    %one connects, no proc
     +binopdf(2,3,mdf.mehit).*(1-mdf.GrCr).^2 ... %two connects, no procs
     +binopdf(3,3,mdf.mehit).*(1-mdf.GrCr).^3;    %three connects, no procs
-p.CS=1-q.CS;
-q.HotR=(1-mdf.GrCr).^3;
-p.HotR=1-q.HotR;
+p.grcr=1-q.grcr;
 %average AS cast count
 clear tmprot
-tmprot.CScols(1,:)=ones(size(q.CS));
-tmprot.HotRcols(1,:)=ones(size(q.HotR));
+tmprot.cols(1,:)=ones(size(q.grcr));
 for mmmm=2:50
-tmprot.CScols(mmmm,:)=p.CS.*tmprot.CScols(mmmm-1,:)+(1-tmprot.CScols(mmmm-1,:));
-tmprot.HotRcols(mmmm,:)=p.HotR.*tmprot.HotRcols(mmmm-1,:)+(1-tmprot.HotRcols(mmmm-1,:));
+tmprot.cols(mmmm,:)=p.grcr.*tmprot.cols(mmmm-1,:)+(1-tmprot.cols(mmmm-1,:));
 end
-P.CS=mean(tmprot.CScols(size(tmprot.CScols,1)-1:size(tmprot.CScols,1),:));
-P.HotR=mean(tmprot.HotRcols(size(tmprot.HotRcols,1)-1:size(tmprot.HotRcols,1),:));
-
-%initialize var for storing effective casts
-tmpc=[];
+P.grcr=mean(tmprot.cols(size(tmprot.cols,1)-1:size(tmprot.cols,1),:));
 
 
 %% SCSC/939 framework : SotR>CS>J>AS>Cons>HW (execute range : SotR>CS>J>HoW)
@@ -61,19 +53,19 @@ rot(1).tag='939';
 rot(1).xtragcd=2.*((1./mdf.mehit)-1);
 rot(1).sotrfactor=(mdf.phcrit+mdf.mehit.*mdf.sd1.*(mdf.phcritm-mdf.phcrit));
 rot(1).ncasts=[...
-    2.*val.ones;...                                                     %SotR
-    6.*val.ones;...                                                     %CS
-    2.*val.ones;...                                                     %J
-   (2.*P.CS.*0.81).*val.ones;...                                        %AS
-   (max([2.*(1-P.CS)-0.5;zeros(size(mdf.mehit))]).*0.81).*val.ones;...  %HW
-   (0.5.*0.81).*val.ones;...                                            %Cons
-    0.*val.ones;...                                                     %HotR
-    0.*val.ones;...                                                     %2SotR
-    0.*val.ones;...                                                     %Inq
-   (2.*0.19).*val.ones;...                                              %HoW
-   (8.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones;...                %seal (CS+SotR+J)
-    0.*val.ones;                                                        %HammerNova
-    0.*val.ones];                                                       %WoG
+    2.*val.ones;...                                                       %SotR
+    6.*val.ones;...                                                       %CS
+    2.*val.ones;...                                                       %J
+   (2.*P.grcr.*0.81).*val.ones;...                                        %AS
+   (max([2.*(1-P.grcr)-0.5;zeros(size(mdf.mehit))]).*0.81).*val.ones;...  %HW
+   (0.5.*0.81).*val.ones;...                                              %Cons
+    0.*val.ones;...                                                       %HotR
+    0.*val.ones;...                                                       %2SotR
+    0.*val.ones;...                                                       %Inq
+   (2.*0.19).*val.ones;...                                                %HoW
+   (8.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones;...                  %seal (CS+SotR+J)
+    0.*val.ones;                                                          %HammerNova
+    0.*val.ones];                                                         %WoG
 rot(1).cps=rot(1).ncasts./repmat((18+1.5.*rot(1).xtragcd).*val.ones,size(rot(1).ncasts,1),1);
 rot(1).coeff=rot(1).ncasts./repmat((18+1.5.*rot(1).xtragcd).*val.ones,size(rot(1).ncasts,1),1);
 rot(1).coeff(1,:)=rot(1).coeff(1,:).*rot(1).sotrfactor;
@@ -87,8 +79,8 @@ rot(2).ncasts=[...
     1.*val.ones;...                                    %SotR
     0.*val.ones;...                                    %CS
     2.*val.ones;...                                    %J
-   (2.*P.HotR.*0.81).*val.ones;...                     %AS
-   (max([2.*(1-P.HotR)-0.5;0]).*0.81).*val.ones;...    %HW
+   (2.*P.grcr.*0.81).*val.ones;...                     %AS
+   (max([2.*(1-P.grcr)-0.5;0]).*0.81).*val.ones;...    %HW
    (0.5.*0.81).*val.ones;...                           %Cons
     6.*val.ones;...                                    %HotR
     0.*val.ones;...                                    %2SotR
@@ -112,8 +104,8 @@ rot(3).ncasts=[ ...
     2.*val.ones;...                                         %SotR
     0.*val.ones;...                                         %CS
     2.*val.ones;...                                         %J
-   (2.*P.HotR.*0.81).*val.ones;...                          %AS
-   (max([2.*(1-P.HotR)-0.5;0]).*0.81).*val.ones;...         %HW
+   (2.*P.grcr.*0.81).*val.ones;...                          %AS
+   (max([2.*(1-P.grcr)-0.5;0]).*0.81).*val.ones;...         %HW
    (0.5.*0.81).*val.ones;...                                %Cons
     6.*val.ones;...                                         %HotR
     0.*val.ones;...                                         %2SotR
@@ -133,19 +125,19 @@ rot(4).tag='IHSC';
 rot(4).xtragcd=(1./mdf.mehit)-1;
 rot(4).sotrfactor=(mdf.phcrit+mdf.mehit.*mdf.sd2.*(mdf.phcritm-mdf.phcrit));
 rot(4).ncasts=[...
-    1.*val.ones;...                                                         %SotR
-    3.*val.ones;...                                                         %CS
-    2.*val.ones;...                                                         %J
-   ((P.CS+P.HotR).*0.81).*val.ones;...                                      %AS
-   (max([2-P.CS-P.HotR-0.5;zeros(size(mdf.mehit))]).*0.81).*val.ones;...    %HW
-   (0.5.*0.81).*val.ones;...                                                %Cons
-    3.*val.ones;...                                                         %HotR
-    0.*val.ones;...                                                         %2SotR
-    1.*val.ones;...                                                         %Inq
-   (2.*0.19).*val.ones;...                                                  %HoW
-   (4.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones;...                    %seal (CS+SotR+J)
-    3.*val.ones;                                                            %HammerNova
-    0.*val.ones];                                                           %WoG
+    1.*val.ones;...                                                      %SotR
+    3.*val.ones;...                                                      %CS
+    2.*val.ones;...                                                      %J
+   (2.*P.grcr.*0.81).*val.ones;...                                       %AS
+   (max([2.*(1-P.grcr)-0.5;zeros(size(mdf.mehit))]).*0.81).*val.ones;... %HW
+   (0.5.*0.81).*val.ones;...                                             %Cons
+    3.*val.ones;...                                                      %HotR
+    0.*val.ones;...                                                      %2SotR
+    1.*val.ones;...                                                      %Inq
+   (2.*0.19).*val.ones;...                                               %HoW
+   (4.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones;...                 %seal (CS+SotR+J)
+    3.*val.ones;                                                         %HammerNova
+    0.*val.ones];                                                        %WoG
 rot(4).cps=rot(4).ncasts./repmat((18+1.5.*rot(4).xtragcd).*val.ones,size(rot(4).ncasts,1),1);
 rot(4).coeff=rot(4).ncasts./repmat((18+1.5.*rot(4).xtragcd).*val.ones,size(rot(4).ncasts,1),1);
 rot(4).coeff(1,:)=rot(4).coeff(1,:).*rot(4).sotrfactor;
@@ -165,13 +157,13 @@ rot(5).ncasts=[...
     1.*val.ones;...                                                             %SotR
     3.*val.ones;...                                                             %CS
   ((1+mdf.sd2)./mdf.sd2).*val.ones;...                                          %J
-  ((P.CS+P.HotR./mdf.sd2).*0.81).*val.ones;...                                  %AS
-   (max([0.75.*((1+mdf.sd2)./mdf.sd2)-(P.CS+P.HotR./mdf.sd2);zeros(size(mdf.mehit))]).*0.81).*val.ones;... %HW
-   (0.25.*((1+mdf.sd2)./mdf.sd2).*0.81).*val.ones;...                           %Cons
+   (P.grcr.*0.81.*(1+mdf.sd2)./mdf.sd2).*val.ones;...                           %AS
+   (max([(2.*(1-P.grcr)-0.5).*(1+mdf.sd2)./mdf.sd2;zeros(size(mdf.mehit))]).*0.81).*val.ones;... %HW
+   (0.25.*0.81.*(1+mdf.sd2)./mdf.sd2).*val.ones;...                             %Cons
    (3./mdf.sd2).*val.ones;...                                                   %HotR
     0.*val.ones;...                                                            	%2SotR
    (1./mdf.sd2).*val.ones;...                                                   %Inq
- (((1+mdf.sd2)./mdf.sd2).*0.19).*val.ones;...                                   %HoW
+   (0.19.*(1+mdf.sd2)./mdf.sd2).*val.ones;...                                   %HoW
    (4.*mdf.mehit+((1+mdf.sd2)./mdf.sd2).*mdf.rahit.*mdf.jseals).*val.ones;...   %seal (CS+SotR+J)
    (3./mdf.sd2).*val.ones;                                                      %HammerNova
     0.*val.ones];                                                               %WoG
@@ -199,8 +191,8 @@ rot(6).sotrfactor=1;
 rot(6).ncasts=[0.*val.ones;...                                      %SotR
                0.*val.ones;...                                      %CS
                2.*val.ones;...                                      %J
-               2.*P.HotR.*val.ones;...                              %AS
-               max([2.*(1-P.HotR)-0.5;0]).*val.ones;...             %HW
+               2.*P.grcr.*val.ones;...                              %AS
+               max([2.*(1-P.grcr)-0.5;0]).*val.ones;...             %HW
                0.5.*val.ones;...                                    %Cons
                6.*val.ones;...                                      %HotR
                0.*val.ones;...                                  	%2SotR
@@ -221,19 +213,19 @@ rot(7).tag='W39';
 rot(7).xtragcd=2.*(mdf.EG./(1+mdf.EG));
 rot(7).sotrfactor=1;
 rot(7).ncasts=[...
-    0.*val.ones;...                                                     %SotR
-    6.*val.ones;...                                                     %CS
-    2.*val.ones;...                                                  	%J
-   (2.*P.CS.*0.81).*val.ones;...                                        %AS
-   (max([2.*(1-P.CS)-0.5;zeros(size(mdf.mehit))]).*0.81).*val.ones;...  %HW
-   (0.5.*0.81).*val.ones;...                                            %Cons
-    0.*val.ones;...                                                  	%HotR
-    0.*val.ones;...                                                     %2SotR
-    0.*val.ones;...                                                     %Inq
-   (2.*0.19).*val.ones;...                                              %HoW
-   (6.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones;...                %seal (CS+J)
-    0.*val.ones;                                                       	%HammerNova
-    2.*(1+mdf.EG./(1+mdf.EG)).*val.ones];                               %WoG
+    0.*val.ones;...                                                      %SotR
+    6.*val.ones;...                                                      %CS
+    2.*val.ones;...                                                  	 %J
+   (2.*P.grcr.*0.81).*val.ones;...                                       %AS
+   (max([2.*(1-P.grcr)-0.5;zeros(size(mdf.mehit))]).*0.81).*val.ones;... %HW
+   (0.5.*0.81).*val.ones;...                                             %Cons
+    0.*val.ones;...                                                      %HotR
+    0.*val.ones;...                                                      %2SotR
+    0.*val.ones;...                                                      %Inq
+   (2.*0.19).*val.ones;...                                               %HoW
+   (6.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones;...                 %seal (CS+J)
+    0.*val.ones;                                                       	 %HammerNova
+    2.*(1+mdf.EG./(1+mdf.EG)).*val.ones];                                %WoG
 rot(7).cps=rot(7).ncasts./repmat((18+1.5.*rot(7).xtragcd).*val.ones,size(rot(7).ncasts,1),1);
 rot(7).coeff=rot(7).ncasts./repmat((18+1.5.*rot(7).xtragcd).*val.ones,size(rot(7).ncasts,1),1);
 rot(7).coeff(1,:)=rot(7).coeff(1,:).*rot(7).sotrfactor;
@@ -263,4 +255,4 @@ for i=1:length(rot)
 end
 
 
-clear mmmm tmpc i
+clear p q tmprot mmmm P i

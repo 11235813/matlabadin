@@ -31,7 +31,7 @@ threat.SealofRighteousness=dmg.SealofRighteousness.*mdf.RF;
 %Seal of Insight (15 PPM, not haste-normalized)
 raw.SealofInsight=          0.15.*(player.hsp+player.ap).*mdf.Divin;
 raw.JoI          =          (1+0.25.*player.hsp+0.16.*player.ap);
-dmg.SealofInsight=          raw.SealofInsight;
+dmg.SealofInsight=          0;
 heal.SealofInsight=         raw.SealofInsight.*(15.*gear.swing./60); %chance on hit, 15 PPM
 threat.SealofInsight=       heal.SealofInsight.*mdf.hthreat.*mdf.RF./exec.npccount;
 
@@ -76,15 +76,14 @@ net.CrusaderStrike{2}=threat.CrusaderStrike+threat.activeseal.*mdf.mehit;
 
 %Hammer of the Righteous
 %physical (can be blocked)
-mdf.HotRmodel=1+(mdf.blockrdx-1).*target.block./100;
 raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*(1+mdf.Crus+mdf.glyphHotR);
-dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.HotRmodel.*mdf.HotRphcrit;
+dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.memodel.*mdf.HotRphcrit;
 threat.HammeroftheRighteous=dmg.HammeroftheRighteous.*mdf.RF;
 net.HammeroftheRighteous{1}=dmg.HammeroftheRighteous; %doesn't proc seals
 net.HammeroftheRighteous{2}=threat.HammeroftheRighteous;
-%the physical component always connects, the nova rolls for hit only once
+%the nova rolls for hit only if physical connects
 raw.HammerNova=   (728.8813374+0.18.*player.ap).*mdf.spdmg.*(1+mdf.Crus+mdf.glyphHotR);
-dmg.HammerNova=   raw.HammerNova.*mdf.sphit.*mdf.HotRspcrit.*target.resrdx; %spell hit/crit
+dmg.HammerNova=   raw.HammerNova.*mdf.mehit.*mdf.sphit.*mdf.HotRspcrit.*target.resrdx; %spell hit/crit
 threat.HammerNova=dmg.HammerNova.*mdf.RF;
 net.HammerNova{1}=dmg.HammerNova; %doesn't proc seals
 net.HammerNova{2}=threat.HammerNova;

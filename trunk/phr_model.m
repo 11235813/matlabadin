@@ -48,8 +48,8 @@ else
    upt=@(x) 1-rk.^(floor(min(8,(x+min(3,8.*(Ra.*phr.ph)))./(Ra.*phr.ph)).*Rb) ...
        +(exec.npccount>1).*(min(8,(x+min(3,8.*(Ra.*phr.ph)))./(Ra.*phr.ph)).*Rb) ...
        .*(exec.npccount-1));
-   if numel([exec.npccount exec.timein ps bs pb rp])>6
-       phr.reck=quadv(upt,0,1,1.e-8);
+   if max([length(exec.npccount);length(exec.timein);length(ps);length(bs);length(pp);length(pb);length(rp)])>1
+       phr.reck=quadv(upt,0,1);
    else
        phr.reck=quadl(upt,0,1,1.e-8);
    end
