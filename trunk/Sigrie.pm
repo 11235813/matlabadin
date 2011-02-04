@@ -39,8 +39,8 @@ my %parsers = (
   dodge     => qr{>Equip: Increases your dodge rating by (\d+)},
   parry     => qr{>Equip: Increases your parry rating by (\d+)},
   block     => qr{>Equip: Increases your shield block rating by (\d+)},
-  spower    => qr{>Equip: Increases spell power by (\d+)},
-  apower    => qr{>Equip: Increases attack power by (\d+)},
+  sp        => qr{>Equip: Increases spell power by (\d+)},
+  ap        => qr{>Equip: Increases attack power by (\d+)},
   armor     => qr{>(\d+) Armor},
   earmor    => qr{Armor \(\+(\d+)\)},
 );
@@ -60,8 +60,8 @@ my %stat_names = (
   'dodge rating' => 'dodge',
   'parry rating' => 'parry',
   'block rating' => 'block',
-  'spell power' => 'spower',
-  'attack power' => 'apower',
+  'spell power' => 'sp',
+  'attack power' => 'ap',
 );
 
 sub get_item {
@@ -71,14 +71,14 @@ sub get_item {
   my $response = $ua->get("http://db.mmo-champion.com/i/$id/tooltip/js");
   if ($response->is_error) {
     print STDERR "Error getting item $id:", $response->status_line, "\n";
-    return undef;
+    return ();
   }
 
   # weed out the useless bits
   my ($tooltip) = $response->content =~ m/tooltip: '(.*)',/;
   unless ($tooltip) {
     print STDERR "Error parsing item $id\n";
-    return undef;
+    return ();
   }
 
   # unencode entities
