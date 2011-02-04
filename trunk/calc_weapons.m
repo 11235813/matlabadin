@@ -53,7 +53,6 @@ weaplist3=[65166; %Buzz Saw (Heroic)
            65164; %Cruel Barb (Heroic)
            56353; %Heavy Geode Mace (Heroic)
            55067; %Elementium Bonesplitter
-           67605; %Forged Elementium Mindcrusher
            65170; %Smite''s Reaver (Heroic)
            59443; %Crul''korak, the Lightning''s Arc
            68161; %Krol Decapitator
