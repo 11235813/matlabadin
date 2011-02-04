@@ -399,11 +399,14 @@ idb.iid(65225).istier=[1 0 0];
 
 idb.iid(55059).name='Hardened Elementium Girdle';
 idb.iid(55059).ilvl=359;
-idb.iid(55059).str=253;
+idb.iid(55059).str=233;
 idb.iid(55059).sta=380;
-idb.iid(55059).mast=169;
+idb.iid(55059).mast=149;
 idb.iid(55059).dodge=169;
 idb.iid(55059).barmor=1927;
+idb.iid(55059).socket='B';
+idb.iid(55059).sbstat='dodge';
+idb.iid(55059).sbval=10;
 idb.iid(55059).atype=1;
 
 idb.iid(59117).name='Jumbotron Power Belt';
@@ -593,17 +596,6 @@ idb.iid(67602).agi=129;
 idb.iid(67602).hit=86;
 idb.iid(67602).mast=86;
 
-idb.iid(67605).name='Forged Elementium Mindcrusher';
-idb.iid(67605).wtype='axe';
-idb.iid(67605).ilvl=346;
-idb.iid(67605).tooldps=409.4;
-idb.iid(67605).swing=2.6;
-idb.iid(67605).avgdmg=1064.5;
-idb.iid(67605).str=129;
-idb.iid(67605).sta=194;
-idb.iid(67605).hit=86;
-idb.iid(67605).exp=86;
-
 idb.iid(59443).name='Crul''korak, the Lightning''s Arc';
 idb.iid(59443).wtype='axe';
 idb.iid(59443).ilvl=359;
@@ -676,6 +668,7 @@ idb.iid(55065).sta=194;
 idb.iid(55065).int=129;
 idb.iid(55065).spi=86;
 idb.iid(55065).mast=86;
+idb.iid(55065).sp=1729;
 
 idb.iid(56312).name='Torturer''s Mercy (Heroic)';
 idb.iid(56312).wtype='mac';
@@ -685,8 +678,9 @@ idb.iid(56312).swing=2.3;
 idb.iid(56312).avgdmg=942;
 idb.iid(56312).sta=194;
 idb.iid(56312).int=129;
-idb.iid(56312).spi=86;
-idb.iid(56312).mast=86;
+idb.iid(56312).spi=91;
+idb.iid(56312).mast=78;
+idb.iid(56312).sp=1729;
 
 idb.iid(56353).name='Heavy Geode Mace (Heroic)';
 idb.iid(56353).wtype='mac';
@@ -731,6 +725,7 @@ idb.iid(57872).sta=194;
 idb.iid(57872).int=129;
 idb.iid(57872).spi=86;
 idb.iid(57872).haste=86;
+idb.iid(57872).sp=1729;
 
 idb.iid(62459).name='Shimmering Morningstar';
 idb.iid(62459).wtype='mac';
@@ -742,6 +737,7 @@ idb.iid(62459).sta=194;
 idb.iid(62459).int=129;
 idb.iid(62459).spi=86;
 idb.iid(62459).crit=86;
+idb.iid(62459).sp=1729;
 
 idb.iid(65171).name='Cookie''s Tenderizer (Heroic)';
 idb.iid(65171).wtype='mac';
@@ -768,13 +764,14 @@ idb.iid(59347).parry=97;
 idb.iid(59459).name='Andoros, Fist of the Dragon King';
 idb.iid(59459).wtype='mac';
 idb.iid(59459).ilvl=359;
-idb.iid(59459).tooldps=462.2;
-idb.iid(59459).swing=2.3;
-idb.iid(59459).avgdmg=1063;
+idb.iid(59459).tooldps=462.5;
+idb.iid(59459).swing=1.8;
+idb.iid(59459).avgdmg=832.5;
 idb.iid(59459).sta=219;
 idb.iid(59459).int=146;
 idb.iid(59459).spi=97;
 idb.iid(59459).mast=97;
+idb.iid(59459).sp=1954;
 
 idb.iid(61335).name='Vicious Gladiator''s Pummeler';
 idb.iid(61335).wtype='mac';
@@ -805,28 +802,31 @@ idb.iid(61338).avgdmg=740;
 idb.iid(61338).sta=219;
 idb.iid(61338).int=146;
 idb.iid(61338).crit=97;
+idb.iid(61338).sp=1954;
 
 idb.iid(63680).name='Twilight''s Hammer';
 idb.iid(63680).wtype='mac';
 idb.iid(63680).ilvl=359;
-idb.iid(63680).tooldps=462.2;
-idb.iid(63680).swing=2.3;
-idb.iid(63680).avgdmg=1063;
+idb.iid(63680).tooldps=462.4;
+idb.iid(63680).swing=1.7;
+idb.iid(63680).avgdmg=786;
 idb.iid(63680).sta=219;
 idb.iid(63680).int=146;
 idb.iid(63680).crit=97;
 idb.iid(63680).haste=97;
+idb.iid(63680).sp=1954;
 
 idb.iid(65017).name='Andoros, Fist of the Dragon King (Heroic)';
 idb.iid(65017).wtype='mac';
 idb.iid(65017).ilvl=372;
-idb.iid(65017).tooldps=521.7;
-idb.iid(65017).swing=2.3;
-idb.iid(65017).avgdmg=1200;
+idb.iid(65017).tooldps=521.9;
+idb.iid(65017).swing=1.8;
+idb.iid(65017).avgdmg=939.5;
 idb.iid(65017).sta=247;
 idb.iid(65017).int=165;
 idb.iid(65017).spi=110;
 idb.iid(65017).mast=110;
+idb.iid(65017).sp=2207;
 
 idb.iid(65036).name='Mace of Acrid Death (Heroic)';
 idb.iid(65036).wtype='mac';
@@ -842,13 +842,14 @@ idb.iid(65036).parry=110;
 idb.iid(65090).name='Twilight''s Hammer (Heroic)';
 idb.iid(65090).wtype='mac';
 idb.iid(65090).ilvl=372;
-idb.iid(65090).tooldps=521.7;
-idb.iid(65090).swing=2.3;
-idb.iid(65090).avgdmg=1200;
+idb.iid(65090).tooldps=521.8;
+idb.iid(65090).swing=1.7;
+idb.iid(65090).avgdmg=887;
 idb.iid(65090).sta=248;
 idb.iid(65090).int=165;
 idb.iid(65090).crit=110;
 idb.iid(65090).haste=110;
+idb.iid(65090).sp=2207;
 
 idb.iid(67454).name='Vicious Gladiator''s Gavel';
 idb.iid(67454).wtype='mac';
@@ -859,6 +860,7 @@ idb.iid(67454).avgdmg=834.5;
 idb.iid(67454).sta=248;
 idb.iid(67454).int=165;
 idb.iid(67454).crit=110;
+idb.iid(67454).sp=2207;
 
 idb.iid(67470).name='Vicious Gladiator''s Bonecracker';
 idb.iid(67470).wtype='mac';
@@ -923,6 +925,7 @@ idb.iid(56433).sta=194;
 idb.iid(56433).int=129;
 idb.iid(56433).crit=93;
 idb.iid(56433).haste=76;
+idb.iid(56433).sp=1729;
 
 idb.iid(65164).name='Cruel Barb (Heroic)';
 idb.iid(65164).wtype='swo';
@@ -976,8 +979,9 @@ idb.iid(59463).swing=1.6;
 idb.iid(59463).avgdmg=740;
 idb.iid(59463).sta=219;
 idb.iid(59463).int=146;
-idb.iid(59463).crit=97;
-idb.iid(59463).mast=97;
+idb.iid(59463).crit=88;
+idb.iid(59463).mast=103;
+idb.iid(59463).sp=1954;
 
 idb.iid(59521).name='Soul Blade';
 idb.iid(59521).wtype='swo';
@@ -1029,8 +1033,8 @@ idb.iid(64885).swing=2.6;
 idb.iid(64885).avgdmg=1202;
 idb.iid(64885).str=146;
 idb.iid(64885).sta=219;
-idb.iid(64885).crit=97;
-idb.iid(64885).haste=97;
+idb.iid(64885).crit=111;
+idb.iid(64885).haste=74;
 
 idb.iid(68161).name='Krol Decapitator';
 idb.iid(68161).wtype='swo';
@@ -1051,8 +1055,9 @@ idb.iid(65013).swing=1.6;
 idb.iid(65013).avgdmg=834.5;
 idb.iid(65013).sta=247;
 idb.iid(65013).int=165;
-idb.iid(65013).crit=110;
-idb.iid(65013).mast=110;
+idb.iid(65013).crit=99;
+idb.iid(65013).mast=117;
+idb.iid(65013).sp=2207;
 
 idb.iid(65047).name='Lava Spine (Heroic)';
 idb.iid(65047).wtype='swo';
@@ -1130,8 +1135,8 @@ idb.iid(67145).name='Blockade''s Lost Shield';
 idb.iid(67145).ilvl=359;
 idb.iid(67145).str=190;
 idb.iid(67145).sta=286;
-idb.iid(67145).mast=127;
-idb.iid(67145).parry=127;
+idb.iid(67145).mast=134;
+idb.iid(67145).parry=114;
 idb.iid(67145).barmor=11896;
 
 

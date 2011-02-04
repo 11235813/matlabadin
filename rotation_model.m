@@ -80,7 +80,7 @@ rot(2).ncasts=[...
     0.*val.ones;...                                    %CS
     2.*val.ones;...                                    %J
    (2.*P.grcr.*0.81).*val.ones;...                     %AS
-   (max([2.*(1-P.grcr)-0.5;0]).*0.81).*val.ones;...    %HW
+   (max([2.*(1-P.grcr)-0.5;zeros(size(mdf.mehit))]).*0.81).*val.ones;... %HW
    (0.5.*0.81).*val.ones;...                           %Cons
     6.*val.ones;...                                    %HotR
     0.*val.ones;...                                    %2SotR
@@ -105,7 +105,7 @@ rot(3).ncasts=[ ...
     0.*val.ones;...                                         %CS
     2.*val.ones;...                                         %J
    (2.*P.grcr.*0.81).*val.ones;...                          %AS
-   (max([2.*(1-P.grcr)-0.5;0]).*0.81).*val.ones;...         %HW
+   (max([2.*(1-P.grcr)-0.5;zeros(size(mdf.mehit))]).*0.81).*val.ones;... %HW
    (0.5.*0.81).*val.ones;...                                %Cons
     6.*val.ones;...                                         %HotR
     0.*val.ones;...                                         %2SotR
@@ -192,7 +192,7 @@ rot(6).ncasts=[0.*val.ones;...                                      %SotR
                0.*val.ones;...                                      %CS
                2.*val.ones;...                                      %J
                2.*P.grcr.*val.ones;...                              %AS
-               max([2.*(1-P.grcr)-0.5;0]).*val.ones;...             %HW
+               max([2.*(1-P.grcr)-0.5;zeros(size(mdf.mehit))]).*val.ones;... %HW
                0.5.*val.ones;...                                    %Cons
                6.*val.ones;...                                      %HotR
                0.*val.ones;...                                  	%2SotR

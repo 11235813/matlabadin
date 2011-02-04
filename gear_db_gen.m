@@ -1873,17 +1873,6 @@ idb.iid(67602).agi=129;
 idb.iid(67602).hit=86;
 idb.iid(67602).mast=86;
 
-idb.iid(67605).name='Forged Elementium Mindcrusher';
-idb.iid(67605).wtype='axe';
-idb.iid(67605).ilvl=346;
-idb.iid(67605).tooldps=552.2;
-idb.iid(67605).swing=3.6;
-idb.iid(67605).avgdmg=1988;
-idb.iid(67605).str=302;
-idb.iid(67605).sta=454;
-idb.iid(67605).crit=202;
-idb.iid(67605).exp=202;
-
 idb.iid(59443).name='Crul''korak, the Lightning''s Arc';
 idb.iid(59443).wtype='axe';
 idb.iid(59443).ilvl=359;
