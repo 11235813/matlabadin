@@ -16,6 +16,7 @@ glyph=ddb.glyphset{3}; %SoT glyph only
 talents;
 buff=buff_model;
 stat_model;
+ability_model;
 
 
 %% Configurations
@@ -54,7 +55,7 @@ cfg(5).seal='Insight';
 
 
 %labels for pretty-print output
-dmg_labels={'SotR';'CS';'JoT';'AS';'HW';'HoW';'Exor';'SoT';'SoR';'SoJ';'Cens';'Cons';'HotR';'HaNova';'Melee';'WoG'};
+dmg_labels={'SotR';'CS';'Jud';'AS';'HW';'HoW';'Exor';'SoT';'SoR';'SoJ';'Cens';'Cons';'HotR';'HaNova';'Melee';'WoG'};
 
 %% glyphed vals
 tmpvar.raw=zeros(length(val.raw),length(cfg));
@@ -95,10 +96,14 @@ end
 %% text arrays
 spacer=repmat(' ',size(tmpvar.raw,1),3);
 arr1=[tmpvar.raw(:,1) tmpvar.dmg(:,1) tmpvar.net(:,1) tmpvar.glyphdmg(:,1)];
+arr2=[tmpvar.raw(:,5) tmpvar.dmg(:,5) tmpvar.net(:,5) tmpvar.glyphdmg(:,5)];
 ii=find(strcmp(cellstr(dmg_labels),'WoG'));
-arr1(ii,:)=[tmpvar.raw(ii,5) tmpvar.heal(ii,5) tmpvar.net(ii,5) tmpvar.glyphheal(ii,5)];
-dmgarray1=[char(dmg_labels) spacer int2str(arr1)]
-dmgarray2=[char(dmg_labels) spacer int2str(tmpvar.glyphnet)]
+arr1(ii,:)=[tmpvar.raw(ii,1) tmpvar.heal(ii,1) tmpvar.heal(ii,1) tmpvar.glyphheal(ii,1)];
+arr2(ii,:)=[tmpvar.raw(ii,5) tmpvar.heal(ii,5) tmpvar.heal(ii,5) tmpvar.glyphheal(ii,5)];
+dmgarray1=[char(dmg_labels) spacer int2str(arr1) spacer spacer int2str(arr2)]
+arr3=tmpvar.glyphnet;
+arr3(ii,:)=[tmpvar.heal(ii,:)];
+dmgarray2=[char(dmg_labels) spacer int2str(arr3)]
 thrarray1=[char(dmg_labels) spacer int2str(tmpvar.glyphthr)]
 
 
@@ -107,7 +112,7 @@ dmgplot=[tmpvar.dmg(:,1) max([tmpvar.glyphdmg(:,1)-tmpvar.dmg(:,1) zeros(size(tm
 netplot=[tmpvar.net(:,1) max([tmpvar.glyphdmg(:,1)-tmpvar.dmg(:,1) zeros(size(tmpvar.glyphdmg(:,1)))],[],2)];
 %fix for J (add raw.SotR)
 netplot2=netplot;
-jj=find(strcmp(cellstr(dmg_labels),'JoT'));ss=find(strcmp(cellstr(dmg_labels),'SotR'));
+jj=find(strcmp(cellstr(dmg_labels),'Jud'));ss=find(strcmp(cellstr(dmg_labels),'SotR'));
 netplot2(jj,1)=netplot2(jj,1)+dmgplot(ss,1)*mdf.SacDut*mdf.rahit;
 netplot2(jj,2)=netplot2(jj,2)+dmgplot(ss,2)*mdf.SacDut*mdf.rahit;
 kk=[1:7 11:14 16];
@@ -157,6 +162,7 @@ xlabel('Ability')
 ylabel('Damage (including SoT procs and Sacred Duty)')
 title('100% Vengeance')
 % 
+%% these two look psychadelically awful
 % 
 figure(23)
 set(gcf,'Position',[428 128 728 378])
@@ -170,4 +176,19 @@ set(gca,'XTickLabel',dmg_labels(kk))
 legend('Veng=100%','Veng=100%, 8% hit, 26 exp','Veng=30%','Veng=30%, 8% hit, 26 exp','Location','NorthEast')
 xlabel('Ability')
 ylabel('Damage (including SoT procs)')
+title('Glyphed Damage, Varying Vengeance, Hit, Exp')
+% 
+% 
+figure(24)
+set(gcf,'Position',[428 128 728 378])
+bar40=barh(arr3(kk,:),'BarWidth',1.5,'BarLayout','grouped');
+set(bar40(2),'FaceColor',[0.749 0.749 0]);
+ylim([0.5 12.5])
+maxx=ceil(max(sum(netplot2,2))/5000)*5000;
+xlim([0 maxy])
+set(gca,'XTick',[0:5000:maxx],'XTickLabel',[int2str([0:5:maxx/1000]') repmat('k',1+maxx/5000,1)])
+set(gca,'YTickLabel',dmg_labels(kk))
+legend('Veng=100%','Veng=100%, 8% hit, 26 exp','Veng=30%','Veng=30%, 8% hit, 26 exp','Location','NorthEast')
+ylabel('Ability')
+xlabel('Damage (including SoT procs)')
 title('Glyphed Damage, Varying Vengeance, Hit, Exp')
