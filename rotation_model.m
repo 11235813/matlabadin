@@ -47,9 +47,23 @@ tmprot.cols(mmmm,:)=p.grcr.*tmprot.cols(mmmm-1,:)+(1-tmprot.cols(mmmm-1,:));
 end
 P.grcr=mean(tmprot.cols(size(tmprot.cols,1)-1:size(tmprot.cols,1),:));
 
+%% Naming Convention
+%FG-X
+%F = HP finisher
+%G = HP generator
+%X = Nominal Cycle Framework
+%
+%Examples: 
+% -For the default 939, we use SotR as a finisher and CS as the generator,
+% so F=S and G=C.  Since the cycle is based on the standard 939 framework,
+% X=9, giving us SC9
+% -If we alternate Inq and SotR as finishers, and use HotR as the
+% generator, we get IHSH9
+% -If we alternate I/S and only use HotR as the generator after an Inq, we
+% get IHSC9
 
-%% SCSC/939 framework : SotR>CS>J>AS>Cons>HW (execute range : SotR>CS>J>HoW)
-rot(1).tag='939';
+%% SC9 ("939" or "9C9") framework : SotR>CS>J>AS>Cons>HW (execute range : SotR>CS>J>HoW)
+rot(1).tag='SC9';
 rot(1).xtragcd=2.*((1./mdf.mehit)-1);
 rot(1).sotrfactor=(mdf.phcrit+mdf.mehit.*mdf.sd1.*(mdf.phcritm-mdf.phcrit));
 rot(1).ncasts=[...
@@ -96,7 +110,7 @@ rot(2).InqMod=rot(2).InqMod+0.3.*[val.ones;val.zeros;0.5.*val.ones;0.5.*val.ones
 rot(2).InqUp=rot(2).InqUp+0.3.*(12./(18+1.5.*rot(2).xtragcd)).*val.ones;
 
 
-%% SH9 framework : SotR>HotR>J>AS>Cons>HW (execute range : SotR>HotR>J>HoW)
+%% SH9 ("9H9") framework : SotR>HotR>J>AS>Cons>HW (execute range : SotR>HotR>J>HoW)
 rot(3).tag='SH9';
 rot(3).xtragcd=2.*((1./mdf.mehit)-1);
 rot(3).sotrfactor=(mdf.phcrit+mdf.mehit.*mdf.sd1.*(mdf.phcritm-mdf.phcrit));
@@ -121,7 +135,7 @@ rot(3).coeff(1,:)=rot(3).coeff(1,:).*rot(3).sotrfactor;
 
 
 %% IHSC9 : Inq>SotR*>HotR*>CS>J>AS>Cons>HW (execute range: ?)
-rot(4).tag='IHSC';
+rot(4).tag='IHSC9';
 rot(4).xtragcd=(1./mdf.mehit)-1;
 rot(4).sotrfactor=(mdf.phcrit+mdf.mehit.*mdf.sd2.*(mdf.phcritm-mdf.phcrit));
 rot(4).ncasts=[...
@@ -145,11 +159,10 @@ rot(4).InqMod=rot(4).InqMod+0.3.*[val.ones;val.zeros;0.5.*val.ones;0.5.*val.ones
 rot(4).InqUp=rot(4).InqUp+0.3.*(12./(18+1.5.*rot(4).xtragcd)).*val.ones;
 
 
-%% ICIHSH framework Inq>SDSotR*>HotR*>CS>J>AS>Cons>HW (?)  (cast SotR only on SD)
-%TODO: the naming scheme really breaks down for this one, I have no idea if my
-%guess at the queue is correct.
+%% IHIHSC9 framework SDSotR*>Inq>HotR*>CS>J>AS>Cons>HW (?) (cast SotR only on SD)
+%I have no idea if my guess at the queue is correct.
 %with no points in Sacred Duty, the framework is reduced to ICSH
-rot(5).tag='ICIHSH';
+rot(5).tag='IHIHSC';
 rot(5).xtragcd=(1./mdf.mehit)-1;
 if mdf.SacDut>0
 rot(5).sotrfactor=(mdf.phcrit+mdf.mehit.*(mdf.phcritm-mdf.phcrit));
@@ -181,10 +194,7 @@ rot(5).coeff(1,:)=rot(5).coeff(1,:).*rot(5).sotrfactor;
 
 
 
-%% IH9? framework (AoE) 
-%Are we casting Inq every 9 seconds here (i.e. Inq*>HotR>J>AS>Cons>HW)?  if
-%not then this is one case where we "break" the 939 framework and move to
-%something else
+%% IH9 framework (AoE) 
 rot(6).tag='IH9';
 rot(6).xtragcd=0;
 rot(6).sotrfactor=1;
@@ -208,8 +218,8 @@ rot(6).InqMod=rot(6).InqMod+0.3.*[val.ones;val.zeros;val.ones;val.ones;val.ones;
 rot(6).InqUp=rot(6).InqUp+0.3.*val.ones; %100% uptime
 
 
-%% WC9 framework
-rot(7).tag='W39';
+%% WC9 ("W39") framework
+rot(7).tag='WC9';
 rot(7).xtragcd=2.*(mdf.EG./(1+mdf.EG));
 rot(7).sotrfactor=1;
 rot(7).ncasts=[...
