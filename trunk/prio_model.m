@@ -156,7 +156,7 @@ priolist(q).holy=0;
 priolist(q).proctrig=[0]; %no procs
 priolist(q).prochit=[0]; 
 priolist(q).condition='hopo>=3';
-priolist(q).action='if (rand<mdf.EG && icd.EG<=0) dur.EGicd=15; else hopo=0; end;'; 
+priolist(q).action='if (rand<mdf.EG && dur.EGicd<=0) dur.EGicd=15; else hopo=0; end;'; 
 
                 
 
@@ -184,7 +184,7 @@ prio(k).spaction={'';''; ''; ''; ''; ''; ''; '';'';'';};
 
 
 %% Single-Target Queues
-
+%standard
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>HotR>J>AS>HW';
 
@@ -203,34 +203,61 @@ prio(k).name='AS>SotR>CS>J>Cons>HW';
 k=k+1;prio(k)=prio(1);
 prio(k).name='SD>SotR>CS>J>AS>Cons>HW';
 
+%Inq rotations
+
 k=k+1;prio(k)=prio(1);
 prio(k).name='Inq>CS>J>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='Inq>SotR2*>CS>AS>J>Cons>HW';
+prio(k).name='SotR2*>Inq>CS>AS>J>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='Inq>SotR*>CS>J>AS>Cons>HW';
+prio(k).name='SotR*>Inq>CS>J>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='Inq>SotR*>CS>J2>AS>Cons>HW';
+prio(k).name='SotR*>Inq>HotR*>CS>J>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='Inq>SotR*>HotR>J2>AS>Cons>HW';
+prio(k).name='SotR*>Inq>CS>J2>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='Inq>SotR*>CS>AS>J>Cons>HW';
+prio(k).name='SotR*>Inq>HotR>J2>AS>Cons>HW';
+
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='Inq>SotR*>CS>AS*>J>Cons>HW';
+prio(k).name='SotR*>Inq>CS>AS>J>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='Inq>SotR*>HotR>AS>J>Cons>HW';
+prio(k).name='SotR*>Inq>CS>AS*>J>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='Inq>SotR>SDSotR2>CS>J>AS>Cons>HW';
+prio(k).name='SotR*>Inq>HotR>AS>J>Cons>HW';
 
+k=k+1;prio(k)=prio(1);
+prio(k).name='SotR*>Inq>SDSotR2>CS>J>AS>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SDSotR*>Inq>HotR*>CS>J>AS>Cons>HW';
+
+%WoG
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='WoG>CS>J>AS>Cons>HW';
         
+k=k+1;prio(k)=prio(1);
+prio(k).name='WoG>CS>AS>J>Cons>HW';
+        
+k=k+1;prio(k)=prio(1);
+prio(k).name='WoG>CS>AS>Cons>J>HW';
+        
+k=k+1;prio(k)=prio(1);
+prio(k).name='SDSotR>WoG>CS>J>AS>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SDSotR>WoG>CS>AS>J>Cons>HW';
+
+%HoW (sub-20%)
+
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>CS>J>AS>HoW';
 
@@ -256,11 +283,16 @@ k=k+1;prio(k)=prio(1);
 prio(k).name='HoW>CS>SotR>J>AS';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='Inq>SotR*>CS>HoW>J2>AS';
+prio(k).name='SotR*>Inq>CS>HoW>J2>AS';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='Inq>SotR*>HotR>HoW>J2>AS';
+prio(k).name='SotR*>Inq>HotR>HoW>J2>AS';
 
+k=k+1;prio(k)=prio(1);
+prio(k).name='HoW*>SotR*>Inq>CS>J2>AS';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='HoW>SotR*>Inq>CS>J2>AS';
 
 
 k1=k;
@@ -446,7 +478,17 @@ for m=1:k2
             elseif sum(strcmp(snstr,'SotR2*'))
                 prio(m).cast(l)=tmp.SotR2; 
                 prio(m).cond{l}='hopo>=2 && dur.Inq>0';
-                                
+                
+            %SDSotR (3 hopo, only with SD active)
+            elseif sum(strcmp(snstr,'SDSotR'))
+                prio(m).cast(l)=tmp.SotR; %2ShoR
+                prio(m).cond{l}='hopo>=3 && dur.SD>0';
+                                                
+            %SDSotR* (3 hopo, only with SD and Inq active)
+            elseif sum(strcmp(snstr,'SDSotR*'))
+                prio(m).cast(l)=tmp.SotR; %2ShoR
+                prio(m).cond{l}='hopo>=3 && dur.SD>0 && dur.Inq>0';
+                
             %SDSotR2 (2 hopo, only with SD active)
             elseif sum(strcmp(snstr,'SDSotR2'))
                 prio(m).cast(l)=tmp.SotR2; %2ShoR
@@ -465,6 +507,16 @@ for m=1:k2
             %AS* (only with Inq active)
             elseif sum(strcmp(snstr,'AS*'))
                 prio(m).cast(l)=tmp.AS; %AS
+                prio(m).cond{l}='dur.Inq>0';
+                
+            %HotR* (only with Inq active)
+            elseif sum(strcmp(snstr,'HotR*'))
+                prio(m).cast(l)=tmp.HotR; %HotR
+                prio(m).cond{l}='dur.Inq>0';
+                
+            %HoW* (only with Inq active)
+            elseif sum(strcmp(snstr,'HoW*'))
+                prio(m).cast(l)=tmp.HoW; %HoW
                 prio(m).cond{l}='dur.Inq>0';
             end
         end

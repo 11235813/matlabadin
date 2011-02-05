@@ -248,6 +248,6 @@ set(bar33(2),'FaceColor',[0.749 0.749 0]);
 % set(bar33(2),'FaceColor',[ 0.078 0.169 0.549]);
 ylim([0.5 10.5])
 set(gca,'YTickLabel',name(inda(2:length(name))))
-legend('IHSH/SoT','IHSH/SoI','Location','Best')
+legend('IH9/SoT','IH9/SoI','Location','Best')
 xlabel('DPS per point')
 title(['4 targets, ' num2str(cfg(sortby).veng*100,'%2.1f') '% Veng, ' num2str(cfg(sortby).hit,'%2.1f') '% hit, ' num2str(cfg(sortby).exp,'%2.1f') ' expertise'])

@@ -134,11 +134,16 @@ tempglyphs.prime=[1 0 1 0 1 1 0 0];
 tempglyphs.major=[0 1 0 0 1 0 0 0 0 0 0];
 tempglyphs.minor=[0 0 0 0 0 0 0];
 ddb.glyphset{4}=tempglyphs;
+%wog load-out with both CS and HotR for prio sims
+tempglyphs.prime=[1 0 1 0 0 0 1 1];
+tempglyphs.major=[0 1 0 0 1 0 0 0 0 0 0];
+tempglyphs.minor=[0 0 0 0 0 0 0];
+ddb.glyphset{5}=tempglyphs;
 %no glyphs
 tempglyphs.prime=[0 0 0 0 0 0 0 0];
 tempglyphs.major=[0 0 0 0 0 0 0 0 0 0 0];
 tempglyphs.minor=[0 0 0 0 0 0 0];
-ddb.glyphset{5}=tempglyphs;
+ddb.glyphset{6}=tempglyphs;
 
 
 clear tempegs tempgems tempglyphs temptree
