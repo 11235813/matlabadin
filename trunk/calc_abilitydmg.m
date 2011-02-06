@@ -55,7 +55,7 @@ cfg(5).seal='Insight';
 
 
 %labels for pretty-print output
-dmg_labels={'SotR';'CS';'Jud';'AS';'HW';'HoW';'Exor';'SoT';'SoR';'SoJ';'Cens';'Cons';'HotR';'HaNova';'Melee';'WoG'};
+dmg_labels={'SotR';'WoG';'CS';'HotR';'AS';'Cons';'Exor';'HoW';'HW';'Jud';'HaNova';'SoI';'SoJ';'SoR';'SoT';'Melee';'Cens'};
 
 %% glyphed vals
 tmpvar.raw=zeros(length(val.raw),length(cfg));
@@ -78,7 +78,7 @@ for c=1:length(cfg)
     tmpvar.heal(:,c)=val.heal;
     tmpvar.thr(:,c)=val.threat; %threat after hit/crit
     tmpvar.net(:,c)=val.net{1};  %seal procs included
-    tmpvar.netthr(:,c)=val.net{2}; %net threat per cast
+    tmpvar.netthr(:,c)=val.net{3}; %net threat per cast
     
     %values with all glyphs active
     glyph.prime=ones(size(glyph.prime));glyph.major=ones(size(glyph.major));
@@ -89,7 +89,7 @@ for c=1:length(cfg)
     tmpvar.glyphthr(:,c)=val.threat;
     tmpvar.glyphheal(:,c)=val.heal;
     tmpvar.glyphnet(:,c)=val.net{1};
-    tmpvar.glyphnetthr(:,c)=val.net{2};
+    tmpvar.glyphnetthr(:,c)=val.net{3};
 end
 
 
