@@ -104,7 +104,7 @@ for c=1:length(cfg)
         %aa and seal damage
         padps(m,1,c)=padps(m,1,c)+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
         %aa and seal threat
-        if strcmpi('Inisght',exec.seal)||strcmpi('SoI',exec.seal)
+        if strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)
             pathr(m,1,c)=pathr(m,1,c)+tps.Melee+threat.activeseal.*mdf.mehit./player.wswing;
         else
             pathr(m,1,c)=pathr(m,1,c)+tps.Melee+threat.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;

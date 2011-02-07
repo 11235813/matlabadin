@@ -63,7 +63,7 @@ if base.lvl==85
 primary_stats=[164 156  97 106 117;
                169 157  93 105 113;
                165 156  94 106 116;
-               161 156  99 109 104;
+               161 156  99 109 112;
                169 157  93 102 116];
 end
 %runtime string-numerical conversion
