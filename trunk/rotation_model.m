@@ -93,7 +93,7 @@ rot(1).ncasts=[...
     2.*val.ones;                                                       %J
     ...
     0.*val.ones;                                                       %HammerNova
-    (8.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones];                %seal (CS+SotR+J)  
+    (2+6.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones];              %seal (CS+SotR+J)  
 rot(1).cps=rot(1).ncasts./repmat((18+1.5.*rot(1).xtragcd).*val.ones,size(rot(1).ncasts,1),1);
 rot(1).coeff=rot(1).ncasts./repmat((18+1.5.*rot(1).xtragcd).*val.ones,size(rot(1).ncasts,1),1);
 rot(1).coeff(idx.sotr,:)=rot(1).coeff(idx.sotr,:).*rot(1).sotrfactor;
@@ -119,11 +119,11 @@ rot(2).ncasts=[...
     2.*val.ones;                                                       %J
     ...
     6.*val.ones;                                                       %HammerNova
-    (7.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones];                %seal (SotR+J)   
+    (1+2.*mdf.rahit.*mdf.jseals).*val.ones];                           %seal (SotR+J)   
 rot(2).cps=rot(2).ncasts./repmat((18+1.5.*rot(2).xtragcd).*val.ones,size(rot(2).ncasts,1),1);
 rot(2).coeff=rot(2).ncasts./repmat((18+1.5.*rot(2).xtragcd).*val.ones,size(rot(2).ncasts,1),1);
 rot(2).coeff(idx.sotr,:)=rot(2).coeff(idx.sotr,:).*rot(2).sotrfactor;
-rot(2).InqMod=rot(2).InqMod+0.3.*[val.zeros;val.ones;val.ones;val.zeros;val.zeros;val.zeros;0.5.*val.ones;0.5.*val.ones;0.5.*val.ones;0.5.*val.ones;0.5.*val.ones;4./6.*val.ones;(mdf.mehit+mdf.rahit.*mdf.jseals)./(mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones]; %uptime depends on ability
+rot(2).InqMod=rot(2).InqMod+0.3.*[val.zeros;val.ones;val.ones;val.zeros;val.zeros;val.zeros;0.5.*val.ones;0.5.*val.ones;0.5.*val.ones;0.5.*val.ones;0.5.*val.ones;4./6.*val.ones;(1+mdf.rahit.*mdf.jseals)./(1+2.*mdf.rahit.*mdf.jseals).*val.ones]; %uptime depends on ability
 rot(2).InqUp=rot(2).InqUp+0.3.*(12./(18+1.5.*rot(2).xtragcd)).*val.ones; 
 
 
@@ -147,7 +147,7 @@ rot(3).ncasts=[...
     2.*val.ones;                                                       %J
     ...
     6.*val.ones;                                                       %HammerNova
-    (8.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones];                %seal (SotR+J) 
+    (2+2.*mdf.rahit.*mdf.jseals).*val.ones];                           %seal (SotR+J) 
 rot(3).cps=rot(3).ncasts./repmat((18+1.5.*rot(3).xtragcd).*val.ones,size(rot(3).ncasts,1),1);
 rot(3).coeff=rot(3).ncasts./repmat((18+1.5.*rot(3).xtragcd).*val.ones,size(rot(3).ncasts,1),1);
 rot(3).coeff(idx.sotr,:)=rot(3).coeff(idx.sotr,:).*rot(3).sotrfactor;
@@ -174,11 +174,11 @@ rot(4).ncasts=[...
     2.*val.ones;                                                       %J
     ...
     3.*val.ones;                                                       %HammerNova
-    (7.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones];                %seal (CS+SotR+J)
+    (1+3.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones];              %seal (CS+SotR+J)
 rot(4).cps=rot(4).ncasts./repmat((18+1.5.*rot(4).xtragcd).*val.ones,size(rot(4).ncasts,1),1);
 rot(4).coeff=rot(4).ncasts./repmat((18+1.5.*rot(4).xtragcd).*val.ones,size(rot(4).ncasts,1),1);
 rot(4).coeff(idx.sotr,:)=rot(4).coeff(idx.sotr,:).*rot(4).sotrfactor;
-rot(4).InqMod=rot(4).InqMod+0.3.*[val.zeros;val.ones;val.ones;val.zeros;val.zeros;val.zeros;0.5.*val.ones;0.5.*val.ones;0.5.*val.ones;0.5.*val.ones;0.5.*val.ones;val.ones;(2.*mdf.mehit+mdf.rahit.*mdf.jseals)./(4.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones]; %uptime depends on ability
+rot(4).InqMod=rot(4).InqMod+0.3.*[val.zeros;val.ones;val.ones;val.zeros;val.zeros;val.zeros;0.5.*val.ones;0.5.*val.ones;0.5.*val.ones;0.5.*val.ones;0.5.*val.ones;val.ones;(1+mdf.mehit+mdf.rahit.*mdf.jseals)./(1+3.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones]; %uptime depends on ability
 rot(4).InqUp=rot(4).InqUp+0.3.*(12./(18+1.5.*rot(4).xtragcd)).*val.ones;
 
 
@@ -205,8 +205,8 @@ rot(5).ncasts=[...
     ((1+mdf.sd2)./mdf.sd2).*val.ones;                                                          %J
     ...
     (3./mdf.sd2).*val.ones;                                                                    %HammerNova
-    (7.*mdf.mehit+((1+mdf.sd2)./mdf.sd2).*mdf.rahit.*mdf.jseals).*val.ones];                   %seal (CS+SotR+J)
-rot(5).InqMod=rot(5).InqMod+0.3.*[val.zeros;val.ones;val.ones;val.zeros;val.zeros;val.zeros;0.5./mdf.sd2.*val.ones;0.5./mdf.sd2.*val.ones;0.5./mdf.sd2.*val.ones;0.5./mdf.sd2.*val.ones;0.5./mdf.sd2.*val.ones;val.ones;(2.*mdf.mehit+(1./mdf.sd2).*mdf.rahit.*mdf.jseals)./(4.*mdf.mehit+((1+mdf.sd2)./mdf.sd2).*mdf.rahit.*mdf.jseals).*val.ones]; %uptime depends on ability
+    (1+3.*mdf.mehit+((1+mdf.sd2)./mdf.sd2).*mdf.rahit.*mdf.jseals).*val.ones];                 %seal (CS+SotR+J)
+rot(5).InqMod=rot(5).InqMod+0.3.*[val.zeros;val.ones;val.ones;val.zeros;val.zeros;val.zeros;0.5./mdf.sd2.*val.ones;0.5./mdf.sd2.*val.ones;0.5./mdf.sd2.*val.ones;0.5./mdf.sd2.*val.ones;0.5./mdf.sd2.*val.ones;val.ones;(1+mdf.mehit+(1./mdf.sd2).*mdf.rahit.*mdf.jseals)./(1+3.*mdf.mehit+((1+mdf.sd2)./mdf.sd2).*mdf.rahit.*mdf.jseals).*val.ones]; %uptime depends on ability
 rot(5).InqUp=rot(5).InqUp+0.3.*((12./mdf.sd2)./(9.*((1+mdf.sd2)./mdf.sd2)+1.5.*rot(5).xtragcd)).*val.ones;
 else
 rot(5).ncasts=rot(4).ncasts;
@@ -240,7 +240,7 @@ rot(6).ncasts=[...
     2.*val.ones;                                               %J
     ...
     6.*val.ones;                                        	   %HammerNova
-    (6.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones];        %seal         
+    (0.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones];        %seal         
 rot(6).cps=rot(6).ncasts./18;
 rot(6).coeff=rot(6).ncasts./repmat((18+1.5.*rot(6).xtragcd).*val.ones,size(rot(6).ncasts,1),1);
 rot(6).coeff(idx.sotr,:)=rot(6).coeff(idx.sotr,:).*rot(6).sotrfactor;
@@ -294,7 +294,7 @@ rot(8).ncasts=[...
     2.*val.ones;                                                  	   %J
     ...
     6.*val.ones;                                                       %HammerNova
-    (6.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones];                %seal (CS+J) 
+    (0.*mdf.mehit+2.*mdf.rahit.*mdf.jseals).*val.ones];                %seal (CS+J) 
 rot(8).cps=rot(8).ncasts./repmat((18+1.5.*rot(8).xtragcd).*val.ones,size(rot(8).ncasts,1),1);
 rot(8).coeff=rot(8).ncasts./repmat((18+1.5.*rot(8).xtragcd).*val.ones,size(rot(8).ncasts,1),1);
 rot(8).coeff(idx.sotr,:)=rot(8).coeff(idx.sotr,:).*rot(8).sotrfactor;
