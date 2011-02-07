@@ -13,20 +13,55 @@ priolist=struct('alabel',[], ...
 %% Spells and Procs
 %Procs are treated just like spells on the list, simplifying the data
 %structures in prio_sim considerably.
-tmp.sealid=11;
+tmp.sealid=13;
 tmp.novaid=12;
 
-%SotR       
-priolist(1).alabel='SotR';       
-priolist(1).cd=0;
-priolist(1).gcd=1.5;
-priolist(1).holy=1;
-priolist(1).proctrig=[tmp.sealid]; %seals only
-priolist(1).prochit=[1]; %SotR misses accounted for in code
-priolist(1).condition='hopo>=3';
-priolist(1).action='0;';
 
+q=1;
+%Inq
+priolist(q).alabel='Inq';       
+priolist(q).cd=0;
+priolist(q).gcd=1.5;
+priolist(q).holy=0;
+priolist(q).proctrig=[0]; %no procs
+priolist(q).prochit=[0]; 
+priolist(q).condition='hopo>=3 && dur.Inq<=1';
+priolist(q).action='dur.Inq=4*hopo;hopo=0;';
+ 
 q=2;
+%SotR2   
+priolist(q).alabel='SotR2';       
+priolist(q).cd=0;
+priolist(q).gcd=1.5;
+priolist(q).holy=1;
+priolist(q).proctrig=[tmp.sealid]; %seals
+priolist(q).prochit=[1]; %SotR misses accounted for in code
+priolist(q).condition='hopo>=2';
+priolist(q).action='0;';
+
+q=3;
+%SotR       
+priolist(q).alabel='SotR';       
+priolist(q).cd=0;
+priolist(q).gcd=1.5;
+priolist(q).holy=1;
+priolist(q).proctrig=[tmp.sealid]; %seals only
+priolist(q).prochit=[1]; %SotR misses accounted for in code
+priolist(q).condition='hopo>=3';
+priolist(q).action='0;';
+
+q=4;
+%WoG
+priolist(q).alabel='WoG';       
+priolist(q).cd=0;
+priolist(q).gcd=1.5;
+priolist(q).holy=0;
+priolist(q).proctrig=[0]; %no procs
+priolist(q).prochit=[0]; 
+priolist(q).condition='hopo>=3';
+priolist(q).action='if (rand<mdf.EG && dur.EGicd<=0) dur.EGicd=15; else hopo=0; end;'; 
+
+q=5;
 %CS     
 priolist(q).alabel='CS';       
 priolist(q).cd=3;
@@ -37,18 +72,18 @@ priolist(q).prochit=[mdf.mehit];
 priolist(q).condition='1'; 
 priolist(q).action='hopo=min([3 hopo+1]);if rand<mdf.GrCr.*mdf.mehit ccd(tmp.AS)=0; end;'; 
  
-q=3;
-%J    
-priolist(q).alabel='J';       
-priolist(q).cd=8;
+q=6;
+%HotR   
+priolist(q).alabel='HotR';       
+priolist(q).cd=3;
 priolist(q).gcd=1.5;
-priolist(q).holy=1;
-priolist(q).proctrig=[tmp.sealid]; %seals
-priolist(q).prochit=[mdf.rahit.*mdf.jseals]; 
-priolist(q).condition='1'; 
-priolist(q).action='if rand<mdf.SacDut*mdf.rahit dur.SD=15; end;'; 
+priolist(q).holy=0;
+priolist(q).proctrig=[tmp.sealid;tmp.novaid]; %seals,HammerNova
+priolist(q).prochit=[mdf.mehit;mdf.mehit]; 
+priolist(q).condition='1';
+priolist(q).action='hopo=min([3 hopo+1]);if rand<mdf.GrCr ccd(tmp.AS)=0; end;';
  
-q=4;
+q=7;
 %AS   
 priolist(q).alabel='AS';       
 priolist(q).cd=15;
@@ -59,18 +94,7 @@ priolist(q).prochit=[0];
 priolist(q).condition='1'; 
 priolist(q).action=''; 
   
-q=5;
-%HW  
-priolist(q).alabel='HW';       
-priolist(q).cd=15;
-priolist(q).gcd=1.5;
-priolist(q).holy=1;
-priolist(q).proctrig=[0]; %no procs
-priolist(q).prochit=[0]; 
-priolist(q).condition='1';
-priolist(q).action='';
-  
-q=6;
+q=8;
 %Cons  
 priolist(q).alabel='Cons';       
 priolist(q).cd=30.*mdf.glyphCons;
@@ -80,41 +104,8 @@ priolist(q).proctrig=[0]; %no procs
 priolist(q).prochit=[0]; 
 priolist(q).condition='1';
 priolist(q).action='';
- 
-q=7;
-%HotR   
-priolist(q).alabel='HotR';       
-priolist(q).cd=3;
-priolist(q).gcd=1.5;
-priolist(q).holy=0;
-priolist(q).proctrig=[tmp.sealid;tmp.novaid]; %seals,HammerNova
-priolist(q).prochit=[1;1]; 
-priolist(q).condition='1';
-priolist(q).action='hopo=min([3 hopo+1]);if rand<mdf.GrCr ccd(tmp.AS)=0; end;';
- 
-q=8;
-%SotR2   
-priolist(q).alabel='SotR2';       
-priolist(q).cd=0;
-priolist(q).gcd=1.5;
-priolist(q).holy=1;
-priolist(q).proctrig=[tmp.sealid]; %seals
-priolist(q).prochit=[1]; 
-priolist(q).condition='hopo>=2';
-priolist(q).action='0;';
 
 q=9;
-%Inq
-priolist(q).alabel='Inq';       
-priolist(q).cd=0;
-priolist(q).gcd=1.5;
-priolist(q).holy=0;
-priolist(q).proctrig=[0]; %no procs
-priolist(q).prochit=[0]; 
-priolist(q).condition='hopo>=3 && dur.Inq<=1';
-priolist(q).action='dur.Inq=4*hopo;hopo=0;';
-
-q=10;
 %HoW
 priolist(q).alabel='HoW';       
 priolist(q).cd=6;
@@ -124,17 +115,28 @@ priolist(q).proctrig=[tmp.sealid]; %seals
 priolist(q).prochit=[mdf.rahit]; 
 priolist(q).condition='1';
 priolist(q).action='';
-
-q=11;
-%Seal
-priolist(q).alabel=exec.seal;       
-priolist(q).cd=0;
-priolist(q).gcd=0;
-priolist(q).holy=strcmp(exec.seal,'Truth')+strcmp(exec.seal,'Righteousness');
-priolist(q).proctrig=[0]; %no recursive procs (irrelevant as this should never be a primary cast anyway)
+  
+q=10;
+%HW  
+priolist(q).alabel='HW';       
+priolist(q).cd=15;
+priolist(q).gcd=1.5;
+priolist(q).holy=1;
+priolist(q).proctrig=[0]; %no procs
 priolist(q).prochit=[0]; 
-priolist(q).condition='0';
-priolist(q).action='0;';
+priolist(q).condition='1';
+priolist(q).action='';
+ 
+q=11;
+%J    
+priolist(q).alabel='J';       
+priolist(q).cd=8;
+priolist(q).gcd=1.5;
+priolist(q).holy=1;
+priolist(q).proctrig=[tmp.sealid]; %seals
+priolist(q).prochit=[mdf.rahit]; %base judgement, JotJ no longer procs seals
+priolist(q).condition='1'; 
+priolist(q).action='if rand<mdf.SacDut*mdf.rahit dur.SD=15; end;'; 
 
 q=12;
 %HammerNova
@@ -148,17 +150,17 @@ priolist(q).condition='0';
 priolist(q).action='0;';
 
 q=13;
-%WoG
-priolist(q).alabel='WoG';       
+%Seal
+priolist(q).alabel=exec.seal;       
 priolist(q).cd=0;
-priolist(q).gcd=1.5;
-priolist(q).holy=0;
-priolist(q).proctrig=[0]; %no procs
+priolist(q).gcd=0;
+priolist(q).holy=strcmp(exec.seal,'Truth')+strcmp(exec.seal,'Righteousness');
+priolist(q).proctrig=[0]; %no recursive procs (irrelevant as this should never be a primary cast anyway)
 priolist(q).prochit=[0]; 
-priolist(q).condition='hopo>=3';
-priolist(q).action='if (rand<mdf.EG && dur.EGicd<=0) dur.EGicd=15; else hopo=0; end;'; 
+priolist(q).condition='0';
+priolist(q).action='0;';
 
-                
+clear q                
 
 
 %% Construct priority list
@@ -408,16 +410,6 @@ prio(k).name='AS>Inq>HotR>Cons>HW>J';
 k2=k;
 
 
-%#1 = SotR
-%#2 = CS
-%#3 = Jud
-%#4 = AS
-%#5 = HW
-%#6 = Cons
-%#7 = HotR
-%#8 = SotR2
-%#9 = Inq
-%#10= HoW
 
 
 %IMPORTANT for proper SotR handling, the label of SotR should be:
@@ -532,7 +524,7 @@ for m=1:k2
 end
 
 %pretty output for troubleshooting
-clear prilist*
+clear prilist* tmp
 for m=1:k1
     prilist(m,:)=[ num2str(m,'%03.0f') ' ' prio(m).name repmat(' ',1,40-length(prio(m).name)-4)];
 end
