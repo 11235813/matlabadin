@@ -51,7 +51,7 @@ cfg(3).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
 %% Generate coefficients for each priority queue
 N=30000;  %# GCDs, set long enough to get stochastic data for each sim
 dt=1.5;
-N=1000;
+N=5000;
 for c=1:length(cfg)
     %set configuration variables
     egs(1)=cfg(c).helm;
