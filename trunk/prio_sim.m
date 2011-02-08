@@ -142,7 +142,7 @@ for m=1:N
                 %procs triggered by ability
                 for o=1:length(priolist(aid).proctrig)
                     if priolist(aid).proctrig(o)~=0
-                        sequence.amatrix(priolist(aid).proctrig(o),qq)=1;
+                        sequence.amatrix(priolist(aid).proctrig(o),qq)=priolist(aid).procno(o);
                         sequence.hmatrix(priolist(aid).proctrig(o),qq)=priolist(aid).prochit(o);
                     end
                 end
