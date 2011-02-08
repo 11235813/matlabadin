@@ -25,6 +25,7 @@ priolist(q).gcd=1.5;
 priolist(q).holy=0;
 priolist(q).proctrig=[0]; %no procs
 priolist(q).prochit=[0]; 
+priolist(q).procno=[0];
 priolist(q).condition='hopo>=3 && dur.Inq<=1';
 priolist(q).action='dur.Inq=4*hopo;hopo=0;';
  
@@ -36,6 +37,7 @@ priolist(q).gcd=1.5;
 priolist(q).holy=1;
 priolist(q).proctrig=[tmp.sealid]; %seals
 priolist(q).prochit=[1]; %SotR misses accounted for in code
+priolist(q).procno=[1];
 priolist(q).condition='hopo>=2';
 priolist(q).action='0;';
 
@@ -47,6 +49,7 @@ priolist(q).gcd=1.5;
 priolist(q).holy=1;
 priolist(q).proctrig=[tmp.sealid]; %seals only
 priolist(q).prochit=[1]; %SotR misses accounted for in code
+priolist(q).procno=[1];
 priolist(q).condition='hopo>=3';
 priolist(q).action='0;';
 
@@ -58,6 +61,7 @@ priolist(q).gcd=1.5;
 priolist(q).holy=0;
 priolist(q).proctrig=[0]; %no procs
 priolist(q).prochit=[0]; 
+priolist(q).procno=[0];
 priolist(q).condition='hopo>=3';
 priolist(q).action='if (rand<mdf.EG && dur.EGicd<=0) dur.EGicd=15; else hopo=0; end;'; 
 
@@ -69,8 +73,10 @@ priolist(q).gcd=1.5;
 priolist(q).holy=0;
 priolist(q).proctrig=[tmp.sealid]; %seals only
 priolist(q).prochit=[mdf.mehit]; 
-priolist(q).condition='1'; 
-priolist(q).action='hopo=min([3 hopo+1]);if rand<mdf.GrCr.*mdf.mehit ccd(tmp.AS)=0; end;'; 
+priolist(q).procno=[1];
+priolist(q).condition='ccd(6)<=0'; %shared with HotR
+priolist(q).action='hopo=min([3 hopo+1]);if rand<mdf.GrCr.*mdf.mehit ccd(tmp.AS)=0; end;';  %4.0.3a "proper" behavior
+priolist(q).action='if rand<mdf.mehit hopo=min([3 hopo+1]);if rand<mdf.GrCr ccd(tmp.AS)=0; end;end;';  %4.0.6 "bugged" behavior
  
 q=6;
 %HotR   
@@ -78,10 +84,12 @@ priolist(q).alabel='HotR';
 priolist(q).cd=3;
 priolist(q).gcd=1.5;
 priolist(q).holy=0;
-priolist(q).proctrig=[tmp.sealid;tmp.novaid]; %seals,HammerNova
+priolist(q).proctrig=[tmp.sealid;tmp.novaid]; %SoT,HammerNova
 priolist(q).prochit=[mdf.mehit;mdf.mehit]; 
-priolist(q).condition='1';
-priolist(q).action='hopo=min([3 hopo+1]);if rand<mdf.GrCr ccd(tmp.AS)=0; end;';
+priolist(q).procno=[strcmp(exec.seal,'Truth');1];
+priolist(q).condition='ccd(5)<=0'; %shared with CS
+priolist(q).action='if rand<mdf.mehit hopo=min([3 hopo+1]);end;if rand<mdf.GrCr.*mdf.mehit ccd(tmp.AS)=0; end;';
+priolist(q).action='if rand<mdf.mehit hopo=min([3 hopo+1]);if rand<mdf.GrCr ccd(tmp.AS)=0; end;end;';
  
 q=7;
 %AS   
@@ -89,8 +97,9 @@ priolist(q).alabel='AS';
 priolist(q).cd=15;
 priolist(q).gcd=1.5;
 priolist(q).holy=1;
-priolist(q).proctrig=[0]; %no procs
-priolist(q).prochit=[0]; 
+priolist(q).proctrig=[tmp.sealid]; 
+priolist(q).prochit=[mdf.rahit]; 
+priolist(q).procno=[strcmp(exec.seal,'Truth')];
 priolist(q).condition='1'; 
 priolist(q).action=''; 
   
@@ -102,6 +111,7 @@ priolist(q).gcd=1.5;
 priolist(q).holy=1;
 priolist(q).proctrig=[0]; %no procs
 priolist(q).prochit=[0]; 
+priolist(q).procno=[0];
 priolist(q).condition='1';
 priolist(q).action='';
 
@@ -113,6 +123,7 @@ priolist(q).gcd=1.5;
 priolist(q).holy=1;
 priolist(q).proctrig=[tmp.sealid]; %seals
 priolist(q).prochit=[mdf.rahit]; 
+priolist(q).procno=[1];
 priolist(q).condition='1';
 priolist(q).action='';
   
@@ -124,6 +135,7 @@ priolist(q).gcd=1.5;
 priolist(q).holy=1;
 priolist(q).proctrig=[0]; %no procs
 priolist(q).prochit=[0]; 
+priolist(q).procno=[0];
 priolist(q).condition='1';
 priolist(q).action='';
  
@@ -134,7 +146,10 @@ priolist(q).cd=8;
 priolist(q).gcd=1.5;
 priolist(q).holy=1;
 priolist(q).proctrig=[tmp.sealid]; %seals
-priolist(q).prochit=[mdf.rahit]; %base judgement, JotJ no longer procs seals
+priolist(q).prochit=[mdf.rahit]; %TODO: does JotJ automatically hit?
+priolist(q).procno=[(strcmp(exec.seal,'Truth').*(1+mdf.jseals)     ... %J+JotJ
+                    +strcmp(exec.seal,'Righteousness').*mdf.jseals ... %JotJ only
+                    +strcmp(exec.seal,'Insight'))];                    %J only
 priolist(q).condition='1'; 
 priolist(q).action='if rand<mdf.SacDut*mdf.rahit dur.SD=15; end;'; 
 
@@ -146,6 +161,7 @@ priolist(q).gcd=0;
 priolist(q).holy=1;
 priolist(q).proctrig=[0]; %no procs
 priolist(q).prochit=[0]; 
+priolist(q).procno=[0];
 priolist(q).condition='0';
 priolist(q).action='0;';
 
@@ -157,6 +173,7 @@ priolist(q).gcd=0;
 priolist(q).holy=strcmp(exec.seal,'Truth')+strcmp(exec.seal,'Righteousness');
 priolist(q).proctrig=[0]; %no recursive procs (irrelevant as this should never be a primary cast anyway)
 priolist(q).prochit=[0]; 
+priolist(q).procno=[0];
 priolist(q).condition='0';
 priolist(q).action='0;';
 
