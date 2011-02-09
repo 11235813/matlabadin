@@ -9,6 +9,7 @@ player.hopo=3;  %TODO move it
 %% Seals
 
 %Seal of Truth (fully stacked)
+mdf.tseal=strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal);
 raw.SealofTruth=    0.15.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
 raw.JoT        =    (1+0.2229.*player.hsp+0.1421.*player.ap).*1.5; 
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
@@ -78,7 +79,7 @@ end
 %% Melee abilities
 
 %Crusader Strike (can be blocked)
-raw.CrusaderStrike= 1.15.*player.ndamage.*mdf.phdmg.*(1+mdf.Crus+(10./3).*mdf.WotL+mdf.t11x2);
+raw.CrusaderStrike= 1.35.*player.ndamage.*mdf.phdmg.*(1+mdf.Crus+(10./3).*mdf.WotL+mdf.t11x2);
 dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.memodel.*mdf.CScrit;
 heal.CrusaderStrike=0;
 threat.CrusaderStrike=max(dmg.CrusaderStrike,heal.CrusaderStrike).*mdf.RF;
@@ -92,9 +93,9 @@ raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*(1+mdf.Crus+mdf.glyp
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.memodel.*mdf.HotRphcrit;
 heal.HammeroftheRighteous=   0;
 threat.HammeroftheRighteous=max(dmg.HammeroftheRighteous,heal.HammeroftheRighteous).*mdf.RF;
-net.HammeroftheRighteous{1}=dmg.HammeroftheRighteous; %doesn't proc seals
+net.HammeroftheRighteous{1}=dmg.HammeroftheRighteous+dmg.activeseal.*mdf.mehit.*mdf.tseal;
 net.HammeroftheRighteous{2}=heal.HammeroftheRighteous;
-net.HammeroftheRighteous{3}=threat.HammeroftheRighteous;
+net.HammeroftheRighteous{3}=threat.HammeroftheRighteous+threat.activeseal.*mdf.mehit.*mdf.tseal;
 %the nova rolls for hit only if physical connects
 raw.HammerNova=   (728.8813374+0.18.*player.ap).*mdf.spdmg.*(1+mdf.Crus+mdf.glyphHotR);
 dmg.HammerNova=   raw.HammerNova.*mdf.mehit.*mdf.sphit.*mdf.HotRspcrit.*target.resrdx; %spell hit/crit
@@ -135,9 +136,9 @@ raw.AvengersShield= (3113.187994+0.419.*player.ap+0.21.*player.hsp).*mdf.spdmg.*
 dmg.AvengersShield= raw.AvengersShield.*mdf.ramodel.*mdf.phcrit.*target.resrdx;
 heal.AvengersShield=0;
 threat.AvengersShield=max(dmg.AvengersShield,heal.AvengersShield).*mdf.RF;
-net.AvengersShield{1}=dmg.AvengersShield; %doesn't proc seals
+net.AvengersShield{1}=dmg.AvengersShield+dmg.activeseal.*mdf.rahit.*mdf.tseal;
 net.AvengersShield{2}=heal.AvengersShield;
-net.AvengersShield{3}=threat.AvengersShield;
+net.AvengersShield{3}=threat.AvengersShield+threat.activeseal.*mdf.rahit.*mdf.tseal;
 
 %Judgement (the seal of choice is defined in execution_model)
 mdf.jseals=(mdf.JotJ>1)&&(strcmpi('Righteousness',exec.seal)||strcmpi('SoR',exec.seal) ...
@@ -146,18 +147,18 @@ raw.Judgement=      raw.Judgement.*mdf.spdmg.*(1+mdf.glyphJ+(10./3).*mdf.WotL);
 dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
 heal.Judgement=     0;
 threat.Judgement=   max(dmg.Judgement,heal.Judgement).*mdf.RF;
-net.Judgement{1}=   dmg.Judgement+mdf.jseals.*dmg.activeseal.*mdf.rahit;
+net.Judgement{1}=   dmg.Judgement+(mdf.jseals+mdf.tseal).*dmg.activeseal.*mdf.rahit;
 net.Judgement{2}=   heal.Judgement+mdf.jseals.*heal.activeseal.*mdf.rahit;
-net.Judgement{3}=   threat.Judgement+mdf.jseals.*threat.activeseal.*mdf.rahit;
+net.Judgement{3}=   threat.Judgement+(mdf.jseals+mdf.tseal).*threat.activeseal.*mdf.rahit;
 
 %Hammer of Wrath (can be blocked)
 raw.HammerofWrath= (4015.02439+0.117.*player.hsp+0.39.*player.ap).*mdf.spdmg;
 dmg.HammerofWrath= raw.HammerofWrath.*mdf.ramodel.*mdf.HoWcrit.*target.resrdx;
 heal.HammerofWrath=0;
 threat.HammerofWrath=max(dmg.HammerofWrath,heal.HammerofWrath).*mdf.RF;
-net.HammerofWrath{1}=dmg.HammerofWrath; %doesn't proc seals
-net.HammerofWrath{2}=heal.HammerofWrath;
-net.HammerofWrath{3}=threat.HammerofWrath;
+net.HammerofWrath{1}=dmg.HammerofWrath+dmg.activeseal.*mdf.rahit;
+net.HammerofWrath{2}=heal.HammerofWrath+heal.activeseal.*mdf.rahit;
+net.HammerofWrath{3}=threat.HammerofWrath+threat.activeseal.*mdf.rahit;
 
 %% Spell abilities
 
@@ -165,7 +166,7 @@ net.HammerofWrath{3}=threat.HammerofWrath;
 raw.Consecration =  (813.2998299+0.27.*player.hsp+0.27.*player.ap).*mdf.spdmg.*(1+mdf.HalGro).*mdf.glyphCons;
 dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 heal.Consecration=  0;
-threat.Consecration=max(dmg.Consecration,heal.Consecration).*mdf.RF;
+threat.Consecration=(max(dmg.Consecration,heal.Consecration)+12).*mdf.RF;
 net.Consecration{1}=dmg.Consecration;
 net.Consecration{2}=heal.Consecration;
 net.Consecration{3}=threat.Consecration;
@@ -173,13 +174,13 @@ net.Consecration{3}=threat.Consecration;
 %Exorcism
 mdf.Exorcrit=mdf.spcrit.*(npc.type==0)+mdf.spcritm.*(npc.type==1); %tracking npc type
 raw.Exorcism=       (2741+0.344.*max([player.hsp;player.ap])).*mdf.spdmg ...
-                    .*(mdf.BlazLi+mdf.glyphExo); %DoT is based on base damage
+                    .*mdf.BlazLi.*(1+mdf.glyphExo);
 dmg.Exorcism=       raw.Exorcism.*mdf.sphit.*mdf.Exorcrit.*target.resrdx;
 heal.Exorcism=      0;
 threat.Exorcism=    max(dmg.Exorcism,heal.Exorcism).*mdf.RF;
-net.Exorcism{1}=    dmg.Exorcism;
+net.Exorcism{1}=    dmg.Exorcism+dmg.activeseal.*mdf.sphit.*mdf.tseal;
 net.Exorcism{2}=    heal.Exorcism;
-net.Exorcism{3}=    threat.Exorcism;
+net.Exorcism{3}=    threat.Exorcism+threat.activeseal.*mdf.sphit.*mdf.tseal;
 
 %Holy Wrath
 raw.HolyWrath=      ((2402.8+0.61.*player.hsp)./exec.npccount).*mdf.spdmg;
@@ -190,12 +191,12 @@ net.HolyWrath{1}=   dmg.HolyWrath;
 net.HolyWrath{2}=   heal.HolyWrath;
 net.HolyWrath{3}=   threat.HolyWrath;
 
-%Word of Glory //TODO
+%Word of Glory
 raw.WordofGlory=    (2133+0.2086.*player.hsp+0.1984.*player.ap).*player.hopo ...
                     .*(1-exec.overh).*mdf.Divin.*mdf.GbtL.*(1+mdf.glyphWoG+mdf.glyphSoI);
 dmg.WordofGlory=    0;
 heal.WordofGlory=   raw.WordofGlory.*mdf.WoGcrit;
-threat.WordofGlory= (heal.WordofGlory.*mdf.hthreat+5.5.*(exec.overh>0)).*mdf.RF./exec.npccount;
+threat.WordofGlory= 11.*(exec.overh>0).*mdf.RF./exec.npccount;
 net.WordofGlory{1}= dmg.WordofGlory;
 net.WordofGlory{2}= heal.WordofGlory;
 net.WordofGlory{3}= threat.WordofGlory;
