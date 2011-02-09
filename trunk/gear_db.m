@@ -370,7 +370,7 @@ idb.iid(58105).atype=1;
 
 idb.iid(60355).name='Reinforced Sapphirium Handguards';
 idb.iid(60355).ilvl=359;
-idb.iid(60355).str=193;
+idb.iid(60355).str=233;
 idb.iid(60355).sta=380;
 idb.iid(60355).mast=149;
 idb.iid(60355).parry=149;
@@ -383,7 +383,7 @@ idb.iid(60355).istier=[1 0 0];
 
 idb.iid(65225).name='Reinforced Sapphirium Handguards (Heroic)';
 idb.iid(65225).ilvl=372;
-idb.iid(65225).str=217;
+idb.iid(65225).str=266;
 idb.iid(65225).sta=429;
 idb.iid(65225).mast=171;
 idb.iid(65225).parry=171;
