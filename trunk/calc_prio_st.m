@@ -29,14 +29,14 @@ cfg(1).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
 cfg(1).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
 cfg(1).label='939/SoT build';
 cfg(1).seal='Truth';
-cfg(1).glyph=ddb.glyphset{1}; %Default, HotR/SoT/ShoR, Cons/AS
+cfg(1).glyph=ddb.glyphset{4}; %Modified Default, (CS+HotR)/SoT/ShoR, Cons/AS
 cfg(1).talent=ddb.talentset{1}; %0/31/10 w/o HG
 
 %low hit, WoG/SoI build
 cfg(2).helm=cfg(1).helm;
 cfg(2).label='W39/SoI build';
 cfg(2).seal='Insight';
-cfg(2).glyph=ddb.glyphset{2}; %WoG set
+cfg(2).glyph=ddb.glyphset{5}; %Modified WoG (CS+HotR)/SoI/WoG, Cons/AS
 cfg(2).talent=ddb.talentset{2}; %0/31/10 WoG build
 
 
