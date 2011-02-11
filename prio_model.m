@@ -75,7 +75,7 @@ priolist(q).proctrig=[tmp.sealid]; %seals only
 priolist(q).prochit=[mdf.mehit]; 
 priolist(q).procno=[1];
 priolist(q).condition='ccd(6)<=0'; %shared with HotR
-priolist(q).action='hopo=min([3 hopo+1]);if rand<mdf.GrCr.*mdf.mehit ccd(tmp.AS)=0; end;';  %4.0.3a "proper" behavior
+% priolist(q).action='hopo=min([3 hopo+1]);if rand<mdf.GrCr.*mdf.mehit ccd(tmp.AS)=0; end;';  %4.0.3a "proper" behavior
 priolist(q).action='if rand<mdf.mehit hopo=min([3 hopo+1]);if rand<mdf.GrCr ccd(tmp.AS)=0; end;end;';  %4.0.6 "bugged" behavior
  
 q=6;
@@ -85,10 +85,10 @@ priolist(q).cd=3;
 priolist(q).gcd=1.5;
 priolist(q).holy=0;
 priolist(q).proctrig=[tmp.sealid;tmp.novaid]; %SoT,HammerNova
-priolist(q).prochit=[mdf.mehit;mdf.mehit]; 
+priolist(q).prochit=[mdf.mehit;1]; %HaNova misses accounted for in [AM]
 priolist(q).procno=[strcmp(exec.seal,'Truth');1];
 priolist(q).condition='ccd(5)<=0'; %shared with CS
-priolist(q).action='if rand<mdf.mehit hopo=min([3 hopo+1]);end;if rand<mdf.GrCr.*mdf.mehit ccd(tmp.AS)=0; end;';
+% priolist(q).action='if rand<mdf.mehit hopo=min([3 hopo+1]);end;if rand<mdf.GrCr.*mdf.mehit ccd(tmp.AS)=0; end;';
 priolist(q).action='if rand<mdf.mehit hopo=min([3 hopo+1]);if rand<mdf.GrCr ccd(tmp.AS)=0; end;end;';
  
 q=7;
@@ -220,7 +220,13 @@ k=k+1;prio(k)=prio(1);
 prio(k).name='AS>SotR>CS>J>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
+prio(k).name='CS+>AS>SotR>J>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
 prio(k).name='SD>SotR>CS>J>AS>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SotR>CS>J>AS>Cons>SotR2>HW';
 
 %Inq rotations
 
@@ -228,35 +234,35 @@ k=k+1;prio(k)=prio(1);
 prio(k).name='Inq>CS>J>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
+prio(k).name='Inq>HotR>J>AS>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
 prio(k).name='SotR2*>Inq>CS>AS>J>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR*>Inq>CS>J>AS>Cons>HW';
-
-k=k+1;prio(k)=prio(1);
-prio(k).name='SotR*>Inq>HotR*>CS>J>AS>Cons>HW';
+% 
+% k=k+1;prio(k)=prio(1);
+% prio(k).name='SotR*>Inq>HotR*>CS>J>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR*>Inq>CS>J2>AS>Cons>HW';
 
-k=k+1;prio(k)=prio(1);
-prio(k).name='SotR*>Inq>HotR>J2>AS>Cons>HW';
+% k=k+1;prio(k)=prio(1);
+% prio(k).name='SotR*>Inq>HotR>J2>AS>Cons>HW';
 
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR*>Inq>CS>AS>J>Cons>HW';
 
-k=k+1;prio(k)=prio(1);
-prio(k).name='SotR*>Inq>CS>AS*>J>Cons>HW';
-
-k=k+1;prio(k)=prio(1);
-prio(k).name='SotR*>Inq>HotR>AS>J>Cons>HW';
+% k=k+1;prio(k)=prio(1);
+% prio(k).name='SotR*>Inq>HotR>AS>J>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR*>Inq>SDSotR2>CS>J>AS>Cons>HW';
 
-k=k+1;prio(k)=prio(1);
-prio(k).name='SDSotR*>Inq>HotR*>CS>J>AS>Cons>HW';
+% k=k+1;prio(k)=prio(1);
+% prio(k).name='SDSotR*>Inq>HotR*>CS>J>AS>Cons>HW';
 
 %WoG
 
@@ -272,19 +278,19 @@ prio(k).name='WoG>CS>AS>Cons>J>HW';
 k=k+1;prio(k)=prio(1);
 prio(k).name='SDSotR>WoG>CS>J>AS>Cons>HW';
 
-k=k+1;prio(k)=prio(1);
-prio(k).name='SDSotR>WoG>CS>AS>J>Cons>HW';
+% k=k+1;prio(k)=prio(1);
+% prio(k).name='SDSotR>WoG>CS>AS>J>Cons>HW';
 
 %HoW (sub-20%)
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='SotR>CS>J>AS>HoW';
+prio(k).name='SotR>CS>J>AS>HoW>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='SotR>CS>J>HoW>AS';
+prio(k).name='SotR>CS>J>HoW>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='SotR>CS>HoW>J>AS';
+prio(k).name='SotR>CS>HoW>J>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>CS>HoW>AS>J>Cons>HW';
@@ -296,22 +302,19 @@ k=k+1;prio(k)=prio(1);
 prio(k).name='HoW>SotR>CS>J>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
+prio(k).name='HoW>Inq>CS>J>AS>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='Inq>HoW>CS>J>AS>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
 prio(k).name='HoW>Inq>SotR*>CS>J>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='HoW>CS>SotR>J>AS';
+prio(k).name='SotR*>Inq>CS>HoW>J2>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='SotR*>Inq>CS>HoW>J2>AS';
-
-k=k+1;prio(k)=prio(1);
-prio(k).name='SotR*>Inq>HotR>HoW>J2>AS';
-
-k=k+1;prio(k)=prio(1);
-prio(k).name='HoW*>SotR*>Inq>CS>J2>AS';
-
-k=k+1;prio(k)=prio(1);
-prio(k).name='HoW>SotR*>Inq>CS>J2>AS';
+prio(k).name='HoW>SotR*>Inq>CS>J>AS>Cons>HW';
 
 
 k1=k;
@@ -527,6 +530,11 @@ for m=1:k2
             elseif sum(strcmp(snstr,'HoW*'))
                 prio(m).cast(l)=tmp.HoW; %HoW
                 prio(m).cond{l}='dur.Inq>0';
+                
+            %CS+ (only when <3 HoPo)
+            elseif sum(strcmp(snstr,'CS+'))
+                prio(m).cast(l)=tmp.CS; %CS
+                prio(m).cond{l}=[priolist(tmp.CS).condition ' && hopo<3'];
             end
         end
 

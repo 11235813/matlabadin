@@ -96,9 +96,9 @@ threat.HammeroftheRighteous=max(dmg.HammeroftheRighteous,heal.HammeroftheRighteo
 net.HammeroftheRighteous{1}=dmg.HammeroftheRighteous+dmg.activeseal.*mdf.mehit.*mdf.tseal;
 net.HammeroftheRighteous{2}=heal.HammeroftheRighteous;
 net.HammeroftheRighteous{3}=threat.HammeroftheRighteous+threat.activeseal.*mdf.mehit.*mdf.tseal;
-%the nova rolls for hit only if physical connects
+%Nova no longer rolls separately from phys; only occurs when phys succeeds
 raw.HammerNova=   (728.8813374+0.18.*player.ap).*mdf.spdmg.*(1+mdf.Crus+mdf.glyphHotR);
-dmg.HammerNova=   raw.HammerNova.*mdf.mehit.*mdf.sphit.*mdf.HotRspcrit.*target.resrdx; %spell hit/crit
+dmg.HammerNova=   raw.HammerNova.*mdf.mehit.*mdf.HotRspcrit.*target.resrdx; %spell hit/crit
 heal.HammerNova=   0;
 threat.HammerNova=max(dmg.HammerNova,heal.HammerNova).*mdf.RF;
 net.HammerNova{1}=dmg.HammerNova; %doesn't proc seals
