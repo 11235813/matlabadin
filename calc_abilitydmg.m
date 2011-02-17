@@ -53,6 +53,11 @@ cfg(5).helm=cfg(1).helm;
 cfg(5).veng=1;
 cfg(5).seal='Insight';
 
+%low veng, low hit, SoI
+cfg(6).helm=cfg(1).helm;
+cfg(6).veng=0.3;
+cfg(6).seal='Insight';
+
 
 %labels for pretty-print output
 dmg_labels={'SotR';'WoG';'CS';'HotR';'AS';'Cons';'Exor';'HoW';'HW';'Jud';'HaNova';'SoI';'SoJ';'SoR';'SoT';'Melee';'Cens'};
@@ -89,22 +94,33 @@ for c=1:length(cfg)
     tmpvar.glyphthr(:,c)=val.threat;
     tmpvar.glyphheal(:,c)=val.heal;
     tmpvar.glyphnet(:,c)=val.net{1};
+    tmpvar.glyphnetheal(:,c)=val.net{2};
     tmpvar.glyphnetthr(:,c)=val.net{3};
 end
 
 
 %% text arrays
 spacer=repmat(' ',size(tmpvar.raw,1),3);
-arr1=[tmpvar.raw(:,1) tmpvar.dmg(:,1) tmpvar.net(:,1) tmpvar.glyphdmg(:,1)];
-arr2=[tmpvar.raw(:,5) tmpvar.dmg(:,5) tmpvar.net(:,5) tmpvar.glyphdmg(:,5)];
+arr1=[tmpvar.raw(:,1) tmpvar.dmg(:,1) tmpvar.net(:,1) tmpvar.glyphdmg(:,1)]; 
+arr2=[tmpvar.raw(:,5) tmpvar.dmg(:,5) tmpvar.glyphdmg(:,5)];  
 ii=find(strcmp(cellstr(dmg_labels),'WoG'));
-arr1(ii,:)=[tmpvar.raw(ii,1) tmpvar.heal(ii,1) tmpvar.heal(ii,1) tmpvar.glyphheal(ii,1)];
-arr2(ii,:)=[tmpvar.raw(ii,5) tmpvar.heal(ii,5) tmpvar.heal(ii,5) tmpvar.glyphheal(ii,5)];
+arr1(ii,:)=[tmpvar.raw(ii,1) tmpvar.heal(ii,1) tmpvar.heal(ii,1) tmpvar.glyphheal(ii,1)]; 
+arr2(ii,:)=[tmpvar.raw(ii,5) tmpvar.heal(ii,5) tmpvar.glyphheal(ii,5)]; 
+iii=find(strcmp(cellstr(dmg_labels),'SoI'));
+arr1(iii,:)=[tmpvar.raw(iii,1) tmpvar.heal(iii,1) tmpvar.net(iii,1) tmpvar.glyphheal(iii,1)];
+arr2(iii,:)=[tmpvar.raw(iii,5) tmpvar.heal(iii,5) tmpvar.glyphheal(iii,5)];
 dmgarray1=[char(dmg_labels) spacer int2str(arr1) spacer spacer int2str(arr2)]
+
 arr3=tmpvar.glyphnet;
-arr3(ii,:)=[tmpvar.heal(ii,:)];
-dmgarray2=[char(dmg_labels) spacer int2str(arr3)]
-thrarray1=[char(dmg_labels) spacer int2str(tmpvar.glyphthr)]
+arr3(ii,:)=[tmpvar.glyphnetheal(ii,:)];
+arr3(iii,:)=[tmpvar.glyphnetheal(iii,:)];
+dmgarray3=[char(dmg_labels) spacer int2str(arr3)]
+
+% arr4=tmpvar.net;
+% arr4(ii,:)=[tmpvar.heal(ii,:)];
+% arr4(iii,:)=[tmpvar.heal(iii,:)];
+% dmgarray4=[char(dmg_labels) spacer int2str(arr4)]
+% thrarray1=[char(dmg_labels) spacer int2str(tmpvar.glyphthr)]
 
 
 %% Code for plots
@@ -115,13 +131,14 @@ netplot2=netplot;
 jj=find(strcmp(cellstr(dmg_labels),'Jud'));ss=find(strcmp(cellstr(dmg_labels),'SotR'));
 netplot2(jj,1)=netplot2(jj,1)+dmgplot(ss,1)*mdf.SacDut*mdf.rahit;
 netplot2(jj,2)=netplot2(jj,2)+dmgplot(ss,2)*mdf.SacDut*mdf.rahit;
-kk=[1:7 11:14 16];
+kk=[1 3 4 11 5:10 13:16];
+% dmg_labels={'SotR';'WoG';'CS';'HotR';'AS';'Cons';'Exor';'HoW';'HW';'Jud';'HaNova';'SoI';'SoJ';'SoR';'SoT';'Melee';'Cens'};
 
 figure(20)
 set(gcf,'Position',[428 128 728 378])
 bar20=bar(dmgplot(kk,:),'BarWidth',0.5,'BarLayout','stacked');
 set(bar20(2),'FaceColor',[0.749 0.749 0]);
-xlim([0.5 11.5])
+xlim([0.5 10.5])
 maxy=ceil(max(sum(dmgplot,2))/5000)*5000;
 ylim([0 maxy])
 set(gca,'YTick',[0:5000:maxy],'YTickLabel',[int2str([0:5:maxy/1000]') repmat('k',1+maxy/5000,1)])
@@ -137,7 +154,7 @@ figure(21)
 set(gcf,'Position',[428 128 728 378])
 bar40=bar(netplot(kk,:),'BarWidth',0.5,'BarLayout','stacked');
 set(bar40(2),'FaceColor',[0.749 0.749 0]);
-xlim([0.5 11.5])
+xlim([0.5 10.5])
 maxy=ceil(max(sum(netplot,2))/5000)*5000;
 ylim([0 maxy])
 set(gca,'YTick',[0:5000:maxy],'YTickLabel',[int2str([0:5:maxy/1000]') repmat('k',1+maxy/5000,1)])
@@ -166,9 +183,9 @@ title('100% Vengeance')
 % 
 figure(23)
 set(gcf,'Position',[428 128 728 378])
-bar40=bar(tmpvar.glyphnet(kk,:),'BarWidth',1,'BarLayout','grouped');
+bar40=bar(tmpvar.glyphnet(kk,1:4),'BarWidth',1,'BarLayout','grouped');
 set(bar40(2),'FaceColor',[0.749 0.749 0]);
-xlim([0.5 12.5])
+xlim([0.5 10.5])
 maxy=ceil(max(sum(netplot2,2))/5000)*5000;
 ylim([0 maxy])
 set(gca,'YTick',[0:5000:maxy],'YTickLabel',[int2str([0:5:maxy/1000]') repmat('k',1+maxy/5000,1)])

@@ -51,7 +51,7 @@ cfg(3).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
 %% Generate coefficients for each priority queue
 N=30000;  %# GCDs, set long enough to get stochastic data for each sim
 dt=1.5;
-
+% N=5000;
 for c=1:length(cfg)
     %set configuration variables
     egs(1)=cfg(c).helm;
@@ -79,14 +79,10 @@ for c=1:length(cfg)
         cmat(m,:,c)=rdata(m,c).coeff;
     end
 
-
-    %% save for later use (good for generic stuff, saves computation time)
-    % save prio_data cmat rdata
-
     %% incorporate non-GCD damage sources
     %preallocate arrays for speed
     padps=zeros(size(rdata,1),2,length(cfg));
-    pathr=zeros(size(padps));pahps=zeros(size(padps));
+    patps=zeros(size(padps));pahps=zeros(size(padps));
     acdps=zeros(size(padps));acthr=zeros(size(padps));achps=zeros(size(padps));
     totdps=zeros(size(padps));tottps=zeros(size(padps));tothps=zeros(size(padps));
     %once at 100% vengeance
@@ -95,7 +91,7 @@ for c=1:length(cfg)
     ability_model
     for m=1:length(rdata)
         padps(m,1,c)=0;
-        pathr(m,1,c)=0;
+        patps(m,1,c)=0;
         pahps(m,1,c)=0;
         
         %account for Inq
@@ -104,24 +100,24 @@ for c=1:length(cfg)
         %assume a 5-stack of SoT (if applicable).
         if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
             padps(m,1,c)=padps(m,1,c)+dps.Censure.*(1+0.3.*Inqmod);
-            pathr(m,1,c)=pathr(m,1,c)+tps.Censure.*(1+0.3.*Inqmod);
+            patps(m,1,c)=patps(m,1,c)+tps.Censure.*(1+0.3.*Inqmod);
         end
 
         %aa and seal damage
         padps(m,1,c)=padps(m,1,c)+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
         %aa and seal threat
         if strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)
-            pathr(m,1,c)=pathr(m,1,c)+tps.Melee+threat.activeseal.*mdf.mehit./player.wswing;
+            patps(m,1,c)=patps(m,1,c)+tps.Melee+threat.activeseal.*mdf.mehit./player.wswing;
             pahps(m,1,c)=pahps(m,1,c)+heal.activeseal.*mdf.mehit./player.wswing;
         else
-            pathr(m,1,c)=pathr(m,1,c)+tps.Melee+threat.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
+            patps(m,1,c)=patps(m,1,c)+tps.Melee+threat.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
         end
     end
     acdps(:,1,c)=cmat(:,:,c)*val.pdmg;
     acthr(:,1,c)=cmat(:,:,c)*val.pthr;
     achps(:,1,c)=cmat(:,:,c)*val.pheal;
     totdps(:,1,c)=acdps(:,1,c)+padps(:,1,c);
-    tottps(:,1,c)=acthr(:,1,c)+pathr(:,1,c);
+    tottps(:,1,c)=acthr(:,1,c)+patps(:,1,c);
     tothps(:,1,c)=achps(:,1,c)+pahps(:,1,c);
     
 
@@ -131,7 +127,7 @@ for c=1:length(cfg)
     ability_model
     for m=1:length(rdata)
         padps(m,2,c)=0;
-        pathr(m,2,c)=0;
+        patps(m,2,c)=0;
         pahps(m,2,c)=0;
         
         %account for Inq
@@ -140,24 +136,24 @@ for c=1:length(cfg)
         %assume a 5-stack of SoT (if applicable).
         if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
             padps(m,2,c)=padps(m,2,c)+dps.Censure.*(1+0.3.*Inqmod);
-            pathr(m,2,c)=pathr(m,2,c)+tps.Censure.*(1+0.3.*Inqmod);
+            patps(m,2,c)=patps(m,2,c)+tps.Censure.*(1+0.3.*Inqmod);
         end
 
         %aa and seal damage
         padps(m,2,c)=padps(m,2,c)+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
         %aa and seal threat
         if strcmpi('Inisght',exec.seal)||strcmpi('SoI',exec.seal)
-            pathr(m,2,c)=pathr(m,2,c)+tps.Melee+threat.activeseal.*mdf.mehit./player.wswing;
+            patps(m,2,c)=patps(m,2,c)+tps.Melee+threat.activeseal.*mdf.mehit./player.wswing;
             pahps(m,2,c)=pahps(m,2,c)+heal.activeseal.*mdf.mehit./player.wswing;
         else
-            pathr(m,2,c)=pathr(m,2,c)+tps.Melee+threat.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
+            patps(m,2,c)=patps(m,2,c)+tps.Melee+threat.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
         end
     end
     acdps(:,2,c)=cmat(:,:,c)*val.pdmg;
     acthr(:,2,c)=cmat(:,:,c)*val.pthr;
     achps(:,2,c)=cmat(:,:,c)*val.pheal;
     totdps(:,2,c)=acdps(:,2,c)+padps(:,2,c);
-    tottps(:,2,c)=acthr(:,2,c)+pathr(:,2,c);
+    tottps(:,2,c)=acthr(:,2,c)+patps(:,2,c);
     tothps(:,2,c)=achps(:,2,c)+pahps(:,2,c);
 %% construct damage arrays
 
@@ -182,3 +178,9 @@ cfg(c).label
 li{c}
 
 end
+
+%% store coefficients of important queues for later
+for c=1:3; coeffsum(:,:,c)=[rdata([3 18],c).coeff];end %939, W39
+
+%% save for later use (good for generic stuff, saves computation time)
+save prio_data cmat rdata

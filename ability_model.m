@@ -317,8 +317,8 @@ val.net{i}=[...
     round(net.HammerNova{i}).*val.ones;
     val.zeros; val.zeros; val.zeros; val.zeros;
     ...
-    round(dmg.Censure).*val.ones;
-    round(net.Melee{i}).*val.ones];
+    round(net.Melee{i}).*val.ones;
+    round(dmg.Censure).*val.ones];
 end
 clear i
 
