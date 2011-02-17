@@ -23,6 +23,7 @@ priolist(q).alabel='Inq';
 priolist(q).cd=0;
 priolist(q).gcd=1.5;
 priolist(q).holy=0;
+priolist(q).mana=0; %pct base mana
 priolist(q).proctrig=[0]; %no procs
 priolist(q).prochit=[0]; 
 priolist(q).procno=[0];
@@ -35,6 +36,7 @@ priolist(q).alabel='SotR2';
 priolist(q).cd=0;
 priolist(q).gcd=1.5;
 priolist(q).holy=1;
+priolist(q).mana=0; %pct base mana
 priolist(q).proctrig=[tmp.sealid]; %seals
 priolist(q).prochit=[1]; %SotR misses accounted for in code
 priolist(q).procno=[1];
@@ -47,6 +49,7 @@ priolist(q).alabel='SotR';
 priolist(q).cd=0;
 priolist(q).gcd=1.5;
 priolist(q).holy=1;
+priolist(q).mana=0; %pct base mana
 priolist(q).proctrig=[tmp.sealid]; %seals only
 priolist(q).prochit=[1]; %SotR misses accounted for in code
 priolist(q).procno=[1];
@@ -59,6 +62,7 @@ priolist(q).alabel='WoG';
 priolist(q).cd=0;
 priolist(q).gcd=1.5;
 priolist(q).holy=0;
+priolist(q).mana=0; %pct base mana
 priolist(q).proctrig=[0]; %no procs
 priolist(q).prochit=[0]; 
 priolist(q).procno=[0];
@@ -71,6 +75,7 @@ priolist(q).alabel='CS';
 priolist(q).cd=3;
 priolist(q).gcd=1.5;
 priolist(q).holy=0;
+priolist(q).mana=10*mdf.glyphAscetic; %pct base mana
 priolist(q).proctrig=[tmp.sealid]; %seals only
 priolist(q).prochit=[mdf.mehit]; 
 priolist(q).procno=[1];
@@ -84,6 +89,7 @@ priolist(q).alabel='HotR';
 priolist(q).cd=3;
 priolist(q).gcd=1.5;
 priolist(q).holy=0;
+priolist(q).mana=12; %pct base mana
 priolist(q).proctrig=[tmp.sealid;tmp.novaid]; %SoT,HammerNova
 priolist(q).prochit=[mdf.mehit;1]; %HaNova misses accounted for in [AM]
 priolist(q).procno=[strcmp(exec.seal,'Truth');1];
@@ -97,6 +103,7 @@ priolist(q).alabel='AS';
 priolist(q).cd=15;
 priolist(q).gcd=1.5;
 priolist(q).holy=1;
+priolist(q).mana=6; %pct base mana
 priolist(q).proctrig=[tmp.sealid]; 
 priolist(q).prochit=[mdf.rahit]; 
 priolist(q).procno=[strcmp(exec.seal,'Truth')];
@@ -109,6 +116,7 @@ priolist(q).alabel='Cons';
 priolist(q).cd=30.*mdf.glyphCons;
 priolist(q).gcd=1.5;
 priolist(q).holy=1;
+priolist(q).mana=55; %pct base mana
 priolist(q).proctrig=[0]; %no procs
 priolist(q).prochit=[0]; 
 priolist(q).procno=[0];
@@ -121,6 +129,7 @@ priolist(q).alabel='HoW';
 priolist(q).cd=6;
 priolist(q).gcd=1.5;
 priolist(q).holy=1;
+priolist(q).mana=12; %pct base mana
 priolist(q).proctrig=[tmp.sealid]; %seals
 priolist(q).prochit=[mdf.rahit]; 
 priolist(q).procno=[1];
@@ -133,6 +142,7 @@ priolist(q).alabel='HW';
 priolist(q).cd=15;
 priolist(q).gcd=1.5;
 priolist(q).holy=1;
+priolist(q).mana=20; %pct base mana
 priolist(q).proctrig=[0]; %no procs
 priolist(q).prochit=[0]; 
 priolist(q).procno=[0];
@@ -145,6 +155,7 @@ priolist(q).alabel='J';
 priolist(q).cd=8;
 priolist(q).gcd=1.5;
 priolist(q).holy=1;
+priolist(q).mana=5-30; %pct base mana - JotW
 priolist(q).proctrig=[tmp.sealid]; %seals
 priolist(q).prochit=[mdf.rahit]; %TODO: does JotJ automatically hit?
 priolist(q).procno=[(strcmp(exec.seal,'Truth').*(1+mdf.jseals)     ... %J+JotJ
@@ -159,6 +170,7 @@ priolist(q).alabel='HaNova';
 priolist(q).cd=0;
 priolist(q).gcd=0;
 priolist(q).holy=1;
+priolist(q).mana=0; %pct base mana
 priolist(q).proctrig=[0]; %no procs
 priolist(q).prochit=[0]; 
 priolist(q).procno=[0];
@@ -171,6 +183,7 @@ priolist(q).alabel=exec.seal;
 priolist(q).cd=0;
 priolist(q).gcd=0;
 priolist(q).holy=strcmp(exec.seal,'Truth')+strcmp(exec.seal,'Righteousness');
+priolist(q).mana=0; %pct base mana
 priolist(q).proctrig=[0]; %no recursive procs (irrelevant as this should never be a primary cast anyway)
 priolist(q).prochit=[0]; 
 priolist(q).procno=[0];
@@ -308,13 +321,11 @@ k=k+1;prio(k)=prio(1);
 prio(k).name='Inq>HoW>CS>J>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='HoW>Inq>SotR*>CS>J>AS>Cons>HW';
-
-k=k+1;prio(k)=prio(1);
-prio(k).name='SotR*>Inq>CS>HoW>J2>AS>Cons>HW';
-
-k=k+1;prio(k)=prio(1);
 prio(k).name='HoW>SotR*>Inq>CS>J>AS>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SotR*>Inq>CS>HoW>J>AS>Cons>HW';
+
 
 
 k1=k;

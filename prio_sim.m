@@ -278,7 +278,9 @@ sequence.totaltime=double(m*dt);
 
 sequence.numcasts=sum(sequence.amatrix,2);
 sequence.effcasts=sum(sequence.eamatrix,2);
-
+sequence.cps=sequence.numcasts./sequence.totaltime;
+sequence.mpc=[priolist.mana]';
+sequence.mps=sum(sequence.cps.*sequence.mpc);
 
 sequence.coeff=sequence.effcasts./sequence.totaltime;
 sequence.empties=sum(sequence.castid==0);
