@@ -38,6 +38,7 @@ mdf.glyphCons=1+0.2.*glyph.Consecration;         %Consecration output (and coold
 mdf.glyphAS=1+0.3.*glyph.FocusedShield;          %AS output
 mdf.glyphSoT=10.*glyph.SealofTruth.*(strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal));     %expertise bonus
 mdf.glyphSoI=0.05.*glyph.SealofInsight.*(strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)); %healing output
+mdf.glyphAscetic=1-0.3*glyph.AsceticCrusader;
 
 %% Meta Gems, Enchants, Plate Spec, Tier Bonus
 %%%%%%%%%%% META

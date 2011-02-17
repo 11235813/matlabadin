@@ -18,6 +18,7 @@ talents;
 stat_model;
 ability_model;
 rotation_model;
+prio_model;
 
 
 %% set up our tree configurations
@@ -106,35 +107,43 @@ cfg(1).helm=egs(1);
 cfg(1).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
 cfg(1).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
 cfg(1).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
-cfg(1).label='939/SoT';
-cfg(1).veng=1;
-cfg(1).seal='Truth';
-cfg(1).rot=1;
-cfg(1).glyph=ddb.glyphset{1}; %Default, HotR/SoT/ShoR, Cons/AS
-
+cc=1;
 %low hit, W39
-cfg(2).helm=cfg(1).helm;
-cfg(2).label='W39/SoI';
-cfg(2).veng=1;
-cfg(2).seal='Insight';
-cfg(2).rot=7; %W39
-cfg(2).glyph=ddb.glyphset{2}; %WoG set
+cfg(cc).label='W39/SoI/#2/2%/10';
+cfg(cc).veng=1;
+cfg(cc).seal='Insight';
+cfg(cc).rot=3; %W39
+cfg(cc).queue=17;
+cfg(cc).glyph=ddb.glyphset{2}; %WoG set
 
-%low hit, IHSH
-cfg(3)=cfg(1);
-cfg(3).label='IHSH/SoT';
-cfg(3).rot=2;
+%low hit, 939
+cc=cc+1;
+cfg(cc).helm=cfg(1).helm;
+cfg(cc).label='939/SoT/#1/2%/10';
+cfg(cc).veng=1;
+cfg(cc).seal='Truth';
+cfg(cc).rot=1;
+cfg(cc).queue=3;
+cfg(cc).glyph=ddb.glyphset{1}; %Default, HotR/SoT/ShoR, Cons/AS
 
+
+% %low hit, IHSH
+% cfg(3)=cfg(1);
+% cfg(3).label='IHSH/SoT';
+% cfg(3).rot=2;
+% 
 %hit-cap and exp soft-cap, 939
-cfg(4)=cfg(2);
-cfg(4).label='939/SoT';
-cfg(4).helm=egs(1);
-cfg(4).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
-cfg(4).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
-cfg(4).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
+cc=cc+1;
+cfg(cc)=cfg(2);
+cfg(cc).label='939/SoT/#1/8%/26';
+cfg(cc).helm=egs(1);
+cfg(cc).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
+cfg(cc).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
+cfg(cc).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
 
 %% sim 
 tabledps=zeros(length(tree),length(rot),2);
+tic
 for c=1:length(cfg)
     
     for m=1:length(tree) %each talent
@@ -156,21 +165,25 @@ for c=1:length(cfg)
         stat_model;
         ability_model;
         rotation_model;
+        clear queue;queue=cfg(c).queue;
+        prio_rot;
         
         %store items in cfg for plots
         cfg(c).hit=player.phhit;
         cfg(c).exp=player.exp;
         
-        totdps(m,c)=rot(cfg(c).rot).totdps;
+%         totdps(m,c)=rot(cfg(c).rot).totdps;
+        totdps(m,c)=rot.totdps;
         totdps0(m,c)=totdps(1,c);
-
-        %calculate aoe stats
-        exec.npccount=4; 
-        stat_model;
-        ability_model;
-        rotation_model;
-        totdpsa(m,c)=rot(6).totdps;
-        totdpsa0(m,c)=totdpsa(1,c);
+        toc
+%         %calculate aoe stats
+%         exec.npccount=4; 
+%         stat_model;
+%         ability_model;
+%         rotation_model;
+%         prio_rot;
+%         totdpsa(m,c)=rot(2).aoedps;
+%         totdpsa0(m,c)=totdpsa(1,c);
 
     end
 end
@@ -178,7 +191,7 @@ end
 
 dpsppt=(totdps0-totdps)./repmat(points',1,size(totdps,2));
 % dpsppt1=(totdps1(1)-totdps1')./points';
-dpsppta=(totdpsa0-totdpsa)./repmat(points',1,size(totdpsa,2));
+% dpsppta=(totdpsa0-totdpsa)./repmat(points',1,size(totdpsa,2));
 
 %% table output
 spacer=repmat(' ',length(name),5);
@@ -188,16 +201,16 @@ for c=1:length(cfg)
 end
 table_st
 
-table_aoe=char(name);
-for c=2:length(cfg)
-    table_aoe=[table_aoe spacer num2str(dpsppta(:,c),'%2.1f')];
-end
-table_aoe
+% table_aoe=char(name);
+% for c=2:length(cfg)
+%     table_aoe=[table_aoe spacer num2str(dpsppta(:,c),'%2.1f')];
+% end
+% table_aoe
 
 
 %% plots
 dpsplot=[dpsppt(:,1:3)];
-aoeplot=[dpsppta(:,1:2)];
+% aoeplot=[dpsppta(:,1:2)];
 
 % figure(30)
 % set(gcf,'Position',[428 128 728 378])
@@ -210,12 +223,13 @@ aoeplot=[dpsppta(:,1:2)];
 % title([ num2str(player.phhit,'%2.1f') '% hit, ' num2str(player.exp,'%2.1f') ' expertise'])
 
 %Sort
-sortby=1; %sort by cfg(1)
+sortby=2; %sort by cfg(1)
 [dpspptsorted ind]=sort(dpsppt(:,sortby));
 dpsplotsorted=dpsplot(ind,:);
+dpsplotsorted=max(dpsplotsorted,zeros(size(dpsplotsorted)));
 
-[aoesorted inda]=sort(dpsppta(:,sortby));
-aoeplotsorted=aoeplot(inda,:);
+% [aoesorted inda]=sort(dpsppta(:,sortby));
+% aoeplotsorted=aoeplot(inda,:);
 
 figure(31)
 set(gcf,'Position',[428 128 728 378])
@@ -225,7 +239,7 @@ ylim([0.5 10.5])
 set(gca,'YTickLabel',name(ind(2:length(name))))
 legend({cfg.label},'Location','Best')
 xlabel('DPS per point')
-title([ num2str(cfg(sortby).veng*100,'%2.1f') '% Veng, ' num2str(cfg(sortby).hit,'%2.1f') '% hit, ' num2str(cfg(sortby).exp,'%2.1f') ' expertise'])
+title([ num2str(cfg(sortby).veng*100,'%2.1f') '% Veng, legend contains rotation/seal/glyphs/hit/expertise'])
 
 %for talent spec guide
 figure(32)
@@ -240,14 +254,14 @@ xlabel('DPS per point')
 title([ num2str(cfg(sortby).veng*100,'%2.1f') '% Veng, ' num2str(cfg(sortby).hit,'%2.1f') '% hit, ' ...
     num2str(cfg(sortby).exp,'%2.1f') ' expertise'])
 
-%aoe figure
-figure(33)
-set(gcf,'Position',[428 128 728 378])
-bar33=barh(aoeplotsorted(2:length(dpsppt),:),'BarWidth',1,'BarLayout','grouped');
-set(bar33(2),'FaceColor',[0.749 0.749 0]);
-% set(bar33(2),'FaceColor',[ 0.078 0.169 0.549]);
-ylim([0.5 10.5])
-set(gca,'YTickLabel',name(inda(2:length(name))))
-legend('IH9/SoT','IH9/SoI','Location','Best')
-xlabel('DPS per point')
-title(['4 targets, ' num2str(cfg(sortby).veng*100,'%2.1f') '% Veng, ' num2str(cfg(sortby).hit,'%2.1f') '% hit, ' num2str(cfg(sortby).exp,'%2.1f') ' expertise'])
+% %aoe figure
+% figure(33)
+% set(gcf,'Position',[428 128 728 378])
+% bar33=barh(aoeplotsorted(2:length(dpsppt),:),'BarWidth',1,'BarLayout','grouped');
+% set(bar33(2),'FaceColor',[0.749 0.749 0]);
+% % set(bar33(2),'FaceColor',[ 0.078 0.169 0.549]);
+% ylim([0.5 10.5])
+% set(gca,'YTickLabel',name(inda(2:length(name))))
+% legend('IH9/SoT','IH9/SoI','Location','Best')
+% xlabel('DPS per point')
+% title(['4 targets, ' num2str(cfg(sortby).veng*100,'%2.1f') '% Veng, ' num2str(cfg(sortby).hit,'%2.1f') '% hit, ' num2str(cfg(sortby).exp,'%2.1f') ' expertise'])
