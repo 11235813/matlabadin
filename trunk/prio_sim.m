@@ -157,7 +157,7 @@ for m=1:N
                 if strfind(sequence.label{qq},'SotR')
                     
                     %check for misses
-                    if rand<target.avoid/100
+                    if rand>mdf.mehit
                         %if we miss, set the flag
                         sequence.hmatrix(aid,qq)=0;
                         %nullify procs
@@ -279,6 +279,7 @@ sequence.totaltime=double(m*dt);
 sequence.numcasts=sum(sequence.amatrix,2);
 sequence.effcasts=sum(sequence.eamatrix,2);
 sequence.cps=sequence.numcasts./sequence.totaltime;
+sequence.scps=sum(sequence.amatrix.*sequence.hmatrix,2)./sequence.totaltime;
 sequence.mpc=[priolist.mana]';
 sequence.mps=sum(sequence.cps.*sequence.mpc);
 
