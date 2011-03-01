@@ -11,7 +11,7 @@
 %Eternal Glory (unless changed)
 
 %% Setup Tasks
-clear;
+% clear;
 gear_db;
 def_db;
 
@@ -30,9 +30,22 @@ ability_model;
 
 
 %% Sim
-for gc=1:3
-    for sd=1:3
-        for eg=1:3
+clear rcgd
+Ngc=[1 3];    %grand crusader 
+Nsd=[1 3];      %sacred duty
+Neg=[3];        %eternal glory
+Ntot=length(Neg)*length(Nsd)*length(Ngc);
+t1=clock;
+uwb=waitbar(0,['Calculating config #1/' int2str(Ntot)]);tic;
+set(uwb,'Position',get(uwb,'Position')+[0 80 0 0])
+for igc=1:length(Ngc)
+    for isd=1:length(Nsd)
+        for ieg=1:length(Neg)
+            
+            %define indices
+            gc=Ngc(igc);
+            sd=Nsd(isd);
+            eg=Neg(ieg);
             
             %set talent environment
             talent.prot(4,3)=gc-1;
@@ -48,7 +61,11 @@ for gc=1:3
             
             %store data for later scrutiny
             rcgd.h=h;
-            rcgd.allcoeffs(:,:,:,gc,sd,eg)=rcgd.coeff;
+            if length(size(rcgd.coeff))>2
+                rcgd.allcoeffs(:,:,:,gc,sd,eg)=rcgd.coeff;
+            else
+                rcgd.allcoeffs(:,:,1,gc,sd,eg)=rcgd.coeff;
+            end
             
             %fit data
             rcgd.showplots=0; %plot flag, set to 1 to show plots
@@ -65,6 +82,11 @@ for gc=1:3
             %debugging
             pause(0.1)
             close all
+            
+            %waitbar updating
+            currind=((igc-1)*length(Neg)*length(Nsd)+(isd-1)*length(Neg)+ieg);
+            waitbar(currind/(Ntot),uwb, ...
+                ['Calculating #' int2str(currind) '/' int2str(Ntot) ', est=' num2str((Ntot-currind)*(etime(clock,t1)./currind),'%3.1f') 'sec']);
 
         end
     end
@@ -88,12 +110,22 @@ save zzRCD_data rcgd
 %Check AS plot to see what effect GrCr has
 figure(1);
 H=repmat(h,1,size(rcgd.allcoeffs,3));
-plot(H,squeeze(rcgd.allcoeffs(7,:,:,1,3,3)),'b.-',H,squeeze(rcgd.allcoeffs(7,:,:,3,3,3)),'r.-')
+f=fittype('poly5');
+tempfit=rcgd.allpvals(7,:,1,3,3);
+c11=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
+tempfit=rcgd.allpvals(7,:,3,3,3);
+c12=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
+plot(H,squeeze(rcgd.allcoeffs(7,:,:,1,3,3)),'b.-',H,squeeze(rcgd.allcoeffs(7,:,:,3,3,3)),'r.-',h,c11(h),'ko-',h,c12(h),'ko-')
 
 %See what effect SD has
 figure(2)
-plot(H,squeeze(rcgd.allcoeffs(3,:,:,3,1,3)),'b.-',H,squeeze(rcgd.allcoeffs(3,:,:,3,3,3)),'r.-')
+tempfit=rcgd.allpvals(3,:,3,1,3);
+c21=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
+tempfit=rcgd.allpvals(3,:,3,3,3);
+c22=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
+plot(H,squeeze(rcgd.allcoeffs(3,:,:,3,1,3)),'b.-',H,squeeze(rcgd.allcoeffs(3,:,:,3,3,3)),'r.-',h,c21(h),'k-',h,c22(h),'ko-')
 
 %EG, won't work until support for mulitple queues is added
 figure(3)
-plot(H,squeeze(rcgd.allcoeffs(4,:,:,3,3,1)),'b.-',H,squeeze(rcgd.allcoeffs(4,:,:,3,3,3)),'r.-')
+tempfit=rcgd.allpvals(4,:,3,3,1);f=fittype('poly5');c3b=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
+plot(H,squeeze(rcgd.allcoeffs(4,:,:,3,3,1)),'b.-',H,squeeze(rcgd.allcoeffs(4,:,:,3,3,3)),'r.-',h,c3b(h),'k-')
