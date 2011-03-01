@@ -33,7 +33,7 @@ end
 rcgd.pvals=zeros(size(rcgd.coeff,1),rcgd.maxlength);
 for a=1:size(rcgd.coeff,1)
     rcgd.tmp=coeffvalues(rcgd.cf{a});
-    rcgd.pvals(a,1:length(rcgd.tmp))=rcgd.tmp;
+    rcgd.pvals(a,1+size(rcgd.pvals,2)-length(rcgd.tmp):size(rcgd.pvals,2))=rcgd.tmp;
 end
 
 % rcgd.pvals

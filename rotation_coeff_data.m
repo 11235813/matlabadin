@@ -3,9 +3,9 @@
 %environment.
 
 h=[0.7:0.02:1]';
-N=10000;
+N=5000;
 dt=1.5;
-M=5;
+M=10;
 rcgd.coeff=zeros(13,length(h));
 tic
 wb=waitbar(0,'Calculating');tic;
