@@ -6,6 +6,13 @@ function [ sequence ] = prio_sim(pri,varargin)
 
 %temporarily put here to make testing easier
 %% Input handling
+%force update of prio_model in base workspace; this is a kludge to
+%compensate for the fact that prio_model doesn't automatically update when
+%mdf.mehit is updated, and Theck has a terrible memory when debugging.
+%OTOH: it also means we never have to run prio_model anywhere, and since we
+%always want to run it before prio_sim anyway, it makes more sense to put
+%it here
+evalin('base','prio_model');
 
 %import priority queue models, cooldowns, and modifiers
 priolist=evalin('base','priolist');
