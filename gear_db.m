@@ -596,6 +596,17 @@ idb.iid(67602).agi=129;
 idb.iid(67602).hit=86;
 idb.iid(67602).mast=86;
 
+idb.iid(68739).name='Darkheart Hacker';
+idb.iid(68739).wtype='axe';
+idb.iid(68739).ilvl=346;
+idb.iid(68739).tooldps=409.6;
+idb.iid(68739).swing=2.6;
+idb.iid(68739).avgdmg=1065;
+idb.iid(68739).sta=194;
+idb.iid(68739).agi=129;
+idb.iid(68739).exp=78;
+idb.iid(68739).mast=91;
+
 idb.iid(59443).name='Crul''korak, the Lightning''s Arc';
 idb.iid(59443).wtype='axe';
 idb.iid(59443).ilvl=359;

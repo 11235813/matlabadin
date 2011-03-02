@@ -15,6 +15,8 @@ for qq=1:length(h)
     for m=1:M;
         rdata=prio_sim(3,'N',N,'dt',dt);
         rcgd.coeff(:,qq,m)=rdata.coeff;
+        rcgd.numcasts(:,qq,m)=rdata.numcasts;  %TODO: include in fits?
+        rcgd.cps(:,qq,m)=rdata.cps;            %TODO: include in fits?
     end
     waitbar(qq/length(h),wb,['Calculating #' int2str(qq) '/' int2str(length(h)) ', est=' num2str((length(h)-qq)*(toc/qq),'%3.1f') 'sec']);
 end

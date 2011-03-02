@@ -31,8 +31,8 @@ ability_model;
 
 %% Sim
 clear rcgd
-Ngc=[1 3];    %grand crusader 
-Nsd=[1 3];      %sacred duty
+Ngc=[3];    %grand crusader 
+Nsd=[3];      %sacred duty
 Neg=[3];        %eternal glory
 Ntot=length(Neg)*length(Nsd)*length(Ngc);
 t1=clock;
@@ -96,12 +96,12 @@ clear gc sd eg
 %generate matlab-readable code for copy/pasting into rotation_model
 rcgd.print.ids=find(rcgd.allpvals);
 rcgd.print.vals=rcgd.allpvals(rcgd.print.ids);
-rcgd.comm{1}=['clear rotdb;rotdb.tempvals=zeros(' int2str(length(rcgd.allpvals(:))) ',1);'];
-rcgd.comm{2}=['rotdb.ids=[' int2str(rcgd.print.ids') '];'];
-rcgd.comm{3}=['rotdb.vals=[' num2str(rcgd.print.vals') '];'];
-rcgd.comm{4}=['rotdb.tempvals(rotdb.ids)=rotdb.vals;'];
-rcgd.comm{5}=['rotdb.pvals=reshape(rotdb.tempvals,' int2str(length(priolist)) ',' int2str(size(rcgd.pvals,2)) ',3,3,3);'];
-rcgd.command=char({'%% Copy/Paste this code into rotation_model',rcgd.comm{1},rcgd.comm{2},rcgd.comm{3},rcgd.comm{4},rcgd.comm{5}});
+rcgd.comm{1}=['rotdb(i).tempvals=zeros(' int2str(length(rcgd.allpvals(:))) ',1);'];
+rcgd.comm{2}=['rotdb(i).ids=[' int2str(rcgd.print.ids') '];'];
+rcgd.comm{3}=['rotdb(i).vals=[' num2str(rcgd.print.vals') '];'];
+rcgd.comm{4}=['rotdb(i).tempvals(rotdb(i).ids)=rotdb(i).vals;'];
+rcgd.comm{5}=['rotdb(i).pvals=reshape(rotdb(i).tempvals,' int2str(length(priolist)) ',' int2str(size(rcgd.pvals,2)) ',3,3,3);'];
+rcgd.command=char({'%% Copy/Paste this code into rotation_model','clear rotdb',rcgd.comm{1},rcgd.comm{2},rcgd.comm{3},rcgd.comm{4},rcgd.comm{5}});
 rcgd.command
 save zzRCD_data rcgd
 
