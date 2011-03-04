@@ -80,8 +80,7 @@ priolist(q).proctrig=[tmp.sealid]; %seals only
 priolist(q).prochit=[mdf.mehit]; 
 priolist(q).procno=[1];
 priolist(q).condition='ccd(6)<=0'; %shared with HotR
-% priolist(q).action='hopo=min([3 hopo+1]);if rand<mdf.GrCr.*mdf.mehit ccd(tmp.AS)=0; end;';  %4.0.3a "proper" behavior
-priolist(q).action='if rand<mdf.mehit hopo=min([3 hopo+1]);if rand<mdf.GrCr ccd(tmp.AS)=0; end;end;';  %4.0.6 "bugged" behavior
+priolist(q).action='if rand<mdf.mehit hopo=min([3 hopo+1]);if rand<mdf.GrCr ccd(tmp.AS)=0; dur.GC=6; end;end;';  %4.1 
  
 q=6;
 %HotR   
@@ -94,8 +93,7 @@ priolist(q).proctrig=[tmp.sealid;tmp.novaid]; %SoT,HammerNova
 priolist(q).prochit=[mdf.mehit;1]; %HaNova misses accounted for in [AM]
 priolist(q).procno=[strcmp(exec.seal,'Truth');1];
 priolist(q).condition='ccd(5)<=0'; %shared with CS
-% priolist(q).action='if rand<mdf.mehit hopo=min([3 hopo+1]);end;if rand<mdf.GrCr.*mdf.mehit ccd(tmp.AS)=0; end;';
-priolist(q).action='if rand<mdf.mehit hopo=min([3 hopo+1]);if rand<mdf.GrCr ccd(tmp.AS)=0; end;end;';
+priolist(q).action='if rand<mdf.mehit hopo=min([3 hopo+1]);if rand<mdf.GrCr ccd(tmp.AS)=0; dur.GC=6; end;end;'; %4.1
  
 q=7;
 %AS   
@@ -108,7 +106,10 @@ priolist(q).proctrig=[tmp.sealid];
 priolist(q).prochit=[mdf.rahit]; 
 priolist(q).procno=[strcmp(exec.seal,'Truth')];
 priolist(q).condition='1'; 
-priolist(q).action=''; 
+priolist(q).action='0;';  %4.0.6;
+priolist(q).action='if dur.GC>0 dur.GC=-dt/pi; if rand<mdf.rahit hopo=min([3 hopo+1]); end; end';  %4.1
+% priolist(q).action='if dur.GC>0 dur.GC=-dt/pi; hopo=min([3 hopo+1]); end';  %4.1 alternative
+
   
 q=8;
 %Cons  
@@ -201,7 +202,7 @@ clear prio
 %things if we decide we want to.
 
 k=1;
-prio(k).name='SotR>CS>J>AS>HW';
+prio(k).name='SotR>CS>J>AS';
           
 %setup contains commands to be evaluated at the beginning of the
 %simulation.  For example, setting ccd.AS=13.5 would simulate pulling with
@@ -218,7 +219,22 @@ prio(k).spaction={'';''; ''; ''; ''; ''; ''; '';'';'';};
 %% Single-Target Queues
 %standard
 k=k+1;prio(k)=prio(1);
-prio(k).name='SotR>HotR>J>AS>HW';
+prio(k).name='SotR>HotR>J>AS';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SotR>CS>AS>J';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SotR>AS>CS>J';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SotR>CS>AS+>J>AS';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SotR>AS+>CS>J>AS';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SotR>CS>J>AS>HW';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>CS>J>AS>Cons>HW';
@@ -285,8 +301,11 @@ prio(k).name='WoG>CS>J>AS>Cons>HW';
 k=k+1;prio(k)=prio(1);
 prio(k).name='WoG>CS>AS>J>Cons>HW';
         
+% k=k+1;prio(k)=prio(1);
+% prio(k).name='WoG>CS>AS>Cons>J>HW';
+        
 k=k+1;prio(k)=prio(1);
-prio(k).name='WoG>CS>AS>Cons>J>HW';
+prio(k).name='WoG>AS>CS>J>Cons>HW';
         
 k=k+1;prio(k)=prio(1);
 prio(k).name='SDSotR>WoG>CS>J>AS>Cons>HW';
@@ -531,7 +550,17 @@ for m=1:k2
             elseif sum(strcmp(snstr,'AS*'))
                 prio(m).cast(l)=tmp.AS; %AS
                 prio(m).cond{l}='dur.Inq>0';
+            
+            %AS+ (only with Grand Crusader buff active)
+            elseif sum(strcmp(snstr,'AS+'))
+                prio(m).cast(l)=tmp.AS;
+                prio(m).cond{l}='dur.GC>0';
                 
+            %AS*+ (only with Inq & GC active)
+            elseif sum(strcmp(snstr,'AS*+'))
+                prio(m).cast(l)=tmp.AS;
+                prio(m).cond{l}='dur.GC>0 && dur.Inq>0';
+                            
             %HotR* (only with Inq active)
             elseif sum(strcmp(snstr,'HotR*'))
                 prio(m).cast(l)=tmp.HotR; %HotR

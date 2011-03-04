@@ -24,6 +24,7 @@ weaplist1=[62457; %Ravening Slicer
            67602; %Elementium Gutslicer
            56459; %Mace of Transformed Bone (Heroic)
            56364; %Axe of the Eclipse (Heroic)
+           68739; %Darkheart Hacker
            56430; %Sun Strike (Heroic)
            65171; %Cookie''s Tenderizer (Heroic)
            63533; %Fang of Twilight
@@ -78,6 +79,7 @@ cfg(1).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
 cfg(1).rot=7;   %W39
 cfg(1).glyph=ddb.glyphset{2}; %WoG/SoI/HotR, AS/Cons
 cfg(1).talent=ddb.talentset{2}; %0/31/10 survivability
+cfg(1).talent=ddb.talentset{4}; %temp until rot_db updated
 cfg(1).label='W39/SoI build';
 
 %939 rotation, low-hit set
@@ -85,6 +87,7 @@ cfg(2).helm=cfg(1).helm;
 cfg(2).rot=1;
 cfg(2).glyph=ddb.glyphset{1}; %SoT/SotR/HotR, AS/Cons
 cfg(2).talent=ddb.talentset{1}; %0/31/10 no HG
+cfg(2).talent=ddb.talentset{4}; %temp until rot_db updated
 cfg(2).label='939/SoT build';
 
 %939 for 8% hit and exp soft-cap

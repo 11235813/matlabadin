@@ -65,9 +65,9 @@ for c=1:length(cfg)
 
     wb=waitbar(0,['Calculating CFG # ' int2str(c) ' / ' int2str(length(cfg))]);
     tic
-    for k=1:k1
-        waitbar(k/k1,wb)
-        rdata(k,c)=prio_sim(k,'N',N,'dt',dt);
+    for kk=1:k1
+        waitbar(kk/k1,wb)
+        rdata(kk,c)=prio_sim(kk,'N',N,'dt',dt);
     end
     close(wb)
     toc
@@ -172,7 +172,8 @@ li{c} =    [spacer char({' ','Q#',int2str([1:length(rdata)]')}) ...
             spacer char({' E',' #',int2str([rdata(:,c).empties]')}) ...
             spacer char({' E',' %',num2str([rdata(:,c).emptypct]','%3.1f')}) ...
             spacer char({'SotR','miss',int2str([rdata(:,c).smiss]')}) ...
-            spacer char({'AS','cast',int2str([rdata(:,c).ascast]')})];
+            spacer char({'AS','cast',int2str([rdata(:,c).ascast]')}) ...
+            spacer char({'GC','procs',int2str([rdata(:,c).gcproc]')})];
         
 cfg(c).label
 li{c}
@@ -180,7 +181,7 @@ li{c}
 end
 
 %% store coefficients of important queues for later
-for c=1:3; coeffsum(:,:,c)=[rdata([3 18],c).coeff];end %939, W39
+% for c=1:3; coeffsum(:,:,c)=[rdata([3 18],c).coeff];end %939, W39
 
 %% save for later use (good for generic stuff, saves computation time)
 save prio_data cmat rdata

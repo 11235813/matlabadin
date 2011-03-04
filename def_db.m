@@ -88,22 +88,22 @@ ddb.gearset(2)={tempegs};
 
 
 %% Talent Specs
-%0/31/10 spec for baseline calcs
+%0/32/9 spec for baseline calcs
 %http://www.wowhead.com/talent#sZGMhcRddkRucbG
-temptree.prot=[3 2 0 0; 2 3 0 0; 0 3 1 2; 2 1 2 0; 1 1 1 1; 0 2 3 0; 0 1 0 0];
-temptree.ret=[0 3 2 0; 0 3 0 2];
+temptree.prot=[3 2 0 0; 2 3 0 0; 0 3 1 2; 2 1 2 0; 1 1 2 1; 0 2 3 0; 0 1 0 0];
+temptree.ret=[0 3 2 0; 0 3 0 1];
 ddb.talentset{1}=temptree;
 
-%0/31/10 WoG survivability spec
+%0/32/9 WoG survivability spec
 %http://www.wowhead.com/talent#sZhrhcRkdRRucbG
-temptree.prot=[3 0 2 0; 2 3 0 0; 0 3 1 2; 1 1 2 0; 1 1 2 1; 0 2 3 0; 0 1 0 0];
+temptree.prot=[3 0 2 0; 2 3 0 0; 0 3 1 2; 2 1 2 0; 1 1 2 1; 0 2 3 0; 0 1 0 0];
 temptree.ret=[0 3 2 0; 0 3 0 2];
 ddb.talentset{2}=temptree;
 
-%0/31/10 spec w/HG
+%0/33/8 spec w/HG (PoJ+AD->HG)
 %http://www.wowhead.com/talent#sZGMhfRddoMucbG
-temptree.prot=[3 2 0 0; 2 3 0 0; 2 3 1 2; 2 1 2 0; 1 1 0 0; 0 2 3 0; 0 1 0 0];
-temptree.ret=[0 3 2 0; 0 3 0 2];
+temptree.prot=[3 2 0 0; 2 3 0 0; 2 3 1 2; 2 1 2 0; 1 1 2 0; 0 2 3 0; 0 0 0 0];
+temptree.ret=[0 3 2 0; 0 3 0 0];
 ddb.talentset{3}=temptree;
 
 %0/33/8 spec to get everything relevant in prot (skip DG, PoJ, HG)
