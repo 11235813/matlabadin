@@ -85,6 +85,7 @@ ccd=zeros(size(cd));
 dur.SD=0;
 dur.Inq=0;
 dur.EGicd=0;
+dur.GC=0;
 
 %evaluate setup conditionals
 for m=1:length(pri.setup)
@@ -203,6 +204,7 @@ for m=1:N
                 %SD/Inq duration (done here so that uptime % is correct)
                 sequence.SD(qq)=dur.SD;
                 sequence.Inq(qq)=dur.Inq;
+                sequence.GC(qq)=dur.GC;
                 
                 %special actions (performed last)
                 eval(char(pri.spaction(n)));
@@ -229,6 +231,7 @@ for m=1:N
        sequence.castid(qq)=0;
        sequence.casttime(qq)=t(m);
        sequence.SD(qq)=dur.SD;
+       sequence.GC(qq)=dur.GC;
        sequence.Inq(qq)=dur.Inq;
        sequence.hopo(qq)=hopo;
        sequence.label{qq}='Empty';
@@ -250,6 +253,7 @@ for m=1:N
     %reduce durations
     dur.SD=max([dur.SD-dt 0]);
     dur.Inq=max([dur.Inq-dt 0]);
+    dur.GC=max([dur.GC-dt 0]);
     
     
     %kludgy fix for numerical errors - 
@@ -262,6 +266,7 @@ for m=1:N
     factor=1e10;
     ccd=round(ccd.*factor)./factor;
     dur.SD=round(dur.SD.*factor)./factor;dur.SD=max([dur.SD 0]);
+    dur.GC=round(dur.GC.*factor)./factor;dur.GC=max([dur.GC 0]);
     gcd=round(gcd.*factor)./factor;
     egcd=round(egcd.*factor)./factor;
     
@@ -299,6 +304,7 @@ sequence.emptypct=100.*sequence.emptytime./sequence.totaltime;
 %informational fields
 sequence.smiss=sum(sum(sequence.hmatrix==0,2));
 sequence.ascast=sequence.numcasts(tmp.AS);
+sequence.gcproc=sum(diff(sequence.GC)>1)+int32(sequence.GC(1)~=0);
 
 
 %all damage calculations now taken care of in postprocessing.
