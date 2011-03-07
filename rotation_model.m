@@ -40,7 +40,7 @@ rot=struct('tag','', ...
            'tottps',[]);
 
 %fix entries
-for i=1:8
+for i=1:length(rotdb)
     rot(i).labels={'Inq';'2SotR';'SotR';'WoG';'CS';'HotR';'AS';'Cons';'HoW';'HW';'J';'HaNova';'Seal'};
     rot(i).xtragcd=val.zeros;
     rot(i).sotrfactor=val.ones;
@@ -99,7 +99,7 @@ rot(1).tag='SC9';
 %this extracts coefficient data from rotdb for every rotation
 %TODO: somehow implement sub-20% weighting? May necessitate removing outer
 %for loop.
-for i=1:length(rotdb);
+for i=1:length(rot);
     %load pvals for the appropiate gc/sd/eg config
     rot(i).pvals(:,:)=rotdb(i).pvals(:,:,rmtmp.gc,rmtmp.sd,rmtmp.eg);
     
