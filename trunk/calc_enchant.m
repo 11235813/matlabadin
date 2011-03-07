@@ -28,18 +28,18 @@ cfg(1).helm=egs(1);
 cfg(1).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
 cfg(1).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
 cfg(1).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
-cfg(1).rot=7;   %W39
+cfg(1).rot=3;   %W39
 
 %939 rotation, low-hit set
 cfg(2).helm=cfg(1).helm;
-cfg(2).rot=1;
+cfg(2).rot=2;
 
 %repeat for 8% hit and exp soft-cap
 cfg(3).helm=egs(1);
 cfg(3).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
 cfg(3).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
 cfg(3).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
-cfg(3).rot=1;   %9C9
+cfg(3).rot=2;   %9C9
 
 
 %% List of passive effects to calculate

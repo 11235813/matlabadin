@@ -11,29 +11,43 @@ rcgd.ftype{11}='poly4';
 rcgd.maxlength=1;
 for a=1:size(rcgd.coeff,1)
     
+    %fit coeffs
     x=[];y=[];
     for m=1:M
         x=[x h];
         y=[y rcgd.coeff(a,:,m)'];
     end
-    rcgd.cf{a}=fit(x(:),y(:),fittype(rcgd.ftype{a})); %fit data
+    rcgd.coeffcf{a}=fit(x(:),y(:),fittype(rcgd.ftype{a})); %fit data
     
-    rcgd.maxlength=max([rcgd.maxlength length(coeffvalues(rcgd.cf{a}))]);
+    rcgd.maxlength=max([rcgd.maxlength length(coeffvalues(rcgd.coeffcf{a}))]);
 
     if rcgd.showplots==1
         figure(a)
-        plot(x,y,'.-',h,feval(rcgd.cf{a},h),'ko-');
+        plot(x,y,'.-',h,feval(rcgd.cf.coeff{a},h),'ko-');
         title(char(priolist(a).alabel))
         xlabel('mdf.mehit (h)')
         ylabel('rcgd.coeff and fit')
     end
+    
+    %fit cps
+    clear x y
+    x=[];y=[];
+    for m=1:M
+        x=[x h];
+        y=[y rcgd.cps(a,:,m)'];
+    end
+    rcgd.cpscf{a}=fit(x(:),y(:),fittype(rcgd.ftype{a})); %fit data
+    
 end
 
 %% Collect and store coefficients
-rcgd.pvals=zeros(size(rcgd.coeff,1),rcgd.maxlength);
+rcgd.coeffpvals=zeros(size(rcgd.coeff,1),rcgd.maxlength);
+rcgd.cpspvals=rcgd.coeffpvals;
 for a=1:size(rcgd.coeff,1)
-    rcgd.tmp=coeffvalues(rcgd.cf{a});
-    rcgd.pvals(a,1+size(rcgd.pvals,2)-length(rcgd.tmp):size(rcgd.pvals,2))=rcgd.tmp;
+    rcgd.tmp=coeffvalues(rcgd.coeffcf{a});
+    rcgd.coeffpvals(a,1+size(rcgd.coeffpvals,2)-length(rcgd.tmp):size(rcgd.coeffpvals,2))=rcgd.tmp;
+    rcgd.tmp=coeffvalues(rcgd.cpscf{a});
+    rcgd.cpspvals(a,1+size(rcgd.coeffpvals,2)-length(rcgd.tmp):size(rcgd.coeffpvals,2))=rcgd.tmp;
 end
 
 % rcgd.pvals

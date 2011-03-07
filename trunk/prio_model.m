@@ -107,7 +107,7 @@ priolist(q).prochit=[mdf.rahit];
 priolist(q).procno=[strcmp(exec.seal,'Truth')];
 priolist(q).condition='1'; 
 priolist(q).action='0;';  %4.0.6;
-priolist(q).action='if dur.GC>0 dur.GC=-dt/pi; if rand<mdf.rahit hopo=min([3 hopo+1]); end; end';  %4.1
+% priolist(q).action='if dur.GC>0 dur.GC=-dt/pi; if rand<mdf.rahit hopo=min([3 hopo+1]); end; end';  %4.1
 % priolist(q).action='if dur.GC>0 dur.GC=-dt/pi; hopo=min([3 hopo+1]); end';  %4.1 alternative
 
   
@@ -228,16 +228,19 @@ k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>AS>CS>J';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='SotR>CS>AS+>J>AS';
+% prio(k).name='SotR>CS>AS+>J>AS';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='SotR>AS+>CS>J>AS';
+% prio(k).name='SotR>AS+>CS>J>AS';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>CS>J>AS>HW';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>CS>J>AS>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SotR>HotR>J>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>CS>AS>J>Cons>HW';
@@ -590,10 +593,10 @@ end
 
 %pretty output for troubleshooting
 clear prilist* tmp
-for m=1:k1
-    prilist(m,:)=[ num2str(m,'%03.0f') ' ' prio(m).name repmat(' ',1,40-length(prio(m).name)-4)];
+for k=1:k1
+    prilist(k,:)=[ num2str(k,'%03.0f') ' ' prio(k).name repmat(' ',1,40-length(prio(k).name)-4)];
 end
 
-for m=(k1+1):k2
-    prilist2(m+1-k1,:)=[ num2str(m,'%03.0f') ' ' prio(m).name repmat(' ',1,40-length(prio(m).name)-4)];
+for k=(k1+1):k2
+    prilist2(k+1-k1,:)=[ num2str(k,'%03.0f') ' ' prio(k).name repmat(' ',1,40-length(prio(k).name)-4)];
 end
