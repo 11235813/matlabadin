@@ -115,33 +115,33 @@ rcgd.comm{6}=['rotdb(i).cpsids=[' int2str(rcgd.print.cpsids') '];'];
 rcgd.comm{7}=['rotdb(i).cpsvals=[' num2str(rcgd.print.cpsvals') '];'];
 rcgd.comm{8}=['rotdb(i).tempvals(rotdb(i).cpsids)=rotdb(i).cpsvals;'];
 rcgd.comm{9}=['rotdb(i).cpspvals=reshape(rotdb(i).tempvals,' int2str(length(priolist)) ',' int2str(size(rcgd.coeffpvals,2)) ',3,3,3);'];
-rcgd.command=char({'%% Copy/Paste this code into rotation_model','clear rotdb',rcgd.comm{1},rcgd.comm{2},rcgd.comm{3},rcgd.comm{4},rcgd.comm{5},rcgd.comm{6},rcgd.comm{7},rcgd.comm{8},rcgd.comm{9}});
+rcgd.command=char({'%% Copy/Paste this code into rotation_model',['%' prio(iq).name],rcgd.comm{1},rcgd.comm{2},rcgd.comm{3},rcgd.comm{4},rcgd.comm{5},rcgd.comm{6},rcgd.comm{7},rcgd.comm{8},rcgd.comm{9}});
 rcgd.command
 save zzRCD_data rcgd
 
-
-%debugging
-%Check AS plot to see what effect GrCr has
-figure(1+3*iq);
-H=repmat(h,1,size(rcgd.allcoeffs,3));
-f=fittype('poly5');
-tempfit=rcgd.allpvals(7,:,1,3,3);
-c11=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
-tempfit=rcgd.allpvals(7,:,3,3,3);
-c12=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
-plot(H,squeeze(rcgd.allcoeffs(7,:,:,1,3,3)),'b.-',H,squeeze(rcgd.allcoeffs(7,:,:,3,3,3)),'r.-',h,c11(h),'ko-',h,c12(h),'ko-')
-
-%See what effect SD has
-figure(2+3*iq)
-tempfit=rcgd.allpvals(3,:,3,1,3);
-c21=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
-tempfit=rcgd.allpvals(3,:,3,3,3);
-c22=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
-plot(H,squeeze(rcgd.allcoeffs(3,:,:,3,1,3)),'b.-',H,squeeze(rcgd.allcoeffs(3,:,:,3,3,3)),'r.-',h,c21(h),'k-',h,c22(h),'ko-')
-
-%EG, won't work until support for mulitple queues is added
-figure(3+3*iq)
-tempfit=rcgd.allpvals(4,:,3,3,1);f=fittype('poly5');c3b=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
-plot(H,squeeze(rcgd.allcoeffs(4,:,:,3,3,1)),'b.-',H,squeeze(rcgd.allcoeffs(4,:,:,3,3,3)),'r.-',h,c3b(h),'k-')
+% 
+% %debugging
+% %Check AS plot to see what effect GrCr has
+% figure(1+3*iq);
+% H=repmat(h,1,size(rcgd.allcoeffs,3));
+% f=fittype('poly5');
+% tempfit=rcgd.allpvals(7,:,1,3,3);
+% c11=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
+% tempfit=rcgd.allpvals(7,:,3,3,3);
+% c12=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
+% plot(H,squeeze(rcgd.allcoeffs(7,:,:,1,3,3)),'b.-',H,squeeze(rcgd.allcoeffs(7,:,:,3,3,3)),'r.-',h,c11(h),'ko-',h,c12(h),'ko-')
+% 
+% %See what effect SD has
+% figure(2+3*iq)
+% tempfit=rcgd.allpvals(3,:,3,1,3);
+% c21=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
+% tempfit=rcgd.allpvals(3,:,3,3,3);
+% c22=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
+% plot(H,squeeze(rcgd.allcoeffs(3,:,:,3,1,3)),'b.-',H,squeeze(rcgd.allcoeffs(3,:,:,3,3,3)),'r.-',h,c21(h),'k-',h,c22(h),'ko-')
+% 
+% %EG, won't work until support for mulitple queues is added
+% figure(3+3*iq)
+% tempfit=rcgd.allpvals(4,:,3,3,1);f=fittype('poly5');c3b=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
+% plot(H,squeeze(rcgd.allcoeffs(4,:,:,3,3,1)),'b.-',H,squeeze(rcgd.allcoeffs(4,:,:,3,3,3)),'r.-',h,c3b(h),'k-')
 
 end
