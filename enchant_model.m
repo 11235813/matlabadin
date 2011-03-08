@@ -1,5 +1,4 @@
 %enchant_model handles dynamic enchants
-%% TODO: Fix row addresses
 
 %This module requires a rotation input.  If rotation_model hasn't been run,
 %do so now

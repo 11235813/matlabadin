@@ -94,41 +94,44 @@ cfg(c).helm=egs(1);
 cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
 cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
 cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
-cfg(c).veng=1;
-cfg(c).seal='Truth';
-cfg(c).talent=ddb.talentset{1}; %0/31/10 w/o HG
-cfg(c).tal='#1';
-cfg(c).sea='SoT';
-cfg(c).hitexp='2%/10';
 
-%hit-capped, SotR talents, SoT
+%low hit, W39/SoI
+cfg(c).seal='SoI';
+cfg(c).rot=3;
+%tsubs and psubs are substitutiosn for tables and plots
+cfg(c).tsubs={}; %format: ={{glyphname1,subsrot#},{gn2,sr#},...}
+% cfg(c).psubs={{'SoT',c+1}}; %format: ={{glyphname1,subscfg#},{gn2,sc#},...}
+cfg(c).psubs={};  %decided against using this
+cfg(c).rlabel='W39';
+cfg(c).veng=1;
+
+%low hit, 939/SoT
 c=c+1;
 cfg(c)=cfg(1);
+cfg(c).seal='SoT';
+cfg(c).rot=2;
+cfg(c).tsubs={{'HotR',5}}; %format: ={{glyphname1,subsrot#},{gn2,sr#},...}
+cfg(c).psubs={}; %format: ={{glyphname1,subscfg#},{gn2,sc#},...}
+cfg(c).rlabel='939';
+
+%hit-capped, 939/SoT
+c=c+1;
+cfg(c)=cfg(2);
 cfg(c).helm=egs(1);
 cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
 cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
 cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
-cfg(c).hitexp='8%/26';
 
-%low hit, WoG talents, SoI
+%low hit, W39/SoT
 c=c+1;
 cfg(c)=cfg(1);
-cfg(c).seal='Insight';
-cfg(c).talent=ddb.talentset{2}; %0/31/10 WoG build
-cfg(c).tal='#2';
-cfg(c).sea='SoI';
-cfg(c).hitexp='2%/10';
-
-%low hit, WoG talents, Truth
-c=c+1;
-cfg(c)=cfg(1);
-cfg(c).talent=ddb.talentset{2}; %0/31/10 WoG build
-cfg(c).tal='#2';
-cfg(c).hitexp='2%/10';
+cfg(c).rot=3;
+cfg(c).rlabel='W39';
+cfg(c).seal='SoT';
 
 %low-vengeance, low-hit, 939
 c=c+1;
-cfg(c)=cfg(1);
+cfg(c)=cfg(2);
 cfg(c).veng=0.3;
 
 %% sim 
@@ -136,7 +139,7 @@ tabledps=zeros(length(gtree),length(rot),2);
 for c=1:length(cfg);
     %set configuration variables
     exec=execution_model('seal',cfg(c).seal,'veng',cfg(c).veng);
-    talent=cfg(c).talent;
+%     talent=ddb.talentset{4}; %0/33/8 w/o HG/DG
     glyph=ddb.glyphset{6}; %No glyphs, this is to fix the exp value in pretty-print
     egs(1)=cfg(c).helm;
     talents;gear_stats;
@@ -152,164 +155,87 @@ for c=1:length(cfg);
         stat_model;
         ability_model;
         rotation_model;
+               
+        %store items in cfg for plots
+        cfg(c).hit=player.phhit;
+        cfg(c).exp=player.exp-mdf.glyphSoT;
+        cfg(c).plabel=[cfg(c).rlabel ', ' cfg(c).seal ', ' int2str(cfg(c).hit) '% hit, ' int2str(cfg(c).exp) ' exp'];
         
+        %store DPS
         totdps(m,:,c)=[rot.totdps];
         totdps0(m,:,c)=totdps(1,:,c);
         
-        tottps(m,:,c)=[rot.tottps];
-        tottps0(m,:,c)=tottps(1,:,c);
-
-
     end
 end
 dpspgall=totdps0-totdps;
-tpspgall=tottps0-tottps;
+
+
 
 %% generate table data structure
+for c=1:length(cfg)
+    dpspg(:,c)=dpspgall(:,cfg(c).rot,c);
 
-%relevant data indices for substitutions
-h=strmatch('HotR',name);
-w=strmatch('WoG',name);
-i=strmatch('SoI',name);
-s=strmatch('SotR',name);
-t=strmatch('SoT',name);
+    %handle substitutions
+    if ~isempty(cfg(c).tsubs)
+        for mm=1:size(cfg(c).tsubs,2)
+            subi=strmatch(cfg(c).tsubs{mm}(1),name);
+            subr=cfg(c).tsubs{mm}{2};
+            dpspg(subi,c)=dpspgall(subi,subr,c);
+        end
+    end
+    
+    tab.seal{c}=cfg(c).seal;
+    tab.hitexp{c}=[int2str(cfg(c).hit) '%/' int2str(cfg(c).exp)];
+    tab.veng{c}=[int2str(cfg(c).veng*100) '%'];
+    tab.rot{c}=cfg(c).rlabel;
+end
 
-%quick-reference for args: dpspg(glyph,column), dpspgall(glyph,rot,cfg)
-%column 1, low hit, 939
-icol=1;icfg=1;
-tab.tal{icol}=cfg(icfg).tal;
-tab.seal{icol}=cfg(icfg).sea;
-tab.hitexp{icol}=cfg(icfg).hitexp;
-tab.veng{icol}=[int2str(cfg(icfg).veng*100) '%'];
-tab.rot{icol}='939(W)';
-dpspg(:,icol)=dpspgall(:,1,icfg);
-dpspg(h,icol)=dpspgall(h,3,icfg); %s/SC9/SH9 for HotR glyph
-dpspg(w,icol)=dpspgall(w,7,icfg); %s/SC9/WC9 for WoG glyph
-dpspg(i,icol)=dpspgall(i,7,icfg); %s/SC9/W39 for WoG glyph
-tpspg(:,icol)=tpspgall(:,1,icfg);
-tpspg(h,icol)=tpspgall(h,3,icfg); %s/SC9/SH9 for HotR glyph
-tpspg(w,icol)=tpspgall(w,7,icfg); %s/SC9/WC9 for WoG glyph
-tpspg(i,icol)=tpspgall(i,7,icfg); %s/SC9/W39 for WoG glyph
-
-%column 2, hit-capped, 939
-icol=icol+1;icfg=2;
-tab.tal{icol}=cfg(icfg).tal;
-tab.seal{icol}=cfg(icfg).sea;
-tab.hitexp{icol}=cfg(icfg).hitexp;
-tab.veng{icol}=[int2str(cfg(icfg).veng*100) '%'];
-tab.rot{icol}='939(W)';
-dpspg(:,icol)=dpspgall(:,1,icfg);
-dpspg(h,icol)=dpspgall(h,3,icfg); %s/SC9/SH9 for HotR glyph, 
-dpspg(w,icol)=dpspgall(w,7,icfg); %s/SC9/WC9 for WoG glyph
-dpspg(i,icol)=dpspgall(i,7,icfg); %s/SC9/WC9 for WoG glyph
-tpspg(:,icol)=tpspgall(:,1,icfg);
-tpspg(h,icol)=tpspgall(h,3,icfg); %s/SC9/SH9 for HotR glyph, 
-tpspg(w,icol)=tpspgall(w,7,icfg); %s/SC9/WC9 for WoG glyph
-tpspg(i,icol)=tpspgall(i,7,icfg); %s/SC9/WC9 for WoG glyph
-
-%column 3, low hit, W39
-icol=icol+1;icfg=3;
-tab.tal{icol}=cfg(icfg).tal;
-tab.seal{icol}=cfg(icfg).sea;
-tab.hitexp{icol}=cfg(icfg).hitexp;
-tab.veng{icol}=[int2str(cfg(icfg).veng*100) '%'];
-tab.rot{icol}='W39(S)';
-dpspg(:,icol)=dpspgall(:,7,icfg);
-dpspg(h,icol)=dpspgall(h,8,icfg); %s/WC9/WH9 for HotR glyph
-dpspg(s,icol)=dpspgall(s,1,icfg); %s/WC9/SC9 for SotR glyph
-tpspg(:,icol)=tpspgall(:,7,icfg);
-tpspg(h,icol)=tpspgall(h,8,icfg); %s/WC9/WH9 for HotR glyph
-tpspg(s,icol)=tpspgall(s,1,icfg); %s/WC9/SC9 for SotR glyph
-
-%column 4, low hit, W39
-icol=icol+1;icfg=4;
-tab.tal{icol}=cfg(icfg).tal;
-tab.seal{icol}=cfg(icfg).sea;
-tab.hitexp{icol}=cfg(icfg).hitexp;
-tab.veng{icol}=[int2str(cfg(icfg).veng*100) '%'];
-tab.rot{icol}='W39(S)';
-dpspg(:,icol)=dpspgall(:,7,icfg);
-dpspg(h,icol)=dpspgall(h,8,icfg); %s/WC9/WH9 for HotR glyph
-dpspg(s,icol)=dpspgall(s,1,icfg); %s/WC9/SC9 for SotR glyph
-tpspg(:,icol)=tpspgall(:,7,icfg);
-tpspg(h,icol)=tpspgall(h,8,icfg); %s/WC9/WH9 for HotR glyph
-tpspg(s,icol)=tpspgall(s,1,icfg); %s/WC9/SC9 for SotR glyph
-
-%Column 5, low hit, IHSH9
-icol=icol+1;icfg=1;
-tab.tal{icol}=cfg(icfg).tal;
-tab.seal{icol}=cfg(icfg).sea;
-tab.hitexp{icol}=cfg(icfg).hitexp;
-tab.veng{icol}=[int2str(cfg(icfg).veng*100) '%'];
-tab.rot{icol}='IHSH9';
-dpspg(:,icol)=dpspgall(:,2,icfg); %IHSH9, no need to adjsut for HotR
-tpspg(:,icol)=tpspgall(:,2,icfg); %IHSH9, no need to adjsut for HotR
-
-%column 6, low veng, 939
-icol=icol+1;icfg=5;
-tab.tal{icol}=cfg(icfg).tal;
-tab.seal{icol}=cfg(icfg).sea;
-tab.hitexp{icol}=cfg(icfg).hitexp;
-tab.veng{icol}=[int2str(cfg(icfg).veng*100) '%'];
-tab.rot{icol}='939(W)';
-dpspg(:,icol)=dpspgall(:,1,icfg);
-dpspg(h,icol)=dpspgall(h,3,icfg); %s/SC9/SH9 for HotR glyph
-dpspg(w,icol)=dpspgall(w,7,icfg); %s/SC9/WC9 for WoG glyph
-tpspg(:,icol)=tpspgall(:,1,icfg);
-tpspg(h,icol)=tpspgall(h,3,icfg); %s/SC9/SH9 for HotR glyph
-tpspg(w,icol)=tpspgall(w,7,icfg); %s/SC9/WC9 for WoG glyph
 
 
 %% table output
 %TODO: pick up here
-spacer= repmat(' ',length(name)+5,3);
+spacer= repmat(' ',length(name)+4,3);
 
-tabledps=[spacer char({'talents','seal','rotation','hit/exp','Veng',char(name)})];
+tabledps=[spacer char({'seal','rotation','hit/exp','Veng',char(name)})];
 for icol=1:size(dpspg,2)
-	tabledps=[tabledps spacer char({tab.tal{icol},tab.seal{icol},tab.rot{icol},tab.hitexp{icol},tab.veng{icol},num2str(dpspg(:,icol),'%2.1f')})];
+	tabledps=[tabledps spacer char({['  ' tab.seal{icol}],['  ' tab.rot{icol}], ...
+        tab.hitexp{icol},[' ' tab.veng{icol}],num2str(dpspg(:,icol),'%2.1f')})];
 end
 tabledps
 
-tabletps=[spacer char({'talents','seal','rotation','hit/exp','Veng',char(name)})];
-for icol=1:size(dpspg,2)
-	tabletps=[tabletps spacer char({tab.tal{icol},tab.seal{icol},tab.rot{icol},tab.hitexp{icol},tab.veng{icol},num2str(tpspg(:,icol),'%2.1f')})];
-end
-tabletps
 
 
 %% plots
 
+dpspg_temp=dpspg;
+
+%subs
+for c=1:length(cfg)
+    %handle substitutions
+    if ~isempty(cfg(c).psubs)
+        for mm=1:size(cfg(c).psubs,2)
+            subi=strmatch(cfg(c).psubs{mm}(1),name);
+            subc=cfg(c).psubs{mm}{2};
+            dpspg_temp(subi,c)=dpspg_temp(subi,subc);
+        end
+    end
+end
+
 %sorted
-[temp indd]=sort(dpspg(:,1));
-icols=[1 3 5];
-dpspgplot=dpspg(indd,icols);
-
-[temp indt]=sort(tpspg(:,1));
-tpspgplot=tpspg(indt,icols);
-
-
+si=2; %939
+[temp indd]=sort(dpspg_temp(:,si));
+icols=[1 2 3 4];
+dpspgplot=dpspg_temp(indd,icols);
     
 N=size(dpspgplot,1);
-for ll=1:length(icols)
-legi{ll}=[tab.tal{icols(ll)} '-' tab.seal{icols(ll)} '-' tab.rot{icols(ll)}];
-end
-leg=char(legi);
 
 figure(41)
-bar20=barh(dpspgplot(2:N,:),'BarWidth',1,'BarLayout','grouped');
-set(bar20(2),'FaceColor',[0.749 0.749 0]);
-ylim([0.5 9.5])
+bar41=barh(dpspgplot(2:N,:),'BarWidth',1,'BarLayout','grouped');
+set(bar41(2),'FaceColor',[0.749 0.749 0]);
+set(bar41(3),'FaceColor',[0.5 0 0]);
+set(bar41(4),'FaceColor',[0.45 0.75 0.3]);
+ylim([length(find(sum(dpspgplot,2)==0)) N]-0.5)
 set(gca,'YTickLabel',name(indd(2:N)))
-legend(leg,'Location','Best')
+legend({cfg(icols).plabel},'Location','Best')
 xlabel('DPS')
-title('100% Veng, 2%/10 hit/exp, (talents)-(seal)-(rotation)')
-
-figure(42)
-bar20=barh(tpspgplot(2:N,:),'BarWidth',1,'BarLayout','grouped');
-set(bar20(2),'FaceColor',[0.749 0.749 0]);
-ylim([0.5 9.5])
-set(gca,'YTickLabel',name(indt(2:N)))
-legend(leg,'Location','Best')
-xlabel('TPS')
-title('100% Veng, 2%/10 hit/exp, (talents)-(seal)-(rotation)')
-    
+title('100% Veng, legend contains rotation/seal/hit/exp')
