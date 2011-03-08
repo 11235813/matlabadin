@@ -273,10 +273,13 @@ for m=1:N
 end
 
 
+%total time
+sequence.totaltime=double(m*dt);
 
 %determine weighting coefficients for each spell
-%Inq modifier array
+%Inq modifier arrays
 sequence.Inqmod=(1+0.3.*[priolist.holy]'*(sequence.Inq>0));
+sequence.Inqup=sum(sequence.Inq>0)./sequence.totaltime;
 %SotR crit handling array
 sequence.SotRmod=ones(size(sequence.Inqmod));
 tmp.SotR=(sequence.SD>0).*mdf.phcritm + (sequence.SD<=0).*mdf.phcrit;
@@ -286,7 +289,6 @@ for p=1:length(tmp.alabel);
     end;
 end
 sequence.eamatrix=sequence.amatrix.*sequence.hmatrix.*sequence.Inqmod.*sequence.SotRmod;
-sequence.totaltime=double(m*dt);
 
 sequence.numcasts=sum(sequence.amatrix,2);
 sequence.effcasts=sum(sequence.eamatrix,2);
