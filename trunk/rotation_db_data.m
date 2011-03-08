@@ -3,16 +3,18 @@
 %environment.
 
 h=[0.7:0.02:1]';
-N=250;
+N=2500;
 dt=1.5;
-M=2;
+M=10;
 %initialize for speed
 rdbdata.coeff=zeros(13,length(h),M);
 rdbdata.cps=zeros(13,length(h),M);
 rdbdata.inqup=zeros(1,length(h),M);
 tic
-wb=waitbar(0,'Calculating');tic;
-set(wb,'Position',get(wb,'Position')+[0 0 0 0])
+wb=waitbar(0,'Calculating');
+set(wb,'Position',get(wb,'Position')+[mon 0 0 0])
+tic;
+pause(0.01);
 for qq=1:length(h)
     mdf.mehit=h(qq);
     prio_model;
