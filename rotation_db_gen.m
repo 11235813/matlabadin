@@ -31,8 +31,10 @@ ability_model;
 QQ=[1 6 21 2 7 30 17];
 % QQ=[17];  %for testing
 
+%waitbar stuff
+mon=1600; %set to 1600 if using dual-monitor setup, 0 otherwise
 uuwb=waitbar(0,['Calculating queue #1/' int2str(length(QQ))]);tq=clock;
-set(uuwb,'Position',get(uuwb,'Position')+[0 160 0 0])
+set(uuwb,'Position',get(uuwb,'Position')+[mon 160 0 0])
 for iq=1:length(QQ);
     Q=QQ(iq);
     %% Sim
@@ -43,7 +45,7 @@ for iq=1:length(QQ);
     Ntot=length(Neg)*length(Nsd)*length(Ngc);
     tc=clock;
     uwb=waitbar(0,['Calculating config #1/' int2str(Ntot)]);tic;
-    set(uwb,'Position',get(uwb,'Position')+[0 80 0 0])
+    set(uwb,'Position',get(uwb,'Position')+[mon 80 0 0])
     for igc=1:length(Ngc)
         for isd=1:length(Nsd)
             for ieg=1:length(Neg)
