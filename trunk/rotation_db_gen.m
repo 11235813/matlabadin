@@ -26,9 +26,28 @@ talents;
 buff=buff_model;
 stat_model;
 ability_model;
+prio_model;
 
-%% Queue number
-QQ=[1 6 21 2 7 30 17];
+%% Queue numbers
+%generate these automatically so that changes to [PM] are transparent
+QQnames={'SotR>CS>J>AS'; ...
+         'SotR>CS>J>AS>Cons>HW'; ...
+         'WoG>CS>J>AS>Cons>HW'; ...
+         'SotR>HotR>J>AS'; ...
+         'SotR>HotR>J>AS>Cons>HW'; ...
+         'WoG>HotR>J>AS>Cons>HW'; ...
+         'HoW>SotR>CS>J>AS>Cons>HW'; ...
+         };
+QQ=zeros(1,length(QQnames));
+for ip=1:prio_st
+    QQ=QQ+strcmp(prio(ip).name,QQnames)'.*ip;
+end
+
+if find(QQ==0)
+    error('One or more queues defined in QQnames is not found in prio_model')
+end
+
+% QQ=[1 6 21 2 7 30 17];
 % QQ=[17];  %for testing
 
 %waitbar stuff
@@ -155,7 +174,7 @@ close(uuwb)
 
 %write the results to a text file for easy copy/pasting into rotation_db
 ftext=char({rdbg.command});
-fid=fopen('rotation_db_gen.txt','w');
+fid=fopen('rotation_db_gen.nv.txt','w');
 fprintf(fid,'%s \n', ['%Coeffs generated ' date ', N=' int2str(N) ', M=' int2str(M)]);
 for i=1:size(ftext,1)
     fprintf(fid,'%s \n',ftext(i,:));
@@ -175,6 +194,8 @@ figure(1)
 tmp.gc=3;
 tmp.sd=3;
 tmp.eg=3;
+rdbgen=rdbg(1); %choose rotation
+%plot stuff
 H=repmat(h,1,size(rdbgen.coeff,3));
 f=fittype('poly5');
 tempfit=rdbgen.coeffpvals(a,:,tmp.gc,tmp.sd,tmp.eg);

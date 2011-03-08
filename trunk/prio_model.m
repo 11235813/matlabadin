@@ -302,6 +302,9 @@ k=k+1;prio(k)=prio(1);
 prio(k).name='WoG>CS>J>AS>Cons>HW';
         
 k=k+1;prio(k)=prio(1);
+prio(k).name='WoG>HotR>J>AS>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
 prio(k).name='WoG>CS>AS>J>Cons>HW';
         
 % k=k+1;prio(k)=prio(1);
@@ -351,6 +354,7 @@ prio(k).name='SotR*>Inq>CS>HoW>J>AS>Cons>HW';
 
 
 k1=k;
+prio_st=k1;
 %end Single-Target queues
 
 %% AoE Queues
@@ -461,7 +465,7 @@ k=k+1;prio(k)=prio(1);
 prio(k).name='AS>Inq>HotR>Cons>HW>J';
 
 k2=k;
-
+prio_aoe=k2-k1;
 
 
 

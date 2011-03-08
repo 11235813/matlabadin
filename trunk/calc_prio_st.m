@@ -184,4 +184,4 @@ end
 % for c=1:3; coeffsum(:,:,c)=[rdata([3 18],c).coeff];end %939, W39
 
 %% save for later use (good for generic stuff, saves computation time)
-save prio_data cmat rdata
+save prio_data.nv.mat cmat rdata
