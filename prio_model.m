@@ -227,10 +227,10 @@ prio(k).name='SotR>CS>AS>J';
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>AS>CS>J';
 
-k=k+1;prio(k)=prio(1);
+% k=k+1;prio(k)=prio(1);
 % prio(k).name='SotR>CS>AS+>J>AS';
 
-k=k+1;prio(k)=prio(1);
+% k=k+1;prio(k)=prio(1);
 % prio(k).name='SotR>AS+>CS>J>AS';
 
 k=k+1;prio(k)=prio(1);
