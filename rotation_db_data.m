@@ -3,9 +3,9 @@
 %environment.
 
 h=[0.7:0.02:1]';
-N=2500;
+N=1000;
 dt=1.5;
-M=10;
+M=30;
 %initialize for speed
 rdbdata.coeff=zeros(13,length(h),M);
 rdbdata.cps=zeros(13,length(h),M);

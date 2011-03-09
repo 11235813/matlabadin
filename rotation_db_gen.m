@@ -12,6 +12,7 @@
 
 %% Setup Tasks
 clear;
+% matlabpool close
 gear_db;
 def_db;
 
@@ -54,6 +55,15 @@ end
 mon=1600; %set to 1600 if using dual-monitor setup, 0 otherwise
 uuwb=waitbar(0,['Calculating queue #1/' int2str(length(QQ))]);tq=clock;
 set(uuwb,'Position',get(uuwb,'Position')+[mon 160 0 0])
+
+%delare variables for parallel for loop
+rdbgen=struct('coeff',[],'cps',[],'inqup',[],'coeffpvals',[],'cpspvals',[],'inqpvals',[]);
+rdbdata=struct('coeff',[],'cps',[],'inqup',[]);
+rdbfit=struct('maxlength',[]);
+h=[];
+
+% matlabpool local 3
+
 for iq=1:length(QQ);
     Q=QQ(iq);
     %% Sim
