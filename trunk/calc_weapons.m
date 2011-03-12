@@ -24,7 +24,7 @@ weaplist1=[62457; %Ravening Slicer
            67602; %Elementium Gutslicer
            56459; %Mace of Transformed Bone (Heroic)
            56364; %Axe of the Eclipse (Heroic)
-           68739; %Darkheart Hacker
+           68740; %Darkheart Hacker
            56430; %Sun Strike (Heroic)
            65171; %Cookie''s Tenderizer (Heroic)
            63533; %Fang of Twilight

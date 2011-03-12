@@ -160,7 +160,7 @@ for i=1:length(rot)
     rot(i).patps=val.zeros;
     
     %If SoT, include Censure Damage
-    if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
+    if mdf.tseal
         rot(i).padps=rot(i).padps+dps.Censure.*rot(i).inqmod;
         rot(i).patps=rot(i).patps+tps.Censure.*rot(i).inqmod;
     end
@@ -183,4 +183,4 @@ for i=1:length(rot)
 end
 
 
-clear p q tmprot mmmm P i idx rhit
+clear i ii rhit

@@ -10,6 +10,7 @@ end
 if exist('cfg','var') && exist('c','var') && isfield(cfg(c),'rot')  %c always used as config index variable
     pseq=rot(cfg(c).rot);tmpemod.rot=1;
 else
+    warning('rotation defaulted to exec.pseq');
     pseq=rot(exec.pseq);tmpemod.rot=0;
 end
 
@@ -21,7 +22,7 @@ ww.pc=gear.swing./60;ww.pd=10;
 dtrack=[];dstore=gear.dodge;
 for dloop=0:600:600
     gear.dodge=gear.dodge+dloop;
-    stat_model;ability_model;rotation_model;
+    stat_model;
     dtrack=[dtrack player.dodge];
 end
 %average effectiveness
@@ -44,7 +45,7 @@ clear dtrack dstore
 ls.pc=gear.swing./60;ls.pd=12;
 %reference output
 stat_model;ability_model;rotation_model;
-ls.base=rot(exec.pseq).totdps;
+ls.base=pseq.totdps;
 %proc-based output
 astore=gear.ap;gear.ap=gear.ap+1000;
 stat_model;ability_model;rotation_model;
@@ -58,6 +59,11 @@ ls.q=(1-ls.pc).^(ls.pd.*pseq.cps(2,:)) ...                                      
     .*(1-ls.pc.*mdf.mehit).^(ls.pd./player.wswing);                               %AA
 ls.p=1-ls.q;
 ls.dps=(rot(exec.pseq).totdps-ls.base).*ls.p;
+if tmpemod.rot~=0
+    ls.dps=(rot(cfg(c).rot).totdps-ls.base).*ls.p;
+else
+    ls.dps=(rot(exec.pseq).totdps-ls.base).*ls.p;
+end
 %cleanup
 gear.ap=astore;
 clear astore
@@ -90,69 +96,69 @@ av.dps=av.dpp.*av.pps;
 %formulation
 hu.ppc=gear.swing./60;hu.spc=0.15;hu.pd=12;hu.sicd=45;
 %output
-htrack=zeros(1,4);hstore=gear.haste;
-for i=1:5
-    j=i;
-    gear.haste=hstore+450.*sum(htrack(j,2:3));
+htrack=zeros(4,val.length,6);hstore=gear.haste;
+for j=1:1:5
+    gear.haste=hstore+450.*sum(htrack(2:3,:,j));
     stat_model;ability_model;
-    hu.q(1)=(1-hu.ppc).^(hu.pd.*pseq.cps(2,:)) ...                                     %2SotR
+    hu.p=zeros(1,val.length);hu.q=hu.p;
+    hu.q(1,:)=(1-hu.ppc).^(hu.pd.*pseq.cps(2,:)) ...                                   %2SotR
         .*(1-hu.ppc).^(hu.pd.*pseq.cps(3,:)) ...                                       %SotR
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd.*pseq.cps(5,:)) ...                            %CS
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd.*pseq.cps(6,:)) ...                            %HotR
         .*(1-hu.ppc.*mdf.rahit).^(hu.pd.*pseq.cps(7,:)) ...                            %AS
         .*(1-mdf.rahit.*(1-(1-hu.ppc).^(1+(mdf.JotJ>1)))).^(hu.pd.*pseq.cps(11,:)) ... %J
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd./player.wswing);                               %AA
-    hu.p(1)=1-hu.q(1);
-    hu.q(2)=(1-hu.spc).^(hu.pd.*pseq.cps(4,:)) ...           %WoG
+    hu.p(1,:)=1-hu.q(1,:);
+    hu.q(2,:)=(1-hu.spc).^(hu.pd.*pseq.cps(4,:)) ...         %WoG
         .*(1-hu.spc.*mdf.sphit).^(hu.pd.*pseq.cps(10,:)) ... %HW
         .*(1-hu.spc).^(hu.pd./cens.NetTick);                 %Cens
-    hu.p(2)=1-hu.q(2);
-    hu.tm=zeros(4,4);
-    hu.tm(1,1)=hu.q(1).*hu.q(2);hu.tm(1,2)=hu.p(1).*hu.q(2);hu.tm(1,3)=hu.p(2).*hu.q(1);hu.tm(1,4)=hu.p(1).*hu.p(2);
-    hu.tm(2,2)=1;
-    hu.tm(3,3)=hu.q(1);hu.tm(3,4)=hu.p(1);
-    hu.tm(4,4)=1;
-    hu.dd=hu.tm^100;hu.upt=hu.dd(1,:);
-    hu.upt=(hu.upt.*hu.pd+[hu.q(1) hu.p(1) 0 0].*hu.sicd)./(hu.pd+hu.sicd);
-    htrack=[htrack;hu.upt];
-    gear.haste=hstore+900.*htrack(j,4);
+    hu.p(2,:)=1-hu.q(2,:);
+    hu.tm=zeros(4,4,val.length);hu.dd=hu.tm;hu.upt=zeros(4,val.length);
+    hu.tm(1,1,:)=hu.q(1,:).*hu.q(2,:);hu.tm(1,2,:)=hu.p(1,:);hu.tm(1,3,:)=hu.p(2,:).*hu.q(1,:);
+    hu.tm(2,1,:)=hu.q(1,:);hu.tm(2,2,:)=hu.p(1,:);
+    hu.tm(3,1,:)=hu.q(1,:);hu.tm(3,4,:)=hu.p(1,:);
+    hu.tm(4,1,:)=hu.q(1,:);hu.tm(4,4,:)=hu.p(1,:);
+    for k=1:val.length hu.dd(:,:,k)=hu.tm(:,:,k)^100;hu.upt(:,k)=hu.dd(1,:,k);end;
+    hu.upt=(hu.upt.*hu.pd+vertcat([hu.q(1,:);hu.p(1,:)],zeros(2,val.length)).*hu.sicd)./(hu.pd+hu.sicd);
+    htrack(:,:,j+1)=hu.upt;
+    gear.haste=hstore+900.*htrack(4,:,j);
     stat_model;ability_model;
-    hu.q(1)=(1-hu.ppc).^(hu.pd.*pseq.cps(2,:)) ...                                     %2SotR
+    hu.p=zeros(1,val.length);hu.q=hu.p;
+    hu.q(1,:)=(1-hu.ppc).^(hu.pd.*pseq.cps(2,:)) ...                                   %2SotR
         .*(1-hu.ppc).^(hu.pd.*pseq.cps(3,:)) ...                                       %SotR
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd.*pseq.cps(5,:)) ...                            %CS
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd.*pseq.cps(6,:)) ...                            %HotR
         .*(1-hu.ppc.*mdf.rahit).^(hu.pd.*pseq.cps(7,:)) ...                            %AS
         .*(1-mdf.rahit.*(1-(1-hu.ppc).^(1+(mdf.JotJ>1)))).^(hu.pd.*pseq.cps(11,:)) ... %J
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd./player.wswing);                               %AA
-    hu.p(1)=1-hu.q(1);
-    hu.q(2)=(1-hu.spc).^(hu.pd.*pseq.cps(4,:)) ...           %WoG
+    hu.p(1,:)=1-hu.q(1,:);
+    hu.q(2,:)=(1-hu.spc).^(hu.pd.*pseq.cps(4,:)) ...         %WoG
         .*(1-hu.spc.*mdf.sphit).^(hu.pd.*pseq.cps(10,:)) ... %HW
         .*(1-hu.spc).^(hu.pd./cens.NetTick);                 %Cens
-    hu.p(2)=1-hu.q(2);
-    hu.tm=zeros(4,4);
-    hu.tm(1,1)=hu.q(1).*hu.q(2);hu.tm(1,2)=hu.p(1).*hu.q(2);hu.tm(1,3)=hu.p(2).*hu.q(1);hu.tm(1,4)=hu.p(1).*hu.p(2);
-    hu.tm(2,2)=1;
-    hu.tm(3,3)=hu.q(1);hu.tm(3,4)=hu.p(1);
-    hu.tm(4,4)=1;
-    hu.dd=hu.tm^100;hu.upt=hu.dd(1,:);
-    hu.upt=(hu.upt.*hu.pd+[hu.q(1) hu.p(1) 0 0].*hu.sicd)./(hu.pd+hu.sicd);
-    htrack(j+1,:)=(hu.upt.*hu.pd+htrack(j+1,:).*hu.sicd)./(hu.pd+hu.sicd);
+    hu.p(2,:)=1-hu.q(2,:);
+    hu.tm=zeros(4,4,val.length);hu.dd=hu.tm;hu.upt=zeros(4,val.length);
+    hu.tm(1,1,:)=hu.q(1,:).*hu.q(2,:);hu.tm(1,2,:)=hu.p(1,:);hu.tm(1,3,:)=hu.p(2,:).*hu.q(1,:);
+    hu.tm(2,1,:)=hu.q(1,:);hu.tm(2,2,:)=hu.p(1,:);
+    hu.tm(3,1,:)=hu.q(1,:);hu.tm(3,4,:)=hu.p(1,:);
+    hu.tm(4,1,:)=hu.q(1,:);hu.tm(4,4,:)=hu.p(1,:);
+    for k=1:val.length hu.dd(:,:,k)=hu.tm(:,:,k)^100;hu.upt(:,k)=hu.dd(1,:,k);end;
+    hu.upt=(hu.upt.*hu.pd+vertcat([hu.q(1,:);hu.p(1,:)],zeros(2,val.length)).*hu.sicd)./(hu.pd+hu.sicd);
+    htrack(:,:,j+1)=(hu.upt.*hu.pd+htrack(:,:,j+1).*hu.sicd)./(hu.pd+hu.sicd);
 end
 hu.dps=[];
 for j=0:450:900
     gear.haste=hstore+j;
     stat_model;ability_model;rotation_model;
     if tmpemod.rot~=0
-        hu.dps=[hu.dps rot(cfg(c).rot).totdps];
+        hu.dps=[hu.dps;rot(cfg(c).rot).totdps];
     else
-        warning('rotation defaulted to exec.pseq')
-        hu.dps=[hu.dps rot(exec.pseq).totdps];
+        hu.dps=[hu.dps;rot(exec.pseq).totdps];
     end
 end
-hu.dps=hu.dps(1).*(htrack(6,1)-1)+hu.dps(2).*sum(htrack(6,2:3))+hu.dps(3).*htrack(6,4);
+hu.dps=hu.dps(1,:).*(htrack(1,:,6)-1)+hu.dps(2,:).*sum(htrack(2:3,:,6))+hu.dps(3,:).*htrack(4,:,6);
 %cleanup
 gear.haste=hstore;
-clear i j htrack hstore tmpemod
+clear i j k htrack hstore tmpemod
 
 
 %% Mending
@@ -173,5 +179,7 @@ mend.effsicd=ceil(mend.sicd.*mend.stps)./mend.stps;
 mend.effspc=1./(mend.stps.*(mend.effsicd+1./(mend.stps.*mend.spc)));
 %output
 mend.pps=mend.ptps.*mend.ppc+mdf.rahit.*pseq.cps(11,:).*mend.ppc.*(2-mend.ppc)+mend.stps.*mend.effspc;
-mend.hps=mend.hpp.*av.pps;
+mend.hps=mend.hpp.*mend.pps;
 mend.tps=mend.hps.*mdf.hthreat.*mdf.RF./exec.npccount;
+
+clear pseq
