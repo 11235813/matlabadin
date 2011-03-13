@@ -134,6 +134,11 @@ cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
 cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
 cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
 
+%repeat all three at 30% vengeance
+c=c+1;cfg(c)=cfg(1);cfg(c).veng=0.3;
+c=c+1;cfg(c)=cfg(2);cfg(c).veng=0.3;
+c=c+1;cfg(c)=cfg(3);cfg(c).veng=0.3;
+
 %% sim 
 tabledps=zeros(length(tree),length(rot),2);
 for c=1:length(cfg)
@@ -153,7 +158,6 @@ for c=1:length(cfg)
         gear_stats;
 
         %calculate final stats
-        exec.npccount=1; %to reset from AoE
         stat_model;
         ability_model;
         rotation_model;
