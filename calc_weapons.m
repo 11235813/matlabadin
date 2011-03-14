@@ -72,31 +72,46 @@ M1=length(weaplist1);M2=length(weaplist2);M3=length(weaplist3);
 %W39 rotation, low-hit set
 %set melee hit to 2%, expertise to 10, mastery to 390 (16.5 mastery);
 %do this by altering helm stats
-cfg(1).helm=egs(1);
-cfg(1).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
-cfg(1).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
-cfg(1).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
-cfg(1).rot=3;   %W39
-cfg(1).glyph=ddb.glyphset{2}; %WoG/SoI/HotR, AS/Cons
-cfg(1).talent=ddb.talentset{2}; %0/31/10 survivability
-cfg(1).talent=ddb.talentset{4}; %temp until rot_db updated
-cfg(1).label='W39/SoI build';
+c=1;
+cfg(c).helm=egs(1);
+cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
+cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
+cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
+cfg(c).rot=3;   %W39
+cfg(c).glyph=ddb.glyphset{2}; %WoG/SoI/HotR, AS/Cons
+cfg(c).talent=ddb.talentset{2}; %0/31/10 survivability
+cfg(c).talent=ddb.talentset{4}; %temp until rot_db updated
+cfg(c).seal='SoI';
+cfg(c).label='W39/SoI build';
+
+%W39 + SoI
+c=c+1;
+cfg(c)=cfg(c-1);
+cfg(c).rot=3;   %W39
+cfg(c).glyph=ddb.glyphset{2}; %WoG/SoI/HotR, AS/Cons
+cfg(c).talent=ddb.talentset{2}; %0/31/10 survivability
+cfg(c).talent=ddb.talentset{4}; %temp until rot_db updated
+cfg(c).seal='SoT';
+cfg(c).label='W39/SoT build';
 
 %939 rotation, low-hit set
-cfg(2).helm=cfg(1).helm;
-cfg(2).rot=2;
-cfg(2).glyph=ddb.glyphset{1}; %SoT/SotR/HotR, AS/Cons
-cfg(2).talent=ddb.talentset{1}; %0/31/10 no HG
-cfg(2).talent=ddb.talentset{4}; %temp until rot_db updated
-cfg(2).label='939/SoT build';
+c=c+1;
+cfg(c).helm=cfg(1).helm;
+cfg(c).rot=2;
+cfg(c).glyph=ddb.glyphset{1}; %SoT/SotR/HotR, AS/Cons
+cfg(c).talent=ddb.talentset{1}; %0/31/10 no HG
+cfg(c).talent=ddb.talentset{4}; %temp until rot_db updated
+cfg(c).seal='SoT';
+cfg(c).label='939/SoT build';
 
 %939 for 8% hit and exp soft-cap
-cfg(3)=cfg(2);
-cfg(3).helm=egs(1);
-cfg(3).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
-cfg(3).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
-cfg(3).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
-cfg(3).label='939/SoT build, hit/exp cap';
+c=c+1;
+cfg(c)=cfg(c-1);
+cfg(c).helm=egs(1);
+cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
+cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
+cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
+cfg(c).label='939/SoT build, hit/exp cap';
 
 for m=1:M
     %equip the appropriate weapon
@@ -108,11 +123,8 @@ for m=1:M
 
 
     for c=1:length(cfg)
-
-
-
-
         %calculate DPS below caps
+        exec=execution_model('seal',cfg(c).seal,'veng',1);
         egs(1)=cfg(c).helm;
         glyph=cfg(c).glyph;
         talent=cfg(c).talent;
@@ -123,7 +135,8 @@ for m=1:M
         rotation_model;
 
         wdps(m,c)=rot(cfg(c).rot).totdps;
-        wdps2(m,c)=rot(3).totdps; %for 9H9 / hammer check
+        whps(m,c)=rot(cfg(c).rot).tothps;
+%         wdps2(m,c)=rot(cfg(c).rot+3).totdps; %for 9H9 / hammer check
     end
 
 end
@@ -133,18 +146,21 @@ pinfo.labels=[pinfo.name repmat(' ',length(pinfo.ilvl),2) int2str(pinfo.ilvl')];
 
 %HotR table
 % dps=dps2;
-'HotR table'
-[pinfo.labels repmat(' ',length(wdps2),3) int2str(round(wdps2(:,2:3)))]
+% 'HotR table'
+% [pinfo.labels repmat(' ',length(wdps2),3) int2str(round(wdps2(:,2:3)))]
 
 
 % dps=dps1;
 'CS table'
-[pinfo.labels repmat(' ',length(wdps),3) int2str(round(wdps))]
+spacer3=repmat(' ',length(wdps),3);
+spacer2=repmat(' ',length(wdps),2);
+[pinfo.labels  spacer3 int2str(round(whps(:,1))) spacer2 int2str(round(wdps(:,1))) ...
+               spacer2 int2str(round(whps(:,2))) spacer2 int2str(round(wdps(:,2:size(wdps,2))))]
 
 y1=1:M1;y2=M1+1+[1:M2];y3=max(y2)+1+[1:M3];
 y=[y1 y2 y3];
 
-dps1p=[wdps(:,2) diff(wdps(:,2:3)')']./1000;
+dps1p=[wdps(:,3) diff(wdps(:,3:4)')']./1000;
 
 figure(70)
 % set(gcf,'Position',[2200 12 724 936])

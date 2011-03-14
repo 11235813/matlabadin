@@ -89,13 +89,13 @@ ddb.gearset(2)={tempegs};
 
 %% Talent Specs
 %0/32/9 spec for baseline calcs
-%http://www.wowhead.com/talent#sZGMhcRddkRucbG
+%http://www.wowhead.com/talent#sZGMhcRddRRucbu
 temptree.prot=[3 2 0 0; 2 3 0 0; 0 3 1 2; 2 1 2 0; 1 1 2 1; 0 2 3 0; 0 1 0 0];
 temptree.ret=[0 3 2 0; 0 3 0 1];
 ddb.talentset{1}=temptree;
 
 %0/32/9 WoG survivability spec
-%http://www.wowhead.com/talent#sZhrhcRkdRRucbG
+%http://www.wowhead.com/talent#sZhrhcRddRRucbu
 temptree.prot=[3 0 2 0; 2 3 0 0; 0 3 1 2; 2 1 2 0; 1 1 2 1; 0 2 3 0; 0 1 0 0];
 temptree.ret=[0 3 2 0; 0 3 0 2];
 ddb.talentset{2}=temptree;
