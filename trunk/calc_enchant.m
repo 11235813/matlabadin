@@ -6,7 +6,7 @@
 clear;
 gear_db;
 def_db;
-exec=execution_model('veng',0.6);
+exec=execution_model('veng',1);
 base=player_model('race','Belf','prof','');
 npc=npc_model(base);
 %invoke all buffs except food
@@ -15,8 +15,8 @@ egs=ddb.gearset{2};  %1=pre-raid , 2=raid
 %clear main hand enchant slot
 egs(35)=equip(1,'s');
 gear_stats;
-talent=ddb.talentset{4};  %0/33/8 w/o HG
-glyph=ddb.glyphset{1}; %Default, HotR/SoT/ShoR, Cons/AS
+talent=ddb.talentset{4};  %placeholder
+glyph=ddb.glyphset{1}; %placeholder
 talents;
 stat_model;
 
@@ -24,22 +24,31 @@ stat_model;
 %W39 rotation, low-hit set
 %set melee hit to 2%, expertise to 10, mastery to 390 (16.5 mastery);
 %do this by altering helm stats
-cfg(1).helm=egs(1);
-cfg(1).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
-cfg(1).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
-cfg(1).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
-cfg(1).rot=3;   %W39
+c=1;
+cfg(c).helm=egs(1);
+cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
+cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
+cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
+cfg(c).rot=3;   %W39
+cfg(c).glyph=ddb.glyphset{2}; %WoG/SoI/HotR, AS/Cons
+cfg(c).talent=ddb.talentset{4}; %0/33/8
+cfg(c).seal='SoI';
 
 %939 rotation, low-hit set
-cfg(2).helm=cfg(1).helm;
-cfg(2).rot=2;
+c=c+1;
+cfg(c)=cfg(1);
+cfg(c).rot=2; %9C9
+cfg(c).seal='SoT';
+cfg(c).glyph=ddb.glyphset{1}; %SoT/SotR/HotR, AS/Cons
+cfg(c).talent=ddb.talentset{4}; %0/33/8
 
 %repeat for 8% hit and exp soft-cap
-cfg(3).helm=egs(1);
-cfg(3).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
-cfg(3).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
-cfg(3).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
-cfg(3).rot=2;   %9C9
+c=c+1;
+cfg(c)=cfg(c-1);
+cfg(c).helm=egs(1);
+cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
+cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
+cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
 
 
 %% List of passive effects to calculate
@@ -70,6 +79,9 @@ for c=1:3
 %% Passive enchants and foods
     %set configuration variables
     egs(1)=cfg(c).helm;
+    exec=execution_model('seal',cfg(c).seal,'veng',1);
+    glyph=cfg(c).glyph;
+    talent=cfg(c).talent;
     
     %clear food buff
     buff=buff_model('mode',0,'food',0);
@@ -77,6 +89,7 @@ for c=1:3
     egs(35)=equip(1,'s');
 
     %record baseline dps
+    talents
     gear_stats
     stat_model
     ability_model
