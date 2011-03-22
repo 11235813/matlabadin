@@ -67,7 +67,7 @@ priolist(q).proctrig=[0]; %no procs
 priolist(q).prochit=[0]; 
 priolist(q).procno=[0];
 priolist(q).condition='hopo>=3';
-priolist(q).action='if (rand<mdf.EG && dur.EGicd<=0) dur.EGicd=15; else hopo=0; end;'; 
+priolist(q).action='if (icd.EG<=0 && rand<mdf.EG) icd.EG=15; else hopo=0; end;'; 
 
 q=5;
 %CS     
@@ -106,9 +106,8 @@ priolist(q).proctrig=[tmp.sealid];
 priolist(q).prochit=[mdf.rahit]; 
 priolist(q).procno=[strcmp(exec.seal,'Truth')];
 priolist(q).condition='1'; 
-priolist(q).action='0;';  %4.0.6;
-% priolist(q).action='if dur.GC>0 dur.GC=-dt/pi; if rand<mdf.rahit hopo=min([3 hopo+1]); end; end';  %4.1
-% priolist(q).action='if dur.GC>0 dur.GC=-dt/pi; hopo=min([3 hopo+1]); end';  %4.1 alternative
+% priolist(q).action='0;';  %4.0.6;
+priolist(q).action='if dur.GC>0 dur.GC=-dt/pi; if icd.GC<=0 icd.GC=5; hopo=min([3 hopo+1]); end; end';  %4.1, TODO: icd.GC=?
 
   
 q=8;
@@ -227,11 +226,14 @@ prio(k).name='SotR>CS>AS>J';
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>AS>CS>J';
 
-% k=k+1;prio(k)=prio(1);
-% prio(k).name='SotR>CS>AS+>J>AS';
+k=k+1;prio(k)=prio(1);
+prio(k).name='SotR>CS>AS+>J>AS';
 
-% k=k+1;prio(k)=prio(1);
-% prio(k).name='SotR>AS+>CS>J>AS';
+k=k+1;prio(k)=prio(1);
+prio(k).name='SotR>AS+>CS>J>AS';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SotR>AS++>CS>AS+>J>AS';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>CS>J>AS>HW';
@@ -255,6 +257,12 @@ k=k+1;prio(k)=prio(1);
 prio(k).name='CS+>AS>SotR>J>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
+prio(k).name='SotR>CS>AS+>J>AS>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SotR>AS+>CS>J>AS>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
 prio(k).name='SD>SotR>CS>J>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
@@ -273,25 +281,37 @@ prio(k).name='SotR2*>Inq>CS>AS>J>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR*>Inq>CS>J>AS>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SDSotR>Inq>CS>J>AS>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SDSotR>Inq>HotR>J>AS>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SDSotR>Inq>CS>AS+>J>AS>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SDSotR>Inq>AS+>CS>J>AS>Cons>HW';
 % 
 % k=k+1;prio(k)=prio(1);
 % prio(k).name='SotR*>Inq>HotR*>CS>J>AS>Cons>HW';
 
-k=k+1;prio(k)=prio(1);
-prio(k).name='SotR*>Inq>CS>J2>AS>Cons>HW';
+% k=k+1;prio(k)=prio(1);
+% prio(k).name='SotR*>Inq>CS>J2>AS>Cons>HW';
 
 % k=k+1;prio(k)=prio(1);
 % prio(k).name='SotR*>Inq>HotR>J2>AS>Cons>HW';
 
 
-k=k+1;prio(k)=prio(1);
-prio(k).name='SotR*>Inq>CS>AS>J>Cons>HW';
+% k=k+1;prio(k)=prio(1);
+% prio(k).name='SotR*>Inq>CS>AS>J>Cons>HW';
 
 % k=k+1;prio(k)=prio(1);
 % prio(k).name='SotR*>Inq>HotR>AS>J>Cons>HW';
 
-k=k+1;prio(k)=prio(1);
-prio(k).name='SotR*>Inq>SDSotR2>CS>J>AS>Cons>HW';
+% k=k+1;prio(k)=prio(1);
+% prio(k).name='SotR*>Inq>SDSotR2>CS>J>AS>Cons>HW';
 
 % k=k+1;prio(k)=prio(1);
 % prio(k).name='SDSotR*>Inq>HotR*>CS>J>AS>Cons>HW';
@@ -561,12 +581,19 @@ for m=1:k2
             %AS+ (only with Grand Crusader buff active)
             elseif sum(strcmp(snstr,'AS+'))
                 prio(m).cast(l)=tmp.AS;
-                prio(m).cond{l}='dur.GC>0';
+                prio(m).cond{l}='dur.GC>0 && icd.GC<=0';
+%                 prio(m).cond{l}='dur.GC>0'; %debugging only
+            
+            %AS+ (only with Grand Crusader buff active)
+            elseif sum(strcmp(snstr,'AS++'))
+                prio(m).cast(l)=tmp.AS;
+                prio(m).cond{l}='dur.GC>0 && icd.GC<=0 && ccd(tmp.CS)<=0';
+%                 prio(m).cond{l}='dur.GC>0 && ccd(tmp.CS)<=0'; %debugging only
                 
             %AS*+ (only with Inq & GC active)
-            elseif sum(strcmp(snstr,'AS*+'))
+            elseif sum(strcmp(snstr,'AS*+')) || sum(strcmp(snstr,'AS+*'))
                 prio(m).cast(l)=tmp.AS;
-                prio(m).cond{l}='dur.GC>0 && dur.Inq>0';
+                prio(m).cond{l}='dur.GC>0 && icd.GC<=0 && dur.Inq>0';
                             
             %HotR* (only with Inq active)
             elseif sum(strcmp(snstr,'HotR*'))
