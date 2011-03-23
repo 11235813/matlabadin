@@ -84,11 +84,8 @@ ccd=zeros(size(cd));
 %duration variable for buff-like effects
 dur.SD=0;
 dur.Inq=0;
+dur.EGicd=0;
 dur.GC=0;
-
-%icds
-icd.GC=0;
-icd.EG=0;
 
 %evaluate setup conditionals
 for m=1:length(pri.setup)
@@ -101,11 +98,8 @@ sequence.amatrix=zeros(length(priolist),L);
 sequence.hmatrix=ones(length(priolist),L);
 % sequence.ematrix=zeros(size(sequence.amatrix));
 sequence.castid=zeros(1,L);
-sequence.dur.SD=zeros(1,L);
-sequence.dur.Inq=zeros(1,L);
-sequence.dur.GC=zeros(1,L);
-sequence.icd.EG=zeros(1,L);
-sequence.icd.GC=zeros(1,L);
+sequence.SD=zeros(1,L);
+sequence.Inq=zeros(1,L);
 sequence.hopo=zeros(1,L);
 t=zeros(1,N);
 
@@ -143,9 +137,9 @@ for m=1:N
                 %recording what happens - in the end we'll want to know:
                 %   -what was cast 
                 %   -the timestamp of the cast 
-                %   -Status of buffs & ICDs (SD, Inq, GC, EG)
+                %   -Status of buffs (SD & Inq)
                 %   -any procs that should occur
-                %   -Hit/Miss for SotR (so that we can properly evaluate damage later)       
+                %   -Hit/Miss for SotR (so that we can properly evaluate damage later)                
                 %the sequence structure will track all of these
                 
                 %ability usage
@@ -208,14 +202,9 @@ for m=1:N
                 eval(char(priolist(aid).action));
                 
                 %SD/Inq duration (done here so that uptime % is correct)
-                fntemp=fieldnames(dur);
-                for fi=1:length(fntemp)
-                    sequence.dur.(char(fntemp(fi)))(qq)=dur.(char(fntemp(fi)));
-                end
-                fntemp=fieldnames(icd);
-                for fi=1:length(fntemp)
-                    sequence.icd.(char(fntemp(fi)))(qq)=icd.(char(fntemp(fi)));
-                end
+                sequence.SD(qq)=dur.SD;
+                sequence.Inq(qq)=dur.Inq;
+                sequence.GC(qq)=dur.GC;
                 
                 %special actions (performed last)
                 eval(char(pri.spaction(n)));
@@ -241,18 +230,12 @@ for m=1:N
 
        sequence.castid(qq)=0;
        sequence.casttime(qq)=t(m);
+       sequence.SD(qq)=dur.SD;
+       sequence.GC(qq)=dur.GC;
+       sequence.Inq(qq)=dur.Inq;
        sequence.hopo(qq)=hopo;
        sequence.label{qq}='Empty';
        sequence.hmatrix(:,qq)=1;
-       
-       fntemp=fieldnames(dur);
-       for fi=1:length(fntemp)
-           sequence.dur.(char(fntemp(fi)))(qq)=dur.(char(fntemp(fi)));
-       end
-       fntemp=fieldnames(icd);
-       for fi=1:length(fntemp)
-           sequence.icd.(char(fntemp(fi)))(qq)=icd.(char(fntemp(fi)));
-       end
        
        %necessary to make sure amatrix and pmatrix are the correct length
        %in some cases (partial empties)
@@ -267,15 +250,10 @@ for m=1:N
     gcd=gcd-dt;
     egcd=egcd-dt;
     
-    %reduce durations and icds, should be dynamic
-    fntemp=fieldnames(dur);
-    for fi=1:length(fntemp)
-        dur.(char(fntemp(fi)))=max([dur.(char(fntemp(fi)))-dt 0]);
-    end
-    fntemp=fieldnames(icd);
-    for fi=1:length(fntemp)
-        icd.(char(fntemp(fi)))=max([icd.(char(fntemp(fi)))-dt 0]);
-    end    
+    %reduce durations
+    dur.SD=max([dur.SD-dt 0]);
+    dur.Inq=max([dur.Inq-dt 0]);
+    dur.GC=max([dur.GC-dt 0]);
     
     
     %kludgy fix for numerical errors - 
@@ -285,30 +263,12 @@ for m=1:N
     %setting a threshold at 1e-10 seems to work for everything down to
     %dt=0.0001.  This is a patch-up job based on roundn() which is in the
     %mapping toolbox, and thus not necessarily available to Octave.
-    rfact=1e10;
-    ccd=round(ccd.*rfact)./rfact;
-    gcd=round(gcd.*rfact)./rfact;
-    egcd=round(egcd.*rfact)./rfact;
-%     %functionalized replacements
-%     ccd=ps_round(ccd);
-%     gcd=ps_round(gcd);
-%     egcd=ps_round(egcd);
-  
-    fntemp=fieldnames(dur);
-    for fi=1:length(fntemp)
-        dur.(char(fntemp(fi)))=round(dur.(char(fntemp(fi))).*rfact)./rfact;
-        dur.(char(fntemp(fi)))=max([dur.(char(fntemp(fi))) 0]);
-    end
-    fntemp=fieldnames(icd);
-    for fi=1:length(fntemp)
-        icd.(char(fntemp(fi)))=round(icd.(char(fntemp(fi))).*rfact)./rfact;
-        icd.(char(fntemp(fi)))=max([icd.(char(fntemp(fi))) 0]);
-    end
-%     %functionalized replacements
-%     dur=ps_structround(dur);
-%     icd=ps_structround(icd);
-    
-    
+    factor=1e10;
+    ccd=round(ccd.*factor)./factor;
+    dur.SD=round(dur.SD.*factor)./factor;dur.SD=max([dur.SD 0]);
+    dur.GC=round(dur.GC.*factor)./factor;dur.GC=max([dur.GC 0]);
+    gcd=round(gcd.*factor)./factor;
+    egcd=round(egcd.*factor)./factor;
     
 end
 
@@ -318,11 +278,11 @@ sequence.totaltime=double(m*dt);
 
 %determine weighting coefficients for each spell
 %Inq modifier arrays
-sequence.Inqmod=(1+0.3.*[priolist.holy]'*(sequence.dur.Inq>0));
-sequence.Inqup=sum(sequence.dur.Inq>0)./sequence.totaltime;
+sequence.Inqmod=(1+0.3.*[priolist.holy]'*(sequence.Inq>0));
+sequence.Inqup=sum(sequence.Inq>0)./sequence.totaltime;
 %SotR crit handling array
 sequence.SotRmod=ones(size(sequence.Inqmod));
-tmp.SotR=(sequence.dur.SD>0).*mdf.phcritm + (sequence.dur.SD<=0).*mdf.phcrit;
+tmp.SotR=(sequence.SD>0).*mdf.phcritm + (sequence.SD<=0).*mdf.phcrit;
 for p=1:length(tmp.alabel); 
     if strfind(tmp.alabel{p},'SotR'); 
         sequence.SotRmod(p,:)=tmp.SotR;
@@ -346,56 +306,11 @@ sequence.emptypct=100.*sequence.emptytime./sequence.totaltime;
 %informational fields
 sequence.smiss=sum(sum(sequence.hmatrix==0,2));
 sequence.ascast=sequence.numcasts(tmp.AS);
-sequence.gcproc=sum(diff(sequence.dur.GC)>1)+int32(sequence.dur.GC(1)~=0);
+sequence.gcproc=sum(diff(sequence.GC)>1)+int32(sequence.GC(1)~=0);
 
 
 %all damage calculations now taken care of in postprocessing.
 
 sequence.name=pri.name;
 sequence.pri=pri;
-
-%% Functions
-%I intended to use these for readability, replacing several of the
-%multi-line for loop calls that perform the rounding functions on structure
-%fields.  However, while testing I found that there's a significant
-%efficiency cost in doing so, up to 10% slower runtime per replacement,
-%despite running exactly the same code.  MATLAB's nested function routines
-%must have some serious overhead if we get a 5% slowdown by replacing
-%x=round(x.*rfact)./rfact with x=ps_round(x).
-
-    %rounding fix
-    function y=ps_round(x)
-        rfact=1e10;
-        y=round(x.*rfact)./rfact;
-    end
-
-    function y=ps_max(x)
-        y=max([x 0]);
-    end
-
-    %compact version of roundign fix for dur/icd structures
-    function z=ps_structround(w)
-        fntemp=fieldnames(w);
-        for fi=1:length(fntemp)
-            z.(char(fntemp(fi)))=ps_round(w.(char(fntemp(fi))));
-            z.(char(fntemp(fi)))=ps_max(w.(char(fntemp(fi))));
-        end
-    end
-
-    %compact version of subtraction for dur/icd structures
-    function z=ps_structsub(w,dt)
-        fntemp=fieldnames(w);
-        for fi=1:length(fntemp)
-            z.(char(fntemp(fi)))=ps_max(w.(char(fntemp(fi)))-dt);
-        end
-    end
-
-    %compact version of structure copying for dur/icd 
-    function z=ps_structcopy(w,seqw,qq)
-        fntemp=fieldnames(w);
-        z=seqw;
-        for fi=1:length(fntemp)
-            z.(char(fntemp(fi)))(qq)=w.(char(fntemp(fi)));
-        end
-    end
 end
