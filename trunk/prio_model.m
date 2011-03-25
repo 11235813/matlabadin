@@ -59,7 +59,7 @@ priolist(q).action='0;';
 q=4;
 %WoG
 priolist(q).alabel='WoG';       
-priolist(q).cd=0;
+priolist(q).cd=20;
 priolist(q).gcd=1.5;
 priolist(q).holy=0;
 priolist(q).mana=0; %pct base mana
@@ -80,7 +80,7 @@ priolist(q).proctrig=[tmp.sealid]; %seals only
 priolist(q).prochit=[mdf.mehit]; 
 priolist(q).procno=[1];
 priolist(q).condition='ccd(6)<=0'; %shared with HotR
-priolist(q).action='if rand<mdf.mehit hopo=min([3 hopo+1]);if rand<mdf.GrCr ccd(tmp.AS)=0; dur.GC=6; end;end;';  %4.1 
+priolist(q).action='if rand<mdf.mehit hopo=min([3 hopo+1]);if rand<mdf.GrCr ccd(idx.AS)=0; dur.GC=6; end;end;';  %4.1 
  
 q=6;
 %HotR   
@@ -93,7 +93,7 @@ priolist(q).proctrig=[tmp.sealid;tmp.novaid]; %SoT,HammerNova
 priolist(q).prochit=[mdf.mehit;1]; %HaNova misses accounted for in [AM]
 priolist(q).procno=[strcmp(exec.seal,'Truth');1];
 priolist(q).condition='ccd(5)<=0'; %shared with CS
-priolist(q).action='if rand<mdf.mehit hopo=min([3 hopo+1]);if rand<mdf.GrCr ccd(tmp.AS)=0; dur.GC=6; end;end;'; %4.1
+priolist(q).action='if rand<mdf.mehit hopo=min([3 hopo+1]);if rand<mdf.GrCr ccd(idx.AS)=0; dur.GC=6; end;end;'; %4.1
  
 q=7;
 %AS   
@@ -107,9 +107,8 @@ priolist(q).prochit=[mdf.rahit];
 priolist(q).procno=[strcmp(exec.seal,'Truth')];
 priolist(q).condition='1'; 
 % priolist(q).action='0;';  %4.0.6;
-priolist(q).action='if dur.GC>0 dur.GC=-dt/pi; if icd.GC<=0 icd.GC=5; hopo=min([3 hopo+1]); end; end';  %4.1, TODO: icd.GC=?
+priolist(q).action='if rand<mdf.SacDut*mdf.rahit dur.SD=10; end; if dur.GC>0 dur.GC=-dt/pi; hopo=min([3 hopo+1]); end';  %4.1 
 
-  
 q=8;
 %Cons  
 priolist(q).alabel='Cons';       
@@ -162,7 +161,7 @@ priolist(q).procno=[(strcmp(exec.seal,'Truth').*(1+mdf.jseals)     ... %J+JotJ
                     +strcmp(exec.seal,'Righteousness').*mdf.jseals ... %JotJ only
                     +strcmp(exec.seal,'Insight'))];                    %J only
 priolist(q).condition='1'; 
-priolist(q).action='if rand<mdf.SacDut*mdf.rahit dur.SD=15; end;'; 
+priolist(q).action='if rand<mdf.SacDut*mdf.rahit dur.SD=10; end;'; %4.1
 
 q=12;
 %HammerNova
@@ -200,23 +199,20 @@ clear prio
 %priolist to get all of the generic stuff, but we can overwrite specific
 %things if we decide we want to.
 
+%% Standard Queues
 k=1;
 prio(k).name='SotR>CS>J>AS';
           
 %setup contains commands to be evaluated at the beginning of the
 %simulation.  For example, setting ccd.AS=13.5 would simulate pulling with
 %AS, making it unavailable early on in the queue.
-prio(k).setup={'ccd(tmp.AS)=13.5;'};
+prio(k).setup={'ccd(idx.AS)=13.5;'};
             
 %spaction is the structure that contains any special actions that should
 %occur for specific conditions.  It is run after all of the default actions
 %defined in prio.action
 prio(k).spaction={'';''; ''; ''; ''; ''; ''; '';'';'';};
 
-
-
-%% Single-Target Queues
-%standard
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>HotR>J>AS';
 
@@ -230,10 +226,22 @@ k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>CS>AS+>J>AS';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='SotR>AS+>CS>J>AS';
+prio(k).name='SotR>AS+>CS>AS>J';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='SotR>AS++>CS>AS+>J>AS';
+prio(k).name='SotR>AS++>CS>AS>J';
+
+% k=k+1;prio(k)=prio(1);
+% prio(k).name='SotR>CS>sdAS>AS+>J>AS';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='sdAS>sdJ>SotR>CS>AS>J';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='sdAS>SotR>CS>AS>J';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='sdJ>SotR>CS>AS>J';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>CS>J>AS>HW';
@@ -263,12 +271,12 @@ k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>AS+>CS>J>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='SD>SotR>CS>J>AS>Cons>HW';
+prio(k).name='sdJ>SotR>CS>J>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>CS>J>AS>Cons>SotR2>HW';
 
-%Inq rotations
+%% Inq rotations
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='Inq>CS>J>AS>Cons>HW';
@@ -316,30 +324,49 @@ prio(k).name='SDSotR>Inq>AS+>CS>J>AS>Cons>HW';
 % k=k+1;prio(k)=prio(1);
 % prio(k).name='SDSotR*>Inq>HotR*>CS>J>AS>Cons>HW';
 
-%WoG
+kinq=k;
+
+%% WoG
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='WoG>CS>J>AS>Cons>HW';
+prio(k).name='WoG>SotR>CS>J>AS>Cons>HW';
         
 k=k+1;prio(k)=prio(1);
-prio(k).name='WoG>HotR>J>AS>Cons>HW';
+prio(k).name='WoG>SotR>HotR>J>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='WoG>CS>AS>J>Cons>HW';
-        
-% k=k+1;prio(k)=prio(1);
-% prio(k).name='WoG>CS>AS>Cons>J>HW';
+prio(k).name='WoG>SotR>CS>AS>J>Cons>HW';
         
 k=k+1;prio(k)=prio(1);
-prio(k).name='WoG>AS>CS>J>Cons>HW';
+prio(k).name='WoG>SotR>AS>CS>J>Cons>HW';
         
 k=k+1;prio(k)=prio(1);
-prio(k).name='SDSotR>WoG>CS>J>AS>Cons>HW';
+prio(k).name='WoG>SotR>CS>AS+>J>AS>Cons>HW';
+        
+k=k+1;prio(k)=prio(1);
+prio(k).name='WoG>SotR>AS+>CS>J>AS>Cons>HW';
+        
+k=k+1;prio(k)=prio(1);
+prio(k).name='WoG>SotR>AS++>CS>J>AS>Cons>HW';
+        
+k=k+1;prio(k)=prio(1);
+prio(k).name='WoG>Inq>CS>AS+>J>AS>Cons>HW';
+        
+k=k+1;prio(k)=prio(1);
+prio(k).name='WoG>SotR*>Inq>CS>AS+>J>AS>Cons>HW';
+        
+k=k+1;prio(k)=prio(1);
+prio(k).name='SDSotR>WoG>SotR>CS>J>AS>Cons>HW';
 
-% k=k+1;prio(k)=prio(1);
-% prio(k).name='SDSotR>WoG>CS>AS>J>Cons>HW';
+k=k+1;prio(k)=prio(1);
+prio(k).name='WoG>Inq>CS>J>AS>Cons>HW';
+        
+k=k+1;prio(k)=prio(1);
+prio(k).name='WoG>Inq>HotR>J>AS>Cons>HW';
 
-%HoW (sub-20%)
+kwog=k;
+
+%% HoW (sub-20%)
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>CS>J>AS>HoW>Cons>HW';
@@ -496,8 +523,8 @@ prio_aoe=k2-k1;
 %where we have both SotR3 and SotR2.
 
 for m=1:length(priolist)
-    tmp.alabel{m}=priolist(m).alabel;
-    eval(['tmp.' priolist(m).alabel '=' int2str(m) ';']);
+    idx.alabel{m}=priolist(m).alabel;
+    eval(['idx.' priolist(m).alabel '=' int2str(m) ';']);
 end
 
 %Automatic generation of "cast" and "condition" fields from "name" field
@@ -513,7 +540,7 @@ for m=1:k2
         
         %check snstr against the strings in the default spell list.  Should
         %return the id of the spell if it's found, 0 otherwise
-        listid=sum(strcmp(snstr,tmp.alabel).*(1:length(tmp.alabel)));
+        listid=sum(strcmp(snstr,idx.alabel).*(1:length(idx.alabel)));
         
         %store the id of the spell in prio.cast
         prio(m).cast(l)=listid;
@@ -530,85 +557,90 @@ for m=1:k2
             
             %Judgement
             if sum(strcmp(snstr,'J2'))
-                prio(m).cast(l)=tmp.J; 
+                prio(m).cast(l)=idx.J; 
                 prio(m).cond{l}='hopo>1';
 
             %SD fishing
-            elseif sum(strcmp(snstr,'SD'))
-                prio(m).cast(l)=tmp.J;
+            elseif sum(strcmp(snstr,'sdJ'))
+                prio(m).cast(l)=idx.J;
                 prio(m).cond{l}='hopo>=3 && dur.SD<=0';
-
+                
             %SotR* (3 hopo, only with Inq active)
             elseif sum(strcmp(snstr,{'SotR*'}))
-                prio(m).cast(l)=tmp.SotR; %ShoR
-                prio(m).cond{l}=[priolist(tmp.SotR).condition ' && dur.Inq>0'];
+                prio(m).cast(l)=idx.SotR; %ShoR
+                prio(m).cond{l}=[priolist(idx.SotR).condition ' && dur.Inq>0'];
                 
             %SotR2* (2 hopo, only with Inq active)
             elseif sum(strcmp(snstr,'SotR2*'))
-                prio(m).cast(l)=tmp.SotR2; 
+                prio(m).cast(l)=idx.SotR2; 
                 prio(m).cond{l}='hopo>=2 && dur.Inq>0';
                 
             %SDSotR (3 hopo, only with SD active)
             elseif sum(strcmp(snstr,'SDSotR'))
-                prio(m).cast(l)=tmp.SotR; %2ShoR
+                prio(m).cast(l)=idx.SotR; %2ShoR
                 prio(m).cond{l}='hopo>=3 && dur.SD>0';
                                                 
             %SDSotR* (3 hopo, only with SD and Inq active)
             elseif sum(strcmp(snstr,'SDSotR*'))
-                prio(m).cast(l)=tmp.SotR; %2ShoR
+                prio(m).cast(l)=idx.SotR; %2ShoR
                 prio(m).cond{l}='hopo>=3 && dur.SD>0 && dur.Inq>0';
                 
             %SDSotR2 (2 hopo, only with SD active)
             elseif sum(strcmp(snstr,'SDSotR2'))
-                prio(m).cast(l)=tmp.SotR2; %2ShoR
+                prio(m).cast(l)=idx.SotR2; %2ShoR
                 prio(m).cond{l}='hopo>=2 && dur.SD>0';
                 
             %Inq*  (force refresh even if already active)
             elseif sum(strcmp(snstr,'Inq*'))
-                prio(m).cast(l)=tmp.Inq; %Inq
+                prio(m).cast(l)=idx.Inq; %Inq
                 prio(m).cond{l}='hopo>=3';
                 
             %Inq1*  (force refresh at any HP)
             elseif sum(strcmp(snstr,'Inq1*'))
-                prio(m).cast(l)=tmp.Inq; %Inq
+                prio(m).cast(l)=idx.Inq; %Inq
                 prio(m).cond{l}='hopo>=1';
                 
             %AS* (only with Inq active)
             elseif sum(strcmp(snstr,'AS*'))
-                prio(m).cast(l)=tmp.AS; %AS
+                prio(m).cast(l)=idx.AS; %AS
                 prio(m).cond{l}='dur.Inq>0';
             
             %AS+ (only with Grand Crusader buff active)
             elseif sum(strcmp(snstr,'AS+'))
-                prio(m).cast(l)=tmp.AS;
+                prio(m).cast(l)=idx.AS;
                 prio(m).cond{l}='dur.GC>0 && icd.GC<=0';
 %                 prio(m).cond{l}='dur.GC>0'; %debugging only
             
-            %AS+ (only with Grand Crusader buff active)
+            %AS+ (only with Grand Crusader buff active and CS available)
             elseif sum(strcmp(snstr,'AS++'))
-                prio(m).cast(l)=tmp.AS;
-                prio(m).cond{l}='dur.GC>0 && icd.GC<=0 && ccd(tmp.CS)<=0';
-%                 prio(m).cond{l}='dur.GC>0 && ccd(tmp.CS)<=0'; %debugging only
+                prio(m).cast(l)=idx.AS;
+                prio(m).cond{l}='dur.GC>0 && icd.GC<=0 && ccd(idx.CS)<=0';
+%                 prio(m).cond{l}='dur.GC>0 && ccd(idx.CS)<=0'; %debugging only
                 
             %AS*+ (only with Inq & GC active)
             elseif sum(strcmp(snstr,'AS*+')) || sum(strcmp(snstr,'AS+*'))
-                prio(m).cast(l)=tmp.AS;
+                prio(m).cast(l)=idx.AS;
                 prio(m).cond{l}='dur.GC>0 && icd.GC<=0 && dur.Inq>0';
+                
+            %SD fishing
+            elseif sum(strcmp(snstr,'sdAS'))
+                prio(m).cast(l)=idx.AS; 
+                prio(m).cond{l}='hopo>=3 && dur.SD<=0';
                             
             %HotR* (only with Inq active)
             elseif sum(strcmp(snstr,'HotR*'))
-                prio(m).cast(l)=tmp.HotR; %HotR
+                prio(m).cast(l)=idx.HotR; %HotR
                 prio(m).cond{l}='dur.Inq>0';
                 
             %HoW* (only with Inq active)
             elseif sum(strcmp(snstr,'HoW*'))
-                prio(m).cast(l)=tmp.HoW; %HoW
+                prio(m).cast(l)=idx.HoW; %HoW
                 prio(m).cond{l}='dur.Inq>0';
                 
             %CS+ (only when <3 HoPo)
             elseif sum(strcmp(snstr,'CS+'))
-                prio(m).cast(l)=tmp.CS; %CS
-                prio(m).cond{l}=[priolist(tmp.CS).condition ' && hopo<3'];
+                prio(m).cast(l)=idx.CS; %CS
+                prio(m).cond{l}=[priolist(idx.CS).condition ' && hopo<3'];
             end
         end
 

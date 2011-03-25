@@ -35,13 +35,13 @@ end
 
 %temp array for identifiers and labels
 for m=1:length(priolist)
-    tmp.alabel{m}=priolist(m).alabel;
-    eval(['tmp.' priolist(m).alabel '=' int2str(m) ';']);
+    idx.alabel{m}=priolist(m).alabel;
+    eval(['idx.' priolist(m).alabel '=' int2str(m) ';']);
 end
 
 
 %populate all entries with empty arrays
-N=[];dt=[];hopo=[];
+N=[];dt=[];hopo=[];gcdf=[];
 %start filling entries with inputs
 if nargin>1
     for i=1:2:length(varargin)
@@ -54,6 +54,8 @@ if nargin>1
                 N=value;
             case {'hopo', 'HP'}
                 hopo=value;
+            case {'gcd','gcdfactor'}
+                gcdf=value;
         end
     end
 end
@@ -62,8 +64,9 @@ end
 if isempty(dt)==1 dt=0.5; end;  %work in timesteps of 0.5 second for now, can adjust this later
 if isempty(N)==1 N=300; end;  %number of timesteps to evaluate
 if isempty(hopo)==1 hopo=0; end;
+if isempty(gcdf)==1 gcdf=1; end;
 
-M=floor(N.*1.5./dt);
+M=floor(N.*1.5.*gcdf./dt);
 %maintenance, in case we're running this several times
 clear t sequence
 
@@ -96,7 +99,7 @@ for m=1:length(pri.setup)
 end
 
 %preallocate arrays for speed
-L=round(N.*dt./1.5);
+L=round(N.*dt./1.5./gcdf);
 sequence.amatrix=zeros(length(priolist),L);
 sequence.hmatrix=ones(length(priolist),L);
 % sequence.ematrix=zeros(size(sequence.amatrix));
@@ -221,7 +224,7 @@ for m=1:N
                 eval(char(pri.spaction(n)));
 
                 %reset gcd
-                gcd=priolist(aid).gcd;
+                gcd=priolist(aid).gcd.*gcdf;
 
                 %increment counter
                 qq=qq+1;
@@ -259,7 +262,7 @@ for m=1:N
        sequence.amatrix(:,qq)=0;
        
        qq=qq+1;
-       egcd=1.5; 
+       egcd=1.5.*gcdf; 
     end
     
     %reduce cooldowns 
@@ -316,41 +319,65 @@ end
 %total time
 sequence.totaltime=double(m*dt);
 
-%determine weighting coefficients for each spell
+%determine weighting coefficients for each spell, multi-step process
+%
 %Inq modifier arrays
 sequence.Inqmod=(1+0.3.*[priolist.holy]'*(sequence.dur.Inq>0));
 sequence.Inqup=sum(sequence.dur.Inq>0)./sequence.totaltime;
-%SotR crit handling array
-sequence.SotRmod=ones(size(sequence.Inqmod));
+%
+%SD crit handling array
+sequence.SDmod=ones(size(sequence.Inqmod));
 tmp.SotR=(sequence.dur.SD>0).*mdf.phcritm + (sequence.dur.SD<=0).*mdf.phcrit;
-for p=1:length(tmp.alabel); 
-    if strfind(tmp.alabel{p},'SotR'); 
-        sequence.SotRmod(p,:)=tmp.SotR;
+for p=1:length(idx.alabel); 
+    if strfind(idx.alabel{p},'SotR'); 
+        sequence.SDmod(p,:)=tmp.SotR;
     end;
 end
-sequence.eamatrix=sequence.amatrix.*sequence.hmatrix.*sequence.Inqmod.*sequence.SotRmod;
-
+%
+%construct effective ability matrix from all of the above
+sequence.eamatrix=sequence.amatrix.*sequence.hmatrix.*sequence.Inqmod.*sequence.SDmod;
+%
+%total up number of casts and number of effective casts
 sequence.numcasts=sum(sequence.amatrix,2);
 sequence.effcasts=sum(sequence.eamatrix,2);
+%
+%use effective casts to generate weights
+sequence.coeff=sequence.effcasts./sequence.totaltime;
+
+%informational fields
+
+%casts per second and successful casts per second
 sequence.cps=sequence.numcasts./sequence.totaltime;
 sequence.scps=sum(sequence.amatrix.*sequence.hmatrix,2)./sequence.totaltime;
+
+%mana stuff
 sequence.mpc=[priolist.mana]';
 sequence.mps=sum(sequence.cps.*sequence.mpc);
 
-sequence.coeff=sequence.effcasts./sequence.totaltime;
+%empties and total empty time
 sequence.empties=sum(sequence.castid==0);
-temp=find(sequence.castid(1:length(sequence.castid)-1)==0); %all but last one
-sequence.emptytime=sum(sequence.casttime(temp+1)-sequence.casttime(temp));
+tmp.empt=find(sequence.castid(1:length(sequence.castid)-1)==0); %all but last one
+sequence.emptytime=sum(sequence.casttime(tmp.empt+1)-sequence.casttime(tmp.empt));
 sequence.emptypct=100.*sequence.emptytime./sequence.totaltime;
 
-%informational fields
+%sotr misses, as casts, gc procs
 sequence.smiss=sum(sum(sequence.hmatrix==0,2));
-sequence.ascast=sequence.numcasts(tmp.AS);
+sequence.ascast=sequence.numcasts(idx.AS);
 sequence.gcproc=sum(diff(sequence.dur.GC)>1)+int32(sequence.dur.GC(1)~=0);
+
+%mean time between finishers
+tmp.dhopo=diff(sequence.hopo==3);
+tmp.i1=find(tmp.dhopo>0);
+tmp.i2=find(tmp.dhopo<0);
+sequence.f2fgcd=mean(1+tmp.i1-[0 tmp.i2(1:length(tmp.i1)-1)]);
+sequence.f2ftime=mean(1.5.*gcdf+sequence.casttime(1+tmp.i1)-sequence.casttime([1 1+tmp.i2(1:length(tmp.i1)-1)]));
+sequence.sf2sfgcd=mean(tmp.i1-[0 tmp.i1(1:length(tmp.i1)-1)]);
+sequence.sf2sftime=mean(sequence.casttime(1+tmp.i1)-sequence.casttime([1 1+tmp.i1(1:length(tmp.i1)-1)]));
 
 
 %all damage calculations now taken care of in postprocessing.
 
+%storage of queue name and details
 sequence.name=pri.name;
 sequence.pri=pri;
 
@@ -363,39 +390,39 @@ sequence.pri=pri;
 %must have some serious overhead if we get a 5% slowdown by replacing
 %x=round(x.*rfact)./rfact with x=ps_round(x).
 
-    %rounding fix
-    function y=ps_round(x)
-        rfact=1e10;
-        y=round(x.*rfact)./rfact;
-    end
-
-    function y=ps_max(x)
-        y=max([x 0]);
-    end
-
-    %compact version of roundign fix for dur/icd structures
-    function z=ps_structround(w)
-        fntemp=fieldnames(w);
-        for fi=1:length(fntemp)
-            z.(char(fntemp(fi)))=ps_round(w.(char(fntemp(fi))));
-            z.(char(fntemp(fi)))=ps_max(w.(char(fntemp(fi))));
-        end
-    end
-
-    %compact version of subtraction for dur/icd structures
-    function z=ps_structsub(w,dt)
-        fntemp=fieldnames(w);
-        for fi=1:length(fntemp)
-            z.(char(fntemp(fi)))=ps_max(w.(char(fntemp(fi)))-dt);
-        end
-    end
-
-    %compact version of structure copying for dur/icd 
-    function z=ps_structcopy(w,seqw,qq)
-        fntemp=fieldnames(w);
-        z=seqw;
-        for fi=1:length(fntemp)
-            z.(char(fntemp(fi)))(qq)=w.(char(fntemp(fi)));
-        end
-    end
+%     %rounding fix
+%     function y=ps_round(x)
+%         rfact=1e10;
+%         y=round(x.*rfact)./rfact;
+%     end
+% 
+%     function y=ps_max(x)
+%         y=max([x 0]);
+%     end
+% 
+%     %compact version of roundign fix for dur/icd structures
+%     function z=ps_structround(w)
+%         fntemp=fieldnames(w);
+%         for fi=1:length(fntemp)
+%             z.(char(fntemp(fi)))=ps_round(w.(char(fntemp(fi))));
+%             z.(char(fntemp(fi)))=ps_max(w.(char(fntemp(fi))));
+%         end
+%     end
+% 
+%     %compact version of subtraction for dur/icd structures
+%     function z=ps_structsub(w,dt)
+%         fntemp=fieldnames(w);
+%         for fi=1:length(fntemp)
+%             z.(char(fntemp(fi)))=ps_max(w.(char(fntemp(fi)))-dt);
+%         end
+%     end
+% 
+%     %compact version of structure copying for dur/icd 
+%     function z=ps_structcopy(w,seqw,qq)
+%         fntemp=fieldnames(w);
+%         z=seqw;
+%         for fi=1:length(fntemp)
+%             z.(char(fntemp(fi)))(qq)=w.(char(fntemp(fi)));
+%         end
+%     end
 end
