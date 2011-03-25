@@ -24,7 +24,7 @@ prio_model;
 %% set up our tree configurations
 %base - unpossible build, contains a ridiculous # of points
 temptree.holy=[2 0 3 0; 0 0 0 0];
-temptree.prot=[3 2 2 2; 2 3 2 0; 2 3 1 2; 2 1 2 0; 1 1 2 1; 0 2 3 0; 0 1 0 0];
+temptree.prot=[3 2 2 2; 2 3 2 0; 2 3 1 2; 1 1 1 0; 1 1 2 1; 0 2 3 0; 0 1 0 0];
 temptree.ret=[0 3 2 0; 0 3 0 2];
 tree(1)=temptree;
 points(1)=1;
@@ -56,7 +56,14 @@ k=k+1;
 tree(k)=tree(1);
 tree(k).prot(4,1)=0;
 points(k)=tree(1).prot(4,1);
-name{k}='Reck';
+name{k}='Reck (0->1)';
+
+%Reck
+k=k+1;
+tree(k)=tree(1);
+tree(k).prot(4,1)=2;
+points(k)=tree(1).prot(4,1)-tree(k).prot(4,1);
+name{k}='Reck (1->2)';
 
 %Arbiter of the Light
 k=k+1;
@@ -91,7 +98,14 @@ k=k+1;
 tree(k)=tree(1);
 tree(k).prot(4,3)=0;
 points(k)=tree(1).prot(4,3);
-name{k}='Grand Crusader';
+name{k}='Grand Crusader (0->1)';
+
+%Grand Crusader
+k=k+1;
+tree(k)=tree(1);
+tree(k).prot(4,3)=2;
+points(k)=tree(1).prot(4,3)-tree(k).prot(4,3);
+name{k}='Grand Crusader (1->2)';
 
 %Sacred duty
 k=k+1;
@@ -208,7 +222,7 @@ set(gcf,'Position',[428 128 728 378])
 bar31=barh(dpsplotsorted(2:length(dpsppt),:),'BarWidth',1,'BarLayout','grouped');
 set(bar31(2),'FaceColor',[0.749 0.749 0]);
 set(bar31(3),'FaceColor',[0.5 0 0]);
-ylim([0.5 10.5])
+ylim([0.5 k-0.5])
 set(gca,'YTickLabel',name(ind(2:length(name))))
 legend({cfg.plabel},'Location','Best')
 xlabel('DPS per point')
@@ -218,7 +232,7 @@ title([ num2str(cfg(sortby).veng*100,'%2.1f') '% Veng, legend contains rotation/
 figure(32)
 set(gcf,'Position',[428 128 728 378])
 bar32=barh(dpspptsorted(2:length(dpspptsorted)),'BarWidth',0.5,'BarLayout','grouped');
-ylim([0.5 10.5])
+ylim([0.5 k-0.5])
 set(gca,'YTickLabel',name(ind(2:length(name))))
 xlabel('DPS per point')
 title([ num2str(cfg(sortby).veng*100,'%2.1f') '% Veng, ' num2str(cfg(sortby).hit,'%2.1f') '% hit, ' ...
