@@ -13,9 +13,20 @@
 %
 %    You should have received a copy of the GNU General Public License
 %    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-function AssertAreEqual (expected, actual, customErrorMessage = "")
+function AssertAreEqual (expected, actual, customErrorMessage)
+    %handle optional input args
+    if nargin<3
+        customErrorMessage= '';
+    end
+    %sanitize inputs - actual always seems to be uint16 class, while
+    %expected tends to be double
+    if ~strcmp(class(expected),class(actual))
+        expected=uint16(expected);
+        actual=uint16(actual);
+    end
+    
 	if isfloat(expected)
-		if expected - actual != 0
+		if expected - actual ~= 0
 			% check if they're close enough
 			if abs((expected - actual)/min([expected, actual])) > 1e-10 % floating point tolerance
 				raiseError(expected, actual, customErrorMessage);
@@ -23,17 +34,17 @@ function AssertAreEqual (expected, actual, customErrorMessage = "")
 		end
 		return
 	end
-	if length(expected) != length(actual)
+	if length(expected) ~= length(actual)
 		raiseError(expected, actual, customErrorMessage);
-	else if not(all(expected == actual))
+    elseif not(all(expected == actual))
 		raiseError(expected, actual, customErrorMessage);
 	end
 end
 function raiseError (expected, actual, customErrorMessage)
-	if strcmp(customErrorMessage, "")
+	if strcmp(customErrorMessage, '')
 		expected
 		actual
-		error("expected and actual are not equal");
+		error('expected and actual are not equal');
 	else
 		error(customErrorMessage);
 	end
