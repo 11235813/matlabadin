@@ -20,6 +20,9 @@ benchmark(1).results = [10, 8, 12, 120, -1];
 benchmark(2).hardware = 'Core 2 Duo T5750 @ 2.0Ghz 3Gb';
 benchmark(2).version = 'Matlab 2008a';
 benchmark(2).results = [25, 0, 5, 57, -1];
+benchmark(3).hardware = 'i7-2600K @ 4.0Ghz 16Gb';
+benchmark(3).version = 'Matlab 2008a';
+benchmark(3).results = [9, 0, 2, 17, -1];
 showBenchmark = 1;
 disp('Running performance tests for proxying a struct as a hashmap.');
 sprintf('Struct hashmap performance testing')
