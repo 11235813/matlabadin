@@ -15,7 +15,7 @@
 %    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 graphParameters = struct('spmiss', 0.08, 'miss', 0.08, 'dodge', 0.065, 'parry', 0.14, 'egProcRate', 0.3, 'sdProcRate', 0.5, 'gcProcRate', 0.2);
-graphParameters.priorityQueue = {"SotR", "CS", "J", "AS", "Cons"};
+graphParameters.priorityQueue = {'SotR', 'CS', 'J', 'AS', 'Cons','HW'};
 tic();
 [action, pr] = fsm(graphParameters)
 toc()

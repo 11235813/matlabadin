@@ -48,7 +48,8 @@ initialState = zeros(1, fsmInternal.StateVectorSize);
 % solve Mx=[0,...,0,1]
 % note that M appears overdetermined but one of the equations is not linearly independant so we're ok
 B = [zeros(1, length(stateVector)) 1]';
-x = M\B; % Octave does not like QR factorization for 20000+
+% x = M\B; % Octave does not like QR factorization for 20000+
+x = fsm_iterative_solve(M);
 % and it appears we're not positive definite
 %x = pcg(M(2:end,:), [zeros(1, length(stateVector)-1) 1]', 1e-8);
 %x = pcg(M(2:end,:), [zeros(1, length(stateVector)-1) 1]', 1e-8, length(stateVector), [], ones(length(stateVector)) / length(stateVector));
@@ -155,7 +156,7 @@ while stateIndex <= totalStateSpaceSize
             tupleIndex = tupleIndex + 1;
         end
         if printTransitions
-            printf('%s [%s]-> %s (%f)\n', fsm_getStateKey(stateVector(stateIndex).state), stateVector(stateIndex).abilityToUse, nextStateKey, nextPr(i));
+            disp(sprintf('%s [%s]-> %s (%f)\n', fsm_getStateKey(stateVector(stateIndex).state), stateVector(stateIndex).abilityToUse, nextStateKey, nextPr(i)));
         end
     end
     mi(tupleIndex) = stateIndex;
@@ -629,3 +630,36 @@ AssertAreEqual(1/6, pr(4) + pr(5));
 AssertAreEqual(1/6*0.5, pr(5));
 end
 
+function [n,ierr,iind]=fsm_iterative_solve(trans_matrix,varargin)
+    %containers for # iter and error
+    iind=0;
+    ierr=1;
+    %input handling
+    itol=[];max_iter=[];
+    if nargin>1
+        for i=1:2:length(varargin)
+            name=varargin{i};
+            value=varargin{i+1};
+            switch name
+                case 'tol'
+                    itol=value;
+                case 'iter'
+                    max_iter=value;
+            end
+        end
+    end
+    if isempty(itol); itol=1e-3; end
+    if isempty(max_iter); max_iter=1e4; end
+    
+    %start with an equal probability to be in each state
+    n=ones(size(trans_matrix,2),1)./size(trans_matrix,2);
+    %solve iteravely
+    while (ierr>itol && iind<max_iter)
+       iind=iind+1;
+       dn=-trans_matrix(1:size(trans_matrix,1)-1,:)*n;
+       n=n+dn; 
+       ierr=max(abs(dn./n)); %relative tolerance
+%        ierr=max(abs(dn));    %absolute tolerance
+    end
+    
+end
