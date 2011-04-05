@@ -54,14 +54,14 @@ mdf.t11x4=1+0.5.*gear.tierbonus(2); %GoAK duration
 
 %%Standard Professions
 %(passive bonuses, independent of gearing choices)
-if (isempty(base.prof)==0&&(max(strcmpi('Min',strread(base.prof,'%s')))==1 ...
-        ||max(strcmpi('Mining',strread(base.prof,'%s')))==1))
+if ((~isempty(base.prof))&&((~isempty(regexpi(base.prof,'Min'))) ...
+        ||(~isempty(regexpi(base.prof,'Mining')))))
     mdf.mining=120;
 else
     mdf.mining=0;
 end
-if (isempty(base.prof)==0&&(max(strcmpi('Skin',strread(base.prof,'%s')))==1 ...
-        ||max(strcmpi('Skinning',strread(base.prof,'%s')))==1))
+if ((~isempty(base.prof))&&((~isempty(regexpi(base.prof,'Skin'))) ...
+        ||(~isempty(regexpi(base.prof,'Skinning')))))
     mdf.skinning=80;
 else
     mdf.skinning=0;
@@ -75,14 +75,14 @@ mdf.PWF=floor(1.32.*mdf.buffscale).*buff.PWF;
 mdf.FelInt=floor(4.8.*mdf.buffscale).*buff.FelInt; %only mana
 mdf.UnRage=1+0.1.*buff.UnRage;
 mdf.FMT=1+0.06.*buff.FMT;
-mdf.TW=1+0.1.*buff.TW;
+mdf.ToWra=1+0.1.*buff.ToWra;
 mdf.ArcTac=1+0.03.*buff.ArcTac;
 mdf.LotP=5.*buff.LotP;
-mdf.WF=1+0.1.*buff.WF;
+mdf.WFury=1+0.1.*buff.WFury;
 mdf.WoA=1+0.05.*buff.WoA;
-mdf.BL=1+0.3.*buff.BL;
+mdf.BLust=1+0.3.*buff.BLust;
 mdf.Devo=floor(9.2.*mdf.buffscale).*buff.Devo;
-mdf.RF=1+2.*buff.RF;
+mdf.RFury=1+2.*buff.RFury;
 mdf.Focus=3.*buff.Focus;
 %% Raid Debufs
 mdf.SavCom=1+0.04.*buff.SavCom;
@@ -90,15 +90,15 @@ mdf.Hemo=1.3.*buff.Hemo;
 mdf.CoE=1+0.08.*buff.CoE;
 mdf.ISB=5.*buff.ISB;
 mdf.Sund=1-0.12.*buff.Sund;
-mdf.ST=1-0.2.*buff.ST;
+mdf.SThrow=1-0.2.*buff.SThrow;
 
 %% Consumables
 %apply Mixology bonus
-if (isempty(base.prof)==0&&(max(strcmpi('Alch',strread(base.prof,'%s')))==1 ...
-        ||max(strcmpi('Alchemy',strread(base.prof,'%s')))==1))
+if ((~isempty(base.prof))&&((~isempty(regexpi(base.prof,'Alch'))) ...
+        ||(~isempty(regexpi(base.prof,'Alchemy')))))
 switch buff.flask.name
     case 'Flask of Steelskin'
-        mdf.mixo(1)=420./300;
+        mdf.mixo(1)=570./450;
     case {'Flask of Titanic Strength','Flask of the Winds','Flask of the Draconic Mind'}
         mdf.mixo(1)=380./300;
     otherwise
@@ -223,7 +223,7 @@ player.exp=base.exp+((gear.exp+extra.exp+consum.exp)./cnv.exp_exp)+mdf.glyphSoT;
 %% Haste 
 player.phhaste=100.*( ...
     (1 + (gear.haste+extra.haste+consum.haste)./cnv.haste_phhaste./100).* ...
-    (1+mdf.JotP.*(isempty(exec.seal)==0)).*mdf.WF ...
+    (1+mdf.JotP.*(isempty(exec.seal)==0)).*mdf.WFury ...
     -1);
 player.sphaste=100.*(...
     (1+(gear.haste+extra.haste+consum.haste)./cnv.haste_sphaste./100).* ...
@@ -235,20 +235,20 @@ mdf.phhaste=(1+player.phhaste./100);
 mdf.sphaste=(1+player.sphaste./100);
 
 %alternate values under Bloodlust-type effects
-bl.phhaste=100.*((1+player.phhaste./100).*mdf.BL-1);
-bl.sphaste=100.*((1+player.sphaste./100).*mdf.BL-1);
+bl.phhaste=100.*((1+player.phhaste./100).*mdf.BLust-1);
+bl.sphaste=100.*((1+player.sphaste./100).*mdf.BLust-1);
 bl.spgcd=max([1.5./(1+bl.sphaste./100);ones(size(player.sphaste))]); 
 
 mdf.blphhaste=(1+bl.phhaste./100);
 mdf.blsphaste=(1+bl.sphaste./100);
 
 %haste scaling for DoT effects
-cens.BaseTick=3; %seconds
-cens.BaseDur=15; %seconds
-cens.NetTick=cens.BaseTick./mdf.sphaste; %spell haste
-cens.NumTicks=round(cens.BaseDur./cens.BaseTick.*mdf.sphaste); 
+%refer to http://elitistjerks.com/f73/t110354-resto_cataclysm_release_updated_4_0_6_a/p42/#post1896784
+cens.BaseTick=3;
+cens.BaseDur=15;
+cens.NetTick=round(cens.BaseTick./mdf.sphaste.*1e3)./1e3; %spell haste
+cens.NumTicks=ceil(cens.BaseDur./cens.NetTick-0.5);
 cens.NetDur=cens.NumTicks.*cens.NetTick;
-
 
 %% Crit
 %multipliers
@@ -331,7 +331,7 @@ mdf.HotRspcrit=1+(mdf.spcritm-1).*player.HotRspcrit./100;
 %% SP and AP
 %AP gets computed later on, in the Vengeance subsection
 player.sp=floor((base.sp+gear.sp+extra.sp+consum.sp+floor(player.str.*(mdf.TbtL./10)) ...
-    +(player.int-10).*cnv.int_sp).*max([mdf.FMT;mdf.TW]));
+    +(player.int-10).*cnv.int_sp).*max([mdf.FMT;mdf.ToWra]));
 %for future use in case our spellpower and "holy spell power" are both
 %relevant.  hsp is what we get from TbtL, and only affects damage.  We're
 %back to the old 2.x "spell power" and "healing power" modle, it seems.
@@ -399,7 +399,7 @@ player.acoeff=2167.5*npc.lvl-158167.5;
 target.acoeff=2167.5*base.lvl-158167.5;
 %damage reduction
 player.phdr=min([player.armor./(player.armor+player.acoeff);0.75]);
-target.armor=npc.armor.*mdf.Sund.*((290+mdf.ST.*10)./300); %fix ST
+target.armor=npc.armor.*mdf.Sund.*((290+mdf.SThrow.*10)./300); %fix ST
 target.phdr=target.armor./(target.armor+target.acoeff);
 
 %Vengeance, total AP
