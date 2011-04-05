@@ -1376,14 +1376,14 @@ idb.sid(34009).sta=18;
 idb.sid(74207).name='Enchant Shield - Protection';
 idb.sid(74207).earmor=160;
 
-idb.sid(74226).name='Enchant Shield - Blocking';
-idb.sid(74226).mast=36.071; %40 block rating
+idb.sid(74226).name='Enchant Shield - Mastery';
+idb.sid(74226).mast=50;
 
 
 %% Consumables (invoked by buff_model)
 % Flasks
 idb.sid(79469).name='Flask of Steelskin';
-idb.sid(79469).sta=300;
+idb.sid(79469).sta=450;
 
 idb.sid(79472).name='Flask of Titanic Strength';
 idb.sid(79472).str=300;
