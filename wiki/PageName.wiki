@@ -2,14 +2,14 @@
 
 = Introduction =
 
-calc_* is a calculation file, essentially similar to a main() method. It calls other m-files to calculate the answer to a specific question (i.e., "How much DPS is each talent point worth?").
+calc`_``*` is a calculation file, essentially similar to a main() method. It calls other m-files to calculate the answer to a specific question (i.e., "How much DPS is each talent point worth?").
 
-*_db are database-like files that store useful things we refer to a lot
+`*``_`db are database-like files that store useful things we refer to a lot
 
-*_model are modular components that perform portions of the calculation. 
+`*``_`model are modular components that perform portions of the calculation. 
 
-prio_* are files specific to the priority simulation 
+prio`_``*` are files specific to the priority simulation 
 
 = Details =
 
-So for example, a calc_* file will load the databases and then run models to create structures for the player, npc, and "execution" environment, load buffs, apply talent/gear modifiers, and so on. Two of the final steps are usually stat_model and ability_model, which calculate in-combat values (mdf.*, AP, SP, primary stats, etc.) and ability damage values respectively. rotation_model then takes those values and converts them to DPS, TPS, HPS outputs by using ability weight coefficients. The details of rotation_model are thus abstracted; all the calc_* files care about is that rotation_model gives DPS values. 
+So for example, a calc`_``*` file will load the databases and then run models to create structures for the player, npc, and "execution" environment, load buffs, apply talent/gear modifiers, and so on. Two of the final steps are usually stat_model and ability_model, which calculate in-combat values (mdf.*, AP, SP, primary stats, etc.) and ability damage values respectively. rotation_model then takes those values and converts them to DPS, TPS, HPS outputs by using ability weight coefficients. The details of rotation_model are thus abstracted; all the calc`_``*` files care about is that rotation_model gives DPS values. 
