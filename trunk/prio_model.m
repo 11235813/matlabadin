@@ -214,7 +214,7 @@ prio(k).setup={'ccd(idx.AS)=13.5;'};
 prio(k).spaction={'';''; ''; ''; ''; ''; ''; '';'';'';};
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='SotR>HotR>J>AS';
+prio(k).name='SotR>HotR>AS>J';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>CS>AS>J';
@@ -250,7 +250,7 @@ k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>CS>J>AS>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='SotR>HotR>J>AS>Cons>HW';
+prio(k).name='SotR>HotR>AS>J>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>CS>AS>J>Cons>HW';
@@ -332,7 +332,7 @@ k=k+1;prio(k)=prio(1);
 prio(k).name='WoG>SotR>CS>J>AS>Cons>HW';
         
 k=k+1;prio(k)=prio(1);
-prio(k).name='WoG>SotR>HotR>J>AS>Cons>HW';
+prio(k).name='WoG>SotR>HotR>AS>J>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='WoG>SotR>CS>AS>J>Cons>HW';
@@ -369,22 +369,37 @@ kwog=k;
 %% HoW (sub-20%)
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='SotR>CS>J>AS>HoW>Cons>HW';
+prio(k).name='SotR>CS>AS>J>HoW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='SotR>CS>J>HoW>AS>Cons>HW';
+prio(k).name='SotR>CS>AS>HoW>J';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='SotR>CS>HoW>J>AS>Cons>HW';
+prio(k).name='SotR>CS>HoW>AS>J';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SotR>HoW>CS>AS>J';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='HoW>SotR>CS>AS>J';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SotR>CS>AS>J>HoW>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='SotR>CS>AS>HoW>J>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR>CS>HoW>AS>J>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='SotR>HoW>CS>J>AS>Cons>HW';
+prio(k).name='SotR>HotR>HoW>AS>J>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
-prio(k).name='HoW>SotR>CS>J>AS>Cons>HW';
+prio(k).name='SotR>HoW>CS>AS>J>Cons>HW';
+
+k=k+1;prio(k)=prio(1);
+prio(k).name='HoW>SotR>CS>AS>J>Cons>HW';
 
 k=k+1;prio(k)=prio(1);
 prio(k).name='HoW>Inq>CS>J>AS>Cons>HW';
@@ -398,6 +413,8 @@ prio(k).name='HoW>SotR*>Inq>CS>J>AS>Cons>HW';
 k=k+1;prio(k)=prio(1);
 prio(k).name='SotR*>Inq>CS>HoW>J>AS>Cons>HW';
 
+k=k+1;prio(k)=prio(1);
+prio(k).name='HoW>WoG>CS>AS>J>Cons>HW';
 
 
 k1=k;

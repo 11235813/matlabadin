@@ -32,15 +32,15 @@ prio_model;
 %% Queue numbers
 %generate these automatically so that changes to [PM] are transparent
 QQnames={...
-%          'SotR>CS>AS>J'; ...
+         'SotR>CS>AS>J'; ...
 %          'SotR>CS>AS>J>Cons>HW'; ...
 %          'WoG>SotR>CS>AS>J>Cons>HW'; ...
 %          'SotR>HotR>AS>J'; ...
 %          'SotR>HotR>AS>J>Cons>HW'; ...
 %          'WoG>SotR>HotR>AS>J>Cons>HW'; ...
-         'SotR>CS>HoW>AS>J'; ...
-         'SotR>CS>HoW>AS>J>Cons>HW'; ...
-         'HoW>WoG>CS>AS>J>Cons>HW'; ...
+%          'SotR>CS>HoW>AS>J'; ...
+%          'SotR>CS>HoW>AS>J>Cons>HW'; ...
+%          'HoW>WoG>CS>AS>J>Cons>HW'; ...
          };
 QQ=zeros(1,length(QQnames));
 for ip=1:prio_st
@@ -72,9 +72,9 @@ for iq=1:length(QQ);
     Q=QQ(iq);
     %% Sim
     clear rdbgen
-    Ngc=[1 2 3];    %grand crusader
-    Nsd=[1 2 3];      %sacred duty
-    Neg=[1 2 3];        %eternal glory
+    Ngc=[3];    %grand crusader
+    Nsd=[3];      %sacred duty
+    Neg=[3];        %eternal glory
     Ntot=length(Neg)*length(Nsd)*length(Ngc);
     tc=clock;
     uwb=waitbar(0,['Calculating config #1/' int2str(Ntot)]);tic;
@@ -107,15 +107,18 @@ for iq=1:length(QQ);
                 end
 
                 %store data for later scrutiny
-                rdbgen.h=h;
+                rdbgen.mh=rdbdata.mh;
+                rdbgen.rh=rdbdata.rh;
+                rdbgen.sh=rdbdata.sh;
+                
                 if length(size(rdbdata.coeff))>2
-                    rdbgen.coeff(:,:,:,gc,sd,eg)=rdbdata.coeff;
-                    rdbgen.cps(:,:,:,gc,sd,eg)=rdbdata.cps;
-                    rdbgen.inqup(1,:,:,gc,sd,eg)=rdbdata.inqup;
+                    rdbgen.coeff(:,:,:,:,gc,sd,eg)=rdbdata.coeff;
+                    rdbgen.cps(:,:,:,:,gc,sd,eg)=rdbdata.cps;
+                    rdbgen.inqup(1,:,:,:,gc,sd,eg)=rdbdata.inqup;
                 else
-                    rdbgen.coeff(:,:,1,gc,sd,eg)=rdbdata.coeff;
-                    rdbgen.cps(:,:,1,gc,sd,eg)=rdbdata.cps;
-                    rdbgen.inqup(1,:,1,gc,sd,eg)=rdbdata.inqup;
+                    rdbgen.coeff(:,:,:,1,gc,sd,eg)=rdbdata.coeff;
+                    rdbgen.cps(:,:,:,1,gc,sd,eg)=rdbdata.cps;
+                    rdbgen.inqup(1,:,:,1,gc,sd,eg)=rdbdata.inqup;
                 end
 
                 %fit data
