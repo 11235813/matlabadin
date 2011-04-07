@@ -122,7 +122,8 @@ for iq=1:length(QQ);
                 end
 
                 %fit data
-                rdbgen.showplots=0; %plot flag, set to 1 to show plots
+                rdbgen.showplots=1; %plot flag, set to 1 to show plots
+                rdbgen.model='constant x x^2 x^3 y y^2 y^3 x*y y*x^2 x*y^2'; %define fit model
                 rotation_db_fit
 
                 %initialize if not already created
@@ -136,6 +137,7 @@ for iq=1:length(QQ);
                 rdbgen.coeffpvals(:,:,gc,sd,eg)=rdbfit.coeffpvals;
                 rdbgen.cpspvals(:,:,gc,sd,eg)=rdbfit.cpspvals;
                 rdbgen.inqpvals(:,:,gc,sd,eg)=rdbfit.inqpvals;  
+                rdbgen.modelterms=rdbfit.coeff{1}.ModelTerms; %same for every fit, hardcoeded in [RDBF]
 
                 %debugging
                 pause(0.1)
@@ -176,6 +178,7 @@ for iq=1:length(QQ);
     rdbgen.comm{13}=['rotdb(i).inqvals=[' num2str(rdbgen.print.inqvals') '];'];
     rdbgen.comm{14}=['rotdb(i).tempvals(rotdb(i).inqids)=rotdb(i).inqvals;'];
     rdbgen.comm{15}=['rotdb(i).inqpvals=reshape(rotdb(i).tempvals,1,' int2str(size(rdbgen.inqpvals,2)) ',3,3,3);'];
+    rdbgen.comm{16}=['rotdb(i).modelterms=[' int2str(rdbgen.modelterms(:,1)') ';' int2str(rdbgen.modelterms(:,2)') ']'';'];
     rdbgen.command=char({['%% ' prio(QQ(iq)).name],['i=' int2str(iq) ';'],strvcat(rdbgen.comm),' ',' '});
 %     rdbgen.command
 
@@ -203,52 +206,5 @@ save zzRCD_data rdbg
 
 
 %% Debugging
-%Figures for debugging
-
-%check an arbitrary coeff & cps & inq fit
-a=3; 
-figure(1)
-tmp.gc=3;
-tmp.sd=3;
-tmp.eg=3;
-rdbgen=rdbg(1); %choose rotation
-%plot stuff
-H=repmat(h,1,size(rdbgen.coeff,3));
-f=fittype('poly5');
-tempfit=rdbgen.coeffpvals(a,:,tmp.gc,tmp.sd,tmp.eg);
-c1=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
-tempfit=rdbgen.cpspvals(a,:,tmp.gc,tmp.sd,tmp.eg);
-c2=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
-tempfit=rdbgen.inqpvals(1,:,tmp.gc,tmp.sd,tmp.eg);
-c3=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
-plot(H,squeeze(rdbgen.coeff(a,:,:,tmp.gc,tmp.sd,tmp.eg)),'b.-', ...
-     H,squeeze(rdbgen.cps(a,:,:,tmp.gc,tmp.sd,tmp.eg)),'r.-', ...
-     H,squeeze(rdbgen.inqup(1,:,:,tmp.gc,tmp.sd,tmp.eg)),'m.-',...
-     h,c1(h),'ko-',h,c2(h),'ko-',h,c3(h),'ko-')
-
-% %Check AS plot to see what effect GrCr has
-% a=7; %as
-% figure(10);
-% H=repmat(h,1,size(rdbgen.allcoeff,3));
-% f=fittype('poly5');
-% tempfit=rdbgen.allcoeffpvals(a,:,1,3,3);
-% c11=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
-% tempfit=rdbgen.allcoeffpvals(a,:,3,3,3);
-% c12=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
-% plot(H,squeeze(rdbgen.allcoeff(a,:,:,1,3,3)),'b.-',H,squeeze(rdbgen.allcoeff(a,:,:,3,3,3)),'r.-',h,c11(h),'ko-',h,c12(h),'ko-')
-% 
-% %See what effect SD has
-% a=3; %sotr
-% figure(11)
-% tempfit=rdbgen.allcoeffpvals(a,:,3,1,3);
-% c21=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
-% tempfit=rdbgen.allcoeffpvals(a,:,3,3,3);
-% c22=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
-% plot(H,squeeze(rdbgen.allcoeff(a,:,:,3,1,3)),'b.-',H,squeeze(rdbgen.allcoeff(a,:,:,3,3,3)),'r.-',h,c21(h),'k-',h,c22(h),'ko-')
-% 
-% %See what effect EG has
-% a=4; %wog
-% figure(12)
-% tempfit=rdbgen.allcoeffpvals(a,:,3,3,1);f=fittype('poly5');c3b=cfit(f,tempfit(1),tempfit(2),tempfit(3),tempfit(4),tempfit(5),tempfit(6));
-% plot(H,squeeze(rdbgen.allcoeff(a,:,:,3,3,1)),'b.-',H,squeeze(rdbgen.allcoeff(a,:,:,3,3,3)),'r.-',h,c3b(h),'k-')
-% pause(0.001)
+%generates plots for determining if the fit is reasonable
+rotation_db_debug
