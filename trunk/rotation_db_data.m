@@ -10,7 +10,7 @@ sh=1-(0.17-0.08)+hi.*cnv.hit_sphit./cnv.hit_phhit./100;
 sh=max(sh,ones(size(sh)));
 N=1000;
 dt=1.5;
-M=3;
+M=30;
 %initialize for speed
 rdbdata.coeff=zeros(13,size(h,1),size(h,2),M);
 rdbdata.cps=zeros(13,size(h,1),size(h,2),M);
@@ -34,7 +34,8 @@ for qq=1:size(mh,1)
             rdbdata.inqup(1,qq,rr,mm)=rdata.Inqup;
         end
         tempind=(rr+(qq-1)*size(h,1));
-        waitbar(tempind/length(mh(:)),wb,['Calculating #' int2str(tempind) '/' int2str(length(mh(:))) ', est=' num2str((length(mh(:))-tempind)*(toc/tempind),'%3.1f') 'sec']);
+        waitbar(tempind/length(mh(:)),wb,['Calculating #' int2str(tempind) '/' int2str(length(mh(:))) ...
+                    ', est=' num2str((length(mh(:))-tempind)*(toc/tempind),'%3.1f') 'sec']);
     end
 end
 toc
