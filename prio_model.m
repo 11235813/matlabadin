@@ -160,6 +160,7 @@ priolist(q).prochit=[mdf.rahit]; %TODO: does JotJ automatically hit?
 priolist(q).procno=[(strcmp(exec.seal,'Truth').*(1+mdf.jseals)     ... %J+JotJ
                     +strcmp(exec.seal,'Righteousness').*mdf.jseals ... %JotJ only
                     +strcmp(exec.seal,'Insight'))];                    %J only
+priolist(q).procno=[(strcmp(exec.seal,'Truth')+strcmp(exec.seal,'Insight'))]; %J only - 4.1?
 priolist(q).condition='1'; 
 priolist(q).action='if rand<mdf.SacDut*mdf.rahit dur.SD=10; end;'; %4.1
 
