@@ -1,0 +1,172 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Matlabadin
+{
+    public static class StateHelper
+    {
+        public static bool GcWillProcHP(ulong state, GraphParameters gp)
+        {
+            return TimeRemaining(state, Buff.GC, gp) > 0 && TimeRemaining(state, Buff.GCICD, gp) == 0;
+        }
+        /// <summary>
+        /// Cooldown remaining on the given ability
+        /// </summary>
+        /// <param name="ability">Ability</param>
+        /// <returns>Cooldown remaining in ms.</returns>
+        public static int CooldownRemaining(ulong state, Ability ability, GraphParameters gp)
+        {
+            int numBits = gp.AbilityCooldownBits[(int)ability];
+            if (numBits <= 0) return 0;
+            return Unpack(state, gp.AbilityCooldownStartBit[(int)ability], gp.AbilityCooldownBits[(int)ability]);
+        }
+        /// <summary>
+        /// Time remaining on the given buff.
+        /// </summary>
+        /// <param name="buff">Buff to check</param>
+        /// <returns>Time remaining in ms.</returns>
+        public static int TimeRemaining(ulong state, Buff buff, GraphParameters gp)
+        {
+            return Unpack(state, gp.BuffDurationStartBit[(int)buff], gp.BuffDurationBits[(int)buff]);
+        }
+        public static ulong SetTimeRemaining(ulong state, Buff buff, int value, GraphParameters gp)
+        {
+            return Pack(state, gp.BuffDurationStartBit[(int)buff], gp.BuffDurationBits[(int)buff], value);
+        }
+        public static int HP(ulong state, GraphParameters gp)
+        {
+            return Unpack(state, 0, 2);
+        }
+        public static ulong IncHP(ulong state, GraphParameters gp)
+        {
+            return SetHP(state, Math.Min(3, HP(state, gp)+1), gp);
+        }
+        public static ulong SetHP(ulong state, int hp, GraphParameters gp)
+        {
+            return Pack(state, 0, 2, hp);
+        }
+        public static ulong SetCooldownRemaining(ulong state, Ability ability, int cd, GraphParameters gp)
+        {
+            int numBits = gp.AbilityCooldownBits[(int)ability];
+            if (numBits <= 0) return state;
+            return Pack(state, gp.AbilityCooldownStartBit[(int)ability], gp.AbilityCooldownBits[(int)ability], cd);
+        }
+        public static ulong AdvanceTime(ulong state, int steps, GraphParameters gp)
+        {
+            for (int offset = (int)Ability.CooldownIndicator + 1; offset < (int)Ability.Count; offset++)
+            {
+                state = Pack(state, gp.AbilityCooldownStartBit[offset], gp.AbilityCooldownBits[offset],
+                    Math.Max(0, Unpack(state, gp.AbilityCooldownStartBit[offset], gp.AbilityCooldownBits[offset]) - steps));
+            }
+            for (int i = 0; i < (int)Buff.Count; i++)
+            {
+                state = Pack(state, gp.BuffDurationStartBit[i], gp.BuffDurationBits[i],
+                    Math.Max(0, Unpack(state, gp.BuffDurationStartBit[i], gp.BuffDurationBits[i]) - steps));
+            }
+            return state;
+        }
+        public static ulong UseAbility(
+            ulong state,
+            GraphParameters gp,
+            Ability ability,
+            int waitSteps = 0,
+            bool hit = true,
+            bool sdProc = false,
+            bool gcProc = false,
+            bool egProc = false)
+        {
+            if (state == UInt64.MaxValue) throw new ArgumentException("Invalid state");
+            if (ability == Ability.HotR) return UseAbility(state, gp, Ability.CS, waitSteps, hit, sdProc, gcProc, egProc);
+            ulong nextState = state;
+            if (waitSteps > 0)
+            {
+                nextState = StateHelper.AdvanceTime(nextState, waitSteps, gp);
+            }
+            if (StateHelper.CooldownRemaining(state, ability, gp) > 0) throw new InvalidOperationException("Attempting to use ability still on cooldown");
+            int abilityCooldown = gp.AbilityCooldownInSteps(ability);
+            if (abilityCooldown > 0)
+            {
+                nextState = StateHelper.SetCooldownRemaining(nextState, ability, abilityCooldown, gp);
+            }
+            switch (ability)
+            {
+                case Ability.WoG:
+                    nextState = StateHelper.SetHP(nextState, 0, gp);
+                    break;
+                case Ability.SotR:
+                    if (hit) nextState = StateHelper.SetHP(nextState, 0, gp);
+                    nextState = StateHelper.SetTimeRemaining(nextState, Buff.SD, 0, gp);
+                    break;
+                case Ability.CS:
+                    if (hit) nextState = StateHelper.IncHP(nextState, gp);
+                    break;
+                case Ability.AS:
+                    if (hit && StateHelper.GcWillProcHP(nextState, gp))
+                    {
+                        nextState = StateHelper.IncHP(nextState, gp);
+                        nextState = StateHelper.SetTimeRemaining(nextState, Buff.GCICD, gp.BuffDurationInSteps(Buff.GCICD), gp);
+                    }
+                    nextState = StateHelper.SetTimeRemaining(nextState, Buff.GC, 0, gp);
+                    break;
+                case Ability.Inq:
+                    nextState = StateHelper.SetTimeRemaining(nextState, Buff.INQ, StateHelper.HP(nextState, gp) * gp.BuffDurationInSteps(Buff.INQ) / 3, gp);
+                    nextState = StateHelper.SetHP(nextState, 0, gp);
+                    break;
+            }
+            if (egProc)
+            {
+                nextState = StateHelper.SetHP(nextState, StateHelper.HP(state, gp), gp);
+                nextState = StateHelper.SetTimeRemaining(nextState, Buff.EGICD, gp.BuffDurationInSteps(Buff.EGICD), gp);
+            }
+            if (gcProc)
+            {
+                nextState = StateHelper.SetCooldownRemaining(nextState, Ability.AS, 0, gp);
+                nextState = StateHelper.SetTimeRemaining(nextState, Buff.GC, gp.BuffDurationInSteps(Buff.GC), gp);
+            }
+            if (sdProc)
+            {
+                nextState = StateHelper.SetTimeRemaining(nextState, Buff.SD, gp.BuffDurationInSteps(Buff.SD), gp);
+            }
+            // advance time a GCD
+            nextState = StateHelper.AdvanceTime(nextState, gp.StepsPerGcd, gp);
+            return nextState;
+        }
+        private static int Unpack(ulong state, int startBit, int numBits)
+        {
+            ulong shifted = (state >> startBit);
+            ulong result = shifted & (ulong)~(-1 << numBits);
+            return (int)result;
+        }
+        private static ulong Pack(ulong state, int startBit, int numBits, int value)
+        {
+            if (value >= 1 << numBits || value < 0) throw new ArgumentOutOfRangeException(String.Format("value {0} does not fit in {1} bits", value, numBits));
+            ulong bitsToClear = ((ulong)~(-1 << numBits)) << startBit;
+            state &= ~bitsToClear;
+            state |= (ulong)value << startBit;
+            return state;
+        }
+        public static string StateToString(ulong state, GraphParameters gp)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("HP{0}", StateHelper.HP(state, gp));
+            string singleColumnNumberFormat = ",{1,1:#}";
+            string doubleColumnNumberFormat = ",{1,2:##}";
+            for (int offset = (int)Ability.CooldownIndicator + 1; offset < (int)Ability.Count; offset++)
+            {
+                sb.AppendFormat(gp.AbilityCooldownInSteps((Ability)offset) >= 10 ? doubleColumnNumberFormat : singleColumnNumberFormat,
+                    (Ability)offset,
+                    StateHelper.CooldownRemaining(state, (Ability)offset, gp));
+            }
+            sb.Append(",");
+            for (int i = 0; i < (int)Buff.Count; i++)
+            {
+                sb.AppendFormat(gp.BuffDurationInSteps((Buff)i) >= 10 ? doubleColumnNumberFormat : singleColumnNumberFormat,
+                    (Buff)i,
+                    StateHelper.TimeRemaining(state, (Buff)i, gp));
+            }
+            return sb.ToString();
+        }
+    }
+}
