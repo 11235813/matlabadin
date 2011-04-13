@@ -20,19 +20,19 @@ namespace Matlabadin
         }
         // TODO: move the lists to GenerateGraph and have arrays here as it has a non-trivial performance impact in the CalculateNextStateProbability loop
         public Dictionary<ulong, int> lookup; // maps state to state index
-        public List<ulong> index; // maps state index to state
-        public List<Choice> choice; // maps state index to choice made
-        public List<NextStateTransitionIndex> nextState; // maps state index to choice and corresponding next state indexes
+        public ulong[] index; // maps state index to state
+        public Choice[] choice; // maps state index to choice made
+        public NextStateTransitionIndex[] nextState; // maps state index to choice and corresponding next state indexes
         private GraphParameters gp;
         private Func<ulong, GraphParameters, Ability> nextStateFunction;
         private int nextStateIndexSentinal = -1;
         public void GenerateGraph()
         {
             ulong initialState = 0;
-            lookup = new Dictionary<ulong, int>();
-            index = new List<ulong>();
-            choice = new List<Choice>();
-            nextState = new List<NextStateTransitionIndex>();
+            Dictionary<ulong, int> lookup = new Dictionary<ulong, int>();
+            List<ulong> index = new List<ulong>();
+            List<Choice>  choice = new List<Choice>();
+            List<NextStateTransitionIndex> nextState = new List<NextStateTransitionIndex>();
             index.Add(initialState);
             lookup[initialState] = 0;
             while (index.Count() > nextState.Count())
@@ -73,6 +73,10 @@ namespace Matlabadin
                     nextStateIndex3 = nextStateIndex3,
                 });
             }
+            this.lookup = lookup;
+            this.index = index.ToArray();
+            this.choice = choice.ToArray();
+            this.nextState = nextState.ToArray();
         }
         private void ChangeNextStateIndexSentinal(int newSentinalIndex)
         {
@@ -92,14 +96,14 @@ namespace Matlabadin
         {
             Dictionary<string, double> sumPr = new Dictionary<string, double>();
             double sumDuration = 0;
-            int length = index.Count();
+            int length = index.Length;
             for (int i = 0; i < length; i++)
             {
                 Choice c = choice[i];
                 sumDuration += c.stepsDuration;
                 double currentPr;
-                if (!sumPr.TryGetValue(c.action, out currentPr)) currentPr = 0;
-                sumPr[c.action] = currentPr + pr[i];
+                if (!sumPr.TryGetValue(c.Action, out currentPr)) currentPr = 0;
+                sumPr[c.Action] = currentPr + pr[i];
             }
             averageStepDuration = sumDuration / length * 1.5 / gp.StepsPerGcd;
             return sumPr;
@@ -112,20 +116,20 @@ namespace Matlabadin
         /// <param name="iterationStride">Number of iterations between tolerance checks</param>
         /// <param name="initialState">Initial state probability distribution. Defaults to equal probability for all states.</param>
         /// <returns>Final state probability distribution</returns>
-        public double[] ConvergeStateProbability(double relTolerance = 1e-6, int maxIterations = 4096, int iterationStride = 8, double[] initialState = null)
+        public double[] ConvergeStateProbability(double relTolerance = 1e-6, int maxIterations = 4096, int iterationStride = 16, double[] initialState = null)
         {
             if (iterationStride <= 0) throw new ArgumentException("Stride must be greater than 1");
             if (initialState == null)
             {
                 // Default initial state
-                initialState = new double[nextState.Count + 1];
-                double initialPr = 1.0 / nextState.Count;
+                initialState = new double[nextState.Length + 1];
+                double initialPr = 1.0 / nextState.Length;
                 for (int i = 0; i < initialState.Length; i++) initialState[i] = initialPr;
             }
-            if (initialState.Length < nextState.Count)
+            if (initialState.Length < nextState.Length)
             {
                 // intial state is smaller than the number of states we have
-                double[] newState = new double[nextState.Count + 1];
+                double[] newState = new double[nextState.Length + 1];
                 Array.Copy(initialState, newState, initialState.Length);
                 initialState = newState;
             }
@@ -136,7 +140,7 @@ namespace Matlabadin
             do {
                 for (int j = 0; j < iterationStride - 1; j++) statePr = CalculateNextStateProbability(statePr, dampeningFactor);
                 double[] nextStatePr = CalculateNextStateProbability(statePr, dampeningFactor);
-                CalcualteError(statePr, nextStatePr, out relError, out absError);
+                CalculateError(statePr, nextStatePr, out relError, out absError);
                 statePr = nextStatePr;
                 iteration += iterationStride;
 
@@ -150,7 +154,7 @@ namespace Matlabadin
             } while (relError > relTolerance && iteration < maxIterations);
             return statePr;
         }
-        private void CalcualteError(double[] pr1, double[] pr2, out double relError, out double absError)
+        private void CalculateError(double[] pr1, double[] pr2, out double relError, out double absError)
         {
             relError = 0;
             absError = 0;
@@ -180,7 +184,7 @@ namespace Matlabadin
         /// <returns>Updated state probabilities</returns>
         public double[] CalculateNextStateProbability(double[] pr, double decayFactor = 0)
         {
-            int length = index.Count;
+            int length = index.Length;
             double[] nextPr = new double[length + 1];
             if (this.nextStateIndexSentinal != length)
             {

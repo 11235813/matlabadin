@@ -37,19 +37,19 @@ namespace Matlabadin.Tests
             MatlabadinGraph mg = new MatlabadinGraph(NoMissNoProcsParameters, RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("CS"));
             mg.GenerateGraph();
             SanityCheckGraph(mg);
-            Assert.AreEqual(7, mg.index.Count); // 0-3 HP with CS no/off CD = 7 states + 0 HP CS off CD which is unreachable
+            Assert.AreEqual(7, mg.index.Length); // 0-3 HP with CS no/off CD = 7 states + 0 HP CS off CD which is unreachable
 
             mg = new MatlabadinGraph(NoMissNoProcsParameters, RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("HW"));
             mg.GenerateGraph();
             SanityCheckGraph(mg);
-            Assert.AreEqual(10, mg.index.Count); // HW CD of 0, 3, 6, 9, 12, 15, 18, 21, 24, 27 steps
+            Assert.AreEqual(10, mg.index.Length); // HW CD of 0, 3, 6, 9, 12, 15, 18, 21, 24, 27 steps
         }
         [TestMethod]
         public void CalculateNextStateProbability_ShouldAdvanceStateProbabilitiesByOneState()
         {
             MatlabadinGraph mg = new MatlabadinGraph(NoMissNoProcsParameters, RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("CS"));
             mg.GenerateGraph();
-            double[] pr = new double[mg.index.Count];
+            double[] pr = new double[mg.index.Length];
             pr[0] = 1;
             pr = mg.CalculateNextStateProbability(pr);
             Assert.AreEqual(1, pr.Sum());
@@ -64,7 +64,7 @@ namespace Matlabadin.Tests
         {
             MatlabadinGraph mg = new MatlabadinGraph(NoMissNoProcsParameters, RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("CS"));
             mg.GenerateGraph();
-            double[] pr = new double[mg.index.Count];
+            double[] pr = new double[mg.index.Length];
             pr[0] = 1;
             pr = mg.CalculateNextStateProbability(pr, 0.5);
             Assert.AreEqual(1, pr.Sum());

@@ -9,25 +9,48 @@ namespace Matlabadin
     {
         public static Choice CreateChoice(ulong state, GraphParameters gp, Ability a, int stepsDuration, double option1, double option2, double option3)
         {
-            string action = String.Format("{0}{1}{2}",
-                    a,
-                    (a == Ability.SotR && StateHelper.TimeRemaining(state, Buff.SD, gp) > 0) ? "(SD)" : "",
-                    StateHelper.TimeRemaining(state, Buff.INQ, gp) > 0 ? "(Inq)": "");
-            // TODO: choice cache: return an existing instance when all parameters match.
-            // This will reduce the working set size when calculating probabilities by ~75%
-            // TODO: do not make a String.Format call if the choice is already cached
-            return new Choice(action, stepsDuration, option1, option2, option3);
+            Choice c = new Choice(a,
+                a == Ability.SotR && StateHelper.TimeRemaining(state, Buff.SD, gp) > 0,
+                StateHelper.TimeRemaining(state, Buff.INQ, gp) > 0,
+                stepsDuration, option1, option2, option3);
+            Choice lookupChoice;
+            if (!globalLookup.TryGetValue(c, out lookupChoice))
+            {
+                lookupChoice = c;
+                globalLookup.Add(lookupChoice, lookupChoice);
+            }
+            return lookupChoice;
         }
-        private Choice(string action, int stepsDuration, double option1, double option2, double option3)
+        private static Dictionary<Choice, Choice> globalLookup = new Dictionary<Choice, Choice>();
+        private Choice(Ability ability, bool sotrsd, bool inq, int stepsDuration, double option1, double option2, double option3)
         {
-            this.action = action;
+            this.ability = ability;
+            this.sotrsd = sotrsd;
+            this.inq = inq;
             this.stepsDuration = stepsDuration;
             this.option1 = option1;
             this.option2 = option2;
             this.option3 = option3;
         }
         // Output related
-        public readonly string action;
+        public string Action
+        {
+            get
+            {
+                if (action == null)
+                {
+                    action = ability.ToString();
+                    if (sotrsd) action += "(SD)";
+                    if (inq) action += "(Inq)";
+                }
+                return action;
+            }
+        }
+        private string action;
+        private readonly Ability ability;
+        private readonly bool sotrsd;
+        private readonly bool inq;
+        
 
         // required for aggregration
         public readonly int stepsDuration;
@@ -42,7 +65,9 @@ namespace Matlabadin
         }
         public bool Equals(Choice c)
         {
-            return action == c.action
+            return ability == c.ability
+                && sotrsd == c.sotrsd
+                && inq == c.inq
                 && stepsDuration == c.stepsDuration
                 && option1 == c.option1
                 && option2 == c.option2
@@ -50,7 +75,11 @@ namespace Matlabadin
         }
         public override int GetHashCode()
         {
-            return action.GetHashCode() ^ stepsDuration.GetHashCode() ^ option1.GetHashCode() ^ option2.GetHashCode() ^ option3.GetHashCode();
+            int hash = stepsDuration.GetHashCode() ^ option1.GetHashCode() ^ option2.GetHashCode() ^ option3.GetHashCode();
+            if (inq) hash ^= 1 << 28;
+            if (sotrsd) hash ^= 1 << 27;
+            hash += (int)ability << 16;
+            return hash;
         }
     }
 }
