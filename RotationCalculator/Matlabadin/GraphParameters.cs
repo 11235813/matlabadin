@@ -80,6 +80,7 @@ namespace Matlabadin
             }
             if (bit > 64) throw new ArgumentOutOfRangeException("bit-encoded state space larger than 64 bit");
         }
+        // should be read-only but direct access is given to improve StateHelper performance
         public int[] AbilityCooldownStartBit;
         public int[] AbilityCooldownBits;
         public int[] BuffDurationStartBit;

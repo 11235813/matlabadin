@@ -18,12 +18,14 @@ namespace Matlabadin
             public int nextStateIndex2;
             public int nextStateIndex3;
         }
+        // TODO: move the lists to GenerateGraph and have arrays here as it has a non-trivial performance impact in the CalculateNextStateProbability loop
         public Dictionary<ulong, int> lookup; // maps state to state index
         public List<ulong> index; // maps state index to state
         public List<Choice> choice; // maps state index to choice made
         public List<NextStateTransitionIndex> nextState; // maps state index to choice and corresponding next state indexes
         private GraphParameters gp;
         private Func<ulong, GraphParameters, Ability> nextStateFunction;
+        private int nextStateIndexSentinal = -1;
         public void GenerateGraph()
         {
             ulong initialState = 0;
@@ -41,9 +43,9 @@ namespace Matlabadin
                 ulong nextState1;
                 ulong nextState2;
                 ulong nextState3;
-                int nextStateIndex1 = -1;
-                int nextStateIndex2 = -1;
-                int nextStateIndex3 = -1;
+                int nextStateIndex1 = nextStateIndexSentinal;
+                int nextStateIndex2 = nextStateIndexSentinal;
+                int nextStateIndex3 = nextStateIndexSentinal;
                 Choice c = NextStates(currentState, abilityChosen, gp, out nextState1, out nextState2, out nextState3);
                 if (nextState1 != UInt64.MaxValue && !lookup.TryGetValue(nextState1, out nextStateIndex1))
                 {
@@ -72,11 +74,26 @@ namespace Matlabadin
                 });
             }
         }
+        private void ChangeNextStateIndexSentinal(int newSentinalIndex)
+        {
+            int length = nextState.Count();
+            for (int i = 0; i < length; i++)
+            {
+                nextState[i] = new NextStateTransitionIndex()
+                {
+                    nextStateIndex1 = nextState[i].nextStateIndex1 == nextStateIndexSentinal ? newSentinalIndex : nextState[i].nextStateIndex1,
+                    nextStateIndex2 = nextState[i].nextStateIndex2 == nextStateIndexSentinal ? newSentinalIndex : nextState[i].nextStateIndex2,
+                    nextStateIndex3 = nextState[i].nextStateIndex3 == nextStateIndexSentinal ? newSentinalIndex : nextState[i].nextStateIndex3,
+                };
+            }
+            nextStateIndexSentinal = newSentinalIndex;
+        }
         public Dictionary<string, double> CalculateAggregates(double[] pr, out double averageStepDuration)
         {
             Dictionary<string, double> sumPr = new Dictionary<string, double>();
             double sumDuration = 0;
-            for (int i = 0; i < pr.Length; i++)
+            int length = index.Count();
+            for (int i = 0; i < length; i++)
             {
                 Choice c = choice[i];
                 sumDuration += c.stepsDuration;
@@ -84,58 +101,70 @@ namespace Matlabadin
                 if (!sumPr.TryGetValue(c.action, out currentPr)) currentPr = 0;
                 sumPr[c.action] = currentPr + pr[i];
             }
-            averageStepDuration = sumDuration / pr.Length * 1.5 / gp.StepsPerGcd;
+            averageStepDuration = sumDuration / length * 1.5 / gp.StepsPerGcd;
             return sumPr;
         }
-        public double[] ConvergeStateProbability(double relTolerance = 1e-6, int maxIterations = 2048, double[] initialState = null)
+        /// <summary>
+        /// Calcualtes the state probabilities for the given graph using iterative approximation.
+        /// </summary>
+        /// <param name="relTolerance">Minimum relative tolerance at which to stop iterating early.</param>
+        /// <param name="maxIterations">Maximum number of iterations.</param>
+        /// <param name="iterationStride">Number of iterations between tolerance checks</param>
+        /// <param name="initialState">Initial state probability distribution. Defaults to equal probability for all states.</param>
+        /// <returns>Final state probability distribution</returns>
+        public double[] ConvergeStateProbability(double relTolerance = 1e-6, int maxIterations = 4096, int iterationStride = 8, double[] initialState = null)
         {
+            if (iterationStride <= 0) throw new ArgumentException("Stride must be greater than 1");
             if (initialState == null)
             {
                 // Default initial state
-                initialState = new double[nextState.Count];
+                initialState = new double[nextState.Count + 1];
                 double initialPr = 1.0 / nextState.Count;
                 for (int i = 0; i < initialState.Length; i++) initialState[i] = initialPr;
             }
             if (initialState.Length < nextState.Count)
             {
                 // intial state is smaller than the number of states we have
-                double[] newState = new double[nextState.Count];
+                double[] newState = new double[nextState.Count + 1];
                 Array.Copy(initialState, newState, initialState.Length);
                 initialState = newState;
             }
             double[] statePr = initialState;
-            double lastAbsError = 1;
-            double decayFactor = 0;
-            double relError = 0;
-            double absError = 0;
+            double relError, absError;
+            double dampeningFactor = 0;
             int iteration = 0;
             do {
-                relError = 0;
-                absError = 0;
-                // TODO: only check errors every few iterations as checking the error
-                // take non-trivial time compared to actually doing an iteration
-                double[] nextStatePr = CalculateNextStateProbability(statePr, decayFactor);
-                for (int i = 0; i < nextStatePr.Length; i++)
-                {
-                    double currentAbsError = Math.Abs(statePr[i] - nextStatePr[i]);
-                    absError = Math.Max(currentAbsError, absError);
-                    if (currentAbsError > 0)
-                    {
-                        double currentRelError = currentAbsError / Math.Max(statePr[i], nextStatePr[i]);
-                        relError = Math.Max(relError, currentRelError);
-                    }
-                }
-                if (iteration > 64 && absError == lastAbsError)
-                {
-                    // give it some time to clear out the zero states.
-                    // If we're still not converging it's likely to be oscillation
-                    // start dampening the oscillations
-                    decayFactor = 0.25;
-                }
-                lastAbsError = absError;
+                for (int j = 0; j < iterationStride - 1; j++) statePr = CalculateNextStateProbability(statePr, dampeningFactor);
+                double[] nextStatePr = CalculateNextStateProbability(statePr, dampeningFactor);
+                CalcualteError(statePr, nextStatePr, out relError, out absError);
                 statePr = nextStatePr;
-            } while (relError > relTolerance && ++iteration < maxIterations);
+                iteration += iterationStride;
+
+                if (iteration > 64)
+                {
+                    // Many (most?) rotations such as CS and SotR>CS>J oscillate when miss=0
+                    // as the harmonics can be difficult to detect as the period is not known
+                    // beforehand, we start decaying after an initial number of steps.
+                    dampeningFactor = 0.125;
+                }
+            } while (relError > relTolerance && iteration < maxIterations);
             return statePr;
+        }
+        private void CalcualteError(double[] pr1, double[] pr2, out double relError, out double absError)
+        {
+            relError = 0;
+            absError = 0;
+            int length = pr1.Length;
+            for (int i = 0; i < length; i++)
+            {
+                double currentAbsError = Math.Abs(pr1[i] - pr2[i]);
+                absError = Math.Max(currentAbsError, absError);
+                if (currentAbsError > 0)
+                {
+                    double currentRelError = currentAbsError / Math.Max(pr1[i], pr2[i]);
+                    relError = Math.Max(relError, currentRelError);
+                }
+            }
         }
         /// <summary>
         /// Calculates new state probabilities
@@ -151,25 +180,35 @@ namespace Matlabadin
         /// <returns>Updated state probabilities</returns>
         public double[] CalculateNextStateProbability(double[] pr, double decayFactor = 0)
         {
-            double[] nextPr = new double[index.Count];
-            for (int i = 0; i < index.Count; i++)
+            int length = index.Count;
+            double[] nextPr = new double[length + 1];
+            if (this.nextStateIndexSentinal != length)
+            {
+                // change our sentinal value to a placeholder state at the end of the probability array
+                ChangeNextStateIndexSentinal(length);
+            }
+            for (int i = 0; i < length; i++)
             {
                 double statePr = pr[i];
                 NextStateTransitionIndex next = nextState[i];
                 Choice c = choice[i];
-                // TODO: use a sentinal state pr[index.Count] to remove the branching
-                if (next.nextStateIndex1 >= 0) nextPr[next.nextStateIndex1] += pr[i] * c.option1;
-                if (next.nextStateIndex2 >= 0) nextPr[next.nextStateIndex2] += pr[i] * c.option2;
-                if (next.nextStateIndex3 >= 0) nextPr[next.nextStateIndex3] += pr[i] * c.option3;
+                // as we're using a sentinal state, we don't need an
+                // if (next.nextStateIndexN != nextStateIndexSentinal)
+                // conditional which saves us from branching in this expensive
+                // inner loop
+                nextPr[next.nextStateIndex1] += pr[i] * c.option1;
+                nextPr[next.nextStateIndex2] += pr[i] * c.option2;
+                nextPr[next.nextStateIndex3] += pr[i] * c.option3;
             }
             if (decayFactor != 0)
             {
                 double updatedPortion = 1 - decayFactor;
-                for (int i = 0; i < pr.Length; i++)
+                for (int i = 0; i < length; i++)
                 {
                     nextPr[i] = decayFactor * pr[i] + updatedPortion * nextPr[i];
                 }
             }
+            if (nextPr.Last() > 0) throw new Exception("Sanity check failure: sentinal value has non-zero probability");
             return nextPr;
         }
         public static Choice NextStates(
