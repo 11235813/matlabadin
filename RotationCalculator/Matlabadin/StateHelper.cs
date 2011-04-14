@@ -7,6 +7,75 @@ namespace Matlabadin
 {
     public static class StateHelper
     {
+        public static Choice NextStates(
+            ulong state,
+            Ability a,
+            GraphParameters gp,
+            out ulong nextState1,
+            out ulong nextState2,
+            out ulong nextState3)
+        {
+            int waitSteps = StateHelper.CooldownRemaining(state, a, gp);
+            double pr1 = 0;
+            double pr2 = 0;
+            double pr3 = 0;
+            nextState1 = UInt64.MaxValue;
+            nextState2 = UInt64.MaxValue;
+            nextState3 = UInt64.MaxValue;
+            switch (a)
+            {
+                case Ability.J:
+                    nextState1 = StateHelper.UseAbility(state, gp, a, waitSteps);
+                    nextState2 = StateHelper.UseAbility(state, gp, a, waitSteps, sdProc: true); // sd
+                    pr2 = gp.RangeHit * gp.SDProcRate;
+                    pr1 = 1 - pr2;
+                    break;
+                case Ability.AS:
+                    nextState1 = StateHelper.UseAbility(state, gp, a, waitSteps, false); // miss
+                    nextState2 = StateHelper.UseAbility(state, gp, a, waitSteps, true); // hit
+                    nextState3 = StateHelper.UseAbility(state, gp, a, waitSteps, true, sdProc: true); // sd
+                    pr3 = gp.RangeHit * gp.SDProcRate;
+                    pr1 = 1 - gp.RangeHit;
+                    pr2 = 1 - pr1 - pr3;
+                    break;
+                case Ability.HotR:
+                case Ability.CS:
+                    nextState1 = StateHelper.UseAbility(state, gp, a, waitSteps, false); // miss
+                    nextState2 = StateHelper.UseAbility(state, gp, a, waitSteps, true); // hit
+                    nextState3 = StateHelper.UseAbility(state, gp, a, waitSteps, true, gcProc: true); // gc
+                    pr1 = 1 - gp.MeleeHit;
+                    pr3 = gp.MeleeHit * gp.GCProcRate;
+                    pr2 = 1 - pr1 - pr3;
+                    break;
+                case Ability.SotR:
+                    nextState1 = StateHelper.UseAbility(state, gp, a, waitSteps, false); // miss
+                    nextState2 = StateHelper.UseAbility(state, gp, a, waitSteps, true); // hit
+                    pr1 = 1 - gp.MeleeHit;
+                    pr2 = gp.MeleeHit;
+                    break;
+                case Ability.WoG:
+                    nextState1 = StateHelper.UseAbility(state, gp, a, waitSteps);
+                    nextState2 = StateHelper.UseAbility(state, gp, a, waitSteps, egProc: true);
+                    pr2 = StateHelper.TimeRemaining(state, Buff.EGICD, gp) > 0 ? 0 : gp.EGProcRate; // only proc if EG off ICD
+                    pr1 = 1 - pr2;
+                    break;
+                case Ability.Cons:
+                case Ability.HW:
+                case Ability.Inq:
+                case Ability.HoW:
+                case Ability.Nothing:
+                    // Only one state transition for these
+                    nextState1 = StateHelper.UseAbility(state, gp, a, waitSteps);
+                    pr1 = 1;
+                    break;
+                default:
+                    throw new ArgumentException(String.Format("Unknown ability {0}", a));
+            }
+            if (pr1 == 0) nextState1 = UInt64.MaxValue;
+            if (pr2 == 0) nextState2 = UInt64.MaxValue;
+            if (pr3 == 0) nextState3 = UInt64.MaxValue;
+            return Choice.CreateChoice(state, gp, a, waitSteps + gp.StepsPerGcd, pr1, pr2, pr3);
+        }
         public static bool GcWillProcHP(ulong state, GraphParameters gp)
         {
             return TimeRemaining(state, Buff.GC, gp) > 0 && TimeRemaining(state, Buff.GCICD, gp) == 0;

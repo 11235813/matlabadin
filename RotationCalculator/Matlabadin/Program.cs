@@ -42,7 +42,7 @@ namespace Matlabadin
         {
             string message = "Matlabadin.exe <rotation> <stepsPerGcd> <useConsGlyph> <mehit> <rhit> <sdProcRate> <gcProcRate> <egProcRate>";
             Console.WriteLine(message);
-            throw new ArgumentException(message);
+            Environment.Exit(1);
         }
     }
 }

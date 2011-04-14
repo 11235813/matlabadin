@@ -20,7 +20,7 @@ namespace Matlabadin.Tests
         {
             MatlabadinGraph mg = new MatlabadinGraph(gp, RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("CS"));
             ulong s1, s2, s3;
-            Choice c = MatlabadinGraph.NextStates(state, a, gp, out s1, out s2, out s3);
+            Choice c = StateHelper.NextStates(state, a, gp, out s1, out s2, out s3);
             Assert.IsTrue(expectedPr1 == 0 && expectedState1 == UInt64.MaxValue || expectedPr1 != 0 && expectedState1 != UInt64.MaxValue);
             Assert.IsTrue(expectedPr2 == 0 && expectedState2 == UInt64.MaxValue || expectedPr2 != 0 && expectedState2 != UInt64.MaxValue);
             Assert.IsTrue(expectedPr3 == 0 && expectedState3 == UInt64.MaxValue || expectedPr3 != 0 && expectedState3 != UInt64.MaxValue);
