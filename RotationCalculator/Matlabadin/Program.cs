@@ -9,7 +9,7 @@ namespace Matlabadin
     {
         public static void Main(string[] args)
         {
-            if (args.Length != 8) Usage();
+            if (args.Length < 8) Usage();
             string rotation = args[0];
             int stepsPerGcd;
             bool useConsGlyph;
@@ -27,16 +27,29 @@ namespace Matlabadin
             DateTime startGraph = DateTime.Now;
             graph.GenerateGraph();
             DateTime startPr = DateTime.Now;
-            double[] pr = graph.ConvergeStateProbability();
+            int iterationsPerformed;
+            double relTolerance, absTolerance;
+            double[] pr = graph.ConvergeStateProbability(
+                out iterationsPerformed,
+                out relTolerance,
+                out absTolerance);
             DateTime startAggregate = DateTime.Now;
             double avgDuration;
             var result = graph.CalculateAggregates(pr, out avgDuration);
             DateTime startPrint = DateTime.Now;
-            Console.WriteLine("AvgDuration,{0}", avgDuration);
-            foreach (var entry in result)
+            foreach (var key in result.Keys.OrderBy(k => k))
             {
-                Console.WriteLine("{0},{1}", entry.Key, entry.Value);
+                Console.WriteLine("{0},{1}", key, result[key]);
             }
+            Console.WriteLine("AvgDuration,{0}", avgDuration);
+            Console.WriteLine("Stats_StateSize_Total,{0}", graph.index.Length);
+            Console.WriteLine("Stats_StateSize_NonZero,{0}", pr.Count(p => p > 0));
+            Console.WriteLine("Stats_Iterations,{0}", iterationsPerformed);
+            Console.WriteLine("Stats_Tolerance_Relative,{0}", relTolerance);
+            Console.WriteLine("Stats_Tolerance_Absolute,{0}", absTolerance);
+            Console.WriteLine("Stats_Time_GenerateGraph,{0}", (startPr - startGraph).TotalSeconds);
+            Console.WriteLine("Stats_Time_Converge,{0}", (startAggregate - startPr).TotalSeconds);
+            Console.WriteLine("Stats_Time_Aggregate,{0}", (startPrint - startAggregate).TotalSeconds);
         }
         public static void Usage()
         {
