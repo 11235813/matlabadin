@@ -115,7 +115,15 @@ namespace Matlabadin
         /// <param name="iterationStride">Number of iterations between tolerance checks</param>
         /// <param name="initialState">Initial state probability distribution. Defaults to equal probability for all states.</param>
         /// <returns>Final state probability distribution</returns>
-        public double[] ConvergeStateProbability(double relTolerance = 1e-6, int maxIterations = 4096, int iterationStride = 16, double[] initialState = null)
+        public double[] ConvergeStateProbability(
+            out int iterationsPerformed,
+            out double finalRelTolerance,
+            out double finalAbsTolerance,
+            double relTolerance = 1e-8,
+            double absTolerance = 1e-10,
+            int maxIterations = 4096,
+            int iterationStride = 16,
+            double[] initialState = null)
         {
             if (iterationStride <= 0) throw new ArgumentException("Stride must be greater than 1");
             if (initialState == null)
@@ -150,7 +158,19 @@ namespace Matlabadin
                     // beforehand, we start decaying after an initial number of steps.
                     dampeningFactor = 0.125;
                 }
-            } while (relError > relTolerance && iteration < maxIterations);
+                // some 0 probability subgraphs take a very long time to converge.
+                // For example: the graph A->B, B->C, C->D, D->E, E->A(0.5), E->F(0.5), F->F
+                // will have it's relative tolerance of 0.5 (undampened) until
+                // floating point rounding sets them to zero at A,B,C,D,E~=1e-324
+                // this takes many iterations so as a short-cut, we zero out any
+                // sufficiently small state.
+                // Theoretically, a large number of very small states could have a non-trivial
+                // effect on the actual probabilities.
+                ZeroVerySmallValues(statePr, absTolerance / index.Length / 2);
+            } while ((relError > relTolerance || absError > absTolerance) && iteration < maxIterations);
+            iterationsPerformed = iteration;
+            finalRelTolerance = relError;
+            finalAbsTolerance = absError;
             return statePr;
         }
         private void CalculateError(double[] pr1, double[] pr2, out double relError, out double absError)
@@ -167,6 +187,18 @@ namespace Matlabadin
                     double currentRelError = currentAbsError / Math.Max(pr1[i], pr2[i]);
                     relError = Math.Max(relError, currentRelError);
                 }
+            }
+        }
+        /// <summary>
+        /// Zeroes out any probabilities that could have no effect on the result
+        /// due to floating point rounding truncation.
+        /// </summary>
+        /// <param name="pr">Probabilities to process</param>
+        private void ZeroVerySmallValues(double[] pr, double minValue)
+        {
+            for (int i = 0; i < pr.Length; i++)
+            {
+                if (pr[i] < minValue) pr[i] = 0;
             }
         }
         /// <summary>
