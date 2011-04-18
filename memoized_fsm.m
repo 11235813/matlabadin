@@ -21,9 +21,26 @@ function  [actionPr, avgDuration, metadata] = memoized_fsm(rotation, mehit, rhit
 	end
 	filename = strcat('data\\', key, '.csv');
 	if exist(filename) != 2
+		if exist('RotationCalculator') != 7
+			pwd
+			error('Please set your working directory to the matlabadin root');
+		end
+		executable = 'RotationCalculator\Matlabadin\bin\Release\Matlabadin.exe';
+		if exist(executable) != 2
+			executable = 'fsm.exe';
+			if exist(executable) != 2
+				% Attempt to compile
+				% try 32 bit
+				system('%SYSTEMROOT%\Microsoft.NET\Framework\v4.0.30319\csc.exe /o+ /debug- /out:fsm.exe RotationCalculator\Matlabadin\*.cs >nul 2>&1');
+				% then overwrite with 64 bit if available
+				system('%SYSTEMROOT%\Microsoft.NET\Framework64\v4.0.30319\csc.exe /o+ /debug- /out:fsm.exe RotationCalculator\Matlabadin\*.cs >nul 2>&1');
+				if exist(executable) != 2
+					error('Please install version 4 of the .NET framework or mono. .NET 4 can be downloaded from: http://www.microsoft.com/downloads/en/details.aspx?FamilyID=5765d7a8-7722-4888-a970-ac39b33fd8ab&displaylang=en');
+				end
+			end			
+		end
 		commandToExecute = sprintf('%s "%s" 3 %s %f %f %f %f %f > %s', ...
-			'RotationCalculator\Matlabadin\bin\Release\Matlabadin.exe', ...
-			rotation, strConsGlyph, mehit, rhit, egProcRate, sdProcRate, gcProcRate, filename);
+			executable, rotation, strConsGlyph, mehit, rhit, egProcRate, sdProcRate, gcProcRate, filename);
 		system(commandToExecute);
 	end
 	[actionPr, avgDuration, metadata] = load_fsm_csv(filename);
