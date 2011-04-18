@@ -114,6 +114,13 @@ tree(k).prot(6,2)=0;
 points(k)=tree(1).prot(6,2);
 name{k}='Sacred Duty';
 
+%Eternal Glory
+k=k+1;
+tree(k)=tree(1);
+tree(k).prot(1,3)=0;
+points(k)=tree(1).prot(1,3);
+name{k}='Eternal Glory';
+
 %% Configurations
 %set melee hit to 2%, expertise to 10, mastery to 390 (16.5 mastery);
 %do this by altering helm stats
