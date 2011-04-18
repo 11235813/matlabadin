@@ -78,7 +78,7 @@ namespace Matlabadin.Tests
         {
             MatlabadinGraph mg = new MatlabadinGraph(NoMissNoProcsParameters, RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("CS"));
             mg.GenerateGraph();
-            double[] pr = mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance);
+            double[] pr = mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance);
             Assert.AreEqual(0.5, pr[mg.lookup[GetState(Ability.CS, 3, 3)]], Tolerance);
             Assert.AreEqual(0.5, pr[mg.lookup[GetState(Ability.CS, 0, 3)]], Tolerance);
 
@@ -90,18 +90,65 @@ namespace Matlabadin.Tests
             Assert.AreEqual(1.5, stepDuration, Tolerance);
         }
         [TestMethod]
-        public void ConvergeStateProbability_ShouldStopAfterToleranceAchieved()
+        public void ConvergeStateProbability_ShouldStopAfterRelativeToleranceAchieved()
         {
             MatlabadinGraph mg = new MatlabadinGraph(DefaultParameters, RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("CS"));
             mg.GenerateGraph();
-            double tol = 1e-6;
+            double relTol = 1e-3;
+            double absTol = 1e-14;
             int maxIterations = 4096;
             int stride = 2;
-            mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: tol, maxIterations: maxIterations, iterationStride: stride);
+            mg.ConvergeStateProbability(
+                out iterationsTaken, out finalRelError, out finalAbsError,
+                relTolerance: relTol,
+                absTolerance: absTol,
+                maxIterations: maxIterations,
+                iterationStride: stride);
             if (iterationsTaken >= maxIterations) Assert.Inconclusive("Tolerance not reached before max iterations");
-            mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: tol, maxIterations: iterationsTaken - stride, iterationStride: stride);
+            mg.ConvergeStateProbability(
+                out iterationsTaken, out finalRelError, out finalAbsError,
+                relTolerance: relTol,
+                absTolerance: absTol,
+                maxIterations: iterationsTaken - stride,
+                iterationStride: stride);
             // go back a stride and check that our tolerance was not achieved
-            Assert.IsTrue(finalRelError > tol);
+            Assert.IsTrue(finalRelError > relTol);
+        }
+        [TestMethod]
+        public void ConvergeStateProbability_ShouldStopAfterAbsoluteToleranceAchieved()
+        {
+            MatlabadinGraph mg = new MatlabadinGraph(DefaultParameters, RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("CS"));
+            mg.GenerateGraph();
+            double relTol = 1e-14;
+            double absTol = 1e-3;
+            int maxIterations = 4096;
+            int stride = 2;
+            mg.ConvergeStateProbability(
+                out iterationsTaken, out finalRelError, out finalAbsError,
+                relTolerance: relTol,
+                absTolerance: absTol,
+                maxIterations: maxIterations,
+                iterationStride: stride);
+            if (iterationsTaken >= maxIterations) Assert.Inconclusive("Tolerance not reached before max iterations");
+            mg.ConvergeStateProbability(
+                out iterationsTaken, out finalRelError, out finalAbsError,
+                relTolerance: relTol,
+                absTolerance: absTol,
+                maxIterations: iterationsTaken - stride,
+                iterationStride: stride);
+            // go back a stride and check that our tolerance was not achieved
+            Assert.IsTrue(finalAbsError > absTol);
+        }
+        [TestMethod]
+        public void ConvergeStateProbability_ShouldConverge()
+        {
+            MatlabadinGraph mg = new MatlabadinGraph(
+                new GraphParameters(3, false, 0.98, 0.95, 0.5, 0.2, 0.3),
+                RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("SotR>CS>J>AS>HW>Cons"));
+            mg.GenerateGraph();
+            int maxIterations = 8192; // 99% hit does not converge after 4096
+            mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, maxIterations: maxIterations);
+            Assert.AreNotEqual(maxIterations, iterationsTaken);
         }
         [TestMethod]
         public void CalculateAggregates_HW()
@@ -110,7 +157,7 @@ namespace Matlabadin.Tests
             mg.GenerateGraph();
             double stepDuration;
             var result = mg.CalculateAggregates(
-                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance),
+                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance),
                 out stepDuration);
             Assert.AreEqual(0.1, result["HW"], Tolerance);
             Assert.AreEqual(0.9, result["Nothing"], Tolerance);
@@ -123,7 +170,7 @@ namespace Matlabadin.Tests
             mg.GenerateGraph();
             double stepDuration;
             var result = mg.CalculateAggregates(
-                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance),
+                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance),
                 out stepDuration);
             Assert.AreEqual(0.5, result["CS"], Tolerance);
             Assert.AreEqual(1d / 6, result["SotR"], Tolerance);
@@ -137,7 +184,7 @@ namespace Matlabadin.Tests
             mg.GenerateGraph();
             double stepDuration;
             var result = mg.CalculateAggregates(
-                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance),
+                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance),
                 out stepDuration);
             Assert.AreEqual(0.5, result["CS"], Tolerance);
             Assert.AreEqual(1d / 6 / 2, result["SotR"], Tolerance); // 50% proc rate on SD
@@ -149,7 +196,7 @@ namespace Matlabadin.Tests
             mg = new MatlabadinGraph(NoMissNoProcsParameters, RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("SotR>CS>J"));
             mg.GenerateGraph();
             result = mg.CalculateAggregates(
-                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance),
+                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance),
                 out stepDuration);
             Assert.AreEqual(1d / 6, result["SotR"], Tolerance);
             if (result.ContainsKey("SotR(SD)")) Assert.AreEqual(0d, result["SotR(SD)"], Tolerance);
