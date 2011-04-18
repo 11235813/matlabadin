@@ -1,21 +1,18 @@
-%    Prot Pal Rotation state machine
-%    Copyright (C) 2011 Daniel Cameron
-%
-%    This program is free software: you can redistribute it and/or modify
-%    it under the terms of the GNU General Public License as published by
-%    the Free Software Foundation, either version 3 of the License, or
-%    (at your option) any later version.
-%
-%    This program is distributed in the hope that it will be useful,
-%    but WITHOUT ANY WARRANTY; without even the implied warranty of
-%    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-%    GNU General Public License for more details.
-%
-%    You should have received a copy of the GNU General Public License
-%    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-graphParameters = struct('spmiss', 0.08, 'miss', 0.08, 'dodge', 0.065, 'parry', 0.14, 'egProcRate', 0.3, 'sdProcRate', 0.5, 'gcProcRate', 0.2);
-graphParameters.priorityQueue = {'SotR', 'CS', 'J', 'AS', 'Cons','HW'};
-tic();
-[action, pr] = fsm(graphParameters)
-toc()
+% plot some stuff:
+1;
+% soft cap is 6.5% dodge or 26 expertise, and the hard cap is 14% parry or 56 expertise
+function [z] = CS_Pr(hit, expertise)
+	mehit = 1 - 0.05*(1-min(1,hit/960)) - 0.065*(1-min(1, expertise/26)) - 0.14*(1-min(1, expertise/56));
+	rhit = 1 - 0.05*(1-min(1,hit/960));
+	actionPr = memoized_fsm('SotR>CS>J>AS', mehit, rhit, 0, 0.5, 0.2, 0.3);
+	z = actionPr{2, 2};
+end
+function matrixResult = matrixfun2(f, matrix1, matrix2)
+	for i = 1:length(matrix1) % for each row
+		for j = 1:length(matrix1(i, :))
+			matrixResult(i, j) = f(matrix1(i, j), matrix2(i, j));
+		end
+	end
+end
+[xxhit,yyexp]=meshgrid(0:80:960,0:4:56);
+mesh(xxhit, yyexp, matrixfun2(@(x,y)CS_Pr(x,y), xxhit, yyexp))
