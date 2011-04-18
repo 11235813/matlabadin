@@ -151,13 +151,14 @@ namespace Matlabadin
                 statePr = nextStatePr;
                 iteration += iterationStride;
 
-                if (iteration > 64)
-                {
-                    // Many (most?) rotations such as CS and SotR>CS>J oscillate when miss=0
-                    // as the harmonics can be difficult to detect as the period is not known
-                    // beforehand, we start decaying after an initial number of steps.
-                    dampeningFactor = 0.125;
-                }
+                // Many (most?) rotations such as CS and SotR>CS>J oscillate when miss=0
+                // As the harmonics can be difficult to detect as the period is not known
+                // beforehand, we start decaying after an initial number of steps.
+                // If we dampen every iteration, relative tolerance will always be high
+                // and we will never terminate due to small relative tolerance so we only
+                // dampen sometimes
+                dampeningFactor = ((iteration / iterationStride) % 4 == 3) ? 0.25 : 0;
+
                 // some 0 probability subgraphs take a very long time to converge.
                 // For example: the graph A->B, B->C, C->D, D->E, E->A(0.5), E->F(0.5), F->F
                 // will have it's relative tolerance of 0.5 (undampened) until
@@ -167,7 +168,7 @@ namespace Matlabadin
                 // Theoretically, a large number of very small states could have a non-trivial
                 // effect on the actual probabilities.
                 ZeroVerySmallValues(statePr, absTolerance / index.Length / 2);
-            } while ((relError > relTolerance || absError > absTolerance) && iteration < maxIterations);
+            } while (relError > relTolerance && absError > absTolerance && iteration < maxIterations);
             iterationsPerformed = iteration;
             finalRelTolerance = relError;
             finalAbsTolerance = absError;

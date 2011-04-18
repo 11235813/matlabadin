@@ -50,6 +50,13 @@ namespace Matlabadin
             Console.WriteLine("Stats_Time_GenerateGraph,{0}", (startPr - startGraph).TotalSeconds);
             Console.WriteLine("Stats_Time_Converge,{0}", (startAggregate - startPr).TotalSeconds);
             Console.WriteLine("Stats_Time_Aggregate,{0}", (startPrint - startAggregate).TotalSeconds);
+            Console.WriteLine("Param_Rotation,{0}", rotation);
+            Console.WriteLine("Param_Hit_Melee,{0}", mehit);
+            Console.WriteLine("Param_Hit_Ranged,{0}", rhit);
+            Console.WriteLine("Param_Glyph_Cons,{0}", useConsGlyph);
+            Console.WriteLine("Param_ProcRate_SD,{0}", sd);
+            Console.WriteLine("Param_ProcRate_GC,{0}", gc);
+            Console.WriteLine("Param_ProcRate_EG,{0}", eg);
         }
         public static void Usage()
         {
