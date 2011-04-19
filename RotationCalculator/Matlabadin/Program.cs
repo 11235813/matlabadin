@@ -7,6 +7,8 @@ namespace Matlabadin
 {
     public class Program
     {
+		public const double BaseMeleeHit = 1.0 - 0.08 - 0.065 - 0.14;
+		public const double BaseRangeHit = 1.0 - 0.08;
         public static void Main(string[] args)
         {
             if (args.Length < 8) Usage();
@@ -21,6 +23,18 @@ namespace Matlabadin
             if (!Double.TryParse(args[5], out sd)) Usage();
             if (!Double.TryParse(args[6], out gc)) Usage();
             if (!Double.TryParse(args[7], out eg)) Usage();
+			
+			if (mehit < BaseMeleeHit) Console.Error.WriteLine("Warning: {0} melee hit would require negative hit rating", mehit);
+			if (rhit < BaseRangeHit) Console.Error.WriteLine("Warning: {0} range hit would require negative hit rating", rhit);
+			if (sd > 0.5) Console.Error.WriteLine("Warning: SD proc rate of {0} requires more than 2 talent points", sd);
+			if (gc > 0.2) Console.Error.WriteLine("Warning: GC proc rate of {0} requires more than 2 talent points", gc);
+			if (eg > 0.3) Console.Error.WriteLine("Warning: EG proc rate of {0} requires more than 2 talent points", eg);
+			if (mehit > 1) { Console.Error.WriteLine("Warning: invalid melee hit {0}", mehit); Usage(); }
+			if (rhit > 1) { Console.Error.WriteLine("Warning: invalid range hit {0}", rhit); Usage(); }
+			if (sd < 0) { Console.Error.WriteLine("Warning: invalid sd proc rate {0}", sd); Usage(); }
+			if (gc < 0) { Console.Error.WriteLine("Warning: invalid sd proc rate {0}", gc); Usage(); }
+			if (eg < 0) { Console.Error.WriteLine("Warning: invalid sd proc rate {0}", eg); Usage(); }
+			if (stepsPerGcd != 1 && stepsPerGcd != 3 && stepsPerGcd != 5) Console.Error.WriteLine("Warning: {0} steps per GCD is untested", stepsPerGcd);
 
             GraphParameters gp = new GraphParameters(stepsPerGcd, useConsGlyph, mehit, rhit, sd, gc, eg);
             MatlabadinGraph graph = new MatlabadinGraph(gp, RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction(rotation));
