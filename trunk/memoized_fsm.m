@@ -1,27 +1,31 @@
-function  [actionPr, avgDuration, metadata] = memoized_fsm(rotation, mehit, rhit, consGlyph, egProcRate, sdProcRate, gcProcRate)
+function  [actionPr, avgDuration, metadata] = memoized_fsm(rotation, mehit, rhit, consGlyph, egTalentPoints , sdTalentPoints, gcTalentPoints )
 	global fsm_cache_actionPr;
 	global fsm_cache_avgDuration;
 	global fsm_cache_metadata;
+	rotationKey = rotation;
+	rotationKey = strrep(rotationKey, '>', '_');
+	rotationKey = strrep(rotationKey, '*', 'star');
+	rotationKey = strrep(rotationKey, '''', 'prime');
+	optionsKey = sprintf('T%g%g%g_%0.5f_%0.5f', egTalentPoints , sdTalentPoints, gcTalentPoints, mehit, rhit);
+	optionsKey = strrep(optionsKey,'_1.00000','_1_');
+    optionsKey = strrep(optionsKey,'_0.','_');
 	if consGlyph
 		strConsGlyph = 'true';
+		optionsKey = strcat(optionsKey, '_cons');
 	else
 		strConsGlyph = 'false';
 	end
-	key = sprintf('fsmdata_%s_3_%0.4f_%0.4f_%s_%g_%g_%g', rotation, mehit, rhit, strConsGlyph(1), round(egProcRate./0.15), round(sdProcRate./0.25), round(gcProcRate./0.10));
-    key = strrep(key,'_0.','_');
-    key = strrep(key,'_1.0000','_0000');
-	key = strrep(key, '.', '_');
-	key = strrep(key, '>', '_');
-	key = strrep(key, '*', 'star');
-	key = strrep(key, '''', 'prime');
-	if isfield(fsm_cache_actionPr, key)
+	dirname = strcat('data\\', rotationKey);
+	filename = strcat(dirname, '\\', optionsKey, '.csv');
+	% check memory cache
+	if isfield(fsm_cache_actionPr, rotationKey) && isfield(fsm_cache_actionPr.(rotationKey), optionsKey)
 		% warning('using cached result');
-		actionPr = fsm_cache_actionPr.(key);
-		avgDuration = fsm_cache_avgDuration.(key);
-		metadata = fsm_cache_metadata.(key);
+		actionPr = fsm_cache_actionPr.(rotationKey).(optionsKey);
+		avgDuration = fsm_cache_avgDuration.(rotationKey).(optionsKey);
+		metadata = fsm_cache_metadata.(rotationKey).(optionsKey);
 		return;
 	end
-	filename = strcat('data\\', key, '.csv');
+	% check disk cache
 	if exist(filename) ~= 2
 		if exist('RotationCalculator') ~= 7
 			pwd
@@ -33,7 +37,7 @@ function  [actionPr, avgDuration, metadata] = memoized_fsm(rotation, mehit, rhit
 			if exist(executable) ~= 2
 				% Attempt to compile
 				% try 32 bit
-				system('%SYSTEMROOT%\Microsoft.NET\Framework\v4.0.30319\csc.exe /o+ /debug- /out:fsm.exe RotationCalculator\Matlabadin\*.cs >nul 2>&1');
+				system('%SYSTEMROOT%\Microsoft.NET\Framework\v4.0.30319\csc.exe /o+ /debug- /out:fsm.exe RotationCalculator\Matlabadin\*.cs ')%>nul 2>&1');
 				% then overwrite with 64 bit if available
 				system('%SYSTEMROOT%\Microsoft.NET\Framework64\v4.0.30319\csc.exe /o+ /debug- /out:fsm.exe RotationCalculator\Matlabadin\*.cs >nul 2>&1');
 				if exist(executable) ~= 2
@@ -41,15 +45,23 @@ function  [actionPr, avgDuration, metadata] = memoized_fsm(rotation, mehit, rhit
 				end
 			end			
 		end
+		if exist(dirname) ~= 7
+			mkdir(dirname);
+		end
+		% generate the data file
+		egProcRate = 0.15 * egTalentPoints;
+		gcProcRate = 0.10 * gcTalentPoints;
+		sdProcRate = 0.25 * sdTalentPoints;
 		commandToExecute = sprintf('%s "%s" 3 %s %f %f %f %f %f > %s', ...
-			executable, rotation, strConsGlyph, mehit, rhit, egProcRate, sdProcRate, gcProcRate, filename);
+			executable, rotation, strConsGlyph, mehit, rhit, sdProcRate, gcProcRate, egProcRate, filename);
 		system(commandToExecute);
 	end
+	% read from the data file
 	[actionPr, avgDuration, metadata] = load_fsm_csv(filename);
 	% TODO: sanity check that file params match our args
-	fsm_cache_actionPr.(key) = actionPr;
-	fsm_cache_avgDuration.(key) = avgDuration;
-	fsm_cache_metadata.(key) = metadata;
+	fsm_cache_actionPr.(rotationKey).(optionsKey) = actionPr;
+	fsm_cache_avgDuration.(rotationKey).(optionsKey) = avgDuration;
+	fsm_cache_metadata.(rotationKey).(optionsKey) = metadata;
 end
 function [actionPr, avgDuration, metadata] = load_fsm_csv(filename)
 	fid = fopen(filename, 'rt');
