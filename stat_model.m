@@ -84,6 +84,7 @@ mdf.BLust=1+0.3.*buff.BLust;
 mdf.Devo=floor(9.2.*mdf.buffscale).*buff.Devo;
 mdf.RFury=1+2.*buff.RFury;
 mdf.Focus=3.*buff.Focus;
+mdf.Inq=1.3;
 %% Raid Debufs
 mdf.SavCom=1+0.04.*buff.SavCom;
 mdf.Hemo=1.3.*buff.Hemo;

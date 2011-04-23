@@ -53,6 +53,12 @@ namespace Matlabadin
                     pr1 = 1 - gp.MeleeHit;
                     pr2 = gp.MeleeHit;
                     break;
+                case Ability.SotR2:
+                    nextState1 = StateHelper.UseAbility(state, gp, a, waitSteps, false); // miss
+                    nextState2 = StateHelper.UseAbility(state, gp, a, waitSteps, true); // hit
+                    pr1 = 1 - gp.MeleeHit;
+                    pr2 = gp.MeleeHit;
+                    break;
                 case Ability.WoG:
                     nextState1 = StateHelper.UseAbility(state, gp, a, waitSteps);
                     nextState2 = StateHelper.UseAbility(state, gp, a, waitSteps, egProc: true);
@@ -165,6 +171,10 @@ namespace Matlabadin
                     nextState = StateHelper.SetHP(nextState, 0, gp);
                     break;
                 case Ability.SotR:
+                    if (hit) nextState = StateHelper.SetHP(nextState, 0, gp);
+                    nextState = StateHelper.SetTimeRemaining(nextState, Buff.SD, 0, gp);
+                    break;
+                case Ability.SotR2:
                     if (hit) nextState = StateHelper.SetHP(nextState, 0, gp);
                     nextState = StateHelper.SetTimeRemaining(nextState, Buff.SD, 0, gp);
                     break;
