@@ -9,6 +9,7 @@ namespace Matlabadin
     {
         Nothing,
         Inq,
+        SotR2,
         SotR,
         HotR, // treated as a special case
         CooldownIndicator, // Abilities MUST be separated into those without cooldowns (above) and those with cooldowns (below)

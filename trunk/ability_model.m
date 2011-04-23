@@ -123,11 +123,11 @@ raw.ShieldoftheRighteous= ((610.2+0.1.*player.ap).*mdf.hpscale).*mdf.spdmg.*mdf.
 dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit ...
                           .*target.resrdx; %melee hit
 heal.ShieldoftheRighteous=0;
-threat.ShieldoftheRighteous{1}=raw.ShieldoftheRighteous.*mdf.RFury;
-threat.ShieldoftheRighteous{2}=dmg.ShieldoftheRighteous.*mdf.RFury;
+% threat.ShieldoftheRighteous{1}=raw.ShieldoftheRighteous.*mdf.RFury;
+threat.ShieldoftheRighteous=dmg.ShieldoftheRighteous.*mdf.RFury;
 net.ShieldoftheRighteous{1}=dmg.ShieldoftheRighteous+dmg.activeseal.*mdf.mehit;
 net.ShieldoftheRighteous{2}=heal.ShieldoftheRighteous+heal.activeseal.*mdf.mehit;
-net.ShieldoftheRighteous{3}=threat.ShieldoftheRighteous{2}+threat.activeseal.*mdf.mehit;
+net.ShieldoftheRighteous{3}=threat.ShieldoftheRighteous+threat.activeseal.*mdf.mehit;
 
 %% Ranged abilities
 
@@ -277,7 +277,7 @@ val.heal=[...
     round(heal.Censure).*val.ones];
 
 val.threat=[...
-    round(threat.ShieldoftheRighteous{2}).*val.ones; 
+    round(threat.ShieldoftheRighteous).*val.ones; 
     round(threat.WordofGlory).*val.ones;
     ...
     round(threat.CrusaderStrike).*val.ones;
@@ -379,8 +379,8 @@ val.pheal=[...
 
 val.pthr=[...
           val.zeros;
-          threat.ShieldoftheRighteous{1}./2.*val.ones;
-          threat.ShieldoftheRighteous{1}.*val.ones;
+          threat.ShieldoftheRighteous./2.*val.ones;
+          threat.ShieldoftheRighteous.*val.ones;
           threat.WordofGlory.*val.ones;
           ...
           threat.CrusaderStrike.*val.ones;
@@ -398,8 +398,8 @@ val.pthr=[...
 if (strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)) mdf.iseal=min([exec.npccount;10]); else mdf.iseal=1; end;
 val.athr=[...
           val.zeros;
-          threat.ShieldoftheRighteous{1}./2.*val.ones;
-          threat.ShieldoftheRighteous{1}.*val.ones;
+          threat.ShieldoftheRighteous./2.*val.ones;
+          threat.ShieldoftheRighteous.*val.ones;
           threat.WordofGlory.*min([exec.npccount;10]).*val.ones
           ...
           threat.CrusaderStrike.*val.ones;
@@ -413,3 +413,120 @@ val.athr=[...
           ...
           threat.HammerNova.*min([exec.npccount;10]).*val.ones;
           threat.activeseal.*mdf.iseal.*val.ones];
+      
+ val.fsmdmg=[...
+          val.zeros;                                                            %Inq
+          val.zeros;                                                            %Inq(Inq)
+          dmg.ShieldoftheRighteous./2.*val.ones;                                %SotR2
+          dmg.ShieldoftheRighteous.*mdf.phcritm./mdf.phcrit./2.*val.ones;       %SotR2(SD)
+          dmg.ShieldoftheRighteous.*mdf.Inq./2.*val.ones;                       %SotR2(Inq)
+          dmg.ShieldoftheRighteous.*mdf.Inq.*mdf.phcritm./mdf.phcrit./2.*val.ones; %SotR2(SD)(Inq)
+          dmg.ShieldoftheRighteous.*val.ones;                                   %SotR
+          dmg.ShieldoftheRighteous.*mdf.phcritm./mdf.phcrit.*val.ones;          %SotR(SD)
+          dmg.ShieldoftheRighteous.*mdf.Inq.*val.ones;                          %SotR(Inq)
+          dmg.ShieldoftheRighteous.*mdf.Inq.*mdf.phcritm./mdf.phcrit.*val.ones; %SotR(SD)(Inq)
+          dmg.WordofGlory.*val.ones;                                            %WoG
+          dmg.WordofGlory.*mdf.Inq.*val.ones;                                   %WoG(Inq)
+          ...
+          dmg.CrusaderStrike.*val.ones;                                         %CS
+          dmg.CrusaderStrike.*val.ones;                                         %CS(Inq)
+          dmg.HammeroftheRighteous.*val.ones;                                   %HotR
+          dmg.HammerNova.*val.ones;                                             %HammerNova
+          dmg.HammeroftheRighteous.*val.ones;                                   %HotR(Inq)
+          dmg.HammerNova.*mdf.Inq.*val.ones;                                    %HammerNova(Inq)
+          ...
+          dmg.AvengersShield.*val.ones;                                         %AS
+          dmg.AvengersShield.*mdf.Inq.*val.ones;                                %AS(Inq)
+          dmg.Consecration.*val.ones;                                           %Cons
+          dmg.Consecration.*mdf.Inq.*val.ones;                                  %Cons(Inq)
+          dmg.HammerofWrath.*val.ones;                                          %HoW
+          dmg.HammerofWrath.*mdf.Inq.*val.ones;                                 %HoW(Inq)
+          dmg.HolyWrath.*val.ones;                                              %HW
+          dmg.HolyWrath.*mdf.Inq.*val.ones;                                     %HW(Inq)
+          dmg.Judgement.*val.ones;                                              %J
+          dmg.Judgement.*mdf.Inq.*val.ones;                                     %J(Inq)
+          ...
+          dmg.activeseal.*val.ones;                                             %seal
+          dmg.activeseal.*mdf.Inq.*val.ones;                                   %seal(Inq)
+          val.zeros;                                                               %Nothing
+          val.zeros];                                                              %Nothing(Inq)
+      
+ val.fsmheal=[...
+          val.zeros;                                                               %Inq
+          val.zeros;                                                               %Inq(Inq)
+          heal.ShieldoftheRighteous./2.*val.ones;                                %SotR2
+          heal.ShieldoftheRighteous.*mdf.phcritm./mdf.phcrit./2.*val.ones;       %SotR2(SD)
+          heal.ShieldoftheRighteous./2.*val.ones;                               %SotR2(Inq)
+          heal.ShieldoftheRighteous.*mdf.phcritm./mdf.phcrit./2.*val.ones;      %SotR2(SD)(Inq)
+          heal.ShieldoftheRighteous.*val.ones;                                   %SotR
+          heal.ShieldoftheRighteous.*mdf.phcritm./mdf.phcrit.*val.ones;          %SotR(SD)
+          heal.ShieldoftheRighteous.*val.ones;                          %SotR(Inq)
+          heal.ShieldoftheRighteous.*mdf.phcritm./mdf.phcrit.*val.ones; %SotR(SD)(Inq)
+          heal.WordofGlory.*val.ones;                                            %WoG
+          heal.WordofGlory.*val.ones;                                   %WoG(Inq)
+          ...
+          heal.CrusaderStrike.*val.ones;                                         %CS
+          heal.CrusaderStrike.*val.ones;                                         %CS(Inq)
+          heal.HammeroftheRighteous.*val.ones;                                   %HotR
+          heal.HammerNova.*val.ones;                                             %HammerNova
+          heal.HammeroftheRighteous.*val.ones;                                   %HotR(Inq)
+          heal.HammerNova.*val.ones;                                    %HammerNova(Inq)
+          ...
+          heal.AvengersShield.*val.ones;                                         %AS
+          heal.AvengersShield.*val.ones;                                %AS(Inq)
+          heal.Consecration.*val.ones;                                           %Cons
+          heal.Consecration.*val.ones;                                  %Cons(Inq)
+          heal.HammerofWrath.*val.ones;                                          %HoW
+          heal.HammerofWrath.*val.ones;                                 %HoW(Inq)
+          heal.HolyWrath.*val.ones;                                              %HW
+          heal.HolyWrath.*val.ones;                                     %HW(Inq)
+          heal.Judgement.*val.ones;                                              %J
+          heal.Judgement.*val.ones;                                     %J(Inq)
+          ...
+          heal.activeseal.*val.ones;                                             %seal
+          heal.activeseal.*val.ones;                                   %seal(Inq)
+          val.zeros;                                                               %Nothing
+          val.zeros];                                                              %Nothing(Inq)
+      
+ val.fsmthr=[...
+          val.zeros;                                                            %Inq
+          val.zeros;                                                            %Inq(Inq)
+          threat.ShieldoftheRighteous./2.*val.ones;                                %SotR2
+          threat.ShieldoftheRighteous.*mdf.phcritm./mdf.phcrit./2.*val.ones;       %SotR2(SD)
+          threat.ShieldoftheRighteous.*mdf.Inq./2.*val.ones;                       %SotR2(Inq)
+          threat.ShieldoftheRighteous.*mdf.Inq.*mdf.phcritm./mdf.phcrit./2.*val.ones; %SotR2(SD)(Inq)
+          threat.ShieldoftheRighteous.*val.ones;                                   %SotR
+          threat.ShieldoftheRighteous.*mdf.phcritm./mdf.phcrit.*val.ones;          %SotR(SD)
+          threat.ShieldoftheRighteous.*mdf.Inq.*val.ones;                          %SotR(Inq)
+          threat.ShieldoftheRighteous.*mdf.Inq.*mdf.phcritm./mdf.phcrit.*val.ones; %SotR(SD)(Inq)
+          threat.WordofGlory.*val.ones;                                            %WoG
+          threat.WordofGlory.*mdf.Inq.*val.ones;                                   %WoG(Inq)
+          ...
+          threat.CrusaderStrike.*val.ones;                                         %CS
+          threat.CrusaderStrike.*val.ones;                                         %CS(Inq)
+          threat.HammeroftheRighteous.*val.ones;                                   %HotR
+          threat.HammerNova.*val.ones;                                             %HammerNova
+          threat.HammeroftheRighteous.*val.ones;                                   %HotR(Inq)
+          threat.HammerNova.*mdf.Inq.*val.ones;                                    %HammerNova(Inq)
+          ...
+          threat.AvengersShield.*val.ones;                                         %AS
+          threat.AvengersShield.*mdf.Inq.*val.ones;                                %AS(Inq)
+          threat.Consecration.*val.ones;                                           %Cons
+          threat.Consecration.*mdf.Inq.*val.ones;                                  %Cons(Inq)
+          threat.HammerofWrath.*val.ones;                                          %HoW
+          threat.HammerofWrath.*mdf.Inq.*val.ones;                                 %HoW(Inq)
+          threat.HolyWrath.*val.ones;                                              %HW
+          threat.HolyWrath.*mdf.Inq.*val.ones;                                     %HW(Inq)
+          threat.Judgement.*val.ones;                                              %J
+          threat.Judgement.*mdf.Inq.*val.ones;                                     %J(Inq)
+          ...
+          threat.activeseal.*val.ones;                                             %seal
+          threat.activeseal.*mdf.Inq.*val.ones;                                   %seal(Inq)
+          val.zeros;                                                               %Nothing
+          val.zeros];                                                              %Nothing(Inq)
+      
+ val.fsmlabel={'Inq';'Inq(Inq)';'SotR2';'SotR2(SD)';'SotR2(Inq)';'SotR2(SD)(Inq)';'SotR';'SotR(SD)';'SotR(Inq)';'SotR(SD)(Inq)';'WoG';'WoG(Inq)';...
+               'CS';'CS(Inq)';'HotR';'HammerNova';'HotR(Inq)';'HammerNova(Inq)';...
+               'AS';'AS(Inq)';'Cons';'Cons(Inq)';'HoW';'HoW(Inq)';'HW';'HW(Inq)';'J';'J(Inq)';...
+               'seal';'seal(Inq)';...
+               'Nothing';'Nothing(Inq)'};

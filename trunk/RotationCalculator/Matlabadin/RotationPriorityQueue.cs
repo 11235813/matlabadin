@@ -23,7 +23,7 @@ namespace Matlabadin
                         break;
                     case "ISotR":
                         if (StateHelper.HP(state, gp) >= 3 &&
-                            StateHelper.TimeRemaining(state, Buff.INQ, gp) >0) return Ability.SotR;
+                            StateHelper.TimeRemaining(state, Buff.INQ, gp) > 0) return Ability.SotR;
                         break;
                     case "SDSotR":
                         if (StateHelper.HP(state, gp) >= 3 &&
@@ -35,7 +35,7 @@ namespace Matlabadin
                             StateHelper.TimeRemaining(state, Buff.INQ, gp) > 0) return Ability.SotR;
                         break;
                     case "SotR2":
-                        if (StateHelper.HP(state, gp) >= 2) return Ability.SotR;
+                        if (StateHelper.HP(state, gp) >= 2) return Ability.SotR2;
                         break;
                     case "CS":
                         if (StateHelper.CooldownRemaining(state, Ability.CS, gp) == 0) return Ability.CS;
