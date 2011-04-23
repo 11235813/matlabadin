@@ -17,7 +17,7 @@ namespace Matlabadin
             double egProcRate)
         {
             double[] abilityCooldowns = {20, 3, 8, 15, useConsGlyph ? 30 * 1.2 : 30, 15, 6}; // WoG,CS,J,AS,Cons,HW,HoW,
-            double[] buffDurations = {6, 10, 12, 15, 3.5}; //GC, SD, INQ, EGICD, GCICD
+            double[] buffDurations = {6, 10, 12, 15, 0}; //GC, SD, INQ, EGICD, GCICD
             this.StepSize = 1.5 / stepsPerGcd;
             this.StepsPerGcd = stepsPerGcd;
             this.abilitySteps = abilityCooldowns.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();

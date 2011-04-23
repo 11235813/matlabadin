@@ -78,7 +78,7 @@ namespace Matlabadin
         }
         public static bool GcWillProcHP(ulong state, GraphParameters gp)
         {
-            return TimeRemaining(state, Buff.GC, gp) > 0 && TimeRemaining(state, Buff.GCICD, gp) == 0;
+            return TimeRemaining(state, Buff.GC, gp) > 0  && TimeRemaining(state, Buff.GCICD, gp) == 0;
         }
         /// <summary>
         /// Cooldown remaining on the given ability
