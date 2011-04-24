@@ -4,15 +4,18 @@ clear cps inq
 %parallelization flag
 useParallel=0;
 
-%define relevant queues
-queue.rot={'SotR>CS>AS>J';
-           'SotR>CS>AS>J>Cons>HW';
-           'WoG>SotR>CS>AS>J>Cons>HW';
-           'SotR>CS>HoW>AS>J';
-           'SotR>CS>HoW>AS>J>Cons>HW';
-           'WoG>HoW>SotR>CS>AS>J>Cons>HW';
-           'iInq>HotR>AS>Cons>HW>J';
-           'iInq>HotR>HoW>AS>Cons>HW>J';};
+%define relevant queues if not done already
+if exist('queue')==0 || isfield(queue,'rot')==0
+    queue.rot={'SotR>CS>AS>J';
+        'SotR>CS>AS>J>Cons>HW';
+        'WoG>SotR>CS>AS>J>Cons>HW';
+        'SotR>CS>HoW>AS>J';
+        'SotR>CS>HoW>AS>J>Cons>HW';
+        'WoG>HoW>SotR>CS>AS>J>Cons>HW';
+%         'iInq>HotR>AS>Cons>HW>J';
+%         'iInq>HotR>HoW>AS>Cons>HW>J';
+        };
+end
 
 %initialize structure
 %TODO: remove deprecated fields
@@ -68,7 +71,7 @@ for i=1:length(queue.rot);
         else
             wb=waitbar(0,'Generating/Loading FSM data');
             for j=1:length(mdf.mehit)
-                waitbar(j/val.length,wb)
+                waitbar(j/val.length,wb,['FSM gen/load for ' queue.rot{i}])
                 [actionPr, avgDuration, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
                 [cps(:,j) inq(:,j)]=action2cps(actionPr,avgDuration, metadata,val.fsmlabel);
             end
@@ -87,7 +90,7 @@ for i=1:length(queue.rot);
         else
             wb=waitbar(0,'Generating/Loading FSM data');
             for j=1:length(mdf.mehit)
-                waitbar(j/val.length,wb)
+                waitbar(j/val.length,wb,['FSM gen/load for ' queue.rot{i}])
                 [actionPr, avgDuration, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
                 [cps(:,j) inq(:,j)]=action2cps(actionPr,avgDuration, metadata,val.fsmlabel);
             end

@@ -35,6 +35,9 @@ queue.st={...
     'SDSotR>Inq>CS>AS>J>Cons>HW';
     'ISDSotR>Inq>CS>AS>J>Cons>HW';
     %WoG
+    'WoG>CS>AS>J';
+    'WoG>SotR>CS>AS>J';
+    'WoG>CS>AS>J>Cons>HW';
     'WoG>SotR>CS>AS>J>Cons>HW';
     'WoG>SotR>HotR>AS>J>Cons>HW';
     'WoG>Inq>CS>AS>J>Cons>HW';
