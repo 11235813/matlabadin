@@ -33,7 +33,8 @@ cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
 cfg(c).label='939/SoT build';
 cfg(c).veng=1;
 cfg(c).seal='Truth';
-cfg(c).rot=2;
+cfg(c).queue={'SotR>CS>AS>J>Cons>HW'};
+cfg(c).rot=1; %defaults to 1 if defining a queue
 cfg(c).glyph=ddb.glyphset{1}; %Default, HotR/SoT/ShoR, Cons/AS
 cfg(c).talent=ddb.talentset{1}; %0/31/10 w/o HG
 
@@ -43,7 +44,8 @@ cfg(c).helm=cfg(1).helm;
 cfg(c).label='W39/SoI build';
 cfg(c).veng=1;
 cfg(c).seal='Insight';
-cfg(c).rot=3; %W39
+cfg(c).queue={'WoG>SotR>CS>AS>J>Cons>HW'}
+cfg(c).rot=1;
 cfg(c).glyph=ddb.glyphset{2}; %WoG set
 cfg(c).talent=ddb.talentset{2}; %0/31/10 WoG build
 
@@ -55,12 +57,14 @@ extra.val.str=-100+linspace(1,1500,250);
 sdps=zeros(M,length(extra.val.str),length(cfg));
 sdps0=zeros(size(sdps));
 
+tic
 for c=1:length(cfg)
     %set configuration variables
     egs(1)=cfg(c).helm;
     exec=execution_model('veng',cfg(c).veng,'seal',cfg(c).seal);
     glyph=cfg(c).glyph;
     talent=cfg(c).talent;
+    queue.rot=cfg(c).queue;
     gear_stats;
     talents;
     stat_model;
@@ -69,7 +73,11 @@ for c=1:length(cfg)
     cfg(c).hit=player.phhit;
     cfg(c).exp=player.exp;
 
+    csswb=waitbar(0,'Calculating STR Scaling');
+    set(csswb,'Position',get(csswb,'Position')+[0 85 0 0]);
     for m=1:M
+        waitbar(m./M,csswb,['Calculating STR Scaling for ' stat{m} ...
+                            ' in cfg ' int2str(c) '/' int2str(length(cfg))]);
         %set each stat to dstat extra
         eval(char(['extra.itm.' stat{m} '=dstat(m);']))
 
@@ -85,7 +93,9 @@ for c=1:length(cfg)
         sdps0(m,:,c)=rot(cfg(c).rot).totdps;
 
     end
+    close(csswb)
 end
+toc
 sdiffdps=(sdps-sdps0).*10./repmat(dstat',[1 size(sdps,2) size(sdps,3)]);
 xS=player.armorystr';
 yS1=squeeze(sdiffdps(:,:,1))';
@@ -110,6 +120,7 @@ ylabel('DPS per 10 itemization points')
 title([cfg(2).label ', ' num2str(cfg(2).veng*100,'%2.1f') '% Veng, ' num2str(cfg(2).hit,'%2.1f') '% hit, ' num2str(cfg(2).exp,'%2.1f') ' expertise'])
     
 %% Hit graph
+tic
 for c=1:length(cfg)
     
     %reset extra structure
@@ -120,6 +131,7 @@ for c=1:length(cfg)
     exec=execution_model('veng',cfg(c).veng,'seal',cfg(c).seal);
     glyph=cfg(c).glyph;
     talent=cfg(c).talent;
+    queue.rot=cfg(c).queue;
     gear_stats;
     talents;
     stat_model;
@@ -128,9 +140,13 @@ for c=1:length(cfg)
     cfg(c).exp=player.exp;
     
     %define hit range such that it covers 0 to 10%
-    extra.val.hit=(-player.phhit+linspace(0,10,200)).*cnv.hit_phhit;
-
+    extra.val.hit=(-player.phhit+linspace(0,10,100)).*cnv.hit_phhit;
+    
+    csswb=waitbar(0,'Calculating Hit Scaling');
+    set(csswb,'Position',get(csswb,'Position')+[0 85 0 0]);
     for m=1:M
+        waitbar(m./M,csswb,['Calculating Hit Scaling for ' stat{m} ...
+                            ' in cfg ' int2str(c) '/' int2str(length(cfg))]);
         %set each stat to dstat extra
         eval(char(['extra.itm.' stat{m} '=dstat(m);']))
 
@@ -146,7 +162,9 @@ for c=1:length(cfg)
         hdps0(m,:,c)=rot(cfg(c).rot).totdps;
         
     end
+    close(csswb)
 end
+toc
 hdiffdps=(hdps-hdps0).*10./repmat(dstat',[1 size(hdps,2) size(hdps,3)]);
 xH=player.phhit';
 yH1=squeeze(hdiffdps(:,:,1))';
@@ -171,6 +189,7 @@ ylabel('DPS per 10 itemization points')
 title([cfg(2).label ', '  num2str(cfg(2).veng*100,'%2.1f') '% Veng, '  num2str(cfg(2).exp(1),'%2.1f') ' expertise'])
     
 %% Exp graph
+tic
 for c=1:length(cfg)
     
     %reset extra structure
@@ -181,6 +200,7 @@ for c=1:length(cfg)
     exec=execution_model('veng',cfg(c).veng,'seal',cfg(c).seal);
     glyph=cfg(c).glyph;
     talent=cfg(c).talent;
+    queue.rot=cfg(c).queue;
     gear_stats;
     talents;
     stat_model;
@@ -189,9 +209,13 @@ for c=1:length(cfg)
     cfg(c).hit=player.phhit;
     
     %Set expertise to cover range 0 to 60
-    extra.val.exp=(-player.exp+linspace(0,60,200)).*cnv.exp_exp;
+    extra.val.exp=(-player.exp+linspace(0,60,100)).*cnv.exp_exp;
 
+    csswb=waitbar(0,'Calculating Exp Scaling');
+    set(csswb,'Position',get(csswb,'Position')+[0 85 0 0]);
     for m=1:M
+        waitbar(m./M,csswb,['Calculating Exp Scaling for ' stat{m} ...
+                            ' in cfg ' int2str(c) '/' int2str(length(cfg))]);
         %set each stat to dstat extra
         eval(char(['extra.itm.' stat{m} '=dstat(m);']))
 
@@ -207,7 +231,9 @@ for c=1:length(cfg)
         edps0(m,:,c)=rot(cfg(c).rot).totdps;
 
     end
+    close(csswb)
 end
+toc
 ediffdps=(edps-edps0).*10./repmat(dstat',[1 size(edps,2) size(edps,3)]);
 xE=player.exp';
 yE1=squeeze(ediffdps(:,:,1))';
