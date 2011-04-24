@@ -1,10 +1,14 @@
 %ACTION2CPS takes the actionPr and avgDuration arrays returned by
 %memoized_fsm and converts them into a standardized array containing casts
 %per second values for DPS calculations
-function [cps inqup] = action2cps( actionPr, avgDuration, metadata)
+function [cps inqup] = action2cps( actionPr, avgDuration, metadata, labels)
 
-%import val for labels
-val=evalin('base','val');
+if nargin<4
+    %import val for labels
+    val=evalin('base','val');
+else
+    val.fsmlabel=labels;
+end
 
 %default to 1.5s GCD if avgDuration is not supplied
 if nargin<2
@@ -22,7 +26,7 @@ end
     
 
 %initialize cps vector
-cps=zeros(size(val.fsmdmg,1),1);
+cps=zeros(size(val.fsmlabel,1),1);
 
 %sort actionPr entries into cps
 for m=1:size(actionPr,2)

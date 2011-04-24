@@ -1,31 +1,28 @@
-%ROTATION_MODEL calculates the DPS/HPS output of a given rotation from the
-%ability weight coefficients (either analytical or genrated with
-%rotation_coeff_gen) and the ability damage values calculated in
-%ability_model
+%ROTATION_MODEL calculates the DPS/HPS output of a given rotation
+clear cps inq
 
-%load rotation database
-rotation_db
-% rmtmp.f=fittype('poly5');
+%parallelization flag
+useParallel=0;
 
-%identify relevant parameters: GrCr, SD, EG
-rmtmp.gc=1+talent.GrandCrusader;
-rmtmp.sd=1+talent.SacredDuty;
-rmtmp.eg=1+talent.EternalGlory;
-
-%check for inconsistency between talent.* and mdf.*
-if mdf.GrCr~=talent.GrandCrusader./10 || mdf.SacDut~=0.25.*talent.SacredDuty || mdf.EG~=0.15.*talent.EternalGlory
-    warning('GC, SD, or EG inconsistently defined in talent.* and mdf.*')
-end
-
+%define relevant queues
+queue.rot={'SotR>CS>AS>J';
+           'SotR>CS>AS>J>Cons>HW';
+           'WoG>SotR>CS>AS>J>Cons>HW';
+           'SotR>CS>HoW>AS>J';
+           'SotR>CS>HoW>AS>J>Cons>HW';
+           'WoG>HoW>SotR>CS>AS>J>Cons>HW';
+           'iInq>HotR>AS>Cons>HW>J';
+           'iInq>HotR>HoW>AS>Cons>HW>J';};
 
 %initialize structure
 %TODO: remove deprecated fields
 rot=struct('tag','', ...
-           'coeffpvals',[],...
-           'cpspvals',[],...
-           'inqpvals',[],...
+           'cps',[],...
            'inqup',[],...
            'inqmod',[],...
+           'melee',[],...
+           'sealdps',[],...
+           'sealhps',[],...
            'acdps',[], ...
            'achps',[], ...
            'actps',[], ...
@@ -36,178 +33,121 @@ rot=struct('tag','', ...
            'tothps',[], ...
            'tottps',[]);
 
-%% SC9 ("939" or "9C9") framework : SotR>CS>J>AS>Cons>HW (execute range : SotR>CS>J>HoW)
-rot(1).tag='SC9'; %TODO: add tagging
 
-%this extracts coefficient data from rotdb for every rotation
-
-%This should speed things up (rather than recalculating mdf.mehit.^N)
-%multiple times
-clear mh rh
-for i=1:4;
-    mh(i,:)=mdf.mehit.^(i-1);
-    rh(i,:)=mdf.rahit.^(i-1);
+%% open matlabpool if necessary  
+if useParallel==1 && matlabpool('size')==0
+    %create workers
+    matlabpool(3)
 end
 
-for i=1:length(rotdb);
-    %load pvals for the appropiate gc/sd/eg config
-    rot(i).coeffpvals(:,:)=rotdb(i).coeffpvals(:,:,rmtmp.gc,rmtmp.sd,rmtmp.eg);
-    rot(i).cpspvals(:,:)=rotdb(i).cpspvals(:,:,rmtmp.gc,rmtmp.sd,rmtmp.eg);
-    rot(i).inqpvals(:,:)=rotdb(i).inqpvals(:,:,rmtmp.gc,rmtmp.sd,rmtmp.eg);
-    rot(i).modelterms=rotdb(i).modelterms;
+%% Crank
+for i=1:length(queue.rot);
     
-    %generate coefficients
-    %for whatever reason, cfit() calls are very, very slow compared to
-    %brute-forcing a polynomial.  [RM] runs about 15x faster with the
-    %brute-force method, so for now we'll use that.  I'd rather use cfit()
-    %in case we want more flexibility in fit types in the future, but for
-    %now there seems to be no need to do so.
-    
-    %% fittype version
-    %[RM] profiled time of 15s (1.6 self) via [CW]
-    %6s each for loop (i.e. each cfit and cf{}() call)
-    
-%     %convert these into cfit objects
-%     for ii=1:size(rot(i).coeffpvals,1)
-%         rot(i).cf{ii}=cfit(rmtmp.f, ...
-%             rot(i).coeffpvals(ii,1), ...
-%             rot(i).coeffpvals(ii,2), ...
-%             rot(i).coeffpvals(ii,3), ...
-%             rot(i).coeffpvals(ii,4), ...
-%             rot(i).coeffpvals(ii,5), ...
-%             rot(i).coeffpvals(ii,6));
-%     end
-% 
-%     %generate coefficients
-%     for ii=1:size(rot(i).coeffpvals,1)
-%         rot(i).coeff(ii,:)=rot(i).cf{ii}(mdf.mehit)';
-%     end
-
-    %% brute force version 
-    %[RM] profiled time of 23.4s (22.5 self) via [CSS]
-    
-%     for ii=1:size(rot(i).coeffpvals,1)
-%         rot(i).coeff(ii,:)=val.ones.*...
-%                           (rot(i).coeffpvals(ii,1).*mdf.mehit.^5 + ...
-%                            rot(i).coeffpvals(ii,2).*mdf.mehit.^4 + ...
-%                            rot(i).coeffpvals(ii,3).*mdf.mehit.^3 + ...
-%                            rot(i).coeffpvals(ii,4).*mdf.mehit.^2 + ...
-%                            rot(i).coeffpvals(ii,5).*mdf.mehit.^1 + ...
-%                            rot(i).coeffpvals(ii,6));
-%              
-%         rot(i).cps(ii,:)=  val.ones.*...
-%                           (rot(i).cpspvals(ii,1).*mdf.mehit.^5 + ...
-%                            rot(i).cpspvals(ii,2).*mdf.mehit.^4 + ...
-%                            rot(i).cpspvals(ii,3).*mdf.mehit.^3 + ...
-%                            rot(i).cpspvals(ii,4).*mdf.mehit.^2 + ...
-%                            rot(i).cpspvals(ii,5).*mdf.mehit.^1 + ...
-%                            rot(i).cpspvals(ii,6));
-%     end
-%              
-%     rot(i).inqup(1,:)= val.ones.* ...
-%         (rot(i).inqpvals(1,1).*mdf.mehit.^5 + ...
-%         rot(i).inqpvals(1,2).*mdf.mehit.^4 + ...
-%         rot(i).inqpvals(1,3).*mdf.mehit.^3 + ...
-%         rot(i).inqpvals(1,4).*mdf.mehit.^2 + ...
-%         rot(i).inqpvals(1,5).*mdf.mehit.^1 + ...
-%         rot(i).inqpvals(1,6));
-%     
-%     rot(i).inqmod=(1+0.3.*rot(i).inqup);
-    
-    %% brute force version 2 - hopefully optimized for better speed
-    %[RM] profiled time of 4.182s (3.059 self) via [CSS]
-    
-    for ii=1:size(rot(i).coeffpvals,1)
-        tmp.coeff=val.zeros;tmp.cps=val.zeros;
-        for jj=1:size(rot(i).modelterms,1)
-            tmp.coeff=tmp.coeff+...
-                rot(i).coeffpvals(ii,jj).* ...
-                mh(rot(i).modelterms(jj,1)+1,:).* ...
-                rh(rot(i).modelterms(jj,2)+1,:);
-            
-            tmp.cps=tmp.cps+...
-                rot(i).cpspvals(ii,jj).* ...
-                mh(rot(i).modelterms(jj,1)+1,:).* ...
-                rh(rot(i).modelterms(jj,2)+1,:);
+    %tag
+    rot(i).tag=queue.rot{i};
         
-%         rot(i).coeff(ii,:)=val.ones.*...
-%                           (rot(i).coeffpvals(ii,1).*mhit(5,:) + ...
-%                            rot(i).coeffpvals(ii,2).*mhit(4,:) + ...
-%                            rot(i).coeffpvals(ii,3).*mhit(3,:) + ...
-%                            rot(i).coeffpvals(ii,4).*mhit(2,:) + ...
-%                            rot(i).coeffpvals(ii,5).*mhit(1,:) + ...
-%                            rot(i).coeffpvals(ii,6));
-%              
-%         rot(i).cps(ii,:)=  val.ones.*...
-%                           (rot(i).cpspvals(ii,1).*rhit(5,:) + ...
-%                            rot(i).cpspvals(ii,2).*rhit(4,:) + ...
-%                            rot(i).cpspvals(ii,3).*rhit(3,:) + ...
-%                            rot(i).cpspvals(ii,4).*rhit(2,:) + ...
-%                            rot(i).cpspvals(ii,5).*rhit(1,:) + ...
-%                            rot(i).cpspvals(ii,6));
+    %generate FSM results
+    if length(mdf.mehit)==1 && length(mdf.rahit)==1
+        [actionPr, avgDuration, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+        %convert actionPr to CPS array
+        [cps inq]=action2cps(actionPr,avgDuration,metadata);
+    
+    %otherwise, we need some array handling, and may want to take advantage
+    %of parallelization 
+    
+    %both mdf.mehit and mdf.rahit have more than one element - assumed to
+    %be the same size
+    elseif length(mdf.mehit)>1 && length(mdf.rahit)>1
+        %use parallelization
+        if useParallel
+            warning('Parallel processiong enabled - no waitbars')
+            parfor j=1:length(mdf.mehit)
+                [actionPr, avgDuration, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+                [cps(:,j) inq(:,j)]=action2cps(actionPr,avgDuration, metadata,val.fsmlabel);
+            end
+        else
+            wb=waitbar(0,'Generating/Loading FSM data');
+            for j=1:length(mdf.mehit)
+                waitbar(j/val.length,wb)
+                [actionPr, avgDuration, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+                [cps(:,j) inq(:,j)]=action2cps(actionPr,avgDuration, metadata,val.fsmlabel);
+            end
+            close(wb)
         end
-        rot(i).coeff(ii,:)=tmp.coeff;
-        rot(i).cps(ii,:)=tmp.cps;
-    end
-    
-	tmp.inqup=val.zeros;
-    for jj=1:size(rot(i).modelterms,1)
-        tmp.inqup=tmp.inqup+...
-            rot(i).inqpvals(1,jj).*...
-            mh(rot(i).modelterms(jj,1)+1,:).* ...
-            rh(rot(i).modelterms(jj,2)+1,:);
-    end
-    rot(i).inqup(1,:)= tmp.inqup;
-    
-%     rot(i).inqup(1,:)= val.ones.* ...
-%         (rot(i).inqpvals(1,1).*rhit(5,:) + ...
-%         rot(i).inqpvals(1,2).*rhit(4,:) + ...
-%         rot(i).inqpvals(1,3).*rhit(3,:) + ...
-%         rot(i).inqpvals(1,4).*rhit(2,:) + ...
-%         rot(i).inqpvals(1,5).*rhit(1,:) + ...
-%         rot(i).inqpvals(1,6));
-%     
-    rot(i).inqmod=(1+0.3.*rot(i).inqup);
-    
-    
-
-end
-
-
-%% output
-for i=1:length(rot)
-    %calculate damage from 'active' (i.e. simmed) sources
-        rot(i).acdps=[sum(rot(i).coeff.*val.pdmg)];
-        rot(i).achps=[sum(rot(i).coeff.*val.pheal)];
-        rot(i).actps=[sum(rot(i).coeff.*val.pthr)];
         
-    %calculate damage from 'passive' (i.e. not simmed) sources
-    rot(i).padps=val.zeros;
-    rot(i).pahps=val.zeros;
-    rot(i).patps=val.zeros;
-    
-    %If SoT, include Censure Damage
-    if mdf.tseal
-        rot(i).padps=rot(i).padps+dps.Censure.*rot(i).inqmod;
-        rot(i).patps=rot(i).patps+tps.Censure.*rot(i).inqmod;
-    end
-    
-    %Include seal procs from auto-attacks
-    rot(i).padps=rot(i).padps+dps.Melee+dmg.activeseal.*mdf.mehit./player.wswing.*rot(i).inqmod;
-    rot(i).pahps=rot(i).pahps+hps.Melee+heal.activeseal.*mdf.mehit./player.wswing;
-    
-    %threat depends on whether it's damage or healing due to Inq
-    if strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)
-        rot(i).patps=rot(i).patps+tps.Melee+threat.activeseal.*mdf.mehit./player.wswing;
+    %only mdf.mehit has more than one element (hit-capped but not xp capped)    
+    elseif length(mdf.mehit)>1 && length(mdf.rahit)==1
+        %use parallelization
+        if useParallel
+            warning('Parallel processiong enabled - no waitbars')
+            parfor j=1:length(mdf.mehit)
+                [actionPr, avgDuration, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+                [cps(:,j) inq(:,j)]=action2cps(actionPr,avgDuration, metadata,val.fsmlabel);
+            end
+        else
+            wb=waitbar(0,'Generating/Loading FSM data');
+            for j=1:length(mdf.mehit)
+                waitbar(j/val.length,wb)
+                [actionPr, avgDuration, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+                [cps(:,j) inq(:,j)]=action2cps(actionPr,avgDuration, metadata,val.fsmlabel);
+            end
+            close(wb)
+        end
     else
-        rot(i).patps=rot(i).patps+tps.Melee+threat.activeseal.*mdf.mehit./player.wswing.*rot(i).inqmod;
+        error('unrecognized array configuration in rotation_model')
+    end  
+    
+    %store cps and inq
+    rot(i).cps=cps;
+    rot(i).inqup=inq;
+    
+    %correct for cases where cps is Nx1 but val.* is NxM
+    if size(cps,2)==1 && size(val.fsmdmg,2)>1
+        cps=repmat(cps,1,size(val.fsmdmg,2));
+        inq=repmat(inq,1,size(val.fsmdmg,2));
     end
     
-    %Add active and passive sources for total
-    rot(i).totdps=rot(i).acdps+rot(i).padps;
-    rot(i).tothps=rot(i).achps+rot(i).pahps;
-    rot(i).tottps=rot(i).actps+rot(i).patps;
+    %active sources
+    rot(i).acdps=sum(cps.*val.fsmdmg);
+    rot(i).achps=sum(cps.*val.fsmheal);
+    rot(i).actps=sum(cps.*val.fsmthr);
+    
+    
+    %passive sources (melee, seals, Censure)
+    inqmod=1+0.3.*inq;
+    rot(i).inqmod=inqmod;
+
+    %melee and seals
+    rot(i).melee=dps.Melee;
+    rot(i).sealdps=dmg.activeseal.*mdf.mehit.*inqmod./player.wswing;
+    rot(i).sealhps=heal.activeseal.*mdf.mehit./player.wswing;
+    
+        %Censure if applicable
+    if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
+        rot(i).censdps=dps.Censure.*inqmod;
+        rot(i).censtps=tps.Censure.*inqmod;
+    else
+        rot(i).censdps=0;
+        rot(i).censtps=0;
+    end
+    
+    %sum passive sources
+    rot(i).padps=rot(i).melee+rot(i).sealdps+rot(i).censdps;
+    rot(i).pahps=rot(i).sealhps;
+    rot(i).patps=tps.Melee+mdf.RFury.*(rot(i).sealdps+rot(i).censdps+...
+                                       mdf.hthreat.*rot(i).sealhps);
+                                
+    %sum active and passive
+    rot(i).totdps=rot(i).padps+rot(i).acdps;
+    rot(i).tothps=rot(i).pahps+rot(i).achps;
+    rot(i).tottps=rot(i).patps+rot(i).actps;
+    
+    
+
 end
 
+if useParallel && matlabpool('size')>0
+    matlabpool close
+end
 
-clear i ii mh rh
+clear i
