@@ -128,7 +128,7 @@ for c=1:length(cfg)
     cfg(c).exp=player.exp;
     
     %define hit range such that it covers 0 to 10%
-    extra.val.hit=(-player.phhit+linspace(0,10,300)).*cnv.hit_phhit;
+    extra.val.hit=(-player.phhit+linspace(0,10,200)).*cnv.hit_phhit;
 
     for m=1:M
         %set each stat to dstat extra

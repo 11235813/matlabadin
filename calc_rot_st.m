@@ -116,13 +116,14 @@ for c=1:length(cfg)
         %melee + seal
         padps(:,m,c)=dps.Melee+dmg.activeseal.*mdf.mehit.*inqmod./player.wswing;
         pahps(:,m,c)=heal.activeseal.*mdf.mehit./player.wswing;
-        patps(:,m,c)=tps.Melee+(dmg.activeseal.*inqmod+mdf.hthreat.*heal.activeseal).*mdf.mehit./player.wswing;
+        patps(:,m,c)=tps.Melee+(dmg.activeseal.*inqmod+mdf.hthreat.*heal.activeseal).*mdf.RFury.*mdf.mehit./player.wswing;
         
         %Censure if applicable
         if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
             padps(:,m,c)=padps(:,m,c)+dps.Censure.*inqmod;
             patps(:,m,c)=patps(:,m,c)+tps.Censure.*inqmod;
         end
+        
         %sum active and passive
         totdps(:,m,c)=acdps(:,m,c)+padps(:,m,c);
         tottps(:,m,c)=acthr(:,m,c)+patps(:,m,c);

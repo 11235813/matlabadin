@@ -203,7 +203,7 @@ net.WordofGlory{3}= threat.WordofGlory;
 
 
 %% Consolidated arrays
-val.length=max([length(dmg.CrusaderStrike) length(dmg.Consecration) length(dps.Melee) length(dps.Censure)]);
+val.length=max([length(dmg.CrusaderStrike) length(dmg.Consecration) length(dps.Melee) length(dps.Censure) length(mdf.mehit) length(mdf.rahit)]);
 val.zeros=zeros(1,val.length);
 val.ones=ones(1,val.length);
 
