@@ -133,7 +133,7 @@ net.ShieldoftheRighteous{3}=threat.ShieldoftheRighteous+threat.activeseal.*mdf.m
 
 %Avenger's Shield (can be blocked)
 raw.AvengersShield= (3113.187994+0.419.*player.ap+0.21.*player.hsp).*mdf.spdmg.*mdf.glyphAS;
-dmg.AvengersShield= raw.AvengersShield.*mdf.ramodel.*mdf.phcrit.*target.resrdx;
+dmg.AvengersShield= raw.AvengersShield.*mdf.rahit.*mdf.phcrit.*target.resrdx;
 heal.AvengersShield=0;
 threat.AvengersShield=max(dmg.AvengersShield,heal.AvengersShield).*mdf.RFury;
 net.AvengersShield{1}=dmg.AvengersShield+dmg.activeseal.*mdf.rahit.*mdf.tseal;
@@ -147,9 +147,9 @@ raw.Judgement=      raw.Judgement.*mdf.spdmg.*(1+mdf.glyphJ+(10./3).*mdf.WotL);
 dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
 heal.Judgement=     0;
 threat.Judgement=   max(dmg.Judgement,heal.Judgement).*mdf.RFury;
-net.Judgement{1}=   dmg.Judgement+(mdf.jseals).*dmg.activeseal.*mdf.rahit;
-net.Judgement{2}=   heal.Judgement+mdf.jseals.*heal.activeseal.*mdf.rahit;
-net.Judgement{3}=   threat.Judgement+(mdf.jseals).*threat.activeseal.*mdf.rahit;
+net.Judgement{1}=   dmg.Judgement+dmg.activeseal.*mdf.rahit;
+net.Judgement{2}=   heal.Judgement+heal.activeseal.*mdf.rahit;
+net.Judgement{3}=   threat.Judgement+threat.activeseal.*mdf.rahit;
 
 %Hammer of Wrath (can be blocked)
 raw.HammerofWrath= (4015.02439+0.117.*player.hsp+0.39.*player.ap).*mdf.spdmg;

@@ -16,6 +16,17 @@ talents;
 buff=buff_model;
 stat_model;
 
+% TODO : sort them out and delete this listing
+% t
+% 69609;
+% c
+% 69581;
+% d
+% 69575;
+% 69803;
+% 69618;
+% 69639;
+
 
 %% List of weapons
 weaplist1=[62457; %Ravening Slicer
