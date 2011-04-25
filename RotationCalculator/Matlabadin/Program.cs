@@ -49,13 +49,15 @@ namespace Matlabadin
                 out absTolerance);
             DateTime startAggregate = DateTime.Now;
             double avgDuration;
-            var result = graph.CalculateAggregates(pr, out avgDuration);
+            double inqUptime;
+            var result = graph.CalculateAggregates(pr, out avgDuration, out inqUptime);
             DateTime startPrint = DateTime.Now;
             foreach (var key in result.Keys.OrderBy(k => k))
             {
                 Console.WriteLine("{0},{1}", key, result[key]);
             }
             Console.WriteLine("AvgDuration,{0}", avgDuration);
+            Console.WriteLine("InqUptime,{0}", inqUptime);
             Console.WriteLine("Stats_StateSize_Total,{0}", graph.index.Length);
             Console.WriteLine("Stats_StateSize_NonZero,{0}", pr.Count(p => p > 0));
             Console.WriteLine("Stats_Iterations,{0}", iterationsPerformed);

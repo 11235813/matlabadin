@@ -54,16 +54,56 @@ namespace Matlabadin.Tests
             DoTest("HW>CS", 0, Ability.HW);
         }
         [TestMethod]
-        public void ASPlusShouldFishForSDProcs()
+        public void ASPlusShouldUseASIfWillGenerateHP()
         {
-            DoTest("AS+>CS", 0, Ability.AS);
-            DoTest("AS+>CS", GetState(Buff.SD, 4), Ability.CS);
+            DoTest("AS+>CS", GetState(Buff.GC, 1), Ability.AS);
+            DoTest("AS+>CS", 0, Ability.CS);
         }
         [TestMethod]
         public void CreateRotationPriorityQueueNextStateFunctionShouldCreateNextStateFunction()
         {
             var f = RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("CS>HW");
             Assert.AreEqual(Ability.CS, f(0, DefaultParameters));
+        }
+        [TestMethod]
+        public void SDPrefixShouldRequireSDBuff()
+        {
+            DoTest("SDCS", 0, Ability.Nothing);
+            DoTest("SDCS", GetState(Buff.SD, 1), Ability.CS);
+            DoTest("SDSotR", 3, Ability.Nothing);
+            DoTest("SDSotR", GetState(Buff.SD, 1, 3), Ability.SotR);
+        }
+        [TestMethod]
+        public void sdPrefixShouldRequireNoSDBuff()
+        {
+            DoTest("sdCS", 0, Ability.CS);
+            DoTest("sdCS", GetState(Buff.SD, 1), Ability.Nothing);
+            DoTest("sdSotR", 3, Ability.SotR);
+            DoTest("sdSotR", GetState(Buff.SD, 1, 3), Ability.Nothing);
+        }
+        [TestMethod]
+        public void IPrefixShouldRequireIBuff()
+        {
+            DoTest("ICS", 0, Ability.Nothing);
+            DoTest("ICS", GetState(Buff.INQ, 1), Ability.CS);
+            DoTest("ISotR", 3, Ability.Nothing);
+            DoTest("ISotR", GetState(Buff.INQ, 1, 3), Ability.SotR);
+        }
+        [TestMethod]
+        public void iPrefixShouldRequireNoInqBuff()
+        {
+            DoTest("iCS", 0, Ability.CS);
+            DoTest("iCS", GetState(Buff.INQ, 1), Ability.Nothing);
+            DoTest("iSotR", 3, Ability.SotR);
+            DoTest("iSotR", GetState(Buff.INQ, 1, 3), Ability.Nothing);
+        }
+        [TestMethod]
+        public void Inq2ShouldRequire2HP()
+        {
+            DoTest("Inq2", 0, Ability.Nothing);
+            DoTest("Inq2", 1, Ability.Nothing);
+            DoTest("Inq2", 2, Ability.Inq);
+            DoTest("Inq2", 3, Ability.Inq);
         }
     }
 }

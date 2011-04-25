@@ -91,20 +91,23 @@ namespace Matlabadin
             }
             nextStateIndexSentinal = newSentinalIndex;
         }
-        public Dictionary<string, double> CalculateAggregates(double[] pr, out double averageStepDuration)
+        public Dictionary<string, double> CalculateAggregates(double[] pr, out double averageStepDuration, out double inqUptime)
         {
             Dictionary<string, double> sumPr = new Dictionary<string, double>();
-            double sumDuration = 0;
+            double weightedStepsDuration = 0;
+            double weightedInqDuration = 0;
             int length = index.Length;
             for (int i = 0; i < length; i++)
             {
                 Choice c = choice[i];
-                sumDuration += c.stepsDuration;
+                weightedStepsDuration += c.stepsDuration * pr[i];
+                weightedInqDuration += c.inqDuration * pr[i];
                 double currentPr;
                 if (!sumPr.TryGetValue(c.Action, out currentPr)) currentPr = 0;
                 sumPr[c.Action] = currentPr + pr[i];
             }
-            averageStepDuration = sumDuration / length * 1.5 / gp.StepsPerGcd;
+            averageStepDuration = weightedStepsDuration * 1.5 / gp.StepsPerGcd;
+            inqUptime = weightedInqDuration / weightedStepsDuration;
             return sumPr;
         }
         /// <summary>

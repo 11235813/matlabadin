@@ -11,7 +11,6 @@ namespace Matlabadin
         SD,
         INQ,
         EGICD,
-        GCICD,
         Count,
     }
 }

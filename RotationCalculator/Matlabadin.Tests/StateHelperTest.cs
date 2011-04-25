@@ -83,14 +83,6 @@ namespace Matlabadin.Tests
             Assert.AreEqual(3, StateHelper.HP(StateHelper.AdvanceTime(3, 100, DefaultParameters), DefaultParameters));
         }
         [TestMethod]
-        public void GcWillProcHPIffGCActiveAndGCICDNotActive()
-        {
-            Assert.IsFalse(StateHelper.GcWillProcHP(0, DefaultParameters));
-            Assert.IsTrue(StateHelper.GcWillProcHP(StateHelper.SetTimeRemaining(0, Buff.GC, 1, DefaultParameters), DefaultParameters));
-            Assert.IsFalse(StateHelper.GcWillProcHP(StateHelper.SetTimeRemaining(0, Buff.GCICD, 1, DefaultParameters), DefaultParameters));
-            Assert.IsFalse(StateHelper.GcWillProcHP(StateHelper.SetTimeRemaining(StateHelper.SetTimeRemaining(0, Buff.GC, 1, DefaultParameters), Buff.GCICD, 1, DefaultParameters), DefaultParameters));
-        }
-        [TestMethod]
         public void UseAbilityShouldSetAbilityCDAndAdvanceOneGCD()
         {
             foreach (Ability a in new Ability[] {
@@ -179,24 +171,17 @@ namespace Matlabadin.Tests
             Assert.AreNotEqual(0, StateHelper.TimeRemaining(StateHelper.UseAbility(0, DefaultParameters, Ability.CS, hit: true, gcProc: true), Buff.GC, DefaultParameters));
         }
         [TestMethod]
-        public void UseAbility_GCUseShouldSetGCICD()
-        {
-            Assert.AreNotEqual(0, StateHelper.TimeRemaining(StateHelper.UseAbility(GetState(Buff.GC, 4), DefaultParameters, Ability.AS, hit: true), Buff.GCICD, DefaultParameters));
-        }
-        [TestMethod]
         public void UseAbility_GCUseShouldConsumeGC()
         {
             Assert.AreEqual(0, StateHelper.TimeRemaining(StateHelper.UseAbility(GetState(Buff.GC, 4), DefaultParameters, Ability.AS, hit: true), Buff.GC, DefaultParameters));
         }
         [TestMethod]
-        public void UseAbility_GCShouldNotGiveGiveHPforGCDID()
+        public void UseAbility_ASShouldGiveHPIffGCActiveAndHit()
         {
-            Assert.AreEqual(0, StateHelper.HP(StateHelper.UseAbility(GetState(Buff.GC, 4, Buff.GCICD, 4), DefaultParameters, Ability.AS, hit: true), DefaultParameters));
-        }
-        [TestMethod]
-        public void UseAbility_GCNotGivingHPShouldNotResetICD()
-        {
-            Assert.AreEqual(1, StateHelper.TimeRemaining(StateHelper.UseAbility(GetState(Buff.GC, 4, Buff.GCICD, 4), DefaultParameters, Ability.AS, hit: true), Buff.GCICD, DefaultParameters));
+            Assert.AreEqual(0, StateHelper.HP(StateHelper.UseAbility(0, DefaultParameters, Ability.AS, hit: true), DefaultParameters));
+            Assert.AreEqual(0, StateHelper.HP(StateHelper.UseAbility(0, DefaultParameters, Ability.AS, hit: false), DefaultParameters));
+            Assert.AreEqual(1, StateHelper.HP(StateHelper.UseAbility(GetState(Buff.GC, 1), DefaultParameters, Ability.AS, hit: true), DefaultParameters));
+            Assert.AreEqual(0, StateHelper.HP(StateHelper.UseAbility(GetState(Buff.GC, 1), DefaultParameters, Ability.AS, hit: false), DefaultParameters));
         }
         [TestMethod]
         public void UseAbility_ASMissShouldConsumeGCWithoutGivingHP()
@@ -206,9 +191,9 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0, StateHelper.HP(state, DefaultParameters));
         }
         [TestMethod]
-        public void UseAbility_ASHitWithoutGCShouldNotGiveHP()
+        public void UseAbility_ASHitShouldConsumeGC()
         {
-            Assert.AreEqual(0, StateHelper.HP(StateHelper.UseAbility(0, DefaultParameters, Ability.AS), DefaultParameters));
+            Assert.AreEqual(0, StateHelper.TimeRemaining(StateHelper.UseAbility(GetState(Buff.GC, 4), DefaultParameters, Ability.AS, hit: true), Buff.GC, DefaultParameters));
         }
     }
 }

@@ -53,12 +53,6 @@ namespace Matlabadin
                     pr1 = 1 - gp.MeleeHit;
                     pr2 = gp.MeleeHit;
                     break;
-                case Ability.SotR2:
-                    nextState1 = StateHelper.UseAbility(state, gp, a, waitSteps, false); // miss
-                    nextState2 = StateHelper.UseAbility(state, gp, a, waitSteps, true); // hit
-                    pr1 = 1 - gp.MeleeHit;
-                    pr2 = gp.MeleeHit;
-                    break;
                 case Ability.WoG:
                     nextState1 = StateHelper.UseAbility(state, gp, a, waitSteps);
                     nextState2 = StateHelper.UseAbility(state, gp, a, waitSteps, egProc: true);
@@ -81,10 +75,6 @@ namespace Matlabadin
             if (pr2 == 0) nextState2 = UInt64.MaxValue;
             if (pr3 == 0) nextState3 = UInt64.MaxValue;
             return Choice.CreateChoice(state, gp, a, waitSteps + gp.StepsPerGcd, pr1, pr2, pr3);
-        }
-        public static bool GcWillProcHP(ulong state, GraphParameters gp)
-        {
-            return TimeRemaining(state, Buff.GC, gp) > 0  && TimeRemaining(state, Buff.GCICD, gp) == 0;
         }
         /// <summary>
         /// Cooldown remaining on the given ability
@@ -174,18 +164,13 @@ namespace Matlabadin
                     if (hit) nextState = StateHelper.SetHP(nextState, 0, gp);
                     nextState = StateHelper.SetTimeRemaining(nextState, Buff.SD, 0, gp);
                     break;
-                case Ability.SotR2:
-                    if (hit) nextState = StateHelper.SetHP(nextState, 0, gp);
-                    nextState = StateHelper.SetTimeRemaining(nextState, Buff.SD, 0, gp);
-                    break;
                 case Ability.CS:
                     if (hit) nextState = StateHelper.IncHP(nextState, gp);
                     break;
                 case Ability.AS:
-                    if (hit && StateHelper.GcWillProcHP(nextState, gp))
+                    if (hit && StateHelper.TimeRemaining(nextState, Buff.GC, gp) > 0)
                     {
                         nextState = StateHelper.IncHP(nextState, gp);
-                        nextState = StateHelper.SetTimeRemaining(nextState, Buff.GCICD, gp.BuffDurationInSteps(Buff.GCICD), gp);
                     }
                     nextState = StateHelper.SetTimeRemaining(nextState, Buff.GC, 0, gp);
                     break;
