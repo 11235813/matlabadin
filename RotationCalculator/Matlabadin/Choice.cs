@@ -22,8 +22,14 @@ namespace Matlabadin
             Choice lookupChoice;
             if (!globalLookup.TryGetValue(c, out lookupChoice))
             {
-                lookupChoice = c;
-                globalLookup.Add(lookupChoice, lookupChoice);
+                lock (globalLookup)
+                {
+                    if (!globalLookup.TryGetValue(c, out lookupChoice))
+                    {
+                        lookupChoice = c;
+                        globalLookup.Add(lookupChoice, lookupChoice);
+                    }
+                }
             }
             return lookupChoice;
         }
