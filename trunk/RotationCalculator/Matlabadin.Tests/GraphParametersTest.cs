@@ -50,7 +50,6 @@ namespace Matlabadin.Tests
             GraphParameters target = new GraphParameters(3, false, 0, 0, 0, 0, 0);
             Assert.AreEqual(15 * 2, target.BuffDurationInSteps(Buff.EGICD));
             Assert.AreEqual(6 * 2, target.BuffDurationInSteps(Buff.GC));
-            Assert.AreEqual(3.5 * 2, target.BuffDurationInSteps(Buff.GCICD));
             Assert.AreEqual(4 * 3 * 2, target.BuffDurationInSteps(Buff.INQ)); // 4s * 3hp
             Assert.AreEqual(10 * 2, target.BuffDurationInSteps(Buff.SD));
         }

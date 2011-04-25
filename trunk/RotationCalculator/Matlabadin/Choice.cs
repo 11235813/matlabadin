@@ -9,10 +9,16 @@ namespace Matlabadin
     {
         public static Choice CreateChoice(ulong state, GraphParameters gp, Ability a, int stepsDuration, double option1, double option2, double option3)
         {
+            // Special case Inquisition since we may not have inq up when we cast Inq but it's up as a buff for the duration of the casting GCD
+            int inqLeft = StateHelper.TimeRemaining(state, Buff.INQ, gp);
+            if (a == Ability.Inq && StateHelper.HP(state, gp) > 0) inqLeft += gp.StepsPerGcd; // add at least the GCD to the remaining duration
+
             Choice c = new Choice(a,
                 a == Ability.SotR && StateHelper.TimeRemaining(state, Buff.SD, gp) > 0,
-                StateHelper.TimeRemaining(state, Buff.INQ, gp) > 0,
-                stepsDuration, option1, option2, option3);
+                inqLeft,
+                StateHelper.HP(state, gp),
+                stepsDuration,
+                option1, option2, option3);
             Choice lookupChoice;
             if (!globalLookup.TryGetValue(c, out lookupChoice))
             {
@@ -22,12 +28,13 @@ namespace Matlabadin
             return lookupChoice;
         }
         private static Dictionary<Choice, Choice> globalLookup = new Dictionary<Choice, Choice>();
-        private Choice(Ability ability, bool sotrsd, bool inq, int stepsDuration, double option1, double option2, double option3)
+        private Choice(Ability ability, bool sotrsd, int inq, int hp, int stepsDuration, double option1, double option2, double option3)
         {
             this.ability = ability;
+            this.hp = hp;
             this.sotrsd = sotrsd;
-            this.inq = inq;
             this.stepsDuration = stepsDuration;
+            this.inqDuration = Math.Min(inq, stepsDuration);
             this.option1 = option1;
             this.option2 = option2;
             this.option3 = option3;
@@ -40,8 +47,12 @@ namespace Matlabadin
                 if (action == null)
                 {
                     action = ability.ToString();
+                    if (hp != 3 && (ability == Ability.SotR || ability == Ability.WoG)) {
+                        // Not required for Inq
+                        action += hp.ToString();
+                    }
                     if (sotrsd) action += "(SD)";
-                    if (inq) action += "(Inq)";
+                    if (inqDuration > 0) action += "(Inq)";
                 }
                 return action;
             }
@@ -49,11 +60,12 @@ namespace Matlabadin
         private string action;
         private readonly Ability ability;
         private readonly bool sotrsd;
-        private readonly bool inq;
-        
+        private readonly int hp;
 
-        // required for aggregration
+        // aggregation stats
+        public readonly int inqDuration;
         public readonly int stepsDuration;
+
         // transition likelyhoods
         public readonly double option1;
         public readonly double option2;
@@ -67,7 +79,8 @@ namespace Matlabadin
         {
             return ability == c.ability
                 && sotrsd == c.sotrsd
-                && inq == c.inq
+                && inqDuration == c.inqDuration
+                && hp == c.hp
                 && stepsDuration == c.stepsDuration
                 && option1 == c.option1
                 && option2 == c.option2
@@ -76,7 +89,8 @@ namespace Matlabadin
         public override int GetHashCode()
         {
             int hash = stepsDuration.GetHashCode() ^ option1.GetHashCode() ^ option2.GetHashCode() ^ option3.GetHashCode();
-            if (inq) hash ^= 1 << 28;
+            hash ^= inqDuration << 7;
+            hash ^= hp << 11;
             if (sotrsd) hash ^= 1 << 27;
             hash += (int)ability << 16;
             return hash;

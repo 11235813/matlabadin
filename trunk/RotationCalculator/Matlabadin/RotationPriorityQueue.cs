@@ -16,26 +16,31 @@ namespace Matlabadin
         {
             for (int i = 0; i < pq.Length; i++)
             {
-                switch (pq[i])
+                string action = pq[i];
+                // check for buff present/not present ability prefixes
+                if (action.StartsWith("I", StringComparison.InvariantCultureIgnoreCase) && !action.StartsWith("Inq"))
+                {
+                    bool buffMustBeActive = action[0] == 'I';
+                    action = action.Substring(1);
+                    int timeRemaining = StateHelper.TimeRemaining(state, Buff.INQ, gp);
+                    if (buffMustBeActive && timeRemaining == 0) continue; // Inq with no buff
+                    if (!buffMustBeActive && timeRemaining != 0) continue; // Inq with buff
+                }
+                if (action.StartsWith("SD", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    bool buffMustBeActive = action[0] == 'S';
+                    action = action.Substring(2);
+                    int timeRemaining = StateHelper.TimeRemaining(state, Buff.SD, gp);
+                    if (buffMustBeActive && timeRemaining == 0) continue; // SD with no buff
+                    if (!buffMustBeActive && timeRemaining != 0) continue; // sd with buff
+                }
+                switch (action)
                 {
                     case "SotR":
                         if (StateHelper.HP(state, gp) >= 3) return Ability.SotR;
                         break;
-                    case "ISotR":
-                        if (StateHelper.HP(state, gp) >= 3 &&
-                            StateHelper.TimeRemaining(state, Buff.INQ, gp) > 0) return Ability.SotR;
-                        break;
-                    case "SDSotR":
-                        if (StateHelper.HP(state, gp) >= 3 &&
-                            StateHelper.TimeRemaining(state, Buff.SD, gp) > 0) return Ability.SotR;
-                        break;
-                    case "ISDSotR":
-                        if (StateHelper.HP(state, gp) >= 3 &&
-                            StateHelper.TimeRemaining(state, Buff.SD, gp) > 0 &&
-                            StateHelper.TimeRemaining(state, Buff.INQ, gp) > 0) return Ability.SotR;
-                        break;
                     case "SotR2":
-                        if (StateHelper.HP(state, gp) >= 2) return Ability.SotR2;
+                        if (StateHelper.HP(state, gp) >= 2) return Ability.SotR;
                         break;
                     case "CS":
                         if (StateHelper.CooldownRemaining(state, Ability.CS, gp) == 0) return Ability.CS;
@@ -47,10 +52,6 @@ namespace Matlabadin
                     case "HotR":
                         if (StateHelper.CooldownRemaining(state, Ability.HotR, gp) == 0) return Ability.HotR;
                         break;
-                    case "IHotR":
-                        if (StateHelper.CooldownRemaining(state, Ability.HotR, gp) == 0 &&
-                            StateHelper.TimeRemaining(state, Buff.INQ, gp) > 0) return Ability.HotR;
-                        break;
                     case "HoW":
                         if (StateHelper.CooldownRemaining(state, Ability.HoW, gp) == 0) return Ability.HoW;
                         break;
@@ -61,11 +62,6 @@ namespace Matlabadin
                         if (StateHelper.HP(state, gp) >= 3 && 
                             StateHelper.CooldownRemaining(state, Ability.Inq, gp) == 0) return Ability.Inq;
                         break;
-                    case "iInq":
-                        if (StateHelper.HP(state, gp) >= 3 &&
-                            StateHelper.CooldownRemaining(state, Ability.Inq, gp) == 0 &&
-                            StateHelper.TimeRemaining(state, Buff.INQ, gp) == 0) return Ability.Inq;
-                        break;
                     case "Inq2":
                         if (StateHelper.HP(state, gp) >= 2 &&
                             StateHelper.CooldownRemaining(state, Ability.Inq, gp) == 0) return Ability.Inq;
@@ -73,43 +69,15 @@ namespace Matlabadin
                     case "Cons":
                         if (StateHelper.CooldownRemaining(state, Ability.Cons, gp) == 0) return Ability.Cons;
                         break;
-                    case "ICons":
-                        if (StateHelper.CooldownRemaining(state, Ability.Cons, gp) == 0 &&
-                            StateHelper.TimeRemaining(state, Buff.INQ, gp) > 0) return Ability.Cons;
-                        break;
                     case "J":
                         if (StateHelper.CooldownRemaining(state, Ability.J, gp) == 0) return Ability.J;
-                        break;
-                    case "IJ":
-                        if (StateHelper.CooldownRemaining(state, Ability.J, gp) == 0 &&
-                            StateHelper.TimeRemaining(state, Buff.INQ, gp) > 0) return Ability.J;
-                        break;
-                    case "sdJ":
-                        if (StateHelper.CooldownRemaining(state, Ability.J, gp) == 0 &&
-                            StateHelper.TimeRemaining(state, Buff.SD, gp) == 0) return Ability.J;
                         break;
                     case "AS":
                         if (StateHelper.CooldownRemaining(state, Ability.AS, gp) == 0) return Ability.AS;
                         break;
-                    case "IAS":
-                        if (StateHelper.CooldownRemaining(state, Ability.AS, gp) == 0 &&
-                            StateHelper.TimeRemaining(state, Buff.INQ, gp) > 0) return Ability.AS;
-                        break;
-                    case "sdAS":
-                        if (StateHelper.TimeRemaining(state, Buff.SD, gp) == 0 &&
-                            StateHelper.CooldownRemaining(state, Ability.AS, gp) == 0) return Ability.AS;
-                        break;
                     case "AS+":
                         // Use AS if it will generate HP
-                        if (StateHelper.TimeRemaining(state, Buff.GCICD, gp) == 0 &&
-                            StateHelper.TimeRemaining(state, Buff.GC, gp) > 0 && 
-                            StateHelper.CooldownRemaining(state, Ability.AS, gp) == 0) return Ability.AS;
-                        break;
-                    case "sdAS+":
-                        // Use AS if it will generate HP and we're fishing for an SD proc
-                        if (StateHelper.TimeRemaining(state, Buff.SD, gp) == 0 &&
-                            StateHelper.TimeRemaining(state, Buff.GCICD, gp) == 0 &&
-                            StateHelper.TimeRemaining(state, Buff.GC, gp) > 0 &&
+                        if (StateHelper.TimeRemaining(state, Buff.GC, gp) > 0 && 
                             StateHelper.CooldownRemaining(state, Ability.AS, gp) == 0) return Ability.AS;
                         break;
                     default:
@@ -120,7 +88,7 @@ namespace Matlabadin
         }
         public RotationPriorityQueue(string queue)
         {
-            pq = queue.Split('>', ';', ',', '-');
+            pq = queue.Split('>', ';', '-');
         }
         private string[] pq;
     }
