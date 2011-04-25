@@ -1,7 +1,7 @@
 %ACTION2CPS takes the actionPr and avgDuration arrays returned by
 %memoized_fsm and converts them into a standardized array containing casts
 %per second values for DPS calculations
-function [cps inqup] = action2cps( actionPr, avgDuration, metadata, labels)
+function [cps] = action2cps( actionPr, avgDuration, metadata, labels)
 
 if nargin<4
     %import val for labels
@@ -68,19 +68,6 @@ idx5b=logical(...
 
 cps(strcmp('seal(Inq)',val.fsmlabel))=sum(cps(idx5a)).*mdf.mehit + ...
                                       sum(cps(idx5b)).*mdf.rahit;
-
-%calculate effective inq uptime (approx)
-idx6=logical(idx5a+idx5b+...
-             strcmp('Cons(Inq)',val.fsmlabel)+...
-             strcmp('HW(Inq)',val.fsmlabel)+...
-             strcmp('Inq(Inq)',val.fsmlabel)+...
-             strcmp('WoG(Inq)',val.fsmlabel)+...
-             strcmp('Nothing(Inq)',val.fsmlabel));
-    
-inqup=sum(cps(idx6));         
-% if sum(strcmp('Nothing(Inq)',{actionPr{1,:}}))>0
-%     inqup=inqup+actionPr{2,strcmp('Nothing(Inq)',{actionPr{1,:}})};
-% end
 
 %convert CPGCD to CPS
 cps=cps./avgDuration;
