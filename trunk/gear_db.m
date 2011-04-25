@@ -170,30 +170,17 @@ idb.sid=struct('name','Empty Slot', ...
 
 %% Head
 
-idb.iid(58103).name='Helm of the Proud';
-idb.iid(58103).ilvl=346;
-idb.iid(58103).str=302;
-idb.iid(58103).sta=454;
-idb.iid(58103).dodge=142;
-idb.iid(58103).parry=142;
-idb.iid(58103).barmor=2680;
-idb.iid(58103).socket='MY';
-idb.iid(58103).sbstat='sta';
-idb.iid(58103).sbval=45;
-idb.iid(58103).atype=1;
-
-idb.iid(60356).name='Reinforced Sapphirium Faceguard';
-idb.iid(60356).ilvl=359;
-idb.iid(60356).str=259;
-idb.iid(60356).sta=512;
-idb.iid(60356).hit=113;
-idb.iid(60356).dodge=281;
-idb.iid(60356).barmor=2784;
-idb.iid(60356).socket='MY';
-idb.iid(60356).sbstat='sta';
-idb.iid(60356).sbval=45;
-idb.iid(60356).atype=1;
-idb.iid(60356).istier=[1 0 0];
+idb.iid(69558).name='Spiritshield Mask';
+idb.iid(69558).ilvl=353;
+idb.iid(69558).str=263;
+idb.iid(69558).sta=484;
+idb.iid(69558).dodge=201;
+idb.iid(69558).parry=159;
+idb.iid(69558).barmor=2735;
+idb.iid(69558).socket='MB';
+idb.iid(69558).sbstat='dodge';
+idb.iid(69558).sbval=30;
+idb.iid(69558).atype=1;
 
 idb.iid(65226).name='Reinforced Sapphirium Faceguard (Heroic)';
 idb.iid(65226).ilvl=372;
@@ -211,47 +198,34 @@ idb.iid(65226).istier=[1 0 0];
 
 %% Neck 
 
-idb.iid(57932).name='The Lustrous Eye';
-idb.iid(57932).ilvl=346;
-idb.iid(57932).str=168;
-idb.iid(57932).sta=252;
-idb.iid(57932).mast=112;
-idb.iid(57932).dodge=112;
+idb.iid(69635).name='Amulet of Protection';
+idb.iid(69635).ilvl=353;
+idb.iid(69635).str=180;
+idb.iid(69635).sta=270;
+idb.iid(69635).mast=102;
+idb.iid(69635).dodge=130;
 
-idb.iid(59319).name='Ironstar Amulet';
-idb.iid(59319).ilvl=359;
-idb.iid(59319).str=145;
-idb.iid(59319).sta=286;
-idb.iid(59319).hit=96;
-idb.iid(59319).dodge=190;
+idb.iid(65059).name='Ironstar Amulet (Heroic)';
+idb.iid(65059).ilvl=372;
+idb.iid(65059).str=163;
+idb.iid(65059).sta=322;
+idb.iid(65059).hit=109;
+idb.iid(65059).dodge=215;
 
 
 %% Shoulder
 
-idb.iid(58104).name='Sunburnt Pauldrons';
-idb.iid(58104).ilvl=346;
-idb.iid(58104).str=161;
-idb.iid(58104).sta=337;
-idb.iid(58104).hit=111;
-idb.iid(58104).dodge=205;
-idb.iid(58104).barmor=2474;
-idb.iid(58104).socket='R';
-idb.iid(58104).sbstat='dodge';
-idb.iid(58104).sbval=10;
-idb.iid(58104).atype=1;
-
-idb.iid(60358).name='Reinforced Sapphirium Shoulderguards';
-idb.iid(60358).ilvl=359;
-idb.iid(60358).str=193;
-idb.iid(60358).sta=380;
-idb.iid(60358).hit=128;
-idb.iid(60358).dodge=213;
-idb.iid(60358).barmor=2570;
-idb.iid(60358).socket='R';
-idb.iid(60358).sbstat='sta';
-idb.iid(60358).sbval=15;
-idb.iid(60358).atype=1;
-idb.iid(60358).istier=[1 0 0];
+idb.iid(69573).name='Pauldrons of Sacrifice';
+idb.iid(69573).ilvl=353;
+idb.iid(69573).str=219;
+idb.iid(69573).sta=360;
+idb.iid(69573).mast=136;
+idb.iid(69573).parry=162;
+idb.iid(69573).barmor=2525;
+idb.iid(69573).socket='R';
+idb.iid(69573).sbstat='sta';
+idb.iid(69573).sbval=15;
+idb.iid(69573).atype=1;
 
 idb.iid(65228).name='Reinforced Sapphirium Shoulderguards (Heroic)';
 idb.iid(65228).ilvl=372;
@@ -303,19 +277,6 @@ idb.iid(58101).sbstat='dodge';
 idb.iid(58101).sbval=20;
 idb.iid(58101).atype=1;
 
-idb.iid(60354).name='Reinforced Sapphirium Chestguard';
-idb.iid(60354).ilvl=359;
-idb.iid(60354).str=341;
-idb.iid(60354).sta=512;
-idb.iid(60354).mast=208;
-idb.iid(60354).parry=168;
-idb.iid(60354).barmor=3426;
-idb.iid(60354).socket='RB';
-idb.iid(60354).sbstat='sta';
-idb.iid(60354).sbval=30;
-idb.iid(60354).atype=1;
-idb.iid(60354).istier=[1 0 0];
-
 idb.iid(65224).name='Reinforced Sapphirium Chestguard (Heroic)';
 idb.iid(65224).ilvl=372;
 idb.iid(65224).str=385;
@@ -344,14 +305,14 @@ idb.iid(57870).sbstat='mast';
 idb.iid(57870).sbval=10;
 idb.iid(57870).atype=1;
 
-idb.iid(59470).name='Bracers of Impossible Strength';
-idb.iid(59470).ilvl=359;
-idb.iid(59470).str=190;
-idb.iid(59470).sta=286;
-idb.iid(59470).mast=127;
-idb.iid(59470).parry=127;
-idb.iid(59470).barmor=1499;
-idb.iid(59470).atype=1;
+idb.iid(65143).name='Bracers of Impossible Strength (Heroic)';
+idb.iid(65143).ilvl=372;
+idb.iid(65143).str=215;
+idb.iid(65143).sta=322;
+idb.iid(65143).mast=143;
+idb.iid(65143).parry=143;
+idb.iid(65143).barmor=1557;
+idb.iid(65143).atype=1;
 
 
 %% Gloves
@@ -368,22 +329,9 @@ idb.iid(58105).sbstat='dodge';
 idb.iid(58105).sbval=10;
 idb.iid(58105).atype=1;
 
-idb.iid(60355).name='Reinforced Sapphirium Handguards';
-idb.iid(60355).ilvl=359;
-idb.iid(60355).str=233;
-idb.iid(60355).sta=380;
-idb.iid(60355).mast=149;
-idb.iid(60355).parry=149;
-idb.iid(60355).barmor=2141;
-idb.iid(60355).socket='B';
-idb.iid(60355).sbstat='mast';
-idb.iid(60355).sbval=10;
-idb.iid(60355).atype=1;
-idb.iid(60355).istier=[1 0 0];
-
 idb.iid(65225).name='Reinforced Sapphirium Handguards (Heroic)';
 idb.iid(65225).ilvl=372;
-idb.iid(65225).str=266;
+idb.iid(65225).str=286;
 idb.iid(65225).sta=429;
 idb.iid(65225).mast=171;
 idb.iid(65225).parry=171;
@@ -392,7 +340,6 @@ idb.iid(65225).socket='B';
 idb.iid(65225).sbstat='mast';
 idb.iid(65225).sbval=10;
 idb.iid(65225).atype=1;
-idb.iid(65225).istier=[1 0 0];
 
 
 %% Belts
@@ -409,45 +356,32 @@ idb.iid(55059).sbstat='dodge';
 idb.iid(55059).sbval=10;
 idb.iid(55059).atype=1;
 
-idb.iid(59117).name='Jumbotron Power Belt';
-idb.iid(59117).ilvl=359;
-idb.iid(59117).str=253;
-idb.iid(59117).sta=380;
-idb.iid(59117).dodge=139;
-idb.iid(59117).mast=159;
-idb.iid(59117).barmor=1927;
-idb.iid(59117).socket='Y';
-idb.iid(59117).sbstat='sta';
-idb.iid(59117).sbval=15;
-idb.iid(59117).atype=1;
+idb.iid(65086).name='Jumbotron Power Belt (Heroic)';
+idb.iid(65086).ilvl=372;
+idb.iid(65086).str=286;
+idb.iid(65086).sta=429;
+idb.iid(65086).mast=181;
+idb.iid(65086).dodge=161;
+idb.iid(65086).barmor=2002;
+idb.iid(65086).socket='Y';
+idb.iid(65086).sbstat='sta';
+idb.iid(65086).sbval=15;
+idb.iid(65086).atype=1;
 
 
 %% Legs
 
-idb.iid(58102).name='Greaves of Splendor';
-idb.iid(58102).ilvl=346;
-idb.iid(58102).str=210;
-idb.iid(58102).sta=454;
-idb.iid(58102).hit=133;
-idb.iid(58102).dodge=262;
-idb.iid(58102).barmor=2886;
-idb.iid(58102).socket='YB';
-idb.iid(58102).sbstat='sta';
-idb.iid(58102).sbval=30;
-idb.iid(58102).atype=1;
-
-idb.iid(60357).name='Reinforced Sapphirium Legguards';
-idb.iid(60357).ilvl=359;
-idb.iid(60357).str=341;
-idb.iid(60357).sta=512;
-idb.iid(60357).dodge=188;
-idb.iid(60357).parry=188;
-idb.iid(60357).barmor=2998;
-idb.iid(60357).socket='RB';
-idb.iid(60357).sbstat='sta';
-idb.iid(60357).sbval=30;
-idb.iid(60357).atype=1;
-idb.iid(60357).istier=[1 0 0];
+idb.iid(69583).name='Legguards of the Unforgiving';
+idb.iid(69583).ilvl=353;
+idb.iid(69583).str=283;
+idb.iid(69583).sta=484;
+idb.iid(69583).mast=192;
+idb.iid(69583).parry=197;
+idb.iid(69583).barmor=2946;
+idb.iid(69583).socket='RY';
+idb.iid(69583).sbstat='parry';
+idb.iid(69583).sbval=20;
+idb.iid(69583).atype=1;
 
 idb.iid(65227).name='Reinforced Sapphirium Legguards (Heroic)';
 idb.iid(65227).ilvl=372;
@@ -478,6 +412,18 @@ idb.iid(62418).sbstat='parry';
 idb.iid(62418).sbval=10;
 idb.iid(62418).atype=1;
 
+idb.iid(65051).name='Molten Tantrum Boots (Heroic)';
+idb.iid(65051).ilvl=372;
+idb.iid(65051).str=286;
+idb.iid(65051).sta=429;
+idb.iid(65051).mast=147;
+idb.iid(65051).dodge=185;
+idb.iid(65051).barmor=2447;
+idb.iid(65051).socket='Y';
+idb.iid(65051).sbstat='sta';
+idb.iid(65051).sbval=15;
+idb.iid(65051).atype=1;
+
 
 %% Rings
 
@@ -502,12 +448,12 @@ idb.iid(58187).sta=286;
 idb.iid(58187).mast=127;
 idb.iid(58187).dodge=127;
 
-idb.iid(59233).name='Bile-O-Tron Nut';
-idb.iid(59233).ilvl=359;
-idb.iid(59233).str=136;
-idb.iid(59233).sta=286;
-idb.iid(59233).exp=111;
-idb.iid(59233).dodge=190;
+idb.iid(65070).name='Bile-O-Tron Nut (Heroic)';
+idb.iid(65070).ilvl=372;
+idb.iid(65070).str=153;
+idb.iid(65070).sta=322;
+idb.iid(65070).exp=126;
+idb.iid(65070).dodge=215;
 
 
 %% Trinkets
@@ -520,9 +466,9 @@ idb.iid(56406).name='Impetuous Query (Heroic)';
 idb.iid(56406).ilvl=346;
 idb.iid(56406).mast=285;
 
-idb.iid(59515).name='Vial of Stolen Memories';
-idb.iid(59515).ilvl=359;
-idb.iid(59515).sta=482;
+idb.iid(65109).name='Vial of Stolen Memories (Heroic)';
+idb.iid(65109).ilvl=372;
+idb.iid(65109).sta=544;
 
 % Mirror of Broken Images (H) =  Unsolvable Riddle (A) 
 idb.iid(62466).name='Mirror of Broken Images';
@@ -762,6 +708,40 @@ idb.iid(65171).sta=194;
 idb.iid(65171).hit=86;
 idb.iid(65171).mast=86;
 
+idb.iid(69575).name='Mace of the Sacrificed';
+idb.iid(69575).wtype='mac';
+idb.iid(69575).ilvl=353;
+idb.iid(69575).tooldps=437.3;
+idb.iid(69575).swing=2.6;
+idb.iid(69575).avgdmg=1137;
+idb.iid(69575).sta=207;
+idb.iid(69575).agi=138;
+idb.iid(69575).hit=85;
+idb.iid(69575).haste=96;
+
+idb.iid(69581).name='Amani Scepter of Rites';
+idb.iid(69581).wtype='mac';
+idb.iid(69581).ilvl=353;
+idb.iid(69581).tooldps=437.2;
+idb.iid(69581).swing=1.6;
+idb.iid(69581).avgdmg=699.5;
+idb.iid(69581).sta=207;
+idb.iid(69581).int=138;
+idb.iid(69581).spi=92;
+idb.iid(69581).mast=92;
+idb.iid(69581).sp=1848;
+
+idb.iid(69803).name='Gurubashi Punisher';
+idb.iid(69803).wtype='mac';
+idb.iid(69803).ilvl=353;
+idb.iid(69803).tooldps=437.3;
+idb.iid(69803).swing=2.6;
+idb.iid(69803).avgdmg=1137;
+idb.iid(69803).str=138;
+idb.iid(69803).sta=207;
+idb.iid(69803).hit=77;
+idb.iid(69803).haste=101;
+
 idb.iid(59347).name='Mace of Acrid Death';
 idb.iid(59347).wtype='mac';
 idb.iid(59347).ilvl=359;
@@ -972,6 +952,39 @@ idb.iid(65173).agi=129;
 idb.iid(65173).haste=86;
 idb.iid(65173).mast=86;
 
+idb.iid(69609).name='Bloodlord''s Protector';
+idb.iid(69609).wtype='swo';
+idb.iid(69609).ilvl=353;
+idb.iid(69609).tooldps=437.3;
+idb.iid(69609).swing=2.6;
+idb.iid(69609).avgdmg=1137;
+idb.iid(69609).str=138;
+idb.iid(69609).sta=207;
+idb.iid(69609).dodge=92;
+idb.iid(69609).parry=92;
+
+idb.iid(69618).name='Zulian Slasher';
+idb.iid(69618).wtype='swo';
+idb.iid(69618).ilvl=353;
+idb.iid(69618).tooldps=437.3;
+idb.iid(69618).swing=2.6;
+idb.iid(69618).avgdmg=1137;
+idb.iid(69618).str=138;
+idb.iid(69618).sta=207;
+idb.iid(69618).hit=96;
+idb.iid(69618).crit=85;
+
+idb.iid(69639).name='Renataki''s Soul Slicer';
+idb.iid(69639).wtype='swo';
+idb.iid(69639).ilvl=353;
+idb.iid(69639).tooldps=437.3;
+idb.iid(69639).swing=2.6;
+idb.iid(69639).avgdmg=1137;
+idb.iid(69639).str=138;
+idb.iid(69639).sta=207;
+idb.iid(69639).exp=95;
+idb.iid(69639).mast=88;
+
 idb.iid(59333).name='Lava Spine';
 idb.iid(59333).wtype='swo';
 idb.iid(59333).ilvl=359;
@@ -1127,29 +1140,21 @@ idb.iid(67469).crit=110;
 
 %% Shields
 
-idb.iid(57926).name='Shield of the Four Grey Towers';
-idb.iid(57926).ilvl=346;
-idb.iid(57926).str=168;
-idb.iid(57926).sta=252;
-idb.iid(57926).mast=112;
-idb.iid(57926).dodge=112;
-idb.iid(57926).barmor=11696;
+idb.iid(69629).name='Shield of the Blood God';
+idb.iid(69629).ilvl=353;
+idb.iid(69629).str=180;
+idb.iid(69629).sta=270;
+idb.iid(69629).mast=117;
+idb.iid(69629).dodge=122;
+idb.iid(69629).barmor=11803;
 
-idb.iid(55069).name='Elementium Earthguard';
-idb.iid(55069).ilvl=359;
-idb.iid(55069).str=190;
-idb.iid(55069).sta=286;
-idb.iid(55069).hit=127;
-idb.iid(55069).mast=127;
-idb.iid(55069).barmor=11896;
-
-idb.iid(67145).name='Blockade''s Lost Shield';
-idb.iid(67145).ilvl=359;
-idb.iid(67145).str=190;
-idb.iid(67145).sta=286;
-idb.iid(67145).mast=134;
-idb.iid(67145).parry=114;
-idb.iid(67145).barmor=11896;
+idb.iid(65023).name='Akmin-Kurai, Dominion''s Shield (Heroic)';
+idb.iid(65023).ilvl=372;
+idb.iid(65023).str=215;
+idb.iid(65023).sta=322;
+idb.iid(65023).mast=143;
+idb.iid(65023).parry=143;
+idb.iid(65023).barmor=12103;
 
 
 
