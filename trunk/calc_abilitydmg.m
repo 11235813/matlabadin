@@ -165,20 +165,20 @@ ylabel('Damage (including SoT procs)')
 title('100% Vengeance')
 % 
 % 
-figure(22)
-set(gcf,'Position',[428 128 728 378])
-bar40=bar(netplot2(kk,:),'BarWidth',0.5,'BarLayout','stacked');
-set(bar40(2),'FaceColor',[0.749 0.749 0]);
-xlim([0.5 11.5])
-maxy=ceil(max(sum(netplot2,2))/5000)*5000;
-ylim([0 maxy])
-set(gca,'YTick',[0:5000:maxy],'YTickLabel',[int2str([0:5:maxy/1000]') repmat('k',1+maxy/5000,1)])
-set(gca,'XTickLabel',dmg_labels(kk))
-legend('Unglyphed','Glyphed','Location','NorthEast')
-xlabel('Ability')
-ylabel('Damage (including SoT procs and Sacred Duty)')
-title('100% Vengeance')
-% 
+% figure(22)
+% set(gcf,'Position',[428 128 728 378])
+% bar40=bar(netplot2(kk,:),'BarWidth',0.5,'BarLayout','stacked');
+% set(bar40(2),'FaceColor',[0.749 0.749 0]);
+% xlim([0.5 11.5])
+% maxy=ceil(max(sum(netplot2,2))/5000)*5000;
+% ylim([0 maxy])
+% set(gca,'YTick',[0:5000:maxy],'YTickLabel',[int2str([0:5:maxy/1000]') repmat('k',1+maxy/5000,1)])
+% set(gca,'XTickLabel',dmg_labels(kk))
+% legend('Unglyphed','Glyphed','Location','NorthEast')
+% xlabel('Ability')
+% ylabel('Damage (including SoT procs and Sacred Duty)')
+% title('100% Vengeance')
+% % 
 %% these two look psychadelically awful
 % 
 figure(23)
@@ -196,16 +196,16 @@ ylabel('Damage (including SoT procs)')
 title('Glyphed Damage, Varying Vengeance, Hit, Exp')
 % 
 % 
-figure(24)
-set(gcf,'Position',[428 128 728 378])
-bar40=barh(arr3(kk,:),'BarWidth',1.5,'BarLayout','grouped');
-set(bar40(2),'FaceColor',[0.749 0.749 0]);
-ylim([0.5 12.5])
-maxx=ceil(max(sum(netplot2,2))/5000)*5000;
-xlim([0 maxy])
-set(gca,'XTick',[0:5000:maxx],'XTickLabel',[int2str([0:5:maxx/1000]') repmat('k',1+maxx/5000,1)])
-set(gca,'YTickLabel',dmg_labels(kk))
-legend('Veng=100%','Veng=100%, 8% hit, 26 exp','Veng=30%','Veng=30%, 8% hit, 26 exp','Location','NorthEast')
-ylabel('Ability')
-xlabel('Damage (including SoT procs)')
-title('Glyphed Damage, Varying Vengeance, Hit, Exp')
+% figure(24)
+% set(gcf,'Position',[428 128 728 378])
+% bar40=barh(arr3(kk,:),'BarWidth',1.5,'BarLayout','grouped');
+% set(bar40(2),'FaceColor',[0.749 0.749 0]);
+% ylim([0.5 12.5])
+% maxx=ceil(max(sum(netplot2,2))/5000)*5000;
+% xlim([0 maxy])
+% set(gca,'XTick',[0:5000:maxx],'XTickLabel',[int2str([0:5:maxx/1000]') repmat('k',1+maxx/5000,1)])
+% set(gca,'YTickLabel',dmg_labels(kk))
+% legend('Veng=100%','Veng=100%, 8% hit, 26 exp','Veng=30%','Veng=30%, 8% hit, 26 exp','Location','NorthEast')
+% ylabel('Ability')
+% xlabel('Damage (including SoT procs)')
+% title('Glyphed Damage, Varying Vengeance, Hit, Exp')

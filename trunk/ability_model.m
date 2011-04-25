@@ -147,9 +147,9 @@ raw.Judgement=      raw.Judgement.*mdf.spdmg.*(1+mdf.glyphJ+(10./3).*mdf.WotL);
 dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
 heal.Judgement=     0;
 threat.Judgement=   max(dmg.Judgement,heal.Judgement).*mdf.RFury;
-net.Judgement{1}=   dmg.Judgement+(mdf.jseals+mdf.tseal).*dmg.activeseal.*mdf.rahit;
+net.Judgement{1}=   dmg.Judgement+(mdf.jseals).*dmg.activeseal.*mdf.rahit;
 net.Judgement{2}=   heal.Judgement+mdf.jseals.*heal.activeseal.*mdf.rahit;
-net.Judgement{3}=   threat.Judgement+(mdf.jseals+mdf.tseal).*threat.activeseal.*mdf.rahit;
+net.Judgement{3}=   threat.Judgement+(mdf.jseals).*threat.activeseal.*mdf.rahit;
 
 %Hammer of Wrath (can be blocked)
 raw.HammerofWrath= (4015.02439+0.117.*player.hsp+0.39.*player.ap).*mdf.spdmg;
