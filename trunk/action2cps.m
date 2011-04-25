@@ -18,10 +18,11 @@ end
 %mdf.mehit and mdf.rahit required for seals - pull from metadata if
 %supplied, else import mdf
 if nargin<3
-    mdf=evalin('base','mdf');
+    mhit=evalin('base','mdf.mehit');
+    rhit=evalin('base','mdf.rahit');
 else
-    mdf.mehit=str2num(metadata.Param_Hit_Melee);
-    mdf.rahit=str2num(metadata.Param_Hit_Ranged);
+    mhit=str2double(metadata.Param_Hit_Melee);
+    rhit=str2double(metadata.Param_Hit_Ranged);
 end
     
 
@@ -54,8 +55,8 @@ idx4b=logical(...
      strcmp('SotR2',val.fsmlabel)+strcmp('CS',val.fsmlabel)+...
      strcmp('HotR',val.fsmlabel));
 
-cps(strcmp('seal',val.fsmlabel))=sum(cps(idx4a)).*mdf.mehit + ...
-                                 sum(cps(idx4b)).*mdf.rahit;
+cps(strcmp('seal',val.fsmlabel))=sum(cps(idx4a)).*mhit + ...
+                                 sum(cps(idx4b)).*rhit;
  
 idx5a=logical(...
      strcmp('AS(Inq)',val.fsmlabel)+strcmp('J(Inq)',val.fsmlabel)+ ...
@@ -66,8 +67,8 @@ idx5b=logical(...
      strcmp('SotR2(Inq)',val.fsmlabel)+strcmp('CS(Inq)',val.fsmlabel)+...
      strcmp('HotR(Inq)',val.fsmlabel));
 
-cps(strcmp('seal(Inq)',val.fsmlabel))=sum(cps(idx5a)).*mdf.mehit + ...
-                                      sum(cps(idx5b)).*mdf.rahit;
+cps(strcmp('seal(Inq)',val.fsmlabel))=sum(cps(idx5a)).*mhit + ...
+                                      sum(cps(idx5b)).*rhit;
 
 %convert CPGCD to CPS
 cps=cps./avgDuration;

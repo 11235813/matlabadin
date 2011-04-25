@@ -18,7 +18,7 @@ talents;
 stat_model;
 ability_model;
 rotation_model;
-prio_model;
+% prio_model;
 
 
 %% set up our tree configurations
@@ -56,14 +56,14 @@ k=k+1;
 tree(k)=tree(1);
 tree(k).prot(4,1)=0;
 points(k)=tree(1).prot(4,1);
-name{k}='Reck (0->1)';
+name{k}='Reck (1st point)';
 
 %Reck
 k=k+1;
 tree(k)=tree(1);
 tree(k).prot(4,1)=2;
 points(k)=tree(1).prot(4,1)-tree(k).prot(4,1);
-name{k}='Reck (1->2)';
+name{k}='Reck (2nd point)';
 
 %Arbiter of the Light
 k=k+1;
@@ -98,14 +98,14 @@ k=k+1;
 tree(k)=tree(1);
 tree(k).prot(4,3)=0;
 points(k)=tree(1).prot(4,3);
-name{k}='Grand Crusader (0->1)';
+name{k}='Grand Crusader (1st point)';
 
 %Grand Crusader
 k=k+1;
 tree(k)=tree(1);
 tree(k).prot(4,3)=2;
 points(k)=tree(1).prot(4,3)-tree(k).prot(4,3);
-name{k}='Grand Crusader (1->2)';
+name{k}='Grand Crusader (2nd point)';
 
 %Sacred duty
 k=k+1;
@@ -182,7 +182,6 @@ for c=1:length(cfg)
         stat_model;
         ability_model;
         rotation_model;
-        rotation_model
         
         %store items in cfg for plots
         cfg(c).hit=player.phhit;

@@ -18,11 +18,12 @@ queue.st={...
     'SotR>CS>AS>J>Cons>HW';
     'SotR>AS+>CS>AS>J>Cons>HW';
     %fishing
-    'sdAS>sdJ>SotR>AS+>CS>AS>J>Cons>HW';
+    'sdAS>sdJ>SotR>CS>AS>J>Cons>HW';
     %Inq variants 
     'Inq>CS>AS>J';
     'Inq>HotR>AS>J';
     'iInq>SotR>CS>AS>J';
+    'iInq>SotR2>CS>AS>J';
     'ISotR>Inq>CS>AS>J';
     'SDSotR>ISotR>Inq>CS>AS>J';
     'ISotR>SDSotR>Inq>CS>AS>J';
@@ -37,9 +38,11 @@ queue.st={...
     %WoG
     'WoG>CS>AS>J';
     'WoG>SotR>CS>AS>J';
+    'WoG>SotR2>CS>AS>J';
+    'WoG>Inq>CS>AS>J';
     'WoG>CS>AS>J>Cons>HW';
     'WoG>SotR>CS>AS>J>Cons>HW';
-    'WoG>SotR>HotR>AS>J>Cons>HW';
+    'WoG>SotR2>CS>AS>J>Cons>HW';
     'WoG>Inq>CS>AS>J>Cons>HW';
     'WoG>Inq>HotR>AS>J>Cons>HW';
     'WoG>Inq>AS+>CS>AS>J>Cons>HW';
@@ -52,13 +55,22 @@ queue.st={...
     'SotR>HoW>CS>AS>J';
     'HoW>SotR>CS>AS>J';
     'SotR>CS>AS+>HoW>AS>J';
+    'SotR>CS>AS>J>HoW>Cons>HW';
+    'SotR>CS>AS>HoW>J>Cons>HW';
     'SotR>CS>HoW>AS>J>Cons>HW';
     'SotR>HoW>CS>AS>J>Cons>HW';
     'HoW>SotR>CS>AS>J>Cons>HW';
-    'ISotR>Inq>CS>HoW>AS>J>Cons>HW';
-    'HoW>ISotR>Inq>CS>AS>J>Cons>HW';
-    'WoG>HoW>SotR>CS>AS>J>Cons>HW';
+    'ISotR>SDSotR>Inq>CS>AS>J>HoW>Cons>HW';
+    'ISotR>SDSotR>Inq>CS>AS>HoW>J>Cons>HW';
+    'ISotR>SDSotR>Inq>CS>HoW>AS>J>Cons>HW';
+    'ISotR>SDSotR>Inq>HoW>CS>AS>J>Cons>HW';
+    'ISotR>SDSotR>HoW>Inq>CS>AS>J>Cons>HW';
+    'HoW>ISotR>SDSotR>Inq>CS>AS>J>Cons>HW';
+    'WoG>SotR>CS>AS>J>HoW>Cons>HW';
+    'WoG>SotR>CS>AS>HoW>J>Cons>HW';
+    'WoG>SotR>CS>HoW>AS>J>Cons>HW';
     'WoG>SotR>HoW>CS>AS>J>Cons>HW';
+    'WoG>HoW>SotR>CS>AS>J>Cons>HW';
     };
 
 

@@ -2,7 +2,7 @@ function [generatedFile] = fsm_gen(rotation, mehitArray, rhitArray, consGlyph, e
 %fsm_gen calculates fsm for each mehit, rhit
 % call memoized_fsm to return the actual fsm data
 generatedFile = cell(length(mehitArray),1);
-argfile = strcat('data\\fsm_gen_input_', num2str(randi(1000000)), '.tmp');
+argfile = strcat('data\\fsm_gen_input_', num2str(ceil(rand.*1000000)), '.tmp');
 argfid = fopen(argfile, 'w');
 generationRequired = 0;
 for i=1:length(mehitArray)
