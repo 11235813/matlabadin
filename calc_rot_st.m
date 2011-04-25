@@ -68,7 +68,7 @@ for c=1:length(cfg)
     tic
     for kk=1:length(queue.st)
         waitbar(kk/length(queue.st),wb)
-        [actionPr, avgDuration, metadata] = memoized_fsm(queue.st{kk}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+        [actionPr, avgDuration, inqUptime, metadata] = memoized_fsm(queue.st{kk}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
         
         %store stuff for debugging
         fsmdata(kk,c).meta=metadata;
@@ -76,11 +76,11 @@ for c=1:length(cfg)
         fsmdata(kk,c).avgDur=avgDuration;
         
         %convert actionPr to CPS array
-        [cps inq]=action2cps(actionPr,avgDuration);
+        [cps] =action2cps(actionPr,avgDuration);
         
         %store in coefficient matrices
         cmat(kk,:,c)=cps';
-        inqup(kk)=inq;
+        inqup(kk)=inqUptime;
         empties(kk)=sum(cps((length(cps)-1):length(cps)));
     end
     close(wb)
