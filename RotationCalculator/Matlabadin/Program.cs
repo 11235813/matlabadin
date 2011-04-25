@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Matlabadin
 {
@@ -14,23 +16,41 @@ namespace Matlabadin
         {
             if (args.Length == 0)
             {
-                ProcessInput();
+                ParallelProcess(Console.In);
+            }
+            else if (args.Length == 1)
+            {
+                using (TextReader tr = new StreamReader(args[0]))
+                {
+                    ParallelProcess(tr);
+                }
             }
             else
             {
                 ProcessParams(args);
             }
         }
-        private static void ProcessInput()
+        private static void ParallelProcess(TextReader input)
         {
+            List<Task> taskList = new List<Task>();
+            foreach (string[] inputArgs in GetInputs(input))
+            {
+                string[] args = inputArgs;
+                taskList.Add(Task.Factory.StartNew(() => ProcessParams(args), TaskCreationOptions.PreferFairness));
+            }
+            Task.WaitAll(taskList.ToArray());
+        }
+        private static IEnumerable<string[]> GetInputs(TextReader input)
+        {
+            // Parse each input line into parameters
             string line;
             int lineNumber = 0;
             while (true)
             {
-                line = Console.In.ReadLine();
+                line = input.ReadLine();
                 lineNumber++;
-                if (String.IsNullOrEmpty(line)) return;
-                ProcessParams(line.Split(' ', '\t'));
+                if (String.IsNullOrEmpty(line)) break;
+                yield return line.Split(' ', '\t');
             }
         }
         private static void ProcessParams(string[] args)
@@ -59,16 +79,19 @@ namespace Matlabadin
             }
             else
             {
-                if (File.Exists(file))
+                FileInfo fi = new FileInfo(file);
+                if (fi.Exists)
                 {
-                    Console.Error.WriteLine("{0} already exists: skipping", file);
+                    Console.Error.WriteLine("Output file {0} already exists: skipping", file);
+                    return;
                 }
-                else
+                if (!fi.Directory.Exists)
                 {
-                    using (StreamWriter sw = new StreamWriter(file, false))
-                    {
-                        ProcessGraph(sw, rotation, stepsPerGcd, useConsGlyph, mehit, rhit, sd, gc, eg);
-                    }
+                    fi.Directory.Create();
+                }
+                using (StreamWriter sw = new StreamWriter(file, false))
+                {
+                    ProcessGraph(sw, rotation, stepsPerGcd, useConsGlyph, mehit, rhit, sd, gc, eg);
                 }
             }
         }
