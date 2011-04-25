@@ -1,0 +1,5 @@
+SotR>CS>AS>J 3 false 1.0 1.0 0.5 0.2 0.3 C:\temp\out1.txt
+SotR>CS>AS>J 3 false 0.9 1.0 0.5 0.2 0.3 C:\temp\out2.txt
+SotR>CS>AS>J 3 false 0.8 1.0 0.5 0.2 0.3 C:\temp\out3.txt
+SotR>CS>AS>J 3 false 0.7 1.0 0.5 0.2 0.3 C:\temp\out4.txt
+SotR>CS>AS>J 3 false 1.0 1.0 0.5 0.2 0.3 C:\temp\out1.txt
