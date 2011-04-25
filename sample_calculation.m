@@ -23,7 +23,7 @@ buff=buff_model;
 
 %invoke talents & glyphs
 talent=ddb.talentset{2};
-glyph=ddb.glyphset(1);
+glyph=ddb.glyphset{1};
 talents;
 
 %calculate final stats

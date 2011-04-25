@@ -156,8 +156,8 @@ for i=1:length(queue.rot);
 
 end
 
-if useParallel && matlabpool('size')>0
-    matlabpool close
-end
+% if useParallel && matlabpool('size')>0
+%     matlabpool close
+% end
 
 clear i

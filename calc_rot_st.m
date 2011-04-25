@@ -29,14 +29,14 @@ cfg(1).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
 cfg(1).label='939/SoT build';
 cfg(1).seal='Truth';
 cfg(1).glyph=ddb.glyphset{4}; %Modified Default, (CS+HotR)/SoT/ShoR, Cons/AS
-cfg(1).talent=ddb.talentset{1}; %0/31/10 w/o HG
+cfg(1).talent=ddb.talentset{1}; %0/32/9 w/o HG
 
 %low hit, WoG/SoI build
 cfg(2).helm=cfg(1).helm;
 cfg(2).label='W39/SoI build';
 cfg(2).seal='Insight';
 cfg(2).glyph=ddb.glyphset{5}; %Modified WoG (CS+HotR)/SoI/WoG, Cons/AS
-cfg(2).talent=ddb.talentset{2}; %0/31/10 WoG build
+cfg(2).talent=ddb.talentset{1}; %0/32/9 w/o HG
 
 
 %hit-cap and exp soft-cap, SotR/SoT build
@@ -76,7 +76,7 @@ for c=1:length(cfg)
         fsmdata(kk,c).avgDur=avgDuration;
         
         %convert actionPr to CPS array
-        [cps] =action2cps(actionPr,avgDuration);
+        [cps] =action2cps(actionPr,avgDuration, metadata);
         
         %store in coefficient matrices
         cmat(kk,:,c)=cps';
@@ -129,72 +129,8 @@ for c=1:length(cfg)
         tottps(:,m,c)=acthr(:,m,c)+patps(:,m,c);
         tothps(:,m,c)=achps(:,m,c)+pahps(:,m,c);
     end
-%     
-%     for m=1:length(rdata)
-%         padps(m,1,c)=0;
-%         patps(m,1,c)=0;
-%         pahps(m,1,c)=0;
-%         
-%         %account for Inq
-%         Inqmod=sum(rdata(m,c).dur.Inq>0)./length(rdata(m,c).dur.Inq);
-% 
-%         %assume a 5-stack of SoT (if applicable).
-%         if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
-%             padps(m,1,c)=padps(m,1,c)+dps.Censure.*(1+0.3.*Inqmod);
-%             patps(m,1,c)=patps(m,1,c)+tps.Censure.*(1+0.3.*Inqmod);
-%         end
-% 
-%         %aa and seal damage
-%         padps(m,1,c)=padps(m,1,c)+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
-%         %aa and seal threat
-%         if strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)
-%             patps(m,1,c)=patps(m,1,c)+tps.Melee+threat.activeseal.*mdf.mehit./player.wswing;
-%             pahps(m,1,c)=pahps(m,1,c)+heal.activeseal.*mdf.mehit./player.wswing;
-%         else
-%             patps(m,1,c)=patps(m,1,c)+tps.Melee+threat.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
-%         end
-%     end
-%     
-    
-% 
-%     %repeat for 30% vengeance
-%     exec=execution_model('seal',cfg(c).seal,'veng',0.3);
-%     stat_model
-%     ability_model
-%     for m=1:length(rdata)
-%         padps(m,2,c)=0;
-%         patps(m,2,c)=0;
-%         pahps(m,2,c)=0;
-%         
-%         %account for Inq
-%         Inqmod=sum(rdata(m,c).dur.Inq>0)./length(rdata(m,c).dur.Inq);
-% 
-%         %assume a 5-stack of SoT (if applicable).
-%         if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
-%             padps(m,2,c)=padps(m,2,c)+dps.Censure.*(1+0.3.*Inqmod);
-%             patps(m,2,c)=patps(m,2,c)+tps.Censure.*(1+0.3.*Inqmod);
-%         end
-% 
-%         %aa and seal damage
-%         padps(m,2,c)=padps(m,2,c)+dps.Melee+dmg.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
-%         %aa and seal threat
-%         if strcmpi('Inisght',exec.seal)||strcmpi('SoI',exec.seal)
-%             patps(m,2,c)=patps(m,2,c)+tps.Melee+threat.activeseal.*mdf.mehit./player.wswing;
-%             pahps(m,2,c)=pahps(m,2,c)+heal.activeseal.*mdf.mehit./player.wswing;
-%         else
-%             patps(m,2,c)=patps(m,2,c)+tps.Melee+threat.activeseal.*mdf.mehit.*(1+0.3.*Inqmod)./player.wswing;
-%         end
-%     end
-%     acdps(:,2,c)=cmat(:,:,c)*val.pdmg;
-%     acthr(:,2,c)=cmat(:,:,c)*val.pthr;
-%     achps(:,2,c)=cmat(:,:,c)*val.pheal;
-%     totdps(:,2,c)=acdps(:,2,c)+padps(:,2,c);
-%     tottps(:,2,c)=acthr(:,2,c)+patps(:,2,c);
-%     tothps(:,2,c)=achps(:,2,c)+pahps(:,2,c);
-%% construct damage arrays
 
-%build name array
-% for m=1:length(queue.st);name{m,:}=queue.st{m}.name;end
+%% construct output arrays
 
 spacer=repmat(' ',length(queue.st)+2,2);
 li{c} =    [spacer char({' ','Q#',int2str([1:length(queue.st)]')}) ...
@@ -219,8 +155,6 @@ li{c}
 
 end
 
-%% store coefficients of important queues for later
-% for c=1:3; coeffsum(:,:,c)=[rdata([3 18],c).coeff];end %939, W39
 
 %% save for later use (good for generic stuff, saves computation time)
-save prio_data.nv.mat cmat fsmdata
+% save prio_data.nv.mat cmat fsmdata
