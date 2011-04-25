@@ -96,7 +96,7 @@ threat.HammeroftheRighteous=max(dmg.HammeroftheRighteous,heal.HammeroftheRighteo
 net.HammeroftheRighteous{1}=dmg.HammeroftheRighteous+dmg.activeseal.*mdf.mehit.*mdf.tseal;
 net.HammeroftheRighteous{2}=heal.HammeroftheRighteous;
 net.HammeroftheRighteous{3}=threat.HammeroftheRighteous+threat.activeseal.*mdf.mehit.*mdf.tseal;
-%Nova no longer rolls separately from phys; only occurs when phys succeeds
+%Nova no longer rolls separately from phys; occurs everytime when phys succeeds
 raw.HammerNova=   (728.8813374+0.18.*player.ap).*mdf.spdmg.*(1+mdf.Crus+mdf.glyphHotR);
 dmg.HammerNova=   raw.HammerNova.*mdf.mehit.*mdf.HotRspcrit.*target.resrdx; %spell hit/crit
 heal.HammerNova=   0;
@@ -131,7 +131,7 @@ net.ShieldoftheRighteous{3}=threat.ShieldoftheRighteous+threat.activeseal.*mdf.m
 
 %% Ranged abilities
 
-%Avenger's Shield (can be blocked)
+%Avenger's Shield (cannot be blocked)
 raw.AvengersShield= (3113.187994+0.419.*player.ap+0.21.*player.hsp).*mdf.spdmg.*mdf.glyphAS;
 dmg.AvengersShield= raw.AvengersShield.*mdf.rahit.*mdf.phcrit.*target.resrdx;
 heal.AvengersShield=0;

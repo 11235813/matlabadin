@@ -340,6 +340,7 @@ idb.iid(65225).socket='B';
 idb.iid(65225).sbstat='mast';
 idb.iid(65225).sbval=10;
 idb.iid(65225).atype=1;
+idb.iid(65225).istier=[1 0 0];
 
 
 %% Belts
