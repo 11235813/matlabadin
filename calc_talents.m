@@ -130,26 +130,25 @@ cfg(1).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
 cfg(1).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
 c=1;
 %low hit, W39
+cfg(c).rot=2; %W39
 cfg(c).rlabel='W39';
 cfg(c).veng=1;
 cfg(c).seal='SoI';
-cfg(c).rot=3; %W39
 cfg(c).glyph=ddb.glyphset{2}; %WoG set
 
 %low hit, 939
 c=c+1;
 cfg(c).helm=cfg(1).helm;
+cfg(c).rot=1;
 cfg(c).rlabel='939';
 cfg(c).veng=1;
 cfg(c).seal='SoT';
-cfg(c).rot=2;
 cfg(c).glyph=ddb.glyphset{1}; %Default, HotR/SoT/ShoR, Cons/AS
 
  
 %hit-cap and exp soft-cap, 939
 c=c+1;
 cfg(c)=cfg(2);
-cfg(c).rlabel='939';
 cfg(c).helm=egs(1);
 cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
 cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;

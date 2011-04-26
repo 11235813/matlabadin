@@ -6,14 +6,13 @@ useParallel=1;
 
 %define relevant queues if not done already
 if exist('queue')==0 || isfield(queue,'rot')==0
-    queue.rot={'SotR>CS>AS>J';
+    queue.rot={...
         'SotR>CS>AS>J>Cons>HW';
         'WoG>SotR>CS>AS>J>Cons>HW';
-        'SotR>CS>HoW>AS>J';
-        'SotR>CS>HoW>AS>J>Cons>HW';
-        'WoG>HoW>SotR>CS>AS>J>Cons>HW';
-%         'iInq>HotR>AS>Cons>HW>J';
-%         'iInq>HotR>HoW>AS>Cons>HW>J';
+%         'SotR>CS>AS>J';
+%         'SotR>CS>HoW>AS>J';
+%         'SotR>CS>HoW>AS>J>Cons>HW';
+%         'WoG>HoW>SotR>CS>AS>J>Cons>HW';
         };
 end
 
@@ -37,12 +36,6 @@ rot=struct('tag','', ...
            'tottps',[]);
 
 
-%% open matlabpool if necessary  
-%if useParallel==1 && matlabpool('size')==0
-%    %create workers
-%    matlabpool(3)
-%end
-
 %% Crank
 for i=1:length(queue.rot);
     
@@ -64,7 +57,6 @@ for i=1:length(queue.rot);
     elseif length(mdf.mehit)>1 && length(mdf.rahit)>1
         %use parallelization
         if useParallel
-            warning('Parallel processiong enabled - no waitbars');
             fsm_gen(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
             for j=1:length(mdf.mehit)
                 [actionPr, avgDuration,inqUptime,metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
@@ -86,7 +78,6 @@ for i=1:length(queue.rot);
     elseif length(mdf.mehit)>1 && length(mdf.rahit)==1
         %use parallelization
         if useParallel
-            warning('Parallel processiong enabled - no waitbars');
             fsm_gen(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
             for j=1:length(mdf.mehit)
                 [actionPr, avgDuration, inqUptime, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
@@ -155,9 +146,5 @@ for i=1:length(queue.rot);
     
 
 end
-
-% if useParallel && matlabpool('size')>0
-%     matlabpool close
-% end
 
 clear i

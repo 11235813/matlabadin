@@ -15,7 +15,7 @@ egs=ddb.gearset{2};  %1=pre-raid , 2=raid
 %clear main hand enchant slot
 egs(35)=equip(1,'s');
 gear_stats;
-talent=ddb.talentset{4};  %placeholder
+talent=ddb.talentset{1};  %placeholder
 glyph=ddb.glyphset{1}; %placeholder
 talents;
 stat_model;
@@ -29,18 +29,17 @@ cfg(c).helm=egs(1);
 cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
 cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
 cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
-cfg(c).rot=3;   %W39
+cfg(c).rot=2;   %W39
 cfg(c).glyph=ddb.glyphset{2}; %WoG/SoI/HotR, AS/Cons
-cfg(c).talent=ddb.talentset{4}; %0/33/8
+cfg(c).talent=ddb.talentset{1}; %0/32/9
 cfg(c).seal='SoI';
 
 %939 rotation, low-hit set
 c=c+1;
 cfg(c)=cfg(1);
-cfg(c).rot=2; %9C9
+cfg(c).rot=1; %9C9
 cfg(c).seal='SoT';
 cfg(c).glyph=ddb.glyphset{1}; %SoT/SotR/HotR, AS/Cons
-cfg(c).talent=ddb.talentset{4}; %0/33/8
 
 %repeat for 8% hit and exp soft-cap
 c=c+1;

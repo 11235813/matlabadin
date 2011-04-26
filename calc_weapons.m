@@ -16,18 +16,6 @@ talents;
 buff=buff_model;
 stat_model;
 
-% TODO : sort them out and delete this listing
-% t
-% 69609;
-% c
-% 69581;
-% d
-% 69575;
-% 69803;
-% 69618;
-% 69639;
-
-
 %% List of weapons
 weaplist1=[62457; %Ravening Slicer
            65173; %Thief''s Blade (Heroic)
@@ -38,6 +26,7 @@ weaplist1=[62457; %Ravening Slicer
            68740; %Darkheart Hacker
            56430; %Sun Strike (Heroic)
            65171; %Cookie''s Tenderizer (Heroic)
+           69609; %Bloodlord's Protector
            63533; %Fang of Twilight
            59347; %Mace of Acrid Death
            59521; %Soul Blade
@@ -50,6 +39,7 @@ weaplist2=[56433; %Blade of the Burning Sun (Heroic)
            56312; %Torturer''s Mercy (Heroic)
            57872; %Scepter of Power (Heroic)
            62459; %Shimmering Morningstar
+           69581; %Amani Scepter of Rites
            59463; %Maldo''s Sword Cane
            59459; %Andoros, Fist of the Dragon King
            63680; %Twilight''s Hammer
@@ -66,6 +56,10 @@ weaplist3=[65166; %Buzz Saw (Heroic)
            56353; %Heavy Geode Mace (Heroic)
            55067; %Elementium Bonesplitter
            65170; %Smite''s Reaver (Heroic)
+           69575; %Mace of the Sacrificed
+           69803; %Gurubashi Punisher
+           69618; %Zulian Slasher
+           69639; %Renataki's Soul Slicer
            59443; %Crul''korak, the Lightning''s Arc
            68161; %Krol Decapitator
            59333; %Lava Spine
@@ -88,30 +82,24 @@ cfg(c).helm=egs(1);
 cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
 cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
 cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
-cfg(c).rot=3;   %W39
+cfg(c).rot=2; %W39   
 cfg(c).glyph=ddb.glyphset{2}; %WoG/SoI/HotR, AS/Cons
-cfg(c).talent=ddb.talentset{2}; %0/31/10 survivability
-cfg(c).talent=ddb.talentset{4}; %temp until rot_db updated
+cfg(c).talent=ddb.talentset{1}; %0/32/9 no HG
 cfg(c).seal='SoI';
 cfg(c).label='W39/SoI build';
 
 %W39 + SoI
 c=c+1;
 cfg(c)=cfg(c-1);
-cfg(c).rot=3;   %W39
-cfg(c).glyph=ddb.glyphset{2}; %WoG/SoI/HotR, AS/Cons
-cfg(c).talent=ddb.talentset{2}; %0/31/10 survivability
-cfg(c).talent=ddb.talentset{4}; %temp until rot_db updated
 cfg(c).seal='SoT';
 cfg(c).label='W39/SoT build';
 
 %939 rotation, low-hit set
 c=c+1;
 cfg(c).helm=cfg(1).helm;
-cfg(c).rot=2;
+cfg(c).rot=1;
 cfg(c).glyph=ddb.glyphset{1}; %SoT/SotR/HotR, AS/Cons
-cfg(c).talent=ddb.talentset{1}; %0/31/10 no HG
-cfg(c).talent=ddb.talentset{4}; %temp until rot_db updated
+cfg(c).talent=ddb.talentset{1}; %0/32/9 no HG
 cfg(c).seal='SoT';
 cfg(c).label='939/SoT build';
 
@@ -145,6 +133,8 @@ for m=1:M
         ability_model;
         rotation_model;
 
+%         wdps(m,c)=rot.totdps;
+%         whps(m,c)=rot.tothps;
         wdps(m,c)=rot(cfg(c).rot).totdps;
         whps(m,c)=rot(cfg(c).rot).tothps;
 %         wdps2(m,c)=rot(cfg(c).rot+3).totdps; %for 9H9 / hammer check
@@ -168,10 +158,20 @@ spacer2=repmat(' ',length(wdps),2);
 [pinfo.labels  spacer3 int2str(round(whps(:,1))) spacer2 int2str(round(wdps(:,1))) ...
                spacer2 int2str(round(whps(:,2))) spacer2 int2str(round(wdps(:,2:size(wdps,2))))]
 
-y1=1:M1;y2=M1+1+[1:M2];y3=max(y2)+1+[1:M3];
-y=[y1 y2 y3];
+i1=1:M1;
+i2=M1+1:M2;
+i3=M1+M2+[1:M3];
 
-dps1p=[wdps(:,3) diff(wdps(:,3:4)')']./1000;
+y1=1:M1;
+y3=M1+1+[1:M3];
+% y2=M1+1+[1:M2];
+% y3=max(y2)+1+[1:M3];
+
+y=[y1 y3];
+i=[i1 i3];
+
+dps1p=[wdps(i,3) diff(wdps(i,3:4)')']./1000;
+pinfo.plotlabels=pinfo.labels(i,:);
 
 figure(70)
 % set(gcf,'Position',[2200 12 724 936])
@@ -179,7 +179,7 @@ bar70=barh(y,dps1p,'BarWidth',0.5,'BarLayout','stacked');
 set(bar70(2),'FaceColor',[0.749 0.749 0]);
 xlim([0.99.*min(dps1p(:,1)) 1.01.*max(sum(dps1p,2))])
 ylim(0.5+[0 max(y)])
-set(gca,'YTick',y,'YTickLabel',pinfo.labels)
+set(gca,'YTick',y,'YTickLabel',pinfo.plotlabels)
 xlabel('DPS (thousands)')
 title('All by ilvl & category - CS rotation')
 legend('4% hit 18 exp','8% hit 26 exp','Location','Best')

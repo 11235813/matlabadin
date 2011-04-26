@@ -9,12 +9,12 @@ exec=execution_model('veng',1);
 base=player_model('race','Human');
 npc=npc_model(base);
 buff=buff_model;
-talent=ddb.talentset{4}; %0/33/8, no DG/HG/PoJ
+talent=ddb.talentset{1}; %0/32/9, no HG
 egs=ddb.gearset{2};  %1=pre-raid , 2=raid
+glyph=ddb.glyphset{6}; %No glyphs
 
 %need to run these here so that the cfg structure can set hit and exp
 gear_stats;
-glyph=ddb.glyphset{6}; %No glyphs
 talents;
 stat_model;
 ability_model;
@@ -86,6 +86,12 @@ name{k}='AS';
 
 
 %% Configurations
+%redefine rotation queue so that we can make substitutions
+queue.rot={'SotR>CS>AS>J>Cons>HW';      %#1 and #2 are the same as the
+           'WoG>SotR>CS>AS>J>Cons>HW';  %defaults in [RM]
+           'SotR>HotR>AS>J>Cons>HW';        %3&4 added for HotR subs
+           'WoG>SotR>HotR>AS>J>Cons>HW'};
+       
 %set melee hit to 2%, expertise to 10, mastery to 390 (16.5 mastery);
 %do this by altering helm stats
 %low hit, SotR talents, SoT
@@ -97,22 +103,19 @@ cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
 
 %low hit, W39/SoI
 cfg(c).seal='SoI';
-cfg(c).rot=3;
-%tsubs and psubs are substitutiosn for tables and plots
-cfg(c).tsubs={}; %format: ={{glyphname1,subsrot#},{gn2,sr#},...}
-% cfg(c).psubs={{'SoT',c+1}}; %format: ={{glyphname1,subscfg#},{gn2,sc#},...}
-cfg(c).psubs={};  %decided against using this
+cfg(c).rot=2;
 cfg(c).rlabel='W39';
+%tsubs is substitutions for tables
+cfg(c).tsubs={{'HotR',4}}; %format: ={{glyphname1,subsrot#},{gn2,sr#},...}
 cfg(c).veng=1;
 
 %low hit, 939/SoT
 c=c+1;
 cfg(c)=cfg(1);
 cfg(c).seal='SoT';
-cfg(c).rot=2;
-cfg(c).tsubs={{'HotR',5}}; %format: ={{glyphname1,subsrot#},{gn2,sr#},...}
-cfg(c).psubs={}; %format: ={{glyphname1,subscfg#},{gn2,sc#},...}
 cfg(c).rlabel='939';
+cfg(c).rot=1;
+cfg(c).tsubs={{'HotR',3}}; %format: ={{glyphname1,subsrot#},{gn2,sr#},...}
 
 %hit-capped, 939/SoT
 c=c+1;
@@ -124,8 +127,7 @@ cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
 
 %low hit, W39/SoT
 c=c+1;
-cfg(c)=cfg(1);
-cfg(c).rot=3;
+cfg(c)=cfg(1); %import W39 from cfg 1
 cfg(c).rlabel='W39';
 cfg(c).seal='SoT';
 
@@ -139,7 +141,6 @@ tabledps=zeros(length(gtree),length(rot),2);
 for c=1:length(cfg);
     %set configuration variables
     exec=execution_model('seal',cfg(c).seal,'veng',cfg(c).veng);
-%     talent=ddb.talentset{4}; %0/33/8 w/o HG/DG
     glyph=ddb.glyphset{6}; %No glyphs, this is to fix the exp value in pretty-print
     egs(1)=cfg(c).helm;
     talents;gear_stats;
@@ -209,17 +210,6 @@ tabledps
 
 dpspg_temp=dpspg;
 
-%subs
-for c=1:length(cfg)
-    %handle substitutions
-    if ~isempty(cfg(c).psubs)
-        for mm=1:size(cfg(c).psubs,2)
-            subi=strmatch(cfg(c).psubs{mm}(1),name);
-            subc=cfg(c).psubs{mm}{2};
-            dpspg_temp(subi,c)=dpspg_temp(subi,subc);
-        end
-    end
-end
 
 %sorted
 si=2; %939
