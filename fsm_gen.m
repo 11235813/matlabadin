@@ -13,6 +13,14 @@ for i=1:length(mehitArray)
         rhit = rhitArray;
     end
     rotationKey = rotation;
+    rotationKey = strrep(rotationKey, '[', '');
+    rotationKey = strrep(rotationKey, ']', '_');
+    rotationKey = strrep(rotationKey, '.', '_');    
+    rotationKey = strrep(rotationKey, '>=', 'ge');
+    rotationKey = strrep(rotationKey, '<=', 'le');
+    rotationKey = strrep(rotationKey, '==', 'eq');
+    rotationKey = strrep(rotationKey, '=', 'eq');
+    rotationKey = strrep(rotationKey, '<', 'lt');
     rotationKey = strrep(rotationKey, '>', '_');
     rotationKey = strrep(rotationKey, '*', 'star');
     rotationKey = strrep(rotationKey, '''', 'prime');
