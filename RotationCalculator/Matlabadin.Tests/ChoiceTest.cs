@@ -40,7 +40,7 @@ namespace Matlabadin.Tests
         [TestMethod]
         public void ActionShouldSuffixInq()
         {
-            Choice c = Choice.CreateChoice(GetState(Buff.INQ, 1), DefaultParameters, Ability.CS, 3, 0.7, 0.2, 0.1);
+            Choice c = Choice.CreateChoice(GetState(Buff.Inq, 1), DefaultParameters, Ability.CS, 3, 0.7, 0.2, 0.1);
             Assert.AreEqual("CS(Inq)", c.Action);
         }
         [TestMethod]
@@ -49,8 +49,8 @@ namespace Matlabadin.Tests
             Assert.AreEqual("CS", Choice.CreateChoice(GetState(Buff.SD, 1, 3), DefaultParameters, Ability.CS, 3, 1, 0, 0).Action);
             Assert.AreEqual("SotR(SD)", Choice.CreateChoice(GetState(Buff.SD, 1, 3), DefaultParameters, Ability.SotR, 3, 1, 0, 0).Action);
             Assert.AreEqual("SotR2(SD)", Choice.CreateChoice(GetState(Buff.SD, 1, 2), DefaultParameters, Ability.SotR, 3, 1, 0, 0).Action);
-            Assert.AreEqual("SotR(SD)(Inq)", Choice.CreateChoice(GetState(Buff.SD, 1, Buff.INQ, 1, 3), DefaultParameters, Ability.SotR, 3, 1, 0, 0).Action);
-            Assert.AreEqual("SotR2(SD)(Inq)", Choice.CreateChoice(GetState(Buff.SD, 1, Buff.INQ, 1, 2), DefaultParameters, Ability.SotR, 3, 1, 0, 0).Action);
+            Assert.AreEqual("SotR(SD)(Inq)", Choice.CreateChoice(GetState(Buff.SD, 1, Buff.Inq, 1, 3), DefaultParameters, Ability.SotR, 3, 1, 0, 0).Action);
+            Assert.AreEqual("SotR2(SD)(Inq)", Choice.CreateChoice(GetState(Buff.SD, 1, Buff.Inq, 1, 2), DefaultParameters, Ability.SotR, 3, 1, 0, 0).Action);
         }
         [TestMethod]
         public void ActionShouldSuffixHPForSotRAndWoGWhenNotMaxHP()

@@ -9,7 +9,7 @@ namespace Matlabadin
     {
         GC,
         SD,
-        INQ,
+        Inq,
         EGICD,
         Count,
     }

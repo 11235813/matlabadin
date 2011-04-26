@@ -10,7 +10,7 @@ namespace Matlabadin
         public static Choice CreateChoice(ulong state, GraphParameters gp, Ability a, int stepsDuration, double option1, double option2, double option3)
         {
             // Special case Inquisition since we may not have inq up when we cast Inq but it's up as a buff for the duration of the casting GCD
-            int inqLeft = StateHelper.TimeRemaining(state, Buff.INQ, gp);
+            int inqLeft = StateHelper.TimeRemaining(state, Buff.Inq, gp);
             if (a == Ability.Inq && StateHelper.HP(state, gp) > 0) inqLeft += gp.StepsPerGcd; // add at least the GCD to the remaining duration
 
             Choice c = new Choice(a,

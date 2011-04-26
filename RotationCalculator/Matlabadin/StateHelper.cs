@@ -175,7 +175,7 @@ namespace Matlabadin
                     nextState = StateHelper.SetTimeRemaining(nextState, Buff.GC, 0, gp);
                     break;
                 case Ability.Inq:
-                    nextState = StateHelper.SetTimeRemaining(nextState, Buff.INQ, StateHelper.HP(nextState, gp) * gp.BuffDurationInSteps(Buff.INQ) / 3, gp);
+                    nextState = StateHelper.SetTimeRemaining(nextState, Buff.Inq, StateHelper.HP(nextState, gp) * gp.BuffDurationInSteps(Buff.Inq) / 3, gp);
                     nextState = StateHelper.SetHP(nextState, 0, gp);
                     break;
             }

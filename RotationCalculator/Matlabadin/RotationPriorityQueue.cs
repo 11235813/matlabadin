@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Matlabadin
 {
@@ -14,82 +15,104 @@ namespace Matlabadin
         }
         public Ability ActionToTake(ulong state, GraphParameters gp)
         {
-            for (int i = 0; i < pq.Length; i++)
+            for (int i = 0; i < abilityQueue.Count; i++)
             {
-                string action = pq[i];
-                // check for buff present/not present ability prefixes
-                if (action.StartsWith("I", StringComparison.InvariantCultureIgnoreCase) && !action.StartsWith("Inq"))
+                Ability ability = abilityQueue[i];
+                // all conditionals must be met
+                if (!abilityConditionals[i].All(f => f(state, gp))) continue;
+                // ability must be off CD
+                if (StateHelper.CooldownRemaining(state, ability, gp) == 0)
                 {
-                    bool buffMustBeActive = action[0] == 'I';
-                    action = action.Substring(1);
-                    int timeRemaining = StateHelper.TimeRemaining(state, Buff.INQ, gp);
-                    if (buffMustBeActive && timeRemaining == 0) continue; // Inq with no buff
-                    if (!buffMustBeActive && timeRemaining != 0) continue; // Inq with buff
-                }
-                if (action.StartsWith("SD", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    bool buffMustBeActive = action[0] == 'S';
-                    action = action.Substring(2);
-                    int timeRemaining = StateHelper.TimeRemaining(state, Buff.SD, gp);
-                    if (buffMustBeActive && timeRemaining == 0) continue; // SD with no buff
-                    if (!buffMustBeActive && timeRemaining != 0) continue; // sd with buff
-                }
-                switch (action)
-                {
-                    case "SotR":
-                        if (StateHelper.HP(state, gp) >= 3) return Ability.SotR;
-                        break;
-                    case "SotR2":
-                        if (StateHelper.HP(state, gp) >= 2) return Ability.SotR;
-                        break;
-                    case "CS":
-                        if (StateHelper.CooldownRemaining(state, Ability.CS, gp) == 0) return Ability.CS;
-                        break;
-                    case "WoG":
-                        if (StateHelper.HP(state, gp) >= 3 &&
-                            StateHelper.CooldownRemaining(state, Ability.WoG, gp) == 0) return Ability.WoG;
-                        break;
-                    case "HotR":
-                        if (StateHelper.CooldownRemaining(state, Ability.HotR, gp) == 0) return Ability.HotR;
-                        break;
-                    case "HoW":
-                        if (StateHelper.CooldownRemaining(state, Ability.HoW, gp) == 0) return Ability.HoW;
-                        break;
-                    case "HW":
-                        if (StateHelper.CooldownRemaining(state, Ability.HW, gp) == 0) return Ability.HW;
-                        break;
-                    case "Inq":
-                        if (StateHelper.HP(state, gp) >= 3 && 
-                            StateHelper.CooldownRemaining(state, Ability.Inq, gp) == 0) return Ability.Inq;
-                        break;
-                    case "Inq2":
-                        if (StateHelper.HP(state, gp) >= 2 &&
-                            StateHelper.CooldownRemaining(state, Ability.Inq, gp) == 0) return Ability.Inq;
-                        break;
-                    case "Cons":
-                        if (StateHelper.CooldownRemaining(state, Ability.Cons, gp) == 0) return Ability.Cons;
-                        break;
-                    case "J":
-                        if (StateHelper.CooldownRemaining(state, Ability.J, gp) == 0) return Ability.J;
-                        break;
-                    case "AS":
-                        if (StateHelper.CooldownRemaining(state, Ability.AS, gp) == 0) return Ability.AS;
-                        break;
-                    case "AS+":
-                        // Use AS if it will generate HP
-                        if (StateHelper.TimeRemaining(state, Buff.GC, gp) > 0 && 
-                            StateHelper.CooldownRemaining(state, Ability.AS, gp) == 0) return Ability.AS;
-                        break;
-                    default:
-                        throw new Exception(String.Format("Unknown priority queue action \"{0}\"", pq[i]));
+                    return ability;
                 }
             }
             return Ability.Nothing;
         }
         public RotationPriorityQueue(string queue)
         {
-            pq = queue.Split('>', ';', '-');
+            abilityQueue = new List<Ability>();
+            abilityConditionals = new List<List<Func<ulong, GraphParameters, bool>>>();
+            string remainingQueue = queue;
+            int i = 0;
+            while (!String.IsNullOrEmpty(remainingQueue))
+            {
+                Match actionMatch = Regex.Match(remainingQueue, @"^(?<first>[^\[>\]]+(\[[^\]]+\])*)(>([^\[>\]]+(\[[^\]]+\])*))*");
+                if (!actionMatch.Success) throw new InvalidOperationException(String.Format("Invalid rotation {0}", queue));
+                abilityConditionals.Add(new List<Func<ulong, GraphParameters, bool>>());
+
+                string rawActionString = actionMatch.Groups["first"].Value;
+                string action = rawActionString;
+                // replace shorthand conditional with their full
+                if (action.StartsWith("i")) action = action.Substring(1) + "[buffInq=0]";
+                if (action.StartsWith("I") && !action.StartsWith("Inq")) action = action.Substring(1) + "[buffInq>0]";
+                if (action.StartsWith("sd")) action = action.Substring(2) + "[buffSD=0]";
+                if (action.StartsWith("SD")) action = action.Substring(2) + "[buffSD>0]";
+                while (action.Contains("["))
+                {
+                    Match conditionMatch = Regex.Match(action, @"\[(?<type>(cd)|(buff))(?<conditional>\w+)(?<operation>[><=]+)(?<value>\d*\.?\d*)\]");
+                    if (!conditionMatch.Success) throw new ArgumentException("Malformed conditional in rotation.");
+                    string type = conditionMatch.Groups["type"].Value;
+                    string conditional = conditionMatch.Groups["conditional"].Value;
+                    string operation = conditionMatch.Groups["operation"].Value;
+                    double value = Double.Parse(conditionMatch.Groups["value"].Value);
+                    Func<ulong, GraphParameters, int> getRemaining;
+                    if (type == "cd")
+                    {
+                        Ability a = (Ability)Enum.Parse(typeof(Ability), conditional);
+                        getRemaining = (state, gp) => StateHelper.CooldownRemaining(state, a, gp);
+                    }
+                    else //if (type == "buff")
+                    {
+                        Buff b = (Buff)Enum.Parse(typeof(Buff), conditional);
+                        getRemaining = (state, gp) => StateHelper.TimeRemaining(state, b, gp);
+                    }
+                    Func<ulong, GraphParameters, bool> condition = null;
+                    switch (operation)
+                    {
+                        case "=":  condition = (state, gp) => getRemaining(state, gp) == (int)(value / gp.StepSize); break;
+                        case "==": condition = (state, gp) => getRemaining(state, gp) == (int)(value / gp.StepSize); break;
+                        case ">":  condition = (state, gp) => getRemaining(state, gp) >  (int)(value / gp.StepSize); break;
+                        case ">=": condition = (state, gp) => getRemaining(state, gp) >= (int)(value / gp.StepSize); break;
+                        case "<":  condition = (state, gp) => getRemaining(state, gp) <  (int)(value / gp.StepSize); break;
+                        case "<=": condition = (state, gp) => getRemaining(state, gp) <= (int)(value / gp.StepSize); break;
+                    }
+                    abilityConditionals[i].Add(condition);
+                    action = action.Replace(conditionMatch.Value, "");
+                }
+                switch (action) // Special ability-specific conditions go here
+                {
+                    case "Inq":
+                    case "WoG":
+                    case "SotR":
+                        abilityConditionals[i].Add((state, gp) => StateHelper.HP(state, gp) >= 3);
+                        break;
+                    case "Inq2":
+                    case "WoG2":
+                    case "SotR2":
+                        abilityConditionals[i].Add((state, gp) => StateHelper.HP(state, gp) >= 2);
+                        action = action.Substring(0, action.Length - 1);
+                        break;
+                    case "Inq1":
+                    case "WoG1":
+                    case "SotR1":
+                        abilityConditionals[i].Add((state, gp) => StateHelper.HP(state, gp) >= 1);
+                        action = action.Substring(0, action.Length - 1);
+                        break;
+                    case "AS+":
+                        // Use AS if it will generate HP
+                        abilityConditionals[i].Add((state, gp) => StateHelper.TimeRemaining(state, Buff.GC, gp) > 0);
+                        action = action.Substring(0, action.Length - 1);
+                        break;
+                }
+                Ability ability = (Ability)Enum.Parse(typeof(Ability), action);
+                abilityQueue.Add(ability);
+                // move on to the next item in the queue
+                remainingQueue = remainingQueue.Substring(rawActionString.Length);
+                remainingQueue = remainingQueue.Trim('>');
+                i++;
+            }
         }
-        private string[] pq;
+        private List<Ability> abilityQueue;
+        private List<List<Func<ulong, GraphParameters, bool>>> abilityConditionals;
     }
 }
