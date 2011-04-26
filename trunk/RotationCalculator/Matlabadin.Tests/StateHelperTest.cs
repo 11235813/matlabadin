@@ -74,8 +74,8 @@ namespace Matlabadin.Tests
         [TestMethod]
         public void AdvanceTimeShouldReduceBuffDuration()
         {
-            Assert.AreEqual(1, StateHelper.TimeRemaining(StateHelper.AdvanceTime(GetState(Buff.INQ, 3), 2, DefaultParameters), Buff.INQ, DefaultParameters));
-            Assert.AreEqual(0, StateHelper.TimeRemaining(StateHelper.AdvanceTime(GetState(Buff.INQ, 3), 5, DefaultParameters), Buff.INQ, DefaultParameters));
+            Assert.AreEqual(1, StateHelper.TimeRemaining(StateHelper.AdvanceTime(GetState(Buff.Inq, 3), 2, DefaultParameters), Buff.Inq, DefaultParameters));
+            Assert.AreEqual(0, StateHelper.TimeRemaining(StateHelper.AdvanceTime(GetState(Buff.Inq, 3), 5, DefaultParameters), Buff.Inq, DefaultParameters));
         }
         [TestMethod]
         public void AdvanceTimeShouldNotChangeHP()
@@ -149,9 +149,9 @@ namespace Matlabadin.Tests
         [TestMethod]
         public void UseAbility_InqDurationShouldBeDeterminedByHP()
         {
-            Assert.AreEqual(12 * 2 - 3, StateHelper.TimeRemaining(StateHelper.UseAbility(3, DefaultParameters, Ability.Inq), Buff.INQ, DefaultParameters));
-            Assert.AreEqual(8 * 2 - 3, StateHelper.TimeRemaining(StateHelper.UseAbility(2, DefaultParameters, Ability.Inq), Buff.INQ, DefaultParameters));
-            Assert.AreEqual(4 * 2 - 3, StateHelper.TimeRemaining(StateHelper.UseAbility(1, DefaultParameters, Ability.Inq), Buff.INQ, DefaultParameters));
+            Assert.AreEqual(12 * 2 - 3, StateHelper.TimeRemaining(StateHelper.UseAbility(3, DefaultParameters, Ability.Inq), Buff.Inq, DefaultParameters));
+            Assert.AreEqual(8 * 2 - 3, StateHelper.TimeRemaining(StateHelper.UseAbility(2, DefaultParameters, Ability.Inq), Buff.Inq, DefaultParameters));
+            Assert.AreEqual(4 * 2 - 3, StateHelper.TimeRemaining(StateHelper.UseAbility(1, DefaultParameters, Ability.Inq), Buff.Inq, DefaultParameters));
         }
         [TestMethod]
         public void UseAbility_SDBuffShouldBeSetForSDProc()

@@ -7,27 +7,27 @@ namespace Matlabadin.Tests
 {
     public class MatlabadinTest
     {
-        public ulong GetState(Ability ability, int cd, int hp = 0)
+        public ulong GetState(Ability ability, int cd, ulong hp = 0)
         {
             return StateHelper.SetCooldownRemaining((ulong)hp, ability, cd, DefaultParameters);
         }
-        public ulong GetState(Ability ability, int cd, Ability ability2, int cd2, int hp = 0)
+        public ulong GetState(Ability ability, int cd, Ability ability2, int cd2, ulong hp = 0)
         {
             return StateHelper.SetCooldownRemaining(GetState(ability2, cd2, hp), ability, cd, DefaultParameters);
         }
-        public ulong GetState(Ability ability, int cd, Ability ability2, int cd2, Ability ability3, int cd3, int hp = 0)
+        public ulong GetState(Ability ability, int cd, Ability ability2, int cd2, Ability ability3, int cd3, ulong hp = 0)
         {
             return StateHelper.SetCooldownRemaining(GetState(ability2, cd2, ability3, cd3, hp), ability, cd, DefaultParameters);
         }
-        public ulong GetState(Buff buff1, int cd1, int hp = 0)
+        public ulong GetState(Buff buff1, int cd1, ulong hp = 0)
         {
             return StateHelper.SetTimeRemaining((ulong)hp, buff1, cd1, DefaultParameters);
         }
-        public ulong GetState(Buff buff1, int cd1, Buff buff2, int cd2, int hp = 0)
+        public ulong GetState(Buff buff1, int cd1, Buff buff2, int cd2, ulong hp = 0)
         {
             return StateHelper.SetTimeRemaining(GetState(buff1, cd1, hp), buff2, cd2, DefaultParameters);
         }
-        public ulong GetState(Buff buff1, int cd1, Buff buff2, int cd2, Buff buff3, int cd3, int hp = 0)
+        public ulong GetState(Buff buff1, int cd1, Buff buff2, int cd2, Buff buff3, int cd3, ulong hp = 0)
         {
             return StateHelper.SetTimeRemaining(GetState(buff1, cd1, buff2, cd2, hp), buff3, cd3, DefaultParameters);
         }

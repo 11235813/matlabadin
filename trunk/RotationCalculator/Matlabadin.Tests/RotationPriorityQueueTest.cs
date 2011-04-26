@@ -85,17 +85,17 @@ namespace Matlabadin.Tests
         public void IPrefixShouldRequireIBuff()
         {
             DoTest("ICS", 0, Ability.Nothing);
-            DoTest("ICS", GetState(Buff.INQ, 1), Ability.CS);
+            DoTest("ICS", GetState(Buff.Inq, 1), Ability.CS);
             DoTest("ISotR", 3, Ability.Nothing);
-            DoTest("ISotR", GetState(Buff.INQ, 1, 3), Ability.SotR);
+            DoTest("ISotR", GetState(Buff.Inq, 1, 3), Ability.SotR);
         }
         [TestMethod]
         public void iPrefixShouldRequireNoInqBuff()
         {
             DoTest("iCS", 0, Ability.CS);
-            DoTest("iCS", GetState(Buff.INQ, 1), Ability.Nothing);
+            DoTest("iCS", GetState(Buff.Inq, 1), Ability.Nothing);
             DoTest("iSotR", 3, Ability.SotR);
-            DoTest("iSotR", GetState(Buff.INQ, 1, 3), Ability.Nothing);
+            DoTest("iSotR", GetState(Buff.Inq, 1, 3), Ability.Nothing);
         }
         [TestMethod]
         public void Inq2ShouldRequire2HP()
@@ -104,6 +104,42 @@ namespace Matlabadin.Tests
             DoTest("Inq2", 1, Ability.Nothing);
             DoTest("Inq2", 2, Ability.Inq);
             DoTest("Inq2", 3, Ability.Inq);
+        }
+        [TestMethod]
+        public void ConditionalsTests()
+        {
+            // basic tests
+            DoTest("HW[cdCS>0]", 0, Ability.Nothing);
+            DoTest("HW[cdCS>0]", GetState(Ability.CS, 3), Ability.HW);
+            DoTest("Cons[buffInq>0]", 0, Ability.Nothing);
+            DoTest("Cons[buffInq>0]", GetState(Buff.Inq, 3), Ability.Cons);
+            DoTest("Cons[buffInq>0]", GetState(Buff.Inq, 3, GetState(Ability.Cons, 1)), Ability.Nothing);
+
+            // test multiple conditionals
+            DoTest("HW[cdCS>0][cdCons>0]", 0, Ability.Nothing);
+            DoTest("HW[cdCS>0][cdCons>0]", GetState(Ability.CS, 3), Ability.Nothing);
+            DoTest("HW[cdCS>0][cdCons>0]", GetState(Ability.Cons, 3), Ability.Nothing);
+            DoTest("HW[cdCS>0][cdCons>0]", GetState(Ability.Cons, 3, Ability.CS, 3), Ability.HW);
+
+            // test operators
+            DoTest("CS[cdCons=1.5]", GetState(Ability.Cons, 0), Ability.Nothing);
+            DoTest("CS[cdCons=1.5]", GetState(Ability.Cons, 3), Ability.CS);
+            DoTest("CS[cdCons=1.5]", GetState(Ability.Cons, 6), Ability.Nothing);
+            DoTest("CS[cdCons==1.5]", GetState(Ability.Cons, 0), Ability.Nothing);
+            DoTest("CS[cdCons==1.5]", GetState(Ability.Cons, 3), Ability.CS);
+            DoTest("CS[cdCons==1.5]", GetState(Ability.Cons, 6), Ability.Nothing);
+            DoTest("CS[cdCons<1.5]", GetState(Ability.Cons, 0), Ability.CS);
+            DoTest("CS[cdCons<1.5]", GetState(Ability.Cons, 3), Ability.Nothing);
+            DoTest("CS[cdCons<1.5]", GetState(Ability.Cons, 6), Ability.Nothing);
+            DoTest("CS[cdCons<=1.5]", GetState(Ability.Cons, 0), Ability.CS);
+            DoTest("CS[cdCons<=1.5]", GetState(Ability.Cons, 3), Ability.CS);
+            DoTest("CS[cdCons<=1.5]", GetState(Ability.Cons, 6), Ability.Nothing);
+            DoTest("CS[cdCons>1.5]", GetState(Ability.Cons, 0), Ability.Nothing);
+            DoTest("CS[cdCons>1.5]", GetState(Ability.Cons, 3), Ability.Nothing);
+            DoTest("CS[cdCons>1.5]", GetState(Ability.Cons, 6), Ability.CS);
+            DoTest("CS[cdCons>=1.5]", GetState(Ability.Cons, 0), Ability.Nothing);
+            DoTest("CS[cdCons>=1.5]", GetState(Ability.Cons, 3), Ability.CS);
+            DoTest("CS[cdCons>=1.5]", GetState(Ability.Cons, 6), Ability.CS);
         }
     }
 }
