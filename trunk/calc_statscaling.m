@@ -33,10 +33,10 @@ cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
 cfg(c).label='939/SoT build';
 cfg(c).veng=1;
 cfg(c).seal='Truth';
-cfg(c).queue={'SotR>CS>AS>J>Cons>HW'};
-cfg(c).rot=1; %defaults to 1 if defining a queue
+cfg(c).queue={'SotR>CS>AS>J>Cons>HW'}; %define queues directly to cut runtime
+cfg(c).rot=1; %should default to 1 if defining a queue
 cfg(c).glyph=ddb.glyphset{1}; %Default, HotR/SoT/ShoR, Cons/AS
-cfg(c).talent=ddb.talentset{1}; %0/31/10 w/o HG
+cfg(c).talent=ddb.talentset{1}; %0/32/9 w/o HG
 
 %low hit, W39
 c=c+1;
@@ -47,7 +47,7 @@ cfg(c).seal='Insight';
 cfg(c).queue={'WoG>SotR>CS>AS>J>Cons>HW'};
 cfg(c).rot=1;
 cfg(c).glyph=ddb.glyphset{2}; %WoG set
-cfg(c).talent=ddb.talentset{2}; %0/31/10 WoG build
+cfg(c).talent=ddb.talentset{1}; %0/32/9 w/o HG
 
 
 %% Strength graphs

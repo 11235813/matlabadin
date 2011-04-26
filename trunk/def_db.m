@@ -17,7 +17,7 @@ tempegs(1)=equip(69558);  %Spiritshield Mask
 tempegs(1)=socket(tempegs(1),gem.meta,gem.blu);
 tempegs(2)=equip(69635); %Amulet of Protection
 tempegs(3)=equip(69573); %Pauldrons of Sacrifice
-tempegs(3)=socket(tempegs(3),gem.blu);
+tempegs(3)=socket(tempegs(3),gem.red);
 tempegs(4)=equip(56549); %Twilight Dragonscale Cloak
 tempegs(4)=socket(tempegs(4),gem.blu);
 tempegs(5)=equip(58101); %Chestplate of the Steadfast
@@ -30,7 +30,7 @@ tempegs(8)=equip(55059); %Hardened Elementium Belt
 tempegs(8)=enhance(tempegs(8),equip(76168,'s')); %Belt Buckle
 tempegs(8)=socket(tempegs(8),gem.blu,gem.blu);
 tempegs(9)=equip(69583); %Legguards of the Unforgiving
-tempegs(9)=socket(tempegs(9),gem.blu,gem.blu);
+tempegs(9)=socket(tempegs(9),gem.red,gem.yel);
 tempegs(10)=equip(62418); %Boots of Sullen Rock / Gryphon Rider's Boots
 tempegs(10)=socket(tempegs(10),gem.yel);
 tempegs(11)=equip(62440); %Red Rock Band
@@ -57,12 +57,41 @@ tempegs(35)=equip(74244,'s');%Windwalk?
 tempegs(36)=equip(74226,'s');%Mastery
 ddb.gearset(1)={tempegs};
 
-%Progression Raid set
+%T11 Normal Raid set
+tempegs(1)=equip(60356);  %T11
+tempegs(1)=socket(tempegs(1),gem.meta,gem.yel);
+tempegs(2)=equip(59319); %Ironstar
+tempegs(3)=equip(60358); %T11
+tempegs(3)=socket(tempegs(3),gem.red);
+tempegs(4)=equip(62383); %Great Turtle
+tempegs(5)=equip(60354); %T11
+tempegs(5)=socket(tempegs(5),gem.red,gem.blu);
+tempegs(6)=equip(59470); %Impossible Strength
+tempegs(7)=equip(60355); %T11
+tempegs(7)=socket(tempegs(7),gem.blu);
+tempegs(8)=equip(55059); %Hardened Elementium
+tempegs(8)=enhance(tempegs(8),equip(76168,'s')); %Belt Buckle
+tempegs(8)=socket(tempegs(8),gem.blu,gem.blu);
+tempegs(9)=equip(60357); %T11
+tempegs(9)=socket(tempegs(9),gem.red,gem.blu);
+tempegs(10)=equip(62418); %Boots of Sullen Rock / Gryphon Rider's Boots
+tempegs(10)=socket(tempegs(10),gem.yel);
+tempegs(11)=equip(58187); %Ring of the Battle Anthem
+tempegs(12)=equip(59233); %Bile-o-tron Nut
+tempegs(13)=equip(59515); %Vial of Stolen Memories
+tempegs(14)=equip(62466); %Mirror of Broken Images / Unsolvable Riddle
+tempegs(15)=equip(59347); %Mace of Acrid Death
+tempegs(16)=equip(67145); %Blockade's Lost Shield
+tempegs(17)=equip(64676); %Relic of Khaz
+tempegs(17)=socket(tempegs(17),gem.blu);
+ddb.gearset(2)={tempegs};
+
+%T11 Heroic Raid set
 tempegs(1)=equip(65226);  %T11H
 tempegs(1)=socket(tempegs(1),gem.meta,gem.yel);
 tempegs(2)=equip(65059); %Ironstar Amulet H
 tempegs(3)=equip(65228); %T11H
-tempegs(3)=socket(tempegs(3),gem.blu);
+tempegs(3)=socket(tempegs(3),gem.red);
 tempegs(4)=equip(62383); %Wrap of the Great Turtle
 tempegs(5)=equip(65224); %T11H
 tempegs(5)=socket(tempegs(5),gem.red,gem.blu);
@@ -84,7 +113,7 @@ tempegs(15)=equip(65036); %Mace of Acrid Death H
 tempegs(16)=equip(65023); %Akmin-Kurai H
 tempegs(17)=equip(64676); %Relic of Khaz
 tempegs(17)=socket(tempegs(17),gem.blu);
-ddb.gearset(2)={tempegs};
+ddb.gearset(3)={tempegs};
 
 
 %% Talent Specs

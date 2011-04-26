@@ -182,6 +182,30 @@ idb.iid(69558).sbstat='dodge';
 idb.iid(69558).sbval=30;
 idb.iid(69558).atype=1;
 
+idb.iid(58103).name='Helm of the Proud';
+idb.iid(58103).ilvl=346;
+idb.iid(58103).str=302;
+idb.iid(58103).sta=454;
+idb.iid(58103).dodge=142;
+idb.iid(58103).parry=142;
+idb.iid(58103).barmor=2680;
+idb.iid(58103).socket='MY';
+idb.iid(58103).sbstat='sta';
+idb.iid(58103).sbval=45;
+idb.iid(58103).atype=1;
+
+idb.iid(60356).name='Reinforced Sapphirium Faceguard';
+idb.iid(60356).ilvl=359;
+idb.iid(60356).str=259;
+idb.iid(60356).sta=512;
+idb.iid(60356).hit=113;
+idb.iid(60356).dodge=281;
+idb.iid(60356).barmor=2784;
+idb.iid(60356).socket='MY';
+idb.iid(60356).sbstat='sta';
+idb.iid(60356).sbval=45;
+idb.iid(60356).atype=1;
+
 idb.iid(65226).name='Reinforced Sapphirium Faceguard (Heroic)';
 idb.iid(65226).ilvl=372;
 idb.iid(65226).str=293;
@@ -205,6 +229,13 @@ idb.iid(69635).sta=270;
 idb.iid(69635).mast=102;
 idb.iid(69635).dodge=130;
 
+idb.iid(59319).name='Ironstar Amulet';
+idb.iid(59319).ilvl=359;
+idb.iid(59319).str=145;
+idb.iid(59319).sta=286;
+idb.iid(59319).hit=96;
+idb.iid(59319).dodge=190;
+
 idb.iid(65059).name='Ironstar Amulet (Heroic)';
 idb.iid(65059).ilvl=372;
 idb.iid(65059).str=163;
@@ -226,6 +257,18 @@ idb.iid(69573).socket='R';
 idb.iid(69573).sbstat='sta';
 idb.iid(69573).sbval=15;
 idb.iid(69573).atype=1;
+
+idb.iid(60358).name='Reinforced Sapphirium Shoulderguards';
+idb.iid(60358).ilvl=359;
+idb.iid(60358).str=193;
+idb.iid(60358).sta=380;
+idb.iid(60358).hit=128;
+idb.iid(60358).dodge=213;
+idb.iid(60358).barmor=2570;
+idb.iid(60358).socket='R';
+idb.iid(60358).sbstat='sta';
+idb.iid(60358).sbval=15;
+idb.iid(60358).atype=1;
 
 idb.iid(65228).name='Reinforced Sapphirium Shoulderguards (Heroic)';
 idb.iid(65228).ilvl=372;
@@ -277,6 +320,18 @@ idb.iid(58101).sbstat='dodge';
 idb.iid(58101).sbval=20;
 idb.iid(58101).atype=1;
 
+idb.iid(60354).name='Reinforced Sapphirium Chestguard';
+idb.iid(60354).ilvl=359;
+idb.iid(60354).str=341;
+idb.iid(60354).sta=512;
+idb.iid(60354).mast=208;
+idb.iid(60354).parry=168;
+idb.iid(60354).barmor=3426;
+idb.iid(60354).socket='RB';
+idb.iid(60354).sbstat='sta';
+idb.iid(60354).sbval=30;
+idb.iid(60354).atype=1;
+
 idb.iid(65224).name='Reinforced Sapphirium Chestguard (Heroic)';
 idb.iid(65224).ilvl=372;
 idb.iid(65224).str=385;
@@ -305,6 +360,15 @@ idb.iid(57870).sbstat='mast';
 idb.iid(57870).sbval=10;
 idb.iid(57870).atype=1;
 
+idb.iid(59470).name='Bracers of Impossible Strength';
+idb.iid(59470).ilvl=359;
+idb.iid(59470).str=190;
+idb.iid(59470).sta=286;
+idb.iid(59470).mast=127;
+idb.iid(59470).parry=127;
+idb.iid(59470).barmor=1499;
+idb.iid(59470).atype=1;
+
 idb.iid(65143).name='Bracers of Impossible Strength (Heroic)';
 idb.iid(65143).ilvl=372;
 idb.iid(65143).str=215;
@@ -328,6 +392,18 @@ idb.iid(58105).socket='B';
 idb.iid(58105).sbstat='dodge';
 idb.iid(58105).sbval=10;
 idb.iid(58105).atype=1;
+
+idb.iid(60355).name='Reinforced Sapphirium Handguards';
+idb.iid(60355).ilvl=359;
+idb.iid(60355).str=253;
+idb.iid(60355).sta=380;
+idb.iid(60355).mast=149;
+idb.iid(60355).parry=149;
+idb.iid(60355).barmor=2141;
+idb.iid(60355).socket='B';
+idb.iid(60355).sbstat='mast';
+idb.iid(60355).sbval=10;
+idb.iid(60355).atype=1;
 
 idb.iid(65225).name='Reinforced Sapphirium Handguards (Heroic)';
 idb.iid(65225).ilvl=372;
@@ -357,6 +433,18 @@ idb.iid(55059).sbstat='dodge';
 idb.iid(55059).sbval=10;
 idb.iid(55059).atype=1;
 
+idb.iid(59117).name='Jumbotron Power Belt';
+idb.iid(59117).ilvl=359;
+idb.iid(59117).str=253;
+idb.iid(59117).sta=380;
+idb.iid(59117).mast=159;
+idb.iid(59117).dodge=139;
+idb.iid(59117).barmor=1927;
+idb.iid(59117).socket='Y';
+idb.iid(59117).sbstat='sta';
+idb.iid(59117).sbval=15;
+idb.iid(59117).atype=1;
+
 idb.iid(65086).name='Jumbotron Power Belt (Heroic)';
 idb.iid(65086).ilvl=372;
 idb.iid(65086).str=286;
@@ -383,6 +471,18 @@ idb.iid(69583).socket='RY';
 idb.iid(69583).sbstat='parry';
 idb.iid(69583).sbval=20;
 idb.iid(69583).atype=1;
+
+idb.iid(60357).name='Reinforced Sapphirium Legguards';
+idb.iid(60357).ilvl=359;
+idb.iid(60357).str=341;
+idb.iid(60357).sta=512;
+idb.iid(60357).dodge=188;
+idb.iid(60357).parry=188;
+idb.iid(60357).barmor=2998;
+idb.iid(60357).socket='RB';
+idb.iid(60357).sbstat='sta';
+idb.iid(60357).sbval=30;
+idb.iid(60357).atype=1;
 
 idb.iid(65227).name='Reinforced Sapphirium Legguards (Heroic)';
 idb.iid(65227).ilvl=372;
@@ -449,6 +549,13 @@ idb.iid(58187).sta=286;
 idb.iid(58187).mast=127;
 idb.iid(58187).dodge=127;
 
+idb.iid(59233).name='Bile-O-Tron Nut';
+idb.iid(59233).ilvl=359;
+idb.iid(59233).str=136;
+idb.iid(59233).sta=286;
+idb.iid(59233).exp=111;
+idb.iid(59233).dodge=190;
+
 idb.iid(65070).name='Bile-O-Tron Nut (Heroic)';
 idb.iid(65070).ilvl=372;
 idb.iid(65070).str=153;
@@ -466,6 +573,10 @@ idb.iid(56347).sta=427;
 idb.iid(56406).name='Impetuous Query (Heroic)';
 idb.iid(56406).ilvl=346;
 idb.iid(56406).mast=285;
+
+idb.iid(59515).name='Vial of Stolen Memories';
+idb.iid(59515).ilvl=359;
+idb.iid(59515).sta=482;
 
 idb.iid(65109).name='Vial of Stolen Memories (Heroic)';
 idb.iid(65109).ilvl=372;
@@ -1148,6 +1259,14 @@ idb.iid(69629).sta=270;
 idb.iid(69629).mast=117;
 idb.iid(69629).dodge=122;
 idb.iid(69629).barmor=11803;
+
+idb.iid(67145).name='Blockade''s Lost Shield';
+idb.iid(67145).ilvl=359;
+idb.iid(67145).str=190;
+idb.iid(67145).sta=286;
+idb.iid(67145).mast=134;
+idb.iid(67145).parry=114;
+idb.iid(67145).barmor=11896;
 
 idb.iid(65023).name='Akmin-Kurai, Dominion''s Shield (Heroic)';
 idb.iid(65023).ilvl=372;
