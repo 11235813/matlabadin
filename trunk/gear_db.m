@@ -404,6 +404,7 @@ idb.iid(60355).socket='B';
 idb.iid(60355).sbstat='mast';
 idb.iid(60355).sbval=10;
 idb.iid(60355).atype=1;
+idb.iid(60355).istier=[1 0 0];
 
 idb.iid(65225).name='Reinforced Sapphirium Handguards (Heroic)';
 idb.iid(65225).ilvl=372;
