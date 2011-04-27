@@ -8,7 +8,7 @@ def_db;
 exec=execution_model('veng',1);
 base=player_model('race','Human');
 npc=npc_model(base);
-egs=ddb.gearset{2}; %1=pre-raid , 2=raid
+egs=ddb.gearset{3};  %1=pre-raid , 2=T11, 3=T11H
 glyph=ddb.glyphset{1}; %Default, HotR/SoT/ShoR, Cons/AS
 buff=buff_model;
 

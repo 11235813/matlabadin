@@ -40,8 +40,8 @@ queue.st={...
     'WoG>SotR>CS>AS>J';
     'WoG>SotR[cdWoG>10]>CS>AS>J';
     'WoG>SotR2[cdWoG>10]>CS>AS>J';
-    'WoG>SotR[cdWoG>10]>SotR2[cdWoG>5]>CS>AS>J';
-    'WoG>SotR[cdWoG>15]>SotR2[cdWoG>10]>CS>AS>J';
+%     'WoG>SotR[cdWoG>10]>SotR2[10>cdWoG>5]>CS>AS>J';
+%     'WoG>SotR[cdWoG>15]>SotR2[15>cdWoG>10]>CS>AS>J';
     'WoG>Inq>CS>AS>J';
     'WoG>CS>AS>J>Cons>HW';
     'WoG>SotR>CS>AS>J>Cons>HW';
