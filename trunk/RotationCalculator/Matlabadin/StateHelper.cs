@@ -161,8 +161,11 @@ namespace Matlabadin
                     nextState = StateHelper.SetHP(nextState, 0, gp);
                     break;
                 case Ability.SotR:
-                    if (hit) nextState = StateHelper.SetHP(nextState, 0, gp);
-                    nextState = StateHelper.SetTimeRemaining(nextState, Buff.SD, 0, gp);
+                    if (hit)
+                    {
+                        nextState = StateHelper.SetHP(nextState, 0, gp);
+                        nextState = StateHelper.SetTimeRemaining(nextState, Buff.SD, 0, gp);
+                    }
                     break;
                 case Ability.CS:
                     if (hit) nextState = StateHelper.IncHP(nextState, gp);

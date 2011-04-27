@@ -8,7 +8,7 @@ def_db;
 exec=execution_model('veng',1); 
 base=player_model('race','Belf','prof','');
 npc=npc_model(base);
-egs=ddb.gearset{2};  %1=pre-raid , 2=raid
+egs=ddb.gearset{3};  %1=pre-raid , 2=T11, 3=T11H
 gear_stats;
 talent=ddb.talentset{1};  %placeholder, redefined in cfg
 glyph=ddb.glyphset{1}; %placeholder, redefined in cfg
@@ -27,6 +27,7 @@ weaplist1=[62457; %Ravening Slicer
            56430; %Sun Strike (Heroic)
            65171; %Cookie''s Tenderizer (Heroic)
            69609; %Bloodlord's Protector
+           69639; %Renataki's Soul Slicer
            63533; %Fang of Twilight
            59347; %Mace of Acrid Death
            59521; %Soul Blade
@@ -59,7 +60,6 @@ weaplist3=[65166; %Buzz Saw (Heroic)
            69575; %Mace of the Sacrificed
            69803; %Gurubashi Punisher
            69618; %Zulian Slasher
-           69639; %Renataki's Soul Slicer
            59443; %Crul''korak, the Lightning''s Arc
            68161; %Krol Decapitator
            59333; %Lava Spine
@@ -155,9 +155,14 @@ pinfo.labels=[pinfo.name repmat(' ',length(pinfo.ilvl),2) int2str(pinfo.ilvl')];
 'CS table'
 spacer3=repmat(' ',length(wdps),3);
 spacer2=repmat(' ',length(wdps),2);
-[pinfo.labels  spacer3 int2str(round(whps(:,1))) spacer2 int2str(round(wdps(:,1))) ...
-               spacer2 int2str(round(whps(:,2))) spacer2 int2str(round(wdps(:,2:size(wdps,2))))]
+pptable=[pinfo.labels  spacer3 int2str(round(whps(:,1))) spacer2 int2str(round(wdps(:,1))) ...
+               spacer2 int2str(round(whps(:,2))) spacer2 int2str(round(wdps(:,2:size(wdps,2))))];
+           
+pptable=[pptable(1:M1,:); repmat(' ',1,size(pptable,2)); ...
+         pptable(M1+[1:M2],:); repmat(' ',1,size(pptable,2)); ...
+         pptable(M1+M2+[1:M3],:)]
 
+           
 i1=1:M1;
 i2=M1+1:M2;
 i3=M1+M2+[1:M3];
