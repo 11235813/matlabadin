@@ -19,21 +19,8 @@ namespace Matlabadin
                 StateHelper.HP(state, gp),
                 stepsDuration,
                 option1, option2, option3);
-            Choice lookupChoice;
-            if (!globalLookup.TryGetValue(c, out lookupChoice))
-            {
-                lock (globalLookup)
-                {
-                    if (!globalLookup.TryGetValue(c, out lookupChoice))
-                    {
-                        lookupChoice = c;
-                        globalLookup.Add(lookupChoice, lookupChoice);
-                    }
-                }
-            }
-            return lookupChoice;
+            return c;
         }
-        private static Dictionary<Choice, Choice> globalLookup = new Dictionary<Choice, Choice>();
         private Choice(Ability ability, bool sotrsd, int inq, int hp, int stepsDuration, double option1, double option2, double option3)
         {
             this.ability = ability;

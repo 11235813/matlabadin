@@ -11,27 +11,51 @@ namespace Matlabadin
         {
             this.gp = gp;
             this.nextStateFunction = nextStateFunction;
+            GenerateGraph();
+            ChangeNextStateIndexSentinal(-1, index.Length);
         }
-        public struct NextStateTransitionIndex
+        /// <summary>
+        /// Clones a given graph.
+        /// </summary>
+        /// <remarks>Cloning will onyl succeed if the graphs only differ in their transition probabilities.
+        /// That is, they only differ in MeleeHit and RangeHit.</remarks>
+        /// <param name="graph">Graph to clone.</param>
+        /// <param name="gp">New parameters</param>
+        public MatlabadinGraph(MatlabadinGraph graph, GraphParameters gp)
         {
-            public int nextStateIndex1;
-            public int nextStateIndex2;
-            public int nextStateIndex3;
+            if (!graph.gp.HasSameShape(gp)) throw new ArgumentException("Graphs do not have the same shape");
+            this.gp = gp;
+            this.nextStateFunction = graph.nextStateFunction;
+            this.lookup = graph.lookup;
+            this.index = graph.index;
+            this.nextState = graph.nextState;
+
+            // replace the choices in the existing graph with the new choices. Since the graph has the same shape we don't have to generate the entire graph
+            ulong tempNextState1, tempNextState2, tempNextState3;
+            var choiceConversion =
+                from kvp in graph.firstChoiceState
+                select new {
+                    OldChoice = kvp.Key,
+                    NewChoice = StateHelper.NextStates(kvp.Value, nextStateFunction(kvp.Value, gp), gp, out tempNextState1, out tempNextState2, out tempNextState3),
+                    State = kvp.Value
+                };
+            this.firstChoiceState = choiceConversion.ToDictionary(n => n.NewChoice, n => n.State);
+            Dictionary<Choice, Choice> choiceRemapping = choiceConversion.ToDictionary(n => n.OldChoice, n => n.NewChoice);
+            this.choice = graph.choice.Select(c => choiceRemapping[c]).ToArray();
         }
-        public Dictionary<ulong, int> lookup; // maps state to state index
-        public ulong[] index; // maps state index to state
-        public Choice[] choice; // maps state index to choice made
-        public NextStateTransitionIndex[] nextState; // maps state index to choice and corresponding next state indexes
-        private GraphParameters gp;
-        private Func<ulong, GraphParameters, Ability> nextStateFunction;
-        private int nextStateIndexSentinal = -1;
-        public void GenerateGraph()
+        /// <summary>
+        /// Number of distinct state in the graph
+        /// </summary>
+        public int Size { get { return index.Length; } }
+        public GraphParameters GraphParameters { get { return gp; } }
+        private void GenerateGraph()
         {
             ulong initialState = 0;
             Dictionary<ulong, int> lookup = new Dictionary<ulong, int>();
             List<ulong> index = new List<ulong>();
             List<Choice>  choice = new List<Choice>();
             List<NextStateTransitionIndex> nextState = new List<NextStateTransitionIndex>();
+            firstChoiceState = new Dictionary<Choice, ulong>();
             index.Add(initialState);
             lookup[initialState] = 0;
             while (index.Count() > nextState.Count())
@@ -42,10 +66,10 @@ namespace Matlabadin
                 ulong nextState1;
                 ulong nextState2;
                 ulong nextState3;
-                int nextStateIndex1 = nextStateIndexSentinal;
-                int nextStateIndex2 = nextStateIndexSentinal;
-                int nextStateIndex3 = nextStateIndexSentinal;
-                Choice c = StateHelper.NextStates(currentState, abilityChosen, gp, out nextState1, out nextState2, out nextState3);
+                int nextStateIndex1 = -1;
+                int nextStateIndex2 = -1;
+                int nextStateIndex3 = -1;
+                Choice c = LookupStateChoice(StateHelper.NextStates(currentState, abilityChosen, gp, out nextState1, out nextState2, out nextState3), currentState);
                 if (nextState1 != UInt64.MaxValue && !lookup.TryGetValue(nextState1, out nextStateIndex1))
                 {
                     nextStateIndex1 = index.Count();
@@ -77,19 +101,32 @@ namespace Matlabadin
             this.choice = choice.ToArray();
             this.nextState = nextState.ToArray();
         }
-        private void ChangeNextStateIndexSentinal(int newSentinalIndex)
+        private Choice LookupStateChoice(Choice choice, ulong state)
+        {
+            if (firstChoiceState.ContainsKey(choice))
+            {
+                // return the cached value
+                return firstChoiceState.Keys.First(c => c.Equals(choice));
+            }
+            else
+            {
+                // add to cache as this is the first state in which we have made this choice
+                firstChoiceState[choice] = state;
+                return choice;
+            }
+        }
+        private void ChangeNextStateIndexSentinal(int currentSentinalIndex, int newSentinalIndex)
         {
             int length = nextState.Count();
             for (int i = 0; i < length; i++)
             {
                 nextState[i] = new NextStateTransitionIndex()
                 {
-                    nextStateIndex1 = nextState[i].nextStateIndex1 == nextStateIndexSentinal ? newSentinalIndex : nextState[i].nextStateIndex1,
-                    nextStateIndex2 = nextState[i].nextStateIndex2 == nextStateIndexSentinal ? newSentinalIndex : nextState[i].nextStateIndex2,
-                    nextStateIndex3 = nextState[i].nextStateIndex3 == nextStateIndexSentinal ? newSentinalIndex : nextState[i].nextStateIndex3,
+                    nextStateIndex1 = nextState[i].nextStateIndex1 == currentSentinalIndex ? newSentinalIndex : nextState[i].nextStateIndex1,
+                    nextStateIndex2 = nextState[i].nextStateIndex2 == currentSentinalIndex ? newSentinalIndex : nextState[i].nextStateIndex2,
+                    nextStateIndex3 = nextState[i].nextStateIndex3 == currentSentinalIndex ? newSentinalIndex : nextState[i].nextStateIndex3,
                 };
             }
-            nextStateIndexSentinal = newSentinalIndex;
         }
         public Dictionary<string, double> CalculateAggregates(double[] pr, out double averageStepDuration, out double inqUptime)
         {
@@ -113,7 +150,9 @@ namespace Matlabadin
         /// <summary>
         /// Calcualtes the state probabilities for the given graph using iterative approximation.
         /// </summary>
+        /// <remarks></remarks>
         /// <param name="relTolerance">Minimum relative tolerance at which to stop iterating early.</param>
+        /// <param name="absTolerance">Absolute tolerance at which to stop iterating early.</param>
         /// <param name="maxIterations">Maximum number of iterations.</param>
         /// <param name="iterationStride">Number of iterations between tolerance checks</param>
         /// <param name="initialState">Initial state probability distribution. Defaults to equal probability for all states.</param>
@@ -221,17 +260,12 @@ namespace Matlabadin
         {
             int length = index.Length;
             double[] nextPr = new double[length + 1];
-            if (this.nextStateIndexSentinal != length)
-            {
-                // change our sentinal value to a placeholder state at the end of the probability array
-                ChangeNextStateIndexSentinal(length);
-            }
             for (int i = 0; i < length; i++)
             {
                 double statePr = pr[i];
                 NextStateTransitionIndex next = nextState[i];
                 Choice c = choice[i];
-                // as we're using a sentinal state, we don't need an
+                // as we're using a sentinal state at the end of the array, we don't need an
                 // if (next.nextStateIndexN != nextStateIndexSentinal)
                 // conditional which saves us from branching in this expensive
                 // inner loop
@@ -250,5 +284,22 @@ namespace Matlabadin
             if (nextPr.Last() > 0) throw new Exception("Sanity check failure: sentinal value has non-zero probability");
             return nextPr;
         }
+        /// <summary>
+        /// Array indicies of the three possible next states to transition to
+        /// </summary>
+        public struct NextStateTransitionIndex
+        {
+            public int nextStateIndex1;
+            public int nextStateIndex2;
+            public int nextStateIndex3;
+        }
+        // should all be private but we're exposing for now to make testing easier
+        public Dictionary<ulong, int> lookup; // maps state to state index
+        public ulong[] index; // maps state index to state
+        public Choice[] choice; // maps state index to choice made
+        public NextStateTransitionIndex[] nextState; // maps state index to choice and corresponding next state indexes
+        private Dictionary<Choice, ulong> firstChoiceState; // The first state in which given choice was encountered
+        private GraphParameters gp;
+        private Func<ulong, GraphParameters, Ability> nextStateFunction;
     }
 }
