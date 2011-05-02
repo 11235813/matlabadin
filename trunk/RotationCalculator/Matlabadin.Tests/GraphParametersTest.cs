@@ -79,5 +79,34 @@ namespace Matlabadin.Tests
             Assert.AreEqual(target.AbilityCooldownStartBit[(int)Ability.HotR], target.AbilityCooldownStartBit[(int)Ability.CS]);
             Assert.AreEqual(target.AbilityCooldownBits[(int)Ability.HotR], target.AbilityCooldownBits[(int)Ability.CS]); // 15 options fits into 4 bits
         }
+        [TestMethod]
+        public void ShouldHaveSameShapeIfParametersMatch()
+        {
+            GraphParameters gp = new GraphParameters(3, true, 1.0, 1.0, 0.5, 0.2, 0.3);
+            Assert.IsTrue(gp.HasSameShape(new GraphParameters(3, true, 1.0, 1.0, 0.5, 0.2, 0.3)));
+            Assert.IsFalse(gp.HasSameShape(new GraphParameters(1, true, 1.0, 1.0, 0.5, 0.2, 0.3)));
+            Assert.IsFalse(gp.HasSameShape(new GraphParameters(3, false, 1.0, 1.0, 0.5, 0.2, 0.3)));
+            Assert.IsFalse(gp.HasSameShape(new GraphParameters(3, true, 0.9, 1.0, 0.5, 0.2, 0.3)));
+            Assert.IsFalse(gp.HasSameShape(new GraphParameters(3, true, 1.0, 0.9, 0.5, 0.2, 0.3)));
+            Assert.IsFalse(gp.HasSameShape(new GraphParameters(3, true, 0.0, 1.0, 0.5, 0.2, 0.3)));
+            Assert.IsFalse(gp.HasSameShape(new GraphParameters(3, true, 1.0, 0.0, 0.5, 0.2, 0.3)));
+            Assert.IsFalse(gp.HasSameShape(new GraphParameters(3, true, 1.0, 1.0, 0.0, 0.2, 0.3)));
+            Assert.IsFalse(gp.HasSameShape(new GraphParameters(3, true, 1.0, 1.0, 0.5, 0.0, 0.3)));
+            Assert.IsFalse(gp.HasSameShape(new GraphParameters(3, true, 1.0, 1.0, 0.5, 0.2, 0.0)));
+        }
+        [TestMethod]
+        public void ShouldHaveSameShapeIfOnlyDifferByNonZeroTransitionMagnitides()
+        {
+            Action<double, double, double, double, bool> DoTest = (mehit1, rhit1, mehit2, rhit2, result) =>
+            {
+                Assert.AreEqual(result, new GraphParameters(3, true, mehit1, rhit1, 0.5, 0.2, 0.3)
+                    .HasSameShape(new GraphParameters(3, true, mehit2, rhit2, 0.5, 0.2, 0.3)));
+            };
+            DoTest(1.0, 1.0, 0.9, 1.0, false);
+            DoTest(0.8, 1.0, 0.9, 1.0, true);
+            DoTest(0.8, 0.8, 0.9, 0.9, true);
+            DoTest(0.8, 0.8, 0.0, 0.9, false);
+            DoTest(0.8, 0.8, 0.9, 0.0, false);
+        }
     }
 }

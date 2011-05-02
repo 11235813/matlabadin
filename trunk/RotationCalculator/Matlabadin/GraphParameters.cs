@@ -22,6 +22,7 @@ namespace Matlabadin
             this.StepsPerGcd = stepsPerGcd;
             this.abilitySteps = abilityCooldowns.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();
             this.buffSteps = buffDurations.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();
+            this.consGlyph = useConsGlyph;
             this.SDProcRate = sdProcRate;
             this.GCProcRate = gcProcRate;
             this.EGProcRate = egProcRate;
@@ -41,6 +42,21 @@ namespace Matlabadin
         {
             return buffSteps[(int)buff];
         }
+        public bool HasSameShape(GraphParameters gp)
+        {
+            return this.StepsPerGcd == gp.StepsPerGcd
+                && this.consGlyph == gp.consGlyph
+                && this.SDProcRate == gp.SDProcRate
+                && this.GCProcRate == gp.GCProcRate
+                && this.EGProcRate == gp.EGProcRate
+                && hitGeneratesSameShape(this.MeleeHit, gp.MeleeHit)
+                && hitGeneratesSameShape(this.RangeHit, gp.RangeHit);
+        }
+        private bool hitGeneratesSameShape(double hit1, double hit2)
+        {
+            // match if they are both 1.0 (or 0.0) or if they are both between 0.0 and 1.0 exclusive
+            return !(hit1 == 1.0 ^ hit2 == 1.0) && !(hit1 == 0.0 ^ hit2 == 0.0);
+        }
         public double MeleeHit { get; private set; }
         public double RangeHit { get; private set; }
         public double SDProcRate { get; private set; }
@@ -48,6 +64,7 @@ namespace Matlabadin
         public double EGProcRate { get; private set; }
         private int[] abilitySteps;
         private int[] buffSteps;
+        private bool consGlyph;
         #region Bit-Encoded State Graph Parameters
         /// <summary>
         /// Calculates the big packing required to encode the state in an unsigned 64 bit integer
