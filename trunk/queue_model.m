@@ -23,6 +23,8 @@ queue.st={...
     'Inq>CS>AS>J';
     'Inq>HotR>AS>J';
     'iInq>SotR>CS>AS>J';
+    'Inq[buffInq<2]>SotR>CS>AS>J';
+%     'Inq[buffInq<4]>SotR>CS>AS>J';
     'iInq>SotR2>CS>AS>J';
     'ISotR>Inq>CS>AS>J';
     'SDSotR>ISotR>Inq>CS>AS>J';
@@ -40,9 +42,10 @@ queue.st={...
     'WoG>SotR>CS>AS>J';
     'WoG>SotR[cdWoG>10]>CS>AS>J';
     'WoG>SotR2[cdWoG>10]>CS>AS>J';
-%     'WoG>SotR[cdWoG>10]>SotR2[10>cdWoG>5]>CS>AS>J';
-%     'WoG>SotR[cdWoG>15]>SotR2[15>cdWoG>10]>CS>AS>J';
+    'WoG>SotR[cdWoG>10]>SotR2[cdWoG<10][cdWoG>5]>CS>AS>J';
+    'WoG>SotR[cdWoG>15]>SotR2[cdWoG<15][cdWoG>10]>CS>AS>J';
     'WoG>Inq>CS>AS>J';
+    'WoG>Inq2[cdWoG>10]>CS>AS>J';
     'WoG>CS>AS>J>Cons>HW';
     'WoG>SotR>CS>AS>J>Cons>HW';
     'WoG>SotR2>CS>AS>J>Cons>HW';
