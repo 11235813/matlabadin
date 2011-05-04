@@ -38,7 +38,7 @@ ww.q=(1-ww.pc).^(ww.pd.*tmp.cps.SotR) ...                   %SotR
     .*(1-ww.pc.*mdf.mehit).^(ww.pd.*tmp.cps.CS) ...         %CS
     .*(1-ww.pc.*mdf.mehit).^(ww.pd.*tmp.cps.HotR) ...       %HotR
     .*(1-ww.pc.*mdf.rahit).^(ww.pd.*tmp.cps.AS) ...         %AS
-    .*(1-mdf.rahit.*(1-(1-ww.pc))).^(ww.pd.*tmp.cps.J) ...  %J
+    .*(1-ww.pc.*mdf.rahit).^(ww.pd.*tmp.cps.J) ...          %J
     .*(1-ww.pc.*mdf.mehit).^(ww.pd./player.wswing);         %AA
 ww.p=1-ww.q;
 ww.dodge=ww.p.*(dtrack(2)-dtrack(1));
@@ -61,7 +61,7 @@ ls.q=(1-ls.pc).^(ls.pd.*tmp.cps.SotR) ...                   %SotR
     .*(1-ls.pc.*mdf.mehit).^(ls.pd.*tmp.cps.CS) ...         %CS
     .*(1-ls.pc.*mdf.mehit).^(ls.pd.*tmp.cps.HotR) ...       %HotR
     .*(1-ls.pc.*mdf.rahit).^(ls.pd.*tmp.cps.AS) ...         %AS
-    .*(1-mdf.rahit.*(1-(1-ls.pc))).^(ls.pd.*tmp.cps.J) ...  %J
+    .*(1-ls.pc.*mdf.rahit).^(ls.pd.*tmp.cps.J) ...          %J
     .*(1-ls.pc.*mdf.mehit).^(ls.pd./player.wswing);         %AA
 ls.p=1-ls.q;
 ls.dps=(rot(exec.pseq).totdps-ls.base).*ls.p;
@@ -85,6 +85,7 @@ av.ptps=mdf.mehit.*tmp.cps.SotR ... %SotR
     +mdf.mehit.*tmp.cps.CS ...      %CS
     +mdf.mehit.*tmp.cps.HotR ...    %HotR
     +mdf.rahit.*tmp.cps.AS ...      %AS
+    +mdf.rahit.*tmp.cps.J ...       %J
     +mdf.mehit./player.wswing;      %AA
 av.stps=tmp.cps.WoG ...             %WoG
     +mdf.sphit.*tmp.cps.HW ...      %HW
@@ -93,7 +94,7 @@ av.stps=tmp.cps.WoG ...             %WoG
 av.effsicd=ceil(av.sicd.*av.stps)./av.stps;
 av.effspc=1./(av.stps.*(av.effsicd+1./(av.stps.*av.spc)));
 %output
-av.pps=av.ptps.*av.ppc+mdf.rahit.*tmp.cps.J.*av.ppc.*(2-av.ppc)+av.stps.*av.effspc;
+av.pps=av.ptps.*av.ppc+av.stps.*av.effspc;
 av.dps=av.dpp.*av.pps;
 
 
@@ -110,7 +111,7 @@ for j=1:1:5
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd.*tmp.cps.CS) ...            %CS
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd.*tmp.cps.HotR) ...          %HotR
         .*(1-hu.ppc.*mdf.rahit).^(hu.pd.*tmp.cps.AS) ...            %AS
-        .*(1-mdf.rahit.*(1-(1-hu.ppc))).^(hu.pd.*tmp.cps.J) ...     %J
+        .*(1-hu.ppc.*mdf.rahit).^(hu.pd.*tmp.cps.J) ...             %J
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd./player.wswing);            %AA
     hu.p(1,:)=1-hu.q(1,:);
     hu.q(2,:)=(1-hu.spc).^(hu.pd.*tmp.cps.WoG) ...          %WoG
@@ -132,7 +133,7 @@ for j=1:1:5
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd.*tmp.cps.CS) ...         %CS
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd.*tmp.cps.HotR) ...       %HotR
         .*(1-hu.ppc.*mdf.rahit).^(hu.pd.*tmp.cps.AS) ...         %AS
-        .*(1-mdf.rahit.*(1-(1-hu.ppc))).^(hu.pd.*tmp.cps.J) ...  %J
+        .*(1-hu.ppc.*mdf.rahit).^(hu.pd.*tmp.cps.J) ...          %J
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd./player.wswing);         %AA
     hu.p(1,:)=1-hu.q(1,:);
     hu.q(2,:)=(1-hu.spc).^(hu.pd.*tmp.cps.WoG) ...               %WoG
@@ -172,15 +173,18 @@ mend.hpp=800.*mdf.hcrit.*mdf.Divin;
 stat_model;ability_model;rotation_model;
 mend.ptps=mdf.mehit.*tmp.cps.SotR ...	%SotR
     +mdf.mehit.*tmp.cps.CS ...          %CS
+    +mdf.mehit.*tmp.cps.HotR ...        %HotR
+    +mdf.rahit.*tmp.cps.AS ...          %AS
+    +mdf.rahit.*tmp.cps.J ...           %J
     +mdf.mehit./player.wswing;          %AA
-mend.stps=tmp.cps.WoG ...               %WoG
-    +mdf.sphit.*tmp.cps.HW ...          %HW
-    +1./cens.NetTick;                   %Cens
+mend.stps=tmp.cps.WoG ...            %WoG
+    +mdf.sphit.*tmp.cps.HW ...       %HW
+    +1./cens.NetTick;                %Cens
 %effective cooldown/proc chance for spell-based triggers
 mend.effsicd=ceil(mend.sicd.*mend.stps)./mend.stps;
 mend.effspc=1./(mend.stps.*(mend.effsicd+1./(mend.stps.*mend.spc)));
 %output
-mend.pps=mend.ptps.*mend.ppc+mdf.rahit.*tmp.cps.J.*mend.ppc.*(2-mend.ppc)+mend.stps.*mend.effspc;
+mend.pps=mend.ptps.*mend.ppc+mend.stps.*mend.effspc;
 mend.hps=mend.hpp.*mend.pps;
 mend.tps=mend.hps.*mdf.hthreat.*mdf.RFury./exec.npccount;
 
