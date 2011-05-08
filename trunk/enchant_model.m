@@ -39,7 +39,7 @@ ww.q=(1-ww.pc).^(ww.pd.*tmp.cps.SotR) ...                   %SotR
     .*(1-ww.pc.*mdf.mehit).^(ww.pd.*tmp.cps.HotR) ...       %HotR
     .*(1-ww.pc.*mdf.rahit).^(ww.pd.*tmp.cps.AS) ...         %AS
     .*(1-ww.pc.*mdf.rahit).^(ww.pd.*tmp.cps.J) ...          %J
-    .*(1-ww.pc.*mdf.mehit).^(ww.pd./player.wswing-player.reck.*ww.pc.*mdf.mehit); %AA
+    .*(1-ww.pc.*mdf.mehit).^(ww.pd./player.phs.*(1+player.reck.*(1-ww.pc.*mdf.mehit))); %AA
 ww.p=1-ww.q;
 ww.dodge=ww.p.*(dtrack(2)-dtrack(1));
 %cleanup
@@ -62,7 +62,7 @@ ls.q=(1-ls.pc).^(ls.pd.*tmp.cps.SotR) ...                   %SotR
     .*(1-ls.pc.*mdf.mehit).^(ls.pd.*tmp.cps.HotR) ...       %HotR
     .*(1-ls.pc.*mdf.rahit).^(ls.pd.*tmp.cps.AS) ...         %AS
     .*(1-ls.pc.*mdf.rahit).^(ls.pd.*tmp.cps.J) ...          %J
-    .*(1-ls.pc.*mdf.mehit).^(ls.pd./player.wswing-player.reck.*ls.pc.*mdf.mehit); %AA
+    .*(1-ls.pc.*mdf.mehit).^(ls.pd./player.phs.*(1+player.reck.*(1-ls.pc.*mdf.mehit))); %AA
 ls.p=1-ls.q;
 ls.dps=(rot(exec.pseq).totdps-ls.base).*ls.p;
 if tmpemod.rot~=0
@@ -112,7 +112,7 @@ for j=1:1:5
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd.*tmp.cps.HotR) ...          %HotR
         .*(1-hu.ppc.*mdf.rahit).^(hu.pd.*tmp.cps.AS) ...            %AS
         .*(1-hu.ppc.*mdf.rahit).^(hu.pd.*tmp.cps.J) ...             %J
-        .*(1-hu.ppc.*mdf.mehit).^(hu.pd./player.wswing-player.reck.*hu.ppc.*mdf.mehit); %AA
+        .*(1-hu.ppc.*mdf.mehit).^(hu.pd./player.phs.*(1+player.reck.*(1-hu.ppc.*mdf.mehit))); %AA
     hu.p(1,:)=1-hu.q(1,:);
     hu.q(2,:)=(1-hu.spc).^(hu.pd.*tmp.cps.WoG) ...          %WoG
         .*(1-hu.spc.*mdf.sphit).^(hu.pd.*tmp.cps.HW) ...    %HW
@@ -134,7 +134,7 @@ for j=1:1:5
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd.*tmp.cps.HotR) ...       %HotR
         .*(1-hu.ppc.*mdf.rahit).^(hu.pd.*tmp.cps.AS) ...         %AS
         .*(1-hu.ppc.*mdf.rahit).^(hu.pd.*tmp.cps.J) ...          %J
-        .*(1-hu.ppc.*mdf.mehit).^(hu.pd./player.wswing-player.reck.*hu.ppc.*mdf.mehit); %AA
+        .*(1-hu.ppc.*mdf.mehit).^(hu.pd./player.phs.*(1+player.reck.*(1-hu.ppc.*mdf.mehit))); %AA
     hu.p(1,:)=1-hu.q(1,:);
     hu.q(2,:)=(1-hu.spc).^(hu.pd.*tmp.cps.WoG) ...               %WoG
         .*(1-hu.spc.*mdf.sphit).^(hu.pd.*tmp.cps.HW) ...         %HW

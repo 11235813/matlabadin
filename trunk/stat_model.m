@@ -414,6 +414,7 @@ player.ndamage=gear.avgdmg+player.ap./14.*2.4; %normalized attacks (hardcoded)
 player.swing=gear.swing./mdf.phhaste;
 %PHR corrections
 phr=phr_model(exec,player.swing,target.swing,player.parry,player.block,talent.Reckoning);
+player.phs=phr.phs;     %store ph
 player.reck=phr.reck;   %store ru
 player.wswing=phr.phrs; %store st
 player.wdps=player.wdamage./player.wswing;
