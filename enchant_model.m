@@ -10,7 +10,7 @@ end
 if exist('cfg','var') && exist('c','var') && isfield(cfg(c),'rot')  %c always used as config index variable
     pseq=rot(cfg(c).rot);tmpemod.rot=1;
 else
-    warning('rotation defaulted to exec.pseq');
+    warning(['rotation defaulted to ' rot(exec.pseq).tag]);
     pseq=rot(exec.pseq);tmpemod.rot=0;
 end
 
@@ -34,7 +34,7 @@ for dloop=0:600:600
     dtrack=[dtrack player.dodge];
 end
 %average effectiveness
-ww.q=(1-ww.pc).^(ww.pd.*tmp.cps.SotR) ...                   %SotR
+ww.q=(1-ww.pc.*mdf.mehit).^(ww.pd.*tmp.cps.SotR) ...    	%SotR
     .*(1-ww.pc.*mdf.mehit).^(ww.pd.*tmp.cps.CS) ...         %CS
     .*(1-ww.pc.*mdf.mehit).^(ww.pd.*tmp.cps.HotR) ...       %HotR
     .*(1-ww.pc.*mdf.rahit).^(ww.pd.*tmp.cps.AS) ...         %AS
@@ -57,7 +57,7 @@ ls.base=pseq.totdps;
 astore=gear.ap;gear.ap=gear.ap+1000;
 stat_model;ability_model;rotation_model;
 %average effectiveness
-ls.q=(1-ls.pc).^(ls.pd.*tmp.cps.SotR) ...                   %SotR
+ls.q=(1-ls.pc.*mdf.mehit).^(ls.pd.*tmp.cps.SotR) ...      	%SotR
     .*(1-ls.pc.*mdf.mehit).^(ls.pd.*tmp.cps.CS) ...         %CS
     .*(1-ls.pc.*mdf.mehit).^(ls.pd.*tmp.cps.HotR) ...       %HotR
     .*(1-ls.pc.*mdf.rahit).^(ls.pd.*tmp.cps.AS) ...         %AS
@@ -107,7 +107,7 @@ for j=1:1:5
     gear.haste=hstore+450.*sum(htrack(2:3,:,j));
     stat_model;ability_model;
     hu.p=zeros(1,val.length);hu.q=hu.p;
-    hu.q(1,:)=(1-hu.ppc).^(hu.pd.*tmp.cps.SotR) ...                 %SotR
+    hu.q(1,:)=(1-hu.ppc.*mdf.mehit).^(hu.pd.*tmp.cps.SotR) ...    	%SotR
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd.*tmp.cps.CS) ...            %CS
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd.*tmp.cps.HotR) ...          %HotR
         .*(1-hu.ppc.*mdf.rahit).^(hu.pd.*tmp.cps.AS) ...            %AS
@@ -129,7 +129,7 @@ for j=1:1:5
     gear.haste=hstore+900.*htrack(4,:,j);
     stat_model;ability_model;
     hu.p=zeros(1,val.length);hu.q=hu.p;
-    hu.q(1,:)=(1-hu.ppc).^(hu.pd.*tmp.cps.SotR) ...              %SotR
+    hu.q(1,:)=(1-hu.ppc.*mdf.mehit).^(hu.pd.*tmp.cps.SotR) ...   %SotR
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd.*tmp.cps.CS) ...         %CS
         .*(1-hu.ppc.*mdf.mehit).^(hu.pd.*tmp.cps.HotR) ...       %HotR
         .*(1-hu.ppc.*mdf.rahit).^(hu.pd.*tmp.cps.AS) ...         %AS
