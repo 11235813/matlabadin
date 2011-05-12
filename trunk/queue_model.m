@@ -29,8 +29,8 @@ queue.st={...
 %     'Inq[buffInq<4]>SotR>CS>AS>J';
     'iInq>SotR2>CS>AS>J';
     'ISotR>Inq>CS>AS>J';
+    'SDSotR>Inq>CS>AS>J';
     'SDSotR>ISotR>Inq>CS>AS>J';
-    'ISotR>SDSotR>Inq>CS>AS>J';
     'SDSotR>ISotR>Inq>AS[buffGC<2][buffGC>0]>CS>AS>J';
     'ISDSotR>Inq>CS>AS>J';
     'Inq>CS>AS>J>Cons>HW';
