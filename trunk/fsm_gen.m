@@ -52,6 +52,7 @@ for i=1:length(mehitArray)
     generatedFile{i} = filename;
 end
 fclose(argfid);
+global fsm_compiled;
 if generationRequired
     % TODO: execute fsm.exe with remaining args
     if exist('RotationCalculator') ~= 7
@@ -61,10 +62,14 @@ if generationRequired
     executable = 'RotationCalculator\Matlabadin\bin\Release\Matlabadin.exe';
     if exist(executable) ~= 2
         executable = 'fsm.exe';
+        if length(fsm_compiled) == 0
+            delete(executable);
+            fsm_compiled = executable;
+        end
         if exist(executable) ~= 2
             % Attempt to compile
             % try 32 bit
-            system('%SYSTEMROOT%\Microsoft.NET\Framework\v4.0.30319\csc.exe /o+ /debug- /out:fsm.exe RotationCalculator\Matlabadin\*.cs ')%>nul 2>&1');
+            system('%SYSTEMROOT%\Microsoft.NET\Framework\v4.0.30319\csc.exe /o+ /debug- /out:fsm.exe RotationCalculator\Matlabadin\*.cs ');%>nul 2>&1');
             % then overwrite with 64 bit if available
             system('%SYSTEMROOT%\Microsoft.NET\Framework64\v4.0.30319\csc.exe /o+ /debug- /out:fsm.exe RotationCalculator\Matlabadin\*.cs > nul 2>&1');
             if exist(executable) ~= 2
