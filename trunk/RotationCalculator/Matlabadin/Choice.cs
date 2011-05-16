@@ -50,6 +50,7 @@ namespace Matlabadin
                 return action;
             }
         }
+        public Ability Ability { get { return this.ability; } }
         private string action;
         private readonly Ability ability;
         private readonly bool sotrsd;

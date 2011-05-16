@@ -1,14 +1,45 @@
-function calc_fsm
+function [data] = calc_fsm
 % plot some stuff:
-[xxhit,yyexp]=meshgrid(0:80:960,0:4:56);
-mesh(xxhit, yyexp, matrixfun2(@(x,y)CS_Pr(x,y), xxhit, yyexp))
+mhit=(1-0.065-0.14-0.08):0.005:1.0;
+rhit=(1-0.08):0.005:1.0;
+rotation='SotR>CS>AS>J'
+mhitArray=repmat(mhit, 1, length(rhit));
+rhitArray=repmat(rhit, length(mhit), 1);
+rhitArray=rhitArray(:);
+% generate data
+fsm_gen(rotation, mhitArray, rhitArray, 1, 2, 2, 2);
+
+% populate data array
+% TODO use ability_model.m and action2cps.m code instead of duplicating
+fsmlabel={'Inq';'Inq(Inq)';'SotR2';'SotR2(SD)';'SotR2(Inq)';'SotR2(SD)(Inq)';'SotR';'SotR(SD)';'SotR(Inq)';'SotR(SD)(Inq)';'WoG';'WoG(Inq)';...
+    'CS';'CS(Inq)';'HotR';'HammerNova';'HotR(Inq)';'HammerNova(Inq)';...
+    'AS';'AS(Inq)';'Cons';'Cons(Inq)';'HoW';'HoW(Inq)';'HW';'HW(Inq)';'J';'J(Inq)';...
+    'seal';'seal(Inq)';...
+    'Nothing';'Nothing(Inq)'};
+data = horzcat(mhitArray', rhitArray);
+% resize array to include output
+data(1, length(fsmlabel) + 2)=0;
+for i = 1:length(data)
+    actionPr = memoized_fsm(rotation, data(i, 1), data(i, 2), 1, 2, 2, 2);
+    cps=zeros(size(fsmlabel,1),1);
+    %sort actionPr entries into cps
+    for m=1:size(actionPr,2)
+        idx= strcmp(actionPr{1,m},fsmlabel);
+        cps(idx)=actionPr{2,m};    
+    end
+    data(i, :)=data(i, :) + [0, 0, cps'];
 end
-function [z] = CS_Pr(hit, expertise)
+
+%{
+[xxmhit,yyrhit]=meshgrid(mhitArray,rhitArray);
+mesh(xxmhit, yyrhit, matrixfun2(@(x,y)CS_Pr(x,y), xxmhit, yyrhit))
+end
+function [z] = CS_Pr(mehit, rhit)
 	% base miss = 8%, spmiss not required for fsm
 	% soft cap is 6.5% dodge or 26 expertise, and the hard cap is 14% parry or 56 expertise
-	mehit = 1 - 0.08*(1-min(1,hit/960)) - 0.065*(1-min(1, expertise/26)) - 0.14*(1-min(1, expertise/56));
-	rhit = 1 - 0.08*(1-min(1,hit/960));
-	actionPr = memoized_fsm('SotR>AS''>CS>J>AS', mehit, rhit, 1, 2, 2, 2); %input order is eg,sd,gc
+	%mehit = 1 - 0.08*(1-min(1,hit/960)) - 0.065*(1-min(1, expertise/26)) - 0.14*(1-min(1, expertise/56));
+	%rhit = 1 - 0.08*(1-min(1,hit/960));
+	actionPr = memoized_fsm(rotation, mehit, rhit, 1, 2, 2, 2); %input order is eg,sd,gc
 	z = actionPr{2, 5} + actionPr{2, 6};
 end
 function matrixResult = matrixfun2(f, matrix1, matrix2)
@@ -18,3 +49,4 @@ function matrixResult = matrixfun2(f, matrix1, matrix2)
 		end
 	end
 end
+%}

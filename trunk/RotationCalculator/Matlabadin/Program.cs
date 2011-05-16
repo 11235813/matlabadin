@@ -130,15 +130,13 @@ namespace Matlabadin
                 initialState: hintPr);
             CacheGraph(rotation, graph, pr);
             DateTime startAggregate = DateTime.Now;
-            double avgDuration;
             double inqUptime;
-            var result = graph.CalculateAggregates(pr, out avgDuration, out inqUptime);
+            var result = graph.CalculateResults(pr, out inqUptime);
             DateTime startPrint = DateTime.Now;
             foreach (var key in result.Keys.OrderBy(k => k))
             {
                 stream.WriteLine("{0},{1}", key, result[key]);
             }
-            stream.WriteLine("AvgDuration,{0}", avgDuration);
             stream.WriteLine("InqUptime,{0}", inqUptime);
             stream.WriteLine("Stats_StateSize_Total,{0}", graph.Size);
             stream.WriteLine("Stats_StateSize_NonZero,{0}", pr.Count(p => p > 0));

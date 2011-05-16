@@ -171,7 +171,7 @@ namespace Matlabadin
                     if (hit) nextState = StateHelper.IncHP(nextState, gp);
                     break;
                 case Ability.AS:
-                    if (StateHelper.TimeRemaining(nextState, Buff.GC, gp) > 0) ///GC HP is on cast
+                    if (StateHelper.TimeRemaining(nextState, Buff.GC, gp) > 0) // GC HP is on cast
                     {
                         nextState = StateHelper.IncHP(nextState, gp);
                     }

@@ -21,7 +21,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0.8, gp.MeleeHit);
             Assert.AreEqual(0.9, gp.RangeHit);
             Assert.AreEqual(stepsPerGcd, gp.StepsPerGcd);
-            Assert.AreEqual(0.5, gp.StepSize);
+            Assert.AreEqual(0.5, gp.StepDuration);
         }
         [TestMethod]
         public void AbilityCooldownInStepsShouldMatchGameCDs()
@@ -49,7 +49,7 @@ namespace Matlabadin.Tests
         {
             GraphParameters target = new GraphParameters(3, false, 0, 0, 0, 0, 0);
             Assert.AreEqual(15 * 2, target.BuffDurationInSteps(Buff.EGICD));
-            Assert.AreEqual(6 * 2, target.BuffDurationInSteps(Buff.GC));
+            Assert.AreEqual((6 + 0.5) * 2, target.BuffDurationInSteps(Buff.GC)); // extra 0.5s to model buff gain delay
             Assert.AreEqual(4 * 3 * 2, target.BuffDurationInSteps(Buff.Inq)); // 4s * 3hp
             Assert.AreEqual(10 * 2, target.BuffDurationInSteps(Buff.SD));
         }

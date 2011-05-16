@@ -1,26 +1,21 @@
-%ACTION2CPS takes the actionPr and avgDuration arrays returned by
+%ACTION2CPS takes the actionPr returned by
 %memoized_fsm and converts them into a standardized array containing casts
 %per second values for DPS calculations
-function [cps] = action2cps( actionPr, avgDuration, metadata, labels)
+function [cps] = action2cps(actionPr, metadata, labels)
 
 %import focused shield glyph
 fsflag=evalin('base','mdf.glyphAS>1');
 
-if nargin<4
+if nargin<3
     %import val for labels
     val=evalin('base','val');
 else
     val.fsmlabel=labels;
 end
 
-%default to 1.5s GCD if avgDuration is not supplied
-if nargin<2
-    avgDuration=1.5;
-end
-
 %mdf.mehit and mdf.rahit required for seals - pull from metadata if
 %supplied, else import mdf
-if nargin<3
+if nargin<2
     mhit=evalin('base','mdf.mehit');
     rhit=evalin('base','mdf.rahit');
 else
@@ -75,6 +70,4 @@ idx5m=logical(...
 cps(strcmp('seal(Inq)',val.fsmlabel))=sum(cps(idx5r)).*rhit + ...
                                       sum(cps(idx5m)).*mhit;
 
-%convert CPGCD to CPS
-cps=cps./avgDuration;
 end

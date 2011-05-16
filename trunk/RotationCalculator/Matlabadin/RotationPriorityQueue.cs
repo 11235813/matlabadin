@@ -69,12 +69,12 @@ namespace Matlabadin
                     Func<ulong, GraphParameters, bool> condition = null;
                     switch (operation)
                     {
-                        case "=":  condition = (state, gp) => getRemaining(state, gp) == (int)(value / gp.StepSize); break;
-                        case "==": condition = (state, gp) => getRemaining(state, gp) == (int)(value / gp.StepSize); break;
-                        case ">":  condition = (state, gp) => getRemaining(state, gp) >  (int)(value / gp.StepSize); break;
-                        case ">=": condition = (state, gp) => getRemaining(state, gp) >= (int)(value / gp.StepSize); break;
-                        case "<":  condition = (state, gp) => getRemaining(state, gp) <  (int)(value / gp.StepSize); break;
-                        case "<=": condition = (state, gp) => getRemaining(state, gp) <= (int)(value / gp.StepSize); break;
+                        case "=":  condition = (state, gp) => getRemaining(state, gp) == (int)(value / gp.StepDuration); break;
+                        case "==": condition = (state, gp) => getRemaining(state, gp) == (int)(value / gp.StepDuration); break;
+                        case ">":  condition = (state, gp) => getRemaining(state, gp) >  (int)(value / gp.StepDuration); break;
+                        case ">=": condition = (state, gp) => getRemaining(state, gp) >= (int)(value / gp.StepDuration); break;
+                        case "<":  condition = (state, gp) => getRemaining(state, gp) <  (int)(value / gp.StepDuration); break;
+                        case "<=": condition = (state, gp) => getRemaining(state, gp) <= (int)(value / gp.StepDuration); break;
                     }
                     abilityConditionals[i].Add(condition);
                     action = action.Replace(conditionMatch.Value, "");

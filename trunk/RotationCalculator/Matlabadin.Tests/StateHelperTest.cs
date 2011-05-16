@@ -176,19 +176,18 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0, StateHelper.TimeRemaining(StateHelper.UseAbility(GetState(Buff.GC, 4), DefaultParameters, Ability.AS, hit: true), Buff.GC, DefaultParameters));
         }
         [TestMethod]
-        public void UseAbility_ASShouldGiveHPIffGCActiveAndHit()
+        public void UseAbility_ASShouldGiveHP() // UseAbility_ASShouldGiveHPIffGCActiveAndHit() // 4.1 patch change: AS cast on-hit
         {
             Assert.AreEqual(0, StateHelper.HP(StateHelper.UseAbility(0, DefaultParameters, Ability.AS, hit: true), DefaultParameters));
             Assert.AreEqual(0, StateHelper.HP(StateHelper.UseAbility(0, DefaultParameters, Ability.AS, hit: false), DefaultParameters));
             Assert.AreEqual(1, StateHelper.HP(StateHelper.UseAbility(GetState(Buff.GC, 1), DefaultParameters, Ability.AS, hit: true), DefaultParameters));
-            Assert.AreEqual(0, StateHelper.HP(StateHelper.UseAbility(GetState(Buff.GC, 1), DefaultParameters, Ability.AS, hit: false), DefaultParameters));
+            Assert.AreEqual(1, StateHelper.HP(StateHelper.UseAbility(GetState(Buff.GC, 1), DefaultParameters, Ability.AS, hit: false), DefaultParameters));
         }
         [TestMethod]
-        public void UseAbility_ASMissShouldConsumeGCWithoutGivingHP()
+        public void UseAbility_ASMissShouldConsumeGC()
         {
             var state = StateHelper.UseAbility(GetState(Buff.GC, 4), DefaultParameters, Ability.AS, hit: false);
             Assert.AreEqual(0, StateHelper.TimeRemaining(state, Buff.GC, DefaultParameters));
-            Assert.AreEqual(0, StateHelper.HP(state, DefaultParameters));
         }
         [TestMethod]
         public void UseAbility_ASHitShouldConsumeGC()

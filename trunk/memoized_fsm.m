@@ -1,6 +1,5 @@
-function  [actionPr, avgDuration, inqUptime, metadata] = memoized_fsm(rotation, mehit, rhit, consGlyph, egTalentPoints , sdTalentPoints, gcTalentPoints )
+function  [actionPr, inqUptime, metadata] = memoized_fsm(rotation, mehit, rhit, consGlyph, egTalentPoints , sdTalentPoints, gcTalentPoints )
     global fsm_cache_actionPr;
-    global fsm_cache_avgDuration;
     global fsm_cache_inqUptime;
     global fsm_cache_metadata;
     rotationKey = rotation;
@@ -26,7 +25,6 @@ function  [actionPr, avgDuration, inqUptime, metadata] = memoized_fsm(rotation, 
     if isfield(fsm_cache_actionPr, rotationKey) && isfield(fsm_cache_actionPr.(rotationKey), optionsKey)
         % warning('using cached result');
         actionPr = fsm_cache_actionPr.(rotationKey).(optionsKey);
-        avgDuration = fsm_cache_avgDuration.(rotationKey).(optionsKey);
         inqUptime = fsm_cache_inqUptime.(rotationKey).(optionsKey);
         metadata = fsm_cache_metadata.(rotationKey).(optionsKey);
         return;
@@ -34,14 +32,13 @@ function  [actionPr, avgDuration, inqUptime, metadata] = memoized_fsm(rotation, 
     fileCell = fsm_gen(rotation, mehit, rhit, consGlyph, egTalentPoints , sdTalentPoints, gcTalentPoints);
     filename = fileCell{1};
     % read from the data file
-    [actionPr, avgDuration, inqUptime, metadata] = load_fsm_csv(filename);
+    [actionPr, inqUptime, metadata] = load_fsm_csv(filename);
     % TODO: sanity check that file params match our args
     fsm_cache_actionPr.(rotationKey).(optionsKey) = actionPr;
-    fsm_cache_avgDuration.(rotationKey).(optionsKey) = avgDuration;
     fsm_cache_inqUptime.(rotationKey).(optionsKey) = inqUptime;
     fsm_cache_metadata.(rotationKey).(optionsKey) = metadata;
 end
-function [actionPr, avgDuration, inqUptime, metadata] = load_fsm_csv(filename)
+function [actionPr, inqUptime, metadata] = load_fsm_csv(filename)
 	fid = fopen(filename, 'rt');
 	i = 1;
 	metadata = {};
@@ -51,9 +48,7 @@ function [actionPr, avgDuration, inqUptime, metadata] = load_fsm_csv(filename)
 		lineAction = rowEntry{1};
 		lineTxtPr = rowEntry{2};
 		linePr = str2double(lineTxtPr);
-		if strcmp(lineAction, 'AvgDuration')
-			avgDuration = linePr;
-        elseif strcmp(lineAction, 'InqUptime')
+		if strcmp(lineAction, 'InqUptime')
             inqUptime = linePr;
 		elseif length(lineAction) > 6 && strcmp('Stats_', lineAction(1:6))
 			metadata.(lineAction) = lineTxtPr;

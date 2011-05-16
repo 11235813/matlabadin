@@ -17,8 +17,9 @@ namespace Matlabadin
             double egProcRate)
         {
             double[] abilityCooldowns = {20, 3, 8, 15, useConsGlyph ? 30 * 1.2 : 30, 15, 6}; // WoG,CS,J,AS,Cons,HW,HoW,
-            double[] buffDurations = {6.5, 10, 12, 15}; //GC, SD, INQ, EGICD
-            this.StepSize = 1.5 / stepsPerGcd;
+            // GC buff duration extended by 0.5s since the server takes time to apply the buff and it is active 4 GCDs after triggering
+            double[] buffDurations = { 6.5, 10, 12, 15 }; //GC, SD, INQ, EGICD 
+            this.StepDuration = 1.5 / stepsPerGcd;
             this.StepsPerGcd = stepsPerGcd;
             this.abilitySteps = abilityCooldowns.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();
             this.buffSteps = buffDurations.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();
@@ -30,7 +31,7 @@ namespace Matlabadin
             this.RangeHit = rhit;
             CalculateBitOffsets();
         }
-        public double StepSize { get; private set; }
+        public double StepDuration { get; private set; }
         public int StepsPerGcd { get; private set; }
         public int AbilityCooldownInSteps(Ability ability)
         {

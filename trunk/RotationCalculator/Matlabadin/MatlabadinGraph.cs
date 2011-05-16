@@ -128,24 +128,32 @@ namespace Matlabadin
                 };
             }
         }
-        public Dictionary<string, double> CalculateAggregates(double[] pr, out double averageStepDuration, out double inqUptime)
+        public Dictionary<string, double> CalculateResults(double[] pr, out double inqUptime)
         {
-            Dictionary<string, double> sumPr = new Dictionary<string, double>();
-            double weightedStepsDuration = 0;
-            double weightedInqDuration = 0;
-            int length = index.Length;
-            for (int i = 0; i < length; i++)
+            // t = time in state
+            // pr = probability of being in state
+            // sumtpr = sum(t*pr)
+            // pr(choice) = sum[all state=choice](pr) / sumtpr
+            Dictionary<string, double> cps = new Dictionary<string, double>();
+            double sumtpr = 0;
+            double suminqtpr = 0;
+            for (int i = 0; i < index.Length; i++)
             {
                 Choice c = choice[i];
-                weightedStepsDuration += c.stepsDuration * pr[i];
-                weightedInqDuration += c.inqDuration * pr[i];
-                double currentPr;
-                if (!sumPr.TryGetValue(c.Action, out currentPr)) currentPr = 0;
-                sumPr[c.Action] = currentPr + pr[i];
+                double t = c.stepsDuration * gp.StepDuration;
+                double inqt = c.inqDuration * gp.StepDuration;
+                double tpr = t * pr[i];
+                sumtpr += tpr;
+                suminqtpr += inqt * pr[i];
+                if (c.Ability != Ability.Nothing)
+                {
+                    double currentPr;
+                    if (!cps.TryGetValue(c.Action, out currentPr)) currentPr = 0;
+                    cps[c.Action] = currentPr + pr[i];
+                }
             }
-            averageStepDuration = weightedStepsDuration * 1.5 / gp.StepsPerGcd;
-            inqUptime = weightedInqDuration / weightedStepsDuration;
-            return sumPr;
+            inqUptime = suminqtpr / sumtpr;
+            return cps.ToDictionary(kvp => kvp.Key, kvp => kvp.Value / sumtpr);
         }
         /// <summary>
         /// Calcualtes the state probabilities for the given graph using iterative approximation.
