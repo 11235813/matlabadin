@@ -44,10 +44,10 @@ for i=1:length(queue.rot);
         
     %generate FSM results
     if length(mdf.mehit)==1 && length(mdf.rahit)==1
-        [actionPr, avgDuration, inqUptime, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+        [actionPr, inqUptime, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
         %convert actionPr to CPS array
         inq = inqUptime;
-        [cps]=action2cps(actionPr,avgDuration,metadata);
+        [cps]=action2cps(actionPr,metadata);
     
     %otherwise, we need some array handling, and may want to take advantage
     %of parallelization 
@@ -59,17 +59,17 @@ for i=1:length(queue.rot);
         if useParallel
             fsm_gen(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
             for j=1:length(mdf.mehit)
-                [actionPr, avgDuration,inqUptime,metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+                [actionPr,inqUptime,metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
                 inq(:,j) = inqUptime;
-                [cps(:,j)]=action2cps(actionPr,avgDuration,metadata,val.fsmlabel);
+                [cps(:,j)]=action2cps(actionPr,metadata,val.fsmlabel);
             end
         else
             wb=waitbar(0,'Generating/Loading FSM data');
             for j=1:length(mdf.mehit)
                 waitbar(j/val.length,wb,['FSM gen/load for ' queue.rot{i}])
-                [actionPr, avgDuration, inqUptime, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+                [actionPr, inqUptime, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
                 inq(:,j) = inqUptime;
-                [cps(:,j)]=action2cps(actionPr,avgDuration,metadata,val.fsmlabel);
+                [cps(:,j)]=action2cps(actionPr,metadata,val.fsmlabel);
             end
             close(wb)
         end
@@ -80,17 +80,17 @@ for i=1:length(queue.rot);
         if useParallel
             fsm_gen(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
             for j=1:length(mdf.mehit)
-                [actionPr, avgDuration, inqUptime, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+                [actionPr, inqUptime, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
                 inq(:,j) = inqUptime;
-                [cps(:,j)]=action2cps(actionPr,avgDuration, metadata,val.fsmlabel);
+                [cps(:,j)]=action2cps(actionPr, metadata,val.fsmlabel);
             end
         else
             wb=waitbar(0,'Generating/Loading FSM data');
             for j=1:length(mdf.mehit)
                 waitbar(j/val.length,wb,['FSM gen/load for ' queue.rot{i}])
-                [actionPr, avgDuration, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+                [actionPr, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
                 inq(:,j) = inqUptime;
-                [cps(:,j)]=action2cps(actionPr,avgDuration, metadata,val.fsmlabel);
+                [cps(:,j)]=action2cps(actionPr, metadata,val.fsmlabel);
             end
             close(wb)
         end

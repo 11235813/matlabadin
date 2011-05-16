@@ -11,7 +11,6 @@ namespace Matlabadin.Tests
     {
         private int iterationsTaken;
         private double finalAbsError, finalRelError;
-        private double stepDuration;
         private double inqUptime;
         public const double Tolerance = 1e-14;
         public void SanityCheckGraph(MatlabadinGraph mg)
@@ -78,12 +77,15 @@ namespace Matlabadin.Tests
             double[] pr = mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance);
             Assert.AreEqual(0.5, pr[mg.lookup[GetState(Ability.CS, 3, 3)]], Tolerance);
             Assert.AreEqual(0.5, pr[mg.lookup[GetState(Ability.CS, 0, 3)]], Tolerance);
-
-            var result = mg.CalculateAggregates(pr, out stepDuration, out inqUptime);
-
-            Assert.AreEqual(0.5, result["CS"], Tolerance);
-            Assert.AreEqual(0.5, result["Nothing"], Tolerance);
-            Assert.AreEqual(1.5, stepDuration, Tolerance);
+        }
+        [TestMethod]
+        public void CalculateResults_ShouldNotDisplayNothing()
+        {
+            MatlabadinGraph mg = new MatlabadinGraph(NoMissNoProcsParameters, RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("Inq>CS"));
+            double[] pr = mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance);
+            var result = mg.CalculateResults(pr, out inqUptime);
+            Assert.IsFalse(result.ContainsKey("Nothing"));
+            Assert.IsFalse(result.ContainsKey("Nothing(Inq)"));
         }
         [TestMethod]
         public void ConvergeStateProbability_ShouldStopAfterRelativeToleranceAchieved()
@@ -147,44 +149,39 @@ namespace Matlabadin.Tests
         public void CalculateAggregates_HW()
         {
             MatlabadinGraph mg = new MatlabadinGraph(DefaultParameters, RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("HW"));
-            var result = mg.CalculateAggregates(
-                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance),
-                out stepDuration, out inqUptime);
-            Assert.AreEqual(0.1, result["HW"], Tolerance);
-            Assert.AreEqual(0.9, result["Nothing"], Tolerance);
-            Assert.AreEqual(1.5, stepDuration, Tolerance);
+            var result = mg.CalculateResults(
+                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance)
+                , out inqUptime);
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(1.0 / 15, result["HW"], Tolerance);
         }
         [TestMethod]
         public void CalculateAggregates_SotRCS()
         {
             MatlabadinGraph mg = new MatlabadinGraph(NoMissParameters, RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("SotR>CS"));
-            var result = mg.CalculateAggregates(
+            var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance),
-                out stepDuration, out inqUptime);
-            Assert.AreEqual(0.5, result["CS"], Tolerance);
-            Assert.AreEqual(1d / 6, result["SotR"], Tolerance);
-            Assert.AreEqual(2d / 6, result["Nothing"], Tolerance);
-            Assert.AreEqual(1.5, stepDuration, Tolerance);
+                out inqUptime);
+            Assert.AreEqual(0.5 / 1.5, result["CS"], Tolerance);
+            Assert.AreEqual(1d / 6 / 1.5, result["SotR"], Tolerance);
         }
         [TestMethod]
         public void CalculateAggregates_SotRCSJ()
         {
             MatlabadinGraph mg = new MatlabadinGraph(NoMissParameters, RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("SotR>CS>J"));
-            var result = mg.CalculateAggregates(
+            var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance),
-                out stepDuration, out inqUptime);
-            Assert.AreEqual(0.5, result["CS"], Tolerance);
-            Assert.AreEqual(1d / 6 / 2, result["SotR"], Tolerance); // 50% proc rate on SD
-            Assert.AreEqual(1d / 6 / 2, result["SotR(SD)"], Tolerance);
-            Assert.AreEqual(1d / 6, result["J"], Tolerance);
-            Assert.AreEqual(1d / 6, result["Nothing"], Tolerance);
-            Assert.AreEqual(1.5, stepDuration, Tolerance * 100); // aggregation is outside 1e-14 tolerance due to FP rounding
+                out inqUptime);
+            Assert.AreEqual(0.5 / 1.5, result["CS"], Tolerance);
+            Assert.AreEqual(1d / 6 / 2 / 1.5, result["SotR"], Tolerance); // 50% proc rate on SD
+            Assert.AreEqual(1d / 6 / 2 / 1.5, result["SotR(SD)"], Tolerance);
+            Assert.AreEqual(1d / 6 / 1.5, result["J"], Tolerance);
 
             mg = new MatlabadinGraph(NoMissNoProcsParameters, RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("SotR>CS>J"));
-            result = mg.CalculateAggregates(
+            result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance),
-                out stepDuration, out inqUptime);
-            Assert.AreEqual(1d / 6, result["SotR"], Tolerance);
+                out inqUptime);
+            Assert.AreEqual(1d / 6 / 1.5, result["SotR"], Tolerance);
             if (result.ContainsKey("SotR(SD)")) Assert.AreEqual(0d, result["SotR(SD)"], Tolerance);
         }
         [TestMethod]
@@ -194,11 +191,10 @@ namespace Matlabadin.Tests
             // 12s duration
             // 9s between 3 HP
             // -> 18s between Inq (HP usages alternates between SotR & Inq)
-            double stepDuration;
             double inqUptime;
-            var result = mg.CalculateAggregates(
+            var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance),
-                out stepDuration, out inqUptime);
+                out inqUptime);
             Assert.AreEqual(12.0 / 18.0, inqUptime, Tolerance * 100); // aggregation is outside tolerance due to FP rounding
         }
         [TestMethod]
