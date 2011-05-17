@@ -2,6 +2,14 @@ function  [actionPr, inqUptime, metadata] = memoized_fsm(rotation, mehit, rhit, 
     global fsm_cache_actionPr;
     global fsm_cache_inqUptime;
     global fsm_cache_metadata;
+	% Check that we're not caching outdated mechanics
+	if exist('fsm.exe') ~= 2 || datenum(dir('fsm.exe').date) <= max(arrayfun(@(x) datenum(x.date), dir('RotationCalculator\Matlabadin\*.cs')))
+		warning('Flushing fsm memory cache');
+		fsm_cache_actionPr = {};
+		fsm_cache_inqUptime = {};
+		fsm_cache_metadata = {};
+	end
+	
     rotationKey = rotation;
     rotationKey = strrep(rotationKey, '[', '');
     rotationKey = strrep(rotationKey, ']', '_');
@@ -29,7 +37,7 @@ function  [actionPr, inqUptime, metadata] = memoized_fsm(rotation, mehit, rhit, 
         metadata = fsm_cache_metadata.(rotationKey).(optionsKey);
         return;
     end
-    fileCell = fsm_gen(rotation, mehit, rhit, consGlyph, egTalentPoints , sdTalentPoints, gcTalentPoints);
+    fileCell = fsm_gen(rotation, mehit, rhit, consGlyph, egTalentPoints, sdTalentPoints, gcTalentPoints);
     filename = fileCell{1};
     % read from the data file
     [actionPr, inqUptime, metadata] = load_fsm_csv(filename);
