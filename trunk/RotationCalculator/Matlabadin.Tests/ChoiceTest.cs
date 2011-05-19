@@ -9,68 +9,73 @@ namespace Matlabadin.Tests
     [TestClass]
     public class ChoiceTest : MatlabadinTest
     {
+        double[] PR = new double[] { 1 };
         [TestMethod]
         public void ChoiceShouldExposeOptions()
         {
-            Choice c = Choice.CreateChoice(0, DefaultParameters, Ability.CS, 3, 0.7, 0.2, 0.1);
-            Assert.AreEqual(0.7, c.option1);
-            Assert.AreEqual(0.2, c.option2);
-            Assert.AreEqual(0.1, c.option3);
+            Choice<ulong> c = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.CS, 3, new double[] {0.7, 0.2, 0.1});
+            Assert.AreEqual(0.7, c.pr[0]);
+            Assert.AreEqual(0.2, c.pr[1]);
+            Assert.AreEqual(0.1, c.pr[2]);
         }
         [TestMethod]
         public void ChoiceShouldExposeDuration()
         {
-            Choice c = Choice.CreateChoice(0, DefaultParameters, Ability.CS, 3, 0.7, 0.2, 0.1);
-            Assert.AreEqual(0.7, c.option1);
-            Assert.AreEqual(0.2, c.option2);
-            Assert.AreEqual(0.1, c.option3);
+            Choice<ulong> c = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.CS, 3, new double[] {0.7, 0.2, 0.1});
+            Assert.AreEqual(3, c.stepsDuration);
+        }
+        [TestMethod]
+        public void ChoiceShouldExposeInqStepsThatHaveInqActiveInDuration()
+        {
+            Assert.AreEqual(3, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.Inq, 5), Ability.CS, 3, PR).inqDuration);
+            Assert.AreEqual(1, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.Inq, 1), Ability.CS, 3, PR).inqDuration);
         }
         [TestMethod]
         public void InqCastShouldSetInqUptime()
         {
-            Assert.IsTrue(Choice.CreateChoice(3, DefaultParameters, Ability.Inq, 3, 1, 0, 0).inqDuration > 0);
+            Assert.IsTrue(Choice<ulong>.CreateChoice(GP, SM, 3, Ability.Inq, 3, new double[] {1}).inqDuration > 0);
         }
         [TestMethod]
         public void ActionShouldBeAbility()
         {
-            Assert.AreEqual("CS", Choice.CreateChoice(0, DefaultParameters, Ability.CS, 3, 1, 0, 0).Action);
-            Assert.AreEqual("HW", Choice.CreateChoice(0, DefaultParameters, Ability.HW, 3, 1, 0, 0).Action);
-            Assert.AreEqual("Nothing", Choice.CreateChoice(0, DefaultParameters, Ability.Nothing, 3, 1, 0, 0).Action);
+            Assert.AreEqual("CS", Choice<ulong>.CreateChoice(GP, SM, 0, Ability.CS, 3, PR).Action);
+            Assert.AreEqual("HW", Choice<ulong>.CreateChoice(GP, SM, 0, Ability.HW, 3, PR).Action);
+            Assert.AreEqual("Nothing", Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Nothing, 3, PR).Action);
         }
         [TestMethod]
         public void ActionShouldSuffixInq()
         {
-            Choice c = Choice.CreateChoice(GetState(Buff.Inq, 1), DefaultParameters, Ability.CS, 3, 0.7, 0.2, 0.1);
+            Choice<ulong> c = Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.Inq, 1), Ability.CS, 3, PR);
             Assert.AreEqual("CS(Inq)", c.Action);
         }
         [TestMethod]
         public void ActionShouldSuffixSDBeforeInqForSotROnly()
         {
-            Assert.AreEqual("CS", Choice.CreateChoice(GetState(Buff.SD, 1, 3), DefaultParameters, Ability.CS, 3, 1, 0, 0).Action);
-            Assert.AreEqual("SotR(SD)", Choice.CreateChoice(GetState(Buff.SD, 1, 3), DefaultParameters, Ability.SotR, 3, 1, 0, 0).Action);
-            Assert.AreEqual("SotR2(SD)", Choice.CreateChoice(GetState(Buff.SD, 1, 2), DefaultParameters, Ability.SotR, 3, 1, 0, 0).Action);
-            Assert.AreEqual("SotR(SD)(Inq)", Choice.CreateChoice(GetState(Buff.SD, 1, Buff.Inq, 1, 3), DefaultParameters, Ability.SotR, 3, 1, 0, 0).Action);
-            Assert.AreEqual("SotR2(SD)(Inq)", Choice.CreateChoice(GetState(Buff.SD, 1, Buff.Inq, 1, 2), DefaultParameters, Ability.SotR, 3, 1, 0, 0).Action);
+            Assert.AreEqual("CS", Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SD, 1, 3), Ability.CS, 3, PR).Action);
+            Assert.AreEqual("SotR(SD)", Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SD, 1, 3), Ability.SotR, 3, PR).Action);
+            Assert.AreEqual("SotR2(SD)", Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SD, 1, 2), Ability.SotR, 3, PR).Action);
+            Assert.AreEqual("SotR(SD)(Inq)", Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SD, 1, Buff.Inq, 1, 3), Ability.SotR, 3, PR).Action);
+            Assert.AreEqual("SotR2(SD)(Inq)", Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SD, 1, Buff.Inq, 1, 2), Ability.SotR, 3, PR).Action);
         }
         [TestMethod]
         public void ActionShouldSuffixHPForSotRAndWoGWhenNotMaxHP()
         {
-            Assert.AreEqual("SotR0", Choice.CreateChoice(0, DefaultParameters, Ability.SotR, 3, 1, 0, 0).Action);
-            Assert.AreEqual("SotR1", Choice.CreateChoice(1, DefaultParameters, Ability.SotR, 3, 1, 0, 0).Action);
-            Assert.AreEqual("SotR2", Choice.CreateChoice(2, DefaultParameters, Ability.SotR, 3, 1, 0, 0).Action);
-            Assert.AreEqual("SotR", Choice.CreateChoice(3, DefaultParameters, Ability.SotR, 3, 1, 0, 0).Action);
-            Assert.AreEqual("WoG0", Choice.CreateChoice(0, DefaultParameters, Ability.WoG, 3, 1, 0, 0).Action);
-            Assert.AreEqual("WoG1", Choice.CreateChoice(1, DefaultParameters, Ability.WoG, 3, 1, 0, 0).Action);
-            Assert.AreEqual("WoG2", Choice.CreateChoice(2, DefaultParameters, Ability.WoG, 3, 1, 0, 0).Action);
-            Assert.AreEqual("WoG", Choice.CreateChoice(3, DefaultParameters, Ability.WoG, 3, 1, 0, 0).Action);
+            Assert.AreEqual("SotR0", Choice<ulong>.CreateChoice(GP, SM, 0, Ability.SotR, 3, PR).Action);
+            Assert.AreEqual("SotR1", Choice<ulong>.CreateChoice(GP, SM, 1, Ability.SotR, 3, PR).Action);
+            Assert.AreEqual("SotR2", Choice<ulong>.CreateChoice(GP, SM, 2, Ability.SotR, 3, PR).Action);
+            Assert.AreEqual("SotR", Choice<ulong>.CreateChoice(GP, SM, 3, Ability.SotR, 3, PR).Action);
+            Assert.AreEqual("WoG0", Choice<ulong>.CreateChoice(GP, SM, 0, Ability.WoG, 3, PR).Action);
+            Assert.AreEqual("WoG1", Choice<ulong>.CreateChoice(GP, SM, 1, Ability.WoG, 3, PR).Action);
+            Assert.AreEqual("WoG2", Choice<ulong>.CreateChoice(GP, SM, 2, Ability.WoG, 3, PR).Action);
+            Assert.AreEqual("WoG", Choice<ulong>.CreateChoice(GP, SM, 3, Ability.WoG, 3, PR).Action);
         }
         [TestMethod]
         public void ChoiceDefineEqualityAndHashCode()
         {
-            Choice c11 = Choice.CreateChoice(0, DefaultParameters, Ability.CS, 3, 0.7, 0.2, 0.1);
-            Choice c12 = Choice.CreateChoice(0, DefaultParameters, Ability.CS, 3, 0.7, 0.2, 0.1);
-            Choice c21 = Choice.CreateChoice(0, DefaultParameters, Ability.Inq, 3, 0.7, 0.2, 0.1);
-            Choice c22 = Choice.CreateChoice(0, DefaultParameters, Ability.Inq, 3, 0.7, 0.2, 0.1);
+            Choice<ulong> c11 = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 });
+            Choice<ulong> c12 = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 });
+            Choice<ulong> c21 = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Inq, 3, new double[] { 0.7, 0.2, 0.1 });
+            Choice<ulong> c22 = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Inq, 3, new double[] { 0.7, 0.2, 0.1 });
             Assert.AreEqual(c11, c12);
             Assert.AreEqual(c21, c22);
             Assert.AreEqual(c12, c11);
@@ -87,6 +92,12 @@ namespace Matlabadin.Tests
             Assert.AreNotEqual(c11.GetHashCode(), c22.GetHashCode());
             Assert.AreNotEqual(c12.GetHashCode(), c21.GetHashCode());
             Assert.AreNotEqual(c12.GetHashCode(), c22.GetHashCode());
+
+            // duration & probabilies also change equality
+            Assert.AreNotEqual(Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Inq, 2, new double[] { 0.7, 0.2, 0.1 }),
+                               Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Inq, 3, new double[] { 0.7, 0.2, 0.1 }));
+            Assert.AreNotEqual(Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Inq, 3, new double[] { 0.7, 0.3 }),
+                               Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Inq, 3, new double[] { 0.7, 0.2, 0.1 }));
         }
     }
 }

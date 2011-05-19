@@ -5,9 +5,10 @@ using System.Text;
 
 namespace Matlabadin
 {
-    public class GraphParameters
+    public class GraphParameters<TState>
     {
         public GraphParameters(
+            RotationPriorityQueue<TState> rotation,
             int stepsPerGcd,
             bool useConsGlyph,
             double mehit,
@@ -18,18 +19,18 @@ namespace Matlabadin
         {
             double[] abilityCooldowns = {20, 3, 8, 15, useConsGlyph ? 30 * 1.2 : 30, 15, 6}; // WoG,CS,J,AS,Cons,HW,HoW,
             // GC buff duration extended by 0.5s since the server takes time to apply the buff and it is active 4 GCDs after triggering
-            double[] buffDurations = { 6.5, 10, 12, 15 }; //GC, SD, INQ, EGICD 
+            double[] buffDurations = { 6.5, 10, 12, 15 }; // GC, SD, INQ, EGICD 
             this.StepDuration = 1.5 / stepsPerGcd;
             this.StepsPerGcd = stepsPerGcd;
             this.abilitySteps = abilityCooldowns.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();
             this.buffSteps = buffDurations.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();
-            this.consGlyph = useConsGlyph;
+            this.UseConsGlyph = useConsGlyph;
             this.SDProcRate = sdProcRate;
             this.GCProcRate = gcProcRate;
             this.EGProcRate = egProcRate;
             this.MeleeHit = mehit;
             this.RangeHit = rhit;
-            CalculateBitOffsets();
+            this.Rotation = rotation;
         }
         public double StepDuration { get; private set; }
         public int StepsPerGcd { get; private set; }
@@ -43,10 +44,11 @@ namespace Matlabadin
         {
             return buffSteps[(int)buff];
         }
-        public bool HasSameShape(GraphParameters gp)
+        public bool HasSameShape(GraphParameters<TState> gp)
         {
-            return this.StepsPerGcd == gp.StepsPerGcd
-                && this.consGlyph == gp.consGlyph
+            return this.Rotation.PriorityQueue == gp.Rotation.PriorityQueue
+                && this.StepsPerGcd == gp.StepsPerGcd
+                && this.UseConsGlyph == gp.UseConsGlyph
                 && this.SDProcRate == gp.SDProcRate
                 && this.GCProcRate == gp.GCProcRate
                 && this.EGProcRate == gp.EGProcRate
@@ -63,46 +65,9 @@ namespace Matlabadin
         public double SDProcRate { get; private set; }
         public double GCProcRate { get; private set; }
         public double EGProcRate { get; private set; }
-        private int[] abilitySteps;
-        private int[] buffSteps;
-        private bool consGlyph;
-        #region Bit-Encoded State Graph Parameters
-        /// <summary>
-        /// Calculates the big packing required to encode the state in an unsigned 64 bit integer
-        /// </summary>
-        private void CalculateBitOffsets()
-        {
-            int bit = 2; // HP takes the first two bits
-            AbilityCooldownStartBit = new int[(int)Ability.Count];
-            AbilityCooldownBits = new int[(int)Ability.Count];
-            for (int i = (int)Ability.CooldownIndicator + 1; i < (int)Ability.Count; i++)
-            {
-                //int i = offset - (int)Ability.CooldownIndicator - 1;
-                AbilityCooldownStartBit[i] = bit;
-                int cd = AbilityCooldownInSteps((Ability)i);
-                while (1 << AbilityCooldownBits[i] <= cd) AbilityCooldownBits[i]++;
-                bit += AbilityCooldownBits[i];
-            }
-            // CS & HotR shared CD
-            AbilityCooldownStartBit[(int)Ability.HotR] = AbilityCooldownStartBit[(int)Ability.CS];
-            AbilityCooldownBits[(int)Ability.HotR] = AbilityCooldownBits[(int)Ability.CS];
-
-            BuffDurationStartBit = new int[buffSteps.Length];
-            BuffDurationBits = new int[buffSteps.Length];
-            for (int i = 0; i < buffSteps.Length; i++)
-            {
-                BuffDurationStartBit[i] = bit;
-                int cd = BuffDurationInSteps((Buff)i);
-                while (1 << BuffDurationBits[i] <= cd) BuffDurationBits[i]++;
-                bit += BuffDurationBits[i];
-            }
-            if (bit > 64) throw new ArgumentOutOfRangeException("bit-encoded state space larger than 64 bit");
-        }
-        // should be read-only but direct access is given to improve StateHelper performance
-        public int[] AbilityCooldownStartBit;
-        public int[] AbilityCooldownBits;
-        public int[] BuffDurationStartBit;
-        public int[] BuffDurationBits;
-        #endregion
+        public bool UseConsGlyph { get; private set; }
+        public RotationPriorityQueue<TState> Rotation { get; private set; }
+        private readonly int[] abilitySteps;
+        private readonly int[] buffSteps;
     }
 }

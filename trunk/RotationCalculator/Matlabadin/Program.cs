@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Matlabadin
 {
@@ -115,12 +116,15 @@ namespace Matlabadin
             if (gc < 0) { Console.Error.WriteLine("Warning: invalid sd proc rate {0}", gc); Usage(); }
             if (eg < 0) { Console.Error.WriteLine("Warning: invalid sd proc rate {0}", eg); Usage(); }
             if (stepsPerGcd != 1 && stepsPerGcd != 3 && stepsPerGcd != 5) Console.Error.WriteLine("Warning: {0} steps per GCD is untested", stepsPerGcd);
-
-            GraphParameters gp = new GraphParameters(stepsPerGcd, useConsGlyph, mehit, rhit, sd, gc, eg);
-            DateTime startGraph = DateTime.Now;
+            RotationPriorityQueue<ulong> queue = new RotationPriorityQueue<ulong>(rotation);
+            Int64GraphParameters gp = new Int64GraphParameters(queue, stepsPerGcd, useConsGlyph, mehit, rhit, sd, gc, eg);
+            Stopwatch generateGraphStopWatch = new Stopwatch();
+            generateGraphStopWatch.Start();
             double[] hintPr;
-            MatlabadinGraph graph = GenerateGraph(gp, rotation, out hintPr);
-            DateTime startPr = DateTime.Now;
+            MatlabadinGraph<ulong> graph = GenerateGraph(gp, rotation, out hintPr);
+            generateGraphStopWatch.Stop();
+            Stopwatch convergeStopWatch = new Stopwatch();
+            convergeStopWatch.Start();
             int iterationsPerformed;
             double relTolerance, absTolerance;
             double[] pr = graph.ConvergeStateProbability(
@@ -128,11 +132,13 @@ namespace Matlabadin
                 out relTolerance,
                 out absTolerance,
                 initialState: hintPr);
-            CacheGraph(rotation, graph, pr);
-            DateTime startAggregate = DateTime.Now;
+            convergeStopWatch.Stop();
+            CacheGraph(graph, pr);
+            Stopwatch aggregateStopWatch = new Stopwatch();
+            aggregateStopWatch.Start();
             double inqUptime;
             var result = graph.CalculateResults(pr, out inqUptime);
-            DateTime startPrint = DateTime.Now;
+            aggregateStopWatch.Stop();
             foreach (var key in result.Keys.OrderBy(k => k))
             {
                 stream.WriteLine("{0},{1}", key, result[key]);
@@ -144,9 +150,9 @@ namespace Matlabadin
             stream.WriteLine("Stats_ReusedExistingGraph,{0}", hintPr != null ? 1 : 0);
             stream.WriteLine("Stats_Tolerance_Relative,{0}", relTolerance);
             stream.WriteLine("Stats_Tolerance_Absolute,{0}", absTolerance);
-            stream.WriteLine("Stats_Time_GenerateGraph,{0}", (startPr - startGraph).TotalSeconds);
-            stream.WriteLine("Stats_Time_Converge,{0}", (startAggregate - startPr).TotalSeconds);
-            stream.WriteLine("Stats_Time_Aggregate,{0}", (startPrint - startAggregate).TotalSeconds);
+            stream.WriteLine("Stats_Time_GenerateGraph,{0}", generateGraphStopWatch.ElapsedMilliseconds);
+            stream.WriteLine("Stats_Time_Converge,{0}", convergeStopWatch.ElapsedMilliseconds);
+            stream.WriteLine("Stats_Time_Aggregate,{0}", aggregateStopWatch.ElapsedMilliseconds);
             stream.WriteLine("Param_Rotation,{0}", rotation);
             stream.WriteLine("Param_Hit_Melee,{0}", mehit);
             stream.WriteLine("Param_Hit_Ranged,{0}", rhit);
@@ -155,20 +161,21 @@ namespace Matlabadin
             stream.WriteLine("Param_ProcRate_GC,{0}", gc);
             stream.WriteLine("Param_ProcRate_EG,{0}", eg);
         }
-        private static void CacheGraph(string rotation, MatlabadinGraph mg, double[] pr)
+        private static void CacheGraph(MatlabadinGraph<ulong> mg, double[] pr)
         {
+            string rotation = mg.GraphParameters.Rotation.PriorityQueue;
             lock (existingGraphs)
             {
                 if (!existingGraphs.ContainsKey(rotation))
                 {
-                    existingGraphs[rotation] = new List<Tuple<MatlabadinGraph, double[]>>();
+                    existingGraphs[rotation] = new List<Tuple<MatlabadinGraph<ulong>, double[]>>();
                 }
-                existingGraphs[rotation].Add(new Tuple<MatlabadinGraph, double[]>(mg, pr));
+                existingGraphs[rotation].Add(new Tuple<MatlabadinGraph<ulong>, double[]>(mg, pr));
             }
         }
-        private static MatlabadinGraph GenerateGraph(GraphParameters gp, string rotation, out double[] hintPr)
+        private static MatlabadinGraph<ulong> GenerateGraph(Int64GraphParameters gp, string rotation, out double[] hintPr)
         {
-            Tuple<MatlabadinGraph, double[]> closestMatch = null;
+            Tuple<MatlabadinGraph<ulong>, double[]> closestMatch = null;
             lock (existingGraphs)
             {
                 if (existingGraphs.ContainsKey(rotation))
@@ -183,12 +190,12 @@ namespace Matlabadin
             if (closestMatch != null)
             {
                 hintPr = closestMatch.Item2;
-                return new MatlabadinGraph(closestMatch.Item1, gp);
+                return new MatlabadinGraph<ulong>(closestMatch.Item1, gp);
             }
             hintPr = null;
-            return new MatlabadinGraph(gp, RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction(rotation));
+            return new MatlabadinGraph<ulong>(gp, gp);
         }
-        private static Dictionary<string, List<Tuple<MatlabadinGraph, double[]>>> existingGraphs = new Dictionary<string, List<Tuple<MatlabadinGraph, double[]>>>();
+        private static Dictionary<string, List<Tuple<MatlabadinGraph<ulong>, double[]>>> existingGraphs = new Dictionary<string, List<Tuple<MatlabadinGraph<ulong>, double[]>>>();
         public static void Usage()
         {
             string message = "Matlabadin.exe <rotation> <stepsPerGcd> <useConsGlyph> <mehit> <rhit> <sdProcRate> <gcProcRate> <egProcRate> [<outputfile>]" + Environment.NewLine

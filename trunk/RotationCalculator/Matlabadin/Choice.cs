@@ -5,32 +5,42 @@ using System.Text;
 
 namespace Matlabadin
 {
-    public class Choice
+    public class Choice<TState>
     {
-        public static Choice CreateChoice(ulong state, GraphParameters gp, Ability a, int stepsDuration, double option1, double option2, double option3)
+        public static Choice<TState> CreateChoice(
+            GraphParameters<TState> gp,
+            IStateManager<TState> sm,
+            TState state,
+            Ability a,
+            int stepsDuration,
+            double[] pr)
         {
+            if (pr == null) throw new ArgumentNullException("pr");
             // Special case Inquisition since we may not have inq up when we cast Inq but it's up as a buff for the duration of the casting GCD
-            int inqLeft = StateHelper.TimeRemaining(state, Buff.Inq, gp);
-            if (a == Ability.Inq && StateHelper.HP(state, gp) > 0) inqLeft += gp.StepsPerGcd; // add at least the GCD to the remaining duration
-
-            Choice c = new Choice(a,
-                a == Ability.SotR && StateHelper.TimeRemaining(state, Buff.SD, gp) > 0,
+            int inqLeft = sm.TimeRemaining(state, Buff.Inq);
+            if (a == Ability.Inq && sm.HP(state) > 0) inqLeft += gp.StepsPerGcd; // add at least the GCD to the remaining duration
+            Choice<TState> c = new Choice<TState>(a,
+                a == Ability.SotR && sm.TimeRemaining(state, Buff.SD) > 0,
                 inqLeft,
-                StateHelper.HP(state, gp),
+                sm.HP(state),
                 stepsDuration,
-                option1, option2, option3);
+                pr);
             return c;
         }
-        private Choice(Ability ability, bool sotrsd, int inq, int hp, int stepsDuration, double option1, double option2, double option3)
+        private Choice(
+            Ability ability,
+            bool sotrsd,
+            int inq,
+            int hp,
+            int stepsDuration,
+            double[] pr)
         {
             this.ability = ability;
             this.hp = hp;
             this.sotrsd = sotrsd;
             this.stepsDuration = stepsDuration;
             this.inqDuration = Math.Min(inq, stepsDuration);
-            this.option1 = option1;
-            this.option2 = option2;
-            this.option3 = option3;
+            this.pr = pr;
         }
         // Output related
         public string Action
@@ -55,34 +65,29 @@ namespace Matlabadin
         private readonly Ability ability;
         private readonly bool sotrsd;
         private readonly int hp;
-
         // aggregation stats
         public readonly int inqDuration;
         public readonly int stepsDuration;
-
         // transition likelyhoods
-        public readonly double option1;
-        public readonly double option2;
-        public readonly double option3;
+        public readonly double[] pr;
         public override bool Equals(object obj)
         {
-            if (obj is Choice) return Equals((Choice)obj);
+            if (obj is Choice<TState>) return Equals((Choice<TState>)obj);
             return base.Equals(obj);
         }
-        public bool Equals(Choice c)
+        public bool Equals(Choice<TState> c)
         {
             return ability == c.ability
                 && sotrsd == c.sotrsd
                 && inqDuration == c.inqDuration
                 && hp == c.hp
                 && stepsDuration == c.stepsDuration
-                && option1 == c.option1
-                && option2 == c.option2
-                && option3 == c.option3;
+                && pr.SequenceEqual(c.pr);
         }
         public override int GetHashCode()
         {
-            int hash = stepsDuration.GetHashCode() ^ option1.GetHashCode() ^ option2.GetHashCode() ^ option3.GetHashCode();
+            int hash = pr.Aggregate(0, (h, p) => h ^ p.GetHashCode());
+            hash ^= stepsDuration.GetHashCode();
             hash ^= inqDuration << 7;
             hash ^= hp << 11;
             if (sotrsd) hash ^= 1 << 27;

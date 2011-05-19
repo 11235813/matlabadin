@@ -9,15 +9,20 @@ namespace Matlabadin.Tests
     {
         private void DoTest(string queue, ulong state, Ability expected)
         {
-            RotationPriorityQueue rpq = new RotationPriorityQueue(queue);
-            Assert.AreEqual(expected, rpq.ActionToTake(state, DefaultParameters));
+            Int64GraphParameters gp = NoHitExpertise(queue);
+            Assert.AreEqual(expected, gp.Rotation.ActionToTake(gp, gp, state));
+        }
+        private void DoTest(Int64GraphParameters gp, ulong state, Ability expected)
+        {
+            Assert.AreEqual(expected, gp.Rotation.ActionToTake(gp, gp, state));
         }
         [TestMethod]
         public void ShouldUseSingleAbilityOffCooldown()
         {
-            Action<string> doTest = (queue) =>
+            Action<string> doTest = (ability) =>
             {
-                DoTest(queue, StateHelper.SetHP(0, 3, DefaultParameters), (Ability)Enum.Parse(typeof(Ability), queue, false));
+                Int64GraphParameters gp = NoHitExpertise(ability);
+                DoTest(gp, gp.SetHP(0, 3), (Ability)Enum.Parse(typeof(Ability), ability, false));
             };
             doTest("CS");
             doTest("SotR");
@@ -56,90 +61,107 @@ namespace Matlabadin.Tests
         [TestMethod]
         public void ASPlusShouldUseASIfWillGenerateHP()
         {
-            DoTest("AS+>CS", GetState(Buff.GC, 1), Ability.AS);
-            DoTest("AS+>CS", 0, Ability.CS);
-        }
-        [TestMethod]
-        public void CreateRotationPriorityQueueNextStateFunctionShouldCreateNextStateFunction()
-        {
-            var f = RotationPriorityQueue.CreateRotationPriorityQueueNextStateFunction("CS>HW");
-            Assert.AreEqual(Ability.CS, f(0, DefaultParameters));
+            Int64GraphParameters gp = NoHitExpertise("AS+>CS");
+            DoTest(gp, GetState(gp, Buff.GC, 1), Ability.AS);
+            DoTest(gp, 0, Ability.CS);
         }
         [TestMethod]
         public void SDPrefixShouldRequireSDBuff()
         {
-            DoTest("SDCS", 0, Ability.Nothing);
-            DoTest("SDCS", GetState(Buff.SD, 1), Ability.CS);
-            DoTest("SDSotR", 3, Ability.Nothing);
-            DoTest("SDSotR", GetState(Buff.SD, 1, 3), Ability.SotR);
+            Int64GraphParameters gp = NoHitExpertise("SDCS");
+            DoTest(gp, 0, Ability.Nothing);
+            DoTest(gp, GetState(gp, Buff.SD, 1), Ability.CS);
+
+            gp = NoHitExpertise("SDSotR");
+            DoTest(gp, 3, Ability.Nothing);
+            DoTest(gp, GetState(gp, Buff.SD, 1, 3), Ability.SotR);
         }
         [TestMethod]
         public void sdPrefixShouldRequireNoSDBuff()
         {
-            DoTest("sdCS", 0, Ability.CS);
-            DoTest("sdCS", GetState(Buff.SD, 1), Ability.Nothing);
-            DoTest("sdSotR", 3, Ability.SotR);
-            DoTest("sdSotR", GetState(Buff.SD, 1, 3), Ability.Nothing);
+            Int64GraphParameters gp = NoHitExpertise("sdCS");
+            DoTest(gp, 0, Ability.CS);
+            DoTest(gp, GetState(gp, Buff.SD, 1), Ability.Nothing);
+
+            gp = NoHitExpertise("sdSotR");
+            DoTest(gp, 3, Ability.SotR);
+            DoTest(gp, GetState(gp, Buff.SD, 1, 3), Ability.Nothing);
         }
         [TestMethod]
         public void IPrefixShouldRequireIBuff()
         {
-            DoTest("ICS", 0, Ability.Nothing);
-            DoTest("ICS", GetState(Buff.Inq, 1), Ability.CS);
-            DoTest("ISotR", 3, Ability.Nothing);
-            DoTest("ISotR", GetState(Buff.Inq, 1, 3), Ability.SotR);
+            Int64GraphParameters gp = NoHitExpertise("ICS");
+            DoTest(gp, 0, Ability.Nothing);
+            DoTest(gp, GetState(gp, Buff.Inq, 1), Ability.CS);
+
+            gp = NoHitExpertise("ISotR");
+            DoTest(gp, 3, Ability.Nothing);
+            DoTest(gp, GetState(gp, Buff.Inq, 1, 3), Ability.SotR);
         }
         [TestMethod]
         public void iPrefixShouldRequireNoInqBuff()
         {
-            DoTest("iCS", 0, Ability.CS);
-            DoTest("iCS", GetState(Buff.Inq, 1), Ability.Nothing);
-            DoTest("iSotR", 3, Ability.SotR);
-            DoTest("iSotR", GetState(Buff.Inq, 1, 3), Ability.Nothing);
+            Int64GraphParameters gp = NoHitExpertise("iCS");
+            DoTest(gp, 0, Ability.CS);
+            DoTest(gp, GetState(gp, Buff.Inq, 1), Ability.Nothing);
+            gp = NoHitExpertise("iSotR");
+            DoTest(gp, 3, Ability.SotR);
+            DoTest(gp, GetState(gp, Buff.Inq, 1, 3), Ability.Nothing);
         }
         [TestMethod]
         public void Inq2ShouldRequire2HP()
         {
-            DoTest("Inq2", 0, Ability.Nothing);
-            DoTest("Inq2", 1, Ability.Nothing);
-            DoTest("Inq2", 2, Ability.Inq);
-            DoTest("Inq2", 3, Ability.Inq);
+            Int64GraphParameters gp = NoHitExpertise("Inq2");
+            DoTest(gp, 0, Ability.Nothing);
+            DoTest(gp, 1, Ability.Nothing);
+            DoTest(gp, 2, Ability.Inq);
+            DoTest(gp, 3, Ability.Inq);
         }
         [TestMethod]
         public void ConditionalsTests()
         {
+            Int64GraphParameters gp;
             // basic tests
-            DoTest("HW[cdCS>0]", 0, Ability.Nothing);
-            DoTest("HW[cdCS>0]", GetState(Ability.CS, 3), Ability.HW);
-            DoTest("Cons[buffInq>0]", 0, Ability.Nothing);
-            DoTest("Cons[buffInq>0]", GetState(Buff.Inq, 3), Ability.Cons);
-            DoTest("Cons[buffInq>0]", GetState(Buff.Inq, 3, GetState(Ability.Cons, 1)), Ability.Nothing);
+            gp = NoHitExpertise("HW[cdCS>0]>CS");
+            DoTest(gp, 0, Ability.CS);
+            DoTest(gp, GetState(gp, Ability.CS, 3), Ability.HW);
+            gp = NoHitExpertise("Cons[buffInq>0]>CS");
+            DoTest(gp, 0, Ability.CS);
+            DoTest(gp, GetState(gp, Buff.Inq, 3), Ability.Cons);
+            DoTest(gp, GetState(gp, Buff.Inq, 3, GetState(gp, Ability.Cons, 1)), Ability.CS);
 
             // test multiple conditionals
-            DoTest("HW[cdCS>0][cdCons>0]", 0, Ability.Nothing);
-            DoTest("HW[cdCS>0][cdCons>0]", GetState(Ability.CS, 3), Ability.Nothing);
-            DoTest("HW[cdCS>0][cdCons>0]", GetState(Ability.Cons, 3), Ability.Nothing);
-            DoTest("HW[cdCS>0][cdCons>0]", GetState(Ability.Cons, 3, Ability.CS, 3), Ability.HW);
+            gp = NoHitExpertise("HW[cdCS>0][cdCons>0]>CS>Cons");
+            DoTest(gp, 0, Ability.CS);
+            DoTest(gp, GetState(gp, Ability.CS, 3), Ability.Cons);
+            DoTest(gp, GetState(gp, Ability.Cons, 3), Ability.CS);
+            DoTest(gp, GetState(gp, Ability.Cons, 3, Ability.CS, 3), Ability.HW);
 
             // test operators
-            DoTest("CS[cdCons=1.5]", GetState(Ability.Cons, 0), Ability.Nothing);
-            DoTest("CS[cdCons=1.5]", GetState(Ability.Cons, 3), Ability.CS);
-            DoTest("CS[cdCons=1.5]", GetState(Ability.Cons, 6), Ability.Nothing);
-            DoTest("CS[cdCons==1.5]", GetState(Ability.Cons, 0), Ability.Nothing);
-            DoTest("CS[cdCons==1.5]", GetState(Ability.Cons, 3), Ability.CS);
-            DoTest("CS[cdCons==1.5]", GetState(Ability.Cons, 6), Ability.Nothing);
-            DoTest("CS[cdCons<1.5]", GetState(Ability.Cons, 0), Ability.CS);
-            DoTest("CS[cdCons<1.5]", GetState(Ability.Cons, 3), Ability.Nothing);
-            DoTest("CS[cdCons<1.5]", GetState(Ability.Cons, 6), Ability.Nothing);
-            DoTest("CS[cdCons<=1.5]", GetState(Ability.Cons, 0), Ability.CS);
-            DoTest("CS[cdCons<=1.5]", GetState(Ability.Cons, 3), Ability.CS);
-            DoTest("CS[cdCons<=1.5]", GetState(Ability.Cons, 6), Ability.Nothing);
-            DoTest("CS[cdCons>1.5]", GetState(Ability.Cons, 0), Ability.Nothing);
-            DoTest("CS[cdCons>1.5]", GetState(Ability.Cons, 3), Ability.Nothing);
-            DoTest("CS[cdCons>1.5]", GetState(Ability.Cons, 6), Ability.CS);
-            DoTest("CS[cdCons>=1.5]", GetState(Ability.Cons, 0), Ability.Nothing);
-            DoTest("CS[cdCons>=1.5]", GetState(Ability.Cons, 3), Ability.CS);
-            DoTest("CS[cdCons>=1.5]", GetState(Ability.Cons, 6), Ability.CS);
+            gp = NoHitExpertise("CS[cdCons=1.5]>Cons");
+            DoTest(gp, GetState(gp, Ability.Cons, 0), Ability.Cons);
+            DoTest(gp, GetState(gp, Ability.Cons, 3), Ability.CS);
+            DoTest(gp, GetState(gp, Ability.Cons, 6), Ability.Nothing);
+            gp = NoHitExpertise("CS[cdCons==1.5]>Cons");
+            DoTest(gp, GetState(gp, Ability.Cons, 0), Ability.Cons);
+            DoTest(gp, GetState(gp, Ability.Cons, 3), Ability.CS);
+            DoTest(gp, GetState(gp, Ability.Cons, 6), Ability.Nothing);
+            gp = NoHitExpertise("CS[cdCons<1.5]>Cons");
+            DoTest(gp, GetState(gp, Ability.Cons, 0), Ability.CS);
+            DoTest(gp, GetState(gp, Ability.Cons, 3), Ability.Nothing);
+            DoTest(gp, GetState(gp, Ability.Cons, 6), Ability.Nothing);
+            gp = NoHitExpertise("CS[cdCons<=1.5]>Cons");
+            DoTest(gp, GetState(gp, Ability.Cons, 0), Ability.CS);
+            DoTest(gp, GetState(gp, Ability.Cons, 3), Ability.CS);
+            DoTest(gp, GetState(gp, Ability.Cons, 6), Ability.Nothing);
+            gp = NoHitExpertise("CS[cdCons>1.5]>Cons");
+            DoTest(gp, GetState(gp, Ability.Cons, 0), Ability.Cons);
+            DoTest(gp, GetState(gp, Ability.Cons, 3), Ability.Nothing);
+            DoTest(gp, GetState(gp, Ability.Cons, 6), Ability.CS);
+            gp = NoHitExpertise("CS[cdCons>=1.5]>Cons");
+            DoTest(gp, GetState(gp, Ability.Cons, 0), Ability.Cons);
+            DoTest(gp, GetState(gp, Ability.Cons, 3), Ability.CS);
+            DoTest(gp, GetState(gp, Ability.Cons, 6), Ability.CS);
         }
     }
 }
