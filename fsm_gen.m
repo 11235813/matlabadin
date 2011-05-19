@@ -3,7 +3,8 @@ function [generatedFile] = fsm_gen(rotation, mehitArray, rhitArray, consGlyph, e
 % call memoized_fsm to return the actual fsm data
 
 % check source timestamp
-if exist('fsm.exe') == 2 && datenum(dir('fsm.exe').date) <= max(arrayfun(@(x) datenum(x.date), dir('RotationCalculator\Matlabadin\*.cs')))
+fsmFileMetadata = dir('fsm.exe');
+if exist('fsm.exe') == 2 && fsmFileMetadata.datenum <= max(arrayfun(@(x) x.datenum, dir('RotationCalculator\Matlabadin\*.cs')))
 	warning('Execuatable out of date: forcing full regeneration');
 	delete('fsm.exe');
 end

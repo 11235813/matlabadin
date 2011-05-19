@@ -3,7 +3,8 @@ function  [actionPr, inqUptime, metadata] = memoized_fsm(rotation, mehit, rhit, 
     global fsm_cache_inqUptime;
     global fsm_cache_metadata;
 	% Check that we're not caching outdated mechanics
-	if exist('fsm.exe') ~= 2 || datenum(dir('fsm.exe').date) <= max(arrayfun(@(x) datenum(x.date), dir('RotationCalculator\Matlabadin\*.cs')))
+	fsmFileMetadata = dir('fsm.exe');
+    if exist('fsm.exe') == 2 && fsmFileMetadata.datenum <= max(arrayfun(@(x) x.datenum, dir('RotationCalculator\Matlabadin\*.cs')))
 		warning('Flushing fsm memory cache');
 		fsm_cache_actionPr = {};
 		fsm_cache_inqUptime = {};
