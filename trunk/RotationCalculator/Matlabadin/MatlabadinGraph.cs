@@ -237,17 +237,10 @@ namespace Matlabadin
         public double[] CalculateNextStateProbability(double[] pr, double decayFactor = 0)
         {
             int length = index.Length;
-            double[] nextPr = new double[length];
-            for (int i = 0; i < length; i++)
-            {
-                double statePr = pr[i];
-                int[] next = nextState[i];
-                Choice<TState> c = choice[i];
-                for (int j = 0; j < next.Length; j++)
-                {
-                    nextPr[next[j]] += statePr * c.pr[j];
-                }
-            }
+            double[] nextPr = new double[length + 1];
+            //UpdateFromNextState(pr, nextPr);
+            //UpdateFromTransitions(pr, nextPr); // ~20% faster than UpdateFromNextState
+            UpdateFromFixedWidthNextState(pr, nextPr); // ~40% faster than UpdateFromNextState
             if (decayFactor != 0)
             {
                 double updatedPortion = 1 - decayFactor;
@@ -258,6 +251,207 @@ namespace Matlabadin
             }
             return nextPr;
         }
+        private void UpdateFromNextState(double[] pr, double[] nextPr)
+        {
+            int length = index.Length;
+            for (int i = 0; i < length; i++)
+            {
+                double statePr = pr[i];
+                Choice<TState> c = choice[i];
+                int[] next = nextState[i];
+                int len = next.Length;
+                for (int j = 0; j < len; j++)
+                {
+                    nextPr[next[j]] += statePr * c.pr[j];
+                }
+            }
+        }
+        #region Alternate next state implementation: group by #transitions
+        private int[,] singleTransitions;
+        private int[,] doubleTransitions;
+        private int[,] tripleTransitions;
+        private int[] remainingTransitions;
+        private void UpdateFromTransitions(double[] pr, double[] nextPr)
+        {
+            if (singleTransitions == null)
+            {
+                InitTransitions();
+            }
+            int length = index.Length;
+            UpdateSingleTransitions(pr, nextPr, singleTransitions);
+            UpdateDoubleTransitions(pr, nextPr, doubleTransitions);
+            UpdateTripleTransitions(pr, nextPr, tripleTransitions);
+            UpdateRemainingTransitions(pr, nextPr, remainingTransitions);
+        }
+        private void InitTransitions()
+        {
+            // worth optimising this? We make 4 passes of nextState setting up
+            singleTransitions = new int[nextState.Count(ns => ns.Length == 1), 2];
+            doubleTransitions = new int[nextState.Count(ns => ns.Length == 2), 3];
+            tripleTransitions = new int[nextState.Count(ns => ns.Length == 3), 4];
+            remainingTransitions = new int[nextState.Count(ns => ns.Length > 3)];
+            int offset1 = 0;
+            int offset2 = 0;
+            int offset3 = 0;
+            int offsetRemaining = 0;
+            for (int i = 0; i < nextState.Length; i++)
+            {
+                int[] ns = nextState[i];
+                switch (ns.Length)
+                {
+                    case 1:
+                        singleTransitions[offset1, 0] = i;
+                        singleTransitions[offset1, 1] = nextState[i][0];
+                        offset1++;
+                        break;
+                    case 2:
+                        doubleTransitions[offset2, 0] = i;
+                        doubleTransitions[offset2, 1] = nextState[i][0];
+                        doubleTransitions[offset2, 2] = nextState[i][1];
+                        offset2++;
+                        break;
+                    case 3:
+                        tripleTransitions[offset3, 0] = i;
+                        tripleTransitions[offset3, 1] = nextState[i][0];
+                        tripleTransitions[offset3, 2] = nextState[i][1];
+                        tripleTransitions[offset3, 3] = nextState[i][2];
+                        offset3++;
+                        break;
+                    default:
+                        remainingTransitions[offsetRemaining++] = i;
+                        break;
+                }
+            }
+        }
+        private void UpdateSingleTransitions(double[] pr, double[] nextPr, int[,] transitions)
+        {
+            int length = transitions.Length / 2;
+            for (int i = 0; i < length; i++)
+            {
+                int sourceIndex = transitions[i, 0];
+                Choice<TState> c = choice[sourceIndex];
+                double sourcePr = pr[sourceIndex];
+                int destIndex1 = transitions[i, 1];
+                nextPr[destIndex1] += sourcePr * c.pr[0];
+            }
+        }
+        private void UpdateDoubleTransitions(double[] pr, double[] nextPr, int[,] transitions)
+        {
+            int length = transitions.Length / 3;
+            for (int i = 0; i < length; i++)
+            {
+                int sourceIndex = transitions[i, 0];
+                Choice<TState> c = choice[sourceIndex];
+                double sourcePr = pr[sourceIndex];
+                int destIndex1 = transitions[i, 1];
+                int destIndex2 = transitions[i, 2];
+                nextPr[destIndex1] += sourcePr * c.pr[0];
+                nextPr[destIndex2] += sourcePr * c.pr[1];
+            }
+        }
+        private void UpdateTripleTransitions(double[] pr, double[] nextPr, int[,] transitions)
+        {
+            int length = transitions.Length / 4;
+            for (int i = 0; i < length; i++)
+            {
+                int sourceIndex = transitions[i, 0];
+                Choice<TState> c = choice[sourceIndex];
+                double sourcePr = pr[sourceIndex];
+                int destIndex1 = transitions[i, 1];
+                int destIndex2 = transitions[i, 2];
+                int destIndex3 = transitions[i, 3];
+                nextPr[destIndex1] += sourcePr * c.pr[0];
+                nextPr[destIndex2] += sourcePr * c.pr[1];
+                nextPr[destIndex3] += sourcePr * c.pr[2];
+            }
+        }
+        private void UpdateRemainingTransitions(double[] pr, double[] nextPr, int[] states)
+        {
+            int length = states.Length;
+            for (int i = 0; i < length; i++)
+            {
+                int sourceIndex = states[i];
+                Choice<TState> c = choice[sourceIndex];
+                double sourcePr = pr[sourceIndex];
+                int[] next = nextState[sourceIndex];
+                int len = next.Length;
+                for (int j = 0; j < len; j++)
+                {
+                    nextPr[next[j]] += sourcePr * c.pr[j];
+                }
+            }
+        }
+        #endregion
+        #region Alternate next state implementation: sentinal state
+        private Nullable<bool> fwPossible;
+        private int[,] fwNextState;
+        private double[][] fwPr;
+        private void UpdateFromFixedWidthNextState(double[] pr, double[] nextPr)
+        {
+            // fall back to using transitions for next states
+            if (fwPossible.HasValue && !fwPossible.Value) UpdateFromTransitions(pr, nextPr);
+
+            if (fwNextState == null) InitFixedWidthNextState();
+            int length = index.Length;
+            for (int i = 0; i < length; i++)
+            {
+                double statePr = pr[i];
+                double[] nextStatePr = fwPr[i];
+                nextPr[fwNextState[i, 0]] += statePr * nextStatePr[0];
+                nextPr[fwNextState[i, 1]] += statePr * nextStatePr[1];
+                nextPr[fwNextState[i, 2]] += statePr * nextStatePr[2];
+            }
+        }
+        private void InitFixedWidthNextState()
+        {
+            int sentinal = index.Length;
+            fwNextState = new int[nextState.Length, 3];
+            fwPr = new double[nextState.Length][];
+            List<double[]> uniquePr = new List<double[]>();
+            for (int i = 0; i < index.Length; i++)
+            {
+                double[] pr = choice[i].pr;
+                double[] fixedWidthPr = new double[]
+                {
+                    pr[0],
+                    pr.Length > 1 ? pr[1] : 0,
+                    pr.Length > 2 ? pr[2] : 0,
+                };
+                fwPr[i] = FixedWidthGetCachedArray(uniquePr, fixedWidthPr);
+                int[] next = nextState[i];
+                int nextLength = next.Length;
+                fwNextState[i, 0] = (nextLength > 0) ? next[0] : sentinal;
+                fwNextState[i, 1] = (nextLength > 1) ? next[1] : sentinal;
+                fwNextState[i, 2] = (nextLength > 2) ? next[2] : sentinal;
+                if (nextLength > 3)
+                {
+                    // only works for up to 3 transitions: abort now
+                    fwPossible = false;
+                    return;
+                }
+            }
+        }
+        private double[] FixedWidthGetCachedArray(List<double[]> cache, double[] array)
+        {
+            for (int i = 0; i < cache.Count; i++)
+            {
+                double[] cached = cache[i];
+                if (cached[0] == array[0]
+                    && cached[1] == array[1]
+                    && cached[2] == array[2])
+                {
+                    return cached;
+                }
+            }
+            cache.Add(array);
+            return array;
+        }
+        #endregion
+        #region TODO: optimisations
+        // converge with floats before switching to double
+        // coalesce identical choice.pr[] arrays
+        // Try the iterative algorithm that requires a L + I + U form by splitting transitions from a state to itself into two states
+        #endregion
         // should all be private but we're exposing for now to make testing easier
         public Dictionary<TState, int> lookup; // maps state to state index
         public TState[] index; // maps state index to state
