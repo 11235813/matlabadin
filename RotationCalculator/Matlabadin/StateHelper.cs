@@ -5,59 +5,95 @@ using System.Text;
 
 namespace Matlabadin
 {
-    public static class StateHelper
+    public static class StateHelper<TState>
     {
-        public static Choice NextStates(
-            ulong state,
-            Ability a,
-            GraphParameters gp,
-            out ulong nextState1,
-            out ulong nextState2,
-            out ulong nextState3)
+        public static Choice<TState> NextStates(
+            GraphParameters<TState> gp,
+            IStateManager<TState> sm,
+            TState state,
+            out TState[] nextState)
         {
-            int waitSteps = StateHelper.CooldownRemaining(state, a, gp);
-            double pr1 = 0;
-            double pr2 = 0;
-            double pr3 = 0;
-            nextState1 = UInt64.MaxValue;
-            nextState2 = UInt64.MaxValue;
-            nextState3 = UInt64.MaxValue;
+            return NextStates(gp, sm, state, gp.Rotation.ActionToTake(gp, sm, state), out nextState);
+        }
+        public static Choice<TState> NextStates(
+            GraphParameters<TState> gp,
+            IStateManager<TState> sm,
+            TState state,
+            Ability a,
+            out TState[] nextState)
+        {
+            int waitSteps = sm.CooldownRemaining(state, a);
+            double[] pr = null;
             switch (a)
             {
                 case Ability.J:
-                    nextState1 = StateHelper.UseAbility(state, gp, a, waitSteps);
-                    nextState2 = StateHelper.UseAbility(state, gp, a, waitSteps, sdProc: true); // sd
-                    pr2 = gp.RangeHit * gp.SDProcRate;
-                    pr1 = 1 - pr2;
+                    nextState = new TState[]
+                    {
+                        UseAbility(gp, sm, state, a, waitSteps),
+                        UseAbility(gp, sm, state, a, waitSteps, sdProc: true), // sd
+                    };
+                    double jSDProcPr = gp.RangeHit * gp.SDProcRate;
+                    pr = new double[]
+                    {
+                        1 - jSDProcPr,
+                        jSDProcPr,
+                    };
                     break;
                 case Ability.AS:
-                    nextState1 = StateHelper.UseAbility(state, gp, a, waitSteps, false); // miss
-                    nextState2 = StateHelper.UseAbility(state, gp, a, waitSteps, true); // hit
-                    nextState3 = StateHelper.UseAbility(state, gp, a, waitSteps, true, sdProc: true); // sd
-                    pr3 = gp.RangeHit * gp.SDProcRate;
-                    pr1 = 1 - gp.RangeHit;
-                    pr2 = 1 - pr1 - pr3;
+                    nextState = new TState[]
+                    {
+                        UseAbility(gp, sm, state, a, waitSteps, false), // miss
+                        UseAbility(gp, sm, state, a, waitSteps, true), // hit, no proc
+                        UseAbility(gp, sm, state, a, waitSteps, true, sdProc: true), // sd
+                    };
+                    double asSDProcPr = gp.RangeHit * gp.SDProcRate;
+                    pr = new double[]
+                    {
+                        1 - gp.RangeHit,
+                        1 - (1 - gp.RangeHit + asSDProcPr),
+                        asSDProcPr,
+                    };
                     break;
                 case Ability.HotR:
                 case Ability.CS:
-                    nextState1 = StateHelper.UseAbility(state, gp, a, waitSteps, false); // miss
-                    nextState2 = StateHelper.UseAbility(state, gp, a, waitSteps, true); // hit
-                    nextState3 = StateHelper.UseAbility(state, gp, a, waitSteps, true, gcProc: true); // gc
-                    pr1 = 1 - gp.MeleeHit;
-                    pr3 = gp.MeleeHit * gp.GCProcRate;
-                    pr2 = 1 - pr1 - pr3;
+                    nextState = new TState[]
+                    {
+                        UseAbility(gp, sm, state, a, waitSteps, false), // miss
+                        UseAbility(gp, sm, state, a, waitSteps, true), // hit
+                        UseAbility(gp, sm, state, a, waitSteps, true, gcProc: true), // gc
+                    };
+                    double gcProcPr = gp.MeleeHit * gp.GCProcRate;
+                    pr = new double[]
+                    {
+                        1 - gp.MeleeHit,
+                        1 - (1 - gp.MeleeHit + gcProcPr),
+                        gcProcPr,
+                    };
                     break;
                 case Ability.SotR:
-                    nextState1 = StateHelper.UseAbility(state, gp, a, waitSteps, false); // miss
-                    nextState2 = StateHelper.UseAbility(state, gp, a, waitSteps, true); // hit
-                    pr1 = 1 - gp.MeleeHit;
-                    pr2 = gp.MeleeHit;
+                    nextState = new TState[]
+                    {
+                        UseAbility(gp, sm, state, a, waitSteps, false), // miss
+                        UseAbility(gp, sm, state, a, waitSteps, true), // hit
+                    };
+                    pr = new double[]
+                    {
+                        1 - gp.MeleeHit,
+                        gp.MeleeHit,
+                    };
                     break;
                 case Ability.WoG:
-                    nextState1 = StateHelper.UseAbility(state, gp, a, waitSteps);
-                    nextState2 = StateHelper.UseAbility(state, gp, a, waitSteps, egProc: true);
-                    pr2 = StateHelper.TimeRemaining(state, Buff.EGICD, gp) > 0 ? 0 : gp.EGProcRate; // only proc if EG off ICD
-                    pr1 = 1 - pr2;
+                    nextState = new TState[]
+                    {
+                        UseAbility(gp, sm, state, a, waitSteps),
+                        UseAbility(gp, sm, state, a, waitSteps, egProc: true),
+                    };
+                    double egProcPr = sm.TimeRemaining(state, Buff.EGICD) > 0 ? 0 : gp.EGProcRate;
+                    pr = new double[]
+                    {
+                        1 - egProcPr,
+                        egProcPr,
+                    };
                     break;
                 case Ability.Cons:
                 case Ability.HW:
@@ -65,76 +101,48 @@ namespace Matlabadin
                 case Ability.HoW:
                 case Ability.Nothing:
                     // Only one state transition for these
-                    nextState1 = StateHelper.UseAbility(state, gp, a, waitSteps);
-                    pr1 = 1;
+                    nextState = new TState[]
+                    {
+                        UseAbility(gp, sm, state, a, waitSteps),
+                    };
+                    pr = new double[]
+                    {
+                        1,
+                    };
                     break;
                 default:
                     throw new ArgumentException(String.Format("Unknown ability {0}", a));
             }
-            if (pr1 == 0) nextState1 = UInt64.MaxValue;
-            if (pr2 == 0) nextState2 = UInt64.MaxValue;
-            if (pr3 == 0) nextState3 = UInt64.MaxValue;
-            return Choice.CreateChoice(state, gp, a, waitSteps + gp.StepsPerGcd, pr1, pr2, pr3);
+            // cull zero probability transitions
+            CullZeroProbabilityTransitions(ref nextState, ref pr);
+            return Choice<TState>.CreateChoice(gp, sm, state, a, waitSteps + gp.StepsPerGcd, pr);
         }
-        /// <summary>
-        /// Cooldown remaining on the given ability
-        /// </summary>
-        /// <param name="ability">Ability</param>
-        /// <returns>Cooldown remaining in ms.</returns>
-        public static int CooldownRemaining(ulong state, Ability ability, GraphParameters gp)
+        private static void CullZeroProbabilityTransitions(ref TState[] nextState, ref double[] pr)
         {
-            int numBits = gp.AbilityCooldownBits[(int)ability];
-            if (numBits <= 0) return 0;
-            return Unpack(state, gp.AbilityCooldownStartBit[(int)ability], gp.AbilityCooldownBits[(int)ability]);
-        }
-        /// <summary>
-        /// Time remaining on the given buff.
-        /// </summary>
-        /// <param name="buff">Buff to check</param>
-        /// <returns>Time remaining in ms.</returns>
-        public static int TimeRemaining(ulong state, Buff buff, GraphParameters gp)
-        {
-            return Unpack(state, gp.BuffDurationStartBit[(int)buff], gp.BuffDurationBits[(int)buff]);
-        }
-        public static ulong SetTimeRemaining(ulong state, Buff buff, int value, GraphParameters gp)
-        {
-            return Pack(state, gp.BuffDurationStartBit[(int)buff], gp.BuffDurationBits[(int)buff], value);
-        }
-        public static int HP(ulong state, GraphParameters gp)
-        {
-            return Unpack(state, 0, 2);
-        }
-        public static ulong IncHP(ulong state, GraphParameters gp)
-        {
-            return SetHP(state, Math.Min(3, HP(state, gp)+1), gp);
-        }
-        public static ulong SetHP(ulong state, int hp, GraphParameters gp)
-        {
-            return Pack(state, 0, 2, hp);
-        }
-        public static ulong SetCooldownRemaining(ulong state, Ability ability, int cd, GraphParameters gp)
-        {
-            int numBits = gp.AbilityCooldownBits[(int)ability];
-            if (numBits <= 0) return state;
-            return Pack(state, gp.AbilityCooldownStartBit[(int)ability], gp.AbilityCooldownBits[(int)ability], cd);
-        }
-        public static ulong AdvanceTime(ulong state, int steps, GraphParameters gp)
-        {
-            for (int offset = (int)Ability.CooldownIndicator + 1; offset < (int)Ability.Count; offset++)
+            int zeroes = pr.Count(p => p == 0);
+            if (zeroes != 0)
             {
-                state = Pack(state, gp.AbilityCooldownStartBit[offset], gp.AbilityCooldownBits[offset],
-                    Math.Max(0, Unpack(state, gp.AbilityCooldownStartBit[offset], gp.AbilityCooldownBits[offset]) - steps));
+                int nonZeroCount = nextState.Length - zeroes;
+                TState[] rawNextState = nextState;
+                double[] rawPr = pr;
+                nextState = new TState[nonZeroCount];
+                pr = new double[nonZeroCount];
+                int offset = 0;
+                for (int i = 0; i < rawNextState.Length; i++)
+                {
+                    if (rawPr[i] != 0)
+                    {
+                        nextState[offset] = rawNextState[i];
+                        pr[offset] = rawPr[i];
+                        offset++;
+                    }
+                }
             }
-            for (int i = 0; i < (int)Buff.Count; i++)
-            {
-                state = Pack(state, gp.BuffDurationStartBit[i], gp.BuffDurationBits[i],
-                    Math.Max(0, Unpack(state, gp.BuffDurationStartBit[i], gp.BuffDurationBits[i]) - steps));
-            }
-            return state;
         }
-        public static ulong UseAbility(
-            ulong state,
-            GraphParameters gp,
+        public static TState UseAbility(
+            GraphParameters<TState> gp,
+            IStateManager<TState> sm,
+            TState state,
             Ability ability,
             int waitSteps = 0,
             bool hit = true,
@@ -142,96 +150,82 @@ namespace Matlabadin
             bool gcProc = false,
             bool egProc = false)
         {
-            if (state == UInt64.MaxValue) throw new ArgumentException("Invalid state");
-            if (ability == Ability.HotR) return UseAbility(state, gp, Ability.CS, waitSteps, hit, sdProc, gcProc, egProc);
-            ulong nextState = state;
+            //if (state == UInt64.MaxValue) throw new ArgumentException("Invalid state");
+            if (ability == Ability.HotR) return UseAbility(gp, sm, state, Ability.CS, waitSteps, hit, sdProc, gcProc, egProc);
+            TState nextState = state;
             if (waitSteps > 0)
             {
-                nextState = StateHelper.AdvanceTime(nextState, waitSteps, gp);
+                nextState = sm.AdvanceTime(nextState, waitSteps);
             }
-            if (StateHelper.CooldownRemaining(state, ability, gp) > 0) throw new InvalidOperationException("Attempting to use ability still on cooldown");
+            if (sm.CooldownRemaining(state, ability) > 0) throw new InvalidOperationException("Attempting to use ability still on cooldown");
             int abilityCooldown = gp.AbilityCooldownInSteps(ability);
             if (abilityCooldown > 0)
             {
-                nextState = StateHelper.SetCooldownRemaining(nextState, ability, abilityCooldown, gp);
+                nextState = sm.SetCooldownRemaining(nextState, ability, abilityCooldown);
             }
             switch (ability)
             {
                 case Ability.WoG:
-                    nextState = StateHelper.SetHP(nextState, 0, gp);
+                    nextState = sm.SetHP(nextState, 0);
                     break;
                 case Ability.SotR:
                     if (hit)
                     {
-                        nextState = StateHelper.SetHP(nextState, 0, gp);
-                        nextState = StateHelper.SetTimeRemaining(nextState, Buff.SD, 0, gp);
+                        nextState = sm.SetHP(nextState, 0);
+                        nextState = sm.SetTimeRemaining(nextState, Buff.SD, 0);
                     }
                     break;
                 case Ability.CS:
-                    if (hit) nextState = StateHelper.IncHP(nextState, gp);
+                    if (hit) nextState = sm.IncHP(nextState);
                     break;
                 case Ability.AS:
-                    if (StateHelper.TimeRemaining(nextState, Buff.GC, gp) > 0) // GC HP is on cast
+                    if (sm.TimeRemaining(nextState, Buff.GC) > 0) // GC HP is on cast
                     {
-                        nextState = StateHelper.IncHP(nextState, gp);
+                        nextState = sm.IncHP(nextState);
                     }
-                    nextState = StateHelper.SetTimeRemaining(nextState, Buff.GC, 0, gp);
+                    nextState = sm.SetTimeRemaining(nextState, Buff.GC, 0);
                     break;
                 case Ability.Inq:
-                    nextState = StateHelper.SetTimeRemaining(nextState, Buff.Inq, StateHelper.HP(nextState, gp) * gp.BuffDurationInSteps(Buff.Inq) / 3, gp);
-                    nextState = StateHelper.SetHP(nextState, 0, gp);
+                    nextState = sm.SetTimeRemaining(nextState, Buff.Inq, sm.HP(nextState) * gp.BuffDurationInSteps(Buff.Inq) / 3);
+                    nextState = sm.SetHP(nextState, 0);
                     break;
             }
             if (egProc)
             {
-                nextState = StateHelper.SetHP(nextState, StateHelper.HP(state, gp), gp);
-                nextState = StateHelper.SetTimeRemaining(nextState, Buff.EGICD, gp.BuffDurationInSteps(Buff.EGICD), gp);
+                nextState = sm.SetHP(nextState, sm.HP(state));
+                nextState = sm.SetTimeRemaining(nextState, Buff.EGICD, gp.BuffDurationInSteps(Buff.EGICD));
             }
             if (gcProc)
             {
-                nextState = StateHelper.SetCooldownRemaining(nextState, Ability.AS, 0, gp);
-                nextState = StateHelper.SetTimeRemaining(nextState, Buff.GC, gp.BuffDurationInSteps(Buff.GC), gp);
+                nextState = sm.SetCooldownRemaining(nextState, Ability.AS, 0);
+                nextState = sm.SetTimeRemaining(nextState, Buff.GC, gp.BuffDurationInSteps(Buff.GC));
             }
             if (sdProc)
             {
-                nextState = StateHelper.SetTimeRemaining(nextState, Buff.SD, gp.BuffDurationInSteps(Buff.SD), gp);
+                nextState = sm.SetTimeRemaining(nextState, Buff.SD, gp.BuffDurationInSteps(Buff.SD));
             }
             // advance time a GCD
-            nextState = StateHelper.AdvanceTime(nextState, gp.StepsPerGcd, gp);
+            nextState = sm.AdvanceTime(nextState, gp.StepsPerGcd);
             return nextState;
         }
-        private static int Unpack(ulong state, int startBit, int numBits)
-        {
-            ulong shifted = (state >> startBit);
-            ulong result = shifted & (ulong)~(-1 << numBits);
-            return (int)result;
-        }
-        private static ulong Pack(ulong state, int startBit, int numBits, int value)
-        {
-            if (value >= 1 << numBits || value < 0) throw new ArgumentOutOfRangeException(String.Format("value {0} does not fit in {1} bits", value, numBits));
-            ulong bitsToClear = ((ulong)~(-1 << numBits)) << startBit;
-            state &= ~bitsToClear;
-            state |= (ulong)value << startBit;
-            return state;
-        }
-        public static string StateToString(ulong state, GraphParameters gp)
+        public static string StateToString(GraphParameters<TState> gp, IStateManager<TState> sm, TState state)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("HP{0}", StateHelper.HP(state, gp));
+            sb.AppendFormat("HP{0}", sm.HP(state));
             string singleColumnNumberFormat = ",{1,1:#}";
             string doubleColumnNumberFormat = ",{1,2:##}";
             for (int offset = (int)Ability.CooldownIndicator + 1; offset < (int)Ability.Count; offset++)
             {
                 sb.AppendFormat(gp.AbilityCooldownInSteps((Ability)offset) >= 10 ? doubleColumnNumberFormat : singleColumnNumberFormat,
                     (Ability)offset,
-                    StateHelper.CooldownRemaining(state, (Ability)offset, gp));
+                    sm.CooldownRemaining(state, (Ability)offset));
             }
             sb.Append(",");
             for (int i = 0; i < (int)Buff.Count; i++)
             {
                 sb.AppendFormat(gp.BuffDurationInSteps((Buff)i) >= 10 ? doubleColumnNumberFormat : singleColumnNumberFormat,
                     (Buff)i,
-                    StateHelper.TimeRemaining(state, (Buff)i, gp));
+                    sm.TimeRemaining(state, (Buff)i));
             }
             return sb.ToString();
         }

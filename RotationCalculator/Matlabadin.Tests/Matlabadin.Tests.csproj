@@ -50,8 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChoiceTest.cs" />
+    <Compile Include="Int64GraphParametersTest.cs" />
     <Compile Include="MatlabadinGraphTest.cs" />
-    <Compile Include="NextStateTest.cs" />
     <Compile Include="GraphParametersTest.cs" />
     <Compile Include="MatlabadinTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

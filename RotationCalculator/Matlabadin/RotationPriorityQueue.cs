@@ -6,22 +6,17 @@ using System.Text.RegularExpressions;
 
 namespace Matlabadin
 {
-    public class RotationPriorityQueue
+    public class RotationPriorityQueue<TState>
     {
-        public static Func<ulong, GraphParameters, Ability> CreateRotationPriorityQueueNextStateFunction(string queue)
-        {
-            RotationPriorityQueue rpq = new RotationPriorityQueue(queue);
-            return (state, gp) => rpq.ActionToTake(state, gp);
-        }
-        public Ability ActionToTake(ulong state, GraphParameters gp)
+        public Ability ActionToTake(GraphParameters<TState> gp, IStateManager<TState> sm, TState state)
         {
             for (int i = 0; i < abilityQueue.Count; i++)
             {
                 Ability ability = abilityQueue[i];
                 // all conditionals must be met
-                if (!abilityConditionals[i].All(f => f(state, gp))) continue;
+                if (!abilityConditionals[i].All(f => f(gp, sm, state))) continue;
                 // ability must be off CD
-                if (StateHelper.CooldownRemaining(state, ability, gp) == 0)
+                if (sm.CooldownRemaining(state, ability) == 0)
                 {
                     return ability;
                 }
@@ -30,15 +25,21 @@ namespace Matlabadin
         }
         public RotationPriorityQueue(string queue)
         {
-            abilityQueue = new List<Ability>();
-            abilityConditionals = new List<List<Func<ulong, GraphParameters, bool>>>();
+            this.PriorityQueue = queue;
+            this.distinctAbilitiesInRotation = new List<Ability>();
+            this.abilityQueue = new List<Ability>();
+            this.abilityConditionals = new List<List<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>>();
+            ProcessQueueString(queue);
+        }
+        private void ProcessQueueString(string queue)
+        {
             string remainingQueue = queue;
             int i = 0;
             while (!String.IsNullOrEmpty(remainingQueue))
             {
                 Match actionMatch = Regex.Match(remainingQueue, @"^(?<first>[^\[>\]]+(\[[^\]]+\])*)(>([^\[>\]]+(\[[^\]]+\])*))*");
                 if (!actionMatch.Success) throw new InvalidOperationException(String.Format("Invalid rotation {0}", queue));
-                abilityConditionals.Add(new List<Func<ulong, GraphParameters, bool>>());
+                abilityConditionals.Add(new List<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>());
 
                 string rawActionString = actionMatch.Groups["first"].Value;
                 string action = rawActionString;
@@ -55,27 +56,28 @@ namespace Matlabadin
                     string conditional = conditionMatch.Groups["conditional"].Value;
                     string operation = conditionMatch.Groups["operation"].Value;
                     double value = Double.Parse(conditionMatch.Groups["value"].Value);
-                    Func<ulong, GraphParameters, int> getRemaining;
+                    Func<IStateManager<TState>, TState, int> getRemaining;
                     if (type == "cd")
                     {
                         Ability a = (Ability)Enum.Parse(typeof(Ability), conditional);
-                        getRemaining = (state, gp) => StateHelper.CooldownRemaining(state, a, gp);
+                        getRemaining = (sm, state) => sm.CooldownRemaining(state, a);
                     }
                     else //if (type == "buff")
                     {
                         Buff b = (Buff)Enum.Parse(typeof(Buff), conditional);
-                        getRemaining = (state, gp) => StateHelper.TimeRemaining(state, b, gp);
+                        getRemaining = (sm, state) => sm.TimeRemaining(state, b);
                     }
-                    Func<ulong, GraphParameters, bool> condition = null;
+                    Func<GraphParameters<TState>, IStateManager<TState>, TState, bool> condition = null;
                     switch (operation)
                     {
-                        case "=":  condition = (state, gp) => getRemaining(state, gp) == (int)(value / gp.StepDuration); break;
-                        case "==": condition = (state, gp) => getRemaining(state, gp) == (int)(value / gp.StepDuration); break;
-                        case ">":  condition = (state, gp) => getRemaining(state, gp) >  (int)(value / gp.StepDuration); break;
-                        case ">=": condition = (state, gp) => getRemaining(state, gp) >= (int)(value / gp.StepDuration); break;
-                        case "<":  condition = (state, gp) => getRemaining(state, gp) <  (int)(value / gp.StepDuration); break;
-                        case "<=": condition = (state, gp) => getRemaining(state, gp) <= (int)(value / gp.StepDuration); break;
+                        case "=": condition = (gp, sm, state) => getRemaining(sm, state) == (int)(value / gp.StepDuration); break;
+                        case "==": condition = (gp, sm, state) => getRemaining(sm, state) == (int)(value / gp.StepDuration); break;
+                        case ">": condition = (gp, sm, state) => getRemaining(sm, state) > (int)(value / gp.StepDuration); break;
+                        case ">=": condition = (gp, sm, state) => getRemaining(sm, state) >= (int)(value / gp.StepDuration); break;
+                        case "<": condition = (gp, sm, state) => getRemaining(sm, state) < (int)(value / gp.StepDuration); break;
+                        case "<=": condition = (gp, sm, state) => getRemaining(sm, state) <= (int)(value / gp.StepDuration); break;
                     }
+                    if (condition == null) throw new ArgumentException("Unknown conditional operator {0}", operation);
                     abilityConditionals[i].Add(condition);
                     action = action.Replace(conditionMatch.Value, "");
                 }
@@ -84,35 +86,42 @@ namespace Matlabadin
                     case "Inq":
                     case "WoG":
                     case "SotR":
-                        abilityConditionals[i].Add((state, gp) => StateHelper.HP(state, gp) >= 3);
+                        abilityConditionals[i].Add((gp, sm, state) => sm.HP(state) >= 3);
                         break;
                     case "Inq2":
                     case "WoG2":
                     case "SotR2":
-                        abilityConditionals[i].Add((state, gp) => StateHelper.HP(state, gp) >= 2);
+                        abilityConditionals[i].Add((gp, sm, state) => sm.HP(state) >= 2);
                         action = action.Substring(0, action.Length - 1);
                         break;
                     case "Inq1":
                     case "WoG1":
                     case "SotR1":
-                        abilityConditionals[i].Add((state, gp) => StateHelper.HP(state, gp) >= 1);
+                        abilityConditionals[i].Add((gp, sm, state) => sm.HP(state) >= 1);
                         action = action.Substring(0, action.Length - 1);
                         break;
                     case "AS+":
                         // Use AS if it will generate HP
-                        abilityConditionals[i].Add((state, gp) => StateHelper.TimeRemaining(state, Buff.GC, gp) > 0);
+                        abilityConditionals[i].Add((gp, sm, state) => sm.TimeRemaining(state, Buff.GC) > 0);
                         action = action.Substring(0, action.Length - 1);
                         break;
                 }
                 Ability ability = (Ability)Enum.Parse(typeof(Ability), action);
                 abilityQueue.Add(ability);
+                distinctAbilitiesInRotation.Add(ability);
                 // move on to the next item in the queue
                 remainingQueue = remainingQueue.Substring(rawActionString.Length);
                 remainingQueue = remainingQueue.Trim('>');
                 i++;
             }
         }
+        public bool Contains(Ability a)
+        {
+            return distinctAbilitiesInRotation.Contains(a);
+        }
+        public string PriorityQueue { get; private set; }
+        private List<Ability> distinctAbilitiesInRotation;
         private List<Ability> abilityQueue;
-        private List<List<Func<ulong, GraphParameters, bool>>> abilityConditionals;
+        private List<List<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>> abilityConditionals;
     }
 }
