@@ -2,12 +2,14 @@ function [data] = calc_fsm
 % plot some stuff:
 mhit=(1-0.065-0.14-0.08):0.005:1.0;
 rhit=(1-0.08):0.005:1.0;
-rotation='SotR>CS>AS>J'
+mhit=[0.835, 1];
+rhit=[0.94, 1];
+rotation='WoG>SotR>CS>AS>J>Cons>HW'
 mhitArray=repmat(mhit, 1, length(rhit));
 rhitArray=repmat(rhit, length(mhit), 1);
 rhitArray=rhitArray(:);
 % generate data
-fsm_gen(rotation, mhitArray, rhitArray, 1, 2, 2, 2);
+fsm_gen(rotation, mhitArray, rhitArray, 1, 0, 2, 2);
 
 % populate data array
 % TODO use ability_model.m and action2cps.m code instead of duplicating
@@ -19,7 +21,7 @@ fsmlabel={'Inq';'Inq(Inq)';'SotR2';'SotR2(SD)';'SotR2(Inq)';'SotR2(SD)(Inq)';'So
 data = horzcat(mhitArray', rhitArray);
 % resize array to include output
 data(1, length(fsmlabel) + 2)=0;
-for i = 1:length(data)
+for i = 1:size(data)[1]
     actionPr = memoized_fsm(rotation, data(i, 1), data(i, 2), 1, 2, 2, 2);
     cps=zeros(size(fsmlabel,1),1);
     %sort actionPr entries into cps
