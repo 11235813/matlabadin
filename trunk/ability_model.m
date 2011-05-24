@@ -9,7 +9,6 @@ player.hopo=3;  %TODO move it
 %% Seals
 
 %Seal of Truth (fully stacked)
-mdf.tseal=strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal);
 raw.SealofTruth=    0.15.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
 raw.JoT        =    (1+0.2229.*player.hsp+0.1421.*player.ap).*1.5; 
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
@@ -29,7 +28,7 @@ tps.Censure=        threat.Censure./cens.NetDur;
 raw.SealofRighteousness=    gear.swing.*(0.011.*player.ap+0.022.*player.hsp).* ...
                             mdf.spdmg.*mdf.SotP;
 raw.JoR                =    (1+0.32.*player.hsp+0.2.*player.ap);
-dmg.SealofRighteousness=    raw.SealofRighteousness.*target.resrdx; %automatical connect
+dmg.SealofRighteousness=    raw.SealofRighteousness.*mdf.phcrit.*target.resrdx; %automatical connect
 heal.SealofRighteousness=   0;
 threat.SealofRighteousness=max(dmg.SealofRighteousness,heal.SealofRighteousness).*mdf.RFury;
 
@@ -93,9 +92,9 @@ raw.HammeroftheRighteous=   0.3.*player.wdamage.*mdf.phdmg.*(1+mdf.Crus+mdf.glyp
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.memodel.*mdf.HotRphcrit;
 heal.HammeroftheRighteous=   0;
 threat.HammeroftheRighteous=max(dmg.HammeroftheRighteous,heal.HammeroftheRighteous).*mdf.RFury;
-net.HammeroftheRighteous{1}=dmg.HammeroftheRighteous+dmg.activeseal.*mdf.mehit.*mdf.tseal;
+net.HammeroftheRighteous{1}=dmg.HammeroftheRighteous+dmg.activeseal.*mdf.mehit.*mdf.rseal;
 net.HammeroftheRighteous{2}=heal.HammeroftheRighteous;
-net.HammeroftheRighteous{3}=threat.HammeroftheRighteous+threat.activeseal.*mdf.mehit.*mdf.tseal;
+net.HammeroftheRighteous{3}=threat.HammeroftheRighteous+threat.activeseal.*mdf.mehit.*mdf.rseal;
 %Nova is back to having its own combat roll on the spell hit table.
 raw.HammerNova=   (728.8813374+0.18.*player.ap).*mdf.spdmg.*(1+mdf.Crus+mdf.glyphHotR);
 dmg.HammerNova=   raw.HammerNova.*mdf.mehit.*mdf.sphit.*mdf.HotRspcrit.*target.resrdx; %spell hit/crit
