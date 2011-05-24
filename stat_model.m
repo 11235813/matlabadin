@@ -2,6 +2,10 @@
 %this m-file recalculates the final stats of the player, taking into
 %account all sources.  It's divided into sections according to topic.
 
+%seal choice
+mdf.tseal=strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal);
+mdf.rseal=mdf.tseal||strcmpi('Righteousness',exec.seal)||strcmpi('SoR',exec.seal);
+
 %% Rating/Stat conversions 
 stat_conversions
 
@@ -36,7 +40,7 @@ mdf.glyphSotR=1+0.1.*glyph.ShieldoftheRighteous; %SotR output
 mdf.glyphWoG=0.1.*glyph.WordofGlory;             %WoG output
 mdf.glyphCons=1+0.2.*glyph.Consecration;         %Consecration output (and cooldown)
 mdf.glyphAS=1+0.3.*glyph.FocusedShield;          %AS output
-mdf.glyphSoT=10.*glyph.SealofTruth.*(strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal));     %expertise bonus
+mdf.glyphSoT=10.*glyph.SealofTruth.*mdf.rseal;   %expertise bonus (T/R)
 mdf.glyphSoI=0.05.*glyph.SealofInsight.*(strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)); %healing output
 mdf.glyphAscetic=1-0.3*glyph.AsceticCrusader;
 
@@ -255,7 +259,7 @@ cens.NetDur=cens.NumTicks.*cens.NetTick;
 %multipliers
 mdf.phcritm=2.*mdf.meta_crit;   %for physical attacks
 mdf.spcritm=1.5.*mdf.meta_crit; %for spells
-mdf.hcritm=1.5;                 %the critical healing meta can be safely ignored
+mdf.hcritm=2;                   %the critical healing meta can be safely ignored (4.2 compliance)
 
 
 %melee abilities ("physical crit")
@@ -344,7 +348,7 @@ player.mast=base.mast+((gear.mast+extra.mas+consum.mast)./cnv.mast_mast);
 %% Avoidance and Blocking
 %TODO: update avoid_dr
 avoiddr=avoid_dr(base,gear.dodge+consum.dodge,gear.parry+consum.parry ...
-    +floor((player.str-base.stats.str)./4),player.agi-base.stats.agi); %DR for dodge/parry
+    +floor((player.str-base.stats.str).*0.27),player.agi-base.stats.agi); %DR for dodge/parry
 
 player.miss=base.miss-0.04.*npc.skillgap;
 player.dodge=base.dodge+base.stats.agi./cnv.agi_dodge+avoiddr.dodgedr-0.04.*npc.skillgap;
