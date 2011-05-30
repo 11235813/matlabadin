@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChoiceTest.cs" />
+    <Compile Include="ArrayStateManagerTest.cs" />
+    <Compile Include="Int64StateManagerTest.cs" />
     <Compile Include="Int64GraphParametersTest.cs" />
     <Compile Include="MatlabadinGraphTest.cs" />
     <Compile Include="GraphParametersTest.cs" />
@@ -57,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RotationPriorityQueueTest.cs" />
     <Compile Include="StateHelperTest.cs" />
+    <Compile Include="StateManagerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Matlabadin\Matlabadin.csproj">

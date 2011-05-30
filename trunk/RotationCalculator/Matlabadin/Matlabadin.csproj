@@ -45,6 +45,7 @@
     <Compile Include="Ability.cs" />
     <Compile Include="Buff.cs" />
     <Compile Include="Int64GraphParameters.cs" />
+    <Compile Include="ArrayStateManager.cs" />
     <Compile Include="IStateManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="StateHelper.cs" />
