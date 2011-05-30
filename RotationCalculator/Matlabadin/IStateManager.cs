@@ -26,7 +26,6 @@ namespace Matlabadin
         /// <param name="buff">Buff to check</param>
         /// <returns>Time remaining in steps</returns>
         int TimeRemaining(TState state, Buff buff);
-        TState SetTimeRemaining(TState state, Buff buff, int value);
         /// <summary>
         /// Holy Power
         /// </summary>
@@ -36,6 +35,7 @@ namespace Matlabadin
         TState IncHP(TState state);
         TState SetHP(TState state, int hp);
         TState SetCooldownRemaining(TState state, Ability ability, int cd);
+        TState SetTimeRemaining(TState state, Buff buff, int value);
         /// <summary>
         /// Advances the state to a future time
         /// </summary>
