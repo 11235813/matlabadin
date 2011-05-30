@@ -14,12 +14,7 @@ namespace Matlabadin
             {
                 Ability ability = abilityQueue[i];
                 // all conditionals must be met
-                if (!abilityConditionals[i].All(f => f(gp, sm, state))) continue;
-                // ability must be off CD
-                if (sm.CooldownRemaining(state, ability) == 0)
-                {
-                    return ability;
-                }
+                if (abilityConditionals[i].All(f => f(gp, sm, state))) return ability;
             }
             return Ability.Nothing;
         }
@@ -37,6 +32,7 @@ namespace Matlabadin
             int i = 0;
             while (!String.IsNullOrEmpty(remainingQueue))
             {
+                List<Ability> conditionalAbilityList = new List<Ability>();
                 Match actionMatch = Regex.Match(remainingQueue, @"^(?<first>[^\[>\]]+(\[[^\]]+\])*)(>([^\[>\]]+(\[[^\]]+\])*))*");
                 if (!actionMatch.Success) throw new InvalidOperationException(String.Format("Invalid rotation {0}", queue));
                 abilityConditionals.Add(new List<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>());
@@ -61,6 +57,7 @@ namespace Matlabadin
                     {
                         Ability a = (Ability)Enum.Parse(typeof(Ability), conditional);
                         getRemaining = (sm, state) => sm.CooldownRemaining(state, a);
+                        conditionalAbilityList.Add(a);
                     }
                     else //if (type == "buff")
                     {
@@ -107,6 +104,12 @@ namespace Matlabadin
                         break;
                 }
                 Ability ability = (Ability)Enum.Parse(typeof(Ability), action);
+                if (!conditionalAbilityList.Contains(ability))
+                {
+                    // Ability must be off CD if no CD specified
+                    // Delayed casts are modelled by specifying a cooldown conditional (eg CS[cdCS<=0.5])
+                    abilityConditionals[i].Add((gp, sm, state) => sm.CooldownRemaining(state, ability) == 0);
+                }
                 abilityQueue.Add(ability);
                 distinctAbilitiesInRotation.Add(ability);
                 // move on to the next item in the queue
