@@ -69,6 +69,11 @@ namespace Matlabadin.Tests
             Assert.AreNotEqual(0, SM.TimeRemaining(StateHelper<ulong>.UseAbility(GP, SM, 3, Ability.WoG, egProc: true), Buff.EGICD));
         }
         [TestMethod]
+        public void UseAbility_JShouldSetJotw()
+        {
+            Assert.AreNotEqual(0, SM.TimeRemaining(StateHelper<ulong>.UseAbility(GP, SM, 0, Ability.J), Buff.JotW));
+        }
+        [TestMethod]
         public void UseAbility_InqShouldConsumeHP()
         {
             Assert.AreEqual(0, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 2, Ability.Inq)));

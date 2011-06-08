@@ -12,6 +12,7 @@ namespace Matlabadin.Tests
         private int iterationsTaken;
         private double finalAbsError, finalRelError;
         private double inqUptime;
+        private double jotwUptime;
         public const double Tolerance = 1e-14;
         public void SanityCheckGraph(MatlabadinGraph<ulong> mg)
         {
@@ -95,7 +96,7 @@ namespace Matlabadin.Tests
             Int64GraphParameters gp = NoMissNoProcs("Inq>CS");
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             double[] pr = mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance);
-            var result = mg.CalculateResults(pr, out inqUptime);
+            var result = mg.CalculateResults(pr, out inqUptime, out jotwUptime);
             Assert.IsFalse(result.ContainsKey("Nothing"));
             Assert.IsFalse(result.ContainsKey("Nothing(Inq)"));
         }
@@ -167,7 +168,7 @@ namespace Matlabadin.Tests
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance)
-                , out inqUptime);
+                , out inqUptime, out jotwUptime);
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual(1.0 / 15, result["HW"], Tolerance);
         }
@@ -178,7 +179,7 @@ namespace Matlabadin.Tests
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance),
-                out inqUptime);
+                out inqUptime, out jotwUptime);
             Assert.AreEqual(0.5 / 1.5, result["CS"], Tolerance);
             Assert.AreEqual(1d / 6 / 1.5, result["SotR"], Tolerance);
         }
@@ -189,7 +190,7 @@ namespace Matlabadin.Tests
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance),
-                out inqUptime);
+                out inqUptime, out jotwUptime);
             Assert.AreEqual(0.5 / 1.5, result["CS"], Tolerance);
             Assert.AreEqual(1d / 6 / 2 / 1.5, result["SotR"], Tolerance); // 50% proc rate on SD
             Assert.AreEqual(1d / 6 / 2 / 1.5, result["SotR(SD)"], Tolerance);
@@ -199,7 +200,7 @@ namespace Matlabadin.Tests
             mg = new MatlabadinGraph<ulong>(gp, gp);
             result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance),
-                out inqUptime);
+                out inqUptime, out jotwUptime);
             Assert.AreEqual(1d / 6 / 1.5, result["SotR"], Tolerance);
             if (result.ContainsKey("SotR(SD)")) Assert.AreEqual(0d, result["SotR(SD)"], Tolerance);
         }
@@ -214,8 +215,25 @@ namespace Matlabadin.Tests
             double inqUptime;
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance),
-                out inqUptime);
+                out inqUptime, out jotwUptime);
             Assert.AreEqual(12.0 / 18.0, inqUptime, Tolerance * 100); // aggregation is outside tolerance due to FP rounding
+        }
+        [TestMethod]
+        public void JotwUptimeShouldCalculated()
+        {
+            Int64GraphParameters gp = NoMiss("J");
+            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            var result = mg.CalculateResults(
+                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance),
+                out inqUptime, out jotwUptime);
+            Assert.AreEqual(1, jotwUptime, Tolerance * 100); // aggregation is outside tolerance due to FP rounding
+
+            gp = NoMiss("CS");
+            mg = new MatlabadinGraph<ulong>(gp, gp);
+            result = mg.CalculateResults(
+                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance),
+                out inqUptime, out jotwUptime);
+            Assert.AreEqual(0, jotwUptime, Tolerance * 100); // aggregation is outside tolerance due to FP rounding
         }
         [TestMethod]
         public void CloneReduceConvergenceTimeForSameResult()

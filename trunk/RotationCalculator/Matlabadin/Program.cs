@@ -137,13 +137,15 @@ namespace Matlabadin
             Stopwatch aggregateStopWatch = new Stopwatch();
             aggregateStopWatch.Start();
             double inqUptime;
-            var result = graph.CalculateResults(pr, out inqUptime);
+            double jotwUptime;
+            var result = graph.CalculateResults(pr, out inqUptime, out jotwUptime);
             aggregateStopWatch.Stop();
             foreach (var key in result.Keys.OrderBy(k => k))
             {
                 stream.WriteLine("{0},{1}", key, result[key]);
             }
-            stream.WriteLine("InqUptime,{0}", inqUptime);
+            stream.WriteLine("Uptime_Inq,{0}", inqUptime);
+            stream.WriteLine("Uptime_JotW,{0}", jotwUptime);
             stream.WriteLine("Stats_StateSize_Total,{0}", graph.Size);
             stream.WriteLine("Stats_StateSize_NonZero,{0}", pr.Count(p => p > 0));
             stream.WriteLine("Stats_Iterations,{0}", iterationsPerformed);

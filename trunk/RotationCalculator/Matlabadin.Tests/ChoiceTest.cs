@@ -36,6 +36,11 @@ namespace Matlabadin.Tests
             Assert.IsTrue(Choice<ulong>.CreateChoice(GP, SM, 3, Ability.Inq, 3, new double[] {1}).inqDuration > 0);
         }
         [TestMethod]
+        public void JCastShouldSetJotwUptime()
+        {
+            Assert.IsTrue(Choice<ulong>.CreateChoice(GP, SM, 3, Ability.J, 3, new double[] {1}).jotwDuration > 0);
+        }
+        [TestMethod]
         public void ActionShouldBeAbility()
         {
             Assert.AreEqual("CS", Choice<ulong>.CreateChoice(GP, SM, 0, Ability.CS, 3, PR).Action);
@@ -98,6 +103,26 @@ namespace Matlabadin.Tests
                                Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Inq, 3, new double[] { 0.7, 0.2, 0.1 }));
             Assert.AreNotEqual(Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Inq, 3, new double[] { 0.7, 0.3 }),
                                Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Inq, 3, new double[] { 0.7, 0.2, 0.1 }));
+        }
+        [TestMethod]
+        public void EqualityShouldIncludeInqDuration()
+        {            
+            Choice<ulong> c = Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.Inq, 3), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 });
+            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.Inq, 0), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
+            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.Inq, 1), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
+            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.Inq, 2), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
+            Assert.AreEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.Inq, 3), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
+            Assert.AreEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.Inq, 4), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
+        }
+        [TestMethod]
+        public void EqualityShouldIncludeJotwDuration()
+        {
+            Choice<ulong> c = Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.JotW, 3), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 });
+            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.JotW, 0), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
+            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.JotW, 1), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
+            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.JotW, 2), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
+            Assert.AreEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.JotW, 3), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
+            Assert.AreEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.JotW, 4), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
         }
     }
 }

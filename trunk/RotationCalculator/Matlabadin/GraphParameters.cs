@@ -19,7 +19,7 @@ namespace Matlabadin
         {
             double[] abilityCooldowns = {20, 3, 8, 15, useConsGlyph ? 30 * 1.2 : 30, 15, 6}; // WoG,CS,J,AS,Cons,HW,HoW,
             // GC buff duration extended by 0.5s since the server takes time to apply the buff and it is active 4 GCDs after triggering
-            double[] buffDurations = { 6.5, 10, 12, 15 }; // GC, SD, INQ, EGICD 
+            double[] buffDurations = { 6.5, 10, 12, 15, 10 }; // GC, SD, INQ, EGICD , JotW
             this.StepDuration = 1.5 / stepsPerGcd;
             this.StepsPerGcd = stepsPerGcd;
             this.abilitySteps = abilityCooldowns.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();

@@ -18,10 +18,13 @@ namespace Matlabadin
             if (pr == null) throw new ArgumentNullException("pr");
             // Special case Inquisition since we may not have inq up when we cast Inq but it's up as a buff for the duration of the casting GCD
             int inqLeft = sm.TimeRemaining(state, Buff.Inq);
+            int jotwLeft = sm.TimeRemaining(state, Buff.JotW);
             if (a == Ability.Inq && sm.HP(state) > 0) inqLeft += gp.StepsPerGcd; // add at least the GCD to the remaining duration
+            if (a == Ability.J) jotwLeft += gp.StepsPerGcd;
             Choice<TState> c = new Choice<TState>(a,
                 a == Ability.SotR && sm.TimeRemaining(state, Buff.SD) > 0,
                 inqLeft,
+                jotwLeft,
                 sm.HP(state),
                 stepsDuration,
                 pr);
@@ -31,6 +34,7 @@ namespace Matlabadin
             Ability ability,
             bool sotrsd,
             int inq,
+            int jotw,
             int hp,
             int stepsDuration,
             double[] pr)
@@ -40,6 +44,7 @@ namespace Matlabadin
             this.sotrsd = sotrsd;
             this.stepsDuration = stepsDuration;
             this.inqDuration = Math.Min(inq, stepsDuration);
+            this.jotwDuration = Math.Min(jotw, stepsDuration);
             this.pr = pr;
         }
         // Output related
@@ -66,6 +71,7 @@ namespace Matlabadin
         private readonly bool sotrsd;
         private readonly int hp;
         // aggregation stats
+        public readonly int jotwDuration;
         public readonly int inqDuration;
         public readonly int stepsDuration;
         // transition likelyhoods
@@ -80,6 +86,7 @@ namespace Matlabadin
             return ability == c.ability
                 && sotrsd == c.sotrsd
                 && inqDuration == c.inqDuration
+                && jotwDuration == c.jotwDuration
                 && hp == c.hp
                 && stepsDuration == c.stepsDuration
                 && pr.SequenceEqual(c.pr);
@@ -89,6 +96,7 @@ namespace Matlabadin
             int hash = pr.Aggregate(0, (h, p) => h ^ p.GetHashCode());
             hash ^= stepsDuration.GetHashCode();
             hash ^= inqDuration << 7;
+            hash ^= jotwDuration << 28;
             hash ^= hp << 11;
             if (sotrsd) hash ^= 1 << 27;
             hash += (int)ability << 16;

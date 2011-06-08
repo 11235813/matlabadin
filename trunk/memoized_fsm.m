@@ -1,5 +1,6 @@
-function  [actionPr, inqUptime, metadata] = memoized_fsm(rotation, mehit, rhit, consGlyph, egTalentPoints , sdTalentPoints, gcTalentPoints )
+function  [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(rotation, mehit, rhit, consGlyph, egTalentPoints , sdTalentPoints, gcTalentPoints )
     global fsm_cache_actionPr;
+    global fsm_cache_jotwUptime;
     global fsm_cache_inqUptime;
     global fsm_cache_metadata;
 	% Check that we're not caching outdated mechanics
@@ -7,8 +8,9 @@ function  [actionPr, inqUptime, metadata] = memoized_fsm(rotation, mehit, rhit, 
     if exist('fsm.exe') == 2 && fsmFileMetadata.datenum <= max(arrayfun(@(x) x.datenum, dir('RotationCalculator\Matlabadin\*.cs')))
 		warning('Flushing fsm memory cache');
 		fsm_cache_actionPr = {};
+        fsm_cache_metadata = {};
 		fsm_cache_inqUptime = {};
-		fsm_cache_metadata = {};
+		fsm_cache_jotwUptime = {};
 	end
 	
     rotationKey = rotation;
@@ -34,20 +36,22 @@ function  [actionPr, inqUptime, metadata] = memoized_fsm(rotation, mehit, rhit, 
     if isfield(fsm_cache_actionPr, rotationKey) && isfield(fsm_cache_actionPr.(rotationKey), optionsKey)
         % warning('using cached result');
         actionPr = fsm_cache_actionPr.(rotationKey).(optionsKey);
-        inqUptime = fsm_cache_inqUptime.(rotationKey).(optionsKey);
         metadata = fsm_cache_metadata.(rotationKey).(optionsKey);
+        inqUptime = fsm_cache_inqUptime.(rotationKey).(optionsKey);
+        jotwUptime = fsm_cache_jotwUptime.(rotationKey).(optionsKey);
         return;
     end
     fileCell = fsm_gen(rotation, mehit, rhit, consGlyph, egTalentPoints, sdTalentPoints, gcTalentPoints);
     filename = fileCell{1};
     % read from the data file
-    [actionPr, inqUptime, metadata] = load_fsm_csv(filename);
+    [actionPr, metadata, inqUptime, jotwUptime] = load_fsm_csv(filename);
     % TODO: sanity check that file params match our args
     fsm_cache_actionPr.(rotationKey).(optionsKey) = actionPr;
-    fsm_cache_inqUptime.(rotationKey).(optionsKey) = inqUptime;
     fsm_cache_metadata.(rotationKey).(optionsKey) = metadata;
+    fsm_cache_inqUptime.(rotationKey).(optionsKey) = inqUptime;
+    fsm_cache_jotwUptime.(rotationKey).(optionsKey) = jotwUptime;
 end
-function [actionPr, inqUptime, metadata] = load_fsm_csv(filename)
+function [actionPr, metadata, inqUptime, jotwUptime] = load_fsm_csv(filename)
 	fid = fopen(filename, 'rt');
 	i = 1;
 	metadata = {};
@@ -57,8 +61,10 @@ function [actionPr, inqUptime, metadata] = load_fsm_csv(filename)
 		lineAction = rowEntry{1};
 		lineTxtPr = rowEntry{2};
 		linePr = str2double(lineTxtPr);
-		if strcmp(lineAction, 'InqUptime')
+		if strcmp(lineAction, 'Uptime_Inq')
             inqUptime = linePr;
+        elseif strcmp(lineAction, 'Uptime_JotW')
+            jotwUptime = linePr;
 		elseif length(lineAction) > 6 && strcmp('Stats_', lineAction(1:6))
 			metadata.(lineAction) = lineTxtPr;
 		elseif length(lineAction) > 6 && strcmp('Param_', lineAction(1:6))
