@@ -118,6 +118,15 @@ namespace Matlabadin.Tests
             DoTest(gp, 3, Ability.Inq);
         }
         [TestMethod]
+        public void HPConditionalShouldNotRequireConditional()
+        {
+            Int64GraphParameters gp = NoHitExpertise("HW[HP=2]");
+            DoTest(gp, 0, Ability.Nothing);
+            DoTest(gp, 1, Ability.Nothing);
+            DoTest(gp, 2, Ability.HW);
+            DoTest(gp, 3, Ability.Nothing);
+        }
+        [TestMethod]
         public void ConditionalsTests()
         {
             Int64GraphParameters gp;

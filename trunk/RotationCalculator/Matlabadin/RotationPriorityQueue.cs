@@ -46,37 +46,7 @@ namespace Matlabadin
                 if (action.StartsWith("SD")) action = action.Substring(2) + "[buffSD>0]";
                 while (action.Contains("["))
                 {
-                    Match conditionMatch = Regex.Match(action, @"\[(?<type>(cd)|(buff))(?<conditional>\w+)(?<operation>[><=]+)(?<value>\d*\.?\d*)\]");
-                    if (!conditionMatch.Success) throw new ArgumentException("Malformed conditional in rotation.");
-                    string type = conditionMatch.Groups["type"].Value;
-                    string conditional = conditionMatch.Groups["conditional"].Value;
-                    string operation = conditionMatch.Groups["operation"].Value;
-                    double value = Double.Parse(conditionMatch.Groups["value"].Value);
-                    Func<IStateManager<TState>, TState, int> getRemaining;
-                    if (type == "cd")
-                    {
-                        Ability a = (Ability)Enum.Parse(typeof(Ability), conditional);
-                        getRemaining = (sm, state) => sm.CooldownRemaining(state, a);
-                        conditionalAbilityList.Add(a);
-                    }
-                    else //if (type == "buff")
-                    {
-                        Buff b = (Buff)Enum.Parse(typeof(Buff), conditional);
-                        getRemaining = (sm, state) => sm.TimeRemaining(state, b);
-                    }
-                    Func<GraphParameters<TState>, IStateManager<TState>, TState, bool> condition = null;
-                    switch (operation)
-                    {
-                        case "=": condition = (gp, sm, state) => getRemaining(sm, state) == (int)(value / gp.StepDuration); break;
-                        case "==": condition = (gp, sm, state) => getRemaining(sm, state) == (int)(value / gp.StepDuration); break;
-                        case ">": condition = (gp, sm, state) => getRemaining(sm, state) > (int)(value / gp.StepDuration); break;
-                        case ">=": condition = (gp, sm, state) => getRemaining(sm, state) >= (int)(value / gp.StepDuration); break;
-                        case "<": condition = (gp, sm, state) => getRemaining(sm, state) < (int)(value / gp.StepDuration); break;
-                        case "<=": condition = (gp, sm, state) => getRemaining(sm, state) <= (int)(value / gp.StepDuration); break;
-                    }
-                    if (condition == null) throw new ArgumentException("Unknown conditional operator {0}", operation);
-                    abilityConditionals[i].Add(condition);
-                    action = action.Replace(conditionMatch.Value, "");
+                    action = ProcessConditional(i, conditionalAbilityList, action);
                 }
                 switch (action) // Special ability-specific conditions go here
                 {
@@ -117,6 +87,69 @@ namespace Matlabadin
                 remainingQueue = remainingQueue.Trim('>');
                 i++;
             }
+        }
+
+        private string ProcessConditional(int i, List<Ability> conditionalAbilityList, string action)
+        {
+            Match conditionMatch = Regex.Match(action, @"\[(?<type>(cd)|(buff|HP))(?<conditional>\w*)(?<operation>[><=]+)(?<value>\d*\.?\d*)\]");
+            if (!conditionMatch.Success) throw new ArgumentException("Malformed conditional in rotation.");
+            string type = conditionMatch.Groups["type"].Value;
+            string conditional = conditionMatch.Groups["conditional"].Value;
+            string operation = conditionMatch.Groups["operation"].Value;
+            double value = Double.Parse(conditionMatch.Groups["value"].Value);
+            Func<GraphParameters<TState>, IStateManager<TState>, TState, bool> condition;
+            if (type == "HP")
+            {
+                condition = GetHPConditionalMethod(operation, value);
+            }
+            else
+            {
+                condition = GetCdBuffConditionalMethod(conditionalAbilityList, type, conditional, operation, value);
+            }
+            if (condition == null) throw new ArgumentException("Unknown conditional operator {0}", operation);
+            abilityConditionals[i].Add(condition);
+            action = action.Replace(conditionMatch.Value, "");
+            return action;
+        }
+        private static Func<GraphParameters<TState>, IStateManager<TState>, TState, bool> GetHPConditionalMethod(string operation, double value)
+        {
+            Func<GraphParameters<TState>, IStateManager<TState>, TState, bool> condition = null;
+            switch (operation)
+            {
+                case "=": condition = (gp, sm, state) => sm.HP(state) == (int)(value); break;
+                case "==": condition = (gp, sm, state) => sm.HP(state) == (int)(value); break;
+                case ">": condition = (gp, sm, state) => sm.HP(state) > (int)(value); break;
+                case ">=": condition = (gp, sm, state) => sm.HP(state) >= (int)(value); break;
+                case "<": condition = (gp, sm, state) => sm.HP(state) < (int)(value); break;
+                case "<=": condition = (gp, sm, state) => sm.HP(state) <= (int)(value); break;
+            }
+            return condition;
+        }
+        private static Func<GraphParameters<TState>, IStateManager<TState>, TState, bool> GetCdBuffConditionalMethod(List<Ability> conditionalAbilityList, string type, string conditional, string operation, double value)
+        {
+            Func<IStateManager<TState>, TState, int> getRemaining;
+            if (type == "cd")
+            {
+                Ability a = (Ability)Enum.Parse(typeof(Ability), conditional);
+                getRemaining = (sm, state) => sm.CooldownRemaining(state, a);
+                conditionalAbilityList.Add(a);
+            }
+            else //if (type == "buff")
+            {
+                Buff b = (Buff)Enum.Parse(typeof(Buff), conditional);
+                getRemaining = (sm, state) => sm.TimeRemaining(state, b);
+            }
+            Func<GraphParameters<TState>, IStateManager<TState>, TState, bool> condition = null;
+            switch (operation)
+            {
+                case "=": condition = (gp, sm, state) => getRemaining(sm, state) == (int)(value / gp.StepDuration); break;
+                case "==": condition = (gp, sm, state) => getRemaining(sm, state) == (int)(value / gp.StepDuration); break;
+                case ">": condition = (gp, sm, state) => getRemaining(sm, state) > (int)(value / gp.StepDuration); break;
+                case ">=": condition = (gp, sm, state) => getRemaining(sm, state) >= (int)(value / gp.StepDuration); break;
+                case "<": condition = (gp, sm, state) => getRemaining(sm, state) < (int)(value / gp.StepDuration); break;
+                case "<=": condition = (gp, sm, state) => getRemaining(sm, state) <= (int)(value / gp.StepDuration); break;
+            }
+            return condition;
         }
         public bool Contains(Ability a)
         {
