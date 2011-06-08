@@ -98,7 +98,7 @@ namespace Matlabadin
                 return choice;
             }
         }
-        public Dictionary<string, double> CalculateResults(double[] pr, out double inqUptime)
+        public Dictionary<string, double> CalculateResults(double[] pr, out double inqUptime, out double jotwUptime)
         {
             // t = time in state
             // pr = probability of being in state
@@ -107,14 +107,17 @@ namespace Matlabadin
             Dictionary<string, double> cps = new Dictionary<string, double>();
             double sumtpr = 0;
             double suminqtpr = 0;
+            double sumjotwtpr = 0;
             for (int i = 0; i < index.Length; i++)
             {
                 Choice<TState> c = choice[i];
                 double t = c.stepsDuration * GraphParameters.StepDuration;
                 double inqt = c.inqDuration * GraphParameters.StepDuration;
+                double jotwt = c.jotwDuration * GraphParameters.StepDuration;
                 double tpr = t * pr[i];
                 sumtpr += tpr;
                 suminqtpr += inqt * pr[i];
+                sumjotwtpr += jotwt * pr[i];
                 if (c.Ability != Ability.Nothing)
                 {
                     double currentPr;
@@ -123,6 +126,7 @@ namespace Matlabadin
                 }
             }
             inqUptime = suminqtpr / sumtpr;
+            jotwUptime = sumjotwtpr / sumtpr;
             return cps.ToDictionary(kvp => kvp.Key, kvp => kvp.Value / sumtpr);
         }
         /// <summary>

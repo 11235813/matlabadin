@@ -189,6 +189,10 @@ namespace Matlabadin
                     nextState = sm.SetTimeRemaining(nextState, Buff.Inq, sm.HP(nextState) * gp.BuffDurationInSteps(Buff.Inq) / 3);
                     nextState = sm.SetHP(nextState, 0);
                     break;
+                case Ability.J:
+                    // 4.2: JotW triggered by J cast not J landing
+                    nextState = sm.SetTimeRemaining(nextState, Buff.JotW, gp.BuffDurationInSteps(Buff.JotW));
+                    break;
             }
             if (egProc)
             {

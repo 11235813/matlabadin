@@ -68,7 +68,7 @@ for c=1:length(cfg)
     tic
     for kk=1:length(queue.st)
         waitbar(kk/length(queue.st),wb)
-        [actionPr, inqUptime, metadata] = memoized_fsm(queue.st{kk}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+        [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.st{kk}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
         
         %store stuff for debugging
         fsmdata(kk,c).meta=metadata;

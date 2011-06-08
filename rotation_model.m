@@ -44,7 +44,7 @@ for i=1:length(queue.rot);
         
     %generate FSM results
     if length(mdf.mehit)==1 && length(mdf.rahit)==1
-        [actionPr, inqUptime, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+        [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
         %convert actionPr to CPS array
         inq = inqUptime;
         [cps]=action2cps(actionPr,metadata);
@@ -59,7 +59,7 @@ for i=1:length(queue.rot);
         if useParallel
             fsm_gen(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
             for j=1:length(mdf.mehit)
-                [actionPr,inqUptime,metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+                [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
                 inq(:,j) = inqUptime;
                 [cps(:,j)]=action2cps(actionPr,metadata,val.fsmlabel);
             end
@@ -67,7 +67,7 @@ for i=1:length(queue.rot);
             wb=waitbar(0,'Generating/Loading FSM data');
             for j=1:length(mdf.mehit)
                 waitbar(j/val.length,wb,['FSM gen/load for ' queue.rot{i}])
-                [actionPr, inqUptime, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+                [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
                 inq(:,j) = inqUptime;
                 [cps(:,j)]=action2cps(actionPr,metadata,val.fsmlabel);
             end
@@ -80,7 +80,7 @@ for i=1:length(queue.rot);
         if useParallel
             fsm_gen(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
             for j=1:length(mdf.mehit)
-                [actionPr, inqUptime, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+                [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
                 inq(:,j) = inqUptime;
                 [cps(:,j)]=action2cps(actionPr, metadata,val.fsmlabel);
             end
