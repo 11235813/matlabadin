@@ -8,7 +8,7 @@ def_db;
 exec=execution_model('veng',1); 
 base=player_model('race','Belf','prof','');
 npc=npc_model(base);
-egs=ddb.gearset{3};  %1=pre-raid , 2=T11, 3=T11H
+egs=ddb.gearset{4};  %3=T11H, 4=T12, 5=T12H
 gear_stats;
 talent=ddb.talentset{1};  %placeholder, redefined in cfg
 glyph=ddb.glyphset{1}; %placeholder, redefined in cfg
@@ -33,6 +33,8 @@ weaplist1=[62457; %Ravening Slicer
            59521; %Soul Blade
            65094; %Fang of Twilight (Heroic)
            65036; %Mace of Acrid Death (Heroic)
+           70922; %Mandible of Beth'tilac 
+           71406; %Mandible of Beth'tilac (Heroic)
           ];
 
 weaplist2=[56433; %Blade of the Burning Sun (Heroic)
@@ -54,8 +56,8 @@ weaplist3=[65166; %Buzz Saw (Heroic)
            56396; %Hammer of Sparks (Heroic)
            56384; %Resonant Kris (Heroic)
            65164; %Cruel Barb (Heroic)
-           56353; %Heavy Geode Mace (Heroic)
            55067; %Elementium Bonesplitter
+           56353; %Heavy Geode Mace (Heroic)
            65170; %Smite''s Reaver (Heroic)
            69575; %Mace of the Sacrificed
            69803; %Gurubashi Punisher
@@ -66,6 +68,10 @@ weaplist3=[65166; %Buzz Saw (Heroic)
            64885; %Scimitar of the Sirocco
            65024; %Crul''korak, the Lightning''s Arc (Heroic)
            65047; %Lava Spine (Heroic)
+           70222; %Ruthless Glad Bonecracker 378
+           71362; %Blackcleave Chopper
+           70201; %Ruthless Glad Bonecrakcer 391
+           71562; %Blackcleave Chopper (Heroic)
           ];
 weaplist=[weaplist1;weaplist2;weaplist3];
           

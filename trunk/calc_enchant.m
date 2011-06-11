@@ -11,7 +11,7 @@ base=player_model('race','Belf','prof','');
 npc=npc_model(base);
 %invoke all buffs except food
 buff=buff_model('mode',0,'food',0);
-egs=ddb.gearset{3};  %1=pre-raid , 2=T11, 3=T11H
+egs=ddb.gearset{4};  %3=T11H, 4=T12, 5=T12H
 %clear main hand enchant slot
 egs(35)=equip(1,'s');
 gear_stats;
