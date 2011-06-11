@@ -43,6 +43,7 @@ mdf.glyphAS=1+0.3.*glyph.FocusedShield;          %AS output
 mdf.glyphSoT=10.*glyph.SealofTruth.*mdf.rseal;   %expertise bonus (T/R)
 mdf.glyphSoI=0.05.*glyph.SealofInsight.*(strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)); %healing output
 mdf.glyphAscetic=1-0.3*glyph.AsceticCrusader;
+mdf.glyphHammerofWrath=1-glyph.HammerofWrath;
 
 %% Meta Gems, Enchants, Plate Spec, Tier Bonus
 %%%%%%%%%%% META
@@ -459,3 +460,5 @@ mdf.ramodel=mdf.rahit+(mdf.blockrdx-1).*target.block./100;
 
 %% Power Gains
 %Low-priority at the moment.
+jotwPerTick=0.03.*base.mana;
+jotwmps=jotwPerTick.*mdf.sphaste;

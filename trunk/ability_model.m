@@ -14,6 +14,7 @@ raw.JoT        =    (1+0.2229.*player.hsp+0.1421.*player.ap).*1.5;
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
 heal.SealofTruth=   0;
 threat.SealofTruth= max(dmg.SealofTruth,heal.SealofTruth).*mdf.RFury;
+mcost.SealofTruth=0;
 
 %Censure (fully stacked, full duration)
 raw.Censure=        (0.050.*player.hsp+0.0965.*player.ap).*5.*mdf.SotP.*mdf.spdmg;
@@ -31,6 +32,7 @@ raw.JoR                =    (1+0.32.*player.hsp+0.2.*player.ap);
 dmg.SealofRighteousness=    raw.SealofRighteousness.*mdf.phcrit.*target.resrdx; %automatical connect
 heal.SealofRighteousness=   0;
 threat.SealofRighteousness=max(dmg.SealofRighteousness,heal.SealofRighteousness).*mdf.RFury;
+mcost.SealofRighteousness=0;
 
 %Seal of Insight (15 PPM, not haste-normalized)
 raw.SealofInsight=          0.15.*(player.hsp+player.ap).*mdf.Divin;
@@ -38,6 +40,7 @@ raw.JoI          =          (1+0.25.*player.hsp+0.16.*player.ap);
 dmg.SealofInsight=          0;
 heal.SealofInsight=         raw.SealofInsight.*(15.*gear.swing./60);
 threat.SealofInsight=       max(dmg.SealofInsight,heal.SealofInsight).*mdf.hthreat.*mdf.RFury./exec.npccount;
+mcost.SealofInsight=-0.04.*base.mana;
 
 %Seal of Justice
 raw.SealofJustice=          gear.swing.*(0.005.*player.ap+0.01.*player.hsp) ...
@@ -46,6 +49,7 @@ raw.JoJ          =          (1+0.25.*player.hsp+0.16.*player.ap);
 dmg.SealofJustice=          raw.SealofJustice.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 heal.SealofJustice=         0;
 threat.SealofJustice=max(dmg.SealofJustice,heal.SealofJustice).*mdf.RFury;
+mcost.SealofJustice=0;
 
 %exhaustive listing of seal/judgement damage
 if isempty(exec.seal)
@@ -53,25 +57,30 @@ if isempty(exec.seal)
     heal.activeseal=0;
     threat.activeseal=0;
     raw.Judgement=0;
+    mcost.activeseal=0;
 elseif strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)
     dmg.activeseal=dmg.SealofInsight;
     heal.activeseal=heal.SealofInsight;
     threat.activeseal=threat.SealofInsight;
+    mcost.activeseal=mcost.SealofInsight;
     raw.Judgement=raw.JoI;
 elseif strcmpi('Justice',exec.seal)||strcmpi('SoJ',exec.seal)
     dmg.activeseal=dmg.SealofJustice;
     heal.activeseal=heal.SealofJustice;
     threat.activeseal=threat.SealofJustice;
+    mcost.activeseal=mcost.SealofJustice;
     raw.Judgement=raw.JoJ;
 elseif strcmpi('Righteousness',exec.seal)||strcmpi('SoR',exec.seal)
     dmg.activeseal=dmg.SealofRighteousness;
     heal.activeseal=heal.SealofRighteousness;
     threat.activeseal=threat.SealofRighteousness;
+    mcost.activeseal=mcost.SealofRighteousness;
     raw.Judgement=raw.JoR;
 elseif strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
     dmg.activeseal=dmg.SealofTruth;
     heal.activeseal=heal.SealofTruth;
     threat.activeseal=threat.SealofTruth;
+    mcost.activeseal=mcost.SealofTruth;
     raw.Judgement=raw.JoT;
 end
 
@@ -85,6 +94,7 @@ threat.CrusaderStrike=max(dmg.CrusaderStrike,heal.CrusaderStrike).*mdf.RFury;
 net.CrusaderStrike{1}=dmg.CrusaderStrike+dmg.activeseal.*mdf.mehit;
 net.CrusaderStrike{2}=heal.CrusaderStrike+heal.activeseal.*mdf.mehit;
 net.CrusaderStrike{3}=threat.CrusaderStrike+threat.activeseal.*mdf.mehit;
+mcost.CrusaderStrike=0.1.*mdf.glyphAscetic.*base.mana;
 
 %Hammer of the Righteous
 %physical (can be blocked)
@@ -95,6 +105,8 @@ threat.HammeroftheRighteous=max(dmg.HammeroftheRighteous,heal.HammeroftheRighteo
 net.HammeroftheRighteous{1}=dmg.HammeroftheRighteous+dmg.activeseal.*mdf.mehit.*mdf.rseal;
 net.HammeroftheRighteous{2}=heal.HammeroftheRighteous;
 net.HammeroftheRighteous{3}=threat.HammeroftheRighteous+threat.activeseal.*mdf.mehit.*mdf.rseal;
+mcost.HammeroftheRighteous=0.1.*base.mana;
+
 %Nova is back to having its own combat roll on the spell hit table.
 raw.HammerNova=   (728.8813374+0.18.*player.ap).*mdf.spdmg.*(1+mdf.Crus+mdf.glyphHotR);
 dmg.HammerNova=   raw.HammerNova.*mdf.mehit.*mdf.sphit.*mdf.HotRspcrit.*target.resrdx; %spell hit/crit
@@ -118,8 +130,8 @@ net.Melee{3}=       threat.Melee+threat.activeseal.*mdf.mehit;
 
 %Shield of the Righteous (can be blocked)
 mdf.hpscale=(player.hopo==1)+3.*(player.hopo==2)+6.*(player.hopo==3);
-raw.ShieldoftheRighteous= ((610.2+0.1.*player.ap).*mdf.hpscale).*mdf.spdmg.*mdf.glyphSotR.*mdf.t12x2;
-dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit ...
+raw.ShieldoftheRighteous= ((610.2+0.1.*player.ap).*mdf.hpscale).*mdf.spdmg.*mdf.glyphSotR;
+dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit.*(1+mdf.t12x2.*mdf.mehit) ... %melee hit assumed here for tier bonus, needs to be tested
                           .*target.resrdx; %melee hit
 heal.ShieldoftheRighteous=0;
 % threat.ShieldoftheRighteous{1}=raw.ShieldoftheRighteous.*mdf.RFury;
@@ -128,7 +140,7 @@ threat.ShieldoftheRighteous=dmg.ShieldoftheRighteous.*mdf.RFury;
 net.ShieldoftheRighteous{1}=dmg.ShieldoftheRighteous+dmg.activeseal;
 net.ShieldoftheRighteous{2}=heal.ShieldoftheRighteous+heal.activeseal.*mdf.mehit;
 net.ShieldoftheRighteous{3}=threat.ShieldoftheRighteous+threat.activeseal.*mdf.mehit;
-
+mcost.ShieldoftheRighteous=0;
 
 %% Ranged abilities
 
@@ -140,6 +152,7 @@ threat.AvengersShield=max(dmg.AvengersShield,heal.AvengersShield).*mdf.RFury;
 net.AvengersShield{1}=dmg.AvengersShield+dmg.activeseal.*mdf.rahit.*mdf.tseal;
 net.AvengersShield{2}=heal.AvengersShield;
 net.AvengersShield{3}=threat.AvengersShield+threat.activeseal.*mdf.rahit.*mdf.tseal;
+mcost.AvengersShield=0.06.*base.mana;
 
 %Judgement (the seal of choice is defined in execution_model)
 mdf.jseals=(mdf.JotJ>1)&&(strcmpi('Righteousness',exec.seal)||strcmpi('SoR',exec.seal) ...
@@ -151,6 +164,7 @@ threat.Judgement=   max(dmg.Judgement,heal.Judgement).*mdf.RFury;
 net.Judgement{1}=   dmg.Judgement+dmg.activeseal.*mdf.rahit;
 net.Judgement{2}=   heal.Judgement+heal.activeseal.*mdf.rahit;
 net.Judgement{3}=   threat.Judgement+threat.activeseal.*mdf.rahit;
+mcost.Judgement=0.05.*base.mana;
 
 %Hammer of Wrath (can be blocked)
 raw.HammerofWrath= (4015.02439+0.117.*player.hsp+0.39.*player.ap).*mdf.spdmg;
@@ -160,6 +174,7 @@ threat.HammerofWrath=max(dmg.HammerofWrath,heal.HammerofWrath).*mdf.RFury;
 net.HammerofWrath{1}=dmg.HammerofWrath+dmg.activeseal.*mdf.rahit;
 net.HammerofWrath{2}=heal.HammerofWrath+heal.activeseal.*mdf.rahit;
 net.HammerofWrath{3}=threat.HammerofWrath+threat.activeseal.*mdf.rahit;
+mcost.HammerofWrath=0.12.*mdf.glyphHammerofWrath.*base.mana;
 
 %% Spell abilities
 
@@ -171,6 +186,7 @@ threat.Consecration=(max(dmg.Consecration,heal.Consecration)+12).*mdf.RFury;
 net.Consecration{1}=dmg.Consecration;
 net.Consecration{2}=heal.Consecration;
 net.Consecration{3}=threat.Consecration;
+mcost.Consecration = 0.55.*(1-2.*mdf.HalGro).*base.mana;
 
 %Exorcism
 mdf.Exorcrit=mdf.spcrit.*(npc.type==0)+mdf.spcritm.*(npc.type==1); %tracking npc type
@@ -182,6 +198,7 @@ threat.Exorcism=    max(dmg.Exorcism,heal.Exorcism).*mdf.RFury;
 net.Exorcism{1}=    dmg.Exorcism+dmg.activeseal.*mdf.sphit.*mdf.tseal;
 net.Exorcism{2}=    heal.Exorcism;
 net.Exorcism{3}=    threat.Exorcism+threat.activeseal.*mdf.sphit.*mdf.tseal;
+mcost.Exorcism = 0.3.*base.mana;
 
 %Holy Wrath
 raw.HolyWrath=      ((2402.8+0.61.*player.hsp)./exec.npccount).*mdf.spdmg;
@@ -191,6 +208,7 @@ threat.HolyWrath=   max(dmg.HolyWrath,heal.HolyWrath).*mdf.RFury;
 net.HolyWrath{1}=   dmg.HolyWrath;
 net.HolyWrath{2}=   heal.HolyWrath;
 net.HolyWrath{3}=   threat.HolyWrath;
+mcost.HolyWrath = 0.2.*base.mana;
 
 %Word of Glory
 raw.WordofGlory=    (2133+0.2086.*player.hsp+0.1984.*player.ap).*player.hopo ...
@@ -201,6 +219,7 @@ threat.WordofGlory= 11.*(exec.overh>0).*mdf.RFury./exec.npccount;
 net.WordofGlory{1}= dmg.WordofGlory;
 net.WordofGlory{2}= heal.WordofGlory;
 net.WordofGlory{3}= threat.WordofGlory;
+mcost.WordofGlory = 0;
 
 
 %% Consolidated arrays
@@ -436,6 +455,43 @@ if (strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)) mdf.iseal=min([exec.
           threat.activeseal.*mdf.Inq.*val.ones;                                   %seal(Inq)
           val.zeros;                                                               %Nothing
           val.zeros];                                                              %Nothing(Inq)
+      
+ val.fsmmana=[...
+          val.zeros;                                                            %Inq
+          val.zeros;                                                            %Inq(Inq)
+          val.zeros;                                %SotR2
+          val.zeros;                                %SotR2(SD)
+          val.zeros;                                %SotR2(Inq)
+          val.zeros;                                %SotR2(SD)(Inq)
+          val.zeros;                                %SotR
+          val.zeros;                                %SotR(SD)
+          val.zeros;                                %SotR(Inq)
+          val.zeros;                                %SotR(SD)(Inq)
+          val.zeros;                                %WoG
+          val.zeros;                                %WoG(Inq)
+          ...
+          mcost.CrusaderStrike.*val.ones;         	%CS
+          mcost.CrusaderStrike.*val.ones;         	%CS(Inq)
+          mcost.HammeroftheRighteous.*val.ones;  	%HotR
+          val.zeros;                                %HammerNova
+          mcost.HammeroftheRighteous.*val.ones;    	%HotR(Inq)
+          val.zeros;                                %HammerNova(Inq)
+          ...
+          mcost.AvengersShield.*val.ones;          	%AS
+          mcost.AvengersShield.*val.ones;          	%AS(Inq)
+          mcost.Consecration.*val.ones;            	%Cons
+          mcost.Consecration.*val.ones;           	%Cons(Inq)
+          mcost.HammerofWrath.*val.ones;        	%HoW
+          mcost.HammerofWrath.*val.ones;        	%HoW(Inq)
+          mcost.HolyWrath.*val.ones;              	%HW
+          mcost.HolyWrath.*val.ones;              	%HW(Inq)
+          mcost.Judgement.*val.ones;             	%J
+          mcost.Judgement.*val.ones;            	%J(Inq)
+          ...
+          mcost.activeseal;                         %seal
+          mcost.activeseal;                         %seal(Inq)
+          val.zeros;                                %Nothing
+          val.zeros];    
       
  val.fsmlabel={'Inq';'Inq(Inq)';'SotR2';'SotR2(SD)';'SotR2(Inq)';'SotR2(SD)(Inq)';'SotR';'SotR(SD)';'SotR(Inq)';'SotR(SD)(Inq)';'WoG';'WoG(Inq)';...
                'CS';'CS(Inq)';'HotR';'HammerNova';'HotR(Inq)';'HammerNova(Inq)';...

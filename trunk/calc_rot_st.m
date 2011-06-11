@@ -50,7 +50,7 @@ cfg(3).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
 
 %preallocate arrays for speed
 cmat=zeros(length(queue.st),length(val.fsmlabel),length(cfg));
-inqup=zeros(length(queue.st),1);
+inqup=zeros(length(queue.st),1);mps=inqup;
 empties=inqup;
 
 for c=1:length(cfg)
@@ -80,6 +80,9 @@ for c=1:length(cfg)
         %store in coefficient matrices
         cmat(kk,:,c)=cps';
         inqup(kk)=inqUptime;
+        mpsgain=jotwUptime.*jotwmps;
+        mpscost=sum(cps.*val.fsmmana);
+        mps(kk)=mpsgain-mpscost;
         empties(kk)=sum(cps((length(cps)-1):length(cps)));
     end
     close(wb)
@@ -142,6 +145,7 @@ li{c} =    [spacer char({' ','Q#',int2str([1:length(queue.st)]')}) ...
             spacer char({' ','V=30%',int2str(tothps(:,2,c))}) ...
             spacer char({' E',' %',num2str(empties.*100,'%3.1f')}) ...
             spacer char({' I',' %',num2str(inqup.*100,'%3.1f')})...
+            spacer char({'mps','  ',num2str(mps,'%4.0f')})...
             ];
 %             spacer char({' E',' #',int2str([rdata(:,c).empties]')}) ...
 %             spacer char({'SotR','miss',int2str([rdata(:,c).smiss]')}) ...
