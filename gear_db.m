@@ -963,7 +963,7 @@ idb.iid(69109).name='Scales of Life (Heroic)';
 idb.iid(69109).ilvl=391;
 idb.iid(69109).sta=650;
 
-%% Weapons
+%% Weapons - Axes
 idb.iid(55067).name='Elementium Bonesplitter';
 idb.iid(55067).wtype='axe';
 idb.iid(55067).ilvl=346;
@@ -1145,6 +1145,8 @@ idb.iid(71562).str=197;
 idb.iid(71562).sta=296;
 idb.iid(71562).hit=119;
 idb.iid(71562).mast=139;
+
+%% Weapons - Maces
 
 idb.iid(55065).name='Elementium Hammer';
 idb.iid(55065).wtype='mac';
@@ -1414,7 +1416,7 @@ idb.iid(70222).str=175;
 idb.iid(70222).sta=262;
 idb.iid(70222).crit=116;
 
-idb.iid(70201).name='Ruthless Gladiator''s Bonecracker';
+idb.iid(70201).name='Ruthless Gladiator''s Bonecracker (Heroic)';
 idb.iid(70201).wtype='mac';
 idb.iid(70201).ilvl=391;
 idb.iid(70201).tooldps=622.9;
@@ -1423,6 +1425,8 @@ idb.iid(70201).avgdmg=1619.5;
 idb.iid(70201).str=197;
 idb.iid(70201).sta=296;
 idb.iid(70201).crit=131;
+
+%% Weapons - Swords
 
 idb.iid(56346).name='Elementium Fang (Heroic)';
 idb.iid(56346).wtype='swo';
