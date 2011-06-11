@@ -13,7 +13,7 @@ npc=npc_model(base);
 exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','SoT','veng',1.0);
 
 %load gear set
-egs=ddb.gearset{2}; %1=pre-raid , 2=raid
+egs=ddb.gearset{4}; %1=pre-raid , 2=T11, 3=T11H, 4=T12, 5=T12H
 
 %calculate relevant stats
 gear_stats;

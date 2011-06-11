@@ -116,6 +116,84 @@ tempegs(17)=socket(tempegs(17),gem.blu);
 ddb.gearset(3)={tempegs};
 
 
+%T12 Normal Raid set
+tempegs(1)=equip(70916);  %Helm of Blazing Glory
+tempegs(1)=socket(tempegs(1),gem.meta,gem.yel);
+tempegs(2)=equip(70935); %Stoneheart Necklace
+tempegs(3)=equip(70946); %T12
+tempegs(3)=reforge(tempegs(3),'hit','dodge');
+tempegs(3)=socket(tempegs(3),gem.yel);
+tempegs(4)=equip(70930); %Durable Flamewrath Greatcloak
+tempegs(4)=reforge(tempegs(4),'hit','mast');
+tempegs(5)=equip(70950); %T12
+tempegs(5)=reforge(tempegs(5),'dodge','mast');
+tempegs(5)=socket(tempegs(5),gem.red,gem.blu);
+tempegs(6)=equip(70920); %Bracers of The Fiery Path
+tempegs(6)=socket(tempegs(6),gem.blu);
+tempegs(7)=equip(70949); %T12
+tempegs(7)=socket(tempegs(7),gem.red);
+tempegs(8)=equip(71021); %Uncrushable Belt of Fury
+tempegs(8)=reforge(tempegs(8),'exp','dodge');
+tempegs(8)=enhance(tempegs(8),equip(76168,'s')); %Belt Buckle
+tempegs(8)=socket(tempegs(8),gem.yel,gem.blu);
+tempegs(9)=equip(70947); %T12
+tempegs(9)=socket(tempegs(9),gem.red,gem.blu);
+tempegs(10)=equip(69947); %Mirrored Boots
+tempegs(10)=socket(tempegs(10),gem.red);
+tempegs(11)=equip(71367); %Theck's Emberseal
+tempegs(11)=reforge(tempegs(11),'hit','mast');
+tempegs(12)=equip(70940); %Deflecting Brimstone Band
+tempegs(13)=equip(68915); %Scales of Life
+tempegs(14)=equip(68981); %Spidersilk Spindle
+tempegs(15)=equip(70922); %Mandible of Beth'tilac
+tempegs(16)=equip(70915); %Shard of Torment
+tempegs(16)=reforge(tempegs(16),'parry','mast');
+tempegs(17)=equip(70939); %Deathclutch Figurine
+tempegs(17)=reforge(tempegs(17),'dodge','mast');
+tempegs(17)=socket(tempegs(17),gem.blu);
+ddb.gearset(4)={tempegs};
+
+%T12 Heroic Raid set
+tempegs(1)=equip(71459);  %Helm of Blazing Glory (H)
+tempegs(1)=socket(tempegs(1),gem.meta,gem.yel);
+tempegs(2)=equip(71589); %Stoneheart Necklace (H)
+tempegs(3)=equip(71526); %T12 (H)
+tempegs(3)=reforge(tempegs(3),'hit','dodge');
+tempegs(3)=socket(tempegs(3),gem.yel);
+tempegs(4)=equip(71392);  %Durable Flamewrath Greatcloak (H)
+tempegs(4)=reforge(tempegs(4),'hit','mast');
+tempegs(5)=equip(71522); %T12 (H)
+tempegs(5)=reforge(tempegs(5),'dodge','mast');
+tempegs(5)=socket(tempegs(5),gem.red,gem.blu);
+tempegs(6)=equip(71470); %Bracers of The Fiery Path (H)
+tempegs(6)=socket(tempegs(6),gem.blu);
+tempegs(7)=equip(71523); %T12 (H)
+tempegs(7)=socket(tempegs(7),gem.red);
+tempegs(8)=equip(71443);  %Uncrushable Belt of Fury (H)
+tempegs(8)=reforge(tempegs(8),'exp','dodge');
+tempegs(8)=enhance(tempegs(8),equip(76168,'s')); %Belt Buckle
+tempegs(8)=socket(tempegs(8),gem.yel,gem.blu);
+tempegs(9)=equip(71525); %T12 (H)
+tempegs(9)=socket(tempegs(9),gem.red,gem.blu);
+tempegs(10)=equip(71420); %Cracked Obsidian Stompers (H)
+tempegs(10)=reforge(tempegs(10),'exp','mast');
+tempegs(10)=socket(tempegs(10),gem.blu);
+tempegs(11)=equip(70934); %Adamantite Signet of the Avengers
+tempegs(11)=reforge(tempegs(11),'hit','mast');
+tempegs(11)=socket(tempegs(11),gem.red);
+tempegs(12)=equip(71591); %Deflecting Brimstone Band (H)
+tempegs(13)=equip(69109); %Scales of Life (H)
+tempegs(14)=equip(69138); %Spidersilk Spindle (H)
+tempegs(15)=equip(71406); %Mandible of Beth'tilac
+tempegs(16)=equip(71460);  %Shard of Torment
+tempegs(16)=reforge(tempegs(16),'parry','mast');
+tempegs(17)=equip(71590); %Deathclutch Figurine
+tempegs(17)=reforge(tempegs(17),'dodge','mast');
+tempegs(17)=socket(tempegs(17),gem.blu);
+ddb.gearset(5)={tempegs};
+
+
+
 %% Talent Specs
 %0/32/9 spec for baseline calcs
 %http://www.wowhead.com/talent#sZGMhcRddRRucbu

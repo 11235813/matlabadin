@@ -55,6 +55,8 @@ mdf.meta_stun=1+0.10.*(gear.meta==5);
 mdf.plate=1+0.05.*gear.isplate;
 mdf.t11x2=0.1.*gear.tierbonus(1); %CS output
 mdf.t11x4=1+0.5.*gear.tierbonus(2); %GoAK duration
+mdf.t12x2=1+0.2.*gear.tierbonus(3); %Righteous Flames
+mdf.t12x4=12.*gear.tierbonus(4); %Fiery Aegis
 
 %%Standard Professions
 %(passive bonuses, independent of gearing choices)
