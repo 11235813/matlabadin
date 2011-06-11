@@ -118,15 +118,17 @@ net.Melee{3}=       threat.Melee+threat.activeseal.*mdf.mehit;
 
 %Shield of the Righteous (can be blocked)
 mdf.hpscale=(player.hopo==1)+3.*(player.hopo==2)+6.*(player.hopo==3);
-raw.ShieldoftheRighteous= ((610.2+0.1.*player.ap).*mdf.hpscale).*mdf.spdmg.*mdf.glyphSotR;
+raw.ShieldoftheRighteous= ((610.2+0.1.*player.ap).*mdf.hpscale).*mdf.spdmg.*mdf.glyphSotR.*mdf.t12x2;
 dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit ...
                           .*target.resrdx; %melee hit
 heal.ShieldoftheRighteous=0;
 % threat.ShieldoftheRighteous{1}=raw.ShieldoftheRighteous.*mdf.RFury;
 threat.ShieldoftheRighteous=dmg.ShieldoftheRighteous.*mdf.RFury;
-net.ShieldoftheRighteous{1}=dmg.ShieldoftheRighteous+dmg.activeseal.*mdf.mehit;
+
+net.ShieldoftheRighteous{1}=dmg.ShieldoftheRighteous+dmg.activeseal;
 net.ShieldoftheRighteous{2}=heal.ShieldoftheRighteous+heal.activeseal.*mdf.mehit;
 net.ShieldoftheRighteous{3}=threat.ShieldoftheRighteous+threat.activeseal.*mdf.mehit;
+
 
 %% Ranged abilities
 
