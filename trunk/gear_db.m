@@ -1955,6 +1955,10 @@ idb.sid(78172).name='Charscale Leg Armor';
 idb.sid(78172).sta=145;
 idb.sid(78172).agi=55;
 
+idb.sid(101598).name='Drakehide Leg Armor';
+idb.sid(101598).sta=145;
+idb.sid(101598).dodge=55;
+
 %% Feet
 idb.sid(74189).name='Enchant Boots - Earthen Vitality';
 idb.sid(74189).sta=30;
