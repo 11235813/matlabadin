@@ -16,26 +16,6 @@ talents;
 buff=buff_model;
 stat_model;
 
-% add/order/delete
-% t
-% 70158; %Elementium-Edged Scalper
-% 70163; %Unbreakable Guardian
-% c
-% 71776; %Eye of Purification
-% 71777; %Eye of Purification (Heroic)
-% 71355; %Ko''gun, Hammer of the Firelord
-% 71615; %Ko''gun, Hammer of the Firelord (Heroic)
-% 71006; %Volcanospike
-% 71422; %Volcanospike (Heroic)
-% 71784; %Firethorn Mindslicer (Heroic)
-% 71785; %Firethorn Mindslicer
-% 70157; %Lightforged Elementium Hammer
-% d
-% 71312; %Gatecrasher
-% 71454; %Gatecrasher (Heroic)
-% 71782; %Shatterskull Bonecrusher
-% 71783; %Shatterskull Bonecrusher (Heroic)
-% 70162; %Pyrium Spellward
 
 %% List of weapons
 weaplist1=[62457; %Ravening Slicer
@@ -52,6 +32,8 @@ weaplist1=[62457; %Ravening Slicer
            63533; %Fang of Twilight
            59347; %Mace of Acrid Death
            59521; %Soul Blade
+           70163; %Unbreakable Guardian
+           70158; %Elementium-Edged Scalper
            65094; %Fang of Twilight (Heroic)
            65036; %Mace of Acrid Death (Heroic)
            70922; %Mandible of Beth'tilac 
@@ -67,8 +49,17 @@ weaplist2=[56433; %Blade of the Burning Sun (Heroic)
            59463; %Maldo''s Sword Cane
            59459; %Andoros, Fist of the Dragon King
            63680; %Twilight''s Hammer
+           70157; %Lightforged Elementium Hammer
            65017; %Andoros, Fist of the Dragon King (Heroic)
            65090; %Twilight''s Hammer (Heroic)
+           71776; %Eye of Purification
+           71006; %Volcanospike
+           71785; %Firethorn Mindslicer
+           71355; %Ko''gun, Hammer of the Firelord
+           71777; %Eye of Purification (Heroic)
+           71422; %Volcanospike (Heroic)
+           71784; %Firethorn Mindslicer (Heroic)
+           71615; %Ko''gun, Hammer of the Firelord (Heroic)
           ];
       
           
@@ -87,17 +78,22 @@ weaplist3=[65166; %Buzz Saw (Heroic)
            68161; %Krol Decapitator
            59333; %Lava Spine
            64885; %Scimitar of the Sirocco
+           70162; %Pyrium Spellward
            65024; %Crul''korak, the Lightning''s Arc (Heroic)
            65047; %Lava Spine (Heroic)
+           71782; %Shatterskull Bonecrusher
            70222; %Ruthless Glad Bonecracker 378
-           71362; %Blackcleave Chopper
+           71362; %Obsidium Cleaver
+           71312; %Gatecrasher
+           71783; %Shatterskull Bonecrusher (Heroic)
            70201; %Ruthless Glad Bonecrakcer 391
-           71562; %Blackcleave Chopper (Heroic)
+           71562; %Obsidium Cleaver (Heroic)
+           71454; %Gatecrasher (Heroic)
           ];
 weaplist=[weaplist1;weaplist2;weaplist3];
           
 M=length(weaplist);  %total number of weapons
-M1=length(weaplist1);M2=length(weaplist2);M3=length(weaplist3);
+M1=length(weaplist1);M2=length(weaplist2);M3=length(weaplist3); %length of each individual section
 
 
 %% Configurations
@@ -172,6 +168,9 @@ end
 pinfo.name=char(pinfo.name);
 pinfo.labels=[pinfo.name repmat(' ',length(pinfo.ilvl),2) int2str(pinfo.ilvl')];
 
+
+%% Tables
+
 %HotR table
 % dps=dps2;
 % 'HotR table'
@@ -189,55 +188,65 @@ pptable=[pptable(1:M1,:); repmat(' ',1,size(pptable,2)); ...
          pptable(M1+[1:M2],:); repmat(' ',1,size(pptable,2)); ...
          pptable(M1+M2+[1:M3],:)]
 
-           
-i1=1:M1;
-i2=M1+1:M2;
-i3=M1+M2+[1:M3];
 
-y1=1:M1;
-y3=M1+1+[1:M3];
+%% Plots
+
+%number of weapons to skip in each category
+m1=7;
+m2=5;
+m3=8;
+% m1=0;m2=0;m3=0;
+
+%indices of desired weapons
+i1=(1+m1):M1;
+i2=M1+((1+m2):M2);
+i3=M1+M2+((1+m3):M3);
+
+%y-values for plots
+y1=1:(M1-m1);
+y3=(M1-m1)+1+(1:(M3-m3));
 % y2=M1+1+[1:M2];
 % y3=max(y2)+1+[1:M3];
 
+%combine indices and y values from different sections
 y=[y1 y3];
 i=[i1 i3];
 
-dps1p=[wdps(i,3) diff(wdps(i,3:4)')']./1000;
-pinfo.plotlabels=pinfo.labels(i,:);
+%construct DPS tables for plotting and sorting
+dps70=[wdps(:,3) diff(wdps(:,3:4)')']./1000;
+pinfo.plotlabels70=pinfo.labels(i,:);
+dps70p=dps70(i,:);
+xmin70=min(dps70p(:,1));
+xmax70=max(sum(dps70p,2));
 
+dps71=[wdps(i1,3) diff(wdps(i1,3:4)')']./1000;
+[x71 k71]=sort(dps71(:,1));y71=y1(k71);
+temp=pinfo.labels(i1,:);
+pinfo.plotlabels71=temp(k71,:);
+dps71p=dps71(k71,:);
+xmin71=min(dps71p(:,1));
+xmax71=max(sum(dps71p,2));
+
+%All weapons plot
 figure(70)
 % set(gcf,'Position',[2200 12 724 936])
-bar70=barh(y,dps1p,'BarWidth',0.5,'BarLayout','stacked');
+bar70=barh(y,dps70p,'BarWidth',0.5,'BarLayout','stacked');
 set(bar70(2),'FaceColor',[0.749 0.749 0]);
-xlim([0.99.*min(dps1p(:,1)) 1.01.*max(sum(dps1p,2))])
+xlim([0.99.*xmin70 1.01.*xmax70])
 ylim(0.5+[0 max(y)])
-set(gca,'YTick',y,'YTickLabel',pinfo.plotlabels)
+set(gca,'YTick',y,'YTickLabel',pinfo.plotlabels70)
 xlabel('DPS (thousands)')
 title('All by ilvl & category - CS rotation')
 legend('4% hit 18 exp','8% hit 26 exp','Location','Best')
 
 
-[x71 k71]=sort(dps1p(1:M1,1));y71=y1(k71);
 figure(71)
 % set(gcf,'Position',[2240 88 724 579])
-bar71=barh(dps1p(k71,:),'BarWidth',0.5,'BarLayout','stacked');
+bar71=barh(dps71p,'BarWidth',0.5,'BarLayout','stacked');
 set(bar71(2),'FaceColor',[0.749 0.749 0]);
-xlim([0.99.*min(dps1p(k71,1)) 1.01.*max(sum(dps1p(k71,:),2))])
+xlim([0.99.*xmin71 1.01.*xmax71])
 ylim(0.5+[0 max(y1)])
-set(gca,'YTick',y1,'YTickLabel',pinfo.labels(k71,:))
+set(gca,'YTick',y1,'YTickLabel',pinfo.plotlabels71)
 xlabel('DPS (thousands)')
 title('Tank weapons, sorted by DPS')
 legend('4% hit 18 exp','8% hit 26 exp','Location','Best')
-
-% dps2p=[dps2(:,1) diff(dps2')'];
-% 
-% figure(72)
-% % set(gcf,'Position',[2200 12 724 936])
-% bar72=barh(y,dps2p,'BarWidth',0.5,'BarLayout','stacked');
-% set(bar72(2),'FaceColor',[0.749 0.749 0]);
-% xlim([0.99.*min(min(dps2)) 1.01.*max(max(dps2))])
-% ylim(0.5+[0 max(y)])
-% set(gca,'YTick',y,'YTickLabel',pinfo.labels)
-% xlabel('DPS (thousands)')
-% title('All by ilvl & category - HotR rotation')
-% legend('4% hit 18 exp','8% hit 26 exp','Location','Best')
