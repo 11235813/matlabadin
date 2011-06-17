@@ -16,6 +16,27 @@ talents;
 buff=buff_model;
 stat_model;
 
+% add/order/delete
+% t
+% 70158; %Elementium-Edged Scalper
+% 70163; %Unbreakable Guardian
+% c
+% 71776; %Eye of Purification
+% 71777; %Eye of Purification (Heroic)
+% 71355; %Ko''gun, Hammer of the Firelord
+% 71615; %Ko''gun, Hammer of the Firelord (Heroic)
+% 71006; %Volcanospike
+% 71422; %Volcanospike (Heroic)
+% 71784; %Firethorn Mindslicer (Heroic)
+% 71785; %Firethorn Mindslicer
+% 70157; %Lightforged Elementium Hammer
+% d
+% 71312; %Gatecrasher
+% 71454; %Gatecrasher (Heroic)
+% 71782; %Shatterskull Bonecrusher
+% 71783; %Shatterskull Bonecrusher (Heroic)
+% 70162; %Pyrium Spellward
+
 %% List of weapons
 weaplist1=[62457; %Ravening Slicer
            65173; %Thief''s Blade (Heroic)
