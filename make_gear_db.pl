@@ -5,6 +5,7 @@ use warnings;
 
 use Sigrie;
 use Getopt::Long;
+use Switch;
 
 # list of item ids to parse
 my @items = ();
@@ -234,8 +235,17 @@ foreach my $id (@items) {
     print ";\n";
   }
   
-  # atype = 1 if item is plate (is this still useful?)
+  # armor type flag
   print "idb.iid($id).atype=1;\n" if $item{atype} and $item{atype} eq 'Plate';
+  
+  # reforging flag
+  print "idb.iid($id).isreforged=0;\n";
+  
+  # tier set flag
+  switch ($id) {
+        case [60354..60358,65224..65228] { print "idb.iid($id).istier=[1 0 0];\n" }
+        case [70946..70950,71522..71526] { print "idb.iid($id).istier=[0 1 0];\n" }
+    }
   
   
   print "\n";
