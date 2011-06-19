@@ -12,23 +12,23 @@
 
 
 %offensive stats
-cnv.agi_phcrit=203.08.*(base.lvl==85);
-cnv.int_spcrit=648.91.*(base.lvl==85);
+cnv.agi_phcrit=203.08;
+cnv.int_spcrit=648.91;
 cnv.str_ap=2;
 cnv.int_sp=1;
-cnv.crit_phcrit=179.28004455.*(base.lvl==85);
-cnv.crit_spcrit=179.28004455.*(base.lvl==85);
-cnv.hit_phhit=120.10880279.*(base.lvl==85);
-cnv.hit_sphit=102.44573974.*(base.lvl==85);
-cnv.exp_exp=30.02719688.*(base.lvl==85);
-cnv.haste_phhaste=128.05715942.*(base.lvl==85);
-cnv.haste_sphaste=128.05715942.*(base.lvl==85);
+cnv.crit_phcrit=179.28004455;
+cnv.crit_spcrit=179.28004455;
+cnv.hit_phhit=120.10880279;
+cnv.hit_sphit=102.44573974;
+cnv.exp_exp=30.02719688;
+cnv.haste_phhaste=128.05715942;
+cnv.haste_sphaste=128.05715942;
 
 %defensive stats
-cnv.dodge_dodge=176.71890258.*(base.lvl==85);
-cnv.agi_dodge=304.50769251.*(base.lvl==85);
-cnv.parry_parry=176.71890258.*(base.lvl==85);
-cnv.mast_mast=179.28004455.*(base.lvl==85);
+cnv.dodge_dodge=176.71890258;
+% cnv.agi_dodge=0;
+cnv.parry_parry=176.71890258;
+cnv.mast_mast=179.28004455;
 
 %ipoint conversions
 ipconv.str=1;
