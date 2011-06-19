@@ -354,7 +354,7 @@ avoiddr=avoid_dr(base,gear.dodge+consum.dodge,gear.parry+consum.parry ...
     +floor((player.str-base.stats.str).*0.27),player.agi-base.stats.agi); %DR for dodge/parry
 
 player.miss=base.miss-0.04.*npc.skillgap;
-player.dodge=base.dodge+base.stats.agi./cnv.agi_dodge+avoiddr.dodgedr-0.04.*npc.skillgap;
+player.dodge=base.dodge+avoiddr.dodgedr-0.04.*npc.skillgap;
 player.parry=base.parry+avoiddr.parrydr-0.04.*npc.skillgap;
 
 %at the moment, we don't have Redoubt to worry about, so we shouldnt' need
@@ -377,6 +377,8 @@ player.block=min([player.block.*ones(player.size.av); ...
 
 player.avoid=player.miss+player.dodge+player.parry;
 player.avoidpct=player.avoid./100;
+
+player.ctc=player.avoid+player.block;
 
 %% Boss Stats
 %TODO: This section is a bit weird.  we have the npc structure already, but
