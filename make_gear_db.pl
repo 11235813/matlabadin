@@ -154,7 +154,7 @@ push @items, qw(71460); #391
 push @items, qw(56279 56337 62243 63480); #346
 push @items, qw(64674 64676); #359
 push @items, qw(70939 71147); #378
-push @items, qw(71590); #391
+push @items, qw(71587 71590); #391
 
 # override parsed items
 @items = @ARGV if @ARGV;

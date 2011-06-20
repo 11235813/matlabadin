@@ -13,29 +13,47 @@ function [obj]=equip(iref,type)
 %IMPORTANT : Note that it is much faster to reference an item
 %by inum (item_id, as parsed by armory) than by its name.
 
-global idb
-if nargin<2 type='i'; end;
+%input handling
+switch nargin
+    case 1
+        type='i';
+    case 2
+        switch type
+            case {'iid','i','sid','s'}
+                %do nothing
+            otherwise
+                error('Invalid type argument.');
+        end
+    otherwise
+        error('Too many arguments.');
+end
 
-%character input (i.e. iref='Last Laugh')
+
+global idb
+%character input (e.g. iref='Last Laugh')
 if ischar(iref)
-    gi=length(idb.iid);gj=length(idb.sid);
-    while gi>0 && not(strcmp(idb.iid(gi).name,iref))
-        gi=gi-1;
+    switch type
+        case {'iid','i'}
+            gi=length(idb.iid);
+            while gi>0 && ~(strcmp(idb.iid(gi).name,iref))
+                gi=gi-1;
+            end
+            if gi>0 obj=idb.iid(gi);end;
+        case {'sid','s'}
+            gi=length(idb.sid);
+            while gi>0 && ~(strcmp(idb.sid(gi).name,iref))
+                gi=gi-1;
+            end
+            if gi>0 obj=idb.sid(gi);end;
     end
-    while gj>0 && not(strcmp(idb.sid(gj).name,iref))
-        gj=gj-1;
+    if gi<1 error('Failed to find item "%s" in the gear database.',iref);end;
+%numeric input (e.g. iref=40402)
+elseif isnumeric(iref)
+    switch type
+        case {'iid','i'}
+            obj=idb.iid(iref);
+        case {'sid','s'}
+            obj=idb.sid(iref);
     end
-    if gi>0 && (strcmp(type,'iid')||strcmp(type,'i'))
-        obj=idb.iid(gi);       
-    elseif gj>0 && (strcmp(type,'sid')||strcmp(type,'s'))
-        obj=idb.sid(gj);  
-    else
-       %Oops, we typed 'Last Laff'
-       error(['equip_call failed to find item ''iref'' in gear database']);
-    end
-%numeric input (iref=40402)   
-elseif isnumeric(iref) && (strcmp(type,'iid')||strcmp(type,'i'))
-    obj=idb.iid(iref);
-elseif isnumeric(iref) && (strcmp(type,'sid')||strcmp(type,'s'))
-    obj=idb.sid(iref);
+    if isempty(obj.name) error('Failed to find item "%u" in the gear database.',iref);end;
 end

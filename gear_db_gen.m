@@ -4614,6 +4614,15 @@ idb.iid(71147).haste=86;
 idb.iid(71147).socket='P';
 idb.iid(71147).isreforged=0;
 
+idb.iid(71587).name='Relic of the Elemental Lords (Heroic)';
+idb.iid(71587).ilvl=391;
+idb.iid(71587).str=145;
+idb.iid(71587).sta=217;
+idb.iid(71587).crit=94;
+idb.iid(71587).haste=98;
+idb.iid(71587).socket='P';
+idb.iid(71587).isreforged=0;
+
 idb.iid(71590).name='Deathclutch Figurine (Heroic)';
 idb.iid(71590).ilvl=391;
 idb.iid(71590).str=145;
