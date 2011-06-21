@@ -44,7 +44,7 @@ tempegs(17)=socket(tempegs(17),gem.blu);
 
 %%Enchants (21-37)
 tempegs(21)=equip(86931,'s');%Earthen Ring
-tempegs(23)=equip(86847,'s');%Unbreakable Quartz
+tempegs(23)=equip(86854,'s');%Unbreakable Quartz
 tempegs(24)=equip(74234,'s');%Protection
 tempegs(25)=equip(74251,'s');%Greater STamina
 tempegs(26)=equip(74229,'s');%Dodge
