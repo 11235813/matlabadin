@@ -56,8 +56,9 @@ if isfield(item, stat2)
         return
     else
         %perform the reforge
-        item=setfield(item,stat1,round(0.6.*getfield(item,stat1)));
-        item=setfield(item,stat2,round(0.4.*getfield(item,stat1)));
+        baseitem=item;
+        item=setfield(item,stat1,ceil(0.6.*getfield(baseitem,stat1)));
+        item=setfield(item,stat2,floor(0.4.*getfield(baseitem,stat1)));
         item.isreforged=1;
     end
 else

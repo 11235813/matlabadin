@@ -52,7 +52,7 @@ if isempty(flask)==1 flask=79469; end;
 if isempty(belixir)==1 belixir=0; end;
 if isempty(gelixir)==1 gelixir=0; end;
 if isempty(potion)==1 potion=79475; end;
-if isempty(food)==1 food=87584; end;
+if isempty(food)==1 food=87594; end;
 
 
 %% Buffs
