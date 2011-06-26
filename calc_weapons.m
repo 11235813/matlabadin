@@ -37,7 +37,9 @@ weaplist1=[62457; %Ravening Slicer
            65094; %Fang of Twilight (Heroic)
            65036; %Mace of Acrid Death (Heroic)
            70922; %Mandible of Beth'tilac 
+           71362; %Obsidium Cleaver
            71406; %Mandible of Beth'tilac (Heroic)
+           71562; %Obsidium Cleaver (Heroic)
           ];
 
 weaplist2=[56433; %Blade of the Burning Sun (Heroic)
@@ -83,11 +85,9 @@ weaplist3=[65166; %Buzz Saw (Heroic)
            65047; %Lava Spine (Heroic)
            71782; %Shatterskull Bonecrusher
            70222; %Ruthless Glad Bonecracker 378
-           71362; %Obsidium Cleaver
            71312; %Gatecrasher
            71783; %Shatterskull Bonecrusher (Heroic)
            70201; %Ruthless Glad Bonecrakcer 391
-           71562; %Obsidium Cleaver (Heroic)
            71454; %Gatecrasher (Heroic)
           ];
 weaplist=[weaplist1;weaplist2;weaplist3];

@@ -465,6 +465,14 @@ idb.iid(67138).haste=127;
 idb.iid(67138).mast=127;
 idb.iid(67138).isreforged=0;
 
+idb.iid(70107).name='Fireheart Necklace';
+idb.iid(70107).ilvl=365;
+idb.iid(70107).str=201;
+idb.iid(70107).sta=301;
+idb.iid(70107).exp=136;
+idb.iid(70107).mast=131;
+idb.iid(70107).isreforged=0;
+
 idb.iid(65025).name='Rage of Ages (Heroic)';
 idb.iid(65025).ilvl=372;
 idb.iid(65025).str=215;
@@ -1053,6 +1061,15 @@ idb.iid(62383).dodge=127;
 idb.iid(62383).barmor=625;
 idb.iid(62383).isreforged=0;
 
+idb.iid(71270).name='Mantle of Patience';
+idb.iid(71270).ilvl=365;
+idb.iid(71270).str=201;
+idb.iid(71270).sta=301;
+idb.iid(71270).mast=134;
+idb.iid(71270).dodge=134;
+idb.iid(71270).barmor=647;
+idb.iid(71270).isreforged=0;
+
 idb.iid(65010).name='Ironstar''s Impenetrable Cover (Heroic)';
 idb.iid(65010).ilvl=372;
 idb.iid(65010).str=215;
@@ -1552,6 +1569,16 @@ idb.iid(62449).dodge=190;
 idb.iid(62449).barmor=1499;
 idb.iid(62449).atype=1;
 idb.iid(62449).isreforged=0;
+
+idb.iid(70121).name='Ricket''s Gun Show';
+idb.iid(70121).ilvl=365;
+idb.iid(70121).str=201;
+idb.iid(70121).sta=301;
+idb.iid(70121).mast=111;
+idb.iid(70121).parry=147;
+idb.iid(70121).barmor=1525;
+idb.iid(70121).atype=1;
+idb.iid(70121).isreforged=0;
 
 idb.iid(65085).name='Electron Inductor Coils (Heroic)';
 idb.iid(65085).ilvl=372;
@@ -3037,6 +3064,14 @@ idb.iid(67139).haste=127;
 idb.iid(67139).mast=127;
 idb.iid(67139).isreforged=0;
 
+idb.iid(70127).name='Lylagar Horn Ring';
+idb.iid(70127).ilvl=365;
+idb.iid(70127).str=201;
+idb.iid(70127).sta=301;
+idb.iid(70127).mast=140;
+idb.iid(70127).parry=124;
+idb.iid(70127).isreforged=0;
+
 idb.iid(65070).name='Bile-O-Tron Nut (Heroic)';
 idb.iid(65070).ilvl=372;
 idb.iid(65070).str=153;
@@ -3110,9 +3145,9 @@ idb.iid(60226).str=229;
 idb.iid(60226).sta=344;
 idb.iid(60226).crit=113;
 idb.iid(60226).mast=153;
-idb.iid(70738).socket='Y';
-idb.iid(70738).sbstat='str';
-idb.iid(70738).sbval=10;
+idb.iid(60226).socket='Y';
+idb.iid(60226).sbstat='str';
+idb.iid(60226).sbval=10;
 idb.iid(60226).isreforged=0;
 
 idb.iid(70934).name='Adamantine Signet of the Avengers';

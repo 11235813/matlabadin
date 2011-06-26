@@ -3,15 +3,15 @@ def_db;
 
 for q=1:5
     
-    exec=execution_model('veng',1);  %placeholder, set in cfg
+    exec=execution_model('veng',1); 
     base=player_model('race','Human');
     npc=npc_model(base);
 
     egs=ddb.gearset{q};
     gear_stats;
     gstats(q)=gear;
-    talent=ddb.talentset{1}; %placeholder, set in cfg
-    glyph=ddb.glyphset{1}; %placeholder, set in cfg
+    talent=ddb.talentset{1};
+    glyph=ddb.glyphset{1};
     talents;
     buff=buff_model;
     stat_model;

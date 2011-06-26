@@ -292,6 +292,14 @@ idb.iid(59319).hit=96;
 idb.iid(59319).dodge=190;
 idb.iid(59319).isreforged=0;
 
+idb.iid(70107).name='Fireheart Necklace';
+idb.iid(70107).ilvl=365;
+idb.iid(70107).str=201;
+idb.iid(70107).sta=301;
+idb.iid(70107).exp=136;
+idb.iid(70107).mast=131;
+idb.iid(70107).isreforged=0;
+
 idb.iid(65059).name='Ironstar Amulet (Heroic)';
 idb.iid(65059).ilvl=372;
 idb.iid(65059).str=163;
@@ -438,6 +446,15 @@ idb.iid(62383).dodge=127;
 idb.iid(62383).barmor=625;
 idb.iid(62383).isreforged=0;
 
+idb.iid(71270).name='Mantle of Patience';
+idb.iid(71270).ilvl=365;
+idb.iid(71270).str=201;
+idb.iid(71270).sta=301;
+idb.iid(71270).mast=134;
+idb.iid(71270).dodge=134;
+idb.iid(71270).barmor=647;
+idb.iid(71270).isreforged=0;
+
 idb.iid(70930).name='Durable Flamewrath Greatcloak';
 idb.iid(70930).ilvl=378;
 idb.iid(70930).str=173;
@@ -579,6 +596,16 @@ idb.iid(59470).parry=127;
 idb.iid(59470).barmor=1499;
 idb.iid(59470).atype=1;
 idb.iid(59470).isreforged=0;
+
+idb.iid(70121).name='Ricket''s Gun Show';
+idb.iid(70121).ilvl=365;
+idb.iid(70121).str=201;
+idb.iid(70121).sta=301;
+idb.iid(70121).mast=111;
+idb.iid(70121).parry=147;
+idb.iid(70121).barmor=1525;
+idb.iid(70121).atype=1;
+idb.iid(70121).isreforged=0;
 
 idb.iid(65143).name='Bracers of Impossible Strength (Heroic)';
 idb.iid(65143).ilvl=372;
@@ -957,6 +984,14 @@ idb.iid(59233).sta=286;
 idb.iid(59233).exp=111;
 idb.iid(59233).dodge=190;
 idb.iid(59233).isreforged=0;
+
+idb.iid(70127).name='Lylagar Horn Ring';
+idb.iid(70127).ilvl=365;
+idb.iid(70127).str=201;
+idb.iid(70127).sta=301;
+idb.iid(70127).mast=140;
+idb.iid(70127).parry=124;
+idb.iid(70127).isreforged=0;
 
 idb.iid(65070).name='Bile-O-Tron Nut (Heroic)';
 idb.iid(65070).ilvl=372;

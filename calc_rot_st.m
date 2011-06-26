@@ -80,7 +80,7 @@ for c=1:length(cfg)
         %store in coefficient matrices
         cmat(kk,:,c)=cps';
         inqup(kk)=inqUptime;
-        mpsgain=jotwUptime.*jotwmps;
+        mpsgain=jotwUptime.*jotwmps+replmps+sancmps+bommps;
         mpscost=sum(cps.*val.fsmmana);
         mps(kk)=mpsgain-mpscost;
         empties(kk)=sum(cps((length(cps)-1):length(cps)));
@@ -158,6 +158,19 @@ li{c}
 
 end
 
+%% pretty-print output array, this is only for the first set.
+queue.stsubset={'SotR>CS>AS>J';'SotR>CS>AS>J>HW';'SotR>CS>AS>J>Cons>HW';...
+    'SDSotR>ISotR>Inq>CS>AS>J';'SDSotR>ISotR>Inq>CS>AS>J>Cons>HW';...
+    'WoG>CS>AS>J';'WoG>SotR>CS>AS>J';'WoG>SotR>CS>AS>J>Cons>HW';...
+    'SotR>CS>AS>HoW>J';'ISotR>SDSotR>Inq>CS>AS>HoW>J>Cons>HW';...
+    'WoG>SotR>CS>AS>HoW>J>Cons>HW'};
+    
+
+for q=1:size(queue.stsubset,1)
+    ind(q)=find(strcmp(queue.st,queue.stsubset{q}));
+end
+
+li{1}(ind+2,:)
 
 %% save for later use (good for generic stuff, saves computation time)
 % save prio_data.nv.mat cmat fsmdata
