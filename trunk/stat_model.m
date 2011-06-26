@@ -209,6 +209,8 @@ player.resistance=0; %TODO : fix it (buff etc.)
 player.resist_c=400;
 player.spdr=player.resistance./(player.resistance+player.resist_c);
 
+%maximum mana
+player.maxmana=base.mana+15.*(player.int-base.stats.int);
 
 %% Hit Rating
 player.phhit=(gear.hit+extra.hit+consum.hit)./cnv.hit_phhit ...
@@ -464,3 +466,9 @@ mdf.ramodel=mdf.rahit+(mdf.blockrdx-1).*target.block./100;
 %Low-priority at the moment.
 jotwPerTick=0.03.*base.mana;
 jotwmps=jotwPerTick.*mdf.sphaste;
+
+replmps=0.01.*player.maxmana./10;
+
+sancmps=0.03.*player.maxmana.*((player.block+player.dodge)./100)./npc.swing;
+
+bommps=326/5; %hardcoded

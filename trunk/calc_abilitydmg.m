@@ -11,7 +11,7 @@ base=player_model('race','Human');
 npc=npc_model(base);
 egs=ddb.gearset{4}; %3=T11H, 4=T12, 5=T12H
 gear_stats;
-talent=ddb.talentset{3}; %0/31/10 w/HG
+talent=ddb.talentset{1}; %0/32/9 w/HG
 glyph=ddb.glyphset{3}; %SoT glyph only
 talents;
 buff=buff_model;

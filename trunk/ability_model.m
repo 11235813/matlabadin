@@ -488,8 +488,8 @@ if (strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)) mdf.iseal=min([exec.
           mcost.Judgement.*val.ones;             	%J
           mcost.Judgement.*val.ones;            	%J(Inq)
           ...
-          mcost.activeseal;                         %seal
-          mcost.activeseal;                         %seal(Inq)
+          mcost.activeseal.*val.ones;               %seal
+          mcost.activeseal.*val.ones;               %seal(Inq)
           val.zeros;                                %Nothing
           val.zeros];    
       
