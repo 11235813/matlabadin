@@ -469,6 +469,6 @@ jotwmps=jotwPerTick.*mdf.sphaste;
 
 replmps=0.01.*player.maxmana./10;
 
-sancmps=0.03.*player.maxmana.*((player.block+player.dodge)./100)./npc.swing;
+sancmps=0.03.*player.maxmana.*((player.block+player.dodge)./100).*exec.npccount./npc.swing;
 
 bommps=326/5; %hardcoded

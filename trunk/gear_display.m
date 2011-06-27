@@ -37,36 +37,40 @@ tmpgvals=char(num2str(statarray,5));
 
 %this section gets rid of extra spaces, since there's no control for that
 %in num2str
+clear spacewidth skiplist skipstart
 
-%find index of barmor, that's always the longest number
-for i=1:size(glabels,1)
-    test=strfind(glabels(i,:),'barmor');
-    if test
-        armorind=i;
-        break
+%find max number of spaces on each row
+for i=1:size(tmpgvals,1)
+    for j=1:10
+        test=strfind(tmpgvals(i,:),repmat(' ',1,j));
+        if test
+           spacewidth(i)=j-1;
+        end
     end
 end
 
-%determine max number of spaces
-for i=10:-1:1
-   test=strfind(tmpgvals(armorind,:),repmat(' ',1,i));
-   if ~isempty(test)
-       imax=i;
-       break
-   end
-end
-testsort=test;
-for i=1:(imax-4)
-    testsort=[testsort test+i];
-end
-gindx=setdiff(1:size(tmpgvals,2),testsort);
-gvals=tmpgvals(:,gindx);
+%pick the minimum value and row index
+[mval mind]=min(spacewidth);
 
+
+%find the indices of the empty spaces
+skipstart=strfind(tmpgvals(mind,:),repmat(' ',1,mval));
+
+%set the spacing to 3 spaces by identifying the indices of everything we
+%want to delete
+skiplist=skipstart;
+for i=1:(mval-3)
+    skiplist=[skiplist skipstart+i];
+end
+
+%pull out only the elements that are not on the skip list
+gindx=setdiff(1:size(tmpgvals,2),skiplist);
+
+%keep only those elements
+gvals=tmpgvals(:,gindx);
 
 %display final table
 gear_table=[glabels spacer gvals]
-
-
 
 
 %% Player table
@@ -89,29 +93,40 @@ tmppvals=char(num2str(statarray2,6));
 %this section gets rid of extra spaces, since there's no control for that
 %in num2str
 
-%find index of barmor, that's always the longest number
-for i=1:size(plabels,1)
-    test=strfind(plabels(i,:),'avoidpct');
-    if test
-        avoidpctind=i;
-        break
+clear spacewidth skiplist skipstart
+
+%find max number of spaces on each row
+for i=1:size(tmppvals,1)
+    for j=1:10
+        test=strfind(tmppvals(i,:),repmat(' ',1,j));
+        if test
+           spacewidth(i)=j-1;
+        end
     end
 end
+%pick the minimum value and row index
+[mval mind]=min(spacewidth);
 
-for i=10:-1:1
-   test=strfind(tmppvals(avoidpctind,:),repmat(' ',1,i));
-   if ~isempty(test)
-       imax=i;
-       break
-   end
+%find the indices of the empty spaces
+skipstart=strfind(tmppvals(mind,:),repmat(' ',1,mval));
+
+%set the spacing to 3 spaces by identifying the indices of everything we
+%want to delete
+skiplist=skipstart;
+for i=1:(mval-3)
+    skiplist=[skiplist skipstart+i];
 end
-testsort=test;
-for i=1:(imax-3)
-    testsort=[testsort test+i];
-end
-pindx=setdiff(1:size(tmppvals,2),testsort);
+
+%pull out only the elements that are not on the skip list
+pindx=setdiff(1:size(tmppvals,2),skiplist);
+
+%keep only those elements
 pvals=tmppvals(:,pindx);
 
 %display final table
 player_table=[plabels spacer2 pvals]
+
+
+
+%% different method
 

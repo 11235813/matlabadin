@@ -87,4 +87,4 @@ queue.st={...
 
 
 
-queue.aoe={'Inq>HotR>AS>Cons>HW>J';'iInq>SotR>HotR>AS>Cons>HW>J'};
+queue.aoe={'SotR>CS>AS>J';'Inq>HotR>AS>Cons>HW>J';'iInq>SotR>HotR>AS>Cons>HW>J'};
