@@ -473,18 +473,18 @@ if (strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)) mdf.iseal=min([exec.
           val.zeros;                                                            %CS
           val.zeros;                                                            %CS(Inq)
           val.zeros;                                                            %HotR
-          dmg.HammerNova.*min([exec.npccount; 10]).*val.ones;                   %HammerNova
+          dmg.HammerNova.*min([exec.npccount-1; 9]).*val.ones;                   %HammerNova
           val.zeros;                                                            %HotR(Inq)
-          dmg.HammerNova.*min([exec.npccount; 10]).*mdf.Inq.*val.ones;          %HammerNova(Inq)
+          dmg.HammerNova.*min([exec.npccount-1; 9]).*mdf.Inq.*val.ones;          %HammerNova(Inq)
           ...
-          dmg.AvengersShield.*min([exec.npccount; 1+2.*(mdf.glyphAS==1)]).*val.ones; %AS
-          dmg.AvengersShield.*min([exec.npccount; 1+2.*(mdf.glyphAS==1)]).*mdf.Inq.*val.ones; %AS(Inq)
-          dmg.Consecration.*min([exec.npccount; 10]).*val.ones;                 %Cons
-          dmg.Consecration.*min([exec.npccount; 10]).*mdf.Inq.*val.ones;        %Cons(Inq)
+          dmg.AvengersShield.*min([exec.npccount-1; 0+2.*(mdf.glyphAS==1)]).*val.ones; %AS
+          dmg.AvengersShield.*min([exec.npccount-1; 0+2.*(mdf.glyphAS==1)]).*mdf.Inq.*val.ones; %AS(Inq)
+          dmg.Consecration.*min([exec.npccount-1; 9]).*val.ones;                 %Cons
+          dmg.Consecration.*min([exec.npccount-1; 9]).*mdf.Inq.*val.ones;        %Cons(Inq)
           val.zeros;                                                            %HoW
           val.zeros;                                                            %HoW(Inq)
-          dmg.HolyWrath.*val.ones;                                              %HW
-          dmg.HolyWrath.*mdf.Inq.*val.ones;                                     %HW(Inq)
+          dmg.HolyWrath.*(exec.npccount-1)./exec.npccount.*val.ones;            %HW
+          dmg.HolyWrath.*(exec.npccount-1)./exec.npccount.*mdf.Inq.*val.ones;	%HW(Inq)
           val.zeros;                                                            %J
           val.zeros;                                                            %J(Inq)
           ...

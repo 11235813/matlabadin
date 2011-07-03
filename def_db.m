@@ -238,12 +238,12 @@ tempglyphs.prime=[0 0 0 0 1 0 0 0];
 tempglyphs.major=[0 0 0 0 0 0 0 0 0 0 0];
 tempglyphs.minor=[0 0 0 0 0 0 0];
 ddb.glyphset{3}=tempglyphs;
-%standard load-out with both CS and HotR for prio sims
+%standard load-out+CS: SoT/SotR/HotR/CS, AS/Cons (for rot sims)
 tempglyphs.prime=[1 0 1 0 1 1 0 0];
 tempglyphs.major=[0 1 0 0 1 0 0 0 0 0 0];
 tempglyphs.minor=[0 0 0 0 0 0 0];
 ddb.glyphset{4}=tempglyphs;
-%wog load-out with both CS and HotR for prio sims
+%wog load-out+CS: WoG/SoI/HotR/CS, AS/Cons (for rot sims)
 tempglyphs.prime=[1 0 1 0 0 0 1 1];
 tempglyphs.major=[0 1 0 0 1 0 0 0 0 0 0];
 tempglyphs.minor=[0 0 0 0 0 0 0];
@@ -253,6 +253,11 @@ tempglyphs.prime=[0 0 0 0 0 0 0 0];
 tempglyphs.major=[0 0 0 0 0 0 0 0 0 0 0];
 tempglyphs.minor=[0 0 0 0 0 0 0];
 ddb.glyphset{6}=tempglyphs;
+%standard load-out+CS-AS: SoT/SotR/HotR/CS, Cons (for aoe sims)
+tempglyphs.prime=[1 0 1 0 1 1 0 0];
+tempglyphs.major=[0 1 0 0 0 0 0 0 0 0 0];
+tempglyphs.minor=[0 0 0 0 0 0 0];
+ddb.glyphset{7}=tempglyphs;
 
 
 clear tempegs tempgems tempglyphs temptree
