@@ -6,10 +6,10 @@ clear;
 gear_db;
 def_db;
 
-exec=execution_model('veng',1,'npccount',4);  %placeholder, set in cfg
+exec=execution_model('veng',1);  %placeholder, set in cfg
 base=player_model('race','Human');
 npc=npc_model(base);
-egs=ddb.gearset{4};  %1=pre-raid , 2=T11, 3=T11H
+egs=ddb.gearset{4};  %3=T11H, 4=T12, 5=T12H
 gear_stats;
 talent=ddb.talentset{1}; %placeholder, set in cfg
 glyph=ddb.glyphset{4}; %placeholder, set in cfg
@@ -26,10 +26,15 @@ queue_model; %lists the queues we're interested in
 cfg(1).helm=egs(1);
 cfg(1).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
 cfg(1).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
-cfg(1).label='939/SoT build';
+cfg(1).label='939/SoT build, Focused Shield glyphed';
 cfg(1).seal='Truth';
 cfg(1).glyph=ddb.glyphset{4}; %Modified Default, (CS+HotR)/SoT/ShoR, Cons/AS
 cfg(1).talent=ddb.talentset{1}; %0/32/9 w/o HG
+
+%second config, this time without the AS glyph
+cfg(2)=cfg(1);
+cfg(2).label='939/SoT build, Focused Shield unglyphed';
+cfg(2).glyph=ddb.glyphset{7}; %Modified Default, (CS+HotR)/SoT/ShoR, Cons
 
 
 %% Generate DPS for each config
@@ -44,7 +49,7 @@ empties=inqup;
 for c=1:length(cfg)
     %set configuration variables
     egs(1)=cfg(c).helm;
-    exec=execution_model('seal',cfg(c).seal);
+    exec=execution_model('seal',cfg(c).seal,'veng',1,'npccount',4);
     glyph=cfg(c).glyph;
     talent=cfg(c).talent;
     gear_stats;
@@ -111,12 +116,12 @@ for c=1:length(cfg)
     for mm=1:5
         nmobs=mm+1;
         %re-run relevant modules for mm+1 mobs
-        exec=execution_model('npccount',nmobs,'seal',cfg(c).seal);
+        exec=execution_model('npccount',nmobs,'seal',cfg(c).seal,'veng',1);
         stat_model;ability_model;
         
         %store coefficients for "guaranteed" damage per mob -
         %HW/Cons/HotR/AS(<3)
-        dmgarray.permob(:,mm,c)=cmat(:,:,c)*val.fsmaoe;
+        dmgarray.permob(:,mm,c)=cmat(:,:,c)*val.fsmaoe./mm;
         
         %mana efficiency per mob
         mpspermob(mm)=(nmobs-1)./nmobs.*sancmps;
@@ -132,11 +137,11 @@ spacer=repmat(' ',length(queue.aoe)+2,2);
 li{c} =    [spacer char({' ','Q#',int2str([1:length(queue.aoe)]')}) ...
             spacer char({' ','Priority',char(queue.aoe)}) ...
             spacer char({'Primary','DPS',int2str(dmgarray.target(:,c))}) ...
-            spacer char({' ','2',int2str(dmgarray.permob(:,1,c))}) ...
-            spacer char({' ','3',int2str(dmgarray.permob(:,2,c))}) ...
-            spacer char({' ','4',int2str(dmgarray.permob(:,3,c))}) ...
-            spacer char({' ','5',int2str(dmgarray.permob(:,4,c))}) ...
-            spacer char({' ','6',int2str(dmgarray.permob(:,5,c))}) ...
+            spacer char({' ','  2  ',int2str(dmgarray.permob(:,1,c))}) ...
+            spacer char({' ','  3  ',int2str(dmgarray.permob(:,2,c))}) ...
+            spacer char({' ','  4  ',int2str(dmgarray.permob(:,3,c))}) ...
+            spacer char({' ','  5  ',int2str(dmgarray.permob(:,4,c))}) ...
+            spacer char({' ','  6  ',int2str(dmgarray.permob(:,5,c))}) ...
             spacer char({' E',' %',num2str(empties.*100,'%3.1f')}) ...
             spacer char({' I',' %',num2str(inqup.*100,'%3.1f')})...
             spacer char({'mps','  ',num2str(mps,'%4.0f')})...

@@ -87,4 +87,19 @@ queue.st={...
 
 
 
-queue.aoe={'SotR>CS>AS>J';'Inq>HotR>AS>Cons>HW>J';'iInq>SotR>HotR>AS>Cons>HW>J'};
+queue.aoe={...
+    'SotR>CS>AS>J';
+    'SotR>HotR>AS>J';
+    'SotR>HotR>AS>J>Cons';
+    'SotR>HotR>AS>J>Cons>HW';
+    'SDSotR>ISotR>Inq>HotR>AS>J>Cons>HW';
+    'Inq>HotR>AS>J>Cons>HW';
+    'Inq>HotR>AS>Cons>J>HW';
+    'Inq>HotR>AS>Cons>HW>J';
+    'Inq>HotR>Cons>AS>HW>J';
+    'iInq>SotR>HotR>AS>Cons>HW>J';
+    'iInq>HotR>AS>Cons>HW>J';
+    'iInq>HotR>Cons>AS>HW>J';
+    'HotR>Inq>AS>Cons>HW>J';
+    'HotR>Inq>Cons>AS>HW>J';
+    };
