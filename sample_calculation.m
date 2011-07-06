@@ -18,12 +18,15 @@ egs=ddb.gearset{4}; %1=pre-raid , 2=T11, 3=T11H, 4=T12, 5=T12H
 %calculate relevant stats
 gear_stats;
 
+%uncomment this to disable tier bonuses
+% gear.tierbonus=[0 0 0;0 0 0];
+
 %activate buffs and consumables
 buff=buff_model;
 
 %invoke talents & glyphs
-talent=ddb.talentset{2};
-glyph=ddb.glyphset{1};
+talent=ddb.talentset{1};
+glyph=ddb.glyphset{4};
 talents;
 
 %calculate final stats
@@ -34,5 +37,5 @@ ability_model;
 
 %rotation 
 rotation_model;
-
-warning('Success!')
+disp('Success!')
+disp(['Total dps for default 939 is ' num2str(rot(1).totdps,'%5.0f') ' DPS'])
