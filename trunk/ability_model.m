@@ -87,7 +87,7 @@ end
 %% Melee abilities
 
 %Crusader Strike (can be blocked)
-raw.CrusaderStrike= 1.35.*player.ndamage.*mdf.phdmg.*(1+mdf.Crus+(10./3).*mdf.WotL+mdf.t11x2);
+raw.CrusaderStrike= 1.35.*player.ndamage.*mdf.phdmg.*(1+mdf.Crus+(10./3).*mdf.WotL+mdf.t11x2+mdf.pvphands);
 dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.memodel.*mdf.CScrit;
 heal.CrusaderStrike=0;
 threat.CrusaderStrike=max(dmg.CrusaderStrike,heal.CrusaderStrike).*mdf.RFury;

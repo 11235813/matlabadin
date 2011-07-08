@@ -80,7 +80,9 @@ for c=1:length(cfg)
         %store in coefficient matrices
         cmat(kk,:,c)=cps';
         inqup(kk)=inqUptime;
-        mpsgain=jotwUptime.*jotwmps+replmps+sancmps+bommps;
+        jotw.uptime(kk)=jotwUptime;
+        mps.jotw(kk)=(jotw.uptime(kk).*jotw.NumTicks./jotw.BaseDur).*jotw.PerTick;
+        mpsgain=mps.jotw(kk)+mps.Repl+mps.Sanc+mps.BoM;
         mpscost=sum(cps.*val.fsmmana);
         mps(kk)=mpsgain-mpscost;
         empties(kk)=sum(cps((length(cps)-1):length(cps)));

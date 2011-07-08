@@ -83,3 +83,11 @@ if numel(gear.istier)==3
         end
     end
 end
+
+%pvp hands (CS bonus)
+switch egs(7).name
+    case {'Bloodthirsty Gladiator''s Scaled Gauntlets','Vicious Gladiator''s Scaled Gauntlets','Ruthless Gladiator''s Scaled Gauntlets'}
+        gear.pvphands=1;
+    otherwise
+        gear.pvphands=0;
+end

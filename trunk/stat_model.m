@@ -54,6 +54,7 @@ mdf.meta_spell=1+0.02.*(gear.meta==4);
 mdf.meta_stun=1+0.10.*(gear.meta==5);
 
 mdf.plate=1+0.05.*gear.isplate;
+mdf.pvphands=0.05.*gear.pvphands; %CS output
 mdf.t11x2=0.1.*gear.tierbonus(1); %CS output
 mdf.t11x4=1+0.5.*gear.tierbonus(2); %GoAK duration
 mdf.t12x2=0.2.*gear.tierbonus(3); %Righteous Flames
@@ -210,7 +211,7 @@ player.resist_c=400;
 player.spdr=player.resistance./(player.resistance+player.resist_c);
 
 %maximum mana
-player.maxmana=base.mana+15.*(player.int-base.stats.int);
+player.manapoints=base.mana+15.*(player.int-base.stats.int)+mdf.FelInt;
 
 %% Hit Rating
 player.phhit=(gear.hit+extra.hit+consum.hit)./cnv.hit_phhit ...
@@ -259,6 +260,11 @@ cens.BaseDur=15;
 cens.NetTick=round(cens.BaseTick./mdf.sphaste.*1e3)./1e3; %spell haste
 cens.NumTicks=ceil(cens.BaseDur./cens.NetTick-0.5);
 cens.NetDur=cens.NumTicks.*cens.NetTick;
+jotw.BaseTick=1;
+jotw.BaseDur=10;
+jotw.NetTick=round(jotw.BaseTick./mdf.sphaste.*1e3)./1e3; %spell haste
+jotw.NumTicks=ceil(jotw.BaseDur./jotw.NetTick-0.5);
+jotw.NetDur=jotw.NumTicks.*jotw.NetTick;
 
 %% Crit
 %multipliers
@@ -464,11 +470,7 @@ mdf.ramodel=mdf.rahit+(mdf.blockrdx-1).*target.block./100;
 
 %% Power Gains
 %Low-priority at the moment.
-jotwPerTick=0.03.*base.mana;
-jotwmps=jotwPerTick.*mdf.sphaste;
-
-replmps=0.01.*player.maxmana./10;
-
-sancmps=0.03.*player.maxmana.*((player.block+player.dodge)./100).*exec.npccount./npc.swing;
-
-bommps=326/5; %hardcoded
+jotw.PerTick=0.03.*base.mana;
+mps.Repl=0.01.*player.manapoints./10;
+mps.Sanc=0.03.*player.manapoints.*((player.block+player.dodge)./100).*exec.npccount./npc.swing;
+mps.BoM=326/5; %hardcoded

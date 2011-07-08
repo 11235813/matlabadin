@@ -3,7 +3,7 @@ function [avoiddr] =  avoid_dr(base,dodge,parry,agi,class)
 %after diminishing returns.  It takes four inputs, in order:
 %dodge  = dodge rating from gear
 %parry  = parry rating from gear
-%agi = agility from all sources EXCEPT base agility
+%agi = agility from all sources EXCEPT base agility (optional)
 %class = (optional) a string representing the class.  Default is 'paladin',
 %        but the code can handle 'warrior', 'deathknight', 'druid', and 'rogue' as
 %        well as some other variations on those ('warr', 'dk', etc).
@@ -13,7 +13,20 @@ function [avoiddr] =  avoid_dr(base,dodge,parry,agi,class)
 %function.
 
 %%sanity check
-if (min(dodge)<0 || min(parry)<0 || min(agi)<0) error('At least one of the input arguments is negative. Please recheck them.'); end;
+switch nargin
+    case {1,2}
+        error('Insufficient input arguments');
+    case 3
+        if (min(dodge)<0||min(parry)<0)
+            error('All input arguments must be nonnegative.');
+        end
+    case {4,5}
+        if (min(dodge)<0||min(parry)<0||min(agi)<0)
+            error('All input arguments must be nonnegative.');
+        end
+    otherwise
+        error('Too many input arguments.');
+end
 
 %% Constants
 %rating conversions

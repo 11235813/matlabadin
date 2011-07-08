@@ -15,6 +15,8 @@ function [obj]=equip(iref,type)
 
 %input handling
 switch nargin
+    case 0
+        error('Missing iref argument.');
     case 1
         type='i';
     case 2
@@ -51,9 +53,17 @@ if ischar(iref)
 elseif isnumeric(iref)
     switch type
         case {'iid','i'}
-            obj=idb.iid(iref);
+            if iref > length(idb.iid)
+                error('The iref argument exceeds the number of entries from idb.iid.');
+            else
+                obj=idb.iid(iref);
+            end
         case {'sid','s'}
-            obj=idb.sid(iref);
+            if iref > length(idb.sid)
+                error('The iref argument exceeds the number of entries from idb.sid.');
+            else
+                obj=idb.sid(iref);
+            end
     end
     if isempty(obj.name) error('Failed to find item "%u" in the gear database.',iref);end;
 end
