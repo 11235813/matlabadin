@@ -67,10 +67,13 @@ push @items, qw(71418 71470 71584 71585); #391
 
 # Hand
 push @items, qw(56336 56428 58099 58105 62408 63434 63474); #346
+push @items, qw(64844); #352
 push @items, qw(69619 69633); #353
 push @items, qw(59225 59505 60355); #359
+push @items, qw(60414); #365
 push @items, qw(65071 65119 65225); #372
 push @items, qw(69936 69937 70949 70993 71064); #378
+push @items, qw(70250); #384
 push @items, qw(71419 71513 71523); #391
 
 # Waist
