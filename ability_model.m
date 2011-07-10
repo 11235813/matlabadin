@@ -131,7 +131,7 @@ net.Melee{3}=       threat.Melee+threat.activeseal.*mdf.mehit;
 %Shield of the Righteous (can be blocked)
 mdf.hpscale=(player.hopo==1)+3.*(player.hopo==2)+6.*(player.hopo==3);
 raw.ShieldoftheRighteous= ((610.2+0.1.*player.ap).*mdf.hpscale).*mdf.spdmg.*mdf.glyphSotR;
-dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit.*(1+mdf.t12x2.*mdf.mehit) ... %melee hit assumed here for tier bonus, needs to be tested
+dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit.*(1+mdf.t12x2) ... %t12x2 automatically hits
                           .*target.resrdx; %melee hit
 heal.ShieldoftheRighteous=0;
 % threat.ShieldoftheRighteous{1}=raw.ShieldoftheRighteous.*mdf.RFury;
