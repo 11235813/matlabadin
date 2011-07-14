@@ -153,7 +153,7 @@ idb.iid(60356).sbstat='sta';
 idb.iid(60356).sbval=45;
 idb.iid(60356).atype=1;
 idb.iid(60356).isreforged=0;
-idb.iid(60356).istier=[1 0 0];
+idb.iid(60356).istierP=[1 0 0];
 
 idb.iid(63531).name='Daybreaker Helm';
 idb.iid(63531).ilvl=359;
@@ -219,7 +219,7 @@ idb.iid(65226).sbstat='sta';
 idb.iid(65226).sbval=45;
 idb.iid(65226).atype=1;
 idb.iid(65226).isreforged=0;
-idb.iid(65226).istier=[1 0 0];
+idb.iid(65226).istierP=[1 0 0];
 
 idb.iid(70734).name='Greathelm of the Voracious Maw';
 idb.iid(70734).ilvl=378;
@@ -259,7 +259,7 @@ idb.iid(70948).sbstat='sta';
 idb.iid(70948).sbval=45;
 idb.iid(70948).atype=1;
 idb.iid(70948).isreforged=0;
-idb.iid(70948).istier=[0 1 0];
+idb.iid(70948).istierP=[0 1 0];
 
 idb.iid(71065).name='Immolation Helmet';
 idb.iid(71065).ilvl=378;
@@ -273,6 +273,7 @@ idb.iid(71065).sbstat='str';
 idb.iid(71065).sbval=30;
 idb.iid(71065).atype=1;
 idb.iid(71065).isreforged=0;
+idb.iid(71065).istierR=[0 1 0];
 
 idb.iid(71430).name='Greathelm of the Voracious Maw (Heroic)';
 idb.iid(71430).ilvl=391;
@@ -312,6 +313,7 @@ idb.iid(71514).sbstat='str';
 idb.iid(71514).sbval=30;
 idb.iid(71514).atype=1;
 idb.iid(71514).isreforged=0;
+idb.iid(71514).istierR=[0 1 0];
 
 idb.iid(71524).name='Immolation Faceguard (Heroic)';
 idb.iid(71524).ilvl=391;
@@ -325,7 +327,7 @@ idb.iid(71524).sbstat='sta';
 idb.iid(71524).sbval=45;
 idb.iid(71524).atype=1;
 idb.iid(71524).isreforged=0;
-idb.iid(71524).istier=[0 1 0];
+idb.iid(71524).istierP=[0 1 0];
 
 idb.iid(52323).name='Elementium Guardian';
 idb.iid(52323).ilvl=346;
@@ -705,7 +707,7 @@ idb.iid(60358).sbstat='sta';
 idb.iid(60358).sbval=15;
 idb.iid(60358).atype=1;
 idb.iid(60358).isreforged=0;
-idb.iid(60358).istier=[1 0 0];
+idb.iid(60358).istierP=[1 0 0];
 
 idb.iid(67144).name='Pauldrons of Edward the Odd';
 idb.iid(67144).ilvl=359;
@@ -771,7 +773,7 @@ idb.iid(65228).sbstat='sta';
 idb.iid(65228).sbval=15;
 idb.iid(65228).atype=1;
 idb.iid(65228).isreforged=0;
-idb.iid(65228).istier=[1 0 0];
+idb.iid(65228).istierP=[1 0 0];
 
 idb.iid(70737).name='Spaulders of Recurring Flame';
 idb.iid(70737).ilvl=378;
@@ -798,7 +800,7 @@ idb.iid(70946).sbstat='sta';
 idb.iid(70946).sbval=15;
 idb.iid(70946).atype=1;
 idb.iid(70946).isreforged=0;
-idb.iid(70946).istier=[0 1 0];
+idb.iid(70946).istierP=[0 1 0];
 
 idb.iid(71067).name='Immolation Pauldrons';
 idb.iid(71067).ilvl=378;
@@ -812,6 +814,7 @@ idb.iid(71067).sbstat='str';
 idb.iid(71067).sbval=10;
 idb.iid(71067).atype=1;
 idb.iid(71067).isreforged=0;
+idb.iid(71067).istierR=[0 1 0];
 
 idb.iid(70921).name='Pauldrons of Roaring Flame';
 idb.iid(70921).ilvl=384;
@@ -851,6 +854,7 @@ idb.iid(71516).sbstat='str';
 idb.iid(71516).sbval=10;
 idb.iid(71516).atype=1;
 idb.iid(71516).isreforged=0;
+idb.iid(71516).istierR=[0 1 0];
 
 idb.iid(71526).name='Immolation Shoulderguards (Heroic)';
 idb.iid(71526).ilvl=391;
@@ -864,7 +868,7 @@ idb.iid(71526).sbstat='sta';
 idb.iid(71526).sbval=15;
 idb.iid(71526).atype=1;
 idb.iid(71526).isreforged=0;
-idb.iid(71526).istier=[0 1 0];
+idb.iid(71526).istierP=[0 1 0];
 
 idb.iid(71612).name='Pauldrons of Roaring Flame (Heroic)';
 idb.iid(71612).ilvl=397;
@@ -1303,7 +1307,7 @@ idb.iid(60354).sbstat='sta';
 idb.iid(60354).sbval=30;
 idb.iid(60354).atype=1;
 idb.iid(60354).isreforged=0;
-idb.iid(60354).istier=[1 0 0];
+idb.iid(60354).istierP=[1 0 0];
 
 idb.iid(67143).name='Icebone Hauberk';
 idb.iid(67143).ilvl=359;
@@ -1356,7 +1360,7 @@ idb.iid(65224).sbstat='sta';
 idb.iid(65224).sbval=30;
 idb.iid(65224).atype=1;
 idb.iid(65224).isreforged=0;
-idb.iid(65224).istier=[1 0 0];
+idb.iid(65224).istierP=[1 0 0];
 
 idb.iid(70914).name='Carapace of Imbibed Flame';
 idb.iid(70914).ilvl=378;
@@ -1383,7 +1387,7 @@ idb.iid(70950).sbstat='sta';
 idb.iid(70950).sbval=30;
 idb.iid(70950).atype=1;
 idb.iid(70950).isreforged=0;
-idb.iid(70950).istier=[0 1 0];
+idb.iid(70950).istierP=[0 1 0];
 
 idb.iid(71063).name='Immolation Battleplate';
 idb.iid(71063).ilvl=378;
@@ -1397,6 +1401,7 @@ idb.iid(71063).sbstat='str';
 idb.iid(71063).sbval=20;
 idb.iid(71063).atype=1;
 idb.iid(71063).isreforged=0;
+idb.iid(71063).istierR=[0 1 0];
 
 idb.iid(71344).name='Breastplate of Shifting Visions';
 idb.iid(71344).ilvl=378;
@@ -1449,6 +1454,7 @@ idb.iid(71512).sbstat='str';
 idb.iid(71512).sbval=20;
 idb.iid(71512).atype=1;
 idb.iid(71512).isreforged=0;
+idb.iid(71512).istierR=[0 1 0];
 
 idb.iid(71522).name='Immolation Chestguard (Heroic)';
 idb.iid(71522).ilvl=391;
@@ -1462,7 +1468,7 @@ idb.iid(71522).sbstat='sta';
 idb.iid(71522).sbval=30;
 idb.iid(71522).atype=1;
 idb.iid(71522).isreforged=0;
-idb.iid(71522).istier=[0 1 0];
+idb.iid(71522).istierP=[0 1 0];
 
 idb.iid(56301).name='Bracers of Cooled Anger (Heroic)';
 idb.iid(56301).ilvl=346;
@@ -1872,7 +1878,7 @@ idb.iid(60355).sbstat='mast';
 idb.iid(60355).sbval=10;
 idb.iid(60355).atype=1;
 idb.iid(60355).isreforged=0;
-idb.iid(60355).istier=[1 0 0];
+idb.iid(60355).istierP=[1 0 0];
 
 idb.iid(60414).name='Vicious Gladiator''s Scaled Gauntlets';
 idb.iid(60414).ilvl=365;
@@ -1924,7 +1930,7 @@ idb.iid(65225).sbstat='mast';
 idb.iid(65225).sbval=10;
 idb.iid(65225).atype=1;
 idb.iid(65225).isreforged=0;
-idb.iid(65225).istier=[1 0 0];
+idb.iid(65225).istierP=[1 0 0];
 
 idb.iid(69936).name='Fists of Fury';
 idb.iid(69936).ilvl=378;
@@ -1964,7 +1970,7 @@ idb.iid(70949).sbstat='sta';
 idb.iid(70949).sbval=15;
 idb.iid(70949).atype=1;
 idb.iid(70949).isreforged=0;
-idb.iid(70949).istier=[0 1 0];
+idb.iid(70949).istierP=[0 1 0];
 
 idb.iid(70993).name='Fireskin Gauntlets';
 idb.iid(70993).ilvl=378;
@@ -1990,6 +1996,7 @@ idb.iid(71064).sbstat='str';
 idb.iid(71064).sbval=10;
 idb.iid(71064).atype=1;
 idb.iid(71064).isreforged=0;
+idb.iid(71064).istierR=[0 1 0];
 
 idb.iid(70250).name='Ruthless Gladiator''s Scaled Gauntlets';
 idb.iid(70250).ilvl=384;
@@ -2027,6 +2034,7 @@ idb.iid(71513).sbstat='str';
 idb.iid(71513).sbval=10;
 idb.iid(71513).atype=1;
 idb.iid(71513).isreforged=0;
+idb.iid(71513).istierR=[0 1 0];
 
 idb.iid(71523).name='Immolation Handguards (Heroic)';
 idb.iid(71523).ilvl=391;
@@ -2040,7 +2048,7 @@ idb.iid(71523).sbstat='sta';
 idb.iid(71523).sbval=15;
 idb.iid(71523).atype=1;
 idb.iid(71523).isreforged=0;
-idb.iid(71523).istier=[0 1 0];
+idb.iid(71523).istierP=[0 1 0];
 
 idb.iid(56392).name='Sand Dune Belt (Heroic)';
 idb.iid(56392).ilvl=346;
@@ -2436,7 +2444,7 @@ idb.iid(60357).sbstat='sta';
 idb.iid(60357).sbval=30;
 idb.iid(60357).atype=1;
 idb.iid(60357).isreforged=0;
-idb.iid(60357).istier=[1 0 0];
+idb.iid(60357).istierP=[1 0 0];
 
 idb.iid(67141).name='Corefire Legplates';
 idb.iid(67141).ilvl=359;
@@ -2489,7 +2497,7 @@ idb.iid(65227).sbstat='sta';
 idb.iid(65227).sbval=30;
 idb.iid(65227).atype=1;
 idb.iid(65227).isreforged=0;
-idb.iid(65227).istier=[1 0 0];
+idb.iid(65227).istierP=[1 0 0];
 
 idb.iid(70739).name='Lavaworm Legplates';
 idb.iid(70739).ilvl=378;
@@ -2529,7 +2537,7 @@ idb.iid(70947).sbstat='sta';
 idb.iid(70947).sbval=30;
 idb.iid(70947).atype=1;
 idb.iid(70947).isreforged=0;
-idb.iid(70947).istier=[0 1 0];
+idb.iid(70947).istierP=[0 1 0];
 
 idb.iid(71066).name='Immolation Legplates';
 idb.iid(71066).ilvl=378;
@@ -2543,6 +2551,7 @@ idb.iid(71066).sbstat='str';
 idb.iid(71066).sbval=20;
 idb.iid(71066).atype=1;
 idb.iid(71066).isreforged=0;
+idb.iid(71066).istierR=[0 1 0];
 
 idb.iid(71431).name='Lavaworm Legplates (Heroic)';
 idb.iid(71431).ilvl=391;
@@ -2582,6 +2591,7 @@ idb.iid(71515).sbstat='str';
 idb.iid(71515).sbval=20;
 idb.iid(71515).atype=1;
 idb.iid(71515).isreforged=0;
+idb.iid(71515).istierR=[0 1 0];
 
 idb.iid(71525).name='Immolation Legguards (Heroic)';
 idb.iid(71525).ilvl=391;
@@ -2595,7 +2605,7 @@ idb.iid(71525).sbstat='sta';
 idb.iid(71525).sbval=30;
 idb.iid(71525).atype=1;
 idb.iid(71525).isreforged=0;
-idb.iid(71525).istier=[0 1 0];
+idb.iid(71525).istierP=[0 1 0];
 
 idb.iid(56378).name='Darksky Treads (Heroic)';
 idb.iid(56378).ilvl=346;
