@@ -87,7 +87,8 @@ end
 %% Melee abilities
 
 %Crusader Strike (can be blocked)
-raw.CrusaderStrike= 1.35.*player.ndamage.*mdf.phdmg.*(1+mdf.Crus+(10./3).*mdf.WotL+mdf.t11x2+mdf.pvphands);
+raw.CrusaderStrike= 1.35.*player.ndamage.*mdf.phdmg.*(1+mdf.Crus+(10./3).*mdf.WotL+mdf.t11x2P+mdf.pvphands) ...
+                    .*mdf.t12x2R;
 dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.memodel.*mdf.CScrit;
 heal.CrusaderStrike=0;
 threat.CrusaderStrike=max(dmg.CrusaderStrike,heal.CrusaderStrike).*mdf.RFury;
@@ -131,12 +132,11 @@ net.Melee{3}=       threat.Melee+threat.activeseal.*mdf.mehit;
 %Shield of the Righteous (can be blocked)
 mdf.hpscale=(player.hopo==1)+3.*(player.hopo==2)+6.*(player.hopo==3);
 raw.ShieldoftheRighteous= ((610.2+0.1.*player.ap).*mdf.hpscale).*mdf.spdmg.*mdf.glyphSotR;
-dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit.*(1+mdf.t12x2) ... %t12x2 automatically hits
+dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit.*mdf.t12x2P ... %t12x2 automatically hits
                           .*target.resrdx; %melee hit
 heal.ShieldoftheRighteous=0;
 % threat.ShieldoftheRighteous{1}=raw.ShieldoftheRighteous.*mdf.RFury;
 threat.ShieldoftheRighteous=dmg.ShieldoftheRighteous.*mdf.RFury;
-
 net.ShieldoftheRighteous{1}=dmg.ShieldoftheRighteous+dmg.activeseal;
 net.ShieldoftheRighteous{2}=heal.ShieldoftheRighteous+heal.activeseal.*mdf.mehit;
 net.ShieldoftheRighteous{3}=threat.ShieldoftheRighteous+threat.activeseal.*mdf.mehit;

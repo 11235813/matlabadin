@@ -47,39 +47,69 @@ gear.meta=egs(1).meta;
 gear.isplate=(sum([egs.atype])==8);
 
 %tier bonus
-gear.istier=sum(reshape([egs.istier],3,length([egs.istier])/3)');
-gear.tierbonus=zeros(2,3); %t11-t13 for now
+gear.istierP=sum(reshape([egs.istierP],3,length([egs.istierP])/3)');
+gear.istierR=sum(reshape([egs.istierR],3,length([egs.istierR])/3)');
+gear.tierbonusP=zeros(2,3); %t11-t13 for now
+gear.tierbonusR=zeros(2,3); %t11-t13 for now
 %format :
 % t11 t12 t13
 %[  0   0   0; %2p
 %   0   0   0] %4p
 
 %check for presence of tier gear, if none, skip this section
-if numel(gear.istier)==3
-    if gear.istier(1)>=4             %4p t11
-        gear.tierbonus(1)=1;
-        gear.tierbonus(2)=1;
-    elseif gear.istier(2)>=4         %4p t12
-        gear.tierbonus(3)=1;
-        gear.tierbonus(4)=1;
-    elseif gear.istier(3)>=4         %4p t13
-        gear.tierbonus(5)=1;
-        gear.tierbonus(6)=1;
+if numel(gear.istierP)==3
+    if gear.istierP(1)>=4             %4p t11
+        gear.tierbonusP(1)=1;
+        gear.tierbonusP(2)=1;
+    elseif gear.istierP(2)>=4         %4p t12
+        gear.tierbonusP(3)=1;
+        gear.tierbonusP(4)=1;
+    elseif gear.istierP(3)>=4         %4p t13
+        gear.tierbonusP(5)=1;
+        gear.tierbonusP(6)=1;
     else
-        if gear.istier(1)>=2         %2p t11
-            gear.tierbonus(1)=1;
-            if gear.istier(2)>=2     %2p t11,t12
-                gear.tierbonus(3)=1;
-            elseif gear.istier(3)>=2 %2p t11,t13
-                gear.tierbonus(5)=1;
+        if gear.istierP(1)>=2         %2p t11
+            gear.tierbonusP(1)=1;
+            if gear.istierP(2)>=2     %2p t11,t12
+                gear.tierbonusP(3)=1;
+            elseif gear.istierP(3)>=2 %2p t11,t13
+                gear.tierbonusP(5)=1;
             end
-        elseif gear.istier(2)>=2     %2p t12
-            gear.tierbonus(3)=1;
-            if gear.istier(3)>=2     %2p t12,t13
-                gear.tierbonus(5)=1;
+        elseif gear.istierP(2)>=2     %2p t12
+            gear.tierbonusP(3)=1;
+            if gear.istierP(3)>=2     %2p t12,t13
+                gear.tierbonusP(5)=1;
             end
-        elseif gear.istier(3)>=2     %2p t13
-            gear.tierbonus(5)=1;
+        elseif gear.istierP(3)>=2     %2p t13
+            gear.tierbonusP(5)=1;
+        end
+    end
+end
+if numel(gear.istierR)==3
+    if gear.istierR(1)>=4             %4p t11
+        gear.tierbonusR(1)=1;
+        gear.tierbonusR(2)=1;
+    elseif gear.istierR(2)>=4         %4p t12
+        gear.tierbonusR(3)=1;
+        gear.tierbonusR(4)=1;
+    elseif gear.istierR(3)>=4         %4p t13
+        gear.tierbonusR(5)=1;
+        gear.tierbonusR(6)=1;
+    else
+        if gear.istierR(1)>=2         %2p t11
+            gear.tierbonusR(1)=1;
+            if gear.istierR(2)>=2     %2p t11,t12
+                gear.tierbonusR(3)=1;
+            elseif gear.istierR(3)>=2 %2p t11,t13
+                gear.tierbonusR(5)=1;
+            end
+        elseif gear.istierR(2)>=2     %2p t12
+            gear.tierbonusR(3)=1;
+            if gear.istierR(3)>=2     %2p t12,t13
+                gear.tierbonusR(5)=1;
+            end
+        elseif gear.istierR(3)>=2     %2p t13
+            gear.tierbonusR(5)=1;
         end
     end
 end

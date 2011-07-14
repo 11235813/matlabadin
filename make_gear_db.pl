@@ -250,9 +250,10 @@ foreach my $id (@items) {
   
   # tier set flag
   switch ($id) {
-        case [60354..60358,65224..65228] { print "idb.iid($id).istier=[1 0 0];\n" }
-        case [70946..70950,71522..71526] { print "idb.iid($id).istier=[0 1 0];\n" }
-    }
+        case [60354..60358,65224..65228] { print "idb.iid($id).istierP=[1 0 0];\n" }
+        case [70946..70950,71522..71526] { print "idb.iid($id).istierP=[0 1 0];\n" }
+        case [71063..71067,71512..71516] { print "idb.iid($id).istierR=[0 1 0];\n" }
+   }
   
   
   print "\n";

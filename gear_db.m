@@ -46,7 +46,8 @@
 %egs.meta       boolean for meta, 0 for no meta, 1/2/3 for ?/?/?
 %egs.sbstat     stat string for the socket bonus
 %egs.sbval      value of socket bonus
-%egs.istier     (logical : [tier11 tier12 tier13], undefined if not a tier set item)
+%egs.istierP    (logical : [tier11P tier12P tier13P], undefined if not a tier set item)
+%egs.istierR    (logical : [tier11P tier12P tier13P], undefined if not a tier set item)
 %egs.isreforged (logical)
 
 %However, egs only has 17 slots, corresponding to the 17 relevant slots on
@@ -127,7 +128,8 @@ idb.iid=struct('name','Empty Slot', ...
                'meta',0, ...
                'sbstat','', ...
                'sbval',0, ...
-               'istier',[0 0 0],...
+               'istierP',[0 0 0],...
+               'istierR',[0 0 0],...
                'isreforged',0);
            
 idb.sid=struct('name','Empty Slot', ...
@@ -158,7 +160,8 @@ idb.sid=struct('name','Empty Slot', ...
                'meta',0, ...
                'sbstat','', ...
                'sbval',0, ...
-               'istier',[0 0 0],...
+               'istierP',[0 0 0],...
+               'istierR',[0 0 0],...
                'isreforged',0);
         
 %% Items
@@ -203,7 +206,7 @@ idb.iid(60356).sbstat='sta';
 idb.iid(60356).sbval=45;
 idb.iid(60356).atype=1;
 idb.iid(60356).isreforged=0;
-idb.iid(60356).istier=[1 0 0];
+idb.iid(60356).istierP=[1 0 0];
 
 idb.iid(65226).name='Reinforced Sapphirium Faceguard (Heroic)';
 idb.iid(65226).ilvl=372;
@@ -217,7 +220,7 @@ idb.iid(65226).sbstat='sta';
 idb.iid(65226).sbval=45;
 idb.iid(65226).atype=1;
 idb.iid(65226).isreforged=0;
-idb.iid(65226).istier=[1 0 0];
+idb.iid(65226).istierP=[1 0 0];
 
 idb.iid(70916).name='Helm of Blazing Glory';
 idb.iid(70916).ilvl=378;
@@ -244,7 +247,7 @@ idb.iid(70948).sbstat='sta';
 idb.iid(70948).sbval=45;
 idb.iid(70948).atype=1;
 idb.iid(70948).isreforged=0;
-idb.iid(70948).istier=[0 1 0];
+idb.iid(70948).istierP=[0 1 0];
 
 idb.iid(71459).name='Helm of Blazing Glory (Heroic)';
 idb.iid(71459).ilvl=391;
@@ -271,7 +274,7 @@ idb.iid(71524).sbstat='sta';
 idb.iid(71524).sbval=45;
 idb.iid(71524).atype=1;
 idb.iid(71524).isreforged=0;
-idb.iid(71524).istier=[0 1 0];
+idb.iid(71524).istierP=[0 1 0];
 
 
 %% Neck 
@@ -352,7 +355,7 @@ idb.iid(60358).sbstat='sta';
 idb.iid(60358).sbval=15;
 idb.iid(60358).atype=1;
 idb.iid(60358).isreforged=0;
-idb.iid(60358).istier=[1 0 0];
+idb.iid(60358).istierP=[1 0 0];
 
 idb.iid(65228).name='Reinforced Sapphirium Shoulderguards (Heroic)';
 idb.iid(65228).ilvl=372;
@@ -366,7 +369,7 @@ idb.iid(65228).sbstat='sta';
 idb.iid(65228).sbval=15;
 idb.iid(65228).atype=1;
 idb.iid(65228).isreforged=0;
-idb.iid(65228).istier=[1 0 0];
+idb.iid(65228).istierP=[1 0 0];
 
 idb.iid(70737).name='Spaulders of Recurring Flame';
 idb.iid(70737).ilvl=378;
@@ -393,7 +396,7 @@ idb.iid(70946).sbstat='sta';
 idb.iid(70946).sbval=15;
 idb.iid(70946).atype=1;
 idb.iid(70946).isreforged=0;
-idb.iid(70946).istier=[0 1 0];
+idb.iid(70946).istierP=[0 1 0];
 
 idb.iid(71432).name='Spaulders of Recurring Flame (Heroic)';
 idb.iid(71432).ilvl=391;
@@ -420,7 +423,7 @@ idb.iid(71526).sbstat='sta';
 idb.iid(71526).sbval=15;
 idb.iid(71526).atype=1;
 idb.iid(71526).isreforged=0;
-idb.iid(71526).istier=[0 1 0];
+idb.iid(71526).istierP=[0 1 0];
 
 
 %% Cloaks
@@ -501,7 +504,7 @@ idb.iid(60354).sbstat='sta';
 idb.iid(60354).sbval=30;
 idb.iid(60354).atype=1;
 idb.iid(60354).isreforged=0;
-idb.iid(60354).istier=[1 0 0];
+idb.iid(60354).istierP=[1 0 0];
 
 idb.iid(65224).name='Reinforced Sapphirium Chestguard (Heroic)';
 idb.iid(65224).ilvl=372;
@@ -515,7 +518,7 @@ idb.iid(65224).sbstat='sta';
 idb.iid(65224).sbval=30;
 idb.iid(65224).atype=1;
 idb.iid(65224).isreforged=0;
-idb.iid(65224).istier=[1 0 0];
+idb.iid(65224).istierP=[1 0 0];
 
 idb.iid(70914).name='Carapace of Imbibed Flame';
 idb.iid(70914).ilvl=378;
@@ -542,7 +545,7 @@ idb.iid(70950).sbstat='sta';
 idb.iid(70950).sbval=30;
 idb.iid(70950).atype=1;
 idb.iid(70950).isreforged=0;
-idb.iid(70950).istier=[0 1 0];
+idb.iid(70950).istierP=[0 1 0];
 
 idb.iid(71405).name='Carapace of Imbibed Flame (Heroic)';
 idb.iid(71405).ilvl=391;
@@ -569,7 +572,7 @@ idb.iid(71522).sbstat='sta';
 idb.iid(71522).sbval=30;
 idb.iid(71522).atype=1;
 idb.iid(71522).isreforged=0;
-idb.iid(71522).istier=[0 1 0];
+idb.iid(71522).istierP=[0 1 0];
 
 
 %% Bracers
@@ -671,7 +674,7 @@ idb.iid(60355).sbstat='mast';
 idb.iid(60355).sbval=10;
 idb.iid(60355).atype=1;
 idb.iid(60355).isreforged=0;
-idb.iid(60355).istier=[1 0 0];
+idb.iid(60355).istierP=[1 0 0];
 
 idb.iid(65225).name='Reinforced Sapphirium Handguards (Heroic)';
 idb.iid(65225).ilvl=372;
@@ -685,7 +688,7 @@ idb.iid(65225).sbstat='mast';
 idb.iid(65225).sbval=10;
 idb.iid(65225).atype=1;
 idb.iid(65225).isreforged=0;
-idb.iid(65225).istier=[1 0 0];
+idb.iid(65225).istierP=[1 0 0];
 
 idb.iid(69937).name='Eternal Elementium Handguards';
 idb.iid(69937).ilvl=378;
@@ -712,7 +715,7 @@ idb.iid(70949).sbstat='sta';
 idb.iid(70949).sbval=15;
 idb.iid(70949).atype=1;
 idb.iid(70949).isreforged=0;
-idb.iid(70949).istier=[0 1 0];
+idb.iid(70949).istierP=[0 1 0];
 
 idb.iid(71523).name='Immolation Handguards (Heroic)';
 idb.iid(71523).ilvl=391;
@@ -726,7 +729,7 @@ idb.iid(71523).sbstat='sta';
 idb.iid(71523).sbval=15;
 idb.iid(71523).atype=1;
 idb.iid(71523).isreforged=0;
-idb.iid(71523).istier=[0 1 0];
+idb.iid(71523).istierP=[0 1 0];
 
 
 %% Belts
@@ -850,7 +853,7 @@ idb.iid(60357).sbstat='sta';
 idb.iid(60357).sbval=30;
 idb.iid(60357).atype=1;
 idb.iid(60357).isreforged=0;
-idb.iid(60357).istier=[1 0 0];
+idb.iid(60357).istierP=[1 0 0];
 
 idb.iid(65227).name='Reinforced Sapphirium Legguards (Heroic)';
 idb.iid(65227).ilvl=372;
@@ -864,7 +867,7 @@ idb.iid(65227).sbstat='sta';
 idb.iid(65227).sbval=30;
 idb.iid(65227).atype=1;
 idb.iid(65227).isreforged=0;
-idb.iid(65227).istier=[1 0 0];
+idb.iid(65227).istierP=[1 0 0];
 
 idb.iid(70947).name='Immolation Legguards';
 idb.iid(70947).ilvl=378;
@@ -878,7 +881,7 @@ idb.iid(70947).sbstat='sta';
 idb.iid(70947).sbval=30;
 idb.iid(70947).atype=1;
 idb.iid(70947).isreforged=0;
-idb.iid(70947).istier=[0 1 0];
+idb.iid(70947).istierP=[0 1 0];
 
 idb.iid(71525).name='Immolation Legguards (Heroic)';
 idb.iid(71525).ilvl=391;
@@ -892,7 +895,7 @@ idb.iid(71525).sbstat='sta';
 idb.iid(71525).sbval=30;
 idb.iid(71525).atype=1;
 idb.iid(71525).isreforged=0;
-idb.iid(71525).istier=[0 1 0];
+idb.iid(71525).istierP=[0 1 0];
 
 
 %% Boots
