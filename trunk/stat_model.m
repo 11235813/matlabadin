@@ -358,9 +358,9 @@ player.hsp=player.sp;
 player.mast=base.mast+((gear.mast+extra.mas+consum.mast)./cnv.mast_mast);
 
 %% Avoidance and Blocking
-%TODO: update avoid_dr
-avoiddr=avoid_dr(base,gear.dodge+consum.dodge,gear.parry+consum.parry ...
-    +floor((player.str-base.stats.str).*0.27),player.agi-base.stats.agi); %DR for dodge/parry
+%calculate DR for avoidance
+avoiddr=avoid_dr(gear.dodge+consum.dodge, ... %dodge
+    gear.parry+consum.parry+floor((player.str-base.stats.str).*0.27)); %parry
 
 player.miss=base.miss-0.04.*npc.skillgap;
 player.dodge=base.dodge+avoiddr.dodgedr-0.04.*npc.skillgap;
