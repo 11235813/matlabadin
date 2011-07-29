@@ -9,6 +9,7 @@ if exist('queue')==0 || isfield(queue,'rot')==0
     queue.rot={...
         'SotR>CS>AS>J>Cons>HW';
         'WoG>SotR>CS>AS>J>Cons>HW';
+        'ISotR>SDSotR>Inq>CS>AS>J>Cons>HW';
 %         'SotR>CS>AS>J';
 %         'SotR>CS>HoW>AS>J';
 %         'SotR>CS>HoW>AS>J>Cons>HW';

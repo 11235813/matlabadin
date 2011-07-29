@@ -37,7 +37,7 @@ cfg(c).helm=egs(1);
 cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
 cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
 cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
-cfg(c).rot=1; %W39   
+cfg(c).rot=1; %939   
 cfg(c).seal='SoT';
 cfg(c).label='939/SoT, 2% hit, 10 exp';
 
@@ -49,6 +49,12 @@ cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
 cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-56).*cnv.exp_exp;
 cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
 cfg(c).label='939/SoT, 8% hit, 56 exp';
+
+%I39 for 2% hit 10 exp
+c=c+1;
+cfg(c)=cfg(c-1);
+cfg(c).rot=3; %I39
+cfg(c).label='I39/SoT, 2% hit, 10 exp';
 
 %% initialize arrays for speed
 prot_2pc_dps=zeros(size(gear.tierbonusP,2),V,length(cfg),M);
@@ -142,12 +148,13 @@ for c=1:length(cfg)
                  char({num2str(vlist(2)),'T12',int2str(tablecm(:,2))}) spacer ...
                  char({' ','T13',int2str(tablecm(:,3))}) spacer ...
                  char({'v=','T11',int2str(tablecm(:,4))}) spacer ...
-                 char({num2str(vlist(2)),'T12',int2str(tablecm(:,5))}) spacer ...
+                 char({num2str(vlist(1)),'T12',int2str(tablecm(:,5))}) spacer ...
                  char({' ','T13',int2str(tablecm(:,6))}) spacer ...
                  ];
              
-             [cfg(c).label ', ' pinfo.name{m} ' ' int2str(pinfo.ilvl(m))]
-             pptable
+             disp(' ')
+             disp([cfg(c).label ', ' pinfo.name{m} ' ' int2str(pinfo.ilvl(m))])
+             disp(pptable)
             
     end
 end
