@@ -81,7 +81,11 @@ for c=1:length(cfg)
         cmat(kk,:,c)=cps';
         inqup(kk)=inqUptime;
         jotw.uptime(kk)=jotwUptime;
-        mps.jotw(kk)=(jotw.uptime(kk).*jotw.NumTicks./jotw.BaseDur).*jotw.PerTick;
+        if (jotw.BaseDur./jotw.uptime(kk))>jotw.NetDur
+            mps.jotw(kk)=jotw.uptime(kk).*(jotw.PerTick./jotw.NetTick);
+        else
+            mps.jotw(kk)=jotw.PerTick./jotw.NetTick;
+        end
         mpsgain=mps.jotw(kk)+mps.Repl+mps.Sanc+mps.BoM;
         mpscost=sum(cps.*val.fsmmana);
         mps(kk)=mpsgain-mpscost;
