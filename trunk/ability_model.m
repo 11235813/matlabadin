@@ -16,14 +16,17 @@ heal.SealofTruth=   0;
 threat.SealofTruth= max(dmg.SealofTruth,heal.SealofTruth).*mdf.RFury;
 mcost.SealofTruth=0;
 
-%Censure (fully stacked, full duration)
-raw.Censure=        (0.050.*player.hsp+0.0965.*player.ap).*5.*mdf.SotP.*mdf.spdmg;
+%Censure (fully stacked)
+%As we do not model interruptions, Cens is assumed to be perpetually
+%refreshed (full uptime).
+raw.Censure=        (0.010.*player.hsp+0.0193.*player.ap).*5 ...
+                    .*mdf.SotP.*mdf.spdmg; %per tick (for 5 stacks)
 dmg.Censure=        raw.Censure.*mdf.phcrit.*target.resrdx; %automatical connect, phys crit/CM
-dps.Censure=        dmg.Censure./cens.NetDur;
+dps.Censure=        dmg.Censure./cens.NetTick;
 heal.Censure=       0;
 hps.Censure=        0;
 threat.Censure=     max(dmg.Censure,heal.Censure).*mdf.RFury;
-tps.Censure=        threat.Censure./cens.NetDur;
+tps.Censure=        threat.Censure./cens.NetTick;
 
 %Seal of Righteousness
 raw.SealofRighteousness=    gear.swing.*(0.011.*player.ap+0.022.*player.hsp).* ...

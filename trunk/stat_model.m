@@ -256,15 +256,29 @@ mdf.blsphaste=(1+bl.sphaste./100);
 
 %haste scaling for DoT effects
 %refer to http://elitistjerks.com/f73/t110354-resto_cataclysm_release_updated_4_0_6_a/p42/#post1896784
+%further testing has shown the use of Gaussian rounding (IEEE 754)
 cens.BaseTick=3;
 cens.BaseDur=15;
 cens.NetTick=round(cens.BaseTick./mdf.sphaste.*1e3)./1e3; %spell haste
-cens.NumTicks=ceil(cens.BaseDur./cens.NetTick-0.5);
+for kkk=1:length(mdf.sphaste)
+    if rem(cens.BaseDur./cens.NetTick(kkk),1)==0.5 && rem(floor(cens.BaseDur./cens.NetTick(kkk)),2)==1
+        cens.NumTicks(kkk)=floor(cens.BaseDur./cens.NetTick(kkk)+0.5);
+    else
+        cens.NumTicks(kkk)=ceil(cens.BaseDur./cens.NetTick(kkk)-0.5);
+    end
+end
 cens.NetDur=cens.NumTicks.*cens.NetTick;
 jotw.BaseTick=1;
 jotw.BaseDur=10;
 jotw.NetTick=round(jotw.BaseTick./mdf.sphaste.*1e3)./1e3; %spell haste
-jotw.NumTicks=ceil(jotw.BaseDur./jotw.NetTick-0.5);
+for kkk=1:length(mdf.sphaste)
+    if rem(jotw.BaseDur./jotw.NetTick(kkk),1)==0.5 && rem(floor(jotw.BaseDur./jotw.NetTick(kkk)),2)==1
+        jotw.NumTicks(kkk)=floor(jotw.BaseDur./jotw.NetTick(kkk)+0.5);
+    else
+        jotw.NumTicks(kkk)=ceil(jotw.BaseDur./jotw.NetTick(kkk)-0.5);
+    end
+end
+clear kkk
 jotw.NetDur=jotw.NumTicks.*jotw.NetTick;
 
 %% Crit

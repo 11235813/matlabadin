@@ -79,11 +79,16 @@ for c=1:length(cfg)
     stat_model;
     ability_model;
     tmpvar.raw(:,c)=val.raw;  %raw damage
+    tmpvar.raw(17,c)=val.raw(17,:).*cens.NumTicks; %override Censure
     tmpvar.dmg(:,c)=val.dmg;  %net damage after hit/crit
+    tmpvar.dmg(17,c)=val.dmg(17,:).*cens.NumTicks; %override Censure
     tmpvar.heal(:,c)=val.heal;
     tmpvar.thr(:,c)=val.threat; %threat after hit/crit
+    tmpvar.thr(17,c)=val.threat(17,:).*cens.NumTicks; %override Censure
     tmpvar.net(:,c)=val.net{1};  %seal procs included
+    tmpvar.net(17,c)=tmpvar.dmg(17,c); %override Censure
     tmpvar.netthr(:,c)=val.net{3}; %net threat per cast
+    tmpvar.netthr(17,c)=tmpvar.thr(17,c); %override Censure
     
     %values with all glyphs active
     glyph.prime=ones(size(glyph.prime));glyph.major=ones(size(glyph.major));
@@ -91,11 +96,15 @@ for c=1:length(cfg)
     stat_model;
     ability_model;
     tmpvar.glyphdmg(:,c)=val.dmg;
+    tmpvar.glyphdmg(17,c)=val.dmg(17,:).*cens.NumTicks; %override Censure
     tmpvar.glyphthr(:,c)=val.threat;
+    tmpvar.glyphthr(17,c)=val.threat(17,:).*cens.NumTicks; %override Censure
     tmpvar.glyphheal(:,c)=val.heal;
     tmpvar.glyphnet(:,c)=val.net{1};
+    tmpvar.glyphnet(17,c)=tmpvar.glyphdmg(17,c); %override Censure
     tmpvar.glyphnetheal(:,c)=val.net{2};
     tmpvar.glyphnetthr(:,c)=val.net{3};
+    tmpvar.glyphnetthr(17,c)=tmpvar.glyphthr(17,c); %override Censure
 end
 
 
