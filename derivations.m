@@ -11,7 +11,7 @@ Ar=40000;
 A=0.1;
 Av=0.35;
 Bc=0.55;
-Bv=[0.3 0.3667 0.4 0.5]+0.01;
+Bv=[0.3 0.3667 0.4 0.5];
 
 
 %% Mastery v. Armor post
@@ -49,12 +49,15 @@ Mast_v_Avoid=[char(labels) spacer num2str(vals3,4)]
    
    
 %% Meta Gems
-x1=(0.02.*Ar./Bc).*(1.024-Av-Bv.*Bc)./(1.02.*Ar+K);
-x2=(0.02.*Ar./Bc).*(1.024-(Av-0.05)-Bv.*(Bc-0.05))./(1.02.*Ar+K);
+% x1=(0.02.*Ar./Bc).*(1.024-Av-Bv.*Bc)./(1.02.*Ar+K);
+% x2=(0.02.*Ar./Bc).*(1.024-(Av-0.05)-Bv.*(Bc-0.05))./(1.02.*Ar+K);
+Ar1=K./(2.*(1.024-Av-(Bc-0.1).*Bv)./(Bc-0.1)-1.02);
+Ar2=K./(2.*(1.024-Av-Bc.*Bv)./Bc-1.02);
+Ar3=K./(2.*(1-Bv)-1.02);
 
 %pretty print table
-vals4=[Bv;x1;x2];
-labels={'Bv','x','x_2'};
+vals4=[Bv;Ar1./1e3;Ar2./1e3;Ar3./1e3];
+labels={'Bv','Ar(45%B)','AR(55%B)','Ar(cap)='};
 spacer=repmat('  ',size(vals4,1),1);
 Meta=[char(labels) spacer num2str(vals4,4)]
 
