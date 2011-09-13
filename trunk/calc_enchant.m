@@ -11,7 +11,7 @@ base=player_model('race','Belf','prof','');
 npc=npc_model(base);
 %invoke all buffs except food
 buff=buff_model('mode',0,'food',0);
-egs=ddb.gearset{4};  %3=T11H, 4=T12, 5=T12H
+egs=ddb.gearset{5};  %3=T11H, 4=T12, 5=T12H
 %clear main hand enchant slot
 egs(35)=equip(1,'s');
 gear_stats;
@@ -22,13 +22,13 @@ stat_model;
 
 %% Configurations
 %W39 rotation, low-hit set
-%set melee hit to 2%, expertise to 10, mastery to 390 (16.5 mastery);
+%set melee hit to 2%, expertise to 10, mastery to 25.5;
 %do this by altering helm stats
 c=1;
 cfg(c).helm=egs(1);
 cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
 cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
-cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
+cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-25.5).*cnv.mast_mast;
 cfg(c).rot=2;   %W39
 cfg(c).glyph=ddb.glyphset{2}; %WoG/SoI/HotR, AS/Cons
 cfg(c).talent=ddb.talentset{1}; %0/32/9

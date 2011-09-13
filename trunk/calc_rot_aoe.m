@@ -9,7 +9,7 @@ def_db;
 exec=execution_model('veng',1);  %placeholder, set in cfg
 base=player_model('race','Human');
 npc=npc_model(base);
-egs=ddb.gearset{4};  %3=T11H, 4=T12, 5=T12H
+egs=ddb.gearset{5};  %3=T11H, 4=T12, 5=T12H
 gear_stats;
 talent=ddb.talentset{1}; %placeholder, set in cfg
 glyph=ddb.glyphset{4}; %placeholder, set in cfg
@@ -41,7 +41,7 @@ cfg(2).glyph=ddb.glyphset{7}; %Modified Default, (CS+HotR)/SoT/ShoR, Cons
 
 %preallocate arrays for speed
 cmat=zeros(length(queue.aoe),length(val.fsmlabel),length(cfg));
-inqup=zeros(length(queue.aoe),1);mps=inqup;
+inqup=zeros(length(queue.aoe),1);mpsnet=inqup;
 empties=inqup;
 
 
@@ -81,7 +81,7 @@ for c=1:length(cfg)
         end
         mpsgain=mps.jotw(kk)+mps.Repl+mps.Sanc+mps.BoM;
         mpscost=sum(cps.*val.fsmmana);
-        mps(kk)=mpsgain-mpscost;
+        mpsnet(kk)=mpsgain-mpscost;
         empties(kk)=sum(cps((length(cps)-1):length(cps)));
     end
     close(wb)
@@ -150,8 +150,8 @@ li{c} =    [spacer char({' ','Q#',int2str([1:length(queue.aoe)]')}) ...
             spacer char({' ','  6  ',int2str(dmgarray.permob(:,5,c))}) ...
             spacer char({' E',' %',num2str(empties.*100,'%3.1f')}) ...
             spacer char({' I',' %',num2str(inqup.*100,'%3.1f')})...
-            spacer char({'mps','  ',num2str(mps,'%4.0f')})...
-            spacer char({'mps','@6',num2str(mps+mpspermob(length(mpspermob)),'%4.0f')})... 
+            spacer char({'mps','  ',num2str(mpsnet,'%4.0f')})...
+            spacer char({'mps','@6',num2str(mpsnet+mpspermob(length(mpspermob)),'%4.0f')})... 
             ];
         
 cfg(c).label

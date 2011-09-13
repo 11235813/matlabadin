@@ -467,15 +467,17 @@ idb.iid(70930).parry=227;
 idb.iid(70930).barmor=695;
 idb.iid(70930).isreforged=0;
 
-idb.iid(71392).name='Durable Flamewrath Greatcloak (Heroic)';
-idb.iid(71392).ilvl=391;
-idb.iid(71392).str=195;
-idb.iid(71392).sta=384;
-idb.iid(71392).hit=130;
-idb.iid(71392).parry=256;
-idb.iid(71392).barmor=745;
-idb.iid(71392).isreforged=0;
-
+idb.iid(71415).name='Dreadfire Drape (Heroic)';
+idb.iid(71415).ilvl=391;
+idb.iid(71415).sta=384;
+idb.iid(71415).agi=241;
+idb.iid(71415).hit=158;
+idb.iid(71415).mast=113;
+idb.iid(71415).barmor=745;
+idb.iid(71415).socket='RR';
+idb.iid(71415).sbstat='agi';
+idb.iid(71415).sbval=20;
+idb.iid(71415).isreforged=0;
 
 %% Chest
 
@@ -1020,13 +1022,13 @@ idb.iid(70940).mast=154;
 idb.iid(70940).dodge=148;
 idb.iid(70940).isreforged=0;
 
-idb.iid(71591).name='Deflecting Brimstone Band (Heroic)';
-idb.iid(71591).ilvl=391;
-idb.iid(71591).str=256;
-idb.iid(71591).sta=384;
-idb.iid(71591).mast=173;
-idb.iid(71591).dodge=166;
-idb.iid(71591).isreforged=0;
+idb.iid(71564).name='Theck''s Emberseal (Heroic)';
+idb.iid(71564).ilvl=391;
+idb.iid(71564).str=195;
+idb.iid(71564).sta=384;
+idb.iid(71564).hit=130;
+idb.iid(71564).dodge=256;
+idb.iid(71564).isreforged=0;
 
 idb.iid(70934).name='Adamantine Signet of the Avengers';
 idb.iid(70934).ilvl=391;

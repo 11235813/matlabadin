@@ -8,7 +8,7 @@ def_db;
 exec=execution_model('veng',1); 
 base=player_model('race','Belf','prof','');
 npc=npc_model(base);
-egs=ddb.gearset{4};  %3=T11H, 4=T12, 5=T12H
+egs=ddb.gearset{5};  %3=T11H, 4=T12, 5=T12H
 gear_stats;
 talent=ddb.talentset{1};  %placeholder, redefined in cfg
 glyph=ddb.glyphset{1}; %placeholder, redefined in cfg
