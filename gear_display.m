@@ -23,16 +23,17 @@ end
 
 %% gear table
 fnames=fieldnames(gstats);
-statarray=zeros(size(fnames,1)-6,size(gstats,2));
+stopat=length(fnames)-find(strcmp(fnames,'swing'));
+statarray=zeros(size(fnames,1)-stopat,size(gstats,2));
 
-for i=1:(size(fnames,1)-6)
+for i=1:(size(fnames,1)-stopat)
 
     statarray(i,:)=[gstats.(char(fnames(i)))];
 
 end
 
-spacer=repmat(' ',size(fnames,1)-6,2);
-glabels=char(fnames(1:size(fnames,1)-6));
+spacer=repmat(' ',size(fnames,1)-stopat,2);
+glabels=char(fnames(1:size(fnames,1)-stopat));
 tmpgvals=char(num2str(statarray,5));
 
 %this section gets rid of extra spaces, since there's no control for that

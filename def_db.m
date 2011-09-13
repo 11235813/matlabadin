@@ -4,13 +4,20 @@
 %% Gear Sets
 
 %default gems
-tempgems.blu=52242;
-tempgems.red=52210;
-tempgems.yel=52231;
-tempgems.pris=52242;
-tempgems.meta=52294;
+tempgems.blu=52242; %solid    (stam)
+tempgems.red=52210; %defender (parry/stam)
+tempgems.yel=52231; %puissant (mast/stam)
+tempgems.pris=52242; %solid
+tempgems.meta=52294; %austere (armor)
 ddb.gemset{1}=tempgems;
-gem=tempgems;
+
+tempgems.blu=52231; %puissant
+tempgems.red=52215; %fine (parry/mast)
+tempgems.yel=52219; %fractured (mast)
+tempgems.pris=52219; %fractured (mast)
+ddb.gemset{2}=tempgems;
+
+gem=ddb.gemset{2};
 
 %%Starter pre-raid
 tempegs(1)=equip(69558);  %Spiritshield Mask
@@ -161,8 +168,9 @@ tempegs(2)=equip(71589); %Stoneheart Necklace (H)
 tempegs(3)=equip(71526); %T12 (H)
 tempegs(3)=reforge(tempegs(3),'hit','dodge');
 tempegs(3)=socket(tempegs(3),gem.yel);
-tempegs(4)=equip(71392);  %Durable Flamewrath Greatcloak (H)
-tempegs(4)=reforge(tempegs(4),'hit','mast');
+tempegs(4)=equip(71415);  %Dreadfire Drape (H)
+tempegs(4)=reforge(tempegs(4),'hit','dodge');
+tempegs(4)=socket(tempegs(4),gem.yel,gem.yel);
 tempegs(5)=equip(71522); %T12 (H)
 tempegs(5)=reforge(tempegs(5),'dodge','mast');
 tempegs(5)=socket(tempegs(5),gem.red,gem.yel);
@@ -182,11 +190,12 @@ tempegs(10)=socket(tempegs(10),gem.blu);
 tempegs(11)=equip(70934); %Adamantite Signet of the Avengers
 tempegs(11)=reforge(tempegs(11),'hit','mast');
 tempegs(11)=socket(tempegs(11),gem.red);
-tempegs(12)=equip(71591); %Deflecting Brimstone Band (H)
+tempegs(12)=equip(71564); %Theck's Emberseal (H)
+tempegs(12)=reforge(tempegs(12),'hit','mast');
 tempegs(13)=equip(69109); %Scales of Life (H)
 tempegs(14)=equip(69138); %Spidersilk Spindle (H)
-tempegs(15)=equip(71406); %Mandible of Beth'tilac
-tempegs(16)=equip(71460);  %Shard of Torment
+tempegs(15)=equip(71406); %Mandible of Beth'tilac (H)
+tempegs(16)=equip(71460);  %Shard of Torment (H)
 tempegs(16)=reforge(tempegs(16),'parry','mast');
 tempegs(16)=socket(tempegs(16),gem.blu,gem.blu);
 tempegs(17)=equip(71590); %Deathclutch Figurine

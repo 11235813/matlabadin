@@ -19,7 +19,7 @@ mcost.SealofTruth=0;
 %Censure (fully stacked)
 %As we do not model interruptions, Cens is assumed to be perpetually
 %refreshed (full uptime).
-raw.Censure=        (0.010.*player.hsp+0.0193.*player.ap).*5 ...
+raw.Censure=        (0.014.*player.hsp+0.0270.*player.ap).*5 ...
                     .*mdf.SotP.*mdf.spdmg; %per tick (for 5 stacks)
 dmg.Censure=        raw.Censure.*mdf.phcrit.*target.resrdx; %automatical connect, phys crit/CM
 dps.Censure=        dmg.Censure./cens.NetTick;

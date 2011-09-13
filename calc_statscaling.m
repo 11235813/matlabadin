@@ -9,7 +9,7 @@ exec=execution_model('veng',1); %placeholder, redefined in cfg
 base=player_model('race','Human');
 npc=npc_model(base);
 buff=buff_model;
-egs=ddb.gearset{4};  %3=T11H, 4=T12, 5=T12H
+egs=ddb.gearset{5};  %3=T11H, 4=T12, 5=T12H
 gear_stats;
 talent=ddb.talentset{1};  %placeholder, redefined in cfg
 glyph=ddb.glyphset{1}; %placeholder, redefined in cfg
@@ -23,13 +23,13 @@ M=length(stat);  %number of "extra" stats
 dstat=[10 10 20 10 10 10 10 10 10 10 10];
 
 %% Configurations
-%set melee hit to 2%, expertise to 10, mastery to 390 (16.5 mastery);
+%set melee hit to 2%, expertise to 10, mastery to 25.5;
 %do this by altering helm stats
 c=1;
 cfg(c).helm=egs(1);
 cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
 cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
-cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
+cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-25.5).*cnv.mast_mast;
 cfg(c).label='939/SoT build';
 cfg(c).veng=1;
 cfg(c).seal='Truth';
