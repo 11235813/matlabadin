@@ -82,7 +82,7 @@ mdf.BoK=1+0.05.*buff.BoK;
 mdf.SoE=floor(1.24.*mdf.buffscale).*buff.SoE;
 mdf.PWF=floor(1.32.*mdf.buffscale).*buff.PWF;
 mdf.FelInt=floor(4.8.*mdf.buffscale).*buff.FelInt; %only mana
-mdf.UnRage=1+0.1.*buff.UnRage;
+mdf.UnRage=1+0.2.*buff.UnRage; %melee AP
 mdf.FMT=1+0.06.*buff.FMT;
 mdf.ToWra=1+0.1.*buff.ToWra;
 mdf.ArcTac=1+0.03.*buff.ArcTac;
@@ -435,7 +435,7 @@ player.phdr=min([player.armor./(player.armor+player.acoeff);0.75]);
 target.armor=npc.armor.*mdf.Sund.*((290+mdf.SThrow.*10)./300); %fix ST
 target.phdr=target.armor./(target.armor+target.acoeff);
 
-%Vengeance, total AP
+%Vengeance, total melee AP
 player.VengAP=(0.1.*base.health+player.sta).*exec.veng.*exec.timein;
 player.ap=floor((base.ap+gear.ap+(player.str-10).*cnv.str_ap+extra.ap ...
     +player.VengAP+consum.ap).*mdf.UnRage);
