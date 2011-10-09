@@ -18,6 +18,7 @@ queue.st={...
     %complete queues
     'SotR>CS>AS>J>HW';
     'SotR>CS>AS>J>Cons>HW';
+    'SotR>CS>AS+>J>AS>Cons>HW';
     'SotR>AS+>CS>AS>J>Cons>HW';
     %fishing
     'sdAS>sdJ>SotR>CS>AS>J>Cons>HW';
@@ -32,6 +33,7 @@ queue.st={...
     'ISotR>Inq>CS>AS>J';
     'SDSotR>Inq>CS>AS>J';
     'SDSotR>ISotR>Inq>CS>AS>J';
+    'SDSotR>ISotR>Inq>CS>AS+>J>AS';
 %     'SDSotR>ISotR>Inq>AS[buffGC<2][buffGC>0]>CS>AS>J';
     'ISDSotR>Inq>CS>AS>J';
     'Inq>CS>AS>J>Cons>HW';
@@ -39,6 +41,7 @@ queue.st={...
     'ISotR>Inq>CS>AS>J>Cons>HW';
     'SDSotR>Inq>CS>AS>J>Cons>HW';
     'SDSotR>ISotR>Inq>CS>AS>J>Cons>HW';
+    'SDSotR>ISotR>Inq>CS>AS+>J>AS>Cons>HW';
 %     'SDSotR>ISotR>Inq>AS[buffGC<2][buffGC>0]>CS>AS>J>Cons>HW';
 %     'SDSotR>ISotR>Inq>CS>AS>J>ICons>HW';
     'ISDSotR>Inq>CS>AS>J>Cons>HW';

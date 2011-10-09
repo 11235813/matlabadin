@@ -49,6 +49,16 @@ cfg(c).rot=1;
 cfg(c).glyph=ddb.glyphset{2}; %WoG set
 cfg(c).talent=ddb.talentset{1}; %0/32/9 w/o HG
 
+%low hit, I39
+c=c+1;
+cfg(c).helm=cfg(1).helm;
+cfg(c).label='I39/SoT build';
+cfg(c).veng=1;
+cfg(c).seal='Truth';
+cfg(c).queue={'SDSotR>ISotR>Inq>CS>AS>J>Cons>HW'};
+cfg(c).rot=1;
+cfg(c).glyph=ddb.glyphset{1}; %WoG set
+cfg(c).talent=ddb.talentset{1}; %0/32/9 w/o HG
 
 %% Strength graphs
 %reset extra structure
