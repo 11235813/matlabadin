@@ -60,6 +60,8 @@ mdf.t11x4P=1+0.5.*gear.tierbonusP(2); %GoAK duration
 mdf.t12x2P=1+0.2.*gear.tierbonusP(3); %Righteous Flames
 mdf.t12x4P=12.*gear.tierbonusP(4); %Fiery Aegis
 mdf.t12x2R=1+0.15.*gear.tierbonusR(3); %Flames of the Faithful
+mdf.t13x2P=gear.tierbonusP(5); %Judgement bubbles
+mdf.t13x2R=gear.tierbonusR(5); %Judgement Hopo
 
 %%Standard Professions
 %(passive bonuses, independent of gearing choices)

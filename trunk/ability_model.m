@@ -10,7 +10,7 @@ player.hopo=3;  %TODO move it
 
 %Seal of Truth (fully stacked)
 raw.SealofTruth=    0.15.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
-raw.JoT        =    (1+0.2229.*player.hsp+0.1421.*player.ap).*1.5; 
+raw.JoT        =    (1+0.2229.*player.hsp+0.1421.*player.ap).*2;  %double damage with 5 stacks of Censure on target
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
 heal.SealofTruth=   0;
 threat.SealofTruth= max(dmg.SealofTruth,heal.SealofTruth).*mdf.RFury;
@@ -162,7 +162,7 @@ mdf.jseals=(mdf.JotJ>1)&&(strcmpi('Righteousness',exec.seal)||strcmpi('SoR',exec
     ||strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)); %JotJ procs only R/T
 raw.Judgement=      raw.Judgement.*mdf.spdmg.*(1+mdf.glyphJ+(10./3).*mdf.WotL);
 dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
-heal.Judgement=     0;
+heal.Judgement=     0.25.*dmg.Judgement.*mdf.t13x2P;
 threat.Judgement=   max(dmg.Judgement,heal.Judgement).*mdf.RFury;
 net.Judgement{1}=   dmg.Judgement+dmg.activeseal.*mdf.rahit;
 net.Judgement{2}=   heal.Judgement+heal.activeseal.*mdf.rahit;
