@@ -19,8 +19,8 @@ my %parsers = (
   swing     => qr{>Speed ([0-9.]+)<},
   damage    => qr{>(\d+ - \d+) Damage<},
   slot      => qr{>(
-    Head      | Neck      | Shoulders | Back      |
-    Chest     | Wrist     | Hand      | Waist     |
+    Head      | Neck      | Shoulder  | Back      |
+    Chest     | Wrist     | Hands     | Waist     |
     Legs      | Feet      | Finger    | Trinket   |
     One-Hand  | Off\sHand | Relic
   )<}x,
@@ -129,6 +129,9 @@ sub get_item {
     $item{sbstat} = $stat_names{lc $2};
   }
   
+  # fallback for slot
+  $item{slot} ||= 'Unknown';
+
   return %item;
 }
 
