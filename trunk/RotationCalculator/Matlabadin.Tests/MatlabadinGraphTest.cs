@@ -47,12 +47,20 @@ namespace Matlabadin.Tests
             Int64GraphParameters gp = NoMissNoProcs("CS");
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             SanityCheckGraph(mg);
-            Assert.AreEqual(7, mg.index.Length); // 0-3 HP with CS no/off CD = 7 states + 0 HP CS off CD which is unreachable
+            Assert.AreEqual(7, mg.index.Length);
+            // CSCD HP  
+            // 0    0   CS (+ 3 steps)
+            // 3    1   Nothing (+ 3 step)
+            // 0    1   CS (+ 3 steps)
+            // 3    2   Nothing (+ 3 step)
+            // 0    2   CS (+ 3 steps)
+            // 3    3   Nothing (+ 3 step)
+            // 0    3   CS (+ 3 steps)
 
             gp = NoMissNoProcs("HW");
             mg = new MatlabadinGraph<ulong>(gp, gp);
             SanityCheckGraph(mg);
-            Assert.AreEqual(10, mg.index.Length); // HW CD of 0, 3, 6, 9, 12, 15, 18, 21, 24, 27 steps
+            Assert.AreEqual(2, mg.index.Length); // HW; Nothing
         }
         [TestMethod]
         public void CalculateNextStateProbability_ShouldAdvanceStateProbabilitiesByOneState()
@@ -173,6 +181,18 @@ namespace Matlabadin.Tests
             Assert.AreEqual(1.0 / 15, result["HW"], Tolerance);
         }
         [TestMethod]
+        public void CalculateAggregates_RetT13P2()
+        {
+            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<ulong>("SotR>J"), 3, false, 1, 1, 0, 0, 0, true);
+            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            var result = mg.CalculateResults(
+                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance)
+                , out inqUptime, out jotwUptime);
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(1.0 / 8, result["J"], Tolerance); // 8s between J casts
+            Assert.AreEqual(result["J"] / 3, result["SotR"], Tolerance); // every third J we can SotR
+        }
+        [TestMethod]
         public void CalculateAggregates_SotRCS()
         {
             Int64GraphParameters gp = NoMiss("SotR>CS");
@@ -194,7 +214,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0.5 / 1.5, result["CS"], Tolerance);
             Assert.AreEqual(1d / 6 / 2 / 1.5, result["SotR"], Tolerance); // 50% proc rate on SD
             Assert.AreEqual(1d / 6 / 2 / 1.5, result["SotR(SD)"], Tolerance);
-            Assert.AreEqual(1d / 6 / 1.5, result["J"], Tolerance);
+            Assert.AreEqual(1d / 6 / 1.5, result["J"], Tolerance * 10);
 
             gp = NoMissNoProcs("SotR>CS>J");
             mg = new MatlabadinGraph<ulong>(gp, gp);
@@ -236,7 +256,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0, jotwUptime, Tolerance * 100); // aggregation is outside tolerance due to FP rounding
         }
         [TestMethod]
-        public void CloneReduceConvergenceTimeForSameResult()
+        public void CloneShouldReduceConvergenceTimeForSameResult()
         {
             Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<ulong>("SotR>CS>AS>J"), 1, false, 0.8, 0.95, 0, 0, 0);
             MatlabadinGraph<ulong> rawGraph = new MatlabadinGraph<ulong>(gp, gp);

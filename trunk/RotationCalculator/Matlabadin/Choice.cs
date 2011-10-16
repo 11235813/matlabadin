@@ -102,5 +102,28 @@ namespace Matlabadin
             hash += (int)ability << 16;
             return hash;
         }
+        /// <summary>
+        /// Peforms the current choice, then the given choice
+        /// </summary>
+        /// <param name="choice">Choice to perform after current choice</param>
+        /// <returns></returns>
+        public Choice<TState> Concatenate(Choice<TState> choice)
+        {
+            if (this.Ability != Ability.Nothing)
+            {
+                throw new InvalidOperationException("Can only concatenate to an Ability.Nothing state");
+            }
+            if (this.pr.Length != 1)
+            {
+                throw new InvalidOperationException("Cannot concatenate to a choice that has multiple next states");
+            }
+            return new Choice<TState>(choice.Ability,
+                choice.sotrsd,
+                this.inqDuration + choice.inqDuration,
+                this.jotwDuration + choice.jotwDuration,
+                choice.hp,
+                this.stepsDuration + choice.stepsDuration,
+                choice.pr);
+        }
     }
 }

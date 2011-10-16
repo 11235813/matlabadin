@@ -15,7 +15,8 @@ namespace Matlabadin
             double rhit,
             double sdProcRate,
             double gcProcRate,
-            double egProcRate)
+            double egProcRate,
+            bool hpOnJudgement = false)
             : base(
             rotation,
             stepsPerGcd,
@@ -24,7 +25,8 @@ namespace Matlabadin
             rhit,
             sdProcRate,
             gcProcRate,
-            egProcRate)
+            egProcRate,
+            hpOnJudgement)
         {
             CalculateBitOffsets();
         }

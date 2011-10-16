@@ -45,7 +45,7 @@ for i=1:length(queue.rot);
         
     %generate FSM results
     if length(mdf.mehit)==1 && length(mdf.rahit)==1
-        [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+        [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
         %convert actionPr to CPS array
         inq = inqUptime;
         [cps]=action2cps(actionPr,metadata);
@@ -58,9 +58,9 @@ for i=1:length(queue.rot);
     elseif length(mdf.mehit)>1 && length(mdf.rahit)>1
         %use parallelization
         if useParallel
-            fsm_gen(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+            fsm_gen(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
             for j=1:length(mdf.mehit)
-                [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+                [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
                 inq(:,j) = inqUptime;
                 [cps(:,j)]=action2cps(actionPr,metadata,val.fsmlabel);
             end
@@ -68,7 +68,7 @@ for i=1:length(queue.rot);
             wb=waitbar(0,'Generating/Loading FSM data');
             for j=1:length(mdf.mehit)
                 waitbar(j/val.length,wb,['FSM gen/load for ' queue.rot{i}])
-                [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+                [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
                 inq(:,j) = inqUptime;
                 [cps(:,j)]=action2cps(actionPr,metadata,val.fsmlabel);
             end
@@ -79,9 +79,9 @@ for i=1:length(queue.rot);
     elseif length(mdf.mehit)>1 && length(mdf.rahit)==1
         %use parallelization
         if useParallel
-            fsm_gen(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+            fsm_gen(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
             for j=1:length(mdf.mehit)
-                [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+                [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
                 inq(:,j) = inqUptime;
                 [cps(:,j)]=action2cps(actionPr, metadata,val.fsmlabel);
             end
@@ -89,7 +89,7 @@ for i=1:length(queue.rot);
             wb=waitbar(0,'Generating/Loading FSM data');
             for j=1:length(mdf.mehit)
                 waitbar(j/val.length,wb,['FSM gen/load for ' queue.rot{i}])
-                [actionPr, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader);
+                [actionPr, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
                 inq(:,j) = inqUptime;
                 [cps(:,j)]=action2cps(actionPr, metadata,val.fsmlabel);
             end

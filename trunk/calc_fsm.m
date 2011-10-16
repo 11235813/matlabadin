@@ -9,7 +9,7 @@ mhitArray=repmat(mhit, 1, length(rhit));
 rhitArray=repmat(rhit, length(mhit), 1);
 rhitArray=rhitArray(:);
 % generate data
-fsm_gen(rotation, mhitArray, rhitArray, 1, 0, 2, 2);
+fsm_gen(rotation, mhitArray, rhitArray, 1, 0, 2, 2, 0);
 
 % populate data array
 % TODO use ability_model.m and action2cps.m code instead of duplicating
@@ -22,7 +22,7 @@ data = horzcat(mhitArray', rhitArray);
 % resize array to include output
 data(1, length(fsmlabel) + 2)=0;
 for i = 1:size(data)[1]
-    actionPr = memoized_fsm(rotation, data(i, 1), data(i, 2), 1, 2, 2, 2);
+    actionPr = memoized_fsm(rotation, data(i, 1), data(i, 2), 1, 2, 2, 2, 0);
     cps=zeros(size(fsmlabel,1),1);
     %sort actionPr entries into cps
     for m=1:size(actionPr,2)
@@ -41,7 +41,7 @@ function [z] = CS_Pr(mehit, rhit)
 	% soft cap is 6.5% dodge or 26 expertise, and the hard cap is 14% parry or 56 expertise
 	%mehit = 1 - 0.08*(1-min(1,hit/960)) - 0.065*(1-min(1, expertise/26)) - 0.14*(1-min(1, expertise/56));
 	%rhit = 1 - 0.08*(1-min(1,hit/960));
-	actionPr = memoized_fsm(rotation, mehit, rhit, 1, 2, 2, 2); %input order is eg,sd,gc
+	actionPr = memoized_fsm(rotation, mehit, rhit, 1, 2, 2, 2, 0); %input order is cons,eg,sd,gc,retT13
 	z = actionPr{2, 5} + actionPr{2, 6};
 end
 function matrixResult = matrixfun2(f, matrix1, matrix2)

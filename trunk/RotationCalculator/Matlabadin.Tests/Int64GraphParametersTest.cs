@@ -123,5 +123,10 @@ namespace Matlabadin.Tests
         {
             Assert.AreEqual(3, SM.HP(SM.AdvanceTime(3, 100)));
         }
+        [TestMethod]
+        public void RetT13P2_ShouldDefaultToOff()
+        {
+            Assert.IsFalse(GP.HpOnJudgement);
+        }
     }
 }

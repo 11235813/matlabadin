@@ -54,6 +54,30 @@ namespace Matlabadin.Tests
             Assert.AreEqual(10, target.StepDuration * target.BuffDurationInSteps(Buff.SD));
         }
         [TestMethod]
+        public void AbilityCastTimeInStepsShouldBe1GCD()
+        {
+            foreach (Ability a in new Ability[] {
+                Ability.Inq,
+                Ability.SotR,
+                Ability.HotR,
+                Ability.WoG,
+                Ability.CS,
+                Ability.J,
+                Ability.AS,
+                Ability.Cons,
+                Ability.HW,
+               Ability. HoW,
+            })
+            {
+                Assert.AreEqual(GP.StepsPerGcd, GP.AbilityCastTimeInSteps(a));
+            }
+        }
+        [TestMethod]
+        public void AbilityCastTimeInSteps_Nothing_ShouldBeSingleStep()
+        {
+            Assert.AreEqual(1, GP.AbilityCastTimeInSteps(Ability.Nothing));
+        }
+        [TestMethod]
         public void ShouldHaveSameShapeIfParametersMatch()
         {
             Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, 3, true, 1.0, 1.0, 0.5, 0.2, 0.3);
@@ -67,6 +91,7 @@ namespace Matlabadin.Tests
             Assert.IsFalse(gp.HasSameShape(new Int64GraphParameters(AllAbilityRotation, 3, true, 1.0, 1.0, 0.0, 0.2, 0.3)));
             Assert.IsFalse(gp.HasSameShape(new Int64GraphParameters(AllAbilityRotation, 3, true, 1.0, 1.0, 0.5, 0.0, 0.3)));
             Assert.IsFalse(gp.HasSameShape(new Int64GraphParameters(AllAbilityRotation, 3, true, 1.0, 1.0, 0.5, 0.2, 0.0)));
+            Assert.IsFalse(gp.HasSameShape(new Int64GraphParameters(AllAbilityRotation, 3, true, 1.0, 1.0, 0.5, 0.2, 0.3, true)));
         }
         [TestMethod]
         public void ShouldHaveSameShapeIfOnlyDifferByNonZeroTransitionMagnitides()

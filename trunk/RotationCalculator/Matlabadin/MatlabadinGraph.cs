@@ -35,7 +35,7 @@ namespace Matlabadin
                 from kvp in graph.firstChoiceState
                 select new {
                     OldChoice = kvp.Key,
-                    NewChoice = StateHelper<TState>.NextStates(GraphParameters, StateManager, kvp.Value, out tempNextStates),
+                    NewChoice = StateHelper<TState>.NextAbilityStates(GraphParameters, StateManager, kvp.Value, out tempNextStates),
                     State = kvp.Value
                 };
             this.firstChoiceState = choiceConversion.ToDictionary(n => n.NewChoice, n => n.State);
@@ -62,10 +62,9 @@ namespace Matlabadin
             {
                 TState currentState = index[nextState.Count()];
                 //Console.WriteLine(StateHelper<TState>.StateToString(GraphParameters, StateManager, currentState));
-                Ability abilityChosen = GraphParameters.Rotation.ActionToTake(GraphParameters, StateManager, currentState);
                 TState[] currentNextState;
                 int[] currentNextStateIndex;
-                Choice<TState> c = StateHelper<TState>.NextStates(GraphParameters, StateManager, currentState, abilityChosen, out currentNextState);
+                Choice<TState> c = StateHelper<TState>.NextAbilityStates(GraphParameters, StateManager, currentState, out currentNextState);
                 currentNextStateIndex = new int[currentNextState.Length];
                 for (int i = 0; i < currentNextState.Length; i++)
                 {
@@ -145,7 +144,7 @@ namespace Matlabadin
             out double finalAbsTolerance,
             double relTolerance = 1e-8,
             double absTolerance = 1e-10,
-            int maxIterations = 4096,
+            int maxIterations = 8192,
             int iterationStride = 16,
             double[] initialState = null)
         {

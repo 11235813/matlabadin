@@ -7,13 +7,28 @@ namespace Matlabadin
 {
     public static class StateHelper<TState>
     {
-        public static Choice<TState> NextStates(
+        /// <summary>
+        /// Calculates the set of next states after the next ability usage
+        /// </summary>
+        public static Choice<TState> NextAbilityStates(
             GraphParameters<TState> gp,
             IStateManager<TState> sm,
             TState state,
             out TState[] nextState)
         {
-            return NextStates(gp, sm, state, gp.Rotation.ActionToTake(gp, sm, state), out nextState);
+            TState[] currentStates;
+            Choice<TState> choice = NextStates(gp, sm, state, gp.Rotation.ActionToTake(gp, sm, state), out currentStates);
+
+            // reduce the state space by merging consecutive Ability.Nothing states
+            while (choice.Ability == Ability.Nothing
+                && currentStates.Length == 1
+                && gp.Rotation.ActionToTake(gp, sm, currentStates[0]) == Ability.Nothing)
+            {
+                // only one next state and we're doing nothing: just merge the two states together
+                choice = choice.Concatenate(NextStates(gp, sm, currentStates[0], Ability.Nothing, out currentStates));
+            }
+            nextState = currentStates;
+            return choice;
         }
         public static Choice<TState> NextStates(
             GraphParameters<TState> gp,
@@ -115,7 +130,7 @@ namespace Matlabadin
             }
             // cull zero probability transitions
             CullZeroProbabilityTransitions(ref nextState, ref pr);
-            return Choice<TState>.CreateChoice(gp, sm, state, a, waitSteps + gp.StepsPerGcd, pr);
+            return Choice<TState>.CreateChoice(gp, sm, state, a, waitSteps + gp.AbilityCastTimeInSteps(a), pr);
         }
         private static void CullZeroProbabilityTransitions(ref TState[] nextState, ref double[] pr)
         {
@@ -192,6 +207,12 @@ namespace Matlabadin
                 case Ability.J:
                     // 4.2: JotW triggered by J cast not J landing
                     nextState = sm.SetTimeRemaining(nextState, Buff.JotW, gp.BuffDurationInSteps(Buff.JotW));
+                    if (gp.HpOnJudgement)
+                    {
+                        // TODO: test if HP is granted on cast or landing
+                        nextState = sm.IncHP(nextState); // on cast
+                        // if (hit) nextState = sm.IncHP(nextState); // on landing
+                    }
                     break;
             }
             if (egProc)
@@ -208,8 +229,8 @@ namespace Matlabadin
             {
                 nextState = sm.SetTimeRemaining(nextState, Buff.SD, gp.BuffDurationInSteps(Buff.SD));
             }
-            // advance time a GCD
-            nextState = sm.AdvanceTime(nextState, gp.StepsPerGcd);
+            // advance time
+            nextState = sm.AdvanceTime(nextState, gp.AbilityCastTimeInSteps(ability));
             return nextState;
         }
         public static string StateToString(GraphParameters<TState> gp, IStateManager<TState> sm, TState state)
