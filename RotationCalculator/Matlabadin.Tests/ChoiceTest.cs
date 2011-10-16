@@ -124,6 +124,71 @@ namespace Matlabadin.Tests
             Assert.AreEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.JotW, 3), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
             Assert.AreEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.JotW, 4), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
         }
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ConcatenateShouldNotAllowConcatenationToActualAbilities()
+        {
+            Choice<ulong> cCS = Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.JotW, 3), Ability.CS, 3, new double[] { 1 });
+            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Nothing, 1, new double[] { 1 });
+            cCS.Concatenate(cNothing);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ConcatenateShouldNotAllowConcatenationWhenThereIsAChoiceOfNextStates()
+        {
+            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Nothing, 1, new double[] { 0.5, 0.5 });
+            cNothing.Concatenate(cNothing);
+        }
+        [TestMethod]
+        public void ConcatenateShouldAddStepsDurations()
+        {
+            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Nothing, 1, new double[] { 1 });
+            Choice<ulong> c = cNothing.Concatenate(cNothing);
+            Assert.AreEqual(c.stepsDuration, 2);
+            Assert.AreEqual(c.stepsDuration, 2);
+            Assert.AreEqual(c.stepsDuration, 2);
+        }
+        [TestMethod]
+        public void ConcatenateShouldAddInqDurations()
+        {
+            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.JotW, 5), Ability.Nothing, 1, new double[] { 1 });
+            Choice<ulong> c = cNothing.Concatenate(cNothing);
+            Assert.AreEqual(c.jotwDuration, 2);
+        }
+        [TestMethod]
+        public void ConcatenateShouldAddJotwDurations()
+        {
+            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.Inq, 5), Ability.Nothing, 1, new double[] { 1 });
+            Choice<ulong> c = cNothing.Concatenate(cNothing);
+            Assert.AreEqual(c.inqDuration, 2);
+        }
+        [TestMethod]
+        public void ConcatenateShouldSetSDBasedOnAbilityUsage()
+        {
+            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, 1, Ability.Nothing, 1, new double[] { 1 });
+            Assert.IsFalse(cNothing.Action.Contains("(SD)")); // no SD buff initially
+            Choice<ulong> c = cNothing.Concatenate(
+                Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SD, 3, 3), Ability.SotR, 3, new double[] { 1 }));
+            Assert.IsTrue(c.Action.Contains("(SD)"));
+        }
+        [TestMethod]
+        public void ConcatenateShouldSetHPBasedOnAbilityUsage()
+        {
+            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, 2, Ability.Nothing, 1, new double[] { 1 });
+            Choice<ulong> c = cNothing.Concatenate(
+                Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SD, 3, 1), Ability.SotR, 3, new double[] { 1 }));
+            // Test data only possible if we introduce HP decay modelling which is unlikely
+            Assert.IsTrue(c.Action.Contains("1"));
+        }
+        [TestMethod]
+        public void ConcatenateShouldSetPrBasedOnContatenatedChoice()
+        {
+            double[] pr = new double[] { 0.5, 0.5 };
+            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, 3, Ability.Nothing, 1, new double[] { 1 });
+            Choice<ulong> c = cNothing.Concatenate(
+                Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SD, 3, 1), Ability.SotR, 3, pr));
+            Assert.AreEqual(pr, c.pr);
+        }
     }
 }
 

@@ -126,6 +126,32 @@ namespace Matlabadin.Tests
         {
             Assert.AreEqual(0, SM.TimeRemaining(StateHelper<ulong>.UseAbility(GP, SM, GetState(SM, Buff.GC, 4), Ability.AS, hit: true), Buff.GC));
         }
+        [TestMethod]
+        public void UseAbility_P2T13Ret_JShouldNotGiveHPByDefault()
+        {
+            ulong state = StateHelper<ulong>.UseAbility(GP, SM, 0, Ability.J);
+            Assert.AreEqual(0, SM.HP(state));
+        }
+        [TestMethod]
+        public void UseAbility_P2T13Ret_JShouldGive1HP_OnHit()
+        {
+            Int64GraphParameters gp = new Int64GraphParameters(R, 3, false, 1, 1, 0, 0, 0, true);
+            ulong state = StateHelper<ulong>.UseAbility(gp, gp, 0, Ability.J);
+            Assert.AreEqual(1, SM.HP(state));
+        }
+        [TestMethod]
+        public void UseAbility_P2T13Ret_JShouldGive1HP_OnMiss()
+        {
+            Int64GraphParameters gp = new Int64GraphParameters(R, 3, false, 1, 1, 0, 0, 0, true);
+            ulong state = StateHelper<ulong>.UseAbility(gp, gp, 0, Ability.J, hit:false);
+            Assert.AreEqual(1, SM.HP(state));
+        }
+        [TestMethod]
+        public void UseAbility_NothingShouldAdvanceTimeByOneStep()
+        {
+            ulong state = StateHelper<ulong>.UseAbility(GP, SM, GetState(SM, Ability.CS, 3), Ability.Nothing);
+            Assert.AreEqual(2, SM.CooldownRemaining(state, Ability.CS));
+        }
         private void TestNextState(Int64GraphParameters gp, ulong state, Ability a,
             ulong[] expectedState,
             double[] expectedPr,
@@ -246,6 +272,32 @@ namespace Matlabadin.Tests
             TestNextState(gp, state, a,
                 1, StateHelper<ulong>.UseAbility(gp, gp, state, a)
             );
+        }
+        [TestMethod]
+        public void NextState_Nothing_ShouldAdvanceTimeBy1Step()
+        {
+            TestNextState(GP, GetState(SM, Ability.CS, 3), Ability.Nothing,
+                1, GetState(SM, Ability.CS, 2), 
+                1 // 1 step duration
+            );
+        }
+        [TestMethod]
+        public void NextAbilityStates_ShouldUseExpectedAbility()
+        {
+            ulong[] nextStates;
+            var r = new RotationPriorityQueue<ulong>("CS");
+            var gp = new Int64GraphParameters(r, 3, false, 1, 1, 0, 0, 0);
+            Assert.AreEqual(r.ActionToTake(gp, gp, 0), StateHelper<ulong>.NextAbilityStates(gp, gp, 0, out nextStates).Ability);
+        }
+        [TestMethod]
+        public void NextAbilityStates_ShouldConcatenateConsecutiveNothingStates()
+        {
+            ulong[] nextStates;
+            var r = new RotationPriorityQueue<ulong>("CS");
+            var gp = new Int64GraphParameters(r, 3, false, 1, 1, 0, 0, 0);
+            Choice<ulong> c = StateHelper<ulong>.NextAbilityStates(gp, gp, GetState(gp, Ability.CS, 4), out nextStates);
+            Assert.AreEqual(Ability.Nothing, c.Ability);
+            Assert.AreEqual(4, c.stepsDuration);
         }
     }
 }

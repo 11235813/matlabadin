@@ -1,22 +1,27 @@
-function [generatedFile] = fsm_gen(rotation, mehitArray, rhitArray, consGlyph, egTalentPoints , sdTalentPoints, gcTalentPoints)
+function [generatedFile] = fsm_gen(rotation, mehitArray, rhitArray, consGlyph, egTalentPoints , sdTalentPoints, gcTalentPoints, t13x2R)
 %fsm_gen calculates fsm for each mehit, rhit
 % call memoized_fsm to return the actual fsm data
 
 % check source timestamp
+if exist('RotationCalculator') ~= 7
+    pwd
+    error('Please set your working directory to the matlabadin root');
+end
 fsmFileMetadata = dir('fsm.exe');
 if exist('fsm.exe') == 2 && fsmFileMetadata.datenum <= max(arrayfun(@(x) x.datenum, dir('RotationCalculator\Matlabadin\*.cs')))
 	warning('Execuatable out of date: forcing full regeneration');
 	delete('fsm.exe');
 end
-if exist('fsm.exe') ~= 2
+if exist('fsm.exe') ~= 2 && exist('data') == 7
 	warning('Deleting data directory to ensure invalid data is not cached.');
 	rmdir('data', 's');
 	if exist('data') == 7
 		error('Unable to delete data directory');
-	end
-	mkdir('data');
+    end
 end
-
+if exist('data') ~= 7
+    mkdir('data');
+end
 generatedFile = cell(length(mehitArray),1);
 argfile = strcat('data\\fsm_gen_input_', num2str(ceil(rand.*1000000)), '.tmp');
 argfid = fopen(argfile, 'w');
@@ -50,6 +55,12 @@ for i=1:length(mehitArray)
     else
         strConsGlyph = 'false';
     end
+    if t13x2R
+        strT13x2R = 'true';
+        optionsKey = strcat(optionsKey, '_t13x2R');
+    else
+        strT13x2R = 'false';
+    end
     dirname = strcat('data\\', rotationKey);
     filename = strcat(dirname, '\\', optionsKey, '.csv');
     % skip generation if the file already exists
@@ -61,8 +72,8 @@ for i=1:length(mehitArray)
         egProcRate = 0.15 * egTalentPoints;
         gcProcRate = 0.10 * gcTalentPoints;
         sdProcRate = 0.25 * sdTalentPoints;
-        fprintf(argfid, '%s 3 %s %f %f %f %f %f %s\n', ...
-            rotation, strConsGlyph, mehit, rhit, sdProcRate, gcProcRate, egProcRate, filename);
+        fprintf(argfid, '%s 3 %s %f %f %f %f %f %s %s\n', ...
+            rotation, strConsGlyph, mehit, rhit, sdProcRate, gcProcRate, egProcRate, strT13x2R, filename);
         generationRequired = 1;
     end
     generatedFile{i} = filename;
