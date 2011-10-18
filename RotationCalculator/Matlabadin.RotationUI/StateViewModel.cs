@@ -9,6 +9,7 @@ namespace Matlabadin.RotationUI
     {
         public StateViewModel(IStateManager<T> sm, T state)
         {
+            HP = sm.HP(state);
             WoG = sm.CooldownRemaining(state, Ability.WoG);
             CS = sm.CooldownRemaining(state, Ability.CS);
             J = sm.CooldownRemaining(state, Ability.J);
@@ -22,6 +23,7 @@ namespace Matlabadin.RotationUI
             EGICD = sm.TimeRemaining(state, Buff.EGICD);
             JotW = sm.TimeRemaining(state, Buff.JotW);
         }
+        public int HP { get; set; }
         public double WoG { get; set; }
         public double CS { get; set; }
         public double J { get; set; }
