@@ -30,7 +30,7 @@ function  [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(rotation, m
     rotationKey = strrep(rotationKey, '*', 'star');
     rotationKey = strrep(rotationKey, '''', 'prime');
     rotationKey = strrep(rotationKey, '+', 'plus');
-    optionsKey = sprintf('T%g%g%g_%0.5f_%0.5f', egTalentPoints , sdTalentPoints, gcTalentPoints, mehit, rhit);
+    optionsKey = sprintf('T%g_%g%g%g_%0.5f_%0.5f', fsm_steps_per_gcd(), egTalentPoints , sdTalentPoints, gcTalentPoints, mehit, rhit);
     optionsKey = strrep(optionsKey,'_1.00000','_1_');
     optionsKey = strrep(optionsKey,'_0.','_');
     if consGlyph
