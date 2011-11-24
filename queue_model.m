@@ -6,12 +6,15 @@ queue.st={...
     'SotR>CS>AS>J';
     'SotR>HotR>AS>J';
     'SotR>CS>J>AS';
+    'SotR>CS>J[cdCS>0.5]>AS';
     'SotR>AS>CS>J';
-    'AS>SotR>CS>J';
+    'SotR>J>CS>AS';
+%     'AS>SotR>CS>J';
     'SotR>CS>AS+>J>AS';
+    'SotR>CS>AS+>J[cdCS>0.5]>AS';
 %     'SotR>AS+>CS>J>AS';
     'SotR>AS+>CS>AS>J';
-    'SotR>AS[buffGC<2][buffGC>0]>CS>AS>J';
+    'SotR>AS[buffGC<2][buffGC>0]>CS>AS+>J>AS';
     %fishing
 %     'sdAS>sdJ>SotR>CS>AS>J';
 %     'sdAS>SotR>CS>AS>J';
@@ -33,6 +36,7 @@ queue.st={...
     'ISotR>Inq>CS>AS>J';
     'SDSotR>Inq>CS>AS>J';
     'SDSotR>ISotR>Inq>CS>AS>J';
+    'SDSotR>ISotR>Inq>CS>J>AS';
     'SDSotR>ISotR>Inq>CS>AS+>J>AS';
 %     'SDSotR>ISotR>Inq>AS[buffGC<2][buffGC>0]>CS>AS>J';
     'ISDSotR>Inq>CS>AS>J';
@@ -41,6 +45,7 @@ queue.st={...
     'ISotR>Inq>CS>AS>J>Cons>HW';
     'SDSotR>Inq>CS>AS>J>Cons>HW';
     'SDSotR>ISotR>Inq>CS>AS>J>Cons>HW';
+    'SDSotR>ISotR>Inq>CS>J>AS>Cons>HW';
     'SDSotR>ISotR>Inq>CS>AS+>J>AS>Cons>HW';
 %     'SDSotR>ISotR>Inq>AS[buffGC<2][buffGC>0]>CS>AS>J>Cons>HW';
 %     'SDSotR>ISotR>Inq>CS>AS>J>ICons>HW';
@@ -64,10 +69,14 @@ queue.st={...
 %     'WoG>iInq>SotR>CS>AS>J>Cons>HW';
     'WoG>SDSotR>ISotR>Inq>CS>AS>J>Cons>HW';
     %HoW queues
-    'SotR>CS>AS>J>HoW';                
-	'SotR>CS>AS>HoW>J';
+    'SotR>CS>AS>J>HoW';
+    'SotR>CS>J>AS>HoW';                
+	'SotR>CS>AS>HoW>J';                
+	'SotR>CS>J>HoW>AS';
     'SotR>CS>AS+>HoW>AS>J';
+    'SotR>CS>AS+>HoW>J>AS';
     'SotR>CS>HoW>AS>J';
+    'SotR>CS>HoW>AS+>J>AS';
     'SotR>HoW>CS>AS>J';
     'HoW>SotR>CS>AS>J';
 %     'SotR>CS>AS>J>HoW>Cons>HW';
@@ -77,6 +86,8 @@ queue.st={...
 %     'HoW>SotR>CS>AS>J>Cons>HW';
 %     'ISotR>SDSotR>Inq>CS>AS>J>HoW>Cons>HW';
     'ISotR>SDSotR>Inq>CS>AS>HoW>J>Cons>HW';
+    'ISotR>SDSotR>Inq>CS>AS>J>HoW>Cons>HW';
+    'ISotR>SDSotR>Inq>CS>J>AS>HoW>Cons>HW';
 %     'ISotR>SDSotR>Inq>CS>HoW>AS>J>Cons>HW';
 %     'ISotR>SDSotR>Inq>HoW>CS>AS>J>Cons>HW';
 %     'ISotR>SDSotR>HoW>Inq>CS>AS>J>Cons>HW';

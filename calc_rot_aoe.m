@@ -9,7 +9,7 @@ def_db;
 exec=execution_model('veng',1);  %placeholder, set in cfg
 base=player_model('race','Human');
 npc=npc_model(base);
-egs=ddb.gearset{5};  %3=T11H, 4=T12, 5=T12H
+egs=ddb.gearset{7};  %6=T13R, 7=T13N, 8=T13H
 gear_stats;
 talent=ddb.talentset{1}; %placeholder, set in cfg
 glyph=ddb.glyphset{4}; %placeholder, set in cfg
@@ -35,6 +35,18 @@ cfg(1).talent=ddb.talentset{1}; %0/32/9 w/o HG
 cfg(2)=cfg(1);
 cfg(2).label='939/SoT build, Focused Shield unglyphed';
 cfg(2).glyph=ddb.glyphset{7}; %Modified Default, (CS+HotR)/SoT/ShoR, Cons
+
+%third config, this time with HG
+cfg(3)=cfg(1);
+cfg(3).label='939/SoT build, with HG';
+cfg(3).glyph=ddb.glyphset{4}; %Modified Default, (CS+HotR)/SoT/ShoR, Cons
+cfg(3).talent=ddb.talentset{3}; %0/33/8 w/ HG
+
+%fourth config, this time without RoL
+cfg(4)=cfg(1);
+cfg(4).label='939/SoT build, w/o RoL';
+cfg(4).glyph=ddb.glyphset{4}; %Modified Default, (CS+HotR)/SoT/ShoR, Cons
+cfg(4).talent=ddb.talentset{5}; %0/32/6 w/o RoL
 
 
 %% Generate DPS for each config
