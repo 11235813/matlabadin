@@ -9,7 +9,7 @@ exec=execution_model('veng',1); %placeholder, redefined in cfg
 base=player_model('race','Human');
 npc=npc_model(base);
 buff=buff_model;
-egs=ddb.gearset{5};  %3=T11H, 4=T12, 5=T12H
+egs=ddb.gearset{7};  %6=T13R, 7=T13N, 8=T13H
 gear_stats;
 talent=ddb.talentset{1};  %placeholder, redefined in cfg
 glyph=ddb.glyphset{1}; %placeholder, redefined in cfg

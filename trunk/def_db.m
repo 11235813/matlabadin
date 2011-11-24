@@ -20,33 +20,38 @@ ddb.gemset{2}=tempgems;
 gem=ddb.gemset{2};
 
 %%Starter pre-raid
-tempegs(1)=equip(69558);  %Spiritshield Mask
-tempegs(1)=reforge(tempegs(1),'dodge','mast');
-tempegs(1)=socket(tempegs(1),gem.meta,gem.blu);
-tempegs(2)=equip(70107); %Fireheart Necklace
-tempegs(2)=reforge(tempegs(2),'exp','dodge');
-tempegs(3)=equip(69573); %Pauldrons of Sacrifice
-tempegs(3)=socket(tempegs(3),gem.red);
-tempegs(4)=equip(71270); %Mantle of Patience
-tempegs(5)=equip(60354); %T11
+tempegs(1)=equip(72842);  %Annihilan Helm
+tempegs(1)=socket(tempegs(1),gem.meta,gem.red);
+tempegs(2)=equip(70935); %Stoneheart Necklace
+tempegs(3)=equip(72861); %Pauldrons of the Dragonblight
+tempegs(3)=reforge(tempegs(3),'parry','mast');
+tempegs(3)=socket(tempegs(3),gem.blu);
+tempegs(4)=equip(72854); %Iceward Cloak
+tempegs(5)=equip(72818); %Breastplate of Tarnished Bronze
 tempegs(5)=socket(tempegs(5),gem.red,gem.blu);
-tempegs(6)=equip(70121); %Ricket's Gun Show
-tempegs(7)=equip(60355); %T11
-tempegs(7)=socket(tempegs(7),gem.blu);
-tempegs(8)=equip(55059); %Hardened Elementium Belt
+tempegs(6)=equip(70937); %Bracers of Regal Force
+tempegs(6)=reforge(tempegs(6),'dodge','mastery')
+tempegs(6)=socket(tempegs(6),gem.yel);
+tempegs(7)=equip(70949); %Immolation Handguards
+tempegs(7)=socket(tempegs(7),gem.red);
+tempegs(8)=equip(72803); %Girdle of Lost Heroes
 tempegs(8)=enhance(tempegs(8),equip(76168,'s')); %Belt Buckle
-tempegs(8)=socket(tempegs(8),gem.blu,gem.blu);
-tempegs(9)=equip(69583); %Legguards of the Unforgiving
-tempegs(9)=socket(tempegs(9),gem.red,gem.yel);
-tempegs(10)=equip(62418); %Boots of Sullen Rock / Gryphon Rider's Boots
+tempegs(8)=socket(tempegs(8),gem.red,gem.yel);
+tempegs(9)=equip(70947); %Immolation Legguards
+tempegs(9)=socket(tempegs(9),gem.red,gem.blu);
+tempegs(10)=equip(72819); %Chrono Boots
+tempegs(10)=reforge(tempegs(10),'exp','mast');
 tempegs(10)=socket(tempegs(10),gem.yel);
-tempegs(11)=equip(70127); %Lylagar Horn Ring
-tempegs(11)=equip(58187); %Ring of the Battle Anthem
-tempegs(13)=equip(56347); %Leaden Despair
-tempegs(14)=equip(56406); %Impetuous Query
-tempegs(15)=equip(70163); %Unbreakable Guardian
-tempegs(16)=equip(69629); %Shield of the Blood God
-tempegs(17)=equip(64676); %Relic of Khaz
+tempegs(11)=equip(72837); %Queen's Boon
+tempegs(11)=reforge(tempegs(11),'dodge','mast');
+tempegs(11)=equip(70940); %Deflecting Brimstone Band
+tempegs(13)=equip(72900); %Veil of Lies
+tempegs(14)=equip(68996); %Stay of Execution
+tempegs(14)=reforge(tempegs(14),'dodge','mast');
+tempegs(15)=equip(72827); %Gavel of Peroth'arn
+tempegs(16)=equip(72855); %Corrupted Carapace
+tempegs(17)=equip(70939); %Deathclutch Figurine
+tempegs(17)=reforge(tempegs(17),'dodge','mast');
 tempegs(17)=socket(tempegs(17),gem.blu);
 
 %%Enchants (21-37)
@@ -203,6 +208,124 @@ tempegs(17)=reforge(tempegs(17),'dodge','mast');
 tempegs(17)=socket(tempegs(17),gem.blu);
 ddb.gearset(5)={tempegs};
 
+%T13 RaidFinder Set
+tempegs(1)=equip(78790); %Faceguard of Radiant Glory
+tempegs(1)=socket(tempegs(1),gem.meta,gem.yel);
+tempegs(2)=equip(77092); %Guardspike Choker
+tempegs(3)=equip(78378); %Brackenshell Shoulder
+tempegs(3)=reforge(tempegs(3),'dodge','mast');
+tempegs(3)=socket(tempegs(3),gem.yel);
+tempegs(4)=equip(77099);  %Indefatigable Greatcloak
+tempegs(4)=reforge(tempegs(4),'exp','mast');
+tempegs(5)=equip(78827); %Chestguard of Radiant Glory
+tempegs(5)=socket(tempegs(5),gem.red,gem.yel,gem.blu);
+tempegs(6)=equip(78397); %Graveheart Bracers
+tempegs(6)=socket(tempegs(6),gem.yel);
+tempegs(7)=equip(78772); %Handguards of Radiant Glory
+tempegs(7)=reforge(tempegs(7),'hit','mast');
+tempegs(7)=socket(tempegs(7),gem.yel);
+tempegs(8)=equip(78460);  %Goriona's Collar
+tempegs(8)=reforge(tempegs(8),'dodge','mast');
+tempegs(8)=enhance(tempegs(8),equip(76168,'s')); %Belt Buckle
+tempegs(8)=socket(tempegs(8),gem.yel,gem.yel,gem.blu);
+tempegs(9)=equip(78810); %Legguards of Radiant Glory
+tempegs(9)=reforge(tempegs(9),'parry','mast');
+tempegs(9)=socket(tempegs(9),gem.red,gem.yel,gem.blu);
+tempegs(10)=equip(78439); %Stillheart Warboots
+tempegs(10)=socket(tempegs(10),gem.red,gem.blu);
+tempegs(11)=equip(78498); %Hardheart Ring
+tempegs(11)=socket(tempegs(11),gem.blu);
+tempegs(12)=equip(77112); %Signet of the Resolute
+tempegs(12)=reforge(tempegs(12),'parry','mast');
+tempegs(12)=socket(tempegs(12),gem.yel);
+tempegs(13)=equip(77117); %Fire of the Deep
+tempegs(14)=equip(77983); %Indomitable Pride
+tempegs(15)=equip(78488); %Souldrinker
+tempegs(16)=equip(78456); %Blackhorn's Mighty Bulwark
+tempegs(16)=socket(tempegs(16),gem.yel,gem.blu);
+tempegs(17)=equip(77084); %Stoutheart Talisman
+tempegs(17)=socket(tempegs(17),gem.blu);
+ddb.gearset(6)={tempegs};
+
+gem=ddb.gemset{1};
+
+%T13 Normal Set
+tempegs(1)=equip(77005); %Faceguard of Radiant Glory
+tempegs(1)=socket(tempegs(1),gem.meta,gem.yel);
+tempegs(2)=equip(77092); %Guardspike Choker
+tempegs(3)=equip(77268); %Brackenshell Shoulder
+tempegs(3)=reforge(tempegs(3),'dodge','mast');
+tempegs(3)=socket(tempegs(3),gem.yel);
+tempegs(4)=equip(77099);  %Indefatigable Greatcloak
+tempegs(4)=reforge(tempegs(4),'exp','mast');
+tempegs(5)=equip(77003); %Chestguard of Radiant Glory
+tempegs(5)=socket(tempegs(5),gem.red,gem.yel,gem.blu);
+tempegs(6)=equip(77258); %Graveheart Bracers
+tempegs(6)=socket(tempegs(6),gem.yel);
+tempegs(7)=equip(77004); %Handguards of Radiant Glory
+tempegs(7)=reforge(tempegs(7),'hit','mast');
+tempegs(7)=socket(tempegs(7),gem.yel);
+tempegs(8)=equip(77239);  %Goriona's Collar
+tempegs(8)=reforge(tempegs(8),'dodge','mast');
+tempegs(8)=enhance(tempegs(8),equip(76168,'s')); %Belt Buckle
+tempegs(8)=socket(tempegs(8),gem.yel,gem.yel,gem.blu);
+tempegs(9)=equip(77006); %Legguards of Radiant Glory
+tempegs(9)=reforge(tempegs(9),'parry','mast');
+tempegs(9)=socket(tempegs(9),gem.red,gem.yel,gem.blu);
+tempegs(10)=equip(77246); %Stillheart Warboots
+tempegs(10)=socket(tempegs(10),gem.red,gem.blu);
+tempegs(11)=equip(77232); %Hardheart Ring
+tempegs(11)=socket(tempegs(11),gem.blu);
+tempegs(12)=equip(77112); %Signet of the Resolute
+tempegs(12)=reforge(tempegs(12),'parry','mast');
+tempegs(12)=socket(tempegs(12),gem.yel);
+tempegs(13)=equip(77117); %Fire of the Deep
+tempegs(14)=equip(77211); %Indomitable Pride
+tempegs(15)=equip(77193); %Souldrinker
+tempegs(16)=equip(77226); %Blackhorn's Mighty Bulwark
+tempegs(16)=socket(tempegs(16),gem.yel,gem.blu);
+tempegs(17)=equip(77084); %Stoutheart Talisman
+tempegs(17)=socket(tempegs(17),gem.blu);
+ddb.gearset(7)={tempegs};
+
+%T13 Herioc Set
+tempegs(1)=equip(78695); %Faceguard of Radiant Glory (H)
+tempegs(1)=socket(tempegs(1),gem.meta,gem.yel);
+tempegs(2)=equip(77092); %Guardspike Choker
+tempegs(3)=equip(78367); %Brackenshell Shoulder (H)
+% tempegs(3)=reforge(tempegs(3),'dodge','mast');
+tempegs(3)=socket(tempegs(3),gem.yel);
+tempegs(4)=equip(77099);  %Indefatigable Greatcloak
+tempegs(4)=reforge(tempegs(4),'exp','dodge');
+tempegs(5)=equip(78732); %Chestguard of Radiant Glory (H)
+tempegs(5)=socket(tempegs(5),gem.red,gem.yel,gem.blu);
+tempegs(6)=equip(78390); %Graveheart Bracers (H)
+tempegs(6)=socket(tempegs(6),gem.yel);
+tempegs(7)=equip(78677); %Handguards of Radiant Glory (H)
+tempegs(7)=reforge(tempegs(7),'hit','mast');
+tempegs(7)=socket(tempegs(7),gem.yel);
+tempegs(8)=equip(78452);  %Goriona's Collar (H)
+% tempegs(8)=reforge(tempegs(8),'dodge','mast');
+tempegs(8)=enhance(tempegs(8),equip(76168,'s')); %Belt Buckle
+tempegs(8)=socket(tempegs(8),gem.yel,gem.yel,gem.blu);
+tempegs(9)=equip(78715); %Legguards of Radiant Glory (H)
+% tempegs(9)=reforge(tempegs(9),'parry','mast');
+tempegs(9)=socket(tempegs(9),gem.red,gem.yel,gem.blu);
+tempegs(10)=equip(78431); %Stillheart Warboots (H)
+tempegs(10)=socket(tempegs(10),gem.red,gem.blu);
+tempegs(11)=equip(78493); %Hardheart Ring (H)
+tempegs(11)=socket(tempegs(11),gem.blu);
+tempegs(12)=equip(77112); %Signet of the Resolute
+% tempegs(12)=reforge(tempegs(12),'parry','mast');
+tempegs(12)=socket(tempegs(12),gem.yel);
+tempegs(13)=equip(77117); %Fire of the Deep
+tempegs(14)=equip(78003); %Indomitable Pride (H)
+tempegs(15)=equip(78479); %Souldrinker (H)
+tempegs(16)=equip(78448); %Blackhorn's Mighty Bulwark (H)
+tempegs(16)=socket(tempegs(16),gem.yel,gem.blu);
+tempegs(17)=equip(77084); %Stoutheart Talisman
+tempegs(17)=socket(tempegs(17),gem.blu);
+ddb.gearset(8)={tempegs};
 
 
 %% Talent Specs
@@ -229,6 +352,12 @@ ddb.talentset{3}=temptree;
 temptree.prot=[3 2 2 0; 2 3 0 0; 0 3 1 2; 2 1 2 0; 1 1 2 0; 0 2 3 0; 0 1 0 0];
 temptree.ret=[0 3 2 0; 0 3 0 0];
 ddb.talentset{4}=temptree;
+
+%0/32/6 spec without RoL
+%http://www.wowhead.com/talent#sZGMhcRddRRucbz
+temptree.prot=[3 2 0 0; 2 3 0 0; 0 3 1 2; 2 1 2 0; 1 1 2 1; 0 2 3 0; 0 1 0 0];
+temptree.ret=[0 3 2 0; 0 0 0 1];
+ddb.talentset{5}=temptree;
 
 
 %% Glyphs

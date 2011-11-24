@@ -9,7 +9,7 @@ def_db;
 exec=execution_model('veng',1); %should default to 1 for npccount/timein/timeout, 0 behind, Truth
 base=player_model('race','Human');
 npc=npc_model(base);
-egs=ddb.gearset{5}; %3=T11H, 4=T12, 5=T12H
+egs=ddb.gearset{7}; %3=T11H, 4=T12, 5=T12H, 6=T13R, 7=T13N, 8=T13H
 gear_stats;
 talent=ddb.talentset{1}; %0/32/9 w/HG
 glyph=ddb.glyphset{3}; %SoT glyph only

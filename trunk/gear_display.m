@@ -1,7 +1,7 @@
 gear_db;
 def_db;
 
-for q=1:5
+for q=1:8
     
     exec=execution_model('veng',1); 
     base=player_model('race','Human');

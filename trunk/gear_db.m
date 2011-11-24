@@ -249,6 +249,46 @@ idb.iid(70948).atype=1;
 idb.iid(70948).isreforged=0;
 idb.iid(70948).istierP=[0 1 0];
 
+idb.iid(72842).name='Annihilan Helm';
+idb.iid(72842).ilvl=378;
+idb.iid(72842).str=346;
+idb.iid(72842).sta=611;
+idb.iid(72842).mast=216;
+idb.iid(72842).parry=260;
+idb.iid(72842).barmor=2943;
+idb.iid(72842).socket='MR';
+idb.iid(72842).sbstat='exp';
+idb.iid(72842).sbval=30;
+idb.iid(72842).atype=1;
+idb.iid(72842).isreforged=0;
+
+idb.iid(78790).name='Faceguard of Radiant Glory (Raidfinder)';
+idb.iid(78790).ilvl=384;
+idb.iid(78790).str=267;
+idb.iid(78790).sta=646;
+idb.iid(78790).mast=194;
+idb.iid(78790).dodge=395;
+idb.iid(78790).barmor=2995;
+idb.iid(78790).socket='MY';
+idb.iid(78790).sbstat='dodge';
+idb.iid(78790).sbval=30;
+idb.iid(78790).atype=1;
+idb.iid(78790).isreforged=0;
+idb.iid(78790).istierP=[0 0 1];
+
+idb.iid(78615).name='Jaw of Repudiation';
+idb.iid(78615).ilvl=384;
+idb.iid(78615).str=248;
+idb.iid(78615).sta=646;
+idb.iid(78615).exp=200;
+idb.iid(78615).parry=423;
+idb.iid(78615).barmor=2995;
+idb.iid(78615).socket='MB';
+idb.iid(78615).sbstat='parry';
+idb.iid(78615).sbval=30;
+idb.iid(78615).atype=1;
+idb.iid(78615).isreforged=0;
+
 idb.iid(71459).name='Helm of Blazing Glory (Heroic)';
 idb.iid(71459).ilvl=391;
 idb.iid(71459).str=400;
@@ -276,6 +316,59 @@ idb.iid(71524).atype=1;
 idb.iid(71524).isreforged=0;
 idb.iid(71524).istierP=[0 1 0];
 
+idb.iid(77156).name='Jaw of Repudiation';
+idb.iid(77156).ilvl=397;
+idb.iid(77156).str=288;
+idb.iid(77156).sta=730;
+idb.iid(77156).exp=233;
+idb.iid(77156).parry=478;
+idb.iid(77156).barmor=3111;
+idb.iid(77156).socket='MB';
+idb.iid(77156).sbstat='parry';
+idb.iid(77156).sbval=30;
+idb.iid(77156).atype=1;
+idb.iid(77156).isreforged=0;
+
+idb.iid(77005).name='Faceguard of Radiant Glory';
+idb.iid(77005).ilvl=397;
+idb.iid(77005).str=310;
+idb.iid(77005).sta=730;
+idb.iid(77005).mast=222;
+idb.iid(77005).dodge=450;
+idb.iid(77005).barmor=3111;
+idb.iid(77005).socket='MY';
+idb.iid(77005).sbstat='dodge';
+idb.iid(77005).sbval=30;
+idb.iid(77005).atype=1;
+idb.iid(77005).isreforged=0;
+idb.iid(77005).istierP=[0 0 1];
+
+idb.iid(78535).name='Jaw of Repudiation (Heroic)';
+idb.iid(78535).ilvl=410;
+idb.iid(78535).str=333;
+idb.iid(78535).sta=824;
+idb.iid(78535).exp=269;
+idb.iid(78535).parry=541;
+idb.iid(78535).barmor=3231;
+idb.iid(78535).socket='MB';
+idb.iid(78535).sbstat='parry';
+idb.iid(78535).sbval=30;
+idb.iid(78535).atype=1;
+idb.iid(78535).isreforged=0;
+
+idb.iid(78695).name='Faceguard of Radiant Glory (Heroic)';
+idb.iid(78695).ilvl=410;
+idb.iid(78695).str=357;
+idb.iid(78695).sta=824;
+idb.iid(78695).mast=254;
+idb.iid(78695).dodge=513;
+idb.iid(78695).barmor=3231;
+idb.iid(78695).socket='MY';
+idb.iid(78695).sbstat='dodge';
+idb.iid(78695).sbval=30;
+idb.iid(78695).atype=1;
+idb.iid(78695).isreforged=0;
+idb.iid(78695).istierP=[0 0 1];
 
 %% Neck 
 
@@ -319,6 +412,22 @@ idb.iid(70935).mast=165;
 idb.iid(70935).parry=129;
 idb.iid(70935).isreforged=0;
 
+idb.iid(76162).name='Twilight Amulet';
+idb.iid(76162).ilvl=378;
+idb.iid(76162).str=226;
+idb.iid(76162).sta=341;
+idb.iid(76162).mast=167;
+idb.iid(76162).dodge=126;
+idb.iid(76162).isreforged=0;
+
+idb.iid(78623).name='Guardspike Choker (Raidfinder)';
+idb.iid(78623).ilvl=384;
+idb.iid(78623).str=240;
+idb.iid(78623).sta=360;
+idb.iid(78623).mast=144;
+idb.iid(78623).dodge=169;
+idb.iid(78623).isreforged=0;
+
 idb.iid(71589).name='Stoneheart Necklace (Heroic)';
 idb.iid(71589).ilvl=391;
 idb.iid(71589).str=256;
@@ -327,6 +436,21 @@ idb.iid(71589).mast=186;
 idb.iid(71589).parry=146;
 idb.iid(71589).isreforged=0;
 
+idb.iid(77092).name='Guardspike Choker';
+idb.iid(77092).ilvl=397;
+idb.iid(77092).str=271;
+idb.iid(77092).sta=406;
+idb.iid(77092).mast=163;
+idb.iid(77092).dodge=191;
+idb.iid(77092).isreforged=0;
+
+idb.iid(78544).name='Guardspike Choker (Heroic)';
+idb.iid(78544).ilvl=410;
+idb.iid(78544).str=306;
+idb.iid(78544).sta=459;
+idb.iid(78544).mast=184;
+idb.iid(78544).dodge=216;
+idb.iid(78544).isreforged=0;
 
 %% Shoulder
 
@@ -398,6 +522,59 @@ idb.iid(70946).atype=1;
 idb.iid(70946).isreforged=0;
 idb.iid(70946).istierP=[0 1 0];
 
+idb.iid(72861).name='Pauldrons of the Dragonblight';
+idb.iid(72861).ilvl=378;
+idb.iid(72861).str=281;
+idb.iid(72861).sta=454;
+idb.iid(72861).dodge=169;
+idb.iid(72861).parry=206;
+idb.iid(72861).barmor=2716;
+idb.iid(72861).socket='B';
+idb.iid(72861).sbstat='sta';
+idb.iid(72861).sbval=15;
+idb.iid(72861).atype=1;
+idb.iid(72861).isreforged=0;
+
+idb.iid(78840).name='Shoulderguards of Radiant Glory (Raidfinder)';
+idb.iid(78840).ilvl=384;
+idb.iid(78840).str=189;
+idb.iid(78840).sta=480;
+idb.iid(78840).exp=175;
+idb.iid(78840).parry=292;
+idb.iid(78840).barmor=2764;
+idb.iid(78840).socket='YB';
+idb.iid(78840).sbstat='parry';
+idb.iid(78840).sbval=20;
+idb.iid(78840).atype=1;
+idb.iid(78840).isreforged=0;
+idb.iid(78840).istierP=[0 0 1];
+
+idb.iid(78378).name='Brackenshell Shoulderplates (Raidfinder)';
+idb.iid(78378).ilvl=384;
+idb.iid(78378).str=223;
+idb.iid(78378).sta=480;
+idb.iid(78378).dodge=320;
+idb.iid(78378).parry=142;
+idb.iid(78378).barmor=2764;
+idb.iid(78378).socket='Y';
+idb.iid(78378).sbstat='dodge';
+idb.iid(78378).sbval=10;
+idb.iid(78378).atype=1;
+idb.iid(78378).isreforged=0;
+
+idb.iid(70921).name='Pauldrons of Roaring Flame';
+idb.iid(70921).ilvl=384;
+idb.iid(70921).str=223;
+idb.iid(70921).sta=480;
+idb.iid(70921).mast=142;
+idb.iid(70921).dodge=320;
+idb.iid(70921).barmor=2764;
+idb.iid(70921).socket='Y';
+idb.iid(70921).sbstat='sta';
+idb.iid(70921).sbval=15;
+idb.iid(70921).atype=1;
+idb.iid(70921).isreforged=0;
+
 idb.iid(71432).name='Spaulders of Recurring Flame (Heroic)';
 idb.iid(71432).ilvl=391;
 idb.iid(71432).str=322;
@@ -425,6 +602,72 @@ idb.iid(71526).atype=1;
 idb.iid(71526).isreforged=0;
 idb.iid(71526).istierP=[0 1 0];
 
+idb.iid(77268).name='Brackenshell Shoulderplates';
+idb.iid(77268).ilvl=397;
+idb.iid(77268).str=255;
+idb.iid(77268).sta=542;
+idb.iid(77268).dodge=361;
+idb.iid(77268).parry=163;
+idb.iid(77268).barmor=2871;
+idb.iid(77268).socket='Y';
+idb.iid(77268).sbstat='dodge';
+idb.iid(77268).sbval=10;
+idb.iid(77268).atype=1;
+idb.iid(77268).isreforged=0;
+
+idb.iid(77007).name='Shoulderguards of Radiant Glory';
+idb.iid(77007).ilvl=397;
+idb.iid(77007).str=218;
+idb.iid(77007).sta=542;
+idb.iid(77007).exp=199;
+idb.iid(77007).parry=333;
+idb.iid(77007).barmor=2871;
+idb.iid(77007).socket='YB';
+idb.iid(77007).sbstat='parry';
+idb.iid(77007).sbval=20;
+idb.iid(77007).atype=1;
+idb.iid(77007).isreforged=0;
+idb.iid(77007).istierP=[0 0 1];
+
+idb.iid(71612).name='Pauldrons of Roaring Flame (Heroic)';
+idb.iid(71612).ilvl=397;
+idb.iid(71612).str=255;
+idb.iid(71612).sta=542;
+idb.iid(71612).mast=163;
+idb.iid(71612).dodge=361;
+idb.iid(71612).barmor=2871;
+idb.iid(71612).socket='Y';
+idb.iid(71612).sbstat='sta';
+idb.iid(71612).sbval=15;
+idb.iid(71612).atype=1;
+idb.iid(71612).isreforged=0;
+
+idb.iid(78367).name='Brackenshell Shoulderplates (Heroic)';
+idb.iid(78367).ilvl=410;
+idb.iid(78367).str=290;
+idb.iid(78367).sta=611;
+idb.iid(78367).dodge=408;
+idb.iid(78367).parry=186;
+idb.iid(78367).barmor=2983;
+idb.iid(78367).socket='Y';
+idb.iid(78367).sbstat='dodge';
+idb.iid(78367).sbval=10;
+idb.iid(78367).atype=1;
+idb.iid(78367).isreforged=0;
+
+idb.iid(78745).name='Shoulderguards of Radiant Glory (Heroic)';
+idb.iid(78745).ilvl=410;
+idb.iid(78745).str=251;
+idb.iid(78745).sta=611;
+idb.iid(78745).exp=226;
+idb.iid(78745).parry=380;
+idb.iid(78745).barmor=2983;
+idb.iid(78745).socket='YB';
+idb.iid(78745).sbstat='parry';
+idb.iid(78745).sbval=20;
+idb.iid(78745).atype=1;
+idb.iid(78745).isreforged=0;
+idb.iid(78745).istierP=[0 0 1];
 
 %% Cloaks
 
@@ -478,6 +721,45 @@ idb.iid(71415).socket='RR';
 idb.iid(71415).sbstat='agi';
 idb.iid(71415).sbval=20;
 idb.iid(71415).isreforged=0;
+
+idb.iid(72854).name='Iceward Cloak';
+idb.iid(72854).ilvl=378;
+idb.iid(72854).str=226;
+idb.iid(72854).sta=341;
+idb.iid(72854).mast=129;
+idb.iid(72854).parry=165;
+idb.iid(72854).barmor=695;
+idb.iid(72854).isreforged=0;
+
+idb.iid(78589).name='Indefatigable Greatcloak (Raidfinder)';
+idb.iid(78589).ilvl=384;
+idb.iid(78589).str=182;
+idb.iid(78589).sta=360;
+idb.iid(78589).exp=121;
+idb.iid(78589).parry=240;
+idb.iid(78589).barmor=718;
+idb.iid(78589).isreforged=0;
+
+idb.iid(77099).name='Indefatigable Greatcloak';
+idb.iid(77099).ilvl=397;
+idb.iid(77099).str=186;
+idb.iid(77099).sta=406;
+idb.iid(77099).exp=127;
+idb.iid(77099).parry=261;
+idb.iid(77099).barmor=769;
+idb.iid(77099).socket='Y';
+idb.iid(77099).sbstat='parry';
+idb.iid(77099).sbval=10;
+idb.iid(77099).isreforged=0;
+
+idb.iid(78507).name='Indefatigable Greatcloak (Heroic)';
+idb.iid(78507).ilvl=410;
+idb.iid(78507).str=233;
+idb.iid(78507).sta=459;
+idb.iid(78507).exp=155;
+idb.iid(78507).parry=306;
+idb.iid(78507).barmor=822;
+idb.iid(78507).isreforged=0;
 
 %% Chest
 
@@ -535,6 +817,15 @@ idb.iid(70914).sbval=30;
 idb.iid(70914).atype=1;
 idb.iid(70914).isreforged=0;
 
+idb.iid(72855).name='Corrupted Carapace';
+idb.iid(72855).ilvl=378;
+idb.iid(72855).str=226;
+idb.iid(72855).sta=341;
+idb.iid(72855).mast=165;
+idb.iid(72855).dodge=129;
+idb.iid(72855).barmor=12201;
+idb.iid(72855).isreforged=0;
+
 idb.iid(70950).name='Immolation Chestguard';
 idb.iid(70950).ilvl=378;
 idb.iid(70950).str=368;
@@ -548,6 +839,46 @@ idb.iid(70950).sbval=30;
 idb.iid(70950).atype=1;
 idb.iid(70950).isreforged=0;
 idb.iid(70950).istierP=[0 1 0];
+
+idb.iid(72818).name='Breastplate of Tarnished Bronze';
+idb.iid(72818).ilvl=378;
+idb.iid(72818).str=366;
+idb.iid(72818).sta=611;
+idb.iid(72818).mast=243;
+idb.iid(72818).dodge=258;
+idb.iid(72818).barmor=3622;
+idb.iid(72818).socket='RB';
+idb.iid(72818).sbstat='sta';
+idb.iid(72818).sbval=30;
+idb.iid(72818).atype=1;
+idb.iid(72818).isreforged=0;
+
+idb.iid(78584).name='Chestplate of the Unshakable Titan (Raidfinder)';
+idb.iid(78584).ilvl=384;
+idb.iid(78584).str=391;
+idb.iid(78584).sta=646;
+idb.iid(78584).dodge=294;
+idb.iid(78584).parry=226;
+idb.iid(78584).barmor=3686;
+idb.iid(78584).socket='RY';
+idb.iid(78584).sbstat='dodge';
+idb.iid(78584).sbval=20;
+idb.iid(78584).atype=1;
+idb.iid(78584).isreforged=0;
+
+idb.iid(78827).name='Chestguard of Radiant Glory (Raidfinder)';
+idb.iid(78827).ilvl=384;
+idb.iid(78827).str=371;
+idb.iid(78827).sta=646;
+idb.iid(78827).mast=268;
+idb.iid(78827).parry=241;
+idb.iid(78827).barmor=3686;
+idb.iid(78827).socket='RYB';
+idb.iid(78827).sbstat='parry';
+idb.iid(78827).sbval=30;
+idb.iid(78827).atype=1;
+idb.iid(78827).isreforged=0;
+idb.iid(78827).istierP=[0 0 1];
 
 idb.iid(71405).name='Carapace of Imbibed Flame (Heroic)';
 idb.iid(71405).ilvl=391;
@@ -575,6 +906,74 @@ idb.iid(71522).sbval=30;
 idb.iid(71522).atype=1;
 idb.iid(71522).isreforged=0;
 idb.iid(71522).istierP=[0 1 0];
+
+idb.iid(76874).name='Battleplate of Radiant Glory';
+idb.iid(76874).ilvl=397;
+idb.iid(76874).str=426;
+idb.iid(76874).sta=730;
+idb.iid(76874).haste=287;
+idb.iid(76874).mast=301;
+idb.iid(76874).barmor=3829;
+idb.iid(76874).socket='RRR';
+idb.iid(76874).sbstat='str';
+idb.iid(76874).sbval=30;
+idb.iid(76874).atype=1;
+idb.iid(76874).isreforged=0;
+idb.iid(76874).istierR=[0 0 1];
+
+idb.iid(77003).name='Chestguard of Radiant Glory';
+idb.iid(77003).ilvl=397;
+idb.iid(77003).str=426;
+idb.iid(77003).sta=730;
+idb.iid(77003).mast=306;
+idb.iid(77003).parry=276;
+idb.iid(77003).barmor=3829;
+idb.iid(77003).socket='RYB';
+idb.iid(77003).sbstat='parry';
+idb.iid(77003).sbval=30;
+idb.iid(77003).atype=1;
+idb.iid(77003).isreforged=0;
+idb.iid(77003).istierP=[0 0 1];
+
+idb.iid(77120).name='Chestplate of the Unshakable Titan';
+idb.iid(77120).ilvl=397;
+idb.iid(77120).str=446;
+idb.iid(77120).sta=730;
+idb.iid(77120).dodge=334;
+idb.iid(77120).parry=259;
+idb.iid(77120).barmor=3829;
+idb.iid(77120).socket='RY';
+idb.iid(77120).sbstat='dodge';
+idb.iid(77120).sbval=20;
+idb.iid(77120).atype=1;
+idb.iid(77120).isreforged=0;
+
+idb.iid(78732).name='Chestguard of Radiant Glory (Heroic)';
+idb.iid(78732).ilvl=410;
+idb.iid(78732).str=489;
+idb.iid(78732).sta=824;
+idb.iid(78732).mast=349;
+idb.iid(78732).parry=316;
+idb.iid(78732).barmor=3977;
+idb.iid(78732).socket='RYB';
+idb.iid(78732).sbstat='parry';
+idb.iid(78732).sbval=30;
+idb.iid(78732).atype=1;
+idb.iid(78732).isreforged=0;
+idb.iid(78732).istierP=[0 0 1];
+
+idb.iid(78500).name='Chestplate of the Unshakable Titan (Heroic)';
+idb.iid(78500).ilvl=410;
+idb.iid(78500).str=509;
+idb.iid(78500).sta=824;
+idb.iid(78500).dodge=379;
+idb.iid(78500).parry=295;
+idb.iid(78500).barmor=3977;
+idb.iid(78500).socket='RY';
+idb.iid(78500).sbstat='dodge';
+idb.iid(78500).sbval=20;
+idb.iid(78500).atype=1;
+idb.iid(78500).isreforged=0;
 
 
 %% Bracers
@@ -622,6 +1021,19 @@ idb.iid(65143).barmor=1557;
 idb.iid(65143).atype=1;
 idb.iid(65143).isreforged=0;
 
+idb.iid(70937).name='Bracers of Regal Force';
+idb.iid(70937).ilvl=378;
+idb.iid(70937).str=153;
+idb.iid(70937).sta=341;
+idb.iid(70937).dodge=212;
+idb.iid(70937).parry=110;
+idb.iid(70937).barmor=1584;
+idb.iid(70937).socket='Y';
+idb.iid(70937).sbstat='sta';
+idb.iid(70937).sbval=15;
+idb.iid(70937).atype=1;
+idb.iid(70937).isreforged=0;
+
 idb.iid(70920).name='Bracers of the Fiery Path';
 idb.iid(70920).ilvl=378;
 idb.iid(70920).str=207;
@@ -635,6 +1047,29 @@ idb.iid(70920).sbval=15;
 idb.iid(70920).atype=1;
 idb.iid(70920).isreforged=0;
 
+idb.iid(78397).name='Graveheart Bracers (Raidfinder)';
+idb.iid(78397).ilvl=384;
+idb.iid(78397).str=220;
+idb.iid(78397).sta=360;
+idb.iid(78397).mast=152;
+idb.iid(78397).dodge=140;
+idb.iid(78397).barmor=1613;
+idb.iid(78397).socket='Y';
+idb.iid(78397).sbstat='dodge';
+idb.iid(78397).sbval=10;
+idb.iid(78397).atype=1;
+idb.iid(78397).isreforged=0;
+
+idb.iid(78650).name='Bracers of Unrelenting Excellence (Raidfinder)';
+idb.iid(78650).ilvl=384;
+idb.iid(78650).str=240;
+idb.iid(78650).sta=360;
+idb.iid(78650).dodge=136;
+idb.iid(78650).parry=174;
+idb.iid(78650).barmor=1613;
+idb.iid(78650).atype=1;
+idb.iid(78650).isreforged=0;
+
 idb.iid(71470).name='Bracers of the Fiery Path (Heroic)';
 idb.iid(71470).ilvl=391;
 idb.iid(71470).str=236;
@@ -647,6 +1082,65 @@ idb.iid(71470).sbstat='sta';
 idb.iid(71470).sbval=15;
 idb.iid(71470).atype=1;
 idb.iid(71470).isreforged=0;
+
+idb.iid(71993).name='Titanguard Wristplates';
+idb.iid(71993).ilvl=397;
+idb.iid(71993).str=231;
+idb.iid(71993).sta=406;
+idb.iid(71993).mast=147;
+idb.iid(71993).parry=169;
+idb.iid(71993).barmor=1675;
+idb.iid(71993).socket='YY';
+idb.iid(71993).sbstat='parry';
+idb.iid(71993).sbval=20;
+idb.iid(71993).atype=1;
+idb.iid(71993).isreforged=0;
+
+idb.iid(77318).name='Bracers of Unrelenting Excellence';
+idb.iid(77318).ilvl=397;
+idb.iid(77318).str=271;
+idb.iid(77318).sta=406;
+idb.iid(77318).dodge=154;
+idb.iid(77318).parry=196;
+idb.iid(77318).barmor=1675;
+idb.iid(77318).atype=1;
+idb.iid(77318).isreforged=0;
+
+idb.iid(77258).name='Graveheart Bracers';
+idb.iid(77258).ilvl=397;
+idb.iid(77258).str=251;
+idb.iid(77258).sta=406;
+idb.iid(77258).mast=174;
+idb.iid(77258).dodge=158;
+idb.iid(77258).barmor=1675;
+idb.iid(77258).socket='Y';
+idb.iid(77258).sbstat='dodge';
+idb.iid(77258).sbval=10;
+idb.iid(77258).atype=1;
+idb.iid(77258).isreforged=0;
+
+idb.iid(78570).name='Bracers of Unrelenting Excellence (Heroic)';
+idb.iid(78570).ilvl=410;
+idb.iid(78570).str=306;
+idb.iid(78570).sta=459;
+idb.iid(78570).dodge=174;
+idb.iid(78570).parry=222;
+idb.iid(78570).barmor=1740;
+idb.iid(78570).atype=1;
+idb.iid(78570).isreforged=0;
+
+idb.iid(78390).name='Graveheart Bracers (Heroic)';
+idb.iid(78390).ilvl=410;
+idb.iid(78390).str=286;
+idb.iid(78390).sta=459;
+idb.iid(78390).mast=199;
+idb.iid(78390).dodge=179;
+idb.iid(78390).barmor=1740;
+idb.iid(78390).socket='Y';
+idb.iid(78390).sbstat='dodge';
+idb.iid(78390).sbval=10;
+idb.iid(78390).atype=1;
+idb.iid(78390).isreforged=0;
 
 
 %% Gloves
@@ -719,6 +1213,46 @@ idb.iid(70949).atype=1;
 idb.iid(70949).isreforged=0;
 idb.iid(70949).istierP=[0 1 0];
 
+idb.iid(72800).name='Gauntlets of Temporal Interference';
+idb.iid(72800).ilvl=378;
+idb.iid(72800).str=281;
+idb.iid(72800).sta=454;
+idb.iid(72800).mast=157;
+idb.iid(72800).dodge=211;
+idb.iid(72800).barmor=2264;
+idb.iid(72800).socket='B';
+idb.iid(72800).sbstat='sta';
+idb.iid(72800).sbval=15;
+idb.iid(72800).atype=1;
+idb.iid(72800).isreforged=0;
+
+idb.iid(78606).name='Gauntlets of Feathery Blows (Raidfinder)';
+idb.iid(78606).ilvl=384;
+idb.iid(78606).str=300;
+idb.iid(78606).sta=480;
+idb.iid(78606).exp=150;
+idb.iid(78606).parry=235;
+idb.iid(78606).barmor=2304;
+idb.iid(78606).socket='B';
+idb.iid(78606).sbstat='parry';
+idb.iid(78606).sbval=10;
+idb.iid(78606).atype=1;
+idb.iid(78606).isreforged=0;
+
+idb.iid(78772).name='Handguards of Radiant Glory (Raidfinder)';
+idb.iid(78772).ilvl=384;
+idb.iid(78772).str=203;
+idb.iid(78772).sta=480;
+idb.iid(78772).hit=132;
+idb.iid(78772).dodge=310;
+idb.iid(78772).barmor=2304;
+idb.iid(78772).socket='Y';
+idb.iid(78772).sbstat='dodge';
+idb.iid(78772).sbval=10;
+idb.iid(78772).atype=1;
+idb.iid(78772).isreforged=0;
+idb.iid(78772).istierP=[0 0 1];
+
 idb.iid(71523).name='Immolation Handguards (Heroic)';
 idb.iid(71523).ilvl=391;
 idb.iid(71523).str=322;
@@ -733,6 +1267,59 @@ idb.iid(71523).atype=1;
 idb.iid(71523).isreforged=0;
 idb.iid(71523).istierP=[0 1 0];
 
+idb.iid(77166).name='Gauntlets of Feathery Blows';
+idb.iid(77166).ilvl=397;
+idb.iid(77166).str=341;
+idb.iid(77166).sta=542;
+idb.iid(77166).exp=171;
+idb.iid(77166).parry=267;
+idb.iid(77166).barmor=2393;
+idb.iid(77166).socket='B';
+idb.iid(77166).sbstat='parry';
+idb.iid(77166).sbval=10;
+idb.iid(77166).atype=1;
+idb.iid(77166).isreforged=0;
+
+idb.iid(77004).name='Handguards of Radiant Glory';
+idb.iid(77004).ilvl=397;
+idb.iid(77004).str=235;
+idb.iid(77004).sta=542;
+idb.iid(77004).hit=153;
+idb.iid(77004).dodge=351;
+idb.iid(77004).barmor=2393;
+idb.iid(77004).socket='Y';
+idb.iid(77004).sbstat='dodge';
+idb.iid(77004).sbval=10;
+idb.iid(77004).atype=1;
+idb.iid(77004).isreforged=0;
+idb.iid(77004).istierP=[0 0 1];
+
+idb.iid(78526).name='Gauntlets of Feathery Blows (Heroic)';
+idb.iid(78526).ilvl=410;
+idb.iid(78526).str=388;
+idb.iid(78526).sta=611;
+idb.iid(78526).exp=194;
+idb.iid(78526).parry=302;
+idb.iid(78526).barmor=2486;
+idb.iid(78526).socket='B';
+idb.iid(78526).sbstat='parry';
+idb.iid(78526).sbval=10;
+idb.iid(78526).atype=1;
+idb.iid(78526).isreforged=0;
+
+idb.iid(78677).name='Handguards of Radiant Glory (Heroic)';
+idb.iid(78677).ilvl=410;
+idb.iid(78677).str=270;
+idb.iid(78677).sta=611;
+idb.iid(78677).hit=176;
+idb.iid(78677).dodge=398;
+idb.iid(78677).barmor=2486;
+idb.iid(78677).socket='Y';
+idb.iid(78677).sbstat='dodge';
+idb.iid(78677).sbval=10;
+idb.iid(78677).atype=1;
+idb.iid(78677).isreforged=0;
+idb.iid(78677).istierP=[0 0 1];
 
 %% Belts
 
@@ -788,6 +1375,45 @@ idb.iid(71021).sbval=15;
 idb.iid(71021).atype=1;
 idb.iid(71021).isreforged=0;
 
+idb.iid(72803).name='Girdle of Lost Heroes';
+idb.iid(72803).ilvl=378;
+idb.iid(72803).str=281;
+idb.iid(72803).sta=454;
+idb.iid(72803).mast=228;
+idb.iid(72803).parry=135;
+idb.iid(72803).barmor=2037;
+idb.iid(72803).socket='R';
+idb.iid(72803).sbstat='mast';
+idb.iid(72803).sbval=10;
+idb.iid(72803).atype=1;
+idb.iid(72803).isreforged=0;
+
+idb.iid(78460).name='Goriona''s Collar (Raidfinder)';
+idb.iid(78460).ilvl=384;
+idb.iid(78460).str=280;
+idb.iid(78460).sta=480;
+idb.iid(78460).dodge=201;
+idb.iid(78460).parry=184;
+idb.iid(78460).barmor=2073;
+idb.iid(78460).socket='YY';
+idb.iid(78460).sbstat='dodge';
+idb.iid(78460).sbval=20;
+idb.iid(78460).atype=1;
+idb.iid(78460).isreforged=0;
+
+idb.iid(78646).name='Forgesmelter Waistplate (Raidfinder)';
+idb.iid(78646).ilvl=384;
+idb.iid(78646).str=280;
+idb.iid(78646).sta=480;
+idb.iid(78646).mast=193;
+idb.iid(78646).parry=190;
+idb.iid(78646).barmor=2073;
+idb.iid(78646).socket='RB';
+idb.iid(78646).sbstat='mast';
+idb.iid(78646).sbval=20;
+idb.iid(78646).atype=1;
+idb.iid(78646).isreforged=0;
+
 idb.iid(71400).name='Girdle of the Indomitable Flame (Heroic)';
 idb.iid(71400).ilvl=391;
 idb.iid(71400).str=322;
@@ -827,6 +1453,70 @@ idb.iid(71400).sbval=15;
 idb.iid(71400).atype=1;
 idb.iid(71400).isreforged=0;
 
+idb.iid(78889).name='Waistplate of the Desecrated Future';
+idb.iid(78889).ilvl=397;
+idb.iid(78889).str=341;
+idb.iid(78889).sta=542;
+idb.iid(78889).hit=224;
+idb.iid(78889).parry=233;
+idb.iid(78889).barmor=2154;
+idb.iid(78889).socket='B';
+idb.iid(78889).sbstat='parry';
+idb.iid(78889).sbval=10;
+idb.iid(78889).atype=1;
+idb.iid(78889).isreforged=0;
+
+idb.iid(77239).name='Goriona''s Collar';
+idb.iid(77239).ilvl=397;
+idb.iid(77239).str=321;
+idb.iid(77239).sta=542;
+idb.iid(77239).dodge=229;
+idb.iid(77239).parry=211;
+idb.iid(77239).barmor=2154;
+idb.iid(77239).socket='YY';
+idb.iid(77239).sbstat='dodge';
+idb.iid(77239).sbval=20;
+idb.iid(77239).atype=1;
+idb.iid(77239).isreforged=0;
+
+idb.iid(77186).name='Forgesmelter Waistplate';
+idb.iid(77186).ilvl=397;
+idb.iid(77186).str=321;
+idb.iid(77186).sta=542;
+idb.iid(77186).mast=221;
+idb.iid(77186).parry=216;
+idb.iid(77186).barmor=2154;
+idb.iid(77186).socket='RB';
+idb.iid(77186).sbstat='mast';
+idb.iid(77186).sbval=20;
+idb.iid(77186).atype=1;
+idb.iid(77186).isreforged=0;
+
+idb.iid(78560).name='Forgesmelter Waistplate (Heroic)';
+idb.iid(78560).ilvl=410;
+idb.iid(78560).str=368;
+idb.iid(78560).sta=611;
+idb.iid(78560).mast=253;
+idb.iid(78560).parry=245;
+idb.iid(78560).barmor=2237;
+idb.iid(78560).socket='RB';
+idb.iid(78560).sbstat='mast';
+idb.iid(78560).sbval=20;
+idb.iid(78560).atype=1;
+idb.iid(78560).isreforged=0;
+
+idb.iid(78452).name='Goriona''s Collar (Heroic)';
+idb.iid(78452).ilvl=410;
+idb.iid(78452).str=368;
+idb.iid(78452).sta=611;
+idb.iid(78452).dodge=260;
+idb.iid(78452).parry=241;
+idb.iid(78452).barmor=2237;
+idb.iid(78452).socket='YY';
+idb.iid(78452).sbstat='dodge';
+idb.iid(78452).sbval=20;
+idb.iid(78452).atype=1;
+idb.iid(78452).isreforged=0;
 
 %% Legs
 
@@ -885,6 +1575,33 @@ idb.iid(70947).atype=1;
 idb.iid(70947).isreforged=0;
 idb.iid(70947).istierP=[0 1 0];
 
+idb.iid(72815).name='Bloodhoof Legguards';
+idb.iid(72815).ilvl=378;
+idb.iid(72815).str=366;
+idb.iid(72815).sta=611;
+idb.iid(72815).dodge=230;
+idb.iid(72815).parry=263;
+idb.iid(72815).barmor=3169;
+idb.iid(72815).socket='RY';
+idb.iid(72815).sbstat='sta';
+idb.iid(72815).sbval=30;
+idb.iid(72815).atype=1;
+idb.iid(72815).isreforged=0;
+
+idb.iid(78810).name='Legguards of Radiant Glory (Raidfinder)';
+idb.iid(78810).ilvl=384;
+idb.iid(78810).str=371;
+idb.iid(78810).sta=646;
+idb.iid(78810).dodge=246;
+idb.iid(78810).parry=260;
+idb.iid(78810).barmor=3225;
+idb.iid(78810).socket='RYB';
+idb.iid(78810).sbstat='parry';
+idb.iid(78810).sbval=30;
+idb.iid(78810).atype=1;
+idb.iid(78810).isreforged=0;
+idb.iid(78810).istierP=[0 0 1];
+
 idb.iid(71525).name='Immolation Legguards (Heroic)';
 idb.iid(71525).ilvl=391;
 idb.iid(71525).str=420;
@@ -898,6 +1615,47 @@ idb.iid(71525).sbval=30;
 idb.iid(71525).atype=1;
 idb.iid(71525).isreforged=0;
 idb.iid(71525).istierP=[0 1 0];
+
+idb.iid(77006).name='Legguards of Radiant Glory';
+idb.iid(77006).ilvl=397;
+idb.iid(77006).str=426;
+idb.iid(77006).sta=730;
+idb.iid(77006).dodge=280;
+idb.iid(77006).parry=299;
+idb.iid(77006).barmor=3350;
+idb.iid(77006).socket='RYB';
+idb.iid(77006).sbstat='parry';
+idb.iid(77006).sbval=30;
+idb.iid(77006).atype=1;
+idb.iid(77006).isreforged=0;
+idb.iid(77006).istierP=[0 0 1];
+
+idb.iid(71984).name='Foundations of Courage';
+idb.iid(71984).ilvl=397;
+idb.iid(71984).str=426;
+idb.iid(71984).sta=730;
+idb.iid(71984).mast=260;
+idb.iid(71984).dodge=319;
+idb.iid(71984).barmor=3350;
+idb.iid(71984).socket='YBB';
+idb.iid(71984).sbstat='mast';
+idb.iid(71984).sbval=30;
+idb.iid(71984).atype=1;
+idb.iid(71984).isreforged=0;
+
+idb.iid(78715).name='Legguards of Radiant Glory (Heroic)';
+idb.iid(78715).ilvl=410;
+idb.iid(78715).str=489;
+idb.iid(78715).sta=824;
+idb.iid(78715).dodge=319;
+idb.iid(78715).parry=342;
+idb.iid(78715).barmor=3480;
+idb.iid(78715).socket='RYB';
+idb.iid(78715).sbstat='parry';
+idb.iid(78715).sbval=30;
+idb.iid(78715).atype=1;
+idb.iid(78715).isreforged=0;
+idb.iid(78715).istierP=[0 0 1];
 
 
 %% Boots
@@ -942,6 +1700,45 @@ idb.iid(69947).sbval=15;
 idb.iid(69947).atype=1;
 idb.iid(69947).isreforged=0;
 
+idb.iid(72819).name='Chrono Boots';
+idb.iid(72819).ilvl=378;
+idb.iid(72819).str=281;
+idb.iid(72819).sta=454;
+idb.iid(72819).exp=186;
+idb.iid(72819).dodge=198;
+idb.iid(72819).barmor=2490;
+idb.iid(72819).socket='Y';
+idb.iid(72819).sbstat='sta';
+idb.iid(72819).sbval=15;
+idb.iid(72819).atype=1;
+idb.iid(72819).isreforged=0;
+
+idb.iid(78591).name='Bladeshatter Treads';
+idb.iid(78591).ilvl=384;
+idb.iid(78591).str=280;
+idb.iid(78591).sta=480;
+idb.iid(78591).dodge=189;
+idb.iid(78591).parry=199;
+idb.iid(78591).barmor=2534;
+idb.iid(78591).socket='YB';
+idb.iid(78591).sbstat='parry';
+idb.iid(78591).sbval=20;
+idb.iid(78591).atype=1;
+idb.iid(78591).isreforged=0;
+
+idb.iid(78439).name='Stillheart Warboots';
+idb.iid(78439).ilvl=384;
+idb.iid(78439).str=280;
+idb.iid(78439).sta=480;
+idb.iid(78439).mast=198;
+idb.iid(78439).parry=183;
+idb.iid(78439).barmor=2534;
+idb.iid(78439).socket='RB';
+idb.iid(78439).sbstat='parry';
+idb.iid(78439).sbval=20;
+idb.iid(78439).atype=1;
+idb.iid(78439).isreforged=0;
+
 idb.iid(71420).name='Cracked Obsidian Stompers (Heroic)';
 idb.iid(71420).ilvl=391;
 idb.iid(71420).str=240;
@@ -954,6 +1751,58 @@ idb.iid(71420).sbstat='sta';
 idb.iid(71420).sbval=15;
 idb.iid(71420).atype=1;
 idb.iid(71420).isreforged=0;
+
+idb.iid(77171).name='Bladeshatter Treads';
+idb.iid(77171).ilvl=397;
+idb.iid(77171).str=321;
+idb.iid(77171).sta=542;
+idb.iid(77171).dodge=216;
+idb.iid(77171).parry=226;
+idb.iid(77171).barmor=2632;
+idb.iid(77171).socket='YB';
+idb.iid(77171).sbstat='parry';
+idb.iid(77171).sbval=20;
+idb.iid(77171).atype=1;
+idb.iid(77171).isreforged=0;
+
+idb.iid(77246).name='Stillheart Warboots';
+idb.iid(77246).ilvl=397;
+idb.iid(77246).str=321;
+idb.iid(77246).sta=542;
+idb.iid(77246).mast=227;
+idb.iid(77246).parry=208;
+idb.iid(77246).barmor=2632;
+idb.iid(77246).socket='RB';
+idb.iid(77246).sbstat='parry';
+idb.iid(77246).sbval=20;
+idb.iid(77246).atype=1;
+idb.iid(77246).isreforged=0;
+
+idb.iid(78431).name='Stillheart Warboots (Heroic)';
+idb.iid(78431).ilvl=410;
+idb.iid(78431).str=368;
+idb.iid(78431).sta=611;
+idb.iid(78431).mast=259;
+idb.iid(78431).parry=237;
+idb.iid(78431).barmor=2734;
+idb.iid(78431).socket='RB';
+idb.iid(78431).sbstat='parry';
+idb.iid(78431).sbval=20;
+idb.iid(78431).atype=1;
+idb.iid(78431).isreforged=0;
+
+idb.iid(78511).name='Bladeshatter Treads (Heroic)';
+idb.iid(78511).ilvl=410;
+idb.iid(78511).str=368;
+idb.iid(78511).sta=611;
+idb.iid(78511).dodge=247;
+idb.iid(78511).parry=257;
+idb.iid(78511).barmor=2734;
+idb.iid(78511).socket='YB';
+idb.iid(78511).sbstat='parry';
+idb.iid(78511).sbval=20;
+idb.iid(78511).atype=1;
+idb.iid(78511).isreforged=0;
 
 
 %% Rings
@@ -1022,6 +1871,36 @@ idb.iid(70940).mast=154;
 idb.iid(70940).dodge=148;
 idb.iid(70940).isreforged=0;
 
+idb.iid(72837).name='Queen''s Boon';
+idb.iid(72837).ilvl=378;
+idb.iid(72837).str=226;
+idb.iid(72837).sta=341;
+idb.iid(72837).dodge=171;
+idb.iid(72837).parry=119;
+idb.iid(72837).isreforged=0;
+
+idb.iid(78602).name='Signet of the Resolute';
+idb.iid(78602).ilvl=384;
+idb.iid(78602).str=220;
+idb.iid(78602).sta=360;
+idb.iid(78602).dodge=134;
+idb.iid(78602).parry=159;
+idb.iid(78602).socket='Y';
+idb.iid(78602).sbstat='parry';
+idb.iid(78602).sbval=10;
+idb.iid(78602).isreforged=0;
+
+idb.iid(78498).name='Hardheart Ring';
+idb.iid(78498).ilvl=384;
+idb.iid(78498).str=220;
+idb.iid(78498).sta=360;
+idb.iid(78498).mast=157;
+idb.iid(78498).parry=138;
+idb.iid(78498).socket='B';
+idb.iid(78498).sbstat='mast';
+idb.iid(78498).sbval=10;
+idb.iid(78498).isreforged=0;
+
 idb.iid(71564).name='Theck''s Emberseal (Heroic)';
 idb.iid(71564).ilvl=391;
 idb.iid(71564).str=195;
@@ -1040,6 +1919,50 @@ idb.iid(70934).socket='R';
 idb.iid(70934).sbstat='sta';
 idb.iid(70934).sbval=15;
 idb.iid(70934).isreforged=0;
+
+idb.iid(77112).name='Signet of the Resolute';
+idb.iid(77112).ilvl=397;
+idb.iid(77112).str=251;
+idb.iid(77112).sta=406;
+idb.iid(77112).dodge=153;
+idb.iid(77112).parry=181;
+idb.iid(77112).socket='Y';
+idb.iid(77112).sbstat='parry';
+idb.iid(77112).sbval=10;
+idb.iid(77112).isreforged=0;
+
+idb.iid(77232).name='Hardheart Ring';
+idb.iid(77232).ilvl=397;
+idb.iid(77232).str=251;
+idb.iid(77232).sta=406;
+idb.iid(77232).mast=179;
+idb.iid(77232).parry=157;
+idb.iid(77232).socket='B';
+idb.iid(77232).sbstat='mast';
+idb.iid(77232).sbval=10;
+idb.iid(77232).isreforged=0;
+
+idb.iid(78521).name='Signet of the Resolute (Heroic)';
+idb.iid(78521).ilvl=410;
+idb.iid(78521).str=286;
+idb.iid(78521).sta=459;
+idb.iid(78521).dodge=174;
+idb.iid(78521).parry=206;
+idb.iid(78521).socket='Y';
+idb.iid(78521).sbstat='parry';
+idb.iid(78521).sbval=10;
+idb.iid(78521).isreforged=0;
+
+idb.iid(78493).name='Hardheart Ring (Heroic)';
+idb.iid(78493).ilvl=410;
+idb.iid(78493).str=286;
+idb.iid(78493).sta=459;
+idb.iid(78493).mast=203;
+idb.iid(78493).parry=179;
+idb.iid(78493).socket='B';
+idb.iid(78493).sbstat='mast';
+idb.iid(78493).sbval=10;
+idb.iid(78493).isreforged=0;
 
 
 %% Trinkets
@@ -1080,6 +2003,31 @@ idb.iid(68915).ilvl=378;
 idb.iid(68915).sta=575;
 idb.iid(68915).isreforged=0;
 
+idb.iid(72900).name='Veil of Lies';
+idb.iid(72900).ilvl=378;
+idb.iid(72900).sta=575;
+idb.iid(72900).isreforged=0;
+
+idb.iid(68996).name='Stay of Execution';
+idb.iid(68996).ilvl=378;
+idb.iid(68996).dodge=383;
+idb.iid(68996).isreforged=0;
+
+
+idb.iid(77983).name='Indomitable Pride (Raidfinder)';
+idb.iid(77983).ilvl=384;
+idb.iid(77983).sta=609;
+idb.iid(77983).isreforged=0;
+
+idb.iid(77970).name='Soulshifter Vortex (Raidfinder)';
+idb.iid(77970).ilvl=384;
+idb.iid(77970).sta=609;
+idb.iid(77970).isreforged=0;
+
+idb.iid(77978).name='Resolve of Undying (Raidfinder)';
+idb.iid(77978).ilvl=390;
+idb.iid(77978).isreforged=0;
+
 idb.iid(69138).name='Spidersilk Spindle (Heroic)';
 idb.iid(69138).ilvl=391;
 idb.iid(69138).mast=433;
@@ -1089,6 +2037,39 @@ idb.iid(69109).name='Scales of Life (Heroic)';
 idb.iid(69109).ilvl=391;
 idb.iid(69109).sta=650;
 idb.iid(69109).isreforged=0;
+
+idb.iid(77117).name='Fire of the Deep';
+idb.iid(77117).ilvl=397;
+idb.iid(77117).mast=458;
+idb.iid(77117).isreforged=0;
+
+idb.iid(77211).name='Indomitable Pride';
+idb.iid(77211).ilvl=397;
+idb.iid(77211).sta=687;
+idb.iid(77211).isreforged=0;
+
+idb.iid(77206).name='Soulshifter Vortex';
+idb.iid(77206).ilvl=397;
+idb.iid(77206).sta=687;
+idb.iid(77206).isreforged=0;
+
+idb.iid(77201).name='Resolve of Undying';
+idb.iid(77201).ilvl=403;
+idb.iid(77201).isreforged=0;
+
+idb.iid(78003).name='Indomitable Pride (Heroic)';
+idb.iid(78003).ilvl=410;
+idb.iid(78003).sta=775;
+idb.iid(78003).isreforged=0;
+
+idb.iid(77990).name='Soulshifter Vortex (Heroic)';
+idb.iid(77990).ilvl=410;
+idb.iid(77990).sta=775;
+idb.iid(77990).isreforged=0;
+
+idb.iid(77998).name='Resolve of Undying (Heroic)';
+idb.iid(77998).ilvl=416;
+idb.iid(77998).isreforged=0;
 
 %% Weapons - Axes
 idb.iid(55067).name='Elementium Bonesplitter';
@@ -1670,6 +2651,18 @@ idb.iid(71782).crit=123;
 idb.iid(71782).haste=105;
 idb.iid(71782).isreforged=0;
 
+idb.iid(72827).name='Gavel of Peroth''arn';
+idb.iid(72827).wtype='mac';
+idb.iid(72827).ilvl=378;
+idb.iid(72827).tooldps=551.7;
+idb.iid(72827).swing=2.6;
+idb.iid(72827).avgdmg=1434.5;
+idb.iid(72827).str=174;
+idb.iid(72827).sta=262;
+idb.iid(72827).mast=91;
+idb.iid(72827).parry=131;
+idb.iid(72827).isreforged=0;
+
 idb.iid(71355).name='Ko''gun, Hammer of the Firelord';
 idb.iid(71355).wtype='mac';
 idb.iid(71355).ilvl=384;
@@ -2081,6 +3074,16 @@ idb.iid(71785).haste=133;
 idb.iid(71785).sp=2333;
 idb.iid(71785).isreforged=0;
 
+idb.iid(78488).name='Souldrinker (Raidfinder)';
+idb.iid(78488).wtype='swo';
+idb.iid(78488).ilvl=390;
+idb.iid(78488).tooldps=617.1;
+idb.iid(78488).swing=2.6;
+idb.iid(78488).avgdmg=1604.5;
+idb.iid(78488).str=195;
+idb.iid(78488).sta=293;
+idb.iid(78488).isreforged=0;
+
 idb.iid(70200).name='Ruthless Gladiator''s Slicer';
 idb.iid(70200).wtype='swo';
 idb.iid(70200).ilvl=391;
@@ -2130,6 +3133,26 @@ idb.iid(71784).crit=150;
 idb.iid(71784).sp=2636;
 idb.iid(71784).isreforged=0;
 
+idb.iid(77193).name='Souldrinker';
+idb.iid(77193).wtype='swo';
+idb.iid(77193).ilvl=403;
+idb.iid(77193).tooldps=696.5;
+idb.iid(77193).swing=2.6;
+idb.iid(77193).avgdmg=1811;
+idb.iid(77193).str=220;
+idb.iid(77193).sta=331;
+idb.iid(77193).isreforged=0;
+
+idb.iid(78479).name='Souldrinker (Heroic)';
+idb.iid(78479).wtype='swo';
+idb.iid(78479).ilvl=416;
+idb.iid(78479).tooldps=786.3;
+idb.iid(78479).swing=2.6;
+idb.iid(78479).avgdmg=2044.5;
+idb.iid(78479).str=249;
+idb.iid(78479).sta=373;
+idb.iid(78479).isreforged=0;
+
 
 %% Shields
 
@@ -2172,6 +3195,18 @@ idb.iid(70915).sbstat='sta';
 idb.iid(70915).sbval=30;
 idb.iid(70915).isreforged=0;
 
+idb.iid(78456).name='Blackhorn''s Mighty Bulwark (Raidfinder)';
+idb.iid(78456).ilvl=384;
+idb.iid(78456).str=200;
+idb.iid(78456).sta=360;
+idb.iid(78456).mast=148;
+idb.iid(78456).dodge=132;
+idb.iid(78456).barmor=12302;
+idb.iid(78456).socket='YB';
+idb.iid(78456).sbstat='dodge';
+idb.iid(78456).sbval=20;
+idb.iid(78456).isreforged=0;
+
 idb.iid(71460).name='Shard of Torment (Heroic)';
 idb.iid(71460).ilvl=391;
 idb.iid(71460).str=176;
@@ -2183,6 +3218,30 @@ idb.iid(71460).socket='BB';
 idb.iid(71460).sbstat='sta';
 idb.iid(71460).sbval=30;
 idb.iid(71460).isreforged=0;
+
+idb.iid(77226).name='Blackhorn''s Mighty Bulwark';
+idb.iid(77226).ilvl=397;
+idb.iid(77226).str=231;
+idb.iid(77226).sta=406;
+idb.iid(77226).mast=169;
+idb.iid(77226).dodge=153;
+idb.iid(77226).barmor=12525;
+idb.iid(77226).socket='YB';
+idb.iid(77226).sbstat='dodge';
+idb.iid(77226).sbval=20;
+idb.iid(77226).isreforged=0;
+
+idb.iid(78448).name='Blackhorn''s Mighty Bulwark (Heroic)';
+idb.iid(78448).ilvl=410;
+idb.iid(78448).str=266;
+idb.iid(78448).sta=459;
+idb.iid(78448).mast=192;
+idb.iid(78448).dodge=176;
+idb.iid(78448).barmor=12756;
+idb.iid(78448).socket='YB';
+idb.iid(78448).sbstat='dodge';
+idb.iid(78448).sbval=20;
+idb.iid(78448).isreforged=0;
 
 
 
@@ -2223,6 +3282,15 @@ idb.iid(71590).dodge=102;
 idb.iid(71590).parry=87;
 idb.iid(71590).socket='P';
 idb.iid(71590).isreforged=0;
+
+idb.iid(77084).name='Stoutheart Talisman';
+idb.iid(77084).ilvl=397;
+idb.iid(77084).str=153;
+idb.iid(77084).sta=230;
+idb.iid(77084).mast=102;
+idb.iid(77084).parry=102;
+idb.iid(77084).socket='P';
+idb.iid(77084).isreforged=0;
 
 
 %% Enchant section  

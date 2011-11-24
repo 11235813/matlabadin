@@ -8,7 +8,9 @@ use Sigrie;
 
 sub debug { print STDERR @_ };
 
-my @levels = qw(346 353 359 365 372 378 379 391 397);
+# adjusting this to only update newer items, the rest are already in GDB
+# my @levels = qw(346 353 359 365 372 378 379 391 397);
+my @levels = qw(378 384 379 384 390 391 397 403 410 416);
 
 my $base = 'http://ptr.wowhead.com/items';
 my $filters = 'ub=2;cr=23:21:96:103:79;crs=3:3:3:3:3;crv=0:0:0:0:0;qu=3:4:5';

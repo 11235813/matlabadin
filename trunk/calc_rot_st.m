@@ -9,7 +9,7 @@ def_db;
 exec=execution_model('veng',1);  %placeholder, set in cfg
 base=player_model('race','Human');
 npc=npc_model(base);
-egs=ddb.gearset{5};  %1=pre-raid , 2=T11, 3=T11H
+egs=ddb.gearset{7};  %6=T13R, 7=T13N, 8=T13H
 gear_stats;
 talent=ddb.talentset{1}; %placeholder, set in cfg
 glyph=ddb.glyphset{4}; %placeholder, set in cfg
@@ -23,28 +23,31 @@ queue_model; %lists the queues we're interested in
 %low hit, SotR/SoT build
 %set melee hit to 2%, expertise to 10
 %do this by altering helm stats
-cfg(1).helm=egs(1);
-cfg(1).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
-cfg(1).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
-cfg(1).label='939/SoT build';
-cfg(1).seal='Truth';
-cfg(1).glyph=ddb.glyphset{4}; %Modified Default, (CS+HotR)/SoT/ShoR, Cons/AS
-cfg(1).talent=ddb.talentset{1}; %0/32/9 w/o HG
+c=1;
+cfg(c).helm=egs(1);
+cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
+cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
+cfg(c).label='939/SoT build';
+cfg(c).seal='Truth';
+cfg(c).glyph=ddb.glyphset{4}; %Modified Default, (CS+HotR)/SoT/ShoR, Cons/AS
+cfg(c).talent=ddb.talentset{1}; %0/32/9 w/o HG
 
-%low hit, WoG/SoI build
-cfg(2).helm=cfg(1).helm;
-cfg(2).label='W39/SoI build';
-cfg(2).seal='Insight';
-cfg(2).glyph=ddb.glyphset{5}; %Modified WoG (CS+HotR)/SoI/WoG, Cons/AS
-cfg(2).talent=ddb.talentset{1}; %0/32/9 w/o HG
+% %low hit, WoG/SoI build
+% c=c+1;
+% cfg(c).helm=cfg(1).helm;
+% cfg(c).label='W39/SoI build';
+% cfg(c).seal='Insight';
+% cfg(c).glyph=ddb.glyphset{5}; %Modified WoG (CS+HotR)/SoI/WoG, Cons/AS
+% cfg(c).talent=ddb.talentset{1}; %0/32/9 w/o HG
 
 
 %hit-cap and exp soft-cap, SotR/SoT build
-cfg(3)=cfg(1);
-cfg(3).label='939/SoT build, hit-capped';
-cfg(3).helm=egs(1);
-cfg(3).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
-cfg(3).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
+c=c+1;
+cfg(c)=cfg(1);
+cfg(c).label='939/SoT build, hit-capped';
+cfg(c).helm=egs(1);
+cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
+cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-56).*cnv.exp_exp;
 
 %% Generate DPS for each config
 
@@ -63,6 +66,9 @@ for c=1:length(cfg)
     talents;
     stat_model;
     ability_model;
+    
+%     arbitrarily turn on T13 ret 2-piece
+    mdf.t13x2R=1;
 
     wb=waitbar(0,['Calculating CFG # ' int2str(c) ' / ' int2str(length(cfg))]);
     tic
@@ -166,7 +172,7 @@ li{c}
 end
 
 %% pretty-print output array, this is only for the first set.
-queue.stsubset={'SotR>CS>AS>J';'SotR>CS>AS+>J>AS';'SotR>CS>AS>J>HW';'SotR>CS>AS>J>Cons>HW';...
+queue.stsubset={'SotR>CS>J>AS';'SotR>CS>AS>J';'SotR>CS>AS+>J>AS';'SotR>CS>AS>J>HW';'SotR>CS>AS>J>Cons>HW';...
     'SDSotR>ISotR>Inq>CS>AS>J';'SDSotR>ISotR>Inq>CS>AS+>J>AS'; ...
     'SDSotR>ISotR>Inq>CS>AS>J>Cons>HW';'SDSotR>ISotR>Inq>CS>AS+>J>AS>Cons>HW';...
     'WoG>CS>AS>J';'WoG>SotR>CS>AS>J';'WoG>SotR>CS>AS>J>Cons>HW';...
