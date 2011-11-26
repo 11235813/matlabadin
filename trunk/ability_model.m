@@ -111,9 +111,9 @@ net.HammeroftheRighteous{2}=heal.HammeroftheRighteous;
 net.HammeroftheRighteous{3}=threat.HammeroftheRighteous+threat.activeseal.*mdf.mehit.*mdf.rseal;
 mcost.HammeroftheRighteous=0.1.*base.mana;
 
-%Nova is back to having its own combat roll on the spell hit table.
+%Nova connects automatically if HotR(phys) succeeds
 raw.HammerNova=   (728.8813374+0.18.*player.ap).*mdf.spdmg.*(1+mdf.Crus+mdf.glyphHotR);
-dmg.HammerNova=   raw.HammerNova.*mdf.mehit.*mdf.sphit.*mdf.HotRspcrit.*target.resrdx; %spell hit/crit
+dmg.HammerNova=   raw.HammerNova.*mdf.mehit.*mdf.HotRspcrit.*target.resrdx; %spell hit/crit
 heal.HammerNova=   0;
 threat.HammerNova=max(dmg.HammerNova,heal.HammerNova).*mdf.RFury;
 net.HammerNova{1}=dmg.HammerNova; %doesn't proc seals

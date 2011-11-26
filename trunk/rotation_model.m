@@ -7,9 +7,10 @@ useParallel=1;
 %define relevant queues if not done already
 if exist('queue')==0 || isfield(queue,'rot')==0
     queue.rot={...
-        'SotR>CS>AS>J>Cons>HW';
-        'WoG>SotR>CS>AS>J>Cons>HW';
-        'ISotR>SDSotR>Inq>CS>AS>J>Cons>HW';
+%         'SotR>CS>J>AS';
+        'SotR>CS>AS+>J>AS>Cons>HW';
+        'WoG>SotR>CS>AS+>J>AS>Cons>HW';
+        'ISotR>SDSotR>Inq>CS>AS+>J>AS>Cons>HW';
 %         'SotR>CS>AS>J';
 %         'SotR>CS>HoW>AS>J';
 %         'SotR>CS>HoW>AS>J>Cons>HW';

@@ -87,10 +87,12 @@ name{k}='AS';
 
 %% Configurations
 %redefine rotation queue so that we can make substitutions
-queue.rot={'SotR>CS>AS>J>Cons>HW';      %#1 and #2 are the same as the
-           'WoG>SotR>CS>AS>J>Cons>HW';  %defaults in [RM]
-           'SotR>HotR>AS>J>Cons>HW';        %3&4 added for HotR subs
-           'WoG>SotR>HotR>AS>J>Cons>HW'};
+queue.rot={'SotR>CS>AS+>J>AS>Cons>HW';      %#1 and #2 are the same as the
+           'WoG>SotR>CS>AS+>J>AS>Cons>HW';  %defaults in [RM]
+           'SotR>HotR>AS+>J>AS>Cons>HW';    %3&4 added for HotR subs
+           'WoG>SotR>HotR>AS+>J>AS>Cons>HW'};
+        
+        
        
 %set melee hit to 2%, expertise to 10, mastery to 390 (16.5 mastery);
 %do this by altering helm stats
@@ -145,6 +147,8 @@ for c=1:length(cfg);
     egs(1)=cfg(c).helm;
     talents;gear_stats;
     
+    wb=waitbar(0,['Calculating CFG # ' int2str(c) ' / ' int2str(length(cfg))]);
+    tic
     for m=1:length(gtree) %everything
 
         clear glyph
@@ -166,7 +170,10 @@ for c=1:length(cfg);
         totdps(m,:,c)=[rot.totdps];
         totdps0(m,:,c)=totdps(1,:,c);
         
+        waitbar(m/length(gtree),wb)
     end
+    close(wb)
+    toc
 end
 dpspgall=totdps0-totdps;
 

@@ -163,6 +163,8 @@ c=c+1;cfg(c)=cfg(3);cfg(c).veng=0.3;
 tabledps=zeros(length(tree),length(rot),2);
 for c=1:length(cfg)
     
+    wb=waitbar(0,['Calculating CFG # ' int2str(c) ' / ' int2str(length(cfg))]);
+    tic
     for m=1:length(tree) %each talent
         %configuration variables
         exec=execution_model('veng',cfg(c).veng,'seal',cfg(c).seal);
@@ -191,26 +193,44 @@ for c=1:length(cfg)
         totdps(m,c)=rot(cfg(c).rot).totdps;
         totdps0(m,c)=totdps(1,c);
         
+        %store HPS
+        tothps(m,c)=rot(cfg(c).rot).tothps;
+        tothps0(m,c)=tothps(1,c);
+        
+        waitbar(m/length(tree),wb)
 
     end
+    close(wb)
+    toc
 end
 
 
 
 ct_temp=(totdps0-totdps)./repmat(points',1,size(totdps,2));
+dpsppt=ct_temp;
+%fix not needed anymore thanks to FSM accuracy
+% dpsppt=max(ct_temp,zeros(size(ct_temp)));  %fix for anomalies caused by fitting (negative DPS when un-talenting SD)
 
-dpsppt=max(ct_temp,zeros(size(ct_temp)));  %fix for anomalies caused by fitting (negative DPS when un-talenting SD)
+ct_temp=(tothps0-tothps)./repmat(points',1,size(tothps,2));
+hpsppt=ct_temp;
 
 %% table output
 spacer=repmat(' ',length(name)+1,3);
 
-table_st=[char({'Talent',name{:}}) spacer];
+table_dps=[char({'Talent',name{:}}) spacer];
 for c=1:length(cfg)
 %     table_st=[table_st spacer char({['   ' cfg(c).label],num2str(dpsppt(:,c),'%2.1f')})];
-    table_st=[table_st spacer char({[' ' cfg(c).rlabel],int2str(dpsppt(:,c))})];
+    table_dps=[table_dps spacer char({[' ' cfg(c).rlabel],int2str(dpsppt(:,c))})];
 end
-table_st
+table_dps
 
+
+table_hps=[char({'Talent',name{:}}) spacer];
+for c=1:length(cfg)
+%     table_st=[table_st spacer char({['   ' cfg(c).label],num2str(dpsppt(:,c),'%2.1f')})];
+    table_hps=[table_hps spacer char({[' ' cfg(c).rlabel],int2str(hpsppt(:,c))})];
+end
+table_hps
 
 
 %% plots
