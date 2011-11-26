@@ -75,6 +75,9 @@ food=[87584; %90 str
   
   
 for c=1:3
+    %waitbar
+    wb=waitbar(0,['Calculating CFG # ' int2str(c) ' / ' int2str(length(cfg))]);
+    tic
 %% Passive enchants and foods
     %set configuration variables
     egs(1)=cfg(c).helm;
@@ -102,6 +105,8 @@ for c=1:3
     buff=buff_model('mode',0,'food',0);
     
     for m=1:length(enchant)
+        
+        waitbar(m/(length(enchant)+length(food)),wb)
 
         %enchant weapon
         egs(35)=equip(enchant(m),'s');
@@ -126,8 +131,8 @@ for c=1:3
     
     %clear weapon enchant
     egs(35)=equip(1,'s');
-
     for m=1:length(food)
+        waitbar((length(enchant)+m)/(length(enchant)+length(food)),wb)
         %apply food buff
         buff=buff_model('mode',0,'food',food(m));
         %store useful info for plots
@@ -167,6 +172,9 @@ for c=1:3
     dpse(length(enchant)+4,c)=0;
     avoe(length(enchant)+4,c)=ww.dodge;
     pinfo.ename{length(enchant)+4}='Windwalk';
+    
+    close(wb)
+    toc
 
 end
 
