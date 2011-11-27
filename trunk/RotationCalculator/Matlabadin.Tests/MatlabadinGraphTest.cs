@@ -105,8 +105,8 @@ namespace Matlabadin.Tests
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             double[] pr = mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance);
             var result = mg.CalculateResults(pr, out inqUptime, out jotwUptime);
-            Assert.IsFalse(result.ContainsKey("Nothing"));
-            Assert.IsFalse(result.ContainsKey("Nothing(Inq)"));
+            Assert.IsTrue(result.ContainsKey("Nothing"));
+            Assert.IsTrue(result.ContainsKey("Nothing(Inq)"));
         }
         [TestMethod]
         public void ConvergeStateProbability_ShouldStopAfterRelativeToleranceAchieved()
@@ -177,8 +177,9 @@ namespace Matlabadin.Tests
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance)
                 , out inqUptime, out jotwUptime);
-            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(2, result.Count);
             Assert.AreEqual(1.0 / 15, result["HW"], Tolerance);
+            Assert.AreEqual(9.0 / (10.0 * 1.5), result["Nothing"], Tolerance); // 9 of 10 GCDs are Nothing
         }
         [TestMethod]
         public void CalculateAggregates_RetT13P2()
@@ -188,7 +189,7 @@ namespace Matlabadin.Tests
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance)
                 , out inqUptime, out jotwUptime);
-            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(3, result.Count);
             Assert.AreEqual(1.0 / 8, result["J"], Tolerance); // 8s between J casts
             Assert.AreEqual(result["J"] / 3, result["SotR"], Tolerance); // every third J we can SotR
         }
@@ -223,6 +224,28 @@ namespace Matlabadin.Tests
                 out inqUptime, out jotwUptime);
             Assert.AreEqual(1d / 6 / 1.5, result["SotR"], Tolerance);
             if (result.ContainsKey("SotR(SD)")) Assert.AreEqual(0d, result["SotR(SD)"], Tolerance);
+        }
+        [TestMethod]
+        public void CalculateAggregates_NothingShouldBeWeightedByOneSecondGCD()
+        {
+            Int64GraphParameters gp = NoHitExpertise("");
+            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            var result = mg.CalculateResults(
+                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance)
+                , out inqUptime, out jotwUptime);
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(1.0 / 1.5, result["Nothing"], Tolerance);
+        }
+        [TestMethod]
+        public void CalculateAggregates_ShouldKeepNothingAndNothingInqDistinct()
+        {
+            Int64GraphParameters gp = NoHitExpertise("Inq>CS");
+            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            var result = mg.CalculateResults(
+                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance)
+                , out inqUptime, out jotwUptime);
+            Assert.AreNotEqual(0, result["Nothing"], Tolerance);
+            Assert.AreNotEqual(0, result["Nothing(Inq)"], Tolerance);
         }
         [TestMethod]
         public void InqUptimeShouldIncludeInqCasts()

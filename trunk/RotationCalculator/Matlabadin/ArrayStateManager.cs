@@ -132,5 +132,13 @@ namespace Matlabadin
             }
             return sa;
         }
+        public bool ZeroCooldownRemainingForAllAbilities(StateArray sa)
+        {
+            for (int i = 0; i < (int)Ability.Count - (int)Ability.CooldownIndicator; i++)
+            {
+                if (sa.cd[i] > 0) return false;
+            }
+            return true;
+        }
     }
 }

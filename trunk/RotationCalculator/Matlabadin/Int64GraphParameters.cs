@@ -67,12 +67,23 @@ namespace Matlabadin
                 bit += BuffDurationBits[i];
             }
             if (bit > 64) throw new ArgumentOutOfRangeException("bit-encoded state space larger than 64 bit");
+
+            
+            zeroCooldownBitMask = 0;
+            for (int i = 0; i < AbilityCooldownStartBit.Length; i++)
+            {
+                for (int j = 0; j < AbilityCooldownBits[i]; j++)
+                {
+                    zeroCooldownBitMask |= 1UL << (AbilityCooldownStartBit[i] + j);
+                }
+            }
         }
         // should be private: exposed purely for testing purposes
         public int[] AbilityCooldownStartBit;
         public int[] AbilityCooldownBits;
         public int[] BuffDurationStartBit;
         public int[] BuffDurationBits;
+        private ulong zeroCooldownBitMask;
         #endregion
         #region IStateManager<ulong>
         /// <summary>
@@ -134,6 +145,10 @@ namespace Matlabadin
         public ulong InitialState()
         {
             return 0;
+        }
+        public bool ZeroCooldownRemainingForAllAbilities(ulong state)
+        {
+            return (zeroCooldownBitMask & state) == 0;
         }
         #endregion
         private static int Unpack(ulong state, int startBit, int numBits)

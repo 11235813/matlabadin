@@ -22,7 +22,10 @@ namespace Matlabadin
             // reduce the state space by merging consecutive Ability.Nothing states
             while (choice.Ability == Ability.Nothing
                 && currentStates.Length == 1
-                && gp.Rotation.ActionToTake(gp, sm, currentStates[0]) == Ability.Nothing)
+                && gp.Rotation.ActionToTake(gp, sm, currentStates[0]) == Ability.Nothing
+                // Edge case: Loop of Nothing. Will not occur in sane rotations so we'll hack in simple check
+                // ignore degerate case where we do Nothing with everything off CD
+                && !sm.ZeroCooldownRemainingForAllAbilities(currentStates[0]))
             {
                 // only one next state and we're doing nothing: just merge the two states together
                 choice = choice.Concatenate(NextStates(gp, sm, currentStates[0], Ability.Nothing, out currentStates));

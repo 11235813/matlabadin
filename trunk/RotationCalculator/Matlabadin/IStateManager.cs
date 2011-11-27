@@ -43,5 +43,6 @@ namespace Matlabadin
         /// <param name="steps">Steps to advance</param>
         /// <returns>State after advancing the given number of steps</returns>
         TState AdvanceTime(TState state, int steps);
+        bool ZeroCooldownRemainingForAllAbilities(TState state);
     }
 }
