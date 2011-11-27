@@ -54,7 +54,8 @@ foreach my $ilvl (@levels) {
     # Trinkets are allowed with only stamina but probably trinkets
     # shouldn't be automated at all because are very subjective
     next unless $item{mastery} or $item{dodge} or $item{parry} 
-      or ($item{slot} eq 'Trinket' and $item{stamina});
+      or ($item{slot} eq 'Trinket' and $item{stamina})
+      or ($item{slot} eq 'One-Hand' and $item{strength});
     
     $items{$item{slot}}{$ilvl}{$id} = $item{name};
   }

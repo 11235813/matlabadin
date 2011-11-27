@@ -33,12 +33,12 @@ cfg(c).glyph=ddb.glyphset{4}; %Modified Default, (CS+HotR)/SoT/ShoR, Cons/AS
 cfg(c).talent=ddb.talentset{1}; %0/32/9 w/o HG
 
 % %low hit, WoG/SoI build
-% c=c+1;
-% cfg(c).helm=cfg(1).helm;
-% cfg(c).label='W39/SoI build';
-% cfg(c).seal='Insight';
-% cfg(c).glyph=ddb.glyphset{5}; %Modified WoG (CS+HotR)/SoI/WoG, Cons/AS
-% cfg(c).talent=ddb.talentset{1}; %0/32/9 w/o HG
+c=c+1;
+cfg(c).helm=cfg(1).helm;
+cfg(c).label='W39/SoI build';
+cfg(c).seal='Insight';
+cfg(c).glyph=ddb.glyphset{5}; %Modified WoG (CS+HotR)/SoI/WoG, Cons/AS
+cfg(c).talent=ddb.talentset{1}; %0/32/9 w/o HG
 
 
 %hit-cap and exp soft-cap, SotR/SoT build
