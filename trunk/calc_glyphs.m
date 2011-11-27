@@ -170,18 +170,23 @@ for c=1:length(cfg);
         totdps(m,:,c)=[rot.totdps];
         totdps0(m,:,c)=totdps(1,:,c);
         
+        tothps(m,:,c)=[rot.tothps];
+        tothps0(m,:,c)=tothps(1,:,c);
+        
         waitbar(m/length(gtree),wb)
     end
     close(wb)
     toc
 end
 dpspgall=totdps0-totdps;
+hpspgall=tothps0-tothps;
 
 
 
 %% generate table data structure
 for c=1:length(cfg)
     dpspg(:,c)=dpspgall(:,cfg(c).rot,c);
+    hpspg(:,c)=hpspgall(:,cfg(c).rot,c);
 
     %handle substitutions
     if ~isempty(cfg(c).tsubs)
@@ -189,6 +194,7 @@ for c=1:length(cfg)
             subi=strmatch(cfg(c).tsubs{mm}(1),name);
             subr=cfg(c).tsubs{mm}{2};
             dpspg(subi,c)=dpspgall(subi,subr,c);
+            hpspg(subi,c)=hpspgall(subi,subr,c);
         end
     end
     
@@ -211,6 +217,12 @@ for icol=1:size(dpspg,2)
 end
 tabledps
 
+tablehps=[spacer char({'seal','rotation','hit/exp','Veng',char(name)})];
+for icol=1:size(hpspg,2)
+    tablehps=[tablehps spacer char({['  ' tab.seal{icol}],['  ' tab.rot{icol}], ...
+        tab.hitexp{icol},[' ' tab.veng{icol}],num2str(hpspg(:,icol),'%2.1f')})];
+end
+tablehps
 
 
 %% plots

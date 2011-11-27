@@ -37,9 +37,13 @@ weaplist1=[62457; %Ravening Slicer
            65094; %Fang of Twilight (Heroic)
            65036; %Mace of Acrid Death (Heroic)
            70922; %Mandible of Beth'tilac 
+           72827; %Gavel of Peroth'arn
            71362; %Obsidium Cleaver
+           78488; %Souldrinker (Raidfinder)
            71406; %Mandible of Beth'tilac (Heroic)
            71562; %Obsidium Cleaver (Heroic)
+           77193; %Souldrinker
+           78479; %Souldrinker (Heroic)
           ];
 
 weaplist2=[56433; %Blade of the Burning Sun (Heroic)
@@ -86,9 +90,16 @@ weaplist3=[65166; %Buzz Saw (Heroic)
            71782; %Shatterskull Bonecrusher
            70222; %Ruthless Glad Bonecracker 378
            71312; %Gatecrasher
+           72804; %Dragonshrine Scepter
+           72866; %Treachery's Bite
+           78379; %Hand of Morchok (Raidfinder)
            71783; %Shatterskull Bonecrusher (Heroic)
            70201; %Ruthless Glad Bonecrakcer 391
            71454; %Gatecrasher (Heroic)
+           73448; %Cataclysmic Gladiator's Bonecracker 397
+           77212; %Hand of Morchok
+           73415; %Cataclysmic Gladiator's Bonecracker 410
+           78371; %Hand of Morchok (Heroic)
           ];
 weaplist=[weaplist1;weaplist2;weaplist3];
           
@@ -135,9 +146,23 @@ cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-26).*cnv.exp_exp;
 cfg(c).helm.mast=max([egs(1).mast 0])-(player.mast-16.5).*cnv.mast_mast;
 cfg(c).label='939/SoT build, hit/exp cap';
 
+
+wb=waitbar(0,['Calculating Weapons']);
+tic
 for m=1:M
     %equip the appropriate weapon
     egs(15)=equip(weaplist(m));
+    %handle socketing
+    if isfield(egs(15),'socket') && isempty(egs(15).socket)==0
+        switch egs(15).socket
+            case 'R'
+                egs(15)=socket(egs(15),gem.red);
+            case 'Y'
+                egs(15)=socket(egs(15),gem.yel);
+            case 'B'
+                egs(15)=socket(egs(15),gem.blu);
+        end
+    end
     
     %store useful info for plots
     pinfo.name{m}=egs(15).name;
@@ -163,8 +188,12 @@ for m=1:M
 %         wdps2(m,c)=rot(cfg(c).rot+3).totdps; %for 9H9 / hammer check
     end
 
+        waitbar(m/M,wb)
 end
 
+close(wb)
+toc
+    
 pinfo.name=char(pinfo.name);
 pinfo.labels=[pinfo.name repmat(' ',length(pinfo.ilvl),2) int2str(pinfo.ilvl')];
 

@@ -2284,6 +2284,21 @@ idb.iid(71776).mast=91;
 idb.iid(71776).sp=2333;
 idb.iid(71776).isreforged=0;
 
+idb.iid(78379).name='Hand of Morchok (Raidfinder)';
+idb.iid(78379).wtype='axe';
+idb.iid(78379).ilvl=378;
+idb.iid(78379).tooldps=583.6;
+idb.iid(78379).swing=2.6;
+idb.iid(78379).avgdmg=(1062+1973)/2;
+idb.iid(78379).str=165;
+idb.iid(78379).sta=277;
+idb.iid(78379).mast=103;
+idb.iid(78379).crit=123;
+idb.iid(78379).socket='R';
+idb.iid(78379).sbstat='str';
+idb.iid(78379).sbval=10;
+idb.iid(78379).isreforged=0;
+
 idb.iid(70204).name='Ruthless Gladiator''s Hacker';
 idb.iid(70204).wtype='axe';
 idb.iid(70204).ilvl=391;
@@ -2331,6 +2346,36 @@ idb.iid(71777).spi=148;
 idb.iid(71777).mast=103;
 idb.iid(71777).sp=2636;
 idb.iid(71777).isreforged=0;
+
+idb.iid(77212).name='Hand of Morchok';
+idb.iid(77212).wtype='axe';
+idb.iid(77212).ilvl=397;
+idb.iid(77212).tooldps=658.7;
+idb.iid(77212).swing=2.6;
+idb.iid(77212).avgdmg=(1198+2227)/2;
+idb.iid(77212).str=188;
+idb.iid(77212).sta=312;
+idb.iid(77212).mast=119;
+idb.iid(77212).crit=139;
+idb.iid(77212).socket='R';
+idb.iid(77212).sbstat='str';
+idb.iid(77212).sbval=10;
+idb.iid(77212).isreforged=0;
+
+idb.iid(78371).name='Hand of Morchok (Heroic)';
+idb.iid(78371).wtype='axe';
+idb.iid(78371).ilvl=410;
+idb.iid(78371).tooldps=743.5;
+idb.iid(78371).swing=2.6;
+idb.iid(78371).avgdmg=(1353+2514)/2;
+idb.iid(78371).str=215;
+idb.iid(78371).sta=353;
+idb.iid(78371).mast=137;
+idb.iid(78371).crit=157;
+idb.iid(78371).socket='R';
+idb.iid(78371).sbstat='str';
+idb.iid(78371).sbval=10;
+idb.iid(78371).isreforged=0;
 
 %% Weapons - Maces
 
@@ -2663,6 +2708,18 @@ idb.iid(72827).mast=91;
 idb.iid(72827).parry=131;
 idb.iid(72827).isreforged=0;
 
+idb.iid(72804).name='Dragonshrine Scepter';
+idb.iid(72804).wtype='mac';
+idb.iid(72804).ilvl=378;
+idb.iid(72804).tooldps=551.8;
+idb.iid(72804).swing=2.6;
+idb.iid(72804).avgdmg=(1004+1866)/2;
+idb.iid(72804).str=174;
+idb.iid(72804).sta=262;
+idb.iid(72804).crit=113;
+idb.iid(72804).mast=118;
+idb.iid(72804).isreforged=0;
+
 idb.iid(71355).name='Ko''gun, Hammer of the Firelord';
 idb.iid(71355).wtype='mac';
 idb.iid(71355).ilvl=384;
@@ -2711,6 +2768,28 @@ idb.iid(71615).spi=151;
 idb.iid(71615).haste=118;
 idb.iid(71615).sp=2783;
 idb.iid(71615).isreforged=0;
+
+idb.iid(73448).name='Cataclysmic Gladiator''s Bonecracker';
+idb.iid(73448).wtype='mac';
+idb.iid(73448).ilvl=397;
+idb.iid(73448).tooldps=658.7;
+idb.iid(73448).swing=2.6;
+idb.iid(73448).avgdmg=(1198+2227)/2;
+idb.iid(73448).str=208;
+idb.iid(73448).sta=312;
+idb.iid(73448).crit=139;
+idb.iid(73448).isreforged=0;
+
+idb.iid(73415).name='Cataclysmic Gladiator''s Bonecracker (Elite)';
+idb.iid(73415).wtype='mac';
+idb.iid(73415).ilvl=410;
+idb.iid(73415).tooldps=743.5;
+idb.iid(73415).swing=2.6;
+idb.iid(73415).avgdmg=(1353+2514)/2;
+idb.iid(73415).str=235;
+idb.iid(73415).sta=353;
+idb.iid(73415).crit=157;
+idb.iid(73415).isreforged=0;
 
 %% Weapons - Swords
 
@@ -3047,6 +3126,18 @@ idb.iid(70922).sta=262;
 idb.iid(70922).mast=99;
 idb.iid(70922).dodge=126;
 idb.iid(70922).isreforged=0;
+
+idb.iid(72866).name='Treachery''s Bite';
+idb.iid(72866).wtype='swo';
+idb.iid(72866).ilvl=378;
+idb.iid(72866).tooldps=551.8;
+idb.iid(72866).swing=2.6;
+idb.iid(72866).avgdmg=(1004+1866)/2;
+idb.iid(72866).str=174;
+idb.iid(72866).sta=262;
+idb.iid(72866).hit=116;
+idb.iid(72866).haste=116;
+idb.iid(72866).isreforged=0;
 
 idb.iid(71006).name='Volcanospike';
 idb.iid(71006).wtype='swo';
