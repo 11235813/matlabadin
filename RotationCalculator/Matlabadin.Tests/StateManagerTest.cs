@@ -100,5 +100,28 @@ namespace Matlabadin.Tests
         {
             Assert.AreEqual(3, StateManager.HP(StateManager.AdvanceTime(StateManager.SetHP(StateManager.InitialState(), 3), 100)));
         }
+        [TestMethod]
+        public void ZeroCooldownRemainingForAllAbilities_ShouldBeTrueIffAllAbilitiesAreOffCD()
+        {
+            Assert.IsTrue(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.InitialState()));
+            Assert.IsTrue(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetHP(StateManager.InitialState(), 1)));
+            Assert.IsTrue(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetHP(StateManager.InitialState(), 2)));
+            Assert.IsTrue(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetHP(StateManager.InitialState(), 3)));
+            Assert.IsTrue(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetTimeRemaining(StateManager.InitialState(), Buff.JotW, 1)));
+            Assert.IsTrue(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetTimeRemaining(StateManager.InitialState(), Buff.Inq, 1)));
+            Assert.IsTrue(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetTimeRemaining(StateManager.InitialState(), Buff.GC, 1)));
+            Assert.IsTrue(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetTimeRemaining(StateManager.InitialState(), Buff.EGICD, 1)));
+            Assert.IsFalse(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetCooldownRemaining(StateManager.InitialState(), Ability.AS, 1)));
+            Assert.IsFalse(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetCooldownRemaining(StateManager.InitialState(), Ability.CS, 1)));
+            Assert.IsFalse(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetCooldownRemaining(StateManager.InitialState(), Ability.Cons, 1)));
+            Assert.IsFalse(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetCooldownRemaining(StateManager.InitialState(), Ability.HotR, 1)));
+            Assert.IsFalse(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetCooldownRemaining(StateManager.InitialState(), Ability.HoW, 1)));
+            Assert.IsFalse(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetCooldownRemaining(StateManager.InitialState(), Ability.HW, 1)));
+            Assert.IsFalse(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetCooldownRemaining(StateManager.InitialState(), Ability.J, 1)));
+            Assert.IsFalse(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetCooldownRemaining(StateManager.InitialState(), Ability.WoG, 1)));
+            Assert.IsFalse(StateManager.ZeroCooldownRemainingForAllAbilities(
+                StateManager.SetCooldownRemaining(StateManager.SetCooldownRemaining(StateManager.InitialState(), Ability.WoG, 1), Ability.CS, 1)
+                ));
+        }
     }
 }

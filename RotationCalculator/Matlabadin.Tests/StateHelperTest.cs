@@ -299,5 +299,15 @@ namespace Matlabadin.Tests
             Assert.AreEqual(Ability.Nothing, c.Ability);
             Assert.AreEqual(4, c.stepsDuration);
         }
+        [TestMethod]
+        public void NextAbilityStates_ShouldNotConcatenateNothingLoop()
+        {
+            ulong[] nextStates;
+            var r = new RotationPriorityQueue<ulong>("");
+            var gp = new Int64GraphParameters(r, 3, false, 1, 1, 0, 0, 0);
+            Choice<ulong> c = StateHelper<ulong>.NextAbilityStates(gp, gp, GetState(gp, Ability.CS, 4), out nextStates);
+            Assert.AreEqual(Ability.Nothing, c.Ability);
+            Assert.AreEqual(1, c.stepsDuration);
+        }
     }
 }

@@ -117,11 +117,16 @@ namespace Matlabadin
                 sumtpr += tpr;
                 suminqtpr += inqt * pr[i];
                 sumjotwtpr += jotwt * pr[i];
+                double currentPr;
+                if (!cps.TryGetValue(c.Action, out currentPr)) currentPr = 0;
                 if (c.Ability != Ability.Nothing)
                 {
-                    double currentPr;
-                    if (!cps.TryGetValue(c.Action, out currentPr)) currentPr = 0;
                     cps[c.Action] = currentPr + pr[i];
+                }
+                else
+                {
+                    // Weight cast/s based on a notional 1 GCD cast time Nothing ability
+                    cps[c.Action] = currentPr + pr[i] * c.stepsDuration / this.GraphParameters.StepsPerGcd;
                 }
             }
             inqUptime = suminqtpr / sumtpr;
