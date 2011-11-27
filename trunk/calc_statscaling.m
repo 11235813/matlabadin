@@ -20,7 +20,7 @@ stat_model;
 stat={'exp';'hit';'str';'ap';'sta';'crit';'agi';'haste';'sp';'int';'mas'};
 M=length(stat);  %number of "extra" stats
 
-dstat=[10 10 20 10 10 10 10 10 10 10 10];
+dstat=[10 10 10 20 10 10 10 10 10 10 10];
 
 %% Configurations
 %set melee hit to 2%, expertise to 10, mastery to 25.5;
@@ -39,15 +39,15 @@ cfg(c).glyph=ddb.glyphset{1}; %Default, HotR/SoT/ShoR, Cons/AS
 cfg(c).talent=ddb.talentset{1}; %0/32/9 w/o HG
 
 %low hit, W39
-c=c+1;
-cfg(c).helm=cfg(1).helm;
-cfg(c).label='W39/SoI build';
-cfg(c).veng=1;
-cfg(c).seal='Insight';
-cfg(c).queue={'WoG>SotR>CS>AS+>J>AS>Cons>HW'};
-cfg(c).rot=1;
-cfg(c).glyph=ddb.glyphset{2}; %WoG set
-cfg(c).talent=ddb.talentset{1}; %0/32/9 w/o HG
+% c=c+1;
+% cfg(c).helm=cfg(1).helm;
+% cfg(c).label='W39/SoI build';
+% cfg(c).veng=1;
+% cfg(c).seal='Insight';
+% cfg(c).queue={'WoG>SotR>CS>AS+>J>AS>Cons>HW'};
+% cfg(c).rot=1;
+% cfg(c).glyph=ddb.glyphset{2}; %WoG set
+% cfg(c).talent=ddb.talentset{1}; %0/32/9 w/o HG
 
 %low hit, I39
 c=c+1;
@@ -60,10 +60,11 @@ cfg(c).rot=1;
 cfg(c).glyph=ddb.glyphset{1}; %WoG set
 cfg(c).talent=ddb.talentset{1}; %0/32/9 w/o HG
 
-%% Strength graphs
+%% Strength calcs
 %reset extra structure
 extra_init;
 extra.val.str=-100+linspace(1,1500,250);
+[temp idx]=min(abs(extra.val.str));
 sdps=zeros(M,length(extra.val.str),length(cfg));
 sdps0=zeros(size(sdps));
 
@@ -94,6 +95,7 @@ for c=1:length(cfg)
         stat_model;ability_model;rotation_model;
         
         sdps(m,:,c)=rot(cfg(c).rot).totdps;
+        shps(m,:,c)=rot(cfg(c).rot).tothps;
 
         %set each stat back to 0 extra
         eval(char(['extra.itm.' stat{m} '=0;']))
@@ -101,15 +103,24 @@ for c=1:length(cfg)
         stat_model;ability_model;rotation_model;
         
         sdps0(m,:,c)=rot(cfg(c).rot).totdps;
+        shps0(m,:,c)=rot(cfg(c).rot).tothps;
 
     end
     close(csswb)
 end
 toc
+%% Strength Graphs / Table
 sdiffdps=(sdps-sdps0).*10./repmat(dstat',[1 size(sdps,2) size(sdps,3)]);
+sdiffhps=(shps-shps0).*10./repmat(dstat',[1 size(shps,2) size(shps,3)]);
 xS=player.armorystr';
 yS1=squeeze(sdiffdps(:,:,1))';
 yS2=squeeze(sdiffdps(:,:,2))';
+
+disp('SHPS and stat weights for config #1')
+[char(stat) repmat(' ',length(stat),2)  num2str(sdiffhps(:,idx,1)) repmat(' ',length(stat),3) num2str(sdiffdps(:,idx,1)./dstat')]
+disp('SHPS and stat weights for config #2')
+[char(stat) repmat(' ',length(stat),2)  num2str(sdiffhps(:,idx,2)) repmat(' ',length(stat),3) num2str(sdiffdps(:,idx,2)./dstat')]
+disp('Stat DPS values for config #1')
 
 figure(50)
 set(gcf,'Position',[290    92   706   414])
@@ -120,7 +131,7 @@ xlabel('Armory Strength')
 ylabel('DPS per 10 itemization points')
 title([cfg(1).label ', '  num2str(cfg(1).veng*100,'%2.1f') '% Veng, ' num2str(cfg(1).hit,'%2.1f') '% hit, ' num2str(cfg(1).exp,'%2.1f') ' expertise'])
 
-figure(60)
+figure(51)
 set(gcf,'Position',[290    92   706   414])
 plot(xS,yS2)
 xlim([min(xS) max(xS)])
@@ -128,7 +139,7 @@ legend(stat,'Location','EastOutside')
 xlabel('Armory Strength')
 ylabel('DPS per 10 itemization points')
 title([cfg(2).label ', ' num2str(cfg(2).veng*100,'%2.1f') '% Veng, ' num2str(cfg(2).hit,'%2.1f') '% hit, ' num2str(cfg(2).exp,'%2.1f') ' expertise'])
-    
+
 %% Hit graph
 tic
 for c=1:length(cfg)
@@ -151,6 +162,7 @@ for c=1:length(cfg)
     
     %define hit range such that it covers 0 to 10%
     extra.val.hit=(-player.phhit+linspace(0,10,100)).*cnv.hit_phhit;
+[temp idx]=min(abs(extra.val.hit));
     
     csswb=waitbar(0,'Calculating Hit Scaling');
     set(csswb,'Position',get(csswb,'Position')+[0 85 0 0]);
@@ -163,6 +175,7 @@ for c=1:length(cfg)
         stat_model;ability_model;rotation_model;
         
         hdps(m,:,c)=rot(cfg(c).rot).totdps;
+        hhps(m,:,c)=rot(cfg(c).rot).tothps;
 
         %set each stat back to 0 extra
         eval(char(['extra.itm.' stat{m} '=0;']))
@@ -170,17 +183,26 @@ for c=1:length(cfg)
         stat_model;ability_model;rotation_model;
 
         hdps0(m,:,c)=rot(cfg(c).rot).totdps;
+        hhps0(m,:,c)=rot(cfg(c).rot).tothps;
+        
+        toc
         
     end
     close(csswb)
 end
 toc
 hdiffdps=(hdps-hdps0).*10./repmat(dstat',[1 size(hdps,2) size(hdps,3)]);
+hdiffhps=(hhps-hhps0).*10./repmat(dstat',[1 size(hhps,2) size(hhps,3)]);
 xH=player.phhit';
 yH1=squeeze(hdiffdps(:,:,1))';
 yH2=squeeze(hdiffdps(:,:,2))';
 
-figure(51)
+% disp('SHPS per 10 stat points for config #1')
+% [char(stat) num2str(hdiffhps(:,idx,1))]
+% disp('SHPS per 10 stat points for config #2')
+% [char(stat) num2str(hdiffhps(:,idx,2))]
+
+figure(52)
 set(gcf,'Position',[290    92   706   414])
 plot(xH,yH1)
 xlim([min(player.phhit) max(player.phhit)])
@@ -189,7 +211,7 @@ xlabel('Melee hit % against lvl 80')
 ylabel('DPS per 10 itemization points')
 title([cfg(1).label ', '  num2str(cfg(1).veng*100,'%2.1f') '% Veng, ' num2str(cfg(1).exp(1),'%2.1f') ' expertise'])
 
-figure(61)
+figure(53)
 set(gcf,'Position',[290    92   706   414])
 plot(xH,yH2)
 xlim([min(xH) max(xH)])
@@ -232,6 +254,7 @@ for c=1:length(cfg)
         stat_model;ability_model;rotation_model;
         
         edps(m,:,c)=rot(cfg(c).rot).totdps;
+        ehps(m,:,c)=rot(cfg(c).rot).tothps;
         
         %set each stat back to 0 extra
         eval(char(['extra.itm.' stat{m} '=0;']))
@@ -239,17 +262,20 @@ for c=1:length(cfg)
         stat_model;ability_model;rotation_model;
         
         edps0(m,:,c)=rot(cfg(c).rot).totdps;
+        ehps0(m,:,c)=rot(cfg(c).rot).tothps;
 
     end
     close(csswb)
 end
 toc
 ediffdps=(edps-edps0).*10./repmat(dstat',[1 size(edps,2) size(edps,3)]);
+ediffhps=(ehps-ehps0).*10./repmat(dstat',[1 size(ehps,2) size(ehps,3)]);
 xE=player.exp';
 yE1=squeeze(ediffdps(:,:,1))';
 yE2=squeeze(ediffdps(:,:,2))';
 
-figure(52)
+
+figure(54)
 set(gcf,'Position',[290    92   706   414])
 plot(xE,yE1)
 xlim([min(player.exp) max(player.exp)])
@@ -259,7 +285,7 @@ ylabel('DPS per 10 itemization points')
 title([cfg(1).label ', '  num2str(cfg(1).veng*100,'%2.1f') '% Veng, ' num2str(cfg(1).hit(1),'%2.1f') '% hit'])
 
 
-figure(62)
+figure(55)
 set(gcf,'Position',[290    92   706   414])
 plot(xE,yE2)
 xlim([min(xE) max(xE)])
