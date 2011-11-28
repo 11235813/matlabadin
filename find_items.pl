@@ -10,7 +10,7 @@ sub debug { print STDERR @_ };
 
 # adjusting this to only update newer items, the rest are already in GDB
 # my @levels = qw(346 353 359 365 372 378 379 391 397);
-my @levels = qw(378 384 379 384 390 391 397 403 410 416);
+my @levels = qw(378 379 384 390 391 397 403 410 416);
 
 my $base = 'http://ptr.wowhead.com/items';
 my $filters = 'ub=2;cr=23:21:96:103:79;crs=3:3:3:3:3;crv=0:0:0:0:0;qu=3:4:5';
@@ -51,11 +51,11 @@ foreach my $ilvl (@levels) {
     my %item = Sigrie::get_item($id);
 
     # Tank items must have at least one of mastery, dodge, or parry
-    # Trinkets are allowed with only stamina but probably trinkets
-    # shouldn't be automated at all because are very subjective
-    next unless $item{mastery} or $item{dodge} or $item{parry} 
-      or ($item{slot} eq 'Trinket' and $item{stamina})
-      or ($item{slot} eq 'One-Hand' and $item{strength});
+    # Trinkets need only have stamina
+    # Weapons need only have strength
+    next unless $item{mast} or $item{dodge} or $item{parry} 
+      or ($item{slot} eq 'Trinket' and $item{sta})
+      or ($item{slot} eq 'One-Hand' and $item{str});
     
     $items{$item{slot}}{$ilvl}{$id} = $item{name};
   }
