@@ -69,6 +69,8 @@ for c=1:length(cfg)
     
 %     arbitrarily turn on T13 ret 2-piece
 %     mdf.t13x2R=1;
+%     mdf.t13x2P=0;
+
 
     wb=waitbar(0,['Calculating CFG # ' int2str(c) ' / ' int2str(length(cfg))]);
     tic
@@ -97,7 +99,7 @@ for c=1:length(cfg)
         mpsnet(kk)=mpsgain-mpscost;
         empties(kk)=sum(cps((length(cps)-1):length(cps)));
         %temporary fix for FSM change
-        empties(kk)=1/1.5-sum([actionPr{2,:}]);
+%         empties(kk)=1/1.5-sum([actionPr{2,:}]);
     end
     close(wb)
     toc
