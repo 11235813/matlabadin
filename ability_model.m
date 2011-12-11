@@ -415,7 +415,7 @@ if (strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)) mdf.iseal=min([exec.
           heal.HolyWrath.*val.ones;                                              %HW
           heal.HolyWrath.*val.ones;                                     %HW(Inq)
           heal.Judgement.*val.ones;                                              %J
-          heal.Judgement.*val.ones;                                     %J(Inq)
+          heal.Judgement.*mdf.Inq.*val.ones;                                     %J(Inq)
           ...
           heal.activeseal.*val.ones;                                             %seal
           heal.activeseal.*val.ones;                                   %seal(Inq)
