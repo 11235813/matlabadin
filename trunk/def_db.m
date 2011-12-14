@@ -17,6 +17,13 @@ tempgems.yel=52219; %fractured (mast)
 tempgems.pris=52219; %fractured (mast)
 ddb.gemset{2}=tempgems;
 
+%FIXME
+tempgems.blu=71838; %puissant
+tempgems.red=71855; %fine (parry/mast)
+tempgems.yel=71877; %fractured (mast)
+tempgems.pris=71877; %fractured (mast)
+ddb.gemset{3}=tempgems;
+
 gem=ddb.gemset{2};
 
 %%Starter pre-raid

@@ -15,6 +15,10 @@ glyph=ddb.glyphset{1}; %placeholder, redefined in cfg
 talents;
 buff=buff_model;
 stat_model;
+%FIXME
+%nothing
+%72812 72833 78485 77214 77196 78363 78476
+%72828 77188 78472 77223 78429 78878
 
 
 %% List of weapons
@@ -39,7 +43,7 @@ weaplist1=[62457; %Ravening Slicer
            70922; %Mandible of Beth'tilac 
            72827; %Gavel of Peroth'arn
            71362; %Obsidium Cleaver
-           78488; %Souldrinker (Raidfinder)
+           78488; %Souldrinker (Raid Finder)
            71406; %Mandible of Beth'tilac (Heroic)
            71562; %Obsidium Cleaver (Heroic)
            77193; %Souldrinker
@@ -92,9 +96,8 @@ weaplist3=[65166; %Buzz Saw (Heroic)
            71312; %Gatecrasher
            72804; %Dragonshrine Scepter
            72866; %Treachery's Bite
-           78379; %Hand of Morchok (Raidfinder)
            71783; %Shatterskull Bonecrusher (Heroic)
-           70201; %Ruthless Glad Bonecrakcer 391
+           70201; %Ruthless Glad Bonecracker 391
            71454; %Gatecrasher (Heroic)
            73448; %Cataclysmic Gladiator's Bonecracker 397
            77212; %Hand of Morchok

@@ -55,6 +55,8 @@ mdf.meta_stun=1+0.10.*(gear.meta==5);
 
 mdf.plate=1+0.05.*gear.isplate;
 mdf.pvphands=0.05.*gear.pvphands; %CS output
+mdf.souldrinker=max([0.013;0.015;0.017].*gear.souldrinker);
+mdf.nokaled=max([8476;9567.5;10800].*gear.nokaled);
 mdf.t11x2P=0.1.*gear.tierbonusP(1); %CS output
 mdf.t11x4P=1+0.5.*gear.tierbonusP(2); %GoAK duration
 mdf.t12x2P=1+0.2.*gear.tierbonusP(3); %Righteous Flames

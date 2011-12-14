@@ -54,11 +54,13 @@ push @items, qw(71460); #391
 push @items, qw(77226); #397
 push @items, qw(78448); #410
 # One-Hand
-push @items, qw(72827 71362 70922); #378
-push @items, qw(78488); #390
+push @items, qw(72827 71362 70922 72828 72812 72833 72804 72866); #378
+push @items, qw(78488 78485); #390
 push @items, qw(71406 71562); #391
-push @items, qw(77193); #403
-push @items, qw(78479); #416
+push @items, qw(77212 77214 77223 78878); #397
+push @items, qw(77193 77188 77196); #403
+push @items, qw(78371 78363 78429); #410
+push @items, qw(78479 78472 78476); #416
 # Relic
 push @items, qw(70939); #378
 push @items, qw(78632); #384

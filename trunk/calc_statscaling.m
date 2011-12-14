@@ -25,7 +25,11 @@ M=length(stat);  %number of "extra" stats
 %been mostly abandoned.  I was also using this to (erroneously) determine
 %stat weights.  I've since corrected the error, but for 5.0 we should fix
 %this nomenclature.
-dstat=[10 10 10 20 15 10 10 10 10 10 10];
+% FIXME (redundancy)
+%stat itemization factors for weight calculations
+icv=10.*[ipconv.exp ipconv.hit ipconv.str ipconv.ap ipconv.sta ipconv.crit...
+    ipconv.agi ipconv.has ipconv.sp ipconv.int ipconv.mas];
+dstat=icv;
 
 %% Configurations
 %set melee hit to 2%, expertise to 10, mastery to 25.5;
@@ -120,9 +124,6 @@ sdiffhps=(shps-shps0).*10./repmat(dstat',[1 size(shps,2) size(shps,3)]);
 xS=player.armorystr';
 yS1=squeeze(sdiffdps(:,:,1))';
 yS2=squeeze(sdiffdps(:,:,2))';
-
-%stat itemization factors for weight calculations
-icv=10.*[ipconv.exp ipconv.hit ipconv.str ipconv.ap ipconv.sta ipconv.crit ipconv.agi ipconv.has ipconv.sp ipconv.int ipconv.mas];
 
 disp('SHPS and stat weights for config #1')
 [char(stat) repmat(' ',length(stat),2)  num2str(sdiffhps(:,idx,1)) repmat(' ',length(stat),3) num2str(sdiffdps(:,idx,1)./dstat')]
