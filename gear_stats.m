@@ -116,8 +116,29 @@ end
 
 %pvp hands (CS bonus)
 switch egs(7).name
-    case {'Bloodthirsty Gladiator''s Scaled Gauntlets','Vicious Gladiator''s Scaled Gauntlets','Ruthless Gladiator''s Scaled Gauntlets'}
+    case {'Bloodthirsty Gladiator''s Scaled Gauntlets','Vicious Gladiator''s Scaled Gauntlets',...
+            'Ruthless Gladiator''s Scaled Gauntlets','Cataclysmic Gladiator''s Scaled Gauntlets'}
         gear.pvphands=1;
     otherwise
         gear.pvphands=0;
+end
+
+%souldrinker
+gear.souldrinker=zeros(3,1);
+switch egs(15).name
+    case 'Souldrinker (Raid Finder)'
+        gear.souldrinker(1)=1;
+    case 'Souldrinker'
+        gear.souldrinker(2)=1;
+    case 'Souldrinker (Heroic)'
+        gear.souldrinker(3)=1;
+end
+
+%no'kaled
+gear.nokaled=zeros(3,1);
+switch egs(15).name
+    case 'No''Kaled, the Elements of Death'
+        gear.nokaled(2)=1;
+    case 'No''Kaled, the Elements of Death (Heroic)'
+        gear.nokaled(3)=1;
 end

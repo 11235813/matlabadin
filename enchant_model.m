@@ -188,4 +188,46 @@ mend.pps=mend.ptps.*mend.ppc+mend.stps.*mend.effspc;
 mend.hps=mend.hpp.*mend.pps;
 mend.tps=mend.hps.*mdf.hthreat.*mdf.RFury./exec.npccount;
 
+
+%% Souldrinker
+%formulation
+souldrinker.pc=0.15;
+souldrinker.dpp=player.hitpoints.*mdf.spdmg.*target.resrdx;
+souldrinker.hpp=2.*souldrinker.dpp.*mdf.Divin;
+%trigger rates
+stat_model;ability_model;rotation_model;
+souldrinker.ptps=mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.SotR ... %SotR
+    +mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.CS ...      %CS
+    +mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.HotR ...    %HotR
+    +min([exec.npccount;1+2.*(mdf.glyphAS==1)]).*mdf.rahit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.AS ... %AS
+    +mdf.rahit.*mdf.mehit.*mdf.tseal.*tmp.cps.J ...           %J
+    +mdf.mehit.*(1+mdf.mehit.*mdf.tseal)./player.wswing;      %AA
+%output
+souldrinker.pps=souldrinker.ptps.*souldrinker.pc;
+souldrinker.dps{1}=0.013.*souldrinker.pps.*souldrinker.dpp;
+souldrinker.hps{1}=souldrinker.dps{1}.*souldrinker.hpp;
+souldrinker.dps{2}=0.015.*souldrinker.pps.*souldrinker.dpp;
+souldrinker.hps{2}=souldrinker.dps{2}.*souldrinker.hpp;
+souldrinker.dps{3}=0.017.*souldrinker.pps.*souldrinker.dpp;
+souldrinker.hps{3}=souldrinker.dps{3}.*souldrinker.hpp;
+
+
+%% No'Kaled
+%formulation
+nokaled.pc=0.065;
+nokaled.dpp=mdf.spdmg.*mdf.spcrit.*target.resrdx;
+%trigger rates
+stat_model;ability_model;rotation_model;
+nokaled.ptps=mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.SotR ... %SotR
+    +mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.CS ...      %CS
+    +mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.HotR ...    %HotR
+    +min([exec.npccount;1+2.*(mdf.glyphAS==1)]).*mdf.rahit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.AS ... %AS
+    +mdf.rahit.*mdf.mehit.*mdf.tseal.*tmp.cps.J ...           %J
+    +mdf.mehit.*(1+mdf.mehit.*mdf.tseal)./player.wswing;      %AA
+%output
+nokaled.pps=nokaled.ptps.*souldrinker.pc;
+nokaled.dps{1}=8476.*nokaled.pps.*nokaled.dpp;
+nokaled.dps{2}=9567.5.*nokaled.pps.*nokaled.dpp;
+nokaled.dps{3}=10800.*nokaled.pps.*nokaled.dpp;
+
 clear pseq

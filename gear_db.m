@@ -2284,20 +2284,30 @@ idb.iid(71776).mast=91;
 idb.iid(71776).sp=2333;
 idb.iid(71776).isreforged=0;
 
-idb.iid(78379).name='Hand of Morchok (Raidfinder)';
-idb.iid(78379).wtype='axe';
-idb.iid(78379).ilvl=378;
-idb.iid(78379).tooldps=583.6;
-idb.iid(78379).swing=2.6;
-idb.iid(78379).avgdmg=(1062+1973)/2;
-idb.iid(78379).str=165;
-idb.iid(78379).sta=277;
-idb.iid(78379).mast=103;
-idb.iid(78379).crit=123;
-idb.iid(78379).socket='R';
-idb.iid(78379).sbstat='str';
-idb.iid(78379).sbval=10;
-idb.iid(78379).isreforged=0;
+idb.iid(72828).name='Trickster''s Edge';
+idb.iid(72828).wtype='axe';
+idb.iid(72828).ilvl=378;
+idb.iid(72828).tooldps=551.7;
+idb.iid(72828).swing=2.6;
+idb.iid(72828).avgdmg=1434.5;
+idb.iid(72828).sta=262;
+idb.iid(72828).agi=174;
+idb.iid(72828).crit=128;
+idb.iid(72828).exp=97;
+idb.iid(72828).isreforged=0;
+
+idb.iid(72812).name='Crescent Moon';
+idb.iid(72812).wtype='axe';
+idb.iid(72812).ilvl=378;
+idb.iid(72812).tooldps=551.9;
+idb.iid(72812).swing=1.6;
+idb.iid(72812).avgdmg=883;
+idb.iid(72812).sta=262;
+idb.iid(72812).int=174;
+idb.iid(72812).spi=91;
+idb.iid(72812).mast=131;
+idb.iid(72812).sp=2333;
+idb.iid(72812).isreforged=0;
 
 idb.iid(70204).name='Ruthless Gladiator''s Hacker';
 idb.iid(70204).wtype='axe';
@@ -2352,30 +2362,50 @@ idb.iid(77212).wtype='axe';
 idb.iid(77212).ilvl=397;
 idb.iid(77212).tooldps=658.7;
 idb.iid(77212).swing=2.6;
-idb.iid(77212).avgdmg=(1198+2227)/2;
+idb.iid(77212).avgdmg=1712.5;
 idb.iid(77212).str=188;
 idb.iid(77212).sta=312;
-idb.iid(77212).mast=119;
 idb.iid(77212).crit=139;
+idb.iid(77212).mast=119;
 idb.iid(77212).socket='R';
 idb.iid(77212).sbstat='str';
 idb.iid(77212).sbval=10;
 idb.iid(77212).isreforged=0;
+
+idb.iid(77188).name='No''Kaled, the Elements of Death';
+idb.iid(77188).wtype='axe';
+idb.iid(77188).ilvl=403;
+idb.iid(77188).tooldps=696.5;
+idb.iid(77188).swing=2.6;
+idb.iid(77188).avgdmg=1811;
+idb.iid(77188).sta=331;
+idb.iid(77188).agi=220;
+idb.iid(77188).isreforged=0;
 
 idb.iid(78371).name='Hand of Morchok (Heroic)';
 idb.iid(78371).wtype='axe';
 idb.iid(78371).ilvl=410;
 idb.iid(78371).tooldps=743.5;
 idb.iid(78371).swing=2.6;
-idb.iid(78371).avgdmg=(1353+2514)/2;
+idb.iid(78371).avgdmg=1933;
 idb.iid(78371).str=215;
 idb.iid(78371).sta=353;
-idb.iid(78371).mast=137;
 idb.iid(78371).crit=157;
+idb.iid(78371).mast=137;
 idb.iid(78371).socket='R';
 idb.iid(78371).sbstat='str';
 idb.iid(78371).sbval=10;
 idb.iid(78371).isreforged=0;
+
+idb.iid(78472).name='No''Kaled, the Elements of Death (Heroic)';
+idb.iid(78472).wtype='axe';
+idb.iid(78472).ilvl=416;
+idb.iid(78472).tooldps=786.3;
+idb.iid(78472).swing=2.6;
+idb.iid(78472).avgdmg=2044.5;
+idb.iid(78472).sta=373;
+idb.iid(78472).agi=249;
+idb.iid(78472).isreforged=0;
 
 %% Weapons - Maces
 
@@ -2708,12 +2738,25 @@ idb.iid(72827).mast=91;
 idb.iid(72827).parry=131;
 idb.iid(72827).isreforged=0;
 
+idb.iid(72833).name='Scepter of Azshara';
+idb.iid(72833).wtype='mac';
+idb.iid(72833).ilvl=378;
+idb.iid(72833).tooldps=551.9;
+idb.iid(72833).swing=1.6;
+idb.iid(72833).avgdmg=883;
+idb.iid(72833).sta=262;
+idb.iid(72833).int=174;
+idb.iid(72833).spi=131;
+idb.iid(72833).crit=91;
+idb.iid(72833).sp=2333;
+idb.iid(72833).isreforged=0;
+
 idb.iid(72804).name='Dragonshrine Scepter';
 idb.iid(72804).wtype='mac';
 idb.iid(72804).ilvl=378;
-idb.iid(72804).tooldps=551.8;
+idb.iid(72804).tooldps=551.7;
 idb.iid(72804).swing=2.6;
-idb.iid(72804).avgdmg=(1004+1866)/2;
+idb.iid(72804).avgdmg=1434.5;
 idb.iid(72804).str=174;
 idb.iid(72804).sta=262;
 idb.iid(72804).crit=113;
@@ -2732,6 +2775,17 @@ idb.iid(71355).spi=134;
 idb.iid(71355).haste=105;
 idb.iid(71355).sp=2467;
 idb.iid(71355).isreforged=0;
+
+idb.iid(78485).name='Maw of the Dragonlord (Raid Finder)';
+idb.iid(78485).wtype='mac';
+idb.iid(78485).ilvl=390;
+idb.iid(78485).tooldps=617;
+idb.iid(78485).swing=2.2;
+idb.iid(78485).avgdmg=1357.5;
+idb.iid(78485).sta=293;
+idb.iid(78485).int=195;
+idb.iid(78485).sp=2607;
+idb.iid(78485).isreforged=0;
 
 idb.iid(70201).name='Ruthless Gladiator''s Bonecracker';
 idb.iid(70201).wtype='mac';
@@ -2780,6 +2834,48 @@ idb.iid(73448).sta=312;
 idb.iid(73448).crit=139;
 idb.iid(73448).isreforged=0;
 
+idb.iid(77214).name='Vagaries of Time';
+idb.iid(77214).wtype='mac';
+idb.iid(77214).ilvl=397;
+idb.iid(77214).tooldps=658.6;
+idb.iid(77214).swing=2.2;
+idb.iid(77214).avgdmg=1449;
+idb.iid(77214).sta=312;
+idb.iid(77214).int=188;
+idb.iid(77214).crit=123;
+idb.iid(77214).haste=135;
+idb.iid(77214).socket='R';
+idb.iid(77214).sbstat='int';
+idb.iid(77214).sbval=10;
+idb.iid(77214).sp=2783;
+idb.iid(77214).isreforged=0;
+
+idb.iid(77223).name='Morningstar of Heroic Will';
+idb.iid(77223).wtype='mac';
+idb.iid(77223).ilvl=397;
+idb.iid(77223).tooldps=658.7;
+idb.iid(77223).swing=2.6;
+idb.iid(77223).avgdmg=1712.5;
+idb.iid(77223).sta=312;
+idb.iid(77223).agi=188;
+idb.iid(77223).exp=141;
+idb.iid(77223).haste=111;
+idb.iid(77223).socket='R';
+idb.iid(77223).sbstat='agi';
+idb.iid(77223).sbval=10;
+idb.iid(77223).isreforged=0;
+
+idb.iid(77196).name='Maw of the Dragonlord';
+idb.iid(77196).wtype='mac';
+idb.iid(77196).ilvl=403;
+idb.iid(77196).tooldps=696.6;
+idb.iid(77196).swing=2.2;
+idb.iid(77196).avgdmg=1532.5;
+idb.iid(77196).sta=331;
+idb.iid(77196).int=220;
+idb.iid(77196).sp=2945;
+idb.iid(77196).isreforged=0;
+
 idb.iid(73415).name='Cataclysmic Gladiator''s Bonecracker (Elite)';
 idb.iid(73415).wtype='mac';
 idb.iid(73415).ilvl=410;
@@ -2790,6 +2886,48 @@ idb.iid(73415).str=235;
 idb.iid(73415).sta=353;
 idb.iid(73415).crit=157;
 idb.iid(73415).isreforged=0;
+
+idb.iid(78363).name='Vagaries of Time (Heroic)';
+idb.iid(78363).wtype='mac';
+idb.iid(78363).ilvl=410;
+idb.iid(78363).tooldps=743.6;
+idb.iid(78363).swing=2.2;
+idb.iid(78363).avgdmg=1636;
+idb.iid(78363).sta=353;
+idb.iid(78363).int=215;
+idb.iid(78363).crit=141;
+idb.iid(78363).haste=153;
+idb.iid(78363).socket='R';
+idb.iid(78363).sbstat='int';
+idb.iid(78363).sbval=10;
+idb.iid(78363).sp=3142;
+idb.iid(78363).isreforged=0;
+
+idb.iid(78429).name='Morningstar of Heroic Will (Heroic)';
+idb.iid(78429).wtype='mac';
+idb.iid(78429).ilvl=410;
+idb.iid(78429).tooldps=743.5;
+idb.iid(78429).swing=2.6;
+idb.iid(78429).avgdmg=1933;
+idb.iid(78429).sta=353;
+idb.iid(78429).agi=215;
+idb.iid(78429).exp=160;
+idb.iid(78429).haste=127;
+idb.iid(78429).socket='R';
+idb.iid(78429).sbstat='agi';
+idb.iid(78429).sbval=10;
+idb.iid(78429).isreforged=0;
+
+idb.iid(78476).name='Maw of the Dragonlord (Heroic)';
+idb.iid(78476).wtype='mac';
+idb.iid(78476).ilvl=416;
+idb.iid(78476).tooldps=786.4;
+idb.iid(78476).swing=2.2;
+idb.iid(78476).avgdmg=1730;
+idb.iid(78476).sta=373;
+idb.iid(78476).int=249;
+idb.iid(78476).sp=3324;
+idb.iid(78476).isreforged=0;
 
 %% Weapons - Swords
 
@@ -3130,9 +3268,9 @@ idb.iid(70922).isreforged=0;
 idb.iid(72866).name='Treachery''s Bite';
 idb.iid(72866).wtype='swo';
 idb.iid(72866).ilvl=378;
-idb.iid(72866).tooldps=551.8;
+idb.iid(72866).tooldps=551.7;
 idb.iid(72866).swing=2.6;
-idb.iid(72866).avgdmg=(1004+1866)/2;
+idb.iid(72866).avgdmg=1434.5;
 idb.iid(72866).str=174;
 idb.iid(72866).sta=262;
 idb.iid(72866).hit=116;
@@ -3165,7 +3303,7 @@ idb.iid(71785).haste=133;
 idb.iid(71785).sp=2333;
 idb.iid(71785).isreforged=0;
 
-idb.iid(78488).name='Souldrinker (Raidfinder)';
+idb.iid(78488).name='Souldrinker (Raid Finder)';
 idb.iid(78488).wtype='swo';
 idb.iid(78488).ilvl=390;
 idb.iid(78488).tooldps=617.1;
@@ -3223,6 +3361,18 @@ idb.iid(71784).hit=100;
 idb.iid(71784).crit=150;
 idb.iid(71784).sp=2636;
 idb.iid(71784).isreforged=0;
+
+idb.iid(78878).name='Spine of the Thousand Cuts';
+idb.iid(78878).wtype='swo';
+idb.iid(78878).ilvl=397;
+idb.iid(78878).tooldps=658.7;
+idb.iid(78878).swing=2.6;
+idb.iid(78878).avgdmg=1712.5;
+idb.iid(78878).sta=312;
+idb.iid(78878).agi=208;
+idb.iid(78878).exp=149;
+idb.iid(78878).haste=122;
+idb.iid(78878).isreforged=0;
 
 idb.iid(77193).name='Souldrinker';
 idb.iid(77193).wtype='swo';
@@ -3704,6 +3854,22 @@ idb.iid(52260).name='Precise Chimera''s Eye';
 idb.iid(52260).exp=67;
 idb.iid(52260).socket='R';
 
+idb.iid(71883).name='Bold Queen''s Garnet';
+idb.iid(71883).str=50;
+idb.iid(71883).socket='R';
+
+idb.iid(71879).name='Delicate Queen''s Garnet';
+idb.iid(71879).agi=50;
+idb.iid(71879).socket='R';
+
+idb.iid(71882).name='Flashing Queen''s Garnet';
+idb.iid(71882).parry=50;
+idb.iid(71882).socket='R';
+
+idb.iid(71880).name='Precise Queen''s Garnet';
+idb.iid(71880).exp=50;
+idb.iid(71880).socket='R';
+
 % Orange
 idb.iid(52204).name='Adept Ember Topaz';
 idb.iid(52204).agi=20;
@@ -3740,6 +3906,31 @@ idb.iid(52249).exp=20;
 idb.iid(52249).dodge=20;
 idb.iid(52249).socket='RY';
 
+idb.iid(71841).name='Crafty Lava Coral';
+idb.iid(71841).exp=25;
+idb.iid(71841).crit=25;
+idb.iid(71841).socket='RY';
+
+idb.iid(71855).name='Fine Lava Coral';
+idb.iid(71855).parry=25;
+idb.iid(71855).mast=25;
+idb.iid(71855).socket='RY';
+
+idb.iid(71843).name='Inscribed Lava Coral';
+idb.iid(71843).str=25;
+idb.iid(71843).crit=25;
+idb.iid(71843).socket='RY';
+
+idb.iid(71853).name='Keen Lava Coral';
+idb.iid(71853).exp=25;
+idb.iid(71853).mast=25;
+idb.iid(71853).socket='RY';
+
+idb.iid(71856).name='Skillful Lava Coral';
+idb.iid(71856).str=25;
+idb.iid(71856).mast=25;
+idb.iid(71856).socket='RY';
+
 % Yellow
 idb.iid(52219).name='Fractured Amberjewel';
 idb.iid(52219).mast=40;
@@ -3756,6 +3947,10 @@ idb.iid(52265).socket='Y';
 idb.iid(52269).name='Fractured Chimera''s Eye';
 idb.iid(52269).mast=67;
 idb.iid(52269).socket='Y';
+
+idb.iid(71877).name='Fractured Lightstone';
+idb.iid(71877).mast=50;
+idb.iid(71877).socket='Y';
 
 % Green
 idb.iid(52227).name='Nimble Dream Emerald';
@@ -3778,6 +3973,16 @@ idb.iid(52237).mast=20;
 idb.iid(52237).hit=20;
 idb.iid(52237).socket='YB';
 
+idb.iid(71838).name='Puissant Elven Peridot';
+idb.iid(71838).mast=25;
+idb.iid(71838).sta=37;
+idb.iid(71838).socket='YB';
+
+idb.iid(71825).name='Sensei''s Elven Peridot';
+idb.iid(71825).mast=25;
+idb.iid(71825).hit=25;
+idb.iid(71825).socket='YB';
+
 % Blue
 idb.iid(52235).name='Rigid Ocean Sapphire';
 idb.iid(52235).hit=40;
@@ -3794,6 +3999,14 @@ idb.iid(52261).socket='B';
 idb.iid(52264).name='Rigid Chimera''s Eye';
 idb.iid(52264).hit=67;
 idb.iid(52264).socket='B';
+
+idb.iid(71817).name='Rigid Deepholm Iolite';
+idb.iid(71817).hit=50;
+idb.iid(71817).socket='B';
+
+idb.iid(71820).name='Solid Deepholm Iolite';
+idb.iid(71820).sta=75;
+idb.iid(71820).socket='B';
 
 % Purple
 idb.iid(52203).name='Accurate Demonseye';
@@ -3835,6 +4048,21 @@ idb.iid(52243).name='Sovereign Demonseye';
 idb.iid(52243).str=20;
 idb.iid(52243).sta=30;
 idb.iid(52243).socket='RB';
+
+idb.iid(71863).name='Accurate Shadow Spinel';
+idb.iid(71863).exp=25;
+idb.iid(71863).hit=25;
+idb.iid(71863).socket='RB';
+
+idb.iid(71872).name='Defender''s Shadow Spinel';
+idb.iid(71872).parry=25;
+idb.iid(71872).sta=37;
+idb.iid(71872).socket='RB';
+
+idb.iid(71866).name='Etched Shadow Spinel';
+idb.iid(71866).str=25;
+idb.iid(71866).hit=25;
+idb.iid(71866).socket='RB';
 
 % Prismatic /TODO check for lvl85 homologue
 idb.iid(49110).name='Nightmare Tear';

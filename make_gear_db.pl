@@ -19,7 +19,8 @@ if (@ARGV) {
 
 # Corrections to items
 my %corrections = (
-	# None at the moment
+  78485 => { name => "Maw of the Dragonlord (Raid Finder)" }, # RF tag
+  78488 => { name => "Souldrinker (Raid Finder)" }, # RF tag
 );
 
 # Slot numbers by name
