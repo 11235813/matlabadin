@@ -80,7 +80,7 @@ clear astore
 av.ppc=5.*gear.swing./60;av.spc=0.2;av.sicd=10;
 av.dpp=500.*mdf.spdmg.*mdf.spcrit.*target.resrdx;
 %trigger rates
-stat_model;ability_model;rotation_model;
+stat_model;ability_model;
 av.ptps=mdf.mehit.*tmp.cps.SotR ... %SotR
     +mdf.mehit.*tmp.cps.CS ...      %CS
     +mdf.mehit.*tmp.cps.HotR ...    %HotR
@@ -96,6 +96,7 @@ av.effspc=1./(av.stps.*(av.effsicd+1./(av.stps.*av.spc)));
 %output
 av.pps=av.ptps.*av.ppc+av.stps.*av.effspc;
 av.dps=av.dpp.*av.pps;
+av.tps=av.dps.*mdf.RFury;
 
 
 %% Hurricane
@@ -170,7 +171,7 @@ clear i j k htrack hstore tmpemod
 mend.ppc=3.*gear.swing./60;mend.spc=0.15;mend.sicd=15;
 mend.hpp=800.*mdf.hcrit.*mdf.Divin;
 %trigger rates
-stat_model;ability_model;rotation_model;
+stat_model;ability_model;
 mend.ptps=mdf.mehit.*tmp.cps.SotR ...	%SotR
     +mdf.mehit.*tmp.cps.CS ...          %CS
     +mdf.mehit.*tmp.cps.HotR ...        %HotR
@@ -191,43 +192,49 @@ mend.tps=mend.hps.*mdf.hthreat.*mdf.RFury./exec.npccount;
 
 %% Souldrinker
 %formulation
-souldrinker.pc=0.15;
-souldrinker.dpp=player.hitpoints.*mdf.spdmg.*target.resrdx;
-souldrinker.hpp=2.*souldrinker.dpp.*mdf.Divin;
+souldrinkerprocproc.pc=0.15;
+souldrinkerproc.dpp=player.hitpoints.*mdf.spdmg.*target.resrdx;
+souldrinkerproc.hpp=2.*souldrinkerproc.dpp.*mdf.Divin;
 %trigger rates
-stat_model;ability_model;rotation_model;
-souldrinker.ptps=mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.SotR ... %SotR
+stat_model;ability_model;
+souldrinkerproc.ptps=mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.SotR ... %SotR
     +mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.CS ...      %CS
     +mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.HotR ...    %HotR
     +min([exec.npccount;1+2.*(mdf.glyphAS==1)]).*mdf.rahit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.AS ... %AS
     +mdf.rahit.*mdf.mehit.*mdf.tseal.*tmp.cps.J ...           %J
     +mdf.mehit.*(1+mdf.mehit.*mdf.tseal)./player.wswing;      %AA
 %output
-souldrinker.pps=souldrinker.ptps.*souldrinker.pc;
-souldrinker.dps{1}=0.013.*souldrinker.pps.*souldrinker.dpp;
-souldrinker.hps{1}=souldrinker.dps{1}.*souldrinker.hpp;
-souldrinker.dps{2}=0.015.*souldrinker.pps.*souldrinker.dpp;
-souldrinker.hps{2}=souldrinker.dps{2}.*souldrinker.hpp;
-souldrinker.dps{3}=0.017.*souldrinker.pps.*souldrinker.dpp;
-souldrinker.hps{3}=souldrinker.dps{3}.*souldrinker.hpp;
+souldrinkerproc.pps=souldrinkerproc.ptps.*souldrinkerproc.pc;
+souldrinkerproc.dps{1}=0.013.*souldrinkerproc.pps.*souldrinkerproc.dpp;
+souldrinkerproc.hps{1}=souldrinkerproc.dps{1}.*souldrinkerproc.hpp;
+souldrinkerproc.tps{1}=(souldrinkerproc.dps{1}+souldrinkerproc.hps{1}.*mdf.hthreat./exec.npccount).*mdf.RFury;
+souldrinkerproc.dps{2}=0.015.*souldrinkerproc.pps.*souldrinkerproc.dpp;
+souldrinkerproc.hps{2}=souldrinkerproc.dps{2}.*souldrinkerproc.hpp;
+souldrinkerproc.tps{2}=(souldrinkerproc.dps{2}+souldrinkerproc.hps{2}.*mdf.hthreat./exec.npccount).*mdf.RFury;
+souldrinkerproc.dps{3}=0.017.*souldrinkerproc.pps.*souldrinkerproc.dpp;
+souldrinkerproc.hps{3}=souldrinkerproc.dps{3}.*souldrinkerproc.hpp;
+souldrinkerproc.tps{3}=(souldrinkerproc.dps{3}+souldrinkerproc.hps{3}.*mdf.hthreat./exec.npccount).*mdf.RFury;
 
 
 %% No'Kaled
 %formulation
-nokaled.pc=0.065;
-nokaled.dpp=mdf.spdmg.*mdf.spcrit.*target.resrdx;
+nokaledproc.pc=0.065;
+nokaledproc.dpp=mdf.spdmg.*mdf.spcrit.*target.resrdx;
 %trigger rates
-stat_model;ability_model;rotation_model;
-nokaled.ptps=mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.SotR ... %SotR
+stat_model;ability_model;
+nokaledproc.ptps=mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.SotR ... %SotR
     +mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.CS ...      %CS
     +mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.HotR ...    %HotR
     +min([exec.npccount;1+2.*(mdf.glyphAS==1)]).*mdf.rahit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.AS ... %AS
     +mdf.rahit.*mdf.mehit.*mdf.tseal.*tmp.cps.J ...           %J
     +mdf.mehit.*(1+mdf.mehit.*mdf.tseal)./player.wswing;      %AA
 %output
-nokaled.pps=nokaled.ptps.*souldrinker.pc;
-nokaled.dps{1}=8476.*nokaled.pps.*nokaled.dpp;
-nokaled.dps{2}=9567.5.*nokaled.pps.*nokaled.dpp;
-nokaled.dps{3}=10800.*nokaled.pps.*nokaled.dpp;
+nokaledproc.pps=nokaledproc.ptps.*souldrinkerproc.pc;
+nokaledproc.dps{1}=8476.*nokaledproc.pps.*nokaledproc.dpp;
+nokaledproc.tps{1}=nokaledproc.dps{1}.*mdf.RFury;
+nokaledproc.dps{2}=9567.5.*nokaledproc.pps.*nokaledproc.dpp;
+nokaledproc.tps{2}=nokaledproc.dps{2}.*mdf.RFury;
+nokaledproc.dps{3}=10800.*nokaledproc.pps.*nokaledproc.dpp;
+nokaledproc.tps{3}=nokaledproc.dps{3}.*mdf.RFury;
 
 clear pseq
