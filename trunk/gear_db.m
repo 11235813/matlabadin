@@ -130,7 +130,8 @@ idb.iid=struct('name','Empty Slot', ...
                'sbval',0, ...
                'istierP',[0 0 0],...
                'istierR',[0 0 0],...
-               'isreforged',0);
+               'isreforged',0, ...
+               'procid',0);
            
 idb.sid=struct('name','Empty Slot', ...
                'atype',0, ...
@@ -162,7 +163,8 @@ idb.sid=struct('name','Empty Slot', ...
                'sbval',0, ...
                'istierP',[0 0 0],...
                'istierR',[0 0 0],...
-               'isreforged',0);
+               'isreforged',0, ...
+               'procid',0);
         
 %% Items
 
@@ -2381,6 +2383,7 @@ idb.iid(77188).avgdmg=1811;
 idb.iid(77188).sta=331;
 idb.iid(77188).agi=220;
 idb.iid(77188).isreforged=0;
+idb.iid(77188).procid=77188;
 
 idb.iid(78371).name='Hand of Morchok (Heroic)';
 idb.iid(78371).wtype='axe';
@@ -2406,6 +2409,7 @@ idb.iid(78472).avgdmg=2044.5;
 idb.iid(78472).sta=373;
 idb.iid(78472).agi=249;
 idb.iid(78472).isreforged=0;
+idb.iid(78472).procid=78472;
 
 %% Weapons - Maces
 
@@ -3312,6 +3316,7 @@ idb.iid(78488).avgdmg=1604.5;
 idb.iid(78488).str=195;
 idb.iid(78488).sta=293;
 idb.iid(78488).isreforged=0;
+idb.iid(78488).procid=78488;
 
 idb.iid(70200).name='Ruthless Gladiator''s Slicer';
 idb.iid(70200).wtype='swo';
@@ -3383,6 +3388,7 @@ idb.iid(77193).avgdmg=1811;
 idb.iid(77193).str=220;
 idb.iid(77193).sta=331;
 idb.iid(77193).isreforged=0;
+idb.iid(77193).procid=77193;
 
 idb.iid(78479).name='Souldrinker (Heroic)';
 idb.iid(78479).wtype='swo';
@@ -3393,6 +3399,7 @@ idb.iid(78479).avgdmg=2044.5;
 idb.iid(78479).str=249;
 idb.iid(78479).sta=373;
 idb.iid(78479).isreforged=0;
+idb.iid(78479).procid=78479;
 
 
 %% Shields
@@ -3723,16 +3730,24 @@ idb.sid(55057).hit=40;
 
 %Cata enchants
 idb.sid(74195).name='Enchant Weapon - Mending';
+idb.sid(74195).procid=74195;
 
 idb.sid(74211).name='Enchant Weapon - Elemental Slayer';
 
 idb.sid(74223).name='Enchant Weapon - Hurricane';
+idb.sid(74223).procid=74223;
 
 idb.sid(74242).name='Enchant Weapon - Power Torrent';
+idb.sid(74242).procid=74242;
 
 idb.sid(74244).name='Enchant Weapon - Windwalk';
+idb.sid(74244).procid=74244;
 
 idb.sid(74246).name='Enchant Weapon - Landslide';
+idb.sid(74246).procid=74246;
+
+idb.sid(74197).name='Enchant Weapon - Avalanche';
+idb.sid(74197).procid=74197;
 
 %% Shield
 idb.sid(34009).name='Enchant Shield - Major Stamina';

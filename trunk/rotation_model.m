@@ -39,14 +39,14 @@ rot=struct('tag','', ...
 
 
 %% Crank
-for i=1:length(queue.rot);
+for r=1:length(queue.rot);
     
     %tag
-    rot(i).tag=queue.rot{i};
+    rot(r).tag=queue.rot{r};
         
     %generate FSM results
     if length(mdf.mehit)==1 && length(mdf.rahit)==1
-        [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
+        [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{r}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
         %convert actionPr to CPS array
         inq = inqUptime;
         [cps]=action2cps(actionPr,metadata);
@@ -59,17 +59,17 @@ for i=1:length(queue.rot);
     elseif length(mdf.mehit)>1 && length(mdf.rahit)>1
         %use parallelization
         if useParallel
-            fsm_gen(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
+            fsm_gen(queue.rot{r}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
             for j=1:length(mdf.mehit)
-                [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
+                [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{r}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
                 inq(:,j) = inqUptime;
                 [cps(:,j)]=action2cps(actionPr,metadata,val.fsmlabel);
             end
         else
             wb=waitbar(0,'Generating/Loading FSM data');
             for j=1:length(mdf.mehit)
-                waitbar(j/val.length,wb,['FSM gen/load for ' queue.rot{i}])
-                [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
+                waitbar(j/val.length,wb,['FSM gen/load for ' queue.rot{r}])
+                [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{r}, mdf.mehit(j), mdf.rahit(j), glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
                 inq(:,j) = inqUptime;
                 [cps(:,j)]=action2cps(actionPr,metadata,val.fsmlabel);
             end
@@ -80,17 +80,17 @@ for i=1:length(queue.rot);
     elseif length(mdf.mehit)>1 && length(mdf.rahit)==1
         %use parallelization
         if useParallel
-            fsm_gen(queue.rot{i}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
+            fsm_gen(queue.rot{r}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
             for j=1:length(mdf.mehit)
-                [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
+                [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.rot{r}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
                 inq(:,j) = inqUptime;
                 [cps(:,j)]=action2cps(actionPr, metadata,val.fsmlabel);
             end
         else
             wb=waitbar(0,'Generating/Loading FSM data');
             for j=1:length(mdf.mehit)
-                waitbar(j/val.length,wb,['FSM gen/load for ' queue.rot{i}])
-                [actionPr, metadata] = memoized_fsm(queue.rot{i}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
+                waitbar(j/val.length,wb,['FSM gen/load for ' queue.rot{r}])
+                [actionPr, metadata] = memoized_fsm(queue.rot{r}, mdf.mehit(j), mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
                 inq(:,j) = inqUptime;
                 [cps(:,j)]=action2cps(actionPr, metadata,val.fsmlabel);
             end
@@ -101,8 +101,8 @@ for i=1:length(queue.rot);
     end  
     
     %store cps and inq
-    rot(i).cps=cps;
-    rot(i).inqup=inq;
+    rot(r).cps=cps;
+    rot(r).inqup=inq;
     
     %correct for cases where cps is Nx1 but val.* is NxM
     if size(cps,2)==1 && size(val.fsmdmg,2)>1
@@ -111,42 +111,42 @@ for i=1:length(queue.rot);
     end
     
     %active sources
-    rot(i).acdps=sum(cps.*val.fsmdmg);
-    rot(i).achps=sum(cps.*val.fsmheal);
-    rot(i).actps=sum(cps.*val.fsmthr);
+    rot(r).acdps=sum(cps.*val.fsmdmg);
+    rot(r).achps=sum(cps.*val.fsmheal);
+    rot(r).actps=sum(cps.*val.fsmthr);
     
     
     %passive sources (melee, seals, Censure)
     inqmod=1+0.3.*inq;
-    rot(i).inqmod=inqmod;
+    rot(r).inqmod=inqmod;
 
     %melee and seals
-    rot(i).melee=dps.Melee;
-    rot(i).sealdps=dmg.activeseal.*mdf.mehit.*inqmod./player.wswing;
-    rot(i).sealhps=heal.activeseal.*mdf.mehit./player.wswing;
+    rot(r).melee=dps.Melee;
+    rot(r).sealdps=dmg.activeseal.*mdf.mehit.*inqmod./player.wswing;
+    rot(r).sealhps=heal.activeseal.*mdf.mehit./player.wswing;
     
-        %Censure if applicable
+    %Censure if applicable
     if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
-        rot(i).censdps=dps.Censure.*inqmod;
-        rot(i).censtps=tps.Censure.*inqmod;
+        rot(r).censdps=dps.Censure.*inqmod;
+        rot(r).censtps=tps.Censure.*inqmod;
     else
-        rot(i).censdps=0;
-        rot(i).censtps=0;
+        rot(r).censdps=0;
+        rot(r).censtps=0;
     end
-    
+        
     %sum passive sources
-    rot(i).padps=rot(i).melee+rot(i).sealdps+rot(i).censdps;
-    rot(i).pahps=rot(i).sealhps;
-    rot(i).patps=tps.Melee+mdf.RFury.*(rot(i).sealdps+rot(i).censdps+...
-                                       mdf.hthreat.*rot(i).sealhps);
+    rot(r).padps=rot(r).melee+rot(r).sealdps+rot(r).censdps;
+    rot(r).pahps=rot(r).sealhps;
+    rot(r).patps=tps.Melee+mdf.RFury.*(rot(r).sealdps+rot(r).censdps+...
+                                       mdf.hthreat.*rot(r).sealhps);
                                 
     %sum active and passive
-    rot(i).totdps=rot(i).padps+rot(i).acdps;
-    rot(i).tothps=rot(i).pahps+rot(i).achps;
-    rot(i).tottps=rot(i).patps+rot(i).actps;
+    rot(r).totdps=rot(r).padps+rot(r).acdps;
+    rot(r).tothps=rot(r).pahps+rot(r).achps;
+    rot(r).tottps=rot(r).patps+rot(r).actps;
     
     
 
 end
 
-clear i
+clear r

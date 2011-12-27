@@ -192,7 +192,7 @@ mend.tps=mend.hps.*mdf.hthreat.*mdf.RFury./exec.npccount;
 
 %% Souldrinker
 %formulation
-souldrinkerprocproc.pc=0.15;
+souldrinkerproc.pc=0.15;
 souldrinkerproc.dpp=player.hitpoints.*mdf.spdmg.*target.resrdx;
 souldrinkerproc.hpp=2.*souldrinkerproc.dpp.*mdf.Divin;
 %trigger rates
@@ -229,7 +229,7 @@ nokaledproc.ptps=mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.SotR ... %SotR
     +mdf.rahit.*mdf.mehit.*mdf.tseal.*tmp.cps.J ...           %J
     +mdf.mehit.*(1+mdf.mehit.*mdf.tseal)./player.wswing;      %AA
 %output
-nokaledproc.pps=nokaledproc.ptps.*souldrinkerproc.pc;
+nokaledproc.pps=nokaledproc.ptps.*nokaledproc.pc;
 nokaledproc.dps{1}=8476.*nokaledproc.pps.*nokaledproc.dpp;
 nokaledproc.tps{1}=nokaledproc.dps{1}.*mdf.RFury;
 nokaledproc.dps{2}=9567.5.*nokaledproc.pps.*nokaledproc.dpp;
