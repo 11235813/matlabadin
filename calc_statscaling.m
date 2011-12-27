@@ -102,17 +102,21 @@ for c=1:length(cfg)
         eval(char(['extra.itm.' stat{m} '=dstat(m);']))
 
         stat_model;ability_model;rotation_model;
+        tmprot.dps=rot(cfg(c).rot).totdps;
+        tmprot.hps=rot(cfg(c).rot).tothps;
+        dynamic_model;
+        sdps(m,:,c)=tmprot.dps+proc.dps;
+        shps(m,:,c)=tmprot.hps+proc.hps;
         
-        sdps(m,:,c)=rot(cfg(c).rot).totdps;
-        shps(m,:,c)=rot(cfg(c).rot).tothps;
-
         %set each stat back to 0 extra
         eval(char(['extra.itm.' stat{m} '=0;']))
 
         stat_model;ability_model;rotation_model;
-        
-        sdps0(m,:,c)=rot(cfg(c).rot).totdps;
-        shps0(m,:,c)=rot(cfg(c).rot).tothps;
+        tmprot.dps=rot(cfg(c).rot).totdps;
+        tmprot.hps=rot(cfg(c).rot).tothps;
+        dynamic_model;
+        sdps0(m,:,c)=tmprot.dps+proc.dps;
+        shps0(m,:,c)=tmprot.hps+proc.hps;
 
     end
     close(csswb)
@@ -183,16 +187,21 @@ for c=1:length(cfg)
 
         stat_model;ability_model;rotation_model;
         
-        hdps(m,:,c)=rot(cfg(c).rot).totdps;
-        hhps(m,:,c)=rot(cfg(c).rot).tothps;
+        tmprot.dps=rot(cfg(c).rot).totdps;
+        tmprot.hps=rot(cfg(c).rot).tothps;
+        dynamic_model;
+        hdps(m,:,c)=tmprot.dps+proc.dps;
+        hhps(m,:,c)=tmprot.hps+proc.hps;
 
         %set each stat back to 0 extra
         eval(char(['extra.itm.' stat{m} '=0;']))
 
         stat_model;ability_model;rotation_model;
-
-        hdps0(m,:,c)=rot(cfg(c).rot).totdps;
-        hhps0(m,:,c)=rot(cfg(c).rot).tothps;
+        tmprot.dps=rot(cfg(c).rot).totdps;
+        tmprot.hps=rot(cfg(c).rot).tothps;
+        dynamic_model;
+        hdps0(m,:,c)=tmprot.dps+proc.dps;
+        hhps0(m,:,c)=tmprot.hps+proc.hps;
         
         toc
         
@@ -261,17 +270,21 @@ for c=1:length(cfg)
         eval(char(['extra.itm.' stat{m} '=dstat(m);']))
 
         stat_model;ability_model;rotation_model;
-        
-        edps(m,:,c)=rot(cfg(c).rot).totdps;
-        ehps(m,:,c)=rot(cfg(c).rot).tothps;
-        
+        tmprot.dps=rot(cfg(c).rot).totdps;
+        tmprot.hps=rot(cfg(c).rot).tothps;
+        dynamic_model;
+        edps(m,:,c)=tmprot.dps+proc.dps;
+        ehps(m,:,c)=tmprot.hps+proc.hps;
+                
         %set each stat back to 0 extra
         eval(char(['extra.itm.' stat{m} '=0;']))
 
         stat_model;ability_model;rotation_model;
-        
-        edps0(m,:,c)=rot(cfg(c).rot).totdps;
-        ehps0(m,:,c)=rot(cfg(c).rot).tothps;
+        tmprot.dps=rot(cfg(c).rot).totdps;
+        tmprot.hps=rot(cfg(c).rot).tothps;
+        dynamic_model;
+        edps0(m,:,c)=tmprot.dps+proc.dps;
+        ehps0(m,:,c)=tmprot.hps+proc.hps;
 
     end
     close(csswb)

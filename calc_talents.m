@@ -183,6 +183,9 @@ for c=1:length(cfg)
         stat_model;
         ability_model;
         rotation_model;
+        tmprot.dps=rot(cfg(c).rot).totdps;
+        tmprot.hps=rot(cfg(c).rot).tothps;
+        dynamic_model
         
         %store items in cfg for plots
         cfg(c).hit=player.phhit;
@@ -190,11 +193,11 @@ for c=1:length(cfg)
         cfg(c).plabel=[cfg(c).rlabel ', ' cfg(c).seal ', ' int2str(cfg(c).hit) '% hit, ' int2str(cfg(c).exp) 'exp'];
         
         %store DPS
-        totdps(m,c)=rot(cfg(c).rot).totdps;
+        totdps(m,c)=tmprot.dps+proc.dps;
         totdps0(m,c)=totdps(1,c);
         
         %store HPS
-        tothps(m,c)=rot(cfg(c).rot).tothps;
+        tothps(m,c)=tmprot.hps+proc.hps;
         tothps0(m,c)=tothps(1,c);
         
         waitbar(m/length(tree),wb)

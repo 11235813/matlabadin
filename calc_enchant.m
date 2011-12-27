@@ -11,7 +11,7 @@ base=player_model('race','Belf','prof','');
 npc=npc_model(base);
 %invoke all buffs except food
 buff=buff_model('mode',0,'food',0);
-egs=ddb.gearset{7};  %6=T13R, 7=T13N, 8=T13H
+egs=ddb.gearset{5};  %6=T13R, 7=T13N, 8=T13H
 %clear main hand enchant slot
 egs(35)=equip(1,'s');
 gear_stats;
@@ -59,6 +59,10 @@ enchant=[55057; %Pyrium Weapon Chain
          27972; %Potency
          38995; %Exceptional Agility
          41976; %Titanium Weapon Chain
+         74244; %Windwalk
+         74246; %Landslide
+         74197; %Avalanche
+         74223; %Hurricane
          ];
 
 food=[87584; %90 str
@@ -96,8 +100,9 @@ for c=1:3
     stat_model
     ability_model
     rotation_model;
-    dps0(c)=rot(cfg(c).rot).totdps;
-    avo0(c)=player.avoid;
+    dynamic_model;
+    dps0(c)=rot(cfg(c).rot).totdps+proc.dps;
+    avo0(c)=player.avoid+proc.dodge;
 
     %enchants
     
@@ -118,13 +123,13 @@ for c=1:3
         stat_model
         ability_model
         rotation_model;
-        seq=rot;
+        tmprot.dps=rot(cfg(c).rot).totdps;
+        tmprot.avoid=player.avoid;
+        dynamic_model;
         
-        %store DPS
-        dpse(m,c)=rot(cfg(c).rot).totdps-dps0(c);
-        
-        %store avoidance
-        avoe(m,c)=player.avoid-avo0(c);
+        %store DPS &avoidance
+        dpse(m,c)=tmprot.dps+proc.dps-dps0(c);
+        avoe(m,c)=tmprot.avoid+proc.dodge-avo0(c);
     end
 
     %foods
@@ -143,35 +148,48 @@ for c=1:3
         stat_model
         ability_model
         rotation_model;
-        seq=rot;
+        tmprot.dps=rot(cfg(c).rot).totdps;
+        tmprot.avoid=player.avoid;
+        dynamic_model;
 
         %store DPS
-        dpsf(m,c)=rot(cfg(c).rot).totdps-dps0(c);
-        avof(m,c)=player.avoid-avo0(c);
+        dpsf(m,c)=tmprot.dps+proc.dps-dps0(c);
+        avof(m,c)=tmprot.avoid+proc.dodge-avo0(c);
     end
 
 %% Dynamic enchants
-    enchant_model
-      
-    %Landslide
-    dpse(length(enchant)+1,c)=ls.dps;
-    avoe(length(enchant)+1,c)=0;
-    pinfo.ename{length(enchant)+1}='Landslide';
+%     enchant_model
+%       
+%     %Landslide
+%     dpse(length(enchant)+1,c)=ls.dps;
+%     avoe(length(enchant)+1,c)=0;
+%     pinfo.ename{length(enchant)+1}='Landslide';
+%     
+%     %Avalanche
+%     dpse(length(enchant)+2,c)=av.dps;
+%     avoe(length(enchant)+2,c)=0;
+%     pinfo.ename{length(enchant)+2}='Avalanche';
+%     
+%     %Hurricane
+%     dpse(length(enchant)+3,c)=hu.dps;
+%     avoe(length(enchant)+3,c)=0;
+%     pinfo.ename{length(enchant)+3}='Hurricane';
+%     
+%     %Windwalk
+%     dpse(length(enchant)+4,c)=0;
+%     avoe(length(enchant)+4,c)=ww.dodge;
+%     pinfo.ename{length(enchant)+4}='Windwalk';
     
-    %Avalanche
-    dpse(length(enchant)+2,c)=av.dps;
-    avoe(length(enchant)+2,c)=0;
-    pinfo.ename{length(enchant)+2}='Avalanche';
+%     %Souldrinker
+%     dpse(length(enchant)+5,c)=souldrinkerproc.dps{2};
+%     avoe(length(enchant)+5,c)=0;
+%     pinfo.ename{length(enchant)+5}='Souldrinker';
+%     
+%     %No'Kaled
+%     dpse(length(enchant)+6,c)=nokaledproc.dps{2};
+%     avoe(length(enchant)+6,c)=0;
+%     pinfo.ename{length(enchant)+6}='No''Kaled';
     
-    %Hurricane
-    dpse(length(enchant)+3,c)=hu.dps;
-    avoe(length(enchant)+3,c)=0;
-    pinfo.ename{length(enchant)+3}='Hurricane';
-    
-    %Windwalk
-    dpse(length(enchant)+4,c)=0;
-    avoe(length(enchant)+4,c)=ww.dodge;
-    pinfo.ename{length(enchant)+4}='Windwalk';
     
     close(wb)
     toc

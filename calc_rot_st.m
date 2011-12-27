@@ -112,7 +112,7 @@ for c=1:length(cfg)
     patps=zeros(size(padps));pahps=zeros(size(padps));
     acdps=zeros(size(padps));acthr=zeros(size(padps));achps=zeros(size(padps));
     totdps=zeros(size(padps));tottps=zeros(size(padps));tothps=zeros(size(padps));
-    
+    prdps=padps;prhps=padps;prtps=padps;
     
     %once at 100% vengeance, once at 30%
     tmp.veng=[1 0.3];
@@ -142,10 +142,22 @@ for c=1:length(cfg)
             patps(:,m,c)=patps(:,m,c)+tps.Censure.*inqmod;
         end
         
+        %Proc effects
+        clear rot
+        rot.single=1;
+        for kk=1:length(queue.st)
+            rot.cps=cmat(kk,:,c);
+            dynamic_model
+            prdps(kk,m,c)=proc.dps;
+            prhps(kk,m,c)=proc.hps;
+            prtps(kk,m,c)=proc.tps;
+        end
+        
+        
         %sum active and passive
-        totdps(:,m,c)=acdps(:,m,c)+padps(:,m,c);
-        tottps(:,m,c)=acthr(:,m,c)+patps(:,m,c);
-        tothps(:,m,c)=achps(:,m,c)+pahps(:,m,c);
+        totdps(:,m,c)=acdps(:,m,c)+padps(:,m,c)+prdps(:,m,c);
+        tottps(:,m,c)=acthr(:,m,c)+patps(:,m,c)+prtps(:,m,c);
+        tothps(:,m,c)=achps(:,m,c)+pahps(:,m,c)+prhps(:,m,c);
     end
 
 %% construct output arrays

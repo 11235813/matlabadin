@@ -65,11 +65,18 @@ weaplist2=[56433; %Blade of the Burning Sun (Heroic)
            71776; %Eye of Purification
            71006; %Volcanospike
            71785; %Firethorn Mindslicer
+           72812; %Crescent Moon
+           72833; %Scepter of Azshara
            71355; %Ko''gun, Hammer of the Firelord
+           78485; %Maw of the Dragonlord (Raid Finder) 390
            71777; %Eye of Purification (Heroic)
            71422; %Volcanospike (Heroic)
            71784; %Firethorn Mindslicer (Heroic)
+           77214; %Vagaries of Time 397
            71615; %Ko''gun, Hammer of the Firelord (Heroic)
+           77196; %Maw of hte Dragonlord 403
+           78363; %Vagaries of Time (H) 410
+           78476; %Maw of the Dragonlord (H) 416
           ];
       
           
@@ -100,9 +107,14 @@ weaplist3=[65166; %Buzz Saw (Heroic)
            70201; %Ruthless Glad Bonecracker 391
            71454; %Gatecrasher (Heroic)
            73448; %Cataclysmic Gladiator's Bonecracker 397
-           77212; %Hand of Morchok
+           77223; %Morningstar of Heroic Will 397
+           77212; %Hand of Morchok 397
+           78878; %Spine of the Thousand Cuts
+           77188; %No'Kaled 403
            73415; %Cataclysmic Gladiator's Bonecracker 410
-           78371; %Hand of Morchok (Heroic)
+           78371; %Hand of Morchok (Heroic) 410
+           78429; %Morningstar of Heroic Will 410
+           78472; %No'Kaled 416
           ];
 weaplist=[weaplist1;weaplist2;weaplist3];
           
@@ -153,6 +165,7 @@ cfg(c).label='939/SoT build, hit/exp cap';
 wb=waitbar(0,['Calculating Weapons']);
 tic
 for m=1:M
+    clear procdps prochps
     %equip the appropriate weapon
     egs(15)=equip(weaplist(m));
     %handle socketing
@@ -183,12 +196,13 @@ for m=1:M
         stat_model;
         ability_model;
         rotation_model;
-
-%         wdps(m,c)=rot.totdps;
-%         whps(m,c)=rot.tothps;
-        wdps(m,c)=rot(cfg(c).rot).totdps;
-        whps(m,c)=rot(cfg(c).rot).tothps;
-%         wdps2(m,c)=rot(cfg(c).rot+3).totdps; %for 9H9 / hammer check
+        tmprot.dps=rot(cfg(c).rot).totdps;
+        tmprot.hps=rot(cfg(c).rot).tothps;
+        dynamic_model
+        
+        wdps(m,c)=tmprot.dps+proc.dps;
+        whps(m,c)=tmprot.hps+proc.hps;
+        
     end
 
         waitbar(m/M,wb)

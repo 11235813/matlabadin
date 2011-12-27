@@ -160,18 +160,26 @@ for c=1:length(cfg);
         stat_model;
         ability_model;
         rotation_model;
-               
+        
+        for mm=1:size(rot,2)
+            rot(1).override=mm;
+            
+            dynamic_model
+            
+            %store DPS & HPS
+            totdps(m,mm,c)=rot(mm).totdps+proc.dps;
+            totdps0(m,mm,c)=totdps(1,mm,c);
+            
+            tothps(m,mm,c)=rot(mm).tothps+proc.hps;
+            tothps0(m,mm,c)=tothps(1,mm,c);
+        end
+        rot=rmfield(rot,'override');
+        
         %store items in cfg for plots
         cfg(c).hit=player.phhit;
         cfg(c).exp=player.exp-mdf.glyphSoT;
         cfg(c).plabel=[cfg(c).rlabel ', ' cfg(c).seal ', ' int2str(cfg(c).hit) '% hit, ' int2str(cfg(c).exp) ' exp'];
         
-        %store DPS
-        totdps(m,:,c)=[rot.totdps];
-        totdps0(m,:,c)=totdps(1,:,c);
-        
-        tothps(m,:,c)=[rot.tothps];
-        tothps0(m,:,c)=tothps(1,:,c);
         
         waitbar(m/length(gtree),wb)
     end
