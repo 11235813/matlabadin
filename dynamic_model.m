@@ -268,12 +268,11 @@ switch tmp.weap
         souldrinker.hpp=2.*souldrinker.dpp.*mdf.Divin;
         %trigger rates
 %         stat_model;ability_model;
-        souldrinker.ptps=mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.SotR ... %SotR
-            +mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.CS ...      %CS
-            +mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.HotR ...    %HotR
-            +min([exec.npccount;1+2.*(mdf.glyphAS==1)]).*mdf.rahit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.AS ... %AS
-            +mdf.rahit.*mdf.mehit.*mdf.tseal.*tmp.cps.J ...           %J
-            +mdf.mehit.*(1+mdf.mehit.*mdf.tseal)./player.wswing;      %AA
+        souldrinker.ptps=mdf.mehit.*tmp.cps.SotR ... %SotR
+            +mdf.mehit.*tmp.cps.CS ...      %CS
+            +mdf.mehit.*tmp.cps.HotR ...    %HotR
+            +min([exec.npccount;1+2.*(mdf.glyphAS==1)]).*mdf.rahit.*tmp.cps.AS ... %AS
+            +mdf.mehit./player.wswing;      %AA
         %output
         souldrinker.pps=souldrinker.ptps.*souldrinker.pc;
         souldrinker.dps=souldrinker.pps.*souldrinker.dpp;
@@ -299,12 +298,11 @@ switch tmp.weap
         nokaled.dpp=nokaled.basedmg.*mdf.spdmg.*mdf.spcrit.*target.resrdx;
         %trigger rates
 %         stat_model;ability_model;
-        nokaled.ptps=mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.SotR ... %SotR
-            +mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.CS ...      %CS
-            +mdf.mehit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.HotR ...    %HotR
-            +min([exec.npccount;1+2.*(mdf.glyphAS==1)]).*mdf.rahit.*(1+mdf.mehit.*mdf.tseal).*tmp.cps.AS ... %AS
-            +mdf.rahit.*mdf.mehit.*mdf.tseal.*tmp.cps.J ...           %J
-            +mdf.mehit.*(1+mdf.mehit.*mdf.tseal)./player.wswing;      %AA
+        nokaled.ptps=mdf.mehit.*tmp.cps.SotR ... %SotR
+            +mdf.mehit.*tmp.cps.CS ...      %CS
+            +mdf.mehit.*tmp.cps.HotR ...    %HotR
+            +min([exec.npccount;1+2.*(mdf.glyphAS==1)]).*mdf.rahit.*tmp.cps.AS ... %AS
+            +mdf.mehit./player.wswing;      %AA
         %output
         nokaled.pps=nokaled.ptps.*nokaled.pc;
         nokaled.dps=nokaled.pps.*nokaled.dpp;

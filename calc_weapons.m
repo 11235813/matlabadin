@@ -15,10 +15,6 @@ glyph=ddb.glyphset{1}; %placeholder, redefined in cfg
 talents;
 buff=buff_model;
 stat_model;
-%FIXME
-%nothing
-%72812 72833 78485 77214 77196 78363 78476
-%72828 77188 78472 77223 78429 78878
 
 
 %% List of weapons
