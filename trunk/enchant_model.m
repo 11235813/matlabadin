@@ -205,13 +205,13 @@ souldrinkerproc.ptps=mdf.mehit.*tmp.cps.SotR ... %SotR
 %output
 souldrinkerproc.pps=souldrinkerproc.ptps.*souldrinkerproc.pc;
 souldrinkerproc.dps{1}=0.013.*souldrinkerproc.pps.*souldrinkerproc.dpp;
-souldrinkerproc.hps{1}=souldrinkerproc.dps{1}.*souldrinkerproc.hpp;
+souldrinkerproc.hps{1}=souldrinkerproc.pps{1}.*souldrinkerproc.hpp;
 souldrinkerproc.tps{1}=(souldrinkerproc.dps{1}+souldrinkerproc.hps{1}.*mdf.hthreat./exec.npccount).*mdf.RFury;
 souldrinkerproc.dps{2}=0.015.*souldrinkerproc.pps.*souldrinkerproc.dpp;
-souldrinkerproc.hps{2}=souldrinkerproc.dps{2}.*souldrinkerproc.hpp;
+souldrinkerproc.hps{2}=souldrinkerproc.ps{2}.*souldrinkerproc.hpp;
 souldrinkerproc.tps{2}=(souldrinkerproc.dps{2}+souldrinkerproc.hps{2}.*mdf.hthreat./exec.npccount).*mdf.RFury;
 souldrinkerproc.dps{3}=0.017.*souldrinkerproc.pps.*souldrinkerproc.dpp;
-souldrinkerproc.hps{3}=souldrinkerproc.dps{3}.*souldrinkerproc.hpp;
+souldrinkerproc.hps{3}=souldrinkerproc.pps{3}.*souldrinkerproc.hpp;
 souldrinkerproc.tps{3}=(souldrinkerproc.dps{3}+souldrinkerproc.hps{3}.*mdf.hthreat./exec.npccount).*mdf.RFury;
 
 

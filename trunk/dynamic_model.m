@@ -276,7 +276,7 @@ switch tmp.weap
         %output
         souldrinker.pps=souldrinker.ptps.*souldrinker.pc;
         souldrinker.dps=souldrinker.pps.*souldrinker.dpp;
-        souldrinker.hps=souldrinker.dps.*souldrinker.hpp;
+        souldrinker.hps=souldrinker.pps.*souldrinker.hpp;
         souldrinker.tps=(souldrinker.dps+souldrinker.hps.*mdf.hthreat./exec.npccount).*mdf.RFury;
 
         proc.dps=proc.dps+souldrinker.dps;
