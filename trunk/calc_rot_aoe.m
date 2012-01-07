@@ -132,13 +132,13 @@ for c=1:length(cfg)
         for kk=1:size(queue.aoe,1)
             rot.cps=cmat(kk,:,c);
             dynamic_model
-            prdps(kk,m,c)=proc.dps;
-            prhps(kk,m,c)=proc.hps;
-            prtps(kk,m,c)=proc.tps;
+            prdps(kk,c)=proc.dps;
+            prhps(kk,c)=proc.hps;
+            prtps(kk,c)=proc.tps;
         end
     
     %sum active and passive
-    dmgarray.target(:,c)=acdps(:,c)+padps(:,c)+prdps(:,m,c);
+    dmgarray.target(:,c)=acdps(:,c)+padps(:,c)+prdps(:,c);
     
     
     %damage for secondary targets
