@@ -55,6 +55,9 @@ queue.st={...
     'SDSotR>ISotR>Inq>CS>AS>J>Cons>HW';
     'SDSotR>ISotR>Inq>CS>J>AS>Cons>HW';
     'SDSotR>ISotR>Inq>CS>AS+>J>AS>Cons>HW';
+%     'SDSotR>ISotR>Inq>AS+[buffInq<1.5]>CS>AS+>J>AS>Cons>HW';
+%     'SDSotR>ISotR>Inq>AS+[buffGC<1.5]>CS>AS+>J>AS>Cons>HW';
+%     'SDSotR>ISotR>Inq>AS+[buffInq<1.5][buffGC<1.5]>CS>AS+>J>AS>Cons>HW';
 %     'SDSotR>ISotR>Inq>AS[buffGC<2][buffGC>0]>CS>AS>J>Cons>HW';
 %     'SDSotR>ISotR>Inq>CS>AS>J>ICons>HW';
     'ISDSotR>Inq>CS>AS>J>Cons>HW';
