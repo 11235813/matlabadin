@@ -18,15 +18,15 @@ stat_model;
 
 
 %% List of weapons
-weaplist1=[62457; %Ravening Slicer
-           65173; %Thief''s Blade (Heroic)
-           56346; %Elementium Fang (Heroic)
-           67602; %Elementium Gutslicer
-           56459; %Mace of Transformed Bone (Heroic)
-           56364; %Axe of the Eclipse (Heroic)
-           68740; %Darkheart Hacker
-           56430; %Sun Strike (Heroic)
-           65171; %Cookie''s Tenderizer (Heroic)
+weaplist1=[%62457; %Ravening Slicer
+           %65173; %Thief''s Blade (Heroic)
+           %56346; %Elementium Fang (Heroic)
+           %67602; %Elementium Gutslicer
+           %56459; %Mace of Transformed Bone (Heroic)
+           %56364; %Axe of the Eclipse (Heroic)
+           %68740; %Darkheart Hacker
+           %56430; %Sun Strike (Heroic)
+           %65171; %Cookie''s Tenderizer (Heroic)
            69609; %Bloodlord's Protector
            69639; %Renataki's Soul Slicer
            63533; %Fang of Twilight
@@ -46,11 +46,11 @@ weaplist1=[62457; %Ravening Slicer
            78479; %Souldrinker (Heroic)
           ];
 
-weaplist2=[56433; %Blade of the Burning Sun (Heroic)
-           55065; %Elementium Hammer
-           56312; %Torturer''s Mercy (Heroic)
-           57872; %Scepter of Power (Heroic)
-           62459; %Shimmering Morningstar
+weaplist2=[%56433; %Blade of the Burning Sun (Heroic)
+           %55065; %Elementium Hammer
+           %56312; %Torturer''s Mercy (Heroic)
+           %57872; %Scepter of Power (Heroic)
+           %62459; %Shimmering Morningstar
            69581; %Amani Scepter of Rites
            59463; %Maldo''s Sword Cane
            59459; %Andoros, Fist of the Dragon King
@@ -76,14 +76,14 @@ weaplist2=[56433; %Blade of the Burning Sun (Heroic)
           ];
       
           
-weaplist3=[65166; %Buzz Saw (Heroic)
-           56266; %Lightning Whelk Axe (Heroic)
-           56396; %Hammer of Sparks (Heroic)
-           56384; %Resonant Kris (Heroic)
-           65164; %Cruel Barb (Heroic)
-           55067; %Elementium Bonesplitter
-           56353; %Heavy Geode Mace (Heroic)
-           65170; %Smite''s Reaver (Heroic)
+weaplist3=[%65166; %Buzz Saw (Heroic)
+           %56266; %Lightning Whelk Axe (Heroic)
+           %56396; %Hammer of Sparks (Heroic)
+           %56384; %Resonant Kris (Heroic)
+           %65164; %Cruel Barb (Heroic)
+           %55067; %Elementium Bonesplitter
+           %56353; %Heavy Geode Mace (Heroic)
+           %65170; %Smite''s Reaver (Heroic)
            69575; %Mace of the Sacrificed
            69803; %Gurubashi Punisher
            69618; %Zulian Slasher
@@ -237,7 +237,7 @@ pptable=[pptable(1:M1,:); repmat(' ',1,size(pptable,2)); ...
 m1=7;
 m2=5;
 m3=8;
-% m1=0;m2=0;m3=0;
+m1=0;m2=0;m3=0;
 
 %indices of desired weapons
 i1=(1+m1):M1;
