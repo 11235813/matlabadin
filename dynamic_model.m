@@ -294,7 +294,7 @@ switch tmp.weap
         end
         %% No'Kaled
         %formulation
-        nokaled.pc=0.065;
+        nokaled.pc=0.07;
         nokaled.dpp=nokaled.basedmg.*mdf.spdmg.*mdf.spcrit.*target.resrdx;
         %trigger rates
 %         stat_model;ability_model;

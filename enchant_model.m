@@ -217,7 +217,7 @@ souldrinkerproc.tps{3}=(souldrinkerproc.dps{3}+souldrinkerproc.hps{3}.*mdf.hthre
 
 %% No'Kaled
 %formulation
-nokaledproc.pc=0.065;
+nokaledproc.pc=0.07;
 nokaledproc.dpp=mdf.spdmg.*mdf.spcrit.*target.resrdx;
 %trigger rates
 stat_model;ability_model;
