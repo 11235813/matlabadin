@@ -67,6 +67,18 @@ cfg(k).parry=10;
 cfg(k).sta=37;
 
 k=k+1;
+cfg(k).name='Puissant->Solid, 30 Parry bonus';
+cfg(k).mast=20;
+cfg(k).parry=30;
+cfg(k).sta=30;
+
+k=k+1;
+cfg(k).name='Puissant->Solid, 30 Parry bonus, EG';
+cfg(k).mast=25;
+cfg(k).parry=30;
+cfg(k).sta=37;
+
+k=k+1;
 cfg(k).name='Defender->Solid, 30 Parry bonus';
 cfg(k).mast=0;
 cfg(k).parry=50;
@@ -74,7 +86,7 @@ cfg(k).sta=30;
 
 k=k+1;
 cfg(k).name='Defender->Solid, 30 Parry bonus, EG';
-cfg(k).mast=20;
+cfg(k).mast=0;
 cfg(k).parry=55;
 cfg(k).sta=37;
 
@@ -113,6 +125,7 @@ cfg(k).name='Puissant->Solid, 20 Parry bonus, EG';
 cfg(k).mast=25;
 cfg(k).parry=20;
 cfg(k).sta=37;
+
 
 
 %% Calculate parry/mastery CTC ratio
@@ -157,3 +170,5 @@ spacer=repmat(' ',length(cfg),5);
 %sorted
 [esorted ind]=sort(eratio,1,'descend');
 [char(cfg(ind).name) spacer num2str(esorted,'%2.3f')]
+
+1/avoid_to_mastery
