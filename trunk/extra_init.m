@@ -9,6 +9,8 @@ extra.ap=0;
 extra.sp=0;
 extra.haste=0;
 extra.mas=0;
+extra.parry=0;
+extra.dodge=0;
 
 clear temp
 temp=extra;
