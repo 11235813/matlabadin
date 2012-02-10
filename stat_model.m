@@ -191,6 +191,8 @@ extra.ap=extra.itm.ap.*ipconv.ap        + extra.val.ap;
 extra.sp=extra.itm.sp.*ipconv.sp        + extra.val.sp;
 extra.haste=extra.itm.haste.*ipconv.has     + extra.val.haste;
 extra.mas=extra.itm.mas.*ipconv.mas     + extra.val.mas;
+extra.dodge=extra.itm.dodge.*ipconv.dodge     + extra.val.dodge;
+extra.parry=extra.itm.parry.*ipconv.parry     + extra.val.parry;
 
 %% Primary stats
 player.str=floor(base.stats.str.*mdf.BoK)+floor((gear.str+mdf.SoE+extra.str+consum.str).*mdf.BoK);
@@ -377,8 +379,8 @@ player.mast=base.mast+((gear.mast+extra.mas+consum.mast)./cnv.mast_mast);
 
 %% Avoidance and Blocking
 %calculate DR for avoidance
-avoiddr=avoid_dr(gear.dodge+consum.dodge, ... %dodge
-    gear.parry+consum.parry+floor((player.str-base.stats.str).*0.27)); %parry
+avoiddr=avoid_dr(gear.dodge+consum.dodge+extra.dodge, ... %dodge
+    gear.parry+consum.parry+extra.parry+floor((player.str-base.stats.str).*0.27)); %parry
 
 player.miss=base.miss-0.04.*npc.skillgap;
 player.dodge=base.dodge+avoiddr.dodgedr-0.04.*npc.skillgap;

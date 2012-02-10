@@ -42,3 +42,5 @@ ipconv.ap=2;
 ipconv.sp=7/6;
 ipconv.has=1;
 ipconv.mas=1;
+ipconv.dodge=1;
+ipconv.parry=1;
