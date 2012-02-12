@@ -126,6 +126,12 @@ cfg(k).mast=25;
 cfg(k).parry=20;
 cfg(k).sta=37;
 
+k=k+1;
+cfg(k).name='50 Dodge->40 Stamina bracer enchant';
+cfg(k).mast=0;
+cfg(k).parry=50;
+cfg(k).sta=40;
+
 
 
 %% Calculate parry/mastery CTC ratio
