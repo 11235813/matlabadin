@@ -1,3 +1,4 @@
+function [mdf player target]=stat_model(base,npc,exec,buff,spec,talent,glyph)
 %% stat_model
 %this m-file recalculates the final stats of the player, taking into
 %account all sources.  It's divided into sections according to topic.
@@ -493,3 +494,4 @@ jotw.PerTick=0.03.*base.mana;
 mps.Repl=0.01.*player.manapoints./10;
 mps.Sanc=0.03.*player.manapoints.*((player.block+player.dodge)./100).*exec.npccount./npc.swing;
 mps.BoM=326/5; %hardcoded
+end
