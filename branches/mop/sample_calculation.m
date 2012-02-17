@@ -25,12 +25,12 @@ glyph=glyph_model();
 egs=ddb.gearset{4}; %1=pre-raid , 2=T11, 3=T11H, 4=T12, 5=T12H
 
 % %calculate relevant stats
-% gear_stats;
+gear_stats;
 
 
 %% Everything up to here works; stat_model under reconstruction
 %calculate final stats
-[mdf player target]=stat_model(base,npc,exec,buff,spec,talent,glyph); %in future, potentially package these somehow into one argument (maybe a "sim" or "player" structure)
+[mdf player target]=stat_model(base,npc,exec,buff,spec,talent,glyph,gear); %in future, potentially package these somehow into one argument (maybe a "sim" or "player" structure)
 
 
 %% ability_model and rotation_model still need to be reworked

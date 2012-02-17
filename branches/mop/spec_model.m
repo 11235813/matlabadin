@@ -31,14 +31,14 @@ spec.SealofInsight=(level>33);
 spec.SealofRighteousness=(level>42);
 spec.AvengingWrath=(level>72);
 spec.BlessingofMight=(level>81);
-spec.BlindingLight=(level>87);
 spec.GuardianofAncientKings=(level>85);
+spec.BlindingLight=(level>87);
 
 %% prot
 if tree == 'prot'
     %Base bonuses for choosing prot (inherent @ level 10)
     spec.Vengeance=1;
-    spec.TouchedbytheLight=1;
+    spec.GuardedbytheLight=1;
     spec.AvengersShield=1;
     
     %Spec bonuses, by level

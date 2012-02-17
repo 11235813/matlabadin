@@ -59,10 +59,10 @@ if isempty(food)==1 food=87594; end;
 %Only 8 buff categories in MoP: HP, AP, SP, melee haste, spell haste,
 %crit, mastery, and stats
 
-%HP : Power word Fortitude / Commanding Shout / Blood Pact / Quiraji Fortitude
-buff.HP=((mode==0&&(isempty(item)||isempty(regexpi(item,'HP'))))||mode==3 ...
+%STA : Power word Fortitude / Commanding Shout / Blood Pact / Quiraji Fortitude
+buff.STA=((mode==0&&(isempty(item)||isempty(regexpi(item,'HP'))))||mode==3 ...
     ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'HP'))))));
-%multiplicative AP : Unleashed Rage / Blessing of Might / Trueshot Aura / Abomination's Might
+%multiplicative AP : Unleashed Rage / Trueshot Aura / Abomination's Might
 buff.AP=((mode==0&&(isempty(item)||isempty(regexpi(item,'AP'))))||mode==3 ...
     ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'AP'))))));
 %multiplicative SP : Totemic Wrath / Demonic Pact
@@ -77,7 +77,7 @@ buff.shaste=((mode==0&&(isempty(item)||isempty(regexpi(item,'shaste'))))||mode==
 %global crit : Leader of the Pack / Rampage / Moonkin Aura / Elemental Oath / Honor Among Thieves
 buff.crit=((mode==0&&(isempty(item)||isempty(regexpi(item,'crit'))))||mode==3 ...
     ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'crit'))))));
-%mastery :  ?? / ?? / ??
+%mastery :  Blessing of  Might / Grace of Air Totem / ??
 buff.mast=((mode==0&&(isempty(item)||isempty(regexpi(item,'mast'))))||mode==3 ...
     ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'mast'))))));
 %stats : Blessing of Kings / Mark of the Wild / Embrace of the Shale Spider
@@ -95,34 +95,26 @@ buff.Thorns=((mode==0&&(isempty(item)||isempty(regexpi(item,'Thorns'))))||mode==
 %Avenging Wrath
 buff.AWra=((mode==0&&(isempty(item)||isempty(regexpi(item,'AWra')))) ...
     ||mode==2||mode==3||mode==4);
-%Divine Plea
-buff.DivPlea=((mode==0&&(isempty(item)||isempty(regexpi(item,'DivPle')))) ...
-    ||mode==2||mode==3||mode==4);
 %Righteous Fury
 buff.RFury=((mode==0&&(isempty(item)||isempty(regexpi(item,'RFury')))) ...
     ||mode==2||mode==3||mode==4);
-%Focus Magic (disabled by default, even in exhaustive mode)
-buff.Focus=0;
 
 %% Player debuffs
 %Chill_up=0; %PLACEHOLDER
 
 %% Boss Debuffs
-%physical damage taken : Savage Combat / Blood Frenzy / Brittle Bones
-buff.SavCom=((mode==0&&(isempty(item)||isempty(regexpi(item,'SavCom'))))||mode==3 ...
-    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'SavCom'))))));
-%bleed damage taken : Mangle / Trauma / Hemorrhage
-buff.Hemo=((mode==0&&(isempty(item)||isempty(regexpi(item,'Hemo'))))||mode==3 ...
-    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'Hemo'))))));
-%spell damage taken : Ebon Plaguebringer / Earth and Moon / Curse of the Elements / Master Poisoner
-buff.CoE=((mode==0&&(isempty(item)||isempty(regexpi(item,'CoE'))))||mode==3 ...
-    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'CoE'))))));
-%spell crit : Critical Mass / Improved Shadowbolt
-buff.ISB=((mode==0&&(isempty(item)||isempty(regexpi(item,'ISB'))))||mode==3 ...
-    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'ISB'))))));
+%physical damage taken : Brittle Bones / Ebon Plaguebringer
+buff.physdmg=((mode==0&&(isempty(item)||isempty(regexpi(item,'physdmg'))))||mode==3 ...
+    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'physdmg'))))));
+%spell damage taken : Curse of the Elements / Master Poisoner
+buff.spdmg=((mode==0&&(isempty(item)||isempty(regexpi(item,'spdmg'))))||mode==3 ...
+    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'spdmg'))))));
 %multiplicative armor : Sunder Armor / Expose Armor / Faerie Fire / Scorpid Venom
-buff.Sund=((mode==0&&(isempty(item)||isempty(regexpi(item,'Sund'))))||mode==3 ...
-    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'Sund'))))));
+buff.armor=((mode==0&&(isempty(item)||isempty(regexpi(item,'armor'))))||mode==3 ...
+    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'armor'))))));
+%physical damage done : Weakened Blows (various sources)
+buff.wblow=((mode==0&&(isempty(item)||isempty(regexpi(item,'wblow'))))||mode==3 ...
+    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'wblow'))))));
 %multiplicative armor : Shattering Throw
 buff.SThrow=((mode==0&&(isempty(item)||isempty(regexpi(item,'SThrow'))))||mode==3 ...
     ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'SThrow'))))));

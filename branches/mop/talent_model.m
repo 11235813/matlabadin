@@ -53,3 +53,4 @@ talent.Clemency=talent.short(5)==3;
 talent.HolyAvenger=talent.short(6)==1;
 talent.SanctifiedWrath=talent.short(6)==2;
 talent.DivinePurpose=talent.short(6)==3;
+
