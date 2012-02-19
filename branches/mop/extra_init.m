@@ -1,3 +1,4 @@
+function [extra]=extra_init;
 extra.str=0;
 extra.sta=0;
 extra.agi=0;
@@ -17,3 +18,4 @@ temp=extra;
 extra.itm=temp;
 extra.val=temp;
 clear temp
+end

@@ -1,90 +1,94 @@
+function [c]=ability_model(c)
 %ABILITY_MODEL calculates the damage each ability does when used.  For
 %DOT-like effects, it calculates the total damage done over the period of
 %interest (i.e. Consecration) so that the total uptime and DPS can be
 %modeled properly in different rotations
 
+
+%TODO: check for redundancy of player.sp and player.hsp - hopefully we can
+%remove player.hsp entirely.
+
+%% Unpack
+mdf=c.mdf;
+player=c.player;
+target=c.target;
+
+
 %% Holy Power
-player.hopo=3;  %TODO move it
+player.hopo=3;  %TODO: probably no reason to consider 1- or 2-HP SotR/WoG anymore
 
 %% Seals
-
+%TODO: Retest all hit conditions for seals
 %Seal of Truth (fully stacked)
-raw.SealofTruth=    0.15.*player.wdamage.*mdf.spdmg.*mdf.SotP; 
-raw.JoT        =    (1+0.2229.*player.hsp+0.1421.*player.ap).*2;  %double damage with 5 stacks of Censure on target
+raw.SealofTruth=    0.10.*player.wdamage.*mdf.spdmg; 
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
 heal.SealofTruth=   0;
-threat.SealofTruth= max(dmg.SealofTruth,heal.SealofTruth).*mdf.RFury;
+threat.SealofTruth= dmg.SealofTruth.*mdf.RFury;
 mcost.SealofTruth=0;
 
 %Censure (fully stacked)
 %As we do not model interruptions, Cens is assumed to be perpetually
 %refreshed (full uptime).
 raw.Censure=        (0.014.*player.hsp+0.0270.*player.ap).*5 ...
-                    .*mdf.SotP.*mdf.spdmg; %per tick (for 5 stacks)
+                    .*mdf.spdmg; %per tick (for 5 stacks)
 dmg.Censure=        raw.Censure.*mdf.phcrit.*target.resrdx; %automatical connect, phys crit/CM
-dps.Censure=        dmg.Censure./cens.NetTick;
+dps.Censure=        dmg.Censure./player.censTick;
 heal.Censure=       0;
 hps.Censure=        0;
-threat.Censure=     max(dmg.Censure,heal.Censure).*mdf.RFury;
+threat.Censure=     dmg.Censure.*mdf.RFury;
 tps.Censure=        threat.Censure./cens.NetTick;
 
-%Seal of Righteousness
-raw.SealofRighteousness=    gear.swing.*(0.011.*player.ap+0.022.*player.hsp).* ...
-                            mdf.spdmg.*mdf.SotP;
-raw.JoR                =    (1+0.32.*player.hsp+0.2.*player.ap);
+%Seal of Righteousness - now seal of cleave
+raw.SealofRighteousness=    gear.swing.*(0.011.*player.ap+0.022.*player.hsp) ...
+                            .*mdf.spdmg;
 dmg.SealofRighteousness=    raw.SealofRighteousness.*mdf.phcrit.*target.resrdx; %automatical connect
 heal.SealofRighteousness=   0;
-threat.SealofRighteousness=max(dmg.SealofRighteousness,heal.SealofRighteousness).*mdf.RFury;
-mcost.SealofRighteousness=0;
+threat.SealofRighteousness= dmg.SealofRighteousness.*mdf.RFury;
+mcost.SealofRighteousness=  0;
+
+%Seal of Command - possibly low-level seal
+raw.SealofCommand=          gear.swing.*(0.005.*player.ap+0.01.*player.hsp) ...
+                            .*mdf.spdmg;
+dmg.SealofCommand=          raw.SealofCommand.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
+heal.SealofCommand=         0;
+threat.SealofCommand=       dmg.SealofCommand.*mdf.RFury;
+mcost.SealofCommand=        0;
+
 
 %Seal of Insight (15 PPM, not haste-normalized)
-raw.SealofInsight=          0.15.*(player.hsp+player.ap).*mdf.Divin;
-raw.JoI          =          (1+0.25.*player.hsp+0.16.*player.ap);
+raw.SealofInsight=          0.15.*(player.hsp+player.ap);
 dmg.SealofInsight=          0;
 heal.SealofInsight=         raw.SealofInsight.*(15.*gear.swing./60);
 threat.SealofInsight=       max(dmg.SealofInsight,heal.SealofInsight).*mdf.hthreat.*mdf.RFury./exec.npccount;
-mcost.SealofInsight=-0.04.*base.mana;
+mcost.SealofInsight=        -0.04.*base.mana;
 
-%Seal of Justice
-raw.SealofJustice=          gear.swing.*(0.005.*player.ap+0.01.*player.hsp) ...
-                            .*mdf.spdmg.*mdf.SotP;
-raw.JoJ          =          (1+0.25.*player.hsp+0.16.*player.ap);
-dmg.SealofJustice=          raw.SealofJustice.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
-heal.SealofJustice=         0;
-threat.SealofJustice=max(dmg.SealofJustice,heal.SealofJustice).*mdf.RFury;
-mcost.SealofJustice=0;
 
 %exhaustive listing of seal/judgement damage
 if isempty(exec.seal)
     dmg.activeseal=0;
     heal.activeseal=0;
     threat.activeseal=0;
-    raw.Judgement=0;
     mcost.activeseal=0;
 elseif strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)
     dmg.activeseal=dmg.SealofInsight;
     heal.activeseal=heal.SealofInsight;
     threat.activeseal=threat.SealofInsight;
     mcost.activeseal=mcost.SealofInsight;
-    raw.Judgement=raw.JoI;
 elseif strcmpi('Justice',exec.seal)||strcmpi('SoJ',exec.seal)
     dmg.activeseal=dmg.SealofJustice;
     heal.activeseal=heal.SealofJustice;
     threat.activeseal=threat.SealofJustice;
     mcost.activeseal=mcost.SealofJustice;
-    raw.Judgement=raw.JoJ;
 elseif strcmpi('Righteousness',exec.seal)||strcmpi('SoR',exec.seal)
     dmg.activeseal=dmg.SealofRighteousness;
     heal.activeseal=heal.SealofRighteousness;
     threat.activeseal=threat.SealofRighteousness;
     mcost.activeseal=mcost.SealofRighteousness;
-    raw.Judgement=raw.JoR;
 elseif strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
     dmg.activeseal=dmg.SealofTruth;
     heal.activeseal=heal.SealofTruth;
     threat.activeseal=threat.SealofTruth;
     mcost.activeseal=mcost.SealofTruth;
-    raw.Judgement=raw.JoT;
 end
 
 %% Melee abilities
@@ -158,16 +162,15 @@ net.AvengersShield{3}=threat.AvengersShield+threat.activeseal.*mdf.rahit.*mdf.ts
 mcost.AvengersShield=0.06.*base.mana;
 
 %Judgement (the seal of choice is defined in execution_model)
-mdf.jseals=(mdf.JotJ>1)&&(strcmpi('Righteousness',exec.seal)||strcmpi('SoR',exec.seal) ...
-    ||strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)); %JotJ procs only R/T
-raw.Judgement=      raw.Judgement.*mdf.spdmg.*(1+mdf.glyphJ+(10./3).*mdf.WotL);
-dmg.Judgement=      raw.Judgement.*mdf.rahit.*mdf.Jcrit.*target.resrdx;
+raw.Judgment=       (1+0.2229.*player.hsp+0.1421.*player.ap) ...
+                    .*(1+mdf.glyphJ).*mdf.spdmg; 
+dmg.Judgement=      raw.Judgement.*mdf.rahit.*target.resrdx;
 heal.Judgement=     0.25.*dmg.Judgement.*mdf.t13x2P;
 threat.Judgement=   max(dmg.Judgement,heal.Judgement).*mdf.RFury;
+mcost.Judgement=0.05.*base.mana;
 net.Judgement{1}=   dmg.Judgement+dmg.activeseal.*mdf.rahit;
 net.Judgement{2}=   heal.Judgement+heal.activeseal.*mdf.rahit;
 net.Judgement{3}=   threat.Judgement+threat.activeseal.*mdf.rahit;
-mcost.Judgement=0.05.*base.mana;
 
 %Hammer of Wrath (can be blocked)
 raw.HammerofWrath= (4015.02439+0.117.*player.hsp+0.39.*player.ap).*mdf.spdmg;

@@ -1,19 +1,50 @@
-function [mdf player target]=stat_model(base,npc,exec,buff,spec,talent,glyph,egs,gear)
+function [c]=stat_model(c); %base,npc,exec,buff,spec,talent,glyph,egs,gear)
 %% stat_model
-%this m-file recalculates the final stats of the player, taking into
-%account all sources.  It's divided into sections according to topic.
+%this m-file recalculates the final stats of the player and target, as well
+%as many different modifier (mdf) values.  It's divided into sections
+%according to topic.
 
-%TODO: possibly change the input to a single structure with sub-structures.
-%i.e., stat_model(player), where player contains structure fields base,
-%npc, exec, buff, etc.  
-%alternatively, allow nargin discrimination; nargin=1 means a player input,
-%nargin>1 means all structures passed separately.
+%stat_model takes one input argument "c", which is the configuration
+%structure for the simulation.  "c" contains the standard fields (base,
+%npc, exec, buff, spec, talent, glyph, egs, gear, extra).  stat_model returns an
+%updated "c" that contains final player and target stats as well as all
+%necessary modifiers (mdf, consum).
+
+%TODO: input handling.  Check c for presence of mdf, provide warnings as
+%appropriate
+
+%% Cleanup
+%This clears existing mdf, player, and target information (in case we're
+%passing a previously-used configuration.
+
+%Remove modifier field
+if isfield(c,'mdf'), c=rmfield(c,'mdf'); end;
+if isfield(c,'mdf'), c=rmfield(c,'player'); end;
+if isfield(c,'mdf'), c=rmfield(c,'target'); end;
+
+%% Unpack
+%this is mostly so I don't have to find/replace every instance of base,
+%npc, etc. with c.base, c.npc, and so on.  I may go through and do this
+%later anyway, but for now it's a quick workaround that keeps the code a
+%little more readable.  These are all local variables that never leave the
+%function workspace, so the memory impact should be negligible.  
+base=c.base;
+npc=c.npc;
+exec=c.exec;
+buff=c.buff;
+spec=c.spec;
+talent=c.talent;
+glyph=c.glyph;
+egs=c.egs;
+gear=c.gear;
+
+if isfield(c,'extra')==0
+    extra=extra_init;
+else
+    extra=c.extra;
+end
 
 %% seal choice
-%TODO: seal will be moving into the new "cfg" variable
-%"exec" will be for things that are generally static; "cfg" will be
-%designed to handle things we'll want to cycle through (like different
-%seals, gear sets, rotations, etc.)
 mdf.tseal=strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal);
 mdf.rseal=mdf.tseal||strcmpi('Righteousness',exec.seal)||strcmpi('SoR',exec.seal);
 
@@ -70,6 +101,7 @@ mdf.t13x2P=gear.tierbonusP(5); %Judgement bubbles
 mdf.t13x2R=gear.tierbonusR(5); %Judgement Hopo
 
 %% Professions
+%TODO: update for MoP
 %(passive bonuses, independent of gearing choices)
 if ((~isempty(base.prof))&&((~isempty(regexpi(base.prof,'Min'))) ...
         ||(~isempty(regexpi(base.prof,'Mining')))))
@@ -182,9 +214,6 @@ mdf.hthreat=0.5;
 %"extra.itm.x" contain the contributions to stat x in terms of raw stats
 %(val) and ipoints (itm)
 %the ipoint conversion factors are defined in stat_conversions
-if exist('extra')==0
-    extra_init
-end;
 extra.str=  extra.itm.str.*ipconv.str       + extra.val.str;
 extra.sta=  extra.itm.sta.*ipconv.sta       + extra.val.sta;
 extra.agi=  extra.itm.agi.*ipconv.agi       + extra.val.agi;
@@ -267,29 +296,33 @@ mdf.blsphaste=(1+bl.sphaste./100);
 %haste scaling for DoT effects
 %refer to http://elitistjerks.com/f73/t110354-resto_cataclysm_release_updated_4_0_6_a/p42/#post1896784
 %further testing has shown the use of Gaussian rounding (IEEE 754)
+%TODO: The only value used in ability_model is cens.NetTick.  For now I've
+%commented out all the unused code.
 cens.BaseTick=3;
-cens.BaseDur=15;
-cens.NetTick=round(cens.BaseTick./mdf.sphaste.*1e3)./1e3; %spell haste
-for kkk=1:length(mdf.sphaste)
-    if rem(cens.BaseDur./cens.NetTick(kkk),1)==0.5 && rem(floor(cens.BaseDur./cens.NetTick(kkk)),2)==1
-        cens.NumTicks(kkk)=floor(cens.BaseDur./cens.NetTick(kkk)+0.5);
-    else
-        cens.NumTicks(kkk)=ceil(cens.BaseDur./cens.NetTick(kkk)-0.5);
-    end
-end
-cens.NetDur=cens.NumTicks.*cens.NetTick;
-jotw.BaseTick=1;
-jotw.BaseDur=10;
-jotw.NetTick=round(jotw.BaseTick./mdf.sphaste.*1e3)./1e3; %spell haste
-for kkk=1:length(mdf.sphaste)
-    if rem(jotw.BaseDur./jotw.NetTick(kkk),1)==0.5 && rem(floor(jotw.BaseDur./jotw.NetTick(kkk)),2)==1
-        jotw.NumTicks(kkk)=floor(jotw.BaseDur./jotw.NetTick(kkk)+0.5);
-    else
-        jotw.NumTicks(kkk)=ceil(jotw.BaseDur./jotw.NetTick(kkk)-0.5);
-    end
-end
-clear kkk
-jotw.NetDur=jotw.NumTicks.*jotw.NetTick;
+% cens.BaseDur=15;
+player.censTick=round(cens.BaseTick./mdf.sphaste.*1e3)./1e3; %spell haste
+% for kkk=1:length(mdf.sphaste)
+%     if rem(cens.BaseDur./cens.NetTick(kkk),1)==0.5 && rem(floor(cens.BaseDur./cens.NetTick(kkk)),2)==1
+%         cens.NumTicks(kkk)=floor(cens.BaseDur./cens.NetTick(kkk)+0.5);
+%     else
+%         cens.NumTicks(kkk)=ceil(cens.BaseDur./cens.NetTick(kkk)-0.5);
+%     end
+% end
+% cens.NetDur=cens.NumTicks.*cens.NetTick;
+
+%TODO: determine whether GbtL mana returns scale with haste (probably not)
+% jotw.BaseTick=1;
+% jotw.BaseDur=10;
+% player.jotwTick=round(jotw.BaseTick./mdf.sphaste.*1e3)./1e3; %spell haste
+% for kkk=1:length(mdf.sphaste)
+%     if rem(jotw.BaseDur./jotw.NetTick(kkk),1)==0.5 && rem(floor(jotw.BaseDur./jotw.NetTick(kkk)),2)==1
+%         jotw.NumTicks(kkk)=floor(jotw.BaseDur./jotw.NetTick(kkk)+0.5);
+%     else
+%         jotw.NumTicks(kkk)=ceil(jotw.BaseDur./jotw.NetTick(kkk)-0.5);
+%     end
+% end
+% clear kkk
+% jotw.NetDur=jotw.NumTicks.*jotw.NetTick;
 
 %% Crit
 %multipliers
@@ -453,7 +486,7 @@ bl.wdps=player.wdamage./bl.wswing;
 mdf.phdmg=mdf.physdmg.*(1-target.phdr);
 mdf.mehit=1-(target.miss+target.dodge+target.parry)./100;
 mdf.rahit=1-target.miss./100;
-%TODO: mdf.spdmg is now redundant until mdf sublasses are implemented
+%TODO: mdf.spdmg is now redundant until mdf subclasses are implemented
 % mdf.spdmg=mdf.CoE.*mdf.ArcTac; %harmful only, healing does not benefit from these
 mdf.sphit=1-target.spmiss./100;
 
@@ -476,9 +509,16 @@ mdf.ramodel=mdf.rahit+(mdf.blockrdx-1).*target.block./100;
 %our rotation looks like, and what procs PPM effects.
 
 %% Power Gains
-%Low-priority at the moment.
-jotw.PerTick=0.03.*base.mana;
-mps.Repl=0.01.*player.manapoints./10;
-mps.Sanc=0.03.*player.manapoints.*((player.block+player.dodge)./100).*exec.npccount./npc.swing;
-mps.BoM=326/5; %hardcoded
+%Low-priority at the moment.  Assuming no haste-scaling on GbtL and
+%ignoring replenishment
+player.mps=0.05.*base.mana/2;
+% mps.Repl=0.01.*player.manapoints./10;
+
+%% Repack
+c.player=player;
+c.target=target;
+c.mdf=mdf;
+c.consum=consum;
+c.extra=extra;
+%TODO: decide whether to repack bloodlust modifiers
 end
