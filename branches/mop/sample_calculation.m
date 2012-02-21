@@ -41,7 +41,7 @@ c=stat_model(c);
 
 %% ability_model and rotation_model still need to be reworked
 %calculate ability damages
-ability_model(c);
+c=ability_model(c);
 
 %rotation 
 rotation_model;
