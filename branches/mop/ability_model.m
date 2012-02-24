@@ -1,12 +1,23 @@
 function [c]=ability_model(c)
 %ABILITY_MODEL calculates the damage each ability does when used.  For
-%DOT-like effects, it calculates the total damage done over the period of
-%interest (i.e. Consecration) so that the total uptime and DPS can be
-%modeled properly in different rotations
+%DOT-like effects, it calculates either the total damage done over the
+%period of interest (i.e. Consecration) or the damage per tick (Censure)
+%depending on how each ability is modeled (Cons is generally DPC, Censure
+%is usually added in post-processing as a passive effect occuring with
+%frequency 1/player.wswing).
+%
+%ability_model takes one input argument "c", which is the configuration
+%structure for the simulation.  "c" contains the standard fields reurned by
+%stat_model.  
+%
+%ability_model returns an updated "c" that includes an
+%"abil" field containing the ability  values introduced in this module.
 
 
 %TODO: check for redundancy of player.sp and player.hsp - hopefully we can
 %remove player.hsp entirely.
+%TODO: remove net structure; I think we don't need this going forward, and
+%if we do, I want to implement it differently
 
 %% Unpack
 mdf=c.mdf;
@@ -81,7 +92,7 @@ elseif strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)
     heal.activeseal=heal.SealofInsight;
     threat.activeseal=threat.SealofInsight;
     mcost.activeseal=mcost.SealofInsight;
-elseif strcmpi('Justice',exec.seal)||strcmpi('SoJ',exec.seal)
+elseif strcmpi('Command',exec.seal)||strcmpi('SoC',exec.seal)
     raw.activeseal=raw.SealofCommand;
     dmg.activeseal=dmg.SealofCommand;
     heal.activeseal=heal.SealofCommand;
@@ -104,7 +115,7 @@ end
 %% Melee abilities
 
 %Crusader Strike (can be blocked)
-raw.CrusaderStrike= 1.00.*player.ndamage.*mdf.phdmg.*mdf.pvphands;
+raw.CrusaderStrike= 1.00.*player.ndamage.*mdf.phdmg.*(1+mdf.pvphands);
 dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.memodel.*mdf.CScrit;
 heal.CrusaderStrike=0;
 threat.CrusaderStrike=max(dmg.CrusaderStrike,heal.CrusaderStrike).*mdf.RFury;
@@ -136,7 +147,7 @@ net.HammerNova{3}=threat.HammerNova;
 %Melee attacks
 raw.Melee=          player.wdamage.*mdf.phdmg;
 dmg.Melee=          raw.Melee.*mdf.aamodel;
-dps.Melee=          dmg.Melee./player.wswing;
+dps.Melee=          dmg.Melee./player.wswing; %TODO: *ps redundant now
 heal.Melee=         0;
 hps.Melee=          0;
 threat.Melee=       max(dmg.Melee,heal.Melee).*mdf.RFury;
@@ -238,6 +249,22 @@ net.WordofGlory{2}= heal.WordofGlory;
 net.WordofGlory{3}= threat.WordofGlory;
 mcost.WordofGlory = 0;
 
+%Eternal Flame
+raw.EternalFlame=   (1 + 1.*player.hsp + 1.*player.ap).*player.hopo ... %PH
+                    .*(1-exec.overh).*(1+mdf.glyphSoI);
+dmg.EternalFlame=   0;
+heal.EternalFlame=  raw.EternalFlame.*mdf.spcrit;
+threat.EternalFlame=1.*mdf.RFury./exec.npccount; %PH
+mcost.EternalFlame= 0;
+
+%Sacred Shield
+raw.SacredShield=   (1 + 1.*player.hsp + 1.*player.ap).*player.hopo ... %PH
+                    .*(1-exec.overh).*(1+mdf.glyphSoI);
+dmg.SacredShield=   0;
+heal.SacredShield=  raw.SacredShield; %can absorbs crit?
+threat.SacredShield=1.*mdf.RFury./exec.npccount; %PH
+mcost.SacredShield= 0;
+
 
 %% Consolidated arrays
 %TODO: rename val to something more descriptive
@@ -245,7 +272,7 @@ val.length=max([length(dmg.CrusaderStrike) length(dmg.Consecration) length(dps.M
 val.zeros=zeros(1,val.length);
 val.ones=ones(1,val.length);
 val.label={'CS';'HotR';'HammerNova';'J';'AS';'Cons';'SotR';'WoG';...
-            'seal';'Censure';'Melee';'Nothing';};
+           'EF';'SS';'SoT';'SoR';'SoC';'SoI';'Censure';'Melee';'Nothing';};
 
 %TODO: add each seal and handle cps separately?        
 val.raw=[...
@@ -259,8 +286,14 @@ val.raw=[...
           ...
           raw.ShieldoftheRighteous.*val.ones;         %SotR
           raw.WordofGlory.*val.ones;                  %WoG
+          raw.EternalFlame.*val.ones;                 %Eternal Flame
+          raw.SacredShield.*val.ones;                 %SS
           ...
-          raw.activeseal.*val.ones;                   %seal
+          raw.SealofTruth.*val.ones;                  %SoT
+          raw.SealofRighteousness.*val.ones;          %SoR
+          raw.SealofCommand.*val.ones;                %SoC
+          raw.SealofInsight.*val.ones;                %SoI
+          ...
           raw.Censure.*val.ones;                      %Censure tick
           raw.Melee.*val.ones;                        %Melee Swing
           val.zeros];                                 %Nothing
@@ -276,8 +309,14 @@ val.dmg=[...
           ...
           dmg.ShieldoftheRighteous.*val.ones;         %SotR
           dmg.WordofGlory.*val.ones;                  %WoG
+          dmg.EternalFlame.*val.ones;                 %Eternal Flame
+          dmg.SacredShield.*val.ones;                 %SS
           ...
-          dmg.activeseal.*val.ones;                   %seal
+          dmg.SealofTruth.*val.ones;                  %SoT
+          dmg.SealofRighteousness.*val.ones;          %SoR
+          dmg.SealofCommand.*val.ones;                %SoC
+          dmg.SealofInsight.*val.ones;                %SoI
+          ...
           dmg.Censure.*val.ones;                      %Censure tick
           dmg.Melee.*val.ones;                        %Melee Swing
           val.zeros];                                 %Nothing
@@ -293,8 +332,14 @@ val.heal=[...
           ...
           heal.ShieldoftheRighteous.*val.ones;         %SotR
           heal.WordofGlory.*val.ones;                  %WoG
+          heal.EternalFlame.*val.ones;                 %Eternal Flame
+          heal.SacredShield.*val.ones;                 %SS
           ...
-          heal.activeseal.*val.ones;                   %seal
+          heal.SealofTruth.*val.ones;                  %SoT
+          heal.SealofRighteousness.*val.ones;          %SoR
+          heal.SealofCommand.*val.ones;                %SoC
+          heal.SealofInsight.*val.ones;                %SoI
+          ...
           heal.Censure.*val.ones;                      %Censure tick
           heal.Melee.*val.ones;                        %Melee Swing
           val.zeros];                                  %Nothing
@@ -310,8 +355,14 @@ val.aoe=[...
           ...
           val.zeros;                                            %SotR
           val.zeros;                                            %WoG
+          val.zeros;                                            %EF (TODO: heal threat)
+          val.zeros;                                            %SS (TODO: buff threat)
           ...
-          val.zeros;                                            %seal TODO: SoRight Cleave
+          val.zeros;                                            %SoT (TODO: seal spreading?)
+          dmg.SealofRighteousness.*min([exec.npccount-1; 9]).*val.ones; %SoR (TODO: check target limit)
+          val.zeros;                                            %SoC
+          val.zeros;                                            %SoI (TODO: heal threat)
+          ...
           val.zeros;                                            %Censure tick
           val.zeros;                                            %Melee Swing
           val.zeros];                                  %Nothing
@@ -327,62 +378,19 @@ val.mcost=[...
           ...
           val.zeros;                                    %SotR
           val.zeros;                                    %WoG
+          val.zeros;                                    %EF
+          val.zeros;                                    %SS
           ...
-          val.zeros;                                    %seal
+          val.zeros;                                    %SoT
+          val.zeros;                                    %SoR
+          val.zeros;                                    %SoC
+          val.zeros;                                    %SoI
+          ...
           val.zeros;                                    %Censure tick
           val.zeros;                                    %Melee Swing
           val.zeros];                                   %Nothing
       
       
-      
-      
-%Old Code, for reference      
-% 
-% val.raw=[...
-%     round(raw.ShieldoftheRighteous).*val.ones;
-%     round(raw.WordofGlory).*val.ones;
-%     ...
-%     round(raw.CrusaderStrike).*val.ones;
-%     round(raw.HammeroftheRighteous).*val.ones;
-%     ...
-%     round(raw.AvengersShield).*val.ones;
-%     round(raw.Consecration).*val.ones;
-%     round(raw.Exorcism).*val.ones;
-%     round(raw.HammerofWrath).*val.ones;
-%     round(raw.HolyWrath).*val.ones;
-%     round(raw.Judgment).*val.ones; 
-%     ...
-%     round(raw.HammerNova).*val.ones;
-%     round(raw.SealofInsight).*val.ones;
-%     round(raw.SealofCommand).*val.ones;
-%     round(raw.SealofRighteousness).*val.ones; 
-%     round(raw.SealofTruth).*val.ones; 
-%     ...
-%     round(raw.Melee).*val.ones;
-%     round(raw.Censure).*val.ones];
-% 
-% for i=1:3
-% val.net{i}=[...
-%     round(net.ShieldoftheRighteous{i}).*val.ones;
-%     round(net.WordofGlory{i}).*val.ones;
-%     ...
-%     round(net.CrusaderStrike{i}).*val.ones;
-%     round(net.HammeroftheRighteous{i}).*val.ones;
-%     ...
-%     round(net.AvengersShield{i}).*val.ones;
-%     round(net.Consecration{i}).*val.ones;
-%     round(net.Exorcism{i}).*val.ones;
-%     round(net.HammerofWrath{i}).*val.ones; 
-%     round(net.HolyWrath{i}).*val.ones;
-%     round(net.Judgment{i}).*val.ones; 
-%     ...
-%     round(net.HammerNova{i}).*val.ones;
-%     val.zeros; val.zeros; val.zeros; val.zeros;
-%     ...
-%     round(net.Melee{i}).*val.ones;
-%     round(dmg.Censure).*val.ones];
-% end
-
 %% Repack
 c.abil.raw=raw;
 c.abil.dmg=dmg;

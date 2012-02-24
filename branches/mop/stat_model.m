@@ -1,14 +1,14 @@
-function [c]=stat_model(c); %base,npc,exec,buff,spec,talent,glyph,egs,gear)
-%% stat_model
-%this m-file recalculates the final stats of the player and target, as well
+function [c]=stat_model(c)
+%STAT_MODEL recalculates the final stats of the player and target, as well
 %as many different modifier (mdf) values.  It's divided into sections
 %according to topic.
-
+%
 %stat_model takes one input argument "c", which is the configuration
 %structure for the simulation.  "c" contains the standard fields (base,
-%npc, exec, buff, spec, talent, glyph, egs, gear, extra).  stat_model returns an
-%updated "c" that contains final player and target stats as well as all
-%necessary modifiers (mdf, consum).
+%npc, exec, buff, spec, talent, glyph, egs, gear, extra).  
+%
+%stat_model returns an updated "c" that contains final player and target 
+%stats as well as all necessary modifiers (mdf, consum).
 
 %TODO: input handling.  Check c for presence of mdf, provide warnings as
 %appropriate

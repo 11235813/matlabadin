@@ -44,7 +44,7 @@ c=stat_model(c);
 c=ability_model(c);
 
 %rotation 
-rotation_model;
-%dynamic_model;
+c=rotation_model(c);
+%dynamic_model; %TODO: put dynamic_model in rotation_model?
 disp('Success!')
-disp(['Total dps for default 939 is ' num2str(rot(1).totdps,'%5.0f') ' DPS'])
+disp(['Total dps for default 939 is ' num2str(c.rot.dps,'%5.0f') ' DPS'])

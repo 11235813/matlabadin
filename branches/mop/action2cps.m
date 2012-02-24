@@ -1,73 +1,57 @@
-%ACTION2CPS takes the actionPr returned by
-%memoized_fsm and converts them into a standardized array containing casts
-%per second values for DPS calculations
-function [cps] = action2cps(actionPr, metadata, labels)
+function [cps] = action2cps(c,j)
+%ACTION2CPS takes the actionPr returned by memoized_fsm and converts them
+%into a standardized "cast per second" array, including both active and
+%passive sources.
+%
+%A2CPS takes one required input ("c", the configuration structure) and one
+%optional input ("j", the iteration number for calculations where mdf.mehit
+%or mdf.rahit are not singleton).
+%
+%A2CPS returns one output, which is the cps array for the given input
+%conditions.
+
+if nargin<2
+    j=1;
+end
 
 %import focused shield glyph
-fsflag=evalin('base','mdf.glyphAS>1');
-
-if nargin<3
-    %import val for labels
-    val=evalin('base','val');
-else
-    val.fsmlabel=labels;
-end
-
-%mdf.mehit and mdf.rahit required for seals - pull from metadata if
-%supplied, else import mdf
-if nargin<2
-    mhit=evalin('base','mdf.mehit');
-    rhit=evalin('base','mdf.rahit');
-else
-    mhit=str2double(metadata.Param_Hit_Melee);
-    rhit=str2double(metadata.Param_Hit_Ranged);
-end
-    
+fsflag=c.mdf.glyphFS>1;
 
 %initialize cps vector
-cps=zeros(size(val.fsmlabel,1),1);
+cps=zeros(size(c.abil.val.label,1),1);
 
 %sort actionPr entries into cps
-for m=1:size(actionPr,2)
-    idx= strcmp(actionPr{1,m},val.fsmlabel);
-    cps(idx)=actionPr{2,m};    
+for m=1:size(c.rot.actionPr,2)
+    idx= strcmpi(c.rot.actionPr{1,m},c.abil.val.label);
+    cps(idx)=c.rot.actionPr{2,m};    
 end
 
 %corrections
 
 %HotR->HammerNova
-idx2=find(strcmp('HotR',val.fsmlabel));
-cps(idx2+1)=cps(idx2);
+idx=find(strcmpi('HotR',c.abil.val.label));
+cps(idx+1)=cps(idx);
 
-%HotR(Inq)->HammerNova(Inq)
-idx3=find(strcmp('HotR(Inq)',val.fsmlabel));
-cps(idx3+1)=cps(idx3);
+%Melee swings
+cps(strcmpi('Melee',c.abil.val.label))=1./c.player.wswing;
+
 
 %seal procs
-idx4r=logical(...
-     strcmp('AS',val.fsmlabel).*fsflag+ ...
-     strcmp('J',val.fsmlabel)+ ...
-     strcmp('HoW',val.fsmlabel));
+idxr=logical(...
+     strcmpi('AS',c.abil.val.label).*fsflag+ ...
+     strcmpi('J',c.abil.val.label));
  
-idx4m=logical(... 
-     strcmp('SotR',val.fsmlabel)+strcmp('SotR(SD)',val.fsmlabel)+...
-     strcmp('SotR2',val.fsmlabel)+strcmp('CS',val.fsmlabel)+...
-     strcmp('HotR',val.fsmlabel));
+idxm=logical(... 
+     strcmpi('SotR',c.abil.val.label) + strcmpi('CS',c.abil.val.label)+...
+     strcmpi('HotR',c.abil.val.label));
 
-cps(strcmp('seal',val.fsmlabel))=sum(cps(idx4r)).*rhit + ...
-                                 sum(cps(idx4m)).*mhit;
- 
-idx5r=logical(...
-     strcmp('AS(Inq)',val.fsmlabel).*fsflag+ ...
-     strcmp('J(Inq)',val.fsmlabel)+ ...
-     strcmp('HoW(Inq)',val.fsmlabel));
- 
-idx5m=logical(... 
-     strcmp('SotR(Inq)',val.fsmlabel)+strcmp('SotR(SD)(Inq)',val.fsmlabel)+...
-     strcmp('SotR2(Inq)',val.fsmlabel)+strcmp('CS(Inq)',val.fsmlabel)+...
-     strcmp('HotR(Inq)',val.fsmlabel));
+%currently assuming that seals will be "corrected" to uniform behavior
+%note that this also requires c.exec.seal to be in 3-char format
+cps(strcmpi(c.exec.seal,c.abil.val.label))= ...
+    sum(cps(idxr)).*c.mdf.rahit(j) + sum(cps(idxm)).*c.mdf.mehit(j) ... %active sources
+    + c.mdf.mehit./c.player.wswing;   %melee swings
 
-cps(strcmp('seal(Inq)',val.fsmlabel))=sum(cps(idx5r)).*rhit + ...
-                                      sum(cps(idx5m)).*mhit;
+%censure
+cps(strcmpi('Censure',c.abil.val.label))= 1./c.player.censTick;
 
 end
