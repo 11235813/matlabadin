@@ -9,7 +9,7 @@ def_db;
 exec=execution_model('veng',1); 
 base=player_model('race','Human','prof','');
 npc=npc_model(base);
-egs=ddb.gearset{7};  %3=T11H, 4=T12, 5=T12H
+egs=ddb.gearset{8};  %3=T11H, 4=T12, 5=T12H
 gear_stats;
 talent=ddb.talentset{1};
 glyph=ddb.glyphset{4}; 

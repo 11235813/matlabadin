@@ -10,7 +10,7 @@ base=player_model('race','Human');
 npc=npc_model(base);
 buff=buff_model;
 talent=ddb.talentset{1}; %0/32/9, no HG
-egs=ddb.gearset{7};  %6=T13R, 7=T13N, 8=T13H
+egs=ddb.gearset{8};  %6=T13R, 7=T13N, 8=T13H
 glyph=ddb.glyphset{6}; %No glyphs
 
 %need to run these here so that the cfg structure can set hit and exp
