@@ -18,9 +18,8 @@ cnv.str_ap=2;
 cnv.int_sp=1;
 cnv.crit_phcrit=179.28004455;
 cnv.crit_spcrit=179.28004455;
-cnv.hit_phhit=120.10880279;
-cnv.hit_sphit=102.44573974;
-cnv.exp_exp=30.02719688;
+cnv.hit_hit=120.10880279;
+cnv.exp_exp=30.02719688.*4;
 cnv.haste_phhaste=128.05715942;
 cnv.haste_sphaste=128.05715942;
 
