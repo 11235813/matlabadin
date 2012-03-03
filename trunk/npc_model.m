@@ -62,7 +62,7 @@ if isempty(npc.out.spell)==1 npc.out.spell=0.5.*10.^5; end;
 %% Start building npc structure
 %level-based vars
 npc.lvlgap=npc.lvl-base.lvl;
-npc.skillgap=5.*(npc.lvl-base.lvl);
+npc.skillgap=5.*(npc.lvl-base.lvl); %probably unnecessary now
 %runtime flags
 lvlflag=npc.lvlgap>2;
 skillflag=npc.skillgap>10;
@@ -70,18 +70,20 @@ skillflag=npc.skillgap>10;
 %physical
 npc.armor=295.*npc.lvl-13983;
 
-npc.phmiss=5+npc.skillgap.*(0.1+0.1.*skillflag);
-npc.dodge=5+npc.skillgap.*0.1;
-npc.parry=5+npc.skillgap.*(0.1+0.5.*skillflag);
-npc.block=5; %invariant
+npc.memiss=3+npc.lvlgap.*1.5;
+npc.dodge=3+npc.lvlgap.*1.5;
+npc.parry=3+npc.lvlgap.*1.5;
+npc.block=3+npc.lvlgap.*1.5;
 
+%TODO: these need to be re-checked
 npc.glance=6.*(1+0.2.*npc.skillgap);
 npc.glancerdx=5.*(npc.lvlgap==0||npc.lvlgap==1) ...
     +15.*(npc.lvlgap==2)+25.*(npc.lvlgap==3);   %average damage reduction (5/5/15/25)
 npc.phcritsupp=0.12.*npc.skillgap+3.*skillflag; %melee crit supp
 
 %spell
-npc.spmiss=4+npc.lvlgap+10.*lvlflag;       %spell miss
+npc.spmiss=6+npc.lvlgap.*3;                %spell miss
+%TODO: check these, remove depecated
 npc.presist=0.*npc.lvlgap;                 %level-based partial resists (nil in 4.0)
 npc.spcritsupp=0.*npc.lvlgap+2.1.*lvlflag; %spell crit supp
 end

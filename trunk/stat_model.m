@@ -77,7 +77,7 @@ mdf.glyphSotR=1+0.1.*glyph.ShieldoftheRighteous; %SotR output
 mdf.glyphWoG=0.1.*glyph.WordofGlory;             %WoG output
 mdf.glyphCons=1+0.2.*glyph.Consecration;         %Consecration output (and cooldown)
 mdf.glyphFS=1+0.3.*glyph.FocusedShield;          %AS output
-mdf.glyphSoT=10.*glyph.SealofTruth.*mdf.rseal;   %expertise bonus (T/R)
+mdf.glyphSoT=10/4.*glyph.SealofTruth.*mdf.rseal; %expertise bonus (T/R)
 mdf.glyphSoI=0.05.*glyph.SealofInsight.*(strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)); %healing output
 mdf.glyphAscetic=1-0.3*glyph.AsceticCrusader;
 mdf.glyphHammerofWrath=1-glyph.HammerofWrath;
@@ -240,44 +240,26 @@ player.int=floor(base.stats.int.*mdf.stats)+floor((gear.int+extra.int+consum.int
 player.armorystr=base.stats.str+gear.str+extra.str; 
 
 %hit points
-player.hitpoints=base.health+(14.*player.sta-260)+gear.health+consum.health;
+player.HP=base.health+(14.*player.sta-260)+gear.health+consum.health;
 
 %armor
 player.armor=gear.barmor.*(1+mdf.Sanct).*mdf.meta_armor ...
     +gear.earmor+consum.earmor;
 
 %resistance and spell damage reduction
-player.resistance=0; %TODO : fix it (buff etc.)
-player.resist_c=400;
-player.spdr=player.resistance./(player.resistance+player.resist_c);
+player.spdr=0; %TODO: move this down with phdr?  Account for Sanctuary?
 
 %maximum mana
-player.manapoints=base.mana; %no more int scaling
-
-%% Hit Rating
-player.phhit=(gear.hit+extra.hit+consum.hit)./cnv.hit_phhit ...
-    +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
-player.sphit=(gear.hit+extra.hit+consum.hit)./cnv.hit_sphit ...
-    +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
-    %TODO: note absence of TbtL hit bonus 
-
-%% Expertise
-if ((strcmpi('Human',base.race)||strcmpi('Hum',base.race)) ...
-        &&(strcmp(egs(15).wtype,'swo')||strcmp(egs(15).wtype,'mac')))
-        base.exp=3;
-elseif ((strcmpi('Dwarf',base.race)||strcmpi('Dwa',base.race)) ...
-        &&strcmp(egs(15).wtype,'mac'))
-        base.exp=3;
-end
-player.exp=base.exp+((gear.exp+extra.exp+consum.exp)./cnv.exp_exp)+mdf.glyphSoT;
+player.mana=base.mana; %no more int scaling
 
 %% Haste 
+player.rating.haste=gear.haste+extra.haste+consum.haste;
 player.phhaste=100.*( ...
-    (1 + (gear.haste+extra.haste+consum.haste)./cnv.haste_phhaste./100).* ...
+    (1 + player.rating.haste./cnv.haste_phhaste./100).* ...
     mdf.mhaste ...
     -1);
 player.sphaste=100.*(...
-    (1+(gear.haste+extra.haste+consum.haste)./cnv.haste_sphaste./100).* ...
+    (1+player.rating.haste./cnv.haste_sphaste./100).* ...
     mdf.shaste ...
     -1);
 player.spgcd=max([1.5./(1+player.sphaste./100);ones(size(player.sphaste))]);
@@ -310,19 +292,6 @@ player.censTick=round(cens.BaseTick./mdf.sphaste.*1e3)./1e3; %spell haste
 % end
 % cens.NetDur=cens.NumTicks.*cens.NetTick;
 
-%TODO: determine whether GbtL mana returns scale with haste (probably not)
-% jotw.BaseTick=1;
-% jotw.BaseDur=10;
-% player.jotwTick=round(jotw.BaseTick./mdf.sphaste.*1e3)./1e3; %spell haste
-% for kkk=1:length(mdf.sphaste)
-%     if rem(jotw.BaseDur./jotw.NetTick(kkk),1)==0.5 && rem(floor(jotw.BaseDur./jotw.NetTick(kkk)),2)==1
-%         jotw.NumTicks(kkk)=floor(jotw.BaseDur./jotw.NetTick(kkk)+0.5);
-%     else
-%         jotw.NumTicks(kkk)=ceil(jotw.BaseDur./jotw.NetTick(kkk)-0.5);
-%     end
-% end
-% clear kkk
-% jotw.NetDur=jotw.NumTicks.*jotw.NetTick;
 
 %% Crit
 %multipliers
@@ -330,34 +299,36 @@ mdf.phcritm=2.*mdf.meta_crit;   %for physical attacks
 mdf.spcritm=1.5.*mdf.meta_crit; %for spells
 mdf.hcritm=2;                   %the critical healing meta can be safely ignored (4.2 compliance)
 
+%rating
+player.rating.crit=gear.crit+mdf.skinning+extra.crit+consum.crit;
 
 %melee abilities ("physical crit")
 player.phcrit=base.phcrit + ...                                            %base physical crit
     player.agi./cnv.agi_phcrit + ...                                       %AGI
-    (gear.crit+mdf.skinning+extra.crit+consum.crit)./cnv.crit_phcrit + ... %crit rating
+    (player.rating.crit)./cnv.crit_phcrit + ... %crit rating
     mdf.crit ...                                                           %buffs
     -npc.phcritsupp;                                                       %crit suppression
 
 %spell abilities ("spell crit")
 player.spcrit=base.spcrit + ...                                            %base spell crit
     player.int./cnv.int_spcrit + ...                                       %INT
-    (gear.crit+mdf.skinning+extra.crit+consum.crit)./cnv.crit_spcrit + ... %crit rating
+    (player.rating.crit)./cnv.crit_spcrit + ... %crit rating
     mdf.crit ...                                                           %buffs
     -npc.spcritsupp;                                                       %crit suppression
 
 %healing abilities ("heal crit")
-player.hcrit=player.spcrit+npc.spcritsupp; %why is this added?
+player.hcrit=player.spcrit+npc.spcritsupp; %TODO: why is this added? NPC spell crit suppression shouldn't affect heals
 
 %regular melee attacks (one-roll system)
 %this gets modified again after boss stats to enforce crit cap
 player.aacrit=base.phcrit + ...                                            %base physical crit
     player.agi./cnv.agi_phcrit + ...                                       %AGI
-    (gear.crit+mdf.skinning+extra.crit+consum.crit)./cnv.crit_phcrit + ... %crit rating
+    (player.rating.crit)./cnv.crit_phcrit + ... %crit rating
     mdf.crit ...                                                           %buffs
     -npc.phcritsupp;                                                       %crit suppression
 
 %explicit crit for non-standard abilities
-player.CScrit=player.phcrit+mdf.glyphCS; %RoL, glyph
+player.CScrit=player.phcrit+mdf.glyphCS;         %RoL, glyph
 player.WoGcrit=player.hcrit+mdf.SacShield;       %Sacred Shield
 
 %enforce crit caps for two-roll
@@ -389,23 +360,48 @@ player.sp=floor((base.sp+gear.sp+extra.sp+consum.sp+floor(player.str.*mdf.GbtL_s
 %relevant.  hsp is what we get from TbtL, and only affects damage.  We're
 %back to the old 2.x "spell power" and "healing power" modle, it seems.
 player.hsp=player.sp;  
-%TODO: consider removing hsp, probably irrelevant now
+%TODO: consider removing hsp, probably irrelevant now.  Check if GbtL works
+%similarly to the old TbtL (i.e., grants hsp but not sp).
 
 %% Mastery
-player.mast=base.mast+mdf.mast+...
-            ((gear.mast+extra.mas+consum.mast)./cnv.mast_mast);
+player.rating.mast=(gear.mast+extra.mas+consum.mast);
+player.mast=base.mast+mdf.mast+(player.rating.mast./cnv.mast_mast);
+
+%% Hit Rating and Expertise
+%TODO: check percentages when stats are available
+if ((strcmpi('Human',base.race)||strcmpi('Hum',base.race)) ...
+        &&(strcmp(egs(15).wtype,'swo')||strcmp(egs(15).wtype,'mac')))
+        base.exp=0.75;
+elseif ((strcmpi('Dwarf',base.race)||strcmpi('Dwa',base.race)) ...
+        &&strcmp(egs(15).wtype,'mac'))
+        base.exp=0.75;
+end
+
+%player expertise in percent
+player.rating.exp=(gear.exp+extra.exp+consum.exp);
+player.exp=base.exp+(player.rating.exp./cnv.exp_exp)+mdf.glyphSoT;
+
+player.rating.hit=(gear.hit+extra.hit+consum.hit);
+player.mehit=player.rating.hit./cnv.hit_hit ...
+    +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
+
+player.sphit=player.rating.hit./cnv.hit_hit ...
+    +player.exp ... %TODO: check if this is min(player.exp,7.5) or whether exp over the 7.5% dodge cap still contributes
+    +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
 
 %% Avoidance and Blocking
+player.rating.dodge=gear.dodge+consum.dodge;
+player.rating.parry=gear.parry+consum.parry ...
+                    +floor((player.str-base.stats.str).*0.27);
 %calculate DR for avoidance
-avoiddr=avoid_dr(gear.dodge+consum.dodge, ... %dodge
-    gear.parry+consum.parry+floor((player.str-base.stats.str).*0.27)); %parry
+avoiddr=avoid_dr(player.rating.dodge, ... %dodge
+                 player.rating.parry); %parry
 
 player.miss=base.miss-0.04.*npc.skillgap;
 player.dodge=base.dodge+avoiddr.dodgedr-0.04.*npc.skillgap;
 player.parry=base.parry+avoiddr.parrydr-0.04.*npc.skillgap;
 
-%at the moment, we don't have Redoubt to worry about, so we shouldnt' need
-%dynamic effects for block chance (hopefully?)
+%TODO: determime DR equation
 player.block=base.block+mdf.DivineBulwark.*player.mast-0.04.*npc.skillgap;
 
 %check for bounding issues, based on the attack table
@@ -414,18 +410,20 @@ player.dodge=max([player.dodge;zeros(size(player.dodge))]);
 player.parry=max([player.parry;zeros(size(player.parry))]);
 player.block=max([player.block;zeros(size(player.block))]);
 
-player.size.av=max([size(player.miss);size(player.parry);size(player.dodge);size(player.block)]);
-player.dodge=min([player.dodge.*ones(player.size.av); ...
-    (100-player.miss).*ones(player.size.av)]);
-player.parry=min([player.parry.*ones(player.size.av); ...
-    (100-player.miss-player.dodge).*ones(player.size.av)]);
-player.block=min([player.block.*ones(player.size.av); ...
-    (100-player.miss-player.dodge-player.parry).*ones(player.size.av)]);
+%Enforce combat table limits (for completeness)
+arrsize.av=max([size(player.miss);size(player.parry);size(player.dodge);size(player.block)]);
+player.dodge=min([player.dodge.*ones(arrsize.av); ...
+    (100-player.miss).*ones(arrsize.av)]);
+player.parry=min([player.parry.*ones(arrsize.av); ...
+    (100-player.miss-player.dodge).*ones(arrsize.av)]);
 
 player.avoid=player.miss+player.dodge+player.parry;
 player.avoidpct=player.avoid./100;
+%TODO: add effective block?
+%player.eblock=(1-player.avoidpct).*player.block;
 
-player.ctc=player.avoid+player.block;
+%CTC on equivalent one-roll table
+% player.ectc=player.avoid+(1-player.avoidpct).*player.block;
 
 %% Boss Stats
 %TODO: This section is a bit weird.  we have the npc structure already, but
@@ -441,9 +439,9 @@ player.ctc=player.avoid+player.block;
 
 target.swing=npc.swing; %TODO: redundant, remove?
 
-target.miss=max([(npc.phmiss-player.phhit);zeros(size(player.phhit))]);
-target.dodge=max([(npc.dodge-0.25.*player.exp);zeros(size(player.exp))]);
-target.parry=max([(npc.parry.*(exec.behind==0)-0.25.*player.exp);zeros(size(player.exp))]);
+target.miss=max([(npc.memiss-player.mehit);zeros(size(player.mehit))]);
+target.dodge=max([(npc.dodge-player.exp);zeros(size(player.exp))]);
+target.parry=max([(npc.parry.*(exec.behind==0)-max([(player.exp-7.5);zeros(size(player.exp))]));zeros(size(player.exp))]);
 target.avoid=target.miss+target.dodge+target.parry;
 target.block=npc.block.*npc.blockflag.*(exec.behind==0);
 
@@ -452,6 +450,7 @@ target.resrdx=(100-npc.presist)./100;
 
 %% Armor calcs
 %armor constant
+%TODO: re-check formula
 player.acoeff=2167.5*npc.lvl-158167.5;
 target.acoeff=2167.5*base.lvl-158167.5;
 %damage reduction
@@ -470,13 +469,11 @@ player.ndamage=gear.avgdmg+player.ap./14.*2.4; %normalized attacks (hardcoded)
 player.swing=gear.swing./mdf.phhaste;
 %PHR corrections
 phr=phr_model(exec,player.swing,target.swing,player.parry,player.block,0); %TODO: placeholder for deprecated Reckoning talent, modify phr_model inputs
-player.phs=phr.phs;     %store ph
-player.reck=phr.reck;   %store ru
-player.wswing=phr.phrs; %store st
+% player.phs=phr.phs;     %store ph %TODO: I think this is redundant now?
+player.wswing=phr.phrs; %store st 
 player.wdps=player.wdamage./player.wswing;
 %alternate values during bloodlust-type effects
 phr=phr_model(exec,gear.swing./mdf.blphhaste,target.swing,player.parry,player.block,0); %TODO: see above
-bl.reck=phr.reck;   %store ru
 bl.wswing=phr.phrs; %store st
 bl.wdps=player.wdamage./bl.wswing;
 
@@ -485,21 +482,23 @@ bl.wdps=player.wdamage./bl.wswing;
 %Hit & Damage modifier values
 mdf.phdmg=mdf.physdmg.*(1-target.phdr);
 mdf.mehit=1-(target.miss+target.dodge+target.parry)./100;
-mdf.rahit=1-target.miss./100;
+mdf.rahit=1-target.miss./100; 
 %TODO: mdf.spdmg is now redundant until mdf subclasses are implemented
 % mdf.spdmg=mdf.CoE.*mdf.ArcTac; %harmful only, healing does not benefit from these
 mdf.sphit=1-target.spmiss./100;
 
+%TODO: re-test whether aa is a one-roll system now
 %enforce one-roll system for auto-attacks
-player.size.hit=max([size(player.phhit);size(player.sphit);size(player.exp)]);
-player.aacrit=max([min([player.aacrit.*ones(player.size.hit); ...
-    (100-target.avoid-npc.glance-target.block)]);zeros(player.size.hit)]);
+arrsize.hit=max([size(player.mehit);size(player.sphit);size(player.exp)]);
+player.aacrit=max([min([player.aacrit.*ones(arrsize.hit); ...
+    (100-target.avoid-npc.glance-target.block)]);zeros(arrsize.hit)]);
 mdf.glancerdx=1-npc.glancerdx./100;
 mdf.blockrdx=0.7;
 mdf.aamodel=(mdf.mehit) ...                  %hit
     +(mdf.glancerdx-1).*npc.glance./100 ...  %glancing
     +(mdf.blockrdx-1).*target.block./100 ... %block
     +(mdf.phcritm-1).*player.aacrit./100;    %crit
+
 %enforce block events for two-roll systems (no critical blocks)
 mdf.memodel=mdf.mehit+(mdf.blockrdx-1).*target.block./100;
 mdf.ramodel=mdf.rahit+(mdf.blockrdx-1).*target.block./100;
@@ -509,8 +508,7 @@ mdf.ramodel=mdf.rahit+(mdf.blockrdx-1).*target.block./100;
 %our rotation looks like, and what procs PPM effects.
 
 %% Power Gains
-%Low-priority at the moment.  Assuming no haste-scaling on GbtL and
-%ignoring replenishment
+%Low-priority at the moment.  
 player.mps=0.05.*base.mana/2;
 % mps.Repl=0.01.*player.manapoints./10;
 
