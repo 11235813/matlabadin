@@ -10,6 +10,7 @@ namespace Matlabadin
         /// <summary>
         /// Calculates the set of next states after the next ability usage
         /// </summary>
+        /// <remarks>Compresses Nothing->Nothing transitions to reduce state space since and thus convergence time.</remarks>
         public static Choice<TState> NextAbilityStates(
             GraphParameters<TState> gp,
             IStateManager<TState> sm,

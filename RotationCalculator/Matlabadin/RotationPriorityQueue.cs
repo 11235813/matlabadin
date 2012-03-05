@@ -6,6 +6,41 @@ using System.Text.RegularExpressions;
 
 namespace Matlabadin
 {
+    /// <summary>
+    /// RotationPriorityQueue takes a 'rotation' string and determines
+    /// which ability would be used by that rotation in the given state.
+    /// 
+    /// Rotations strings consist of a > seperated list of abilities
+    /// each with zero or more conditionals. Ability capitalisation
+    /// and spelling must match that of Ability.cs. The ability
+    /// Nothing performs no action for the given state.
+    /// 
+    /// Holy Power: Abilities that use holy power can be post-pended
+    /// with the minimum holy power required for the ability to be used.
+    /// The default is 3 holy power.
+    /// 
+    /// Conditionals: conditionals take the following form:
+    /// [<type><Ability><op><value>]
+    /// where
+    /// type is "buff" or "cd"
+    /// op is one of < > <= >= = 
+    /// value is a numeric value
+    /// 
+    /// Example: HW[cdCS>0][cdCons>0]>CS[buffInq>0]>Cons>Inq2
+    ///  - will use Holy Wrath if Holy Wrach, Crusader Strike and Consecration are off cooldown
+    ///  - will use Crusader Strike if Crusader Strike is off cooldown and the Inquisition self-buff is active
+    ///  - will use Consecration if Consecration is off cooldown
+    ///  - will use Inquisition if 2 or more holy power is available
+    ///  - will do nothing if the above abilities were not used
+    /// 
+    /// Note that all abilities have an implicit condition that the
+    /// cooldown of the ability in the current state is zero. Abilities
+    /// with a non-zero cooldown are never used.
+    /// 
+    /// Special cases: prepending an ability with i I sd or SD is a
+    /// short-hand for [buffInq=0] [buffInq>0] [buffSD=0] and [buffSD>0]
+    /// conditions respectively.
+    /// </summary>
     public class RotationPriorityQueue<TState>
     {
         public Ability ActionToTake(GraphParameters<TState> gp, IStateManager<TState> sm, TState state)

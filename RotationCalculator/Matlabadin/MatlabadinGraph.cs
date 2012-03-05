@@ -5,6 +5,12 @@ using System.Text;
 
 namespace Matlabadin
 {
+    /// <summary>
+    /// FSM graph for the given graph parameters.
+    /// Generates a graph from the given parameters and calculates probabilities.
+    /// </summary>
+    /// <remarks>Graphs that only differ in hit can be cloned and for new
+    /// values of hit.</remarks>
     public class MatlabadinGraph<TState>
     {
         public MatlabadinGraph(GraphParameters<TState> gp, IStateManager<TState> sm)
@@ -16,7 +22,7 @@ namespace Matlabadin
         /// <summary>
         /// Clones a given graph.
         /// </summary>
-        /// <remarks>Cloning will onyl succeed if the graphs only differ in their transition probabilities.
+        /// <remarks>Cloning will only succeed if the graphs only differ in their transition probabilities.
         /// That is, they only differ in MeleeHit and RangeHit.</remarks>
         /// <param name="graph">Graph to clone.</param>
         /// <param name="gp">New parameters</param>
@@ -48,6 +54,9 @@ namespace Matlabadin
         public int Size { get { return index.Length; } }
         public GraphParameters<TState> GraphParameters { get; private set; }
         public IStateManager<TState> StateManager { get; private set; }
+        /// <summary>
+        /// Generates the state transition graph for the given graph parameters
+        /// </summary>
         private void GenerateGraph()
         {
             TState initialState = StateManager.InitialState();
@@ -97,6 +106,13 @@ namespace Matlabadin
                 return choice;
             }
         }
+        /// <summary>
+        /// Calculates state probabilities and outputs aggregated ability usage information.
+        /// </summary>
+        /// <param name="pr">initial estimation</param>
+        /// <param name="inqUptime">Inquistion uptime</param>
+        /// <param name="jotwUptime">JotW uptime</param>
+        /// <returns>Action frequency table</returns>
         public Dictionary<string, double> CalculateResults(double[] pr, out double inqUptime, out double jotwUptime)
         {
             // t = time in state
@@ -202,6 +218,13 @@ namespace Matlabadin
             finalAbsTolerance = absError;
             return statePr;
         }
+        /// <summary>
+        /// Calculates the maximum relative and absolute delta between the two state probability sets
+        /// </summary>
+        /// <param name="pr1">First set</param>
+        /// <param name="pr2">Second set</param>
+        /// <param name="relError">Maximum relative difference</param>
+        /// <param name="absError">Maximum absolute difference</param>
         private void CalculateError(double[] pr1, double[] pr2, out double relError, out double absError)
         {
             relError = 0;
@@ -240,7 +263,7 @@ namespace Matlabadin
         /// </remarks>
         /// <param name="pr">Current state probability</param>
         /// <param name="decayFactor">Weighting between current probabilities and next state probabilities. 0 indicates that the
-        /// previous probabilities are ignored, 0 indicates no weight for the next state state probabilities.</param>
+        /// previous probabilities are ignored, 1 indicates no weight for the next state state probabilities.</param>
         /// <returns>Updated state probabilities</returns>
         public double[] CalculateNextStateProbability(double[] pr, double decayFactor = 0)
         {
@@ -457,7 +480,7 @@ namespace Matlabadin
         #endregion
         #region TODO: optimisations
         // converge with floats before switching to double
-        // coalesce identical choice.pr[] arrays
+        // DONE[UpdateFromFixedWidthNextState] coalesce identical choice.pr[] arrays
         // Try the iterative algorithm that requires a L + I + U form by splitting transitions from a state to itself into two states
         #endregion
         // should all be private but we're exposing for now to make testing easier

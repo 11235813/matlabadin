@@ -34,8 +34,7 @@ namespace Matlabadin
         private static void ParallelProcess(TextReader input)
         {
             List<Task> taskList = new List<Task>();
-            // Optimisation order tasks to take advantage of graph reuse based on
-            // Task.Factory.Scheduler.MaximumConcurrencyLevel
+            // Optimisation: order tasks to take advantage of graph reuse based on Task.Factory.Scheduler.MaximumConcurrencyLevel
             foreach (string[] inputArgs in GetInputs(input))
             {
                 string[] args = inputArgs;
@@ -187,11 +186,15 @@ namespace Matlabadin
         }
         private static MatlabadinGraph<ulong> GenerateGraph(Int64GraphParameters gp, string rotation, out double[] hintPr)
         {
+            // If we have previously generated a graph for the rotation, we can reuse that one and we only need to recalculate
+            // the state probabilities due to differing hit/expertise.
             Tuple<MatlabadinGraph<ulong>, double[]> closestMatch = null;
             lock (existingGraphs)
             {
                 if (existingGraphs.ContainsKey(rotation))
                 {
+                    // use the graph with the closest euclidian distance in hit/expertise space since that should have
+                    // state probabilities closest to ours.
                     closestMatch = existingGraphs[rotation]
                         .Where(mg => mg.Item1.GraphParameters.HasSameShape(gp))
                         .OrderBy(mg => (mg.Item1.GraphParameters.MeleeHit - gp.MeleeHit) * (mg.Item1.GraphParameters.MeleeHit - gp.MeleeHit)
