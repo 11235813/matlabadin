@@ -50,8 +50,8 @@
 %egs.istierR    (logical : [tier11P tier12P tier13P], undefined if not a tier set item)
 %egs.isreforged (logical)
 
-%However, egs only has 17 slots, corresponding to the 17 relevant slots on
-%the paper doll. Ammo (0), Shirt(18), Tabard (19) are ignored.
+%However, egs only has 16 slots, corresponding to the 16 relevant slots on
+%the paper doll. Shirt(18), Tabard (19) are ignored.
 % HeadSlot          1
 % NeckSlot          2
 % ShoulderSlot      3
@@ -68,8 +68,6 @@
 % Trinket1Slot      14
 % MainHandSlot      15
 % OffHandSlot       16
-% RangedSlot        17
-
 
 %Equipping an item is as simple as invoking the equip() function.  See the
 %equip file for details about the syntax, but for a simple example we could

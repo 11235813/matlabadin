@@ -119,4 +119,6 @@ c.rot.hps=sum(c.rot.cps.*c.abil.val.heal);
 %     rot(r).actps=sum(cps.*val.fsmthr);
 
 
+%order fields alphabetically
+c=orderfields(c);
 end

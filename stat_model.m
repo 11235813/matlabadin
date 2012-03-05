@@ -519,4 +519,7 @@ c.mdf=mdf;
 c.consum=consum;
 c.extra=extra;
 %TODO: decide whether to repack bloodlust modifiers
+
+%order fields alphabetically
+c=orderfields(c);
 end

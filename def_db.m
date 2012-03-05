@@ -1,6 +1,7 @@
 %DEF_DB is a database of default configurations for gear, talents, glyphs,
 %etc.  This is for easy swapping between setups.
 
+global ddb
 %% Gear Sets
 
 %default gems
@@ -51,15 +52,12 @@ tempegs(10)=reforge(tempegs(10),'exp','mast');
 tempegs(10)=socket(tempegs(10),gem.yel);
 tempegs(11)=equip(72837); %Queen's Boon
 tempegs(11)=reforge(tempegs(11),'dodge','mast');
-tempegs(11)=equip(70940); %Deflecting Brimstone Band
+tempegs(12)=equip(70940); %Deflecting Brimstone Band
 tempegs(13)=equip(72900); %Veil of Lies
 tempegs(14)=equip(68996); %Stay of Execution
 tempegs(14)=reforge(tempegs(14),'dodge','mast');
 tempegs(15)=equip(72827); %Gavel of Peroth'arn
 tempegs(16)=equip(72855); %Corrupted Carapace
-tempegs(17)=equip(70939); %Deathclutch Figurine
-tempegs(17)=reforge(tempegs(17),'dodge','mast');
-tempegs(17)=socket(tempegs(17),gem.blu);
 
 %%Enchants (21-37)
 tempegs(21)=equip(86931,'s');%Earthen Ring
@@ -101,8 +99,6 @@ tempegs(13)=equip(59515); %Vial of Stolen Memories
 tempegs(14)=equip(62466); %Mirror of Broken Images / Unsolvable Riddle
 tempegs(15)=equip(59347); %Mace of Acrid Death
 tempegs(16)=equip(67145); %Blockade's Lost Shield
-tempegs(17)=equip(64676); %Relic of Khaz
-tempegs(17)=socket(tempegs(17),gem.blu);
 ddb.gearset(2)={tempegs};
 
 %T11 Heroic Raid set
@@ -130,8 +126,6 @@ tempegs(13)=equip(65109); %Vial of Stolen Memories H
 tempegs(14)=equip(62466); %Mirror of Broken Images / Unsolvable Riddle
 tempegs(15)=equip(65036); %Mace of Acrid Death H
 tempegs(16)=equip(65023); %Akmin-Kurai H
-tempegs(17)=equip(64676); %Relic of Khaz
-tempegs(17)=socket(tempegs(17),gem.blu);
 ddb.gearset(3)={tempegs};
 
 
@@ -168,9 +162,6 @@ tempegs(15)=equip(70922); %Mandible of Beth'tilac
 tempegs(16)=equip(70915); %Shard of Torment
 tempegs(16)=reforge(tempegs(16),'parry','mast');
 tempegs(16)=socket(tempegs(16),gem.blu,gem.blu);
-tempegs(17)=equip(70939); %Deathclutch Figurine
-tempegs(17)=reforge(tempegs(17),'dodge','mast');
-tempegs(17)=socket(tempegs(17),gem.blu);
 ddb.gearset(4)={tempegs};
 
 %T12 Heroic Raid set
@@ -210,9 +201,6 @@ tempegs(15)=equip(71406); %Mandible of Beth'tilac (H)
 tempegs(16)=equip(71460);  %Shard of Torment (H)
 tempegs(16)=reforge(tempegs(16),'parry','mast');
 tempegs(16)=socket(tempegs(16),gem.blu,gem.blu);
-tempegs(17)=equip(71590); %Deathclutch Figurine (H)
-tempegs(17)=reforge(tempegs(17),'dodge','mast');
-tempegs(17)=socket(tempegs(17),gem.blu);
 ddb.gearset(5)={tempegs};
 
 %T13 RaidFinder Set
@@ -250,8 +238,6 @@ tempegs(14)=equip(77983); %Indomitable Pride
 tempegs(15)=equip(78488); %Souldrinker
 tempegs(16)=equip(78456); %Blackhorn's Mighty Bulwark
 tempegs(16)=socket(tempegs(16),gem.yel,gem.blu);
-tempegs(17)=equip(77084); %Stoutheart Talisman
-tempegs(17)=socket(tempegs(17),gem.blu);
 ddb.gearset(6)={tempegs};
 
 gem=ddb.gemset{1};
@@ -291,8 +277,6 @@ tempegs(14)=equip(77211); %Indomitable Pride
 tempegs(15)=equip(77193); %Souldrinker
 tempegs(16)=equip(77226); %Blackhorn's Mighty Bulwark
 tempegs(16)=socket(tempegs(16),gem.yel,gem.blu);
-tempegs(17)=equip(77084); %Stoutheart Talisman
-tempegs(17)=socket(tempegs(17),gem.blu);
 ddb.gearset(7)={tempegs};
 
 %T13 Herioc Set
@@ -330,8 +314,6 @@ tempegs(14)=equip(78003); %Indomitable Pride (H)
 tempegs(15)=equip(78479); %Souldrinker (H)
 tempegs(16)=equip(78448); %Blackhorn's Mighty Bulwark (H)
 tempegs(16)=socket(tempegs(16),gem.yel,gem.blu);
-tempegs(17)=equip(77084); %Stoutheart Talisman
-tempegs(17)=socket(tempegs(17),gem.blu);
 ddb.gearset(8)={tempegs};
 
 
