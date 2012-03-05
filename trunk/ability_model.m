@@ -399,4 +399,6 @@ c.abil.threat=threat;
 c.abil.mcost=mcost;
 c.abil.val=val;
 
+%order fields alphabetically
+c=orderfields(c);
 end

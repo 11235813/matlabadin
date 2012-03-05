@@ -56,7 +56,7 @@ function [glyph] =  glyph_model(shortform)
 
 %% Input Handling
 
-if nargin<1
+if nargin<1 || (nargin==1 && isempty(shortform))
     shortform=[1 4 5; 1 2 6; 0 0 0];
 else
     if sum(size(shortform)==[3 3])~=2

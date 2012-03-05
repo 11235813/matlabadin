@@ -11,10 +11,10 @@ function [spec] =  spec_model(tree,level)
 
 %% input handling
 
-if nargin<1
+if nargin<1 || isempty(tree)
     tree='prot';
 end
-if nargin<2
+if nargin<2 || isempty(level)
     level=90;
 end
 
@@ -35,7 +35,7 @@ spec.GuardianofAncientKings=(level>85);
 spec.BlindingLight=(level>87);
 
 %% prot
-if tree == 'prot'
+if strcmp(tree,'prot')
     %Base bonuses for choosing prot (inherent @ level 10)
     spec.Vengeance=1;
     spec.GuardedbytheLight=1;
@@ -50,7 +50,7 @@ if tree == 'prot'
     spec.DivineBulwark=(level>80);
     
 %% ret    
-elseif tree=='ret'
+elseif strcmp(tree,'ret')
     %Base bonuses for choosing ret (inherent @ level 10)
     spec.TemplarsVerdict=1;
     spec.Sheathoflight=1;

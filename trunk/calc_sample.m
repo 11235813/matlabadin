@@ -1,21 +1,24 @@
 clear;
+%% Load Databases
 %load gear database
 gear_db;
 %load defaults database
 def_db;
 
-%Build simulation configuration
+%% Build simulation configuration
 %"c" is the default config structure name.  For sims which require multiple
 %configurations, we'll use c(1), c(2), etc.
 
+%Note that this entire section can be replaced with c=build_default_config
+
 %invoke player model
-c.base=player_model('race','Human');  %possibly rename "char_model"
+c.base=player_model;  %possibly rename "char_model"
 
 %invoke npc model
 c.npc=npc_model(c.base);
 
 %invoke execution_model
-c.exec=execution_model('npccount',1,'timein',1,'timeout',1,'seal','SoT','veng',1.0);
+c.exec=execution_model;
 
 %activate buffs and consumables
 c.buff=buff_model;
