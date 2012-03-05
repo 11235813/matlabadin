@@ -113,7 +113,7 @@ namespace Matlabadin
         /// <param name="inqUptime">Inquistion uptime</param>
         /// <param name="jotwUptime">JotW uptime</param>
         /// <returns>Action frequency table</returns>
-        public Dictionary<string, double> CalculateResults(double[] pr, out double inqUptime, out double jotwUptime)
+        public ActionSummary CalculateResults(double[] pr)
         {
             // t = time in state
             // pr = probability of being in state
@@ -121,18 +121,24 @@ namespace Matlabadin
             // pr(choice) = sum[all state=choice](pr) / sumtpr
             Dictionary<string, double> cps = new Dictionary<string, double>();
             double sumtpr = 0;
-            double suminqtpr = 0;
-            double sumjotwtpr = 0;
+            double sumsstpr = 0;
+            double sumeftpr = 0;
+            double sumwbtpr = 0;
+            double sumsbtpr = 0;
             for (int i = 0; i < index.Length; i++)
             {
                 Choice<TState> c = choice[i];
                 double t = c.stepsDuration * GraphParameters.StepDuration;
-                double inqt = c.inqDuration * GraphParameters.StepDuration;
-                double jotwt = c.jotwDuration * GraphParameters.StepDuration;
+                double sst = c.ssDuration * GraphParameters.StepDuration;
+                double eft = c.efDuration * GraphParameters.StepDuration;
+                double wbt = c.wbDuration * GraphParameters.StepDuration;
+                double sbt = c.sbDuration * GraphParameters.StepDuration;
                 double tpr = t * pr[i];
                 sumtpr += tpr;
-                suminqtpr += inqt * pr[i];
-                sumjotwtpr += jotwt * pr[i];
+                sumsstpr += sst * pr[i];
+                sumeftpr += eft * pr[i];
+                sumwbtpr += wbt * pr[i];
+                sumsbtpr += sbt * pr[i];
                 double currentPr;
                 if (!cps.TryGetValue(c.Action, out currentPr)) currentPr = 0;
                 if (c.Ability != Ability.Nothing)
@@ -141,13 +147,18 @@ namespace Matlabadin
                 }
                 else
                 {
-                    // Weight cast/s based on a notional 1 GCD cast time Nothing ability
+                    // Weighted cast/s based on a notional 1 GCD cast time Nothing ability
                     cps[c.Action] = currentPr + pr[i] * c.stepsDuration / this.GraphParameters.StepsPerGcd;
                 }
             }
-            inqUptime = suminqtpr / sumtpr;
-            jotwUptime = sumjotwtpr / sumtpr;
-            return cps.ToDictionary(kvp => kvp.Key, kvp => kvp.Value / sumtpr);
+            return new ActionSummary()
+            {
+                Action = cps.ToDictionary(kvp => kvp.Key, kvp => kvp.Value / sumtpr),
+                UptimeSS = sumsstpr / sumtpr,
+                UptimeEF = sumeftpr / sumtpr,
+                UptimeWB = sumwbtpr / sumtpr,
+                UptimeSB = sumsbtpr / sumtpr,
+            };
         }
         /// <summary>
         /// Calcualtes the state probabilities for the given graph using iterative approximation.

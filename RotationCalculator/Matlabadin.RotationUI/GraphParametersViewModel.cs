@@ -10,13 +10,8 @@ namespace Matlabadin.RotationUI
     {
         public string Rotation { get; set; }
         public int StepsPerGCD { get; set; }
-        public bool UseConsGlyph { get; set; }
         public double MeleeHit { get; set; }
         public double RangeHit { get; set; }
-        public double SDProcRate { get; set; }
-        public double GCProcRate { get; set; }
-        public double EGProcRate { get; set; }
-        public bool RetT13 { get; set; }
         public bool CalculatePr { get; set; }
 
         public GraphViewModel Graph { get; private set; }
@@ -24,20 +19,15 @@ namespace Matlabadin.RotationUI
         {
             Rotation = "SotR>CS>AS>J";
             StepsPerGCD = 3;
-            UseConsGlyph = false;
             MeleeHit = 0.735;
             RangeHit = 0.94;
-            RetT13 = false;
-            SDProcRate = 0.5;
-            GCProcRate = 0.2;
-            EGProcRate = 0;
             CalculatePr = true;
             GenerateGraph();
         }
         public void GenerateGraph()
         {
             RotationPriorityQueue<ulong> queue = new RotationPriorityQueue<ulong>(Rotation);
-            Int64GraphParameters gp = new Int64GraphParameters(queue, StepsPerGCD, UseConsGlyph, MeleeHit, RangeHit, SDProcRate, GCProcRate, EGProcRate, RetT13);
+            Int64GraphParameters gp = new Int64GraphParameters(queue, StepsPerGCD, MeleeHit, RangeHit);
             MatlabadinGraph<ulong> graph = new MatlabadinGraph<ulong>(gp, gp);
             double[] pr = null;
             if (CalculatePr)

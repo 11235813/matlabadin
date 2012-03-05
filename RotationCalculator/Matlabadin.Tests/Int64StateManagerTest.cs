@@ -13,7 +13,7 @@ namespace Matlabadin.Tests
         {
             get
             {
-                return new Int64GraphParameters(R, 3, false, 0.5, 0.5, 0.5, 0.2, 0.3);
+                return new Int64GraphParameters(R, 3, 0.5, 0.5);
             }
         }
     }

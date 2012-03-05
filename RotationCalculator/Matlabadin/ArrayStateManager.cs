@@ -77,7 +77,7 @@ namespace Matlabadin
         {
             return new StateArray()
             {
-                hp = Math.Min(state.hp + 1, 3),
+                hp = Math.Min(state.hp + 1, 5),
                 cd = state.cd,
                 duration = state.duration,
             };

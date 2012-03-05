@@ -60,26 +60,20 @@ namespace Matlabadin
             if (args.Length < 9) Usage();
             string rotation;
             int stepsPerGcd;
-            bool useConsGlyph, hpOnJ;
-            double mehit, rhit, sd, gc, eg;
+            double mehit, rhit;
             rotation = args[0];
             if (!Int32.TryParse(args[1], out stepsPerGcd)) Usage();
-            if (!Boolean.TryParse(args[2], out useConsGlyph)) Usage();
-            if (!Double.TryParse(args[3], out mehit)) Usage();
-            if (!Double.TryParse(args[4], out rhit)) Usage();
-            if (!Double.TryParse(args[5], out sd)) Usage();
-            if (!Double.TryParse(args[6], out gc)) Usage();
-            if (!Double.TryParse(args[7], out eg)) Usage();
-            if (!Boolean.TryParse(args[8], out hpOnJ)) Usage();
-            string file = args.Length >= 10 ? args[9] : null;
-            ProcessGraph(file, rotation, stepsPerGcd, useConsGlyph, mehit, rhit, sd, gc, eg, hpOnJ);
+            if (!Double.TryParse(args[2], out mehit)) Usage();
+            if (!Double.TryParse(args[3], out rhit)) Usage();
+            string file = args.Length >= 4 ? args[4] : null;
+            ProcessGraph(file, rotation, stepsPerGcd, mehit, rhit);
         }
         private static DateTime BuildTime = new FileInfo(typeof(Program).Assembly.Location).CreationTime;
-        private static void ProcessGraph(string file, string rotation, int stepsPerGcd, bool useConsGlyph, double mehit, double rhit, double sd, double gc, double eg, bool hpOnJ)
+        private static void ProcessGraph(string file, string rotation, int stepsPerGcd, double mehit, double rhit)
         {
             if (file == null)
             {
-                ProcessGraph(Console.Out, rotation, stepsPerGcd, useConsGlyph, mehit, rhit, sd, gc, eg, hpOnJ);
+                ProcessGraph(Console.Out, rotation, stepsPerGcd, mehit, rhit);
             }
             else
             {
@@ -106,26 +100,20 @@ namespace Matlabadin
                 }
                 using (StringWriter sw = new StringWriter())
                 {
-                    ProcessGraph(sw, rotation, stepsPerGcd, useConsGlyph, mehit, rhit, sd, gc, eg, hpOnJ);
+                    ProcessGraph(sw, rotation, stepsPerGcd, mehit, rhit);
                     File.WriteAllText(file, sw.ToString());
                 }
             }
         }
-        private static void ProcessGraph(TextWriter stream, string rotation, int stepsPerGcd, bool useConsGlyph, double mehit, double rhit, double sd, double gc, double eg, bool hpOnJ)
+        private static void ProcessGraph(TextWriter stream, string rotation, int stepsPerGcd, double mehit, double rhit)
         {
             if (mehit < BaseMeleeHit) Console.Error.WriteLine("Warning: {0} melee hit would require negative hit rating", mehit);
             if (rhit < BaseRangeHit) Console.Error.WriteLine("Warning: {0} range hit would require negative hit rating", rhit);
-            if (sd > 0.5) Console.Error.WriteLine("Warning: SD proc rate of {0} requires more than 2 talent points", sd);
-            if (gc > 0.2) Console.Error.WriteLine("Warning: GC proc rate of {0} requires more than 2 talent points", gc);
-            if (eg > 0.3) Console.Error.WriteLine("Warning: EG proc rate of {0} requires more than 2 talent points", eg);
             if (mehit > 1) { Console.Error.WriteLine("Warning: invalid melee hit {0}", mehit); Usage(); }
             if (rhit > 1) { Console.Error.WriteLine("Warning: invalid range hit {0}", rhit); Usage(); }
-            if (sd < 0) { Console.Error.WriteLine("Warning: invalid sd proc rate {0}", sd); Usage(); }
-            if (gc < 0) { Console.Error.WriteLine("Warning: invalid sd proc rate {0}", gc); Usage(); }
-            if (eg < 0) { Console.Error.WriteLine("Warning: invalid sd proc rate {0}", eg); Usage(); }
             if (stepsPerGcd != 1 && stepsPerGcd != 3 && stepsPerGcd != 5) Console.Error.WriteLine("Warning: {0} steps per GCD is untested", stepsPerGcd);
             RotationPriorityQueue<ulong> queue = new RotationPriorityQueue<ulong>(rotation);
-            Int64GraphParameters gp = new Int64GraphParameters(queue, stepsPerGcd, useConsGlyph, mehit, rhit, sd, gc, eg, hpOnJ);
+            Int64GraphParameters gp = new Int64GraphParameters(queue, stepsPerGcd, mehit, rhit);
             Stopwatch generateGraphStopWatch = new Stopwatch();
             generateGraphStopWatch.Start();
             double[] hintPr;
@@ -144,16 +132,16 @@ namespace Matlabadin
             CacheGraph(graph, pr);
             Stopwatch aggregateStopWatch = new Stopwatch();
             aggregateStopWatch.Start();
-            double inqUptime;
-            double jotwUptime;
-            var result = graph.CalculateResults(pr, out inqUptime, out jotwUptime);
+            ActionSummary result = graph.CalculateResults(pr);
             aggregateStopWatch.Stop();
-            foreach (var key in result.Keys.OrderBy(k => k))
+            foreach (var key in result.Action.Keys.OrderBy(k => k))
             {
-                stream.WriteLine("{0},{1}", key, result[key]);
+                stream.WriteLine("{0},{1}", key, result.Action[key]);
             }
-            stream.WriteLine("Uptime_Inq,{0}", inqUptime);
-            stream.WriteLine("Uptime_JotW,{0}", jotwUptime);
+            stream.WriteLine("Uptime_SacredShield,{0}", result.UptimeSS);
+            stream.WriteLine("Uptime_EternalFlame,{0}", result.UptimeEF);
+            stream.WriteLine("Uptime_WeakenedBlows,{0}", result.UptimeWB);
+            stream.WriteLine("Uptime_SotRShieldBlock,{0}", result.UptimeSB);
             stream.WriteLine("Stats_StateSize_Total,{0}", graph.Size);
             stream.WriteLine("Stats_StateSize_NonZero,{0}", pr.Count(p => p > 0));
             stream.WriteLine("Stats_Iterations,{0}", iterationsPerformed);
@@ -166,11 +154,6 @@ namespace Matlabadin
             stream.WriteLine("Param_Rotation,{0}", rotation);
             stream.WriteLine("Param_Hit_Melee,{0}", mehit);
             stream.WriteLine("Param_Hit_Ranged,{0}", rhit);
-            stream.WriteLine("Param_Glyph_Cons,{0}", useConsGlyph);
-            stream.WriteLine("Param_ProcRate_SD,{0}", sd);
-            stream.WriteLine("Param_ProcRate_GC,{0}", gc);
-            stream.WriteLine("Param_ProcRate_EG,{0}", eg);
-            stream.WriteLine("Param_SetBonus_T13Ret2Piece,{0}", hpOnJ);
         }
         private static void CacheGraph(MatlabadinGraph<ulong> mg, double[] pr)
         {

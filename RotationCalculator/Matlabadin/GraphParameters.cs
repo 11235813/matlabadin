@@ -10,32 +10,24 @@ namespace Matlabadin
         public GraphParameters(
             RotationPriorityQueue<TState> rotation,
             int stepsPerGcd,
-            bool useConsGlyph,
             double mehit,
-            double rhit,
-            double sdProcRate,
-            double gcProcRate,
-            double egProcRate,
-            bool hpOnJudgement)
+            double rhit
+            )
         {
-            double[] abilityCooldowns = {20, 3, 8, 15, useConsGlyph ? 30 * 1.2 : 30, 15, 6}; // WoG,CS,J,AS,Cons,HW,HoW,
+            double[] abilityCooldowns = { 4.5, 6, 9, 9, }; // CS, J, AS, Cons
             // GC buff duration extended by 0.5s since the server takes time to apply the buff and it is active 4 GCDs after triggering
-            double[] buffDurations = { 6.5, 10, 12, 15, 10 }; // GC, SD, INQ, EGICD , JotW
+            double[] buffDurations = { 6.5, 30, 30, 30, 6, }; // GC, EF, SS, WB, SotRSB
             this.StepDuration = 1.5 / stepsPerGcd;
             this.StepsPerGcd = stepsPerGcd;
             this.abilitySteps = abilityCooldowns.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();
             this.buffSteps = buffDurations.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();
-            this.UseConsGlyph = useConsGlyph;
-            this.SDProcRate = sdProcRate;
-            this.GCProcRate = gcProcRate;
-            this.EGProcRate = egProcRate;
             this.MeleeHit = mehit;
             this.RangeHit = rhit;
             this.Rotation = rotation;
-            this.HpOnJudgement = hpOnJudgement;
         }
         public double StepDuration { get; private set; }
         public int StepsPerGcd { get; private set; }
+        public double GCProcRate { get { return 0.4; } }
         public int AbilityCooldownInSteps(Ability ability)
         {
             if (ability == Ability.HotR) return AbilityCooldownInSteps(Ability.CS);
@@ -49,8 +41,19 @@ namespace Matlabadin
         /// <returns></returns>
         public int AbilityCastTimeInSteps(Ability ability)
         {
-            if (ability == Ability.Nothing) return 1; // single step
-            return this.StepsPerGcd; // everything in prot is instant cast = 1 GCD
+            switch (ability)
+            {
+                case Ability.WoG:
+                case Ability.SotR:
+                    // Off-GCD
+                    return 0;
+                case Ability.Nothing:
+                    // only a single step advance
+                    return 1; 
+                default:
+                    // everything else (we would realistically use while tanking) is 1 GCD duration
+                    return this.StepsPerGcd;
+            }
         }
         public int BuffDurationInSteps(Buff buff)
         {
@@ -60,11 +63,6 @@ namespace Matlabadin
         {
             return this.Rotation.PriorityQueue == gp.Rotation.PriorityQueue
                 && this.StepsPerGcd == gp.StepsPerGcd
-                && this.UseConsGlyph == gp.UseConsGlyph
-                && this.SDProcRate == gp.SDProcRate
-                && this.GCProcRate == gp.GCProcRate
-                && this.EGProcRate == gp.EGProcRate
-                && this.HpOnJudgement == gp.HpOnJudgement
                 && hitGeneratesSameShape(this.MeleeHit, gp.MeleeHit)
                 && hitGeneratesSameShape(this.RangeHit, gp.RangeHit);
         }
@@ -75,11 +73,6 @@ namespace Matlabadin
         }
         public double MeleeHit { get; private set; }
         public double RangeHit { get; private set; }
-        public double SDProcRate { get; private set; }
-        public double GCProcRate { get; private set; }
-        public double EGProcRate { get; private set; }
-        public bool UseConsGlyph { get; private set; }
-        public bool HpOnJudgement { get; private set; }
         public RotationPriorityQueue<TState> Rotation { get; private set; }
         private readonly int[] abilitySteps;
         private readonly int[] buffSteps;

@@ -10,23 +10,13 @@ namespace Matlabadin
         public Int64GraphParameters(
             RotationPriorityQueue<ulong> rotation,
             int stepsPerGcd,
-            bool useConsGlyph,
             double mehit,
-            double rhit,
-            double sdProcRate,
-            double gcProcRate,
-            double egProcRate,
-            bool hpOnJudgement = false)
+            double rhit)
             : base(
             rotation,
             stepsPerGcd,
-            useConsGlyph,
             mehit,
-            rhit,
-            sdProcRate,
-            gcProcRate,
-            egProcRate,
-            hpOnJudgement)
+            rhit)
         {
             CalculateBitOffsets();
         }
@@ -36,7 +26,7 @@ namespace Matlabadin
         /// </summary>
         private void CalculateBitOffsets()
         {
-            int bit = 2; // HP takes the first two bits
+            int bit = 3; // HP takes the first three bits
             AbilityCooldownStartBit = new int[(int)Ability.Count];
             AbilityCooldownBits = new int[(int)Ability.Count];
             for (int i = (int)Ability.CooldownIndicator + 1; i < (int)Ability.Count; i++)
@@ -112,15 +102,15 @@ namespace Matlabadin
         }
         public int HP(ulong state)
         {
-            return Unpack(state, 0, 2);
+            return Unpack(state, 0, 3);
         }
         public ulong IncHP(ulong state)
         {
-            return SetHP(state, Math.Min(3, HP(state) + 1));
+            return SetHP(state, Math.Min(5, HP(state) + 1));
         }
         public ulong SetHP(ulong state, int hp)
         {
-            return Pack(state, 0, 2, hp);
+            return Pack(state, 0, 3, hp);
         }
         public ulong SetCooldownRemaining(ulong state, Ability ability, int cd)
         {

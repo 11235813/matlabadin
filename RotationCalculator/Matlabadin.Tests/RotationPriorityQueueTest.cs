@@ -25,19 +25,16 @@ namespace Matlabadin.Tests
                 DoTest(gp, gp.SetHP(0, 3), (Ability)Enum.Parse(typeof(Ability), ability, false));
             };
             doTest("CS");
-            doTest("SotR");
-            doTest("HoW");
-            doTest("HW");
-            doTest("SotR");
-            doTest("WoG");
-            doTest("HotR");
             doTest("Cons");
             doTest("AS");
-            doTest("Inq");
             doTest("J");
+            doTest("SotR");
+            doTest("SS");
+            doTest("EF");
+            doTest("WoG");
         }
         [TestMethod]
-        public void SotRShouldBeSotR3()
+        public void SotRShouldRequire3HP()
         {
             DoTest("SotR", 0, Ability.Nothing);
             DoTest("SotR", 1, Ability.Nothing);
@@ -45,18 +42,22 @@ namespace Matlabadin.Tests
             DoTest("SotR", 3, Ability.SotR);
         }
         [TestMethod]
-        public void SotR2ShouldFireOn2Or3()
+        public void NumericSuffixShouldIndicateMinHolyPowerToUseAbility()
         {
-            DoTest("SotR2", 0, Ability.Nothing);
-            DoTest("SotR2", 1, Ability.Nothing);
-            DoTest("SotR2", 2, Ability.SotR);
-            DoTest("SotR2", 3, Ability.SotR);
+            DoTest("J0", 0, Ability.J);
+            DoTest("J0", 1, Ability.J);
+            DoTest("J5", 0, Ability.Nothing);
+            DoTest("J5", 1, Ability.Nothing);
+            DoTest("J5", 2, Ability.Nothing);
+            DoTest("J5", 3, Ability.Nothing);
+            DoTest("J5", 4, Ability.Nothing);
+            DoTest("J5", 5, Ability.J);
         }
         [TestMethod]
         public void ShouldPrioritiseHigherAbilities()
         {
-            DoTest("CS>HW", 0, Ability.CS);
-            DoTest("HW>CS", 0, Ability.HW);
+            DoTest("CS>Cons", 0, Ability.CS);
+            DoTest("Cons>CS", 0, Ability.Cons);
         }
         [TestMethod]
         public void ASPlusShouldUseASIfWillGenerateHP()
@@ -66,64 +67,12 @@ namespace Matlabadin.Tests
             DoTest(gp, 0, Ability.CS);
         }
         [TestMethod]
-        public void SDPrefixShouldRequireSDBuff()
-        {
-            Int64GraphParameters gp = NoHitExpertise("SDCS");
-            DoTest(gp, 0, Ability.Nothing);
-            DoTest(gp, GetState(gp, Buff.SD, 1), Ability.CS);
-
-            gp = NoHitExpertise("SDSotR");
-            DoTest(gp, 3, Ability.Nothing);
-            DoTest(gp, GetState(gp, Buff.SD, 1, 3), Ability.SotR);
-        }
-        [TestMethod]
-        public void sdPrefixShouldRequireNoSDBuff()
-        {
-            Int64GraphParameters gp = NoHitExpertise("sdCS");
-            DoTest(gp, 0, Ability.CS);
-            DoTest(gp, GetState(gp, Buff.SD, 1), Ability.Nothing);
-
-            gp = NoHitExpertise("sdSotR");
-            DoTest(gp, 3, Ability.SotR);
-            DoTest(gp, GetState(gp, Buff.SD, 1, 3), Ability.Nothing);
-        }
-        [TestMethod]
-        public void IPrefixShouldRequireIBuff()
-        {
-            Int64GraphParameters gp = NoHitExpertise("ICS");
-            DoTest(gp, 0, Ability.Nothing);
-            DoTest(gp, GetState(gp, Buff.Inq, 1), Ability.CS);
-
-            gp = NoHitExpertise("ISotR");
-            DoTest(gp, 3, Ability.Nothing);
-            DoTest(gp, GetState(gp, Buff.Inq, 1, 3), Ability.SotR);
-        }
-        [TestMethod]
-        public void iPrefixShouldRequireNoInqBuff()
-        {
-            Int64GraphParameters gp = NoHitExpertise("iCS");
-            DoTest(gp, 0, Ability.CS);
-            DoTest(gp, GetState(gp, Buff.Inq, 1), Ability.Nothing);
-            gp = NoHitExpertise("iSotR");
-            DoTest(gp, 3, Ability.SotR);
-            DoTest(gp, GetState(gp, Buff.Inq, 1, 3), Ability.Nothing);
-        }
-        [TestMethod]
-        public void Inq2ShouldRequire2HP()
-        {
-            Int64GraphParameters gp = NoHitExpertise("Inq2");
-            DoTest(gp, 0, Ability.Nothing);
-            DoTest(gp, 1, Ability.Nothing);
-            DoTest(gp, 2, Ability.Inq);
-            DoTest(gp, 3, Ability.Inq);
-        }
-        [TestMethod]
         public void HPConditionalShouldNotRequireConditional()
         {
-            Int64GraphParameters gp = NoHitExpertise("HW[HP=2]");
+            Int64GraphParameters gp = NoHitExpertise("Cons[HP=2]");
             DoTest(gp, 0, Ability.Nothing);
             DoTest(gp, 1, Ability.Nothing);
-            DoTest(gp, 2, Ability.HW);
+            DoTest(gp, 2, Ability.Cons);
             DoTest(gp, 3, Ability.Nothing);
         }
         [TestMethod]
@@ -131,20 +80,20 @@ namespace Matlabadin.Tests
         {
             Int64GraphParameters gp;
             // basic tests
-            gp = NoHitExpertise("HW[cdCS>0]>CS");
+            gp = NoHitExpertise("Cons[cdCS>0]>CS");
             DoTest(gp, 0, Ability.CS);
-            DoTest(gp, GetState(gp, Ability.CS, 3), Ability.HW);
-            gp = NoHitExpertise("Cons[buffInq>0]>CS");
+            DoTest(gp, GetState(gp, Ability.CS, 3), Ability.Cons);
+            gp = NoHitExpertise("AS[buffGC>0]>CS");
             DoTest(gp, 0, Ability.CS);
-            DoTest(gp, GetState(gp, Buff.Inq, 3), Ability.Cons);
-            DoTest(gp, GetState(gp, Buff.Inq, 3, GetState(gp, Ability.Cons, 1)), Ability.CS);
+            DoTest(gp, GetState(gp, Buff.GC, 3), Ability.AS);
+            DoTest(gp, GetState(gp, Buff.GC, 3, GetState(gp, Ability.AS, 1)), Ability.CS);
 
             // test multiple conditionals
-            gp = NoHitExpertise("HW[cdCS>0][cdCons>0]>CS>Cons");
+            gp = NoHitExpertise("J[cdCS>0][cdCons>0]>CS>Cons");
             DoTest(gp, 0, Ability.CS);
             DoTest(gp, GetState(gp, Ability.CS, 3), Ability.Cons);
             DoTest(gp, GetState(gp, Ability.Cons, 3), Ability.CS);
-            DoTest(gp, GetState(gp, Ability.Cons, 3, Ability.CS, 3), Ability.HW);
+            DoTest(gp, GetState(gp, Ability.Cons, 3, Ability.CS, 3), Ability.J);
 
             // test operators
             gp = NoHitExpertise("CS[cdCons=1.5]>Cons");
