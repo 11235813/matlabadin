@@ -14,19 +14,18 @@ namespace Matlabadin.Tests
         {
             foreach (Ability a in new Ability[] {
                 Ability.Nothing,
-                Ability.Inq,
                 Ability.SotR,
-                Ability.HotR,
                 Ability.WoG,
+                Ability.EF,
+                Ability.SS,
+                Ability.HotR,
                 Ability.CS,
                 Ability.J,
                 Ability.AS,
                 Ability.Cons,
-                Ability.HW,
-                Ability.HoW,
             })
             {
-                Assert.AreEqual(Math.Max(0, GP.AbilityCooldownInSteps(a) - 3), SM.CooldownRemaining(StateHelper<ulong>.UseAbility(GP, SM, 0, a), a));
+                Assert.AreEqual(Math.Max(0, GP.AbilityCooldownInSteps(a) - 3), SM.CooldownRemaining(StateHelper<ulong>.UseAbility(GP, SM, 3, a), a));
             }
         }
         [TestMethod]
@@ -36,10 +35,11 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 0, Ability.CS, hit: false)));
         }
         [TestMethod]
-        public void UseAbility_HPShouldCapAt3()
+        public void UseAbility_HPShouldCapAt5()
         {
-            Assert.AreEqual(3, SM.HP(StateHelper<ulong>.UseAbility(GP, SM,3, Ability.CS, hit: true)));
-            Assert.AreEqual(3, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, GetState(SM, Buff.GC, 1, 3), Ability.AS, hit: true)));
+            Assert.AreEqual(4, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 3, Ability.CS, hit: true)));
+            Assert.AreEqual(5, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 4, Ability.CS, hit: true)));
+            Assert.AreEqual(5, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 5, Ability.CS, hit: true)));
         }
         [TestMethod]
         public void UseAbility_HotRShouldGiveHPOnHitOnly()
@@ -50,8 +50,14 @@ namespace Matlabadin.Tests
         [TestMethod]
         public void UseAbility_SotRShouldConsumeHPOnHitOnly()
         {
-            Assert.AreEqual(0, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 2, Ability.SotR, hit: true)));
-            Assert.AreEqual(2, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 2, Ability.SotR, hit: false)));
+            Assert.AreEqual(0, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 3, Ability.SotR, hit: true)));
+            Assert.AreEqual(3, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 3, Ability.SotR, hit: false)));
+        }
+        [TestMethod]
+        public void UseAbility_JShouldGiveHPOnHitOnly()
+        {
+            Assert.AreEqual(1, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 0, Ability.J, hit: true)));
+            Assert.AreEqual(0, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 0, Ability.J, hit: false)));
         }
         [TestMethod]
         public void UseAbility_WoGShouldConsumeHP()
@@ -59,43 +65,12 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 2, Ability.WoG)));
         }
         [TestMethod]
-        public void UseAbility_WoGEGShouldNotConsumeHP()
+        public void UseAbility_MaximumOf3HPShouldBeConsumed()
         {
-            Assert.AreEqual(3, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 3, Ability.WoG, egProc: true)));
-        }
-        [TestMethod]
-        public void UseAbility_WoGEGShouldSetICD()
-        {
-            Assert.AreNotEqual(0, SM.TimeRemaining(StateHelper<ulong>.UseAbility(GP, SM, 3, Ability.WoG, egProc: true), Buff.EGICD));
-        }
-        [TestMethod]
-        public void UseAbility_JShouldSetJotw()
-        {
-            Assert.AreNotEqual(0, SM.TimeRemaining(StateHelper<ulong>.UseAbility(GP, SM, 0, Ability.J), Buff.JotW));
-        }
-        [TestMethod]
-        public void UseAbility_InqShouldConsumeHP()
-        {
-            Assert.AreEqual(0, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 2, Ability.Inq)));
-        }
-        [TestMethod]
-        public void UseAbility_InqDurationShouldBeDeterminedByHP()
-        {
-            Assert.AreEqual(12 * 2 - 3, SM.TimeRemaining(StateHelper<ulong>.UseAbility(GP, SM, 3, Ability.Inq), Buff.Inq));
-            Assert.AreEqual(8 * 2 - 3, SM.TimeRemaining(StateHelper<ulong>.UseAbility(GP, SM, 2, Ability.Inq), Buff.Inq));
-            Assert.AreEqual(4 * 2 - 3, SM.TimeRemaining(StateHelper<ulong>.UseAbility(GP, SM, 1, Ability.Inq), Buff.Inq));
-        }
-        [TestMethod]
-        public void UseAbility_SDBuffShouldBeSetForSDProc()
-        {
-            Assert.AreNotEqual(0, SM.TimeRemaining(StateHelper<ulong>.UseAbility(GP, SM, 0, Ability.J, hit:true, sdProc: true), Buff.SD));
-            Assert.AreNotEqual(0, SM.TimeRemaining(StateHelper<ulong>.UseAbility(GP, SM, 0, Ability.AS, hit: true, sdProc: true), Buff.SD));
-        }
-        [TestMethod]
-        public void UseAbility_SDShouldResetSDDuration()
-        {
-            Assert.AreNotEqual(1, SM.TimeRemaining(StateHelper<ulong>.UseAbility(GP, SM, GetState(SM, Buff.SD, 4), Ability.J, hit: true, sdProc: true), Buff.SD));
-            Assert.AreNotEqual(1, SM.TimeRemaining(StateHelper<ulong>.UseAbility(GP, SM, GetState(SM, Buff.SD, 4), Ability.AS, hit: true, sdProc: true), Buff.SD));
+            Assert.AreEqual(2, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 5, Ability.WoG)));
+            Assert.AreEqual(2, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 5, Ability.SotR)));
+            Assert.AreEqual(2, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 5, Ability.EF)));
+            Assert.AreEqual(2, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 5, Ability.SS)));
         }
         [TestMethod]
         public void UseAbility_GCSProcShouldSetGCBuff()
@@ -108,12 +83,22 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0, SM.TimeRemaining(StateHelper<ulong>.UseAbility(GP, SM, GetState(SM, Buff.GC, 4), Ability.AS, hit: true), Buff.GC));
         }
         [TestMethod]
-        public void UseAbility_ASShouldGiveHP() // UseAbility_ASShouldGiveHPIffGCActiveAndHit() // 4.1 patch change: AS cast on-hit
+        public void UseAbility_ASGCShouldGiveHPOnCast() // UseAbility_ASShouldGiveHPIffGCActiveAndHit() // 4.1 patch change: AS cast on-hit
         {
             Assert.AreEqual(0, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 0, Ability.AS, hit: true)));
             Assert.AreEqual(0, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, 0, Ability.AS, hit: false)));
             Assert.AreEqual(1, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, GetState(SM, Buff.GC, 1), Ability.AS, hit: true)));
             Assert.AreEqual(1, SM.HP(StateHelper<ulong>.UseAbility(GP, SM, GetState(SM, Buff.GC, 1), Ability.AS, hit: false)));
+        }
+        [TestMethod]
+        public void UseAbility_SSShouldSetSSBuff()
+        {
+            Assert.AreNotEqual(0, SM.TimeRemaining(StateHelper<ulong>.UseAbility(GP, SM, 3, Ability.SS), Buff.SS));
+        }
+        [TestMethod]
+        public void UseAbility_EFShouldSetEFBuff()
+        {
+            Assert.AreNotEqual(0, SM.TimeRemaining(StateHelper<ulong>.UseAbility(GP, SM, 3, Ability.EF), Buff.EF));
         }
         [TestMethod]
         public void UseAbility_ASMissShouldConsumeGC()
@@ -125,26 +110,6 @@ namespace Matlabadin.Tests
         public void UseAbility_ASHitShouldConsumeGC()
         {
             Assert.AreEqual(0, SM.TimeRemaining(StateHelper<ulong>.UseAbility(GP, SM, GetState(SM, Buff.GC, 4), Ability.AS, hit: true), Buff.GC));
-        }
-        [TestMethod]
-        public void UseAbility_P2T13Ret_JShouldNotGiveHPByDefault()
-        {
-            ulong state = StateHelper<ulong>.UseAbility(GP, SM, 0, Ability.J);
-            Assert.AreEqual(0, SM.HP(state));
-        }
-        [TestMethod]
-        public void UseAbility_P2T13Ret_JShouldGive1HP_OnHit()
-        {
-            Int64GraphParameters gp = new Int64GraphParameters(R, 3, false, 1, 1, 0, 0, 0, true);
-            ulong state = StateHelper<ulong>.UseAbility(gp, gp, 0, Ability.J);
-            Assert.AreEqual(1, SM.HP(state));
-        }
-        [TestMethod]
-        public void UseAbility_P2T13Ret_JShouldGive1HP_OnMiss()
-        {
-            Int64GraphParameters gp = new Int64GraphParameters(R, 3, false, 1, 1, 0, 0, 0, true);
-            ulong state = StateHelper<ulong>.UseAbility(gp, gp, 0, Ability.J, hit:false);
-            Assert.AreEqual(1, SM.HP(state));
         }
         [TestMethod]
         public void UseAbility_NothingShouldAdvanceTimeByOneStep()
@@ -192,42 +157,41 @@ namespace Matlabadin.Tests
         [TestMethod]
         public void NextState_ShouldOnlyGenerateNonZeroTransitions()
         {
-            Int64GraphParameters gp = NoMissNoProcs(R.PriorityQueue);
-            TestNextState(gp, 0, Ability.CS,
-               1, StateHelper<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true)
+            Int64GraphParameters gp = NoMiss(R.PriorityQueue);
+            TestNextState(gp, 0, Ability.J,
+               1, StateHelper<ulong>.UseAbility(gp, gp, 0, Ability.J, hit: true)
            );
         }
         [TestMethod]
         public void NextState_CS()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(R, 3, false, 0.8, 1, 0, 0.20, 0);
+            Int64GraphParameters gp = new Int64GraphParameters(R, 3, 0.8, 1);
             TestNextState(gp, 0, Ability.CS,
                 0.2, StateHelper<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: false), // miss
-                0.8 * (1 - 0.2), StateHelper<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true), // hit
-                0.8 * 0.2, StateHelper<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true, gcProc: true) // GrCr proc
+                0.8 * 0.6, StateHelper<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true), // hit
+                0.8 * 0.4, StateHelper<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true, gcProc: true) // GrCr proc
             );
-            gp = NoMissNoProcs(R.PriorityQueue);
+            gp = NoMiss(R.PriorityQueue);
             TestNextState(gp, 0, Ability.CS,
-               1, StateHelper<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true)
+               0.6, StateHelper<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true),
+               0.4, StateHelper<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true, gcProc: true)
            );
         }
         [TestMethod]
         public void NextState_AS()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(R, 3, false, 1, 0.8, 0.5, 0, 0);
+            Int64GraphParameters gp = new Int64GraphParameters(R, 3, 0.1, 0.8);
             ulong state = GetState(SM, Buff.GC, 1); // with GC
             TestNextState(gp, state, Ability.AS,
                 0.2, StateHelper<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: false),
-                0.8 * (1 - 0.5), StateHelper<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: true), // hit
-                0.8 * 0.5, StateHelper<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: true, sdProc: true) // proc
+                0.8, StateHelper<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: true) // hit
             );
             state = 0; // without GC buff
             TestNextState(gp, state, Ability.AS,
                 0.2, StateHelper<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: false),
-                0.8 * (1 - 0.5), StateHelper<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: true), // hit
-                0.8 * 0.5, StateHelper<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: true, sdProc: true) // proc
+                0.8, StateHelper<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: true) // hit
             );
-            gp = NoMissNoProcs(R.PriorityQueue);
+            gp = NoMiss(R.PriorityQueue);
             TestNextState(gp, state, Ability.AS,
                 1, StateHelper<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: true) // hit
             );
@@ -235,13 +199,13 @@ namespace Matlabadin.Tests
         [TestMethod]
         public void NextState_SotRCanMiss()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(R, 3, false, 0.8, 0, 1, 1, 1);
+            Int64GraphParameters gp = new Int64GraphParameters(R, 3, 0.8, 0);
             ulong state = 3;
             TestNextState(gp, state, Ability.SotR,
                 0.2, StateHelper<ulong>.UseAbility(gp, gp, state, Ability.SotR, hit: false),
                 0.8, StateHelper<ulong>.UseAbility(gp, gp, state, Ability.SotR, hit: true)
             );
-            gp = NoMissNoProcs(R.PriorityQueue);
+            gp = NoMiss(R.PriorityQueue);
             TestNextState(gp, state, Ability.SotR,
                1, StateHelper<ulong>.UseAbility(gp, gp, state, Ability.SotR, hit: true)
            );
@@ -250,8 +214,8 @@ namespace Matlabadin.Tests
         public void NextState_SingleTransitionAbilities()
         {
             Int64GraphParameters gp = NoHitExpertise(R.PriorityQueue);
-            ulong state = 2;
-            foreach (Ability a in new Ability[] { Ability.Cons, Ability.HoW, Ability.HW, Ability.Nothing, Ability.Inq })
+            ulong state = 3;
+            foreach (Ability a in new Ability[] { Ability.Cons, Ability.Nothing, Ability.WoG, Ability.SS, Ability.EF })
             {
                 TestNextState(gp, state, a,
                     1, StateHelper<ulong>.UseAbility(gp, gp, state, a)
@@ -259,18 +223,15 @@ namespace Matlabadin.Tests
             }
         }
         [TestMethod]
-        public void NextState_WoGCanProcEG()
+        public void NextState_SotRWoG_ShouldAdvanceTimeBy0Steps()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(R, 3, false, 0.5, 0.5, 1, 1, 0.3);
-            ulong state = 3;
-            Ability a = Ability.WoG;
-            TestNextState(gp, state, a,
-                0.7, StateHelper<ulong>.UseAbility(gp, gp, state, a),
-                0.3, StateHelper<ulong>.UseAbility(gp, gp, state, a, egProc: true)
+            TestNextState(GP, GetState(SM, Ability.CS, 3, 3), Ability.SotR,
+                1, GetState(SM, Ability.CS, 3, 0),
+                0 // 0 step duration
             );
-            gp = NoMissNoProcs(R.PriorityQueue);
-            TestNextState(gp, state, a,
-                1, StateHelper<ulong>.UseAbility(gp, gp, state, a)
+            TestNextState(GP, GetState(SM, Ability.CS, 3, 3), Ability.WoG,
+                1, GetState(SM, Ability.CS, 3, 0),
+                0 // 0 step duration
             );
         }
         [TestMethod]
@@ -285,17 +246,17 @@ namespace Matlabadin.Tests
         public void NextAbilityStates_ShouldUseExpectedAbility()
         {
             ulong[] nextStates;
-            var r = new RotationPriorityQueue<ulong>("CS");
-            var gp = new Int64GraphParameters(r, 3, false, 1, 1, 0, 0, 0);
+            var r = new RotationPriorityQueue<ulong>("Cons");
+            var gp = new Int64GraphParameters(r, 3, 1, 1);
             Assert.AreEqual(r.ActionToTake(gp, gp, 0), StateHelper<ulong>.NextAbilityStates(gp, gp, 0, out nextStates).Ability);
         }
         [TestMethod]
         public void NextAbilityStates_ShouldConcatenateConsecutiveNothingStates()
         {
             ulong[] nextStates;
-            var r = new RotationPriorityQueue<ulong>("CS");
-            var gp = new Int64GraphParameters(r, 3, false, 1, 1, 0, 0, 0);
-            Choice<ulong> c = StateHelper<ulong>.NextAbilityStates(gp, gp, GetState(gp, Ability.CS, 4), out nextStates);
+            var r = new RotationPriorityQueue<ulong>("J");
+            var gp = new Int64GraphParameters(r, 3, 1, 1);
+            Choice<ulong> c = StateHelper<ulong>.NextAbilityStates(gp, gp, GetState(gp, Ability.J, 4), out nextStates);
             Assert.AreEqual(Ability.Nothing, c.Ability);
             Assert.AreEqual(4, c.stepsDuration);
         }
@@ -304,7 +265,7 @@ namespace Matlabadin.Tests
         {
             ulong[] nextStates;
             var r = new RotationPriorityQueue<ulong>("");
-            var gp = new Int64GraphParameters(r, 3, false, 1, 1, 0, 0, 0);
+            var gp = new Int64GraphParameters(r, 3, 1, 1);
             Choice<ulong> c = StateHelper<ulong>.NextAbilityStates(gp, gp, GetState(gp, Ability.CS, 4), out nextStates);
             Assert.AreEqual(Ability.Nothing, c.Ability);
             Assert.AreEqual(1, c.stepsDuration);

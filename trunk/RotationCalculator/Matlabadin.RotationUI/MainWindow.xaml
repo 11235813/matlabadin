@@ -29,23 +29,13 @@
             </Grid.RowDefinitions>
             <Label Height="28" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" Content="Graph Parameters" />
             <Label Height="28" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Content="StepsPerGCD" />
-            <Label Height="28" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0" Content="UseConsGlyph" />
             <Label Height="28" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" Content="MeleeHit" />
             <Label Height="28" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0" Content="RangeHit" />
-            <Label Height="28" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="0" Content="SDProcRate" />
-            <Label Height="28" HorizontalAlignment="Left" Grid.Row="6" Grid.Column="0" Content="GCProcRate" />
-            <Label Height="28" HorizontalAlignment="Left" Grid.Row="7" Grid.Column="0" Content="EGProcRate" />
-            <Label Height="28" HorizontalAlignment="Left" Grid.Row="8" Grid.Column="0" Content="RetT13" />
             <Label Height="28" HorizontalAlignment="Left" Grid.Row="9" Grid.Column="0" Content="Steps Per GCD" />
             <Label Height="28" HorizontalAlignment="Left" Grid.Row="10" Grid.Column="0" Content="CalculatePr" />
             <TextBox Height="28" Grid.Row="1" Grid.ColumnSpan="2" Background="AliceBlue" Text="{Binding Rotation}" />
-            <CheckBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="38,11,46,7" IsChecked="{Binding UseConsGlyph}" />
             <TextBox Height="28" Grid.Row="3" Grid.Column="2" Background="AliceBlue" Text="{Binding MeleeHit}" />
             <TextBox Height="28" Grid.Row="4" Grid.Column="2" Background="AliceBlue" Text="{Binding RangeHit}" />
-            <TextBox Height="28" Grid.Row="5" Grid.Column="2" Background="AliceBlue" Text="{Binding SDProcRate}" />
-            <TextBox Height="28" Grid.Row="6" Grid.Column="2" Background="AliceBlue" Text="{Binding GCProcRate}" />
-            <TextBox Height="28" Grid.Row="7" Grid.Column="2" Background="AliceBlue" Text="{Binding EGProcRate}" />
-            <CheckBox Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="41,9,47,9" IsChecked="{Binding RetT13}" />
             <!--<Slider Grid.Column="1" Grid.Row="9" Height="29" HorizontalAlignment="Left" Name="slider1" VerticalAlignment="Top" Width="100" SelectionEnd="1" SelectionStart="5" Margin="0" TickPlacement="Both" DataContext="{Binding StepsPerGCD}"  IsSnapToTickEnabled="True" />-->
             <TextBox Height="28" Grid.Row="9" Grid.Column="2" Background="AliceBlue" Text="{Binding StepsPerGCD}" />
             <CheckBox Grid.Row="10" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="40,8,48,10" IsChecked="{Binding CalculatePr}" />

@@ -16,35 +16,41 @@ namespace Matlabadin
             double[] pr)
         {
             if (pr == null) throw new ArgumentNullException("pr");
-            // Special case Inquisition since we may not have inq up when we cast Inq but it's up as a buff for the duration of the casting GCD
-            int inqLeft = sm.TimeRemaining(state, Buff.Inq);
-            int jotwLeft = sm.TimeRemaining(state, Buff.JotW);
-            if (a == Ability.Inq && sm.HP(state) > 0) inqLeft += gp.StepsPerGcd; // add at least the GCD to the remaining duration
-            if (a == Ability.J) jotwLeft += gp.StepsPerGcd;
-            Choice<TState> c = new Choice<TState>(a,
-                a == Ability.SotR && sm.TimeRemaining(state, Buff.SD) > 0,
-                inqLeft,
-                jotwLeft,
-                sm.HP(state),
+            // TODO: fix design flaw: buff tracking is broken for WB as the uptime depends on
+            // whether WB hit or not.
+            Choice<TState> c = new Choice<TState>(
+                a,
                 stepsDuration,
-                pr);
+                pr,
+                sm.HP(state),
+                a == Ability.WoG && sm.TimeRemaining(state, Buff.SS) > 0,
+                sm.TimeRemaining(state, Buff.SS),
+                sm.TimeRemaining(state, Buff.EF),
+                sm.TimeRemaining(state, Buff.WB),
+                sm.TimeRemaining(state, Buff.SotRSB)
+                );
             return c;
         }
         private Choice(
             Ability ability,
-            bool sotrsd,
-            int inq,
-            int jotw,
-            int hp,
             int stepsDuration,
-            double[] pr)
+            double[] pr,
+            int hp,
+            bool wogss,
+            int ssRemaining,
+            int efRemaining,
+            int wbRemaining,
+            int sbRemaining
+            )
         {
             this.ability = ability;
             this.hp = hp;
-            this.sotrsd = sotrsd;
+            this.wogss = wogss;
             this.stepsDuration = stepsDuration;
-            this.inqDuration = Math.Min(inq, stepsDuration);
-            this.jotwDuration = Math.Min(jotw, stepsDuration);
+            this.ssDuration = Math.Min(ssRemaining, stepsDuration);
+            this.efDuration = Math.Min(efRemaining, stepsDuration);
+            this.wbDuration = Math.Min(wbRemaining, stepsDuration);
+            this.sbDuration = Math.Min(ssRemaining, stepsDuration);
             this.pr = pr;
         }
         // Output related
@@ -55,12 +61,10 @@ namespace Matlabadin
                 if (action == null)
                 {
                     action = ability.ToString();
-                    if (hp != 3 && (ability == Ability.SotR || ability == Ability.WoG)) {
-                        // Not required for Inq
+                    if (hp < 3 && (ability == Ability.WoG || ability == Ability.EF)) {
                         action += hp.ToString();
                     }
-                    if (sotrsd) action += "(SD)";
-                    if (inqDuration > 0) action += "(Inq)";
+                    if (wogss) action += "(SS)";
                 }
                 return action;
             }
@@ -68,11 +72,13 @@ namespace Matlabadin
         public Ability Ability { get { return this.ability; } }
         private string action;
         private readonly Ability ability;
-        private readonly bool sotrsd;
+        private readonly bool wogss;
         private readonly int hp;
         // aggregation stats
-        public readonly int jotwDuration;
-        public readonly int inqDuration;
+        public readonly int ssDuration;
+        public readonly int efDuration;
+        public readonly int wbDuration;
+        public readonly int sbDuration;
         public readonly int stepsDuration;
         // transition likelyhoods
         public readonly double[] pr;
@@ -84,9 +90,11 @@ namespace Matlabadin
         public bool Equals(Choice<TState> c)
         {
             return ability == c.ability
-                && sotrsd == c.sotrsd
-                && inqDuration == c.inqDuration
-                && jotwDuration == c.jotwDuration
+                && wogss == c.wogss
+                && ssDuration == c.ssDuration
+                && efDuration == c.efDuration
+                && wbDuration == c.wbDuration
+                && sbDuration == c.sbDuration
                 && hp == c.hp
                 && stepsDuration == c.stepsDuration
                 && pr.SequenceEqual(c.pr);
@@ -94,12 +102,11 @@ namespace Matlabadin
         public override int GetHashCode()
         {
             int hash = pr.Aggregate(0, (h, p) => h ^ p.GetHashCode());
-            hash ^= stepsDuration.GetHashCode();
-            hash ^= inqDuration << 7;
-            hash ^= jotwDuration << 28;
-            hash ^= hp << 11;
-            if (sotrsd) hash ^= 1 << 27;
-            hash += (int)ability << 16;
+            hash ^= stepsDuration.GetHashCode(); // assuming ~< 7 bits
+            hash ^= (ssDuration + efDuration) + (30 * wbDuration + 30 * 30 * sbDuration) << 7; // 9 bits
+            hash ^= hp << (7 + 9);
+            if (wogss) hash ^= 1 << (7 + 9 + 3);
+            hash += (int)ability << (7 + 9 + 3 + 1);
             return hash;
         }
         /// <summary>
@@ -117,13 +124,17 @@ namespace Matlabadin
             {
                 throw new InvalidOperationException("Cannot concatenate to a choice that has multiple next states");
             }
-            return new Choice<TState>(choice.Ability,
-                choice.sotrsd,
-                this.inqDuration + choice.inqDuration,
-                this.jotwDuration + choice.jotwDuration,
-                choice.hp,
+            return new Choice<TState>(
+                choice.Ability,
                 this.stepsDuration + choice.stepsDuration,
-                choice.pr);
+                choice.pr,
+                choice.hp,
+                choice.wogss,
+                this.ssDuration + choice.ssDuration,
+                this.efDuration + choice.efDuration,
+                this.wbDuration + choice.wbDuration,
+                this.sbDuration + choice.sbDuration
+                );
         }
     }
 }

@@ -22,38 +22,30 @@
             <RowDefinition Height="25" />
             <RowDefinition Height="25" />
             <RowDefinition Height="25" />
-            <RowDefinition Height="25" />
-            <RowDefinition Height="25" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Label HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Content="HP" />
         <Label HorizontalAlignment="Center" Grid.Row="1" Grid.ColumnSpan="2" Content="Abilities" FontWeight="Bold" />
-        <Label HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0" Content="WoG" />
-        <Label HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" Content="CS" />
-        <Label HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0" Content="J" />
-        <Label HorizontalAlignment="Left" Grid.Row="5" Grid.Column="0" Content="AS" />
-        <Label HorizontalAlignment="Left" Grid.Row="6" Grid.Column="0" Content="Cons" />
-        <Label HorizontalAlignment="Left" Grid.Row="7" Grid.Column="0" Content="HW" />
-        <Label HorizontalAlignment="Left" Grid.Row="8" Grid.Column="0" Content="HoW" />
-        <Label HorizontalAlignment="Center" Grid.Row="9" Grid.ColumnSpan="2" Content="Buffs" FontWeight="Bold" />
-        <Label HorizontalAlignment="Left" Grid.Row="10" Grid.Column="0" Content="GC" />
-        <Label HorizontalAlignment="Left" Grid.Row="11" Grid.Column="0" Content="SD" />
-        <Label HorizontalAlignment="Left" Grid.Row="12" Grid.Column="0" Content="Inq" />
-        <Label HorizontalAlignment="Left" Grid.Row="13" Grid.ColumnSpan="2" Content="EGICD" />
-        <Label HorizontalAlignment="Left" Grid.Row="14" Grid.Column="0" Content="JotW" />
+        <Label HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0" Content="CS" />
+        <Label HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" Content="J" />
+        <Label HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0" Content="AS" />
+        <Label HorizontalAlignment="Left" Grid.Row="5" Grid.Column="0" Content="Cons" />
+        <Label HorizontalAlignment="Center" Grid.Row="6" Grid.ColumnSpan="2" Content="Buffs" FontWeight="Bold" />
+        <Label HorizontalAlignment="Left" Grid.Row="7" Grid.Column="0" Content="GC" />
+        <Label HorizontalAlignment="Left" Grid.Row="8" Grid.Column="0" Content="SS" />
+        <Label HorizontalAlignment="Left" Grid.Row="9" Grid.Column="0" Content="EF" />
+        <Label HorizontalAlignment="Left" Grid.Row="10" Grid.ColumnSpan="2" Content="WB" />
+        <Label HorizontalAlignment="Left" Grid.Row="11" Grid.Column="0" Content="SB" />
 
         <Label HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Width="40" Content="{Binding HP}" />
-        <Label HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Width="40" Content="{Binding WoG}" />
-        <Label HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Width="40" Content="{Binding CS}" />
-        <Label HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" Width="40" Content="{Binding J}" />
-        <Label HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" Width="40" Content="{Binding AS}" />
-        <Label HorizontalAlignment="Left" Grid.Row="6" Grid.Column="1" Width="40" Content="{Binding Cons}" />
-        <Label HorizontalAlignment="Left" Grid.Row="7" Grid.Column="1" Width="40" Content="{Binding HW}" />
-        <Label HorizontalAlignment="Left" Grid.Row="8" Grid.Column="1" Width="40" Content="{Binding HoW}" />
-        <Label HorizontalAlignment="Left" Grid.Row="10" Grid.Column="1" Width="40" Content="{Binding GC}" />
-        <Label HorizontalAlignment="Left" Grid.Row="11" Grid.Column="1" Width="40" Content="{Binding SD}" />
-        <Label HorizontalAlignment="Left" Grid.Row="12" Grid.Column="1" Width="40" Content="{Binding Inq}" />
-        <Label HorizontalAlignment="Left" Grid.Row="13" Grid.Column="1" Width="40" Content="{Binding EGICD}" />
-        <Label HorizontalAlignment="Left" Grid.Row="14" Grid.Column="1" Width="40" Content="{Binding JotW}" />
+        <Label HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Width="40" Content="{Binding CS}" />
+        <Label HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Width="40" Content="{Binding J}" />
+        <Label HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" Width="40" Content="{Binding AS}" />
+        <Label HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" Width="40" Content="{Binding Cons}" />
+        <Label HorizontalAlignment="Left" Grid.Row="7" Grid.Column="1" Width="40" Content="{Binding GC}" />
+        <Label HorizontalAlignment="Left" Grid.Row="8" Grid.Column="1" Width="40" Content="{Binding SS}" />
+        <Label HorizontalAlignment="Left" Grid.Row="9" Grid.Column="1" Width="40" Content="{Binding EF}" />
+        <Label HorizontalAlignment="Left" Grid.Row="10" Grid.Column="1" Width="40" Content="{Binding WB}" />
+        <Label HorizontalAlignment="Left" Grid.Row="11" Grid.Column="1" Width="40" Content="{Binding SB}" />
     </Grid>
 </UserControl>

@@ -45,41 +45,13 @@ namespace Matlabadin
             double[] pr = null;
             switch (a)
             {
-                case Ability.J:
-                    nextState = new TState[]
-                    {
-                        UseAbility(gp, sm, state, a, waitSteps),
-                        UseAbility(gp, sm, state, a, waitSteps, sdProc: true), // sd
-                    };
-                    double jSDProcPr = gp.RangeHit * gp.SDProcRate;
-                    pr = new double[]
-                    {
-                        1 - jSDProcPr,
-                        jSDProcPr,
-                    };
-                    break;
-                case Ability.AS:
-                    nextState = new TState[]
-                    {
-                        UseAbility(gp, sm, state, a, waitSteps, false), // miss
-                        UseAbility(gp, sm, state, a, waitSteps, true), // hit, no proc
-                        UseAbility(gp, sm, state, a, waitSteps, true, sdProc: true), // sd
-                    };
-                    double asSDProcPr = gp.RangeHit * gp.SDProcRate;
-                    pr = new double[]
-                    {
-                        1 - gp.RangeHit,
-                        1 - (1 - gp.RangeHit + asSDProcPr),
-                        asSDProcPr,
-                    };
-                    break;
                 case Ability.HotR:
                 case Ability.CS:
                     nextState = new TState[]
                     {
                         UseAbility(gp, sm, state, a, waitSteps, false), // miss
                         UseAbility(gp, sm, state, a, waitSteps, true), // hit
-                        UseAbility(gp, sm, state, a, waitSteps, true, gcProc: true), // gc
+                        UseAbility(gp, sm, state, a, waitSteps, true, gcProc: true), // hit & gc
                     };
                     double gcProcPr = gp.MeleeHit * gp.GCProcRate;
                     pr = new double[]
@@ -101,33 +73,30 @@ namespace Matlabadin
                         gp.MeleeHit,
                     };
                     break;
-                case Ability.WoG:
+                case Ability.J:
+                case Ability.AS:
                     nextState = new TState[]
                     {
-                        UseAbility(gp, sm, state, a, waitSteps),
-                        UseAbility(gp, sm, state, a, waitSteps, egProc: true),
+                        UseAbility(gp, sm, state, a, waitSteps, false), // miss
+                        UseAbility(gp, sm, state, a, waitSteps, true), // hit
                     };
-                    double egProcPr = sm.TimeRemaining(state, Buff.EGICD) > 0 ? 0 : gp.EGProcRate;
                     pr = new double[]
                     {
-                        1 - egProcPr,
-                        egProcPr,
+                        1 - gp.RangeHit,
+                        gp.RangeHit,
                     };
                     break;
+                // Can't miss
                 case Ability.Cons:
-                case Ability.HW:
-                case Ability.Inq:
-                case Ability.HoW:
                 case Ability.Nothing:
-                    // Only one state transition for these
+                case Ability.WoG:
+                case Ability.EF:
+                case Ability.SS:
                     nextState = new TState[]
                     {
                         UseAbility(gp, sm, state, a, waitSteps),
                     };
-                    pr = new double[]
-                    {
-                        1,
-                    };
+                    pr = new double[] { 1, };
                     break;
                 default:
                     throw new ArgumentException(String.Format("Unknown ability {0}", a));
@@ -165,12 +134,9 @@ namespace Matlabadin
             Ability ability,
             int waitSteps = 0,
             bool hit = true,
-            bool sdProc = false,
-            bool gcProc = false,
-            bool egProc = false)
+            bool gcProc = false)
         {
             //if (state == UInt64.MaxValue) throw new ArgumentException("Invalid state");
-            if (ability == Ability.HotR) return UseAbility(gp, sm, state, Ability.CS, waitSteps, hit, sdProc, gcProc, egProc);
             TState nextState = state;
             if (waitSteps > 0)
             {
@@ -182,20 +148,40 @@ namespace Matlabadin
             {
                 nextState = sm.SetCooldownRemaining(nextState, ability, abilityCooldown);
             }
+            int hp = sm.HP(nextState);
+            int availableHp = Math.Min(3, hp);
             switch (ability)
             {
                 case Ability.WoG:
-                    nextState = sm.SetHP(nextState, 0);
+                    nextState = sm.SetHP(nextState, hp - availableHp);
                     break;
                 case Ability.SotR:
+                    if (availableHp < 3) throw new InvalidOperationException("SotR cast with less than 3 HP");
                     if (hit)
                     {
-                        nextState = sm.SetHP(nextState, 0);
-                        nextState = sm.SetTimeRemaining(nextState, Buff.SD, 0);
+                        nextState = sm.SetHP(nextState, hp - availableHp);
+                        nextState = sm.SetTimeRemaining(nextState, Buff.SotRSB, gp.BuffDurationInSteps(Buff.SotRSB));
+                    }
+                    break;
+                case Ability.HotR:
+                    if (hit)
+                    {
+                        nextState = sm.SetTimeRemaining(nextState, Buff.WB, gp.BuffDurationInSteps(Buff.WB));
+                        nextState = sm.IncHP(nextState);
                     }
                     break;
                 case Ability.CS:
-                    if (hit) nextState = sm.IncHP(nextState);
+                    if (hit)
+                    {
+                        nextState = sm.IncHP(nextState);
+                    }
+                    break;
+                case Ability.J:
+                    if (hit)
+                    {
+                        nextState = sm.IncHP(nextState);
+                        // TODO Selfless Healer buff
+                    }
                     break;
                 case Ability.AS:
                     if (sm.TimeRemaining(nextState, Buff.GC) > 0) // GC HP is on cast
@@ -204,34 +190,21 @@ namespace Matlabadin
                     }
                     nextState = sm.SetTimeRemaining(nextState, Buff.GC, 0);
                     break;
-                case Ability.Inq:
-                    nextState = sm.SetTimeRemaining(nextState, Buff.Inq, sm.HP(nextState) * gp.BuffDurationInSteps(Buff.Inq) / 3);
-                    nextState = sm.SetHP(nextState, 0);
+                case Ability.SS:
+                    if (availableHp < 3) throw new InvalidOperationException("SS cast with less than 3 HP");
+                    nextState = sm.SetHP(nextState, hp - availableHp);
+                    nextState = sm.SetTimeRemaining(nextState, Buff.SS, gp.BuffDurationInSteps(Buff.SS));
                     break;
-                case Ability.J:
-                    // 4.2: JotW triggered by J cast not J landing
-                    nextState = sm.SetTimeRemaining(nextState, Buff.JotW, gp.BuffDurationInSteps(Buff.JotW));
-                    if (gp.HpOnJudgement)
-                    {
-                        // TODO: test if HP is granted on cast or landing
-                        nextState = sm.IncHP(nextState); // on cast
-                        // if (hit) nextState = sm.IncHP(nextState); // on landing
-                    }
+                case Ability.EF:
+                    nextState = sm.SetHP(nextState, hp - availableHp);
+                    nextState = sm.SetTimeRemaining(nextState, Buff.EF, gp.BuffDurationInSteps(Buff.EF));
+                    // TODO efStacks = availableHp
                     break;
-            }
-            if (egProc)
-            {
-                nextState = sm.SetHP(nextState, sm.HP(state));
-                nextState = sm.SetTimeRemaining(nextState, Buff.EGICD, gp.BuffDurationInSteps(Buff.EGICD));
             }
             if (gcProc)
             {
                 nextState = sm.SetCooldownRemaining(nextState, Ability.AS, 0);
                 nextState = sm.SetTimeRemaining(nextState, Buff.GC, gp.BuffDurationInSteps(Buff.GC));
-            }
-            if (sdProc)
-            {
-                nextState = sm.SetTimeRemaining(nextState, Buff.SD, gp.BuffDurationInSteps(Buff.SD));
             }
             // advance time
             nextState = sm.AdvanceTime(nextState, gp.AbilityCastTimeInSteps(ability));

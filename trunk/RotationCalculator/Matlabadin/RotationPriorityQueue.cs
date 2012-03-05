@@ -22,24 +22,24 @@ namespace Matlabadin
     /// Conditionals: conditionals take the following form:
     /// [<type><Ability><op><value>]
     /// where
-    /// type is "buff" or "cd"
+    /// type is "buff" or "cd" or "HP" (if "HP", ability is omitted)
     /// op is one of < > <= >= = 
     /// value is a numeric value
     /// 
-    /// Example: HW[cdCS>0][cdCons>0]>CS[buffInq>0]>Cons>Inq2
-    ///  - will use Holy Wrath if Holy Wrach, Crusader Strike and Consecration are off cooldown
+    /// Example: HW[cdCS>0][buffGC>1]>CS[buffInq>0]>Cons[HP=2]>Inq2
+    ///  - will use Holy Wrath if Holy Wrath and Crusader Strike are off cooldown and the Grand Crusader buff has at least 1 second remaining
     ///  - will use Crusader Strike if Crusader Strike is off cooldown and the Inquisition self-buff is active
-    ///  - will use Consecration if Consecration is off cooldown
+    ///  - will use Consecration if Consecration is off cooldown and Holy Power is 2
     ///  - will use Inquisition if 2 or more holy power is available
     ///  - will do nothing if the above abilities were not used
     /// 
     /// Note that all abilities have an implicit condition that the
-    /// cooldown of the ability in the current state is zero. Abilities
-    /// with a non-zero cooldown are never used.
+    /// cooldown of the ability in the current state is zero unless
+    /// an explicit cooldown is specified, in which case the cast is
+    /// delayed until the cooldown is up.
     /// 
-    /// Special cases: prepending an ability with i I sd or SD is a
-    /// short-hand for [buffInq=0] [buffInq>0] [buffSD=0] and [buffSD>0]
-    /// conditions respectively.
+    /// Example: CS[cdCS<=0.5]                                      >
+    ///  - will cast Crusader Strike as soon as it is off cooldown if the CS cooldown is half a second or less
     /// </summary>
     public class RotationPriorityQueue<TState>
     {
@@ -56,7 +56,6 @@ namespace Matlabadin
         public RotationPriorityQueue(string queue)
         {
             this.PriorityQueue = queue;
-            this.distinctAbilitiesInRotation = new List<Ability>();
             this.abilityQueue = new List<Ability>();
             this.abilityConditionals = new List<List<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>>();
             ProcessQueueString(queue);
@@ -74,33 +73,34 @@ namespace Matlabadin
 
                 string rawActionString = actionMatch.Groups["first"].Value;
                 string action = rawActionString;
-                // replace shorthand conditional with their full
-                if (action.StartsWith("i")) action = action.Substring(1) + "[buffInq=0]";
-                if (action.StartsWith("I") && !action.StartsWith("Inq")) action = action.Substring(1) + "[buffInq>0]";
-                if (action.StartsWith("sd")) action = action.Substring(2) + "[buffSD=0]";
-                if (action.StartsWith("SD")) action = action.Substring(2) + "[buffSD>0]";
                 while (action.Contains("["))
                 {
                     action = ProcessConditional(i, conditionalAbilityList, action);
                 }
+                // Check for numeric suffic
+                if (Char.IsNumber(action[action.Length - 1]))
+                {
+                    // Add holy power condition
+                    int minHP = Int32.Parse(action.Substring(action.Length - 1));
+                    abilityConditionals[i].Add((gp, sm, state) => sm.HP(state) >= minHP);
+                    action = action.Substring(0, action.Length - 1);
+                }
+                else if (!rawActionString.Contains("HP"))
+                {
+                    // no HP conditions on EF or WoG = default to 3 HP usage
+                    switch (action)
+                    {
+                        case "EF":
+                        case "WoG":
+                            abilityConditionals[i].Add((gp, sm, state) => sm.HP(state) >= 3);
+                            break;
+                    }
+                }
                 switch (action) // Special ability-specific conditions go here
                 {
-                    case "Inq":
-                    case "WoG":
+                    case "SS":
                     case "SotR":
                         abilityConditionals[i].Add((gp, sm, state) => sm.HP(state) >= 3);
-                        break;
-                    case "Inq2":
-                    case "WoG2":
-                    case "SotR2":
-                        abilityConditionals[i].Add((gp, sm, state) => sm.HP(state) >= 2);
-                        action = action.Substring(0, action.Length - 1);
-                        break;
-                    case "Inq1":
-                    case "WoG1":
-                    case "SotR1":
-                        abilityConditionals[i].Add((gp, sm, state) => sm.HP(state) >= 1);
-                        action = action.Substring(0, action.Length - 1);
                         break;
                     case "AS+":
                         // Use AS if it will generate HP
@@ -116,7 +116,6 @@ namespace Matlabadin
                     abilityConditionals[i].Add((gp, sm, state) => sm.CooldownRemaining(state, ability) == 0);
                 }
                 abilityQueue.Add(ability);
-                distinctAbilitiesInRotation.Add(ability);
                 // move on to the next item in the queue
                 remainingQueue = remainingQueue.Substring(rawActionString.Length);
                 remainingQueue = remainingQueue.Trim('>');
@@ -188,10 +187,9 @@ namespace Matlabadin
         }
         public bool Contains(Ability a)
         {
-            return distinctAbilitiesInRotation.Contains(a);
+            return abilityQueue.Contains(a);
         }
         public string PriorityQueue { get; private set; }
-        private List<Ability> distinctAbilitiesInRotation;
         private List<Ability> abilityQueue;
         private List<List<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>> abilityConditionals;
     }

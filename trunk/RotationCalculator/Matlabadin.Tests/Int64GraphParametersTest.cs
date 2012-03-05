@@ -18,12 +18,14 @@ namespace Matlabadin.Tests
             Assert.AreEqual(3, AllAbilityStateManager.HP(3));
         }
         [TestMethod]
-        public void IncHolyPowerShouldCapAt3()
+        public void IncHolyPowerShouldCapAt5()
         {
             Assert.AreEqual(1, AllAbilityStateManager.HP(AllAbilityStateManager.IncHP(0)));
             Assert.AreEqual(2, AllAbilityStateManager.HP(AllAbilityStateManager.IncHP(1)));
             Assert.AreEqual(3, AllAbilityStateManager.HP(AllAbilityStateManager.IncHP(2)));
-            Assert.AreEqual(3, AllAbilityStateManager.HP(AllAbilityStateManager.IncHP(3)));
+            Assert.AreEqual(4, AllAbilityStateManager.HP(AllAbilityStateManager.IncHP(3)));
+            Assert.AreEqual(5, AllAbilityStateManager.HP(AllAbilityStateManager.IncHP(4)));
+            Assert.AreEqual(5, AllAbilityStateManager.HP(AllAbilityStateManager.IncHP(5)));
         }
         [TestMethod]
         public void CooldownRemainingShouldReturnZeroForNoCDAbilities()
@@ -33,42 +35,38 @@ namespace Matlabadin.Tests
         [TestMethod]
         public void CalculateBitOffsetsShouldPackAbilitiesAfterHP()
         {
-            Int64GraphParameters target = new Int64GraphParameters(R, 3, false, 0, 0, 0, 0, 0);
-            Assert.AreEqual(2, target.AbilityCooldownStartBit[(int)Ability.WoG]);
-            Assert.AreEqual(6, target.AbilityCooldownBits[(int)Ability.WoG]); // 0-40 steps = 6 bits
-            Assert.AreEqual(8, target.AbilityCooldownStartBit[(int)Ability.CS]);
-            // TODO: we can save a bit since we always advance 1 GCD after using an ability which effectively reduces the CD by one step
-            Assert.AreEqual(3, target.AbilityCooldownBits[(int)Ability.CS]); // 0-6 steps = 3 bits
-            Assert.AreEqual(5, target.AbilityCooldownBits[(int)Ability.J]); // 16 ticks over to the 5th bit
-
+            Int64GraphParameters target = new Int64GraphParameters(R, 3, 0, 0);
+            Assert.AreEqual(3, target.AbilityCooldownStartBit[(int)Ability.CS]); // 3 bits for HP
+            Assert.AreEqual(4, target.AbilityCooldownBits[(int)Ability.CS]); // 4.5s = 9 + 1 steps = 4 bits
+            Assert.AreEqual(7, target.AbilityCooldownStartBit[(int)Ability.J]);
+            Assert.AreEqual(4, target.AbilityCooldownBits[(int)Ability.J]); // 6s = 12 + 1 steps = 4 bits
         }
         [TestMethod]
         public void NoCDShouldHaveZeroBitSize()
         {
-            Int64GraphParameters target = new Int64GraphParameters(R, 3, false, 0, 0, 0, 0, 0);
+            Int64GraphParameters target = new Int64GraphParameters(R, 3, 0, 0);
             Assert.AreEqual(0, target.AbilityCooldownBits[(int)Ability.SotR]);
-            Assert.AreEqual(0, target.AbilityCooldownBits[(int)Ability.Inq]);
+            Assert.AreEqual(0, target.AbilityCooldownBits[(int)Ability.WoG]);
         }
         [TestMethod]
         public void HotRShouldHaveSameBitsAsCS()
         {
-            Int64GraphParameters target = new Int64GraphParameters(R, 3, false, 0, 0, 0, 0, 0);
+            Int64GraphParameters target = new Int64GraphParameters(R, 3, 0, 0);
             Assert.AreEqual(target.AbilityCooldownStartBit[(int)Ability.HotR], target.AbilityCooldownStartBit[(int)Ability.CS]);
-            Assert.AreEqual(target.AbilityCooldownBits[(int)Ability.HotR], target.AbilityCooldownBits[(int)Ability.CS]); // 15 options fits into 4 bits
+            Assert.AreEqual(target.AbilityCooldownBits[(int)Ability.HotR], target.AbilityCooldownBits[(int)Ability.CS]);
         }
         [TestMethod]
         public void UnusedAbilitiesShouldHaveZeroBitSize()
         {
             // state space compression:
-            Int64GraphParameters target = new Int64GraphParameters(new RotationPriorityQueue<ulong>("CS>J"), 3, false, 0, 0, 0, 0, 0);
+            Int64GraphParameters target = new Int64GraphParameters(new RotationPriorityQueue<ulong>("CS>J"), 3, 0, 0);
             Assert.AreEqual(0, target.AbilityCooldownBits[(int)Ability.Cons]);
             Assert.AreEqual(0, target.AbilityCooldownBits[(int)Ability.AS]);
-            Assert.AreEqual(0, target.AbilityCooldownBits[(int)Ability.HW]);
             Assert.AreNotEqual(0, target.AbilityCooldownBits[(int)Ability.CS]);
             Assert.AreNotEqual(0, target.AbilityCooldownBits[(int)Ability.J]);
 
             // Don't break CS if we have HotR in the rotation
-            target = new Int64GraphParameters(new RotationPriorityQueue<ulong>("HotR"), 3, false, 0, 0, 0, 0, 0);
+            target = new Int64GraphParameters(new RotationPriorityQueue<ulong>("HotR"), 3, 0, 0);
             Assert.AreNotEqual(0, target.AbilityCooldownBits[(int)Ability.CS]);
         }
         [TestMethod]
@@ -86,13 +84,11 @@ namespace Matlabadin.Tests
         public void CooldownRemainingShouldRoundTrip()
         {
             foreach (Ability a in new Ability[] {
-                Ability.WoG,
                 Ability.CS,
                 Ability.J,
                 Ability.AS,
                 Ability.Cons,
-                Ability.HW,
-                Ability.HoW, })
+                })
             {
                 for (int j = 0; j <= AllAbilityGraphParameters.AbilityCooldownInSteps(a); j++)
                 {
@@ -115,18 +111,13 @@ namespace Matlabadin.Tests
         [TestMethod]
         public void AdvanceTimeShouldReduceBuffDuration()
         {
-            Assert.AreEqual(1, SM.TimeRemaining(SM.AdvanceTime(GetState(SM, Buff.Inq, 3), 2), Buff.Inq));
-            Assert.AreEqual(0, SM.TimeRemaining(SM.AdvanceTime(GetState(SM, Buff.Inq, 3), 5), Buff.Inq));
+            Assert.AreEqual(1, SM.TimeRemaining(SM.AdvanceTime(GetState(SM, Buff.GC, 3), 2), Buff.GC));
+            Assert.AreEqual(0, SM.TimeRemaining(SM.AdvanceTime(GetState(SM, Buff.GC, 3), 5), Buff.GC));
         }
         [TestMethod]
         public void AdvanceTimeShouldNotChangeHP()
         {
             Assert.AreEqual(3, SM.HP(SM.AdvanceTime(3, 100)));
-        }
-        [TestMethod]
-        public void RetT13P2_ShouldDefaultToOff()
-        {
-            Assert.IsFalse(GP.HpOnJudgement);
         }
     }
 }
