@@ -49,12 +49,12 @@
     <Compile Include="ArrayStateManager.cs" />
     <Compile Include="IStateManager.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="StateHelper.cs" />
     <Compile Include="Choice.cs" />
     <Compile Include="GraphParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MatlabadinGraph.cs" />
     <Compile Include="RotationPriorityQueue.cs" />
+    <Compile Include="StateTransition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

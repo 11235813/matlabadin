@@ -26,7 +26,8 @@ namespace Matlabadin
         /// SotR Shield Block buff
         /// </summary>
         SotRSB,
-        UptimeTrackedBuffs = SotRSB + 1, // tracked buffs that we record and output go above this line
+        // ----- tracked buffs that we record and output go above this line ----- 
+        // if you want to track additional buffs, UptimeTrackedBuffs needs to be changed
         /// <summary>
         /// Grand Crusader
         /// </summary>
@@ -35,5 +36,6 @@ namespace Matlabadin
         // TODO: EF, Holy Avenger & Selfless Healer require stacks as well as a duration - these require extra state storage (similar to Holy Power).
         // HA, SH
         Count,
+        UptimeTrackedBuffs = SotRSB + 1,
     }
 }

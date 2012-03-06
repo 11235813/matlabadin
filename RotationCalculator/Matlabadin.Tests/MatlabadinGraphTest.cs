@@ -37,7 +37,8 @@ namespace Matlabadin.Tests
         {
             Int64GraphParameters gp = NoMiss("J");
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
-            SanityCheckGraph(mg); // starting state (0) should be unreachable for a J rotation with no miss
+            SanityCheckGraph(mg);
+            Assert.IsFalse(mg.nextState.Any(ns => ns.Any(s => s == 0))); // starting state (0) should be unreachable for a J rotation with no miss
         }
         [TestMethod]
         public void GenerateGraph_NextStateTransitionsShouldAlwaysBeSet()
@@ -97,17 +98,17 @@ namespace Matlabadin.Tests
             Int64GraphParameters gp = NoMiss("J");
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             double[] pr = mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance);
-            Assert.AreEqual(0.5, pr[mg.lookup[GetState(gp, Ability.J, 9, 3)]], Tolerance);
-            Assert.AreEqual(0.5, pr[mg.lookup[GetState(gp, Ability.J, 0, 3)]], Tolerance);
+            Assert.AreEqual(0.5, pr[mg.lookup[GetState(gp, Ability.J, 9, 5)]], Tolerance);
+            Assert.AreEqual(0.5, pr[mg.lookup[GetState(gp, Ability.J, 0, 5)]], Tolerance);
         }
         [TestMethod]
-        public void CalculateResults_ShouldDisplayNothingAsIdleTime()
+        public void CalculateResults_ShouldDisplayNotNothing()
         {
             Int64GraphParameters gp = NoMiss("CS");
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             double[] pr = mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance);
             var result = mg.CalculateResults(pr);
-            Assert.IsTrue(result.Action.ContainsKey("Nothing"));
+            Assert.IsFalse(result.Action.ContainsKey("Nothing"));
         }
         [TestMethod]
         public void ConvergeStateProbability_ShouldStopAfterRelativeToleranceAchieved()
@@ -177,9 +178,8 @@ namespace Matlabadin.Tests
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(2, result.Action.Count);
+            Assert.AreEqual(1, result.Action.Count);
             Assert.AreEqual(1.0 / 9.0, result.Action["Cons"], Tolerance); // Cons every 9s
-            Assert.AreEqual(4 / (5.0 * 1.5), result.Action["Nothing"], Tolerance); // 4 of 5 GCDs are Nothing
         }
         [TestMethod]
         public void CalculateAggregates_SotRCS()
@@ -198,19 +198,9 @@ namespace Matlabadin.Tests
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(1d / 4.5, result.Action["CS"], Tolerance); // 1 per 6s
-            Assert.AreEqual(1d / 9.0, result.Action["J"], Tolerance * 10); // 1 per 9s
-            Assert.AreEqual(5d / 18 / 3, result.Action["SotR"], Tolerance); // 5 HP per 18s; 3 HP per cast
-        }
-        [TestMethod]
-        public void CalculateAggregates_NothingShouldBeWeightedByOneSecondGCD()
-        {
-            Int64GraphParameters gp = NoHitExpertise("");
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
-            var result = mg.CalculateResults(
-                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(1, result.Action.Count);
-            Assert.AreEqual(1.0 / 1.5, result.Action["Nothing"], Tolerance); // 1 fake Nothing cast per 1.5s
+            Assert.AreEqual(1d / 4.5, result.Action["CS"], Tolerance); // 1 per 4.5s
+            Assert.AreEqual(2d / (3 * 4.5), result.Action["J"], Tolerance); // CS & J clash - J gets delayed 1 GCD every 2nd cycle to 2 J per 3 CS
+            Assert.AreEqual(5d / 13.5 / 3, result.Action["SotR"], Tolerance * 10); // 5 HP per 13.5s cycle; 3 HP per cast
         }
         [TestMethod]
         public void SSUptimeShouldBeCalculated()
@@ -219,7 +209,7 @@ namespace Matlabadin.Tests
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(1, result.UptimeSS); // 100% uptime
+            Assert.AreEqual(1, result.BuffUptime[(int)Buff.SS], 1e-7); // 100% uptime
         }
         [TestMethod]
         public void EFUptimeShouldBeCalculated()
@@ -228,7 +218,7 @@ namespace Matlabadin.Tests
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(1, result.UptimeEF); // 100% uptime
+            Assert.AreEqual(1, result.BuffUptime[(int)Buff.EF], 1e-7); // 100% uptime
         }
         [TestMethod]
         public void WBUptimeShouldBeCalculated()
@@ -237,13 +227,13 @@ namespace Matlabadin.Tests
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(1, result.UptimeWB); // 100% uptime
+            Assert.AreEqual(1, result.BuffUptime[(int)Buff.WB], 1e-7); // 100% uptime
 
             gp = new Int64GraphParameters(new RotationPriorityQueue<ulong>("HotR"), 3, 0, 0);
             mg = new MatlabadinGraph<ulong>(gp, gp);
             result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(0, result.UptimeWB); // 0% uptime since HotR never connects
+            Assert.AreEqual(0, result.BuffUptime[(int)Buff.WB], 1e-7); // 0% uptime since HotR never connects
         }
         [TestMethod]
         public void SotRSBUptimeShouldBeCalculated()
@@ -252,7 +242,7 @@ namespace Matlabadin.Tests
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(5d / 18 / 3 * 6, result.UptimeSB); // 5hp per 18s - cast requires 3, buff lasts 6s
+            Assert.AreEqual(5d / 13.5 / 3 * 6, result.BuffUptime[(int)Buff.SotRSB], Tolerance * 100); // 5hp per 13.5s - cast requires 3, buff lasts 6s
         }
         [TestMethod]
         public void CloneShouldReduceConvergenceTimeForSameResult()

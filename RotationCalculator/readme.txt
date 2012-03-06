@@ -13,16 +13,15 @@ Matlabadin project structure:
 	Buff.cs: enum definition of all possible rotation-dependent self-buffs
 	Choice.cs: this class contains the metadata (excluding source & destination states) such as transition duration and ability used associated with a state transition.
 	GraphParameters.cs: contains input parameters such as talents, hit, expertise & steps per GCD
-	IStateManager.cs: interface required for StateManager classes which expose state information. Ideally, these methods would be part of the state class itself but for performance reasons (would need a reference to GraphParameters on every state) they are not. Note that the state class itself is opaque and all access to it is through a StateManager.
+	IStateManager.cs: interface required for StateManager classes which expose state information. Ideally, these methods would be part of the state class itself but for performance reasons (state would need a reference to GraphParameters on every state) they are not. Note that the state class itself is opaque and all access to it is through a StateManager.
 	Int64GraphParameters.cs: Implementation of both GraphParameters & IStateManager using a 64-bit integers as states.
 	MatlabadinGraph.cs: Algorithm implementation. This class traverses the reachable state space, calculates each state probability & outputs aggregated choice information
 	Program.cs: command-line entry-point. Performs command-line parsing and processing
 	RotationPriorityQueue.cs: Ability choice parser. This class parses the ability 'rotation' string and coverts that to an ability choice for any given state. See top of file for required rotation string formats
-	StateHelper.cs: implementation-independent state transition & ability usage logic.
+	StateTransition.cs: state transition & ability usage logic.
 
 TLDR summary for maintenance & code review:
-	StateHelper.NextStates(): next state transition logic
-	StateHelper.UseAbility(): handles holy power & buff logic for a state transition
+	StateTransition: class mechanics go here
 
 	RotationPriorityQueue.cs: ability choice logic
 	MatlabadinGraph.GenerateGraph(): graph generation
@@ -35,3 +34,4 @@ Does EF stack or overwrite? Assuming overwrite
 Does SS stack or overwrite? Assuming overwrite
 Is HP from AS under GC still on-cast or now on-hit? Assuming still on-cast
 Is GP from J on-cast or on-hit? Assuming on-hit due to talent calculator wording
+Does SotR miss proc shield block buff? If so, do we lose HP from the cast?
