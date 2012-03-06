@@ -58,7 +58,7 @@
     <Compile Include="MatlabadinTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RotationPriorityQueueTest.cs" />
-    <Compile Include="StateHelperTest.cs" />
+    <Compile Include="StateTransitionTest.cs" />
     <Compile Include="StateManagerTest.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -10,10 +10,13 @@ namespace Matlabadin.Tests
     public class ChoiceTest : MatlabadinTest
     {
         double[] PR = new double[] { 1 };
+        int[][] BD1 = new int[][] { new int[] { 0 }, new int[] { 0 }, new int[] { 0 }, new int[] { 0 } };
+        int[][] BD2 = new int[][] { new int[] { 0, 0, }, new int[] { 0, 0, }, new int[] { 0, 0, }, new int[] { 0, 0, } };
+        int[][] BD3 = new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } };
         [TestMethod]
         public void ChoiceShouldExposeOptions()
         {
-            Choice<ulong> c = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.CS, 3, new double[] {0.7, 0.2, 0.1});
+            Choice c = new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3);
             Assert.AreEqual(0.7, c.pr[0]);
             Assert.AreEqual(0.2, c.pr[1]);
             Assert.AreEqual(0.1, c.pr[2]);
@@ -21,91 +24,59 @@ namespace Matlabadin.Tests
         [TestMethod]
         public void ChoiceShouldExposeDuration()
         {
-            Choice<ulong> c = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.CS, 3, new double[] {0.7, 0.2, 0.1});
-            Assert.AreEqual(3, c.stepsDuration);
-        }
-        [TestMethod]
-        public void ChoiceShouldExposeStepsThatHaveSSBuffActiveInDuration()
-        {
-            Assert.AreEqual(3, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SS, 5), Ability.CS, 3, PR).ssDuration);
-            Assert.AreEqual(1, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SS, 1), Ability.CS, 3, PR).ssDuration);
-        }
-        [TestMethod]
-        public void ChoiceShouldExposeStepsThatHaveEFBuffActiveInDuration()
-        {
-            Assert.AreEqual(3, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.EF, 5), Ability.CS, 3, PR).efDuration);
-            Assert.AreEqual(1, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.EF, 1), Ability.CS, 3, PR).efDuration);
-        }
-        [TestMethod]
-        public void ChoiceShouldExposeStepsThatHaveWBBuffActiveInDuration()
-        {
-            Assert.AreEqual(3, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.WB, 5), Ability.CS, 3, PR).wbDuration);
-            Assert.AreEqual(1, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.WB, 1), Ability.CS, 3, PR).wbDuration);
-        }
-        [TestMethod]
-        public void ChoiceShouldExposeStepsThatHaveSBBuffActiveInDuration()
-        {
-            Assert.AreEqual(3, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SotRSB, 5), Ability.CS, 3, PR).sbDuration);
-            Assert.AreEqual(1, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SotRSB, 1), Ability.CS, 3, PR).sbDuration);
-        }
-        [TestMethod]
-        public void SSCastShouldSetSSUptime()
-        {
-            Assert.IsTrue(Choice<ulong>.CreateChoice(GP, SM, 3, Ability.SS, 3, new double[] { 1 }).ssDuration > 0);
-        }
-        [TestMethod]
-        public void EFCastShouldSetEFUptime()
-        {
-            Assert.IsTrue(Choice<ulong>.CreateChoice(GP, SM, 3, Ability.EF, 3, new double[] { 1 }).efDuration > 0);
-        }
-        [TestMethod]
-        public void HotRCastShouldSetWeakenedBlowsUptime()
-        {
-            Assert.IsTrue(Choice<ulong>.CreateChoice(GP, SM, 3, Ability.HotR, 3, new double[] { 1 }).wbDuration > 0);
-        }
-        [TestMethod]
-        public void SotRCastShouldSetShieldBlockUptime()
-        {
-            Assert.IsTrue(Choice<ulong>.CreateChoice(GP, SM, 3, Ability.SotR, 3, new double[] {1}).sbDuration > 0);
+            Assert.AreEqual(3, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3).stepsDuration);
+            Assert.AreEqual(5, new Choice(Ability.CS, 5, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3).stepsDuration);
         }
         [TestMethod]
         public void ActionShouldBeAbility()
         {
-            Assert.AreEqual("CS", Choice<ulong>.CreateChoice(GP, SM, 0, Ability.CS, 3, PR).Action);
-            Assert.AreEqual("J", Choice<ulong>.CreateChoice(GP, SM, 0, Ability.J, 3, PR).Action);
-            Assert.AreEqual("Nothing", Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Nothing, 3, PR).Action);
+            Assert.AreEqual("CS", new Choice(Ability.CS, 3, PR, 3, false, BD1).Action);
+            Assert.AreEqual("J", new Choice(Ability.J, 3, PR, 3, false, BD1).Action);
+            Assert.AreEqual("Nothing", new Choice(Ability.Nothing, 3, PR, 3, false, BD1).Action);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void WoGSS_ShouldBeSetForWogOnly()
+        {
+            new Choice(Ability.CS, 3, PR, 3, true, BD1);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void BuffDuration_ShouldNotExceedStepsDuration()
+        {
+            new Choice(Ability.CS, 3, PR, 3, true, new int[][] { new int[] { 0 }, new int[] { 0 }, new int[] { 7 }, new int[] { 0 } });
         }
         [TestMethod]
         public void ActionShouldSuffixSSForWoGOnly()
         {
-            Assert.AreEqual("CS", Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SS, 1, 3), Ability.CS, 3, PR).Action);
-            Assert.AreEqual("WoG(SS)", Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SS, 1, 4), Ability.WoG, 3, PR).Action);
-            Assert.AreEqual("WoG(SS)", Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SS, 1, 3), Ability.WoG, 3, PR).Action);
-            Assert.AreEqual("WoG2(SS)", Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SS, 1, 2), Ability.WoG, 3, PR).Action);
+            Assert.AreEqual("CS", new Choice(Ability.CS, 3, PR, 3, false, BD1).Action);
+            Assert.AreEqual("WoG", new Choice(Ability.WoG, 3, PR, 3, false, BD1).Action);
+            Assert.AreEqual("WoG(SS)", new Choice(Ability.WoG, 3, PR, 3, true, BD1).Action);
+            Assert.AreEqual("WoG2(SS)", new Choice(Ability.WoG, 3, PR, 2, true, BD1).Action);
         }
         [TestMethod]
         public void ActionShouldSuffixHPForWoGAndEFWhenLessThan3()
         {
-            Assert.AreEqual("EF0", Choice<ulong>.CreateChoice(GP, SM, 0, Ability.EF, 3, PR).Action);
-            Assert.AreEqual("EF1", Choice<ulong>.CreateChoice(GP, SM, 1, Ability.EF, 3, PR).Action);
-            Assert.AreEqual("EF2", Choice<ulong>.CreateChoice(GP, SM, 2, Ability.EF, 3, PR).Action);
-            Assert.AreEqual("EF", Choice<ulong>.CreateChoice(GP, SM, 3, Ability.EF, 3, PR).Action);
-            Assert.AreEqual("EF", Choice<ulong>.CreateChoice(GP, SM, 4, Ability.EF, 3, PR).Action);
-            Assert.AreEqual("EF", Choice<ulong>.CreateChoice(GP, SM, 5, Ability.EF, 3, PR).Action);
-            Assert.AreEqual("WoG0", Choice<ulong>.CreateChoice(GP, SM, 0, Ability.WoG, 3, PR).Action);
-            Assert.AreEqual("WoG1", Choice<ulong>.CreateChoice(GP, SM, 1, Ability.WoG, 3, PR).Action);
-            Assert.AreEqual("WoG2", Choice<ulong>.CreateChoice(GP, SM, 2, Ability.WoG, 3, PR).Action);
-            Assert.AreEqual("WoG", Choice<ulong>.CreateChoice(GP, SM, 3, Ability.WoG, 3, PR).Action);
-            Assert.AreEqual("WoG", Choice<ulong>.CreateChoice(GP, SM, 4, Ability.WoG, 3, PR).Action);
-            Assert.AreEqual("WoG", Choice<ulong>.CreateChoice(GP, SM, 5, Ability.WoG, 3, PR).Action);
+            Assert.AreEqual("EF0", new Choice(Ability.EF, 3, PR, 0, false, BD1).Action);
+            Assert.AreEqual("EF1", new Choice(Ability.EF, 3, PR, 1, false, BD1).Action);
+            Assert.AreEqual("EF2", new Choice(Ability.EF, 3, PR, 2, false, BD1).Action);
+            Assert.AreEqual("EF", new Choice(Ability.EF, 3, PR, 3, false, BD1).Action);
+            Assert.AreEqual("EF", new Choice(Ability.EF, 3, PR, 4, false, BD1).Action);
+            Assert.AreEqual("EF", new Choice(Ability.EF, 3, PR, 5, false, BD1).Action);
+            Assert.AreEqual("WoG0", new Choice(Ability.WoG, 3, PR, 0, false, BD1).Action);
+            Assert.AreEqual("WoG1", new Choice(Ability.WoG, 3, PR, 1, false, BD1).Action);
+            Assert.AreEqual("WoG2", new Choice(Ability.WoG, 3, PR, 2, false, BD1).Action);
+            Assert.AreEqual("WoG", new Choice(Ability.WoG, 3, PR, 3, false, BD1).Action);
+            Assert.AreEqual("WoG", new Choice(Ability.WoG, 3, PR, 4, false, BD1).Action);
+            Assert.AreEqual("WoG", new Choice(Ability.WoG, 3, PR, 5, false, BD1).Action);
         }
         [TestMethod]
         public void ChoiceDefineEqualityAndHashCode()
         {
-            Choice<ulong> c11 = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 });
-            Choice<ulong> c12 = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 });
-            Choice<ulong> c21 = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.SS, 3, new double[] { 0.7, 0.2, 0.1 });
-            Choice<ulong> c22 = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.SS, 3, new double[] { 0.7, 0.2, 0.1 });
+            Choice c11 = new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3);
+            Choice c12 = new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3);
+            Choice c21 = new Choice(Ability.SS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3);
+            Choice c22 = new Choice(Ability.SS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3);
             Assert.AreEqual(c11, c12);
             Assert.AreEqual(c21, c22);
             Assert.AreEqual(c12, c11);
@@ -124,116 +95,66 @@ namespace Matlabadin.Tests
             Assert.AreNotEqual(c12.GetHashCode(), c22.GetHashCode());
 
             // duration & probabilies also change equality
-            Assert.AreNotEqual(Choice<ulong>.CreateChoice(GP, SM, 0, Ability.SS, 2, new double[] { 0.7, 0.2, 0.1 }),
-                               Choice<ulong>.CreateChoice(GP, SM, 0, Ability.SS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreNotEqual(Choice<ulong>.CreateChoice(GP, SM, 0, Ability.SS, 3, new double[] { 0.7, 0.3 }),
-                               Choice<ulong>.CreateChoice(GP, SM, 0, Ability.SS, 3, new double[] { 0.7, 0.2, 0.1 }));
+            Assert.AreNotEqual(new Choice(Ability.SS, 2, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3),
+                               new Choice(Ability.SS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3));
+            Assert.AreNotEqual(new Choice(Ability.SS, 3, new double[] { 0.7, 0.3 }, 0, false, BD2),
+                               new Choice(Ability.SS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3));
         }
         [TestMethod]
-        public void EqualityShouldIncludeSSDuration()
-        {            
-            Choice<ulong> c = Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SS, 3), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 });
-            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SS, 0), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SS, 1), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SS, 2), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SS, 3), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SS, 4), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-        }
-        [TestMethod]
-        public void EqualityShouldIncludeEFDuration()
+        public void EqualityShouldIncludeBuffDuration()
         {
-            Choice<ulong> c = Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.EF, 3), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 });
-            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.EF, 0), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.EF, 1), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.EF, 2), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.EF, 3), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.EF, 4), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-        }
-        [TestMethod]
-        public void EqualityShouldIncludeWBDuration()
-        {
-            Choice<ulong> c = Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.WB, 3), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 });
-            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.WB, 0), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.WB, 1), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.WB, 2), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.WB, 3), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.WB, 4), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-        }
-        [TestMethod]
-        public void EqualityShouldIncludeSBDuration()
-        {
-            Choice<ulong> c = Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SotRSB, 3), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 });
-            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SotRSB, 0), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SotRSB, 1), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreNotEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SotRSB, 2), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SotRSB, 3), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
-            Assert.AreEqual(c, Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SotRSB, 4), Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }));
+            Choice c = new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3);
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 1, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 1, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 1, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 1, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 1, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 1, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 1, 0, 0, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 1, 0, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 1, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 1, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 1, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 1, } }));
         }
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ConcatenateShouldNotAllowConcatenationToActualAbilities()
         {
-            Choice<ulong> cCS = Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SS, 3), Ability.CS, 3, new double[] { 1 });
-            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Nothing, 1, new double[] { 1 });
+            Choice cCS = new Choice(Ability.CS, 3, PR, 0, false, BD1);
+            Choice cNothing = new Choice(Ability.Nothing, 3, PR, 0, false, BD1);
             cCS.Concatenate(cNothing);
         }
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ConcatenateShouldNotAllowConcatenationWhenThereIsAChoiceOfNextStates()
         {
-            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Nothing, 1, new double[] { 0.5, 0.5 });
+            Choice cNothing = new Choice(Ability.Nothing, 3, new double[] { 0.5, 0.4, 0.1 }, 0, false, BD3);
             cNothing.Concatenate(cNothing);
         }
         [TestMethod]
         public void ConcatenateShouldAddStepsDurations()
         {
-            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, 0, Ability.Nothing, 1, new double[] { 1 });
-            Choice<ulong> c = cNothing.Concatenate(cNothing);
+            Choice cNothing = new Choice(Ability.Nothing, 1, new double[] { 1 }, 0, false, BD1);
+            Choice c = cNothing.Concatenate(cNothing);
             Assert.AreEqual(2, c.stepsDuration, 2);
         }
         [TestMethod]
-        public void ConcatenateShouldAddSSDurations()
+        public void ConcatenateShouldAddBuffDurations()
         {
-            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SS, 5), Ability.Nothing, 1, new double[] { 1 });
-            Choice<ulong> c = cNothing.Concatenate(cNothing);
-            Assert.AreEqual(2, c.ssDuration);
-        }
-        [TestMethod]
-        public void ConcatenateShouldAddEFDurations()
-        {
-            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.EF, 5), Ability.Nothing, 1, new double[] { 1 });
-            Choice<ulong> c = cNothing.Concatenate(cNothing);
-            Assert.AreEqual(2, c.efDuration);
-        }
-        [TestMethod]
-        public void ConcatenateShouldAddWBDurations()
-        {
-            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.WB, 5), Ability.Nothing, 1, new double[] { 1 });
-            Choice<ulong> c = cNothing.Concatenate(cNothing);
-            Assert.AreEqual(2, c.wbDuration);
-        }
-        [TestMethod]
-        public void ConcatenateShouldAddSBDurations()
-        {
-            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SotRSB, 5), Ability.Nothing, 1, new double[] { 1 });
-            Choice<ulong> c = cNothing.Concatenate(cNothing);
-            Assert.AreEqual(2, c.sbDuration);
-        }
-        [TestMethod]
-        public void ConcatenateShouldSetSSBasedOnAbilityUsage()
-        {
-            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, 1, Ability.Nothing, 1, new double[] { 1 });
-            Assert.IsFalse(cNothing.Action.Contains("(SS)")); // no SS
-            Choice<ulong> c = cNothing.Concatenate(
-                Choice<ulong>.CreateChoice(GP, SM, GetState(SM, Buff.SS, 1, 3), Ability.WoG, 3, new double[] { 1 }));
-            Assert.IsTrue(c.Action.Contains("(SS)"));
+            Choice cNothing = new Choice(Ability.Nothing, 3, new double[] { 1 }, 0, false, new int[][] { new int[] { 0 }, new int[] { 1 }, new int[] { 2 }, new int[] { 3 } });
+            Choice c = cNothing.Concatenate(cNothing);
+            Assert.AreEqual(0, c.buffDuration[0][0]);
+            Assert.AreEqual(2, c.buffDuration[1][0]);
+            Assert.AreEqual(4, c.buffDuration[2][0]);
+            Assert.AreEqual(6, c.buffDuration[3][0]);
         }
         [TestMethod]
         public void ConcatenateShouldSetHPBasedOnAbilityUsage()
         {
-            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, 2, Ability.Nothing, 1, new double[] { 1 });
-            Choice<ulong> c = cNothing.Concatenate(
-                Choice<ulong>.CreateChoice(GP, SM, 2, Ability.WoG, 3, new double[] { 1 }));
+            Choice cNothing = new Choice(Ability.Nothing, 1, new double[] { 1 }, 1, false, BD1);
+            Choice c = cNothing.Concatenate(
+                new Choice(Ability.WoG, 0, new double[] { 1 }, 1, false, BD1));
             // Test data only possible if we introduce HP decay modelling which is unlikely
             Assert.IsTrue(c.Action.Contains("1"));
         }
@@ -241,10 +162,11 @@ namespace Matlabadin.Tests
         public void ConcatenateShouldSetPrBasedOnContatenatedChoice()
         {
             double[] pr = new double[] { 0.5, 0.5 };
-            Choice<ulong> cNothing = Choice<ulong>.CreateChoice(GP, SM, 3, Ability.Nothing, 1, new double[] { 1 });
-            Choice<ulong> c = cNothing.Concatenate(
-                Choice<ulong>.CreateChoice(GP, SM, 3, Ability.SotR, 3, pr));
-            Assert.AreEqual(pr, c.pr);
+            Choice cNothing = new Choice(Ability.Nothing, 1, new double[] { 1 }, 0, false, BD1);
+            Choice c = cNothing.Concatenate(
+                new Choice(Ability.J, 3, pr, 0, false, BD2));
+            Assert.IsTrue(pr.SequenceEqual(c.pr));
+            Assert.IsTrue(BD2.SelectMany(x => x).SequenceEqual(c.buffDuration.SelectMany(x => x)));
         }
     }
 }

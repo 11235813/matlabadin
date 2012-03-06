@@ -36,16 +36,15 @@ namespace Matlabadin
             this.nextState = graph.nextState;
 
             // replace the choices in the existing graph with the new choices. Since the graph has the same shape we don't have to generate the entire graph
-            TState[] tempNextStates;
             var choiceConversion =
                 from kvp in graph.firstChoiceState
                 select new {
                     OldChoice = kvp.Key,
-                    NewChoice = StateHelper<TState>.NextAbilityStates(GraphParameters, StateManager, kvp.Value, out tempNextStates),
+                    NewChoice = StateTransition<TState>.CalculateTransition(GraphParameters, StateManager, kvp.Value).Choice,
                     State = kvp.Value
                 };
             this.firstChoiceState = choiceConversion.ToDictionary(n => n.NewChoice, n => n.State);
-            Dictionary<Choice<TState>, Choice<TState>> choiceRemapping = choiceConversion.ToDictionary(n => n.OldChoice, n => n.NewChoice);
+            Dictionary<Choice, Choice> choiceRemapping = choiceConversion.ToDictionary(n => n.OldChoice, n => n.NewChoice);
             this.choice = graph.choice.Select(c => choiceRemapping[c]).ToArray();
         }
         /// <summary>
@@ -62,26 +61,25 @@ namespace Matlabadin
             TState initialState = StateManager.InitialState();
             Dictionary<TState, int> lookup = new Dictionary<TState, int>();
             List<TState> index = new List<TState>();
-            List<Choice<TState>> choice = new List<Choice<TState>>();
+            List<Choice> choice = new List<Choice>();
             List<int[]> nextState = new List<int[]>();
-            firstChoiceState = new Dictionary<Choice<TState>, TState>();
+            firstChoiceState = new Dictionary<Choice, TState>();
             index.Add(initialState);
             lookup[initialState] = 0;
             while (index.Count() > nextState.Count())
             {
                 TState currentState = index[nextState.Count()];
                 //Console.WriteLine(StateHelper<TState>.StateToString(GraphParameters, StateManager, currentState));
-                TState[] currentNextState;
-                int[] currentNextStateIndex;
-                Choice<TState> c = StateHelper<TState>.NextAbilityStates(GraphParameters, StateManager, currentState, out currentNextState);
-                currentNextStateIndex = new int[currentNextState.Length];
-                for (int i = 0; i < currentNextState.Length; i++)
+                StateTransition<TState> transition = StateTransition<TState>.CalculateTransition(GraphParameters, StateManager, currentState);
+                Choice c = transition.Choice;
+                int[] currentNextStateIndex = new int[transition.NextStates.Length];
+                for (int i = 0; i < transition.NextStates.Length; i++)
                 {
-                    if (!lookup.TryGetValue(currentNextState[i], out currentNextStateIndex[i]))
+                    if (!lookup.TryGetValue(transition.NextStates[i], out currentNextStateIndex[i]))
                     {
                         currentNextStateIndex[i] = index.Count();
-                        index.Add(currentNextState[i]);
-                        lookup[currentNextState[i]] = currentNextStateIndex[i];
+                        index.Add(transition.NextStates[i]);
+                        lookup[transition.NextStates[i]] = currentNextStateIndex[i];
                     }
                 }
                 choice.Add(LookupStateChoice(c, currentState));
@@ -92,7 +90,7 @@ namespace Matlabadin
             this.choice = choice.ToArray();
             this.nextState = nextState.ToArray();
         }
-        private Choice<TState> LookupStateChoice(Choice<TState> choice, TState state)
+        private Choice LookupStateChoice(Choice choice, TState state)
         {
             if (firstChoiceState.ContainsKey(choice))
             {
@@ -121,43 +119,35 @@ namespace Matlabadin
             // pr(choice) = sum[all state=choice](pr) / sumtpr
             Dictionary<string, double> cps = new Dictionary<string, double>();
             double sumtpr = 0;
-            double sumsstpr = 0;
-            double sumeftpr = 0;
-            double sumwbtpr = 0;
-            double sumsbtpr = 0;
+            double[] sumbufftpr = new double[(int)Buff.UptimeTrackedBuffs];
             for (int i = 0; i < index.Length; i++)
             {
-                Choice<TState> c = choice[i];
+                Choice c = choice[i];
                 double t = c.stepsDuration * GraphParameters.StepDuration;
-                double sst = c.ssDuration * GraphParameters.StepDuration;
-                double eft = c.efDuration * GraphParameters.StepDuration;
-                double wbt = c.wbDuration * GraphParameters.StepDuration;
-                double sbt = c.sbDuration * GraphParameters.StepDuration;
                 double tpr = t * pr[i];
                 sumtpr += tpr;
-                sumsstpr += sst * pr[i];
-                sumeftpr += eft * pr[i];
-                sumwbtpr += wbt * pr[i];
-                sumsbtpr += sbt * pr[i];
                 double currentPr;
                 if (!cps.TryGetValue(c.Action, out currentPr)) currentPr = 0;
                 if (c.Ability != Ability.Nothing)
                 {
                     cps[c.Action] = currentPr + pr[i];
                 }
-                else
+                // aggregate buff durations
+                for (int k = 0; k < c.pr.Length; k++) // for each state transition
                 {
-                    // Weighted cast/s based on a notional 1 GCD cast time Nothing ability
-                    cps[c.Action] = currentPr + pr[i] * c.stepsDuration / this.GraphParameters.StepsPerGcd;
+                    double transitiontpr = pr[i] * c.pr[k] * GraphParameters.StepDuration;
+                    for (int j = 0; j < (int)Buff.UptimeTrackedBuffs; j++) // for each buff
+                    {
+                        int buffDurationForTransition = c.buffDuration[j][k];
+                        if (buffDurationForTransition > c.stepsDuration) throw new Exception("Sanity check failure: buff duration exceeds step duration");
+                        sumbufftpr[j] += transitiontpr * buffDurationForTransition;
+                    }
                 }
             }
             return new ActionSummary()
             {
                 Action = cps.ToDictionary(kvp => kvp.Key, kvp => kvp.Value / sumtpr),
-                UptimeSS = sumsstpr / sumtpr,
-                UptimeEF = sumeftpr / sumtpr,
-                UptimeWB = sumwbtpr / sumtpr,
-                UptimeSB = sumsbtpr / sumtpr,
+                BuffUptime = sumbufftpr.Select(buffsumtpr => buffsumtpr / sumtpr).ToArray(),
             };
         }
         /// <summary>
@@ -176,7 +166,7 @@ namespace Matlabadin
             out double finalAbsTolerance,
             double relTolerance = 1e-8,
             double absTolerance = 1e-10,
-            int maxIterations = 8192,
+            int maxIterations = 32768,
             int iterationStride = 16,
             double[] initialState = null)
         {
@@ -299,7 +289,7 @@ namespace Matlabadin
             for (int i = 0; i < length; i++)
             {
                 double statePr = pr[i];
-                Choice<TState> c = choice[i];
+                Choice c = choice[i];
                 int[] next = nextState[i];
                 int len = next.Length;
                 for (int j = 0; j < len; j++)
@@ -371,7 +361,7 @@ namespace Matlabadin
             for (int i = 0; i < length; i++)
             {
                 int sourceIndex = transitions[i, 0];
-                Choice<TState> c = choice[sourceIndex];
+                Choice c = choice[sourceIndex];
                 double sourcePr = pr[sourceIndex];
                 int destIndex1 = transitions[i, 1];
                 nextPr[destIndex1] += sourcePr * c.pr[0];
@@ -383,7 +373,7 @@ namespace Matlabadin
             for (int i = 0; i < length; i++)
             {
                 int sourceIndex = transitions[i, 0];
-                Choice<TState> c = choice[sourceIndex];
+                Choice c = choice[sourceIndex];
                 double sourcePr = pr[sourceIndex];
                 int destIndex1 = transitions[i, 1];
                 int destIndex2 = transitions[i, 2];
@@ -397,7 +387,7 @@ namespace Matlabadin
             for (int i = 0; i < length; i++)
             {
                 int sourceIndex = transitions[i, 0];
-                Choice<TState> c = choice[sourceIndex];
+                Choice c = choice[sourceIndex];
                 double sourcePr = pr[sourceIndex];
                 int destIndex1 = transitions[i, 1];
                 int destIndex2 = transitions[i, 2];
@@ -413,7 +403,7 @@ namespace Matlabadin
             for (int i = 0; i < length; i++)
             {
                 int sourceIndex = states[i];
-                Choice<TState> c = choice[sourceIndex];
+                Choice c = choice[sourceIndex];
                 double sourcePr = pr[sourceIndex];
                 int[] next = nextState[sourceIndex];
                 int len = next.Length;
@@ -497,8 +487,31 @@ namespace Matlabadin
         // should all be private but we're exposing for now to make testing easier
         public Dictionary<TState, int> lookup; // maps state to state index
         public TState[] index; // maps state index to state
-        public Choice<TState>[] choice; // maps state index to choice made
+        public Choice[] choice; // maps state index to choice made
         public int[][] nextState; // maps state index to choice and corresponding next state indexes
-        private Dictionary<Choice<TState>, TState> firstChoiceState; // The first state in which given choice was encountered
+        private Dictionary<Choice, TState> firstChoiceState; // The first state in which given choice was encountered
+        #region Debugging helpers
+        public string StateToString(TState state)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("HP{0}", StateManager.HP(state));
+            string singleColumnNumberFormat = ",{1,1:#}";
+            string doubleColumnNumberFormat = ",{1,2:##}";
+            for (int offset = (int)Ability.CooldownIndicator + 1; offset < (int)Ability.Count; offset++)
+            {
+                sb.AppendFormat(GraphParameters.AbilityCooldownInSteps((Ability)offset) >= 10 ? doubleColumnNumberFormat : singleColumnNumberFormat,
+                    (Ability)offset,
+                    StateManager.CooldownRemaining(state, (Ability)offset));
+            }
+            sb.Append(",");
+            for (int i = 0; i < (int)Buff.Count; i++)
+            {
+                sb.AppendFormat(GraphParameters.BuffDurationInSteps((Buff)i) >= 10 ? doubleColumnNumberFormat : singleColumnNumberFormat,
+                    (Buff)i,
+                    StateManager.TimeRemaining(state, (Buff)i));
+            }
+            return sb.ToString();
+        }
+        #endregion
     }
 }

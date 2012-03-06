@@ -57,7 +57,7 @@ namespace Matlabadin
         }
         private static void ProcessParams(string[] args)
         {
-            if (args.Length < 9) Usage();
+            if (args.Length < 5) Usage();
             string rotation;
             int stepsPerGcd;
             double mehit, rhit;
@@ -138,10 +138,10 @@ namespace Matlabadin
             {
                 stream.WriteLine("{0},{1}", key, result.Action[key]);
             }
-            stream.WriteLine("Uptime_SacredShield,{0}", result.UptimeSS);
-            stream.WriteLine("Uptime_EternalFlame,{0}", result.UptimeEF);
-            stream.WriteLine("Uptime_WeakenedBlows,{0}", result.UptimeWB);
-            stream.WriteLine("Uptime_SotRShieldBlock,{0}", result.UptimeSB);
+            stream.WriteLine("Uptime_SacredShield,{0}", result.BuffUptime[(int)Buff.SS]);
+            stream.WriteLine("Uptime_EternalFlame,{0}", result.BuffUptime[(int)Buff.EF]);
+            stream.WriteLine("Uptime_WeakenedBlows,{0}", result.BuffUptime[(int)Buff.WB]);
+            stream.WriteLine("Uptime_SotRShieldBlock,{0}", result.BuffUptime[(int)Buff.SotRSB]);
             stream.WriteLine("Stats_StateSize_Total,{0}", graph.Size);
             stream.WriteLine("Stats_StateSize_NonZero,{0}", pr.Count(p => p > 0));
             stream.WriteLine("Stats_Iterations,{0}", iterationsPerformed);
@@ -196,7 +196,7 @@ namespace Matlabadin
         private static Dictionary<string, List<Tuple<MatlabadinGraph<ulong>, double[]>>> existingGraphs = new Dictionary<string, List<Tuple<MatlabadinGraph<ulong>, double[]>>>();
         public static void Usage()
         {
-            string message = "Matlabadin.exe <rotation> <stepsPerGcd> <useConsGlyph> <mehit> <rhit> <sdProcRate> <gcProcRate> <egProcRate> <useRetT13P2> [<outputfile>]" + Environment.NewLine
+            string message = "Matlabadin.exe <rotation> <stepsPerGcd> <mehit> <rhit> [<outputfile>]" + Environment.NewLine
                 + "Input parameters can also be read from the command line using the same argument format as above";
             Console.WriteLine(message);
             Console.Error.WriteLine(message);

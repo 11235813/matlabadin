@@ -5,52 +5,29 @@ using System.Text;
 
 namespace Matlabadin
 {
-    public class Choice<TState>
+    public class Choice
     {
-        public static Choice<TState> CreateChoice(
-            GraphParameters<TState> gp,
-            IStateManager<TState> sm,
-            TState state,
-            Ability a,
-            int stepsDuration,
-            double[] pr)
-        {
-            if (pr == null) throw new ArgumentNullException("pr");
-            // TODO: fix design flaw: buff tracking is broken for WB as the uptime depends on
-            // whether WB hit or not.
-            Choice<TState> c = new Choice<TState>(
-                a,
-                stepsDuration,
-                pr,
-                sm.HP(state),
-                a == Ability.WoG && sm.TimeRemaining(state, Buff.SS) > 0,
-                sm.TimeRemaining(state, Buff.SS),
-                sm.TimeRemaining(state, Buff.EF),
-                sm.TimeRemaining(state, Buff.WB),
-                sm.TimeRemaining(state, Buff.SotRSB)
-                );
-            return c;
-        }
-        private Choice(
+        public Choice(
             Ability ability,
             int stepsDuration,
             double[] pr,
             int hp,
             bool wogss,
-            int ssRemaining,
-            int efRemaining,
-            int wbRemaining,
-            int sbRemaining
+            int[][] buffDuration
             )
         {
+            if (pr == null) throw new ArgumentNullException("pr");
+            if (buffDuration == null) throw new ArgumentNullException("buffDuration");
+            if (wogss && ability != Ability.WoG) throw new ArgumentException("Sanity failure: wogss cannot be set if ability is not WoG");
+            if (buffDuration.Any(bd => bd.Any(d => d > stepsDuration))) throw new ArgumentException("Sanity failure: buff duration cannot exceed step duration of transition");
+            if (buffDuration.Length != (int)Buff.UptimeTrackedBuffs) throw new ArgumentException("Sanity failure: buffDuration array length invalid");
+            if (Math.Abs(pr.Sum() - 1.0) > 0.0001) throw new ArgumentException("Sanity failure: transition probabilities do not sum to 1");
+            if (buffDuration.Any(bd => bd.Length != pr.Length)) throw new ArgumentException("Sanity failure: buff duration array length does not match probability array length");
             this.ability = ability;
             this.hp = hp;
             this.wogss = wogss;
             this.stepsDuration = stepsDuration;
-            this.ssDuration = Math.Min(ssRemaining, stepsDuration);
-            this.efDuration = Math.Min(efRemaining, stepsDuration);
-            this.wbDuration = Math.Min(wbRemaining, stepsDuration);
-            this.sbDuration = Math.Min(ssRemaining, stepsDuration);
+            this.buffDuration = buffDuration;
             this.pr = pr;
         }
         // Output related
@@ -74,36 +51,30 @@ namespace Matlabadin
         private readonly Ability ability;
         private readonly bool wogss;
         private readonly int hp;
-        // aggregation stats
-        public readonly int ssDuration;
-        public readonly int efDuration;
-        public readonly int wbDuration;
-        public readonly int sbDuration;
         public readonly int stepsDuration;
+        public readonly int[][] buffDuration;
         // transition likelyhoods
         public readonly double[] pr;
         public override bool Equals(object obj)
         {
-            if (obj is Choice<TState>) return Equals((Choice<TState>)obj);
+            if (obj is Choice) return Equals((Choice)obj);
             return base.Equals(obj);
         }
-        public bool Equals(Choice<TState> c)
+        public bool Equals(Choice c)
         {
             return ability == c.ability
                 && wogss == c.wogss
-                && ssDuration == c.ssDuration
-                && efDuration == c.efDuration
-                && wbDuration == c.wbDuration
-                && sbDuration == c.sbDuration
                 && hp == c.hp
                 && stepsDuration == c.stepsDuration
+                && buffDuration.Length == c.buffDuration.Length
+                && buffDuration.Zip(c.buffDuration, (a, b) => a.SequenceEqual(b)).All(e => e) // jagged arrays match
                 && pr.SequenceEqual(c.pr);
         }
         public override int GetHashCode()
         {
             int hash = pr.Aggregate(0, (h, p) => h ^ p.GetHashCode());
             hash ^= stepsDuration.GetHashCode(); // assuming ~< 7 bits
-            hash ^= (ssDuration + efDuration) + (30 * wbDuration + 30 * 30 * sbDuration) << 7; // 9 bits
+            hash ^= ~(buffDuration.SelectMany(b => b).Aggregate(0, (h, p) => h ^ p.GetHashCode()) << 7);
             hash ^= hp << (7 + 9);
             if (wogss) hash ^= 1 << (7 + 9 + 3);
             hash += (int)ability << (7 + 9 + 3 + 1);
@@ -114,7 +85,7 @@ namespace Matlabadin
         /// </summary>
         /// <param name="choice">Choice to perform after current choice</param>
         /// <returns></returns>
-        public Choice<TState> Concatenate(Choice<TState> choice)
+        public Choice Concatenate(Choice choice)
         {
             if (this.Ability != Ability.Nothing)
             {
@@ -124,16 +95,14 @@ namespace Matlabadin
             {
                 throw new InvalidOperationException("Cannot concatenate to a choice that has multiple next states");
             }
-            return new Choice<TState>(
+            return new Choice(
                 choice.Ability,
                 this.stepsDuration + choice.stepsDuration,
                 choice.pr,
                 choice.hp,
                 choice.wogss,
-                this.ssDuration + choice.ssDuration,
-                this.efDuration + choice.efDuration,
-                this.wbDuration + choice.wbDuration,
-                this.sbDuration + choice.sbDuration
+                // Add the buff durations of the single transition to the choice buff durations
+                buffDuration.Zip(choice.buffDuration, (singleElement, duration) => duration.Select(d => d + singleElement[0]).ToArray()).ToArray()
                 );
         }
     }
