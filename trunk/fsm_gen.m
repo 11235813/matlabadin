@@ -1,4 +1,4 @@
-function [generatedFile] = fsm_gen(rotation, mehitArray, rhitArray, consGlyph, egTalentPoints , sdTalentPoints, gcTalentPoints, t13x2R)
+function [generatedFile] = fsm_gen(rotation, mehitArray, rhitArray)
 %fsm_gen calculates fsm for each mehit, rhit
 % call memoized_fsm to return the actual fsm data
 
@@ -46,21 +46,21 @@ for i=1:length(mehitArray)
     rotationKey = strrep(rotationKey, '*', 'star');
     rotationKey = strrep(rotationKey, '''', 'prime');
     rotationKey = strrep(rotationKey, '+', 'plus');
-    optionsKey = sprintf('T%g_%g%g%g_%0.5f_%0.5f', fsm_steps_per_gcd(), egTalentPoints , sdTalentPoints, gcTalentPoints, mehit, rhit);
+    optionsKey = sprintf('T%g_%0.5f_%0.5f', fsm_steps_per_gcd(), mehit, rhit);
     optionsKey = strrep(optionsKey,'_1.00000','_1_');
     optionsKey = strrep(optionsKey,'_0.','_');
-    if consGlyph
-        strConsGlyph = 'true';
-        optionsKey = strcat(optionsKey, '_cons');
-    else
-        strConsGlyph = 'false';
-    end
-    if t13x2R
-        strT13x2R = 'true';
-        optionsKey = strcat(optionsKey, '_t13x2R');
-    else
-        strT13x2R = 'false';
-    end
+%     if consGlyph
+%         strConsGlyph = 'true';
+%         optionsKey = strcat(optionsKey, '_cons');
+%     else
+%         strConsGlyph = 'false';
+%     end
+%     if t13x2R
+%         strT13x2R = 'true';
+%         optionsKey = strcat(optionsKey, '_t13x2R');
+%     else
+%         strT13x2R = 'false';
+%     end
     dirname = strcat('data\\', rotationKey);
     filename = strcat(dirname, '\\', optionsKey, '.csv');
     % skip generation if the file already exists
@@ -68,12 +68,10 @@ for i=1:length(mehitArray)
         if exist(dirname) ~= 7
             mkdir(dirname);
         end
-        % generate the data args
-        egProcRate = 0.15 * egTalentPoints;
-        gcProcRate = 0.10 * gcTalentPoints;
-        sdProcRate = 0.25 * sdTalentPoints;
-        fprintf(argfid, '%s %g %s %f %f %f %f %f %s %s\n', ...
-            rotation, fsm_steps_per_gcd(), strConsGlyph, mehit, rhit, sdProcRate, gcProcRate, egProcRate, strT13x2R, filename);
+                
+        %TODO: add sacred duty
+        fprintf(argfid, '%s %g %f %f %s\n', ...
+            rotation, fsm_steps_per_gcd(), mehit, rhit, filename);
         generationRequired = 1;
     end
     generatedFile{i} = filename;
@@ -93,7 +91,9 @@ if generationRequired
 		if exist('fsm.exe') ~= 2
 			error('Please install version 4 of the .NET framework or mono. .NET 4 can be downloaded from: http://www.microsoft.com/downloads/en/details.aspx?FamilyID=5765d7a8-7722-4888-a970-ac39b33fd8ab&displaylang=en');
 		end
-	end
-    system(strcat('fsm.exe', ' < ', argfile));
+    end
+    fopen(argfile)
+    system(['fsm.exe', '  ', fgetl(argfid)]);
+    fclose(argfid)
 end
 delete(argfile);
