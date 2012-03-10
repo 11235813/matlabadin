@@ -26,7 +26,7 @@ end
 
 %generate FSM results
 if length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1
-    [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit, c.mdf.rahit, c.glyph.Consecration, 0, 0, 2, 1); %PH for unnecessary inputs
+    [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit, c.mdf.rahit); %PH for unnecessary inputs
     %convert actionPr to CPS array
     c.rot.cps=action2cps(c);
     %EF and SS uptime to come
@@ -41,13 +41,13 @@ if length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1
 elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.mdf.mehit, c.mdf.rahit, glyph.Consecration, 0, 0, 2, 1);
+        fsm_gen(c.exec.queue, c.mdf.mehit, c.mdf.rahit);
         for j=1:length(c.mdf.mehit)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
             %prevents us from having to do awkward multiple-indexed cell
             %operations within c.rot.actionPr.
-            [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j), glyph.Consecration, 0, 0, 2, 1);
+            [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j));
             c.rot.efuptime(j)=0;
             c.rot.ssuptime(j)=0;
             [c.rot.cps(:,j)]=action2cps(c,j);
@@ -60,7 +60,7 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
             %iteration.  This data is automatically stored in cps, and this
             %prevents us from having to do awkward multiple-indexed cell
             %operations within c.rot.actionPr.
-            [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j), glyph.Consecration, 0, 0, 2, 1);
+            [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j));
             c.rot.efuptime(j)=0;
             c.rot.ssuptime(j)=0;
             [c.rot.cps(:,j)]=action2cps(c,j);
@@ -72,13 +72,13 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
 elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.mdf.mehit, c.mdf.rahit, glyph.Consecration, 0, 0, 2, 1);
+        fsm_gen(c.exec.queue, c.mdf.mehit, c.mdf.rahit, c.talent.short(3));
         for j=1:length(c.mdf.mehit)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
             %prevents us from having to do awkward multiple-indexed cell
             %operations within c.rot.actionPr.
-            [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit, glyph.Consecration, 0, 0, 2, 1);
+            [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit);
             c.rot.efuptime(j)=0;
             c.rot.ssuptime(j)=0;
             [c.rot.cps(:,j)]=action2cps(c,j);
@@ -91,7 +91,7 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
             %iteration.  This data is automatically stored in cps, and this
             %prevents us from having to do awkward multiple-indexed cell
             %operations within c.rot.actionPr.
-            [actionPr, metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit, glyph.Consecration, 0, 0, 2, 1);
+            [actionPr, metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit);
             c.rot.efuptime(j)=0;
             c.rot.ssuptime(j)=0;
             [c.rot.cps(:,j)]=action2cps(c,j);

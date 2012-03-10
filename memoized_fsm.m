@@ -1,7 +1,7 @@
-function  [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(rotation, mehit, rhit, consGlyph, egTalentPoints , sdTalentPoints, gcTalentPoints, t13x2R )
+function  [actionPr, metadata, ssUptime, efUptime] = memoized_fsm(rotation, mehit, rhit)
     global fsm_cache_actionPr;
-    global fsm_cache_jotwUptime;
-    global fsm_cache_inqUptime;
+    global fsm_cache_efUptime;
+    global fsm_cache_ssUptime;
     global fsm_cache_metadata;
 	% Check that we're not caching outdated mechanics
     if exist('RotationCalculator') ~= 7
@@ -13,8 +13,8 @@ function  [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(rotation, m
 		warning('Flushing fsm memory cache');
 		fsm_cache_actionPr = {};
         fsm_cache_metadata = {};
-		fsm_cache_inqUptime = {};
-		fsm_cache_jotwUptime = {};
+		fsm_cache_ssUptime = {};
+		fsm_cache_efUptime = {};
 	end
 	
     rotationKey = rotation;
@@ -30,35 +30,35 @@ function  [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(rotation, m
     rotationKey = strrep(rotationKey, '*', 'star');
     rotationKey = strrep(rotationKey, '''', 'prime');
     rotationKey = strrep(rotationKey, '+', 'plus');
-    optionsKey = sprintf('T%g_%g%g%g_%0.5f_%0.5f', fsm_steps_per_gcd(), egTalentPoints , sdTalentPoints, gcTalentPoints, mehit, rhit);
+    optionsKey = sprintf('T%g_%0.5f_%0.5f', fsm_steps_per_gcd(), mehit, rhit);
     optionsKey = strrep(optionsKey,'_1.00000','_1_');
     optionsKey = strrep(optionsKey,'_0.','_');
-    if consGlyph
-        optionsKey = strcat(optionsKey, '_cons');
-    end
-    if t13x2R
-        optionsKey = strcat(optionsKey, '_t13x2R');
-    end
+%     if consGlyph
+%         optionsKey = strcat(optionsKey, '_cons');
+%     end
+%     if t13x2R
+%         optionsKey = strcat(optionsKey, '_t13x2R');
+%     end
     % check memory cache
     if isfield(fsm_cache_actionPr, rotationKey) && isfield(fsm_cache_actionPr.(rotationKey), optionsKey)
         % warning('using cached result');
         actionPr = fsm_cache_actionPr.(rotationKey).(optionsKey);
         metadata = fsm_cache_metadata.(rotationKey).(optionsKey);
-        inqUptime = fsm_cache_inqUptime.(rotationKey).(optionsKey);
-        jotwUptime = fsm_cache_jotwUptime.(rotationKey).(optionsKey);
+        ssUptime = fsm_cache_ssUptime.(rotationKey).(optionsKey);
+        efUptime = fsm_cache_efUptime.(rotationKey).(optionsKey);
         return;
     end
-    fileCell = fsm_gen(rotation, mehit, rhit, consGlyph, egTalentPoints, sdTalentPoints, gcTalentPoints, t13x2R);
+    fileCell = fsm_gen(rotation, mehit, rhit);
     filename = fileCell{1};
     % read from the data file
-    [actionPr, metadata, inqUptime, jotwUptime] = load_fsm_csv(filename);
+    [actionPr, metadata, ssUptime, efUptime] = load_fsm_csv(filename);
     % TODO: sanity check that file params match our args
     fsm_cache_actionPr.(rotationKey).(optionsKey) = actionPr;
     fsm_cache_metadata.(rotationKey).(optionsKey) = metadata;
-    fsm_cache_inqUptime.(rotationKey).(optionsKey) = inqUptime;
-    fsm_cache_jotwUptime.(rotationKey).(optionsKey) = jotwUptime;
+    fsm_cache_ssUptime.(rotationKey).(optionsKey) = ssUptime;
+    fsm_cache_efUptime.(rotationKey).(optionsKey) = efUptime;
 end
-function [actionPr, metadata, inqUptime, jotwUptime] = load_fsm_csv(filename)
+function [actionPr, metadata, ssUptime, efUptime] = load_fsm_csv(filename)
 	fid = fopen(filename, 'rt');
 	i = 1;
 	metadata = {};
@@ -68,10 +68,12 @@ function [actionPr, metadata, inqUptime, jotwUptime] = load_fsm_csv(filename)
 		lineAction = rowEntry{1};
 		lineTxtPr = rowEntry{2};
 		linePr = str2double(lineTxtPr);
-		if strcmp(lineAction, 'Uptime_Inq')
-            inqUptime = linePr;
-        elseif strcmp(lineAction, 'Uptime_JotW')
-            jotwUptime = linePr;
+		if strcmp(lineAction, 'Uptime_SacredShield')
+            ssUptime = linePr;
+        elseif strcmp(lineAction, 'Uptime_EternalFlame')
+            efUptime = linePr;
+		elseif length(lineAction) > 7 && strcmp('Uptime_', lineAction(1:7))
+			metadata.(lineAction) = lineTxtPr;
 		elseif length(lineAction) > 6 && strcmp('Stats_', lineAction(1:6))
 			metadata.(lineAction) = lineTxtPr;
 		elseif length(lineAction) > 6 && strcmp('Param_', lineAction(1:6))
