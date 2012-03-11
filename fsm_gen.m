@@ -69,7 +69,6 @@ for i=1:length(mehitArray)
             mkdir(dirname);
         end
                 
-        %TODO: add sacred duty
         fprintf(argfid, '%s %g %f %f %s\n', ...
             rotation, fsm_steps_per_gcd(), mehit, rhit, filename);
         generationRequired = 1;
@@ -92,8 +91,8 @@ if generationRequired
 			error('Please install version 4 of the .NET framework or mono. .NET 4 can be downloaded from: http://www.microsoft.com/downloads/en/details.aspx?FamilyID=5765d7a8-7722-4888-a970-ac39b33fd8ab&displaylang=en');
 		end
     end
-    fopen(argfile)
+    fopen(argfile);
     system(['fsm.exe', '  ', fgetl(argfid)]);
-    fclose(argfid)
+    fclose(argfid);
 end
 delete(argfile);
