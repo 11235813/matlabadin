@@ -1,4 +1,4 @@
-function [ c ] = build_default_config(varargin)
+function [ c ] = build_config(varargin)
 
 global ddb
 
@@ -11,7 +11,7 @@ b.mode=[];b.item=[];b.flask=[];b.belixir=[];b.gelixir=[];b.potion=[];b.food=[]; 
 s.spec=[]; %spec_model
 t.shortform=[]; %talent_model
 g.shortform=[]; %glyph_model
-gr.gset=[]; %gear set
+gr.gset=[];gr.hit=[];gr.exp=[]; %gear set
 %start filling entries with inputs
 if nargin>1
     for i=1:2:length(varargin)
@@ -84,6 +84,10 @@ if nargin>1
                 g.shortform=value;
             case {'gear','gearset','gset'}
                 gr.gset=value;
+            case 'hit'
+                gr.hit=value;
+            case 'exp'
+                gr.exp=value;
         end
     end
 end
@@ -119,6 +123,11 @@ c.egs=ddb.gearset{gr.gset}; %1=pre-raid , 2=T14, 3=T14H, 4=T15, 5=T15H
 %calculate relevant stats
 %TODO: this could be built into stat_model
 c.gear=gear_stats(c.egs);
+
+%set hit/exp appropriately
+if isempty(gr.hit)==1; gr.hit=-1; end %set these to -1 if not specified
+if isempty(gr.exp)==1; gr.exp=-1; end %set these to -1 if not specified
+c=gear_sethitexp(c,gr.hit,gr.exp);
 
 %generate the remaining fields
 c=stat_model(c);

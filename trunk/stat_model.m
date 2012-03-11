@@ -10,8 +10,6 @@ function [c]=stat_model(c)
 %stat_model returns an updated "c" that contains final player and target 
 %stats as well as all necessary modifiers (mdf, consum).
 
-%TODO: input handling.  Check c for presence of mdf, provide warnings as
-%appropriate
 
 %% Cleanup
 %This clears existing mdf, player, and target information (in case we're
@@ -22,6 +20,8 @@ if isfield(c,'mdf'), c=rmfield(c,'mdf'); end;
 if isfield(c,'mdf'), c=rmfield(c,'player'); end;
 if isfield(c,'mdf'), c=rmfield(c,'target'); end;
 
+%% Make sure gear_stats has run
+c.gear=gear_stats(c.egs);
 %% Unpack
 %this is mostly so I don't have to find/replace every instance of base,
 %npc, etc. with c.base, c.npc, and so on.  I may go through and do this

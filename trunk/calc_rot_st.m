@@ -11,199 +11,133 @@ def_db;
 %% Configurations
 %create the first configuation
 %low hit, SotR/SoT build
-%set melee hit to 2%, expertise to 10
-c(1)=build_default_config; %can pass arguments to specify variations from defaults
+%set melee hit to 2%, expertise to 5%
+%do this by altering shirt stats
+c(1)=build_config('hit',2,'exp',5); 
 
-% queue_model; %lists the queues we're interested in
+%low hit, WoG/SoI build
+c(2)=build_config('hit',2,'exp',5,'seal','SoI');
 
-%do this by altering helm stats
-c=1;
-cfg(c).helm=egs(1);
-cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-2).*cnv.hit_phhit;
-cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-10).*cnv.exp_exp;
-cfg(c).label='939/SoT build';
-cfg(c).seal='Truth';
-cfg(c).glyph=ddb.glyphset{4}; %Modified Default, (CS+HotR)/SoT/ShoR, Cons/AS
-cfg(c).talent=ddb.talentset{1}; %0/32/9 w/o HG
-
-% %low hit, WoG/SoI build
-c=c+1;
-cfg(c).helm=cfg(1).helm;
-cfg(c).label='W39/SoI build';
-cfg(c).seal='Insight';
-cfg(c).glyph=ddb.glyphset{5}; %Modified WoG (CS+HotR)/SoI/WoG, Cons/AS
-cfg(c).talent=ddb.talentset{1}; %0/32/9 w/o HG
+%hit-cap and exp soft-cap
+c(3)=build_config('hit',7.5,'exp',7.5);
 
 
-%hit-cap and exp soft-cap, SotR/SoT build
-c=c+1;
-cfg(c)=cfg(1);
-cfg(c).label='939/SoT build, hit-capped';
-cfg(c).helm=egs(1);
-cfg(c).helm.hit=max([egs(1).hit 0])-(player.phhit-8).*cnv.hit_phhit;
-cfg(c).helm.exp=max([egs(1).exp 0])-(player.exp-56).*cnv.exp_exp;
+queue_model; %lists the queues we're interested in
+
+
 
 %% Generate DPS for each config
 
 %preallocate arrays for speed
-cmat=zeros(length(queue.st),length(val.fsmlabel),length(cfg));
-inqup=zeros(length(queue.st),1);mpsnet=inqup;
-empties=inqup;
+dps=zeros(length(c),length(queue.st));
+hps=dps;efssUptime=dps;empties=dps;
+dps2=dps;hps2=dps;
 
-for c=1:length(cfg)
+for g=1:length(c)
     %set configuration variables
-    egs(1)=cfg(c).helm;
-    exec=execution_model('seal',cfg(c).seal);
-    glyph=cfg(c).glyph;
-    talent=cfg(c).talent;
-    gear_stats;
-    talents;
-    stat_model;
-    ability_model;
     
-%     arbitrarily turn on T13 ret 2-piece
-%     mdf.t13x2R=1;
-%     mdf.t13x2P=0;
-
-
-    wb=waitbar(0,['Calculating CFG # ' int2str(c) ' / ' int2str(length(cfg))]);
+    cfg=c(g);
+    cfg=stat_model(cfg);
+    cfg=ability_model(cfg);
+    
+    wb=waitbar(0,['Calculating CFG # ' int2str(g) ' / ' int2str(length(c))]);
     tic
-    for kk=1:length(queue.st)
-        waitbar(kk/length(queue.st),wb)
-        [actionPr, metadata, inqUptime, jotwUptime] = memoized_fsm(queue.st{kk}, mdf.mehit, mdf.rahit, glyph.Consecration, talent.EternalGlory, talent.SacredDuty, talent.GrandCrusader, mdf.t13x2R);
+    for q=1:length(queue.st)
+        %update waitbar
+        waitbar(q/length(queue.st),wb)
+        
+        %set queue value
+        cfg.exec.queue=queue.st{q};
+        
+        %calculate DPS
+        cfg=rotation_model(cfg);
         
         %store stuff for debugging
-        fsmdata(kk,c).meta=metadata;
-        fsmdata(kk,c).action=actionPr;
+        crs_debug(q,g).meta=cfg.rot.metadata;
+        crs_debug(q,g).action=cfg.rot.actionPr;
+        crs_debug(q,g).cps=cfg.rot.cps;
         
-        %convert actionPr to CPS array
-        [cps] =action2cps(actionPr, metadata);
+        %store values for plot
+        dps(q,g)=cfg.rot.dps;
+        hps(q,g)=cfg.rot.hps;
+        efssUptime(q,g)=max([cfg.rot.efuptime;cfg.rot.ssuptime]);
+        empties(q,g)=cfg.rot.empties; %TODO: fix in [CR] once actionPr working again
         
-        %store in coefficient matrices
-        cmat(kk,:,c)=cps';
-        inqup(kk)=inqUptime;
-        jotw.uptime(kk)=jotwUptime;
-        if (jotw.BaseDur./jotw.uptime(kk))>jotw.NetDur
-            mps.jotw(kk)=jotw.uptime(kk).*(jotw.PerTick./jotw.NetTick);
-        else
-            mps.jotw(kk)=jotw.PerTick./jotw.NetTick;
-        end
-        mpsgain=mps.jotw(kk)+mps.Repl+mps.Sanc+mps.BoM;
-        mpscost=sum(cps.*val.fsmmana);
-        mpsnet(kk)=mpsgain-mpscost;
-        empties(kk)=sum(cps((length(cps)-1):length(cps)));
-        %temporary fix for FSM change
-%         empties(kk)=1/1.5-sum([actionPr{2,:}]);
+        %Old code for empties - for reference
+        %empties(q,g)=sum(cfg.rot.cps((length(cfg.rot.cps)-1):length(cfg.rot.cps)));
+        %alternatively, grab the "nothing" output of actionPr if it's
+        %re-implemented
+        %empties(kk)=1/1.5-sum([actionPr{2,:}]);
+        
+        %if desired, repeate for lower vengeance
+        %         cfg.exec.veng=0.3;
+        %         cfg=ability_model(cfg);
+        %         cfg=rotation_model(cfg);
+        %         dps2(q,g)=cfg.rot.dps;
+        %         hps2(q,g)=cfg.rot.hps;
+        %
+        
     end
     close(wb)
     toc
     
-
-    %% Damage calculations
+ 
+end   
     
-    %preallocate arrays for speed
-    padps=zeros(size(queue.st,1),2,length(cfg));
-    patps=zeros(size(padps));pahps=zeros(size(padps));
-    acdps=zeros(size(padps));acthr=zeros(size(padps));achps=zeros(size(padps));
-    totdps=zeros(size(padps));tottps=zeros(size(padps));tothps=zeros(size(padps));
-    prdps=padps;prhps=padps;prtps=padps;
-    
-    %once at 100% vengeance, once at 30%
-    tmp.veng=[1 0.3];
-    
-    for m=1:2
-        
-        exec.veng=tmp.veng(m);
-        stat_model
-        ability_model
-        
-        %active sources (GCD-based)
-        acdps(:,m,c)=cmat(:,:,c)*val.fsmdmg;
-        acthr(:,m,c)=cmat(:,:,c)*val.fsmthr;
-        achps(:,m,c)=cmat(:,:,c)*val.fsmheal;
-        
-        %passive sources (melee, seals, Censure)
-        inqmod=1+0.3.*inqup;
-        
-        %melee + seal
-        padps(:,m,c)=dps.Melee+dmg.activeseal.*mdf.mehit.*inqmod./player.wswing;
-        pahps(:,m,c)=heal.activeseal.*mdf.mehit./player.wswing;
-        patps(:,m,c)=tps.Melee+(dmg.activeseal.*inqmod+mdf.hthreat.*heal.activeseal).*mdf.RFury.*mdf.mehit./player.wswing;
-        
-        %Censure if applicable
-        if strcmpi('Truth',exec.seal)||strcmpi('SoT',exec.seal)
-            padps(:,m,c)=padps(:,m,c)+dps.Censure.*inqmod;
-            patps(:,m,c)=patps(:,m,c)+tps.Censure.*inqmod;
-        end
-        
-        %Proc effects
-        clear rot
-        rot.single=1;
-        for kk=1:length(queue.st)
-            rot.cps=cmat(kk,:,c);
-            dynamic_model
-            prdps(kk,m,c)=proc.dps;
-            prhps(kk,m,c)=proc.hps;
-            prtps(kk,m,c)=proc.tps;
-        end
-        
-        
-        %sum active and passive
-        totdps(:,m,c)=acdps(:,m,c)+padps(:,m,c)+prdps(:,m,c);
-        tottps(:,m,c)=acthr(:,m,c)+patps(:,m,c)+prtps(:,m,c);
-        tothps(:,m,c)=achps(:,m,c)+pahps(:,m,c)+prhps(:,m,c);
-    end
 
 %% construct output arrays
+L=length(queue.st);
+ldat=2+[1:L];
 
-spacer=repmat(' ',length(queue.st)+2,2);
-li{c} =    [spacer char({' ','Q#',int2str([1:length(queue.st)]')}) ...
-            spacer char({' ','Priority',char(queue.st)}) ...
-            spacer char({'DPS','V=100%',int2str(totdps(:,1,c))}) ...
-            spacer char({' ','V=30%',int2str(totdps(:,2,c))}) ...
-            spacer char({'SHPS','V=100%',int2str(tothps(:,1,c))}) ...
-            spacer char({' ','V=30%',int2str(tothps(:,2,c))}) ...
-            spacer char({' E',' %',num2str(empties.*100,'%3.1f')}) ...
-            spacer char({' I',' %',num2str(inqup.*100,'%3.1f')})...
-            spacer char({'mps','  ',num2str(mpsnet,'%4.0f')})...
-            ];
-        
-%             spacer char({'TPS','V=100%',int2str(tottps(:,1,c))}) ...
-%             spacer char({' ','V=30%',int2str(tottps(:,2,c))}) ...
-%             spacer char({' E',' #',int2str([rdata(:,c).empties]')}) ...
-%             spacer char({'SotR','miss',int2str([rdata(:,c).smiss]')}) ...
-%             spacer char({'AS','cast',int2str([rdata(:,c).ascast]')}) ...
-%             spacer char({'GC','procs',int2str([rdata(:,c).gcproc]')})...
-%             spacer char({'F2F','time',num2str([rdata(:,c).f2ftime]','%3.1f')}) ...
-        
-cfg(c).label
-li{c}
+for g=1:length(c)
 
+disp([num2str(c(g).player.mehit,'%1.2f') '% hit, ' num2str(c(g).player.exp,'%1.2f') '% exp'])    
+    
+li=DataTable();
+li{1:2,1}={' ';'Q#'};      
+li{ldat,1}=[1:L]';
+li{1:2,2}={' ';'Priority'};
+li{ldat,2}=queue.st;
+li{1:2,3}={'DPS';'V=100%'};
+li{ldat,3}=dps(:,g);
+li{1:2,4}={'SHPS';'V=100%'};
+li{ldat,4}=hps(:,g);
+li{1:2,5}={'SS/EF';'Uptime%'};
+li{ldat,5}=efssUptime(:,g);
+li{1:2,6}={' ';'Empty%'};
+li{ldat,6}=empties(:,g);
+
+li.setColumnTextAlignment(2,'left')
+% li.setColumnTextAlignment(3:6,'center')
+li.setColumnFormat(3:4,'%6.0f')
+li.setColumnFormat(5:6,'%2.1f')
+li.toText()
+
+lidb{g}=li;
 end
+
+
 
 %% pretty-print output array, this is only for the first set.
 queue.stsubset={ ...
-    'SotR>CS>J>AS'; ...
-    'SotR>CS>AS>J'; ...
-    'SotR>CS>AS+>J>AS'; ...
-    'SotR>CS>AS+>J>AS>Cons>HW'; ...
-    'SDSotR>ISotR>Inq>CS>AS+>J>AS'; ...
-    'SDSotR>ISotR>Inq>CS>AS+>J>AS>Cons>HW'; ...
-    'WoG>CS>AS+>J>AS'; ...
-    'WoG>SotR>CS>AS+>J>AS'; ...
-    'WoG>SotR>CS>AS+>J>AS>Cons>HW'; ...
-    'SotR>CS>AS>HoW>J'; ...
-    'SotR>CS>J>AS>HoW>Cons>HW'; ...
-    'ISotR>SDSotR>Inq>CS>AS>HoW>J>Cons>HW'; ...
-%     'WoG>SotR>CS>AS>HoW>J>Cons>HW'...
+    'SotR>CS>J>AS>Cons'; ...
+    'SotR>CS>AS>J>Cons'; ...
+    'WoG>CS>J>AS'; ...
     };
     
+li=lidb{1};
+disp([num2str(c(1).player.mehit,'%1.2f') '% hit, ' num2str(c(1).player.exp,'%1.2f') '% exp'])    
 
 for q=1:size(queue.stsubset,1)
     ind(q)=find(strcmp(queue.st,queue.stsubset{q}));
 end
 
-li{1}(ind+2,:)
-
-%% save for later use (good for generic stuff, saves computation time)
-% save prio_data.nv.mat cmat fsmdata
+for q=size(queue.st,1):-1:1
+    if find(ind==q)
+        
+    else
+        li.deleteRow(2+q);
+    end
+        
+end
+li.toText()

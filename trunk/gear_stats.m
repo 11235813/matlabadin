@@ -1,4 +1,4 @@
-function [gear] = gear_stats(egs);
+function [gear] = gear_stats(egs)
 %% GEAR_STATS
 % This module takes the equipped gear set (egs) and calculates the total
 % stat contributions of the gear set.  This module may not see very

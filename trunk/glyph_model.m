@@ -17,7 +17,7 @@ function [glyph] =  glyph_model(shortform)
 %
 %Inputs [defaults] :
 %shortform - 3x3 integer array representing the short form of the glyph
-%tree [1 1 3 3 3 1];
+%tree [8 5 6; 1 2 6; 0 0 0];
 %
 %Glyph ID numbers (TODO: Alphabetize, or order according to usefulness?):
 %
@@ -57,7 +57,7 @@ function [glyph] =  glyph_model(shortform)
 %% Input Handling
 
 if nargin<1 || (nargin==1 && isempty(shortform))
-    shortform=[1 4 5; 1 2 6; 0 0 0];
+    shortform=[8 5 6; 1 2 6; 0 0 0];
 else
     if sum(size(shortform)==[3 3])~=2
         error('glyph_model input is not 1x6')

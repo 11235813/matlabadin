@@ -83,6 +83,8 @@ function [actionPr, metadata, ssUptime, efUptime] = load_fsm_csv(filename)
 			actionPr{2, i} = linePr;
 			i = i + 1;
 		end
-	end
+    end
+    actionPr{1,i}=[];
+    actionPr{2,i}=[];
     fclose (fid);
 end

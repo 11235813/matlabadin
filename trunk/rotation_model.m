@@ -32,6 +32,9 @@ if length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1
     %EF and SS uptime to come
     c.rot.efuptime=0;
     c.rot.ssuptime=0;
+    %TODO: empties tracking, HPG
+    c.rot.empties=0;
+    c.rot.hpg=0;
     
     %otherwise, we need some array handling, and may want to take advantage
     %of parallelization
@@ -50,6 +53,9 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
             [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j));
             c.rot.efuptime(j)=0;
             c.rot.ssuptime(j)=0;
+            %TODO: empties tracking
+            c.rot.empties=0;
+            c.rot.hpg=0;
             [c.rot.cps(:,j)]=action2cps(c,j);
         end
     else
@@ -63,6 +69,9 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
             [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j));
             c.rot.efuptime(j)=0;
             c.rot.ssuptime(j)=0;
+            %TODO: empties tracking
+            c.rot.empties=0;
+            c.rot.hpg=0;
             [c.rot.cps(:,j)]=action2cps(c,j);
         end
         close(wb)
@@ -81,6 +90,9 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
             [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit);
             c.rot.efuptime(j)=0;
             c.rot.ssuptime(j)=0;
+            %TODO: empties tracking
+            c.rot.empties=0;
+            c.rot.hpg=0;
             [c.rot.cps(:,j)]=action2cps(c,j);
         end
     else
@@ -94,6 +106,9 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
             [actionPr, metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit);
             c.rot.efuptime(j)=0;
             c.rot.ssuptime(j)=0;
+            %TODO: empties tracking
+            c.rot.empties=0;
+            c.rot.hpg=0;
             [c.rot.cps(:,j)]=action2cps(c,j);
         end
         close(wb)
