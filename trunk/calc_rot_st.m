@@ -21,12 +21,8 @@ c(2)=build_config('hit',2,'exp',5,'seal','SoI');
 %hit-cap and exp soft-cap
 c(3)=build_config('hit',7.5,'exp',7.5);
 
-
-queue_model; %lists the queues we're interested in
-
-
-
 %% Generate DPS for each config
+queue_model; %lists the queues we're interested in
 
 %preallocate arrays for speed
 dps=zeros(length(c),length(queue.st));
@@ -62,6 +58,7 @@ for g=1:length(c)
         hps(q,g)=cfg.rot.hps;
         efssUptime(q,g)=max([cfg.rot.efuptime;cfg.rot.ssuptime]);
         empties(q,g)=cfg.rot.empties; %TODO: fix in [CR] once actionPr working again
+        hpg(q,g)=cfg.rot.hpg;
         
         %Old code for empties - for reference
         %empties(q,g)=sum(cfg.rot.cps((length(cfg.rot.cps)-1):length(cfg.rot.cps)));
@@ -106,6 +103,8 @@ li{1:2,5}={'SS/EF';'Uptime%'};
 li{ldat,5}=efssUptime(:,g);
 li{1:2,6}={' ';'Empty%'};
 li{ldat,6}=empties(:,g);
+li{1:2,7}={'HPG';'per s'};
+li{ldat,7}=hpg(:,g);
 
 li.setColumnTextAlignment(2,'left')
 % li.setColumnTextAlignment(3:6,'center')

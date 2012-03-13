@@ -46,7 +46,20 @@ tempegs(14)=equip(68996); %Stay of Execution
 tempegs(14)=reforge(tempegs(14),'dodge','mast');
 tempegs(15)=equip(72827); %Gavel of Peroth'arn
 tempegs(16)=equip(72855); %Corrupted Carapace
-
+%%Enchants (21-37)
+tempegs(21)=equip(86931,'s');%Earthen Ring
+tempegs(23)=equip(86854,'s');%Greater Unbreakable Quartz
+tempegs(24)=equip(74234,'s');%Protection
+tempegs(25)=equip(74251,'s');%Greater Stamina
+tempegs(26)=equip(74229,'s');%Dodge
+tempegs(27)=equip(74255,'s');%Greater Mastery
+tempegs(29)=equip(101598,'s');%Drakehide
+tempegs(30)=equip(74238,'s');%Mastery
+tempegs(31)=equip(74218,'s');%finger0
+tempegs(32)=equip(74218,'s');%finger1
+tempegs(35)=equip(74244,'s');%Windwalk?
+tempegs(36)=equip(74226,'s');%Mastery
+ddb.gearset(1)={tempegs};
 
 %% Glyphs
 %TODO: convert this to new 3x3 structure, if needed
