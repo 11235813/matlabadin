@@ -25,22 +25,36 @@ end
 %% Crank
 
 %generate FSM results
-if length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1
-    [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit, c.mdf.rahit); %PH for unnecessary inputs
+if length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswing)==1
+    [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit, c.mdf.rahit); 
     %convert actionPr to CPS array
     c.rot.cps=action2cps(c);
     %EF and SS uptime to come
     c.rot.efuptime=0;
     c.rot.ssuptime=0;
-    %TODO: empties tracking, HPG
+    %TODO: empties tracking
     c.rot.empties=0;
-    c.rot.hpg=0;
     
-    %otherwise, we need some array handling, and may want to take advantage
-    %of parallelization
+%otherwise, we need some array handling, and may want to take advantage
+%of parallelization
+
+%mdf.mehit and mdf.rahit have one element, but player.wswing is 1xN -
+%haste, str scaling (via parry->parryhaste)
+elseif length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswing)>1
+    %only need one fsm generation
+    [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit, c.mdf.rahit);
+    %the conversion to a CPS array needs to be handled appropriately though
+    for j=1:length(c.player.wswing)
+        [c.rot.cps(:,j)]=action2cps(c,j);
+        c.rot.efuptime(j)=0;
+        c.rot.ssuptime(j)=0;
+        %TODO: empties tracking
+        c.rot.empties=0;
+    end
+        
     
-    %both mdf.mehit and mdf.rahit have more than one element - assumed to
-    %be the same size
+%both mdf.mehit and mdf.rahit have more than one element - assumed to
+%be the same size
 elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
     %use parallelization
     if useParallel
@@ -51,12 +65,11 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
             %prevents us from having to do awkward multiple-indexed cell
             %operations within c.rot.actionPr.
             [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j));
+            [c.rot.cps(:,j)]=action2cps(c,j);
             c.rot.efuptime(j)=0;
             c.rot.ssuptime(j)=0;
             %TODO: empties tracking
             c.rot.empties=0;
-            c.rot.hpg=0;
-            [c.rot.cps(:,j)]=action2cps(c,j);
         end
     else
         wb=waitbar(0,'Generating/Loading FSM data');
@@ -67,12 +80,11 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
             %prevents us from having to do awkward multiple-indexed cell
             %operations within c.rot.actionPr.
             [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j));
+            [c.rot.cps(:,j)]=action2cps(c,j);
             c.rot.efuptime(j)=0;
             c.rot.ssuptime(j)=0;
             %TODO: empties tracking
             c.rot.empties=0;
-            c.rot.hpg=0;
-            [c.rot.cps(:,j)]=action2cps(c,j);
         end
         close(wb)
     end
@@ -88,12 +100,12 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
             %prevents us from having to do awkward multiple-indexed cell
             %operations within c.rot.actionPr.
             [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit);
+            [c.rot.cps(:,j)]=action2cps(c,j);
             c.rot.efuptime(j)=0;
             c.rot.ssuptime(j)=0;
             %TODO: empties tracking
             c.rot.empties=0;
-            c.rot.hpg=0;
-            [c.rot.cps(:,j)]=action2cps(c,j);
+            
         end
     else
         wb=waitbar(0,'Generating/Loading FSM data');
@@ -104,12 +116,11 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
             %prevents us from having to do awkward multiple-indexed cell
             %operations within c.rot.actionPr.
             [actionPr, metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit);
+            [c.rot.cps(:,j)]=action2cps(c,j);
             c.rot.efuptime(j)=0;
             c.rot.ssuptime(j)=0;
             %TODO: empties tracking
             c.rot.empties=0;
-            c.rot.hpg=0;
-            [c.rot.cps(:,j)]=action2cps(c,j);
         end
         close(wb)
     end
@@ -133,6 +144,11 @@ c.rot.dps=sum(c.rot.cps.*c.abil.val.dmg);
 c.rot.hps=sum(c.rot.cps.*c.abil.val.heal);
 %     rot(r).actps=sum(cps.*val.fsmthr);
 
+%calculate HPG
+c.rot.hpg=c.rot.cps(1,:).*c.mdf.mehit+... %CS
+          c.rot.cps(2,:).*c.mdf.mehit+... %HotR
+          c.rot.cps(4,:).*c.mdf.rahit+... %J
+          c.rot.cps(5,:).*c.mdf.rahit;    %AS - need a way to differentiate between GrCr and non-GrCr casts
 
 %order fields alphabetically
 c=orderfields(c);
