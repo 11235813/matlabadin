@@ -49,18 +49,6 @@ for i=1:length(mehitArray)
     optionsKey = sprintf('T%g_%0.5f_%0.5f', fsm_steps_per_gcd(), mehit, rhit);
     optionsKey = strrep(optionsKey,'_1.00000','_1_');
     optionsKey = strrep(optionsKey,'_0.','_');
-%     if consGlyph
-%         strConsGlyph = 'true';
-%         optionsKey = strcat(optionsKey, '_cons');
-%     else
-%         strConsGlyph = 'false';
-%     end
-%     if t13x2R
-%         strT13x2R = 'true';
-%         optionsKey = strcat(optionsKey, '_t13x2R');
-%     else
-%         strT13x2R = 'false';
-%     end
     dirname = strcat('data\\', rotationKey);
     filename = strcat(dirname, '\\', optionsKey, '.csv');
     % skip generation if the file already exists
@@ -91,8 +79,6 @@ if generationRequired
 			error('Please install version 4 of the .NET framework or mono. .NET 4 can be downloaded from: http://www.microsoft.com/downloads/en/details.aspx?FamilyID=5765d7a8-7722-4888-a970-ac39b33fd8ab&displaylang=en');
 		end
     end
-    fopen(argfile);
-    system(['fsm.exe', '  ', fgetl(argfid)]);
-    fclose(argfid);
+    system(strcat('fsm.exe < ', argfile));
 end
 delete(argfile);
