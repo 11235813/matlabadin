@@ -61,6 +61,7 @@ function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime] = memoize
     fsm_cache_sbUptime.(rotationKey).(optionsKey) = sbUptime;
 end
 function [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime] = load_fsm_csv(filename)
+    addpath .\helper_func\
 	fid = fopen(filename, 'rt');
 	i = 1;
 	metadata = {};
@@ -88,7 +89,5 @@ function [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime] = load_fsm
 			i = i + 1;
 		end
     end
-    actionPr{1,i}=[];
-    actionPr{2,i}=[];
     fclose (fid);
 end
