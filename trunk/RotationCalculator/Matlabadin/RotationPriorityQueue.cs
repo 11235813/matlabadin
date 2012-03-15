@@ -73,6 +73,23 @@ namespace Matlabadin
 
                 string rawActionString = actionMatch.Groups["first"].Value;
                 string action = rawActionString;
+                // Check for "keep up" operator, append conditional
+                if (String.Equals(action.Substring(0,1),"^"))
+                {
+                    action = action.Substring(1);
+                    string keepUp=action.Substring(0,1+String.Compare(action,"["));  // hardcoded for "^buffname[conditional]" syntax
+                    // If keeping up WB, we need to adjust for the HotR cooldown to keep full uptime
+                    if (String.Equals(action.Substring(0,2),"WB"))
+                    {
+                        action = String.Concat(action, "[buff", keepUp, "<4.5]");
+                    }
+                    // otherwise, we can just look for 0-duration as EF/SS are off-GCD
+                    else
+                    {
+                        action = String.Concat(action, "[buff", keepUp, "=0]");
+                    }
+                }
+                // Process any conditionals, remove from action string
                 while (action.Contains("["))
                 {
                     action = ProcessConditional(i, conditionalAbilityList, action);
@@ -106,6 +123,10 @@ namespace Matlabadin
                         // Use AS if it will generate HP
                         abilityConditionals[i].Add((gp, sm, state) => sm.TimeRemaining(state, Buff.GC) > 0);
                         action = action.Substring(0, action.Length - 1);
+                        break;
+                    case "WB":
+                        // Use HotR for Weakened Blows
+                        action = "HotR";
                         break;
                 }
                 Ability ability = (Ability)Enum.Parse(typeof(Ability), action);
