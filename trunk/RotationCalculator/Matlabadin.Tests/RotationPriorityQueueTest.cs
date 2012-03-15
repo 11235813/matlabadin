@@ -7,10 +7,10 @@ namespace Matlabadin.Tests
     [TestClass]
     public class RotationPriorityQueueTest : MatlabadinTest
     {
-        private void DoTest(string queue, ulong state, Ability expected)
+        private void DoTest(string queue, int hp, Ability expected)
         {
             Int64GraphParameters gp = NoHitExpertise(queue);
-            Assert.AreEqual(expected, gp.Rotation.ActionToTake(gp, gp, state));
+            Assert.AreEqual(expected, gp.Rotation.ActionToTake(gp, gp, (ulong)hp));
         }
         private void DoTest(Int64GraphParameters gp, ulong state, Ability expected)
         {
@@ -120,6 +120,59 @@ namespace Matlabadin.Tests
             DoTest(gp, GetState(gp, Ability.Cons, 0), Ability.Cons);
             DoTest(gp, GetState(gp, Ability.Cons, 3), Ability.CS);
             DoTest(gp, GetState(gp, Ability.Cons, 6), Ability.CS);
+        }
+        [TestMethod]
+        public void KeepUpWBShouldCastHotRWhenBuffLessThan4_5Seconds()
+        {
+            var gp = new Int64GraphParameters(new RotationPriorityQueue<ulong>("^WB"), 3, 1, 1);
+            DoTest(gp, GetState(gp, Buff.WB, 10), Ability.Nothing);
+            DoTest(gp, GetState(gp, Buff.WB, 9), Ability.Nothing); // 4.5s = 3 GCD * 3 steps / GCD = 9 steps
+            DoTest(gp, GetState(gp, Buff.WB, 8), Ability.HotR);
+            DoTest(gp, GetState(gp, Buff.WB, 1), Ability.HotR);
+            DoTest(gp, GetState(gp, Buff.WB, 0), Ability.HotR);
+        }
+        [TestMethod]
+        public void KeepUpSSShouldCastSSWhenBuffExpired()
+        {
+            var gp = NoHitExpertise("^SS");
+            DoTest(gp, GetState(gp, Buff.SS, 2, 3), Ability.Nothing);
+            DoTest(gp, GetState(gp, Buff.SS, 1, 3), Ability.Nothing);
+            DoTest(gp, GetState(gp, Buff.SS, 0, 3), Ability.SS);
+        }
+        [TestMethod]
+        public void KeepUpEFShouldCastEFWhenBuffExpired()
+        {
+            var gp = NoHitExpertise("^EF");
+            DoTest(gp, GetState(gp, Buff.EF, 2, 3), Ability.Nothing);
+            DoTest(gp, GetState(gp, Buff.EF, 1, 3), Ability.Nothing);
+            DoTest(gp, GetState(gp, Buff.EF, 0, 3), Ability.EF);
+        }
+        [TestMethod]
+        public void KeepUpEFShouldUseCastEFAt3HP()
+        {
+            var gp = NoHitExpertise("^EF");
+            DoTest(gp, GetState(gp, Buff.EF, 0, 3), Ability.EF);
+            DoTest(gp, GetState(gp, Buff.EF, 0, 2), Ability.Nothing);
+            DoTest(gp, GetState(gp, Buff.EF, 0, 1), Ability.Nothing);
+            DoTest(gp, GetState(gp, Buff.EF, 0, 0), Ability.Nothing);
+        }
+        [TestMethod]
+        public void KeepUpShouldRetainConditionals()
+        {
+            var gp = NoHitExpertise("^EF[cdCS>0]>CS");
+            DoTest(gp, GetState(gp, Buff.EF, 0, 3), Ability.CS);
+            DoTest(gp, GetState(gp, Ability.CS, 1, 3), Ability.EF);
+        }
+        [TestMethod]
+        // ^ with numeric holy power suffix not supported at this time
+        // to properly support then, we should change the regex and add capture groups
+        public void KeepUpShouldRetainSuffix()
+        {
+            var gp = NoHitExpertise("^EF2");
+            DoTest(gp, GetState(gp, Buff.EF, 0, 3), Ability.EF);
+            DoTest(gp, GetState(gp, Buff.EF, 0, 2), Ability.EF);
+            DoTest(gp, GetState(gp, Buff.EF, 0, 1), Ability.Nothing);
+            DoTest(gp, GetState(gp, Buff.EF, 0, 0), Ability.Nothing);
         }
     }
 }
