@@ -11,8 +11,8 @@ namespace Matlabadin
 {
     public class Program
     {
-		public const double BaseMeleeHit = 1.0 - 0.08 - 0.065 - 0.14;
-		public const double BaseRangeHit = 1.0 - 0.08;
+		public const double BaseMeleeHit = 1.0 - 0.075 - 0.075 - 0.075;
+		public const double BaseRangeHit = 1.0 - 0.075;
         public static void Main(string[] args)
         {
             if (args.Length == 0)
