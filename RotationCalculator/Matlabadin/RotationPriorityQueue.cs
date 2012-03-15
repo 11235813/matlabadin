@@ -40,6 +40,10 @@ namespace Matlabadin
     /// 
     /// Example: CS[cdCS<=0.5]                                      >
     ///  - will cast Crusader Strike as soon as it is off cooldown if the CS cooldown is half a second or less
+    ///  
+    /// Buff uptime:
+    /// A short-hand for keeping up a buff can be written using ^ and the buff name.
+    /// Eg: ^WB>J casts HotR to ensure Weakening Blows uptime
     /// </summary>
     public class RotationPriorityQueue<TState>
     {
@@ -73,21 +77,29 @@ namespace Matlabadin
 
                 string rawActionString = actionMatch.Groups["first"].Value;
                 string action = rawActionString;
-                // Check for "keep up" operator, append conditional
-                if (String.Equals(action.Substring(0,1),"^"))
+                // Check for "keep up" operator
+                if (action.StartsWith("^"))
                 {
-                    action = action.Substring(1);
-                    string keepUp=action.Substring(0,1+String.Compare(action,"["));  // hardcoded for "^buffname[conditional]" syntax
-                    // If keeping up WB, we need to adjust for the HotR cooldown to keep full uptime
-                    if (String.Equals(action.Substring(0,2),"WB"))
+                    string buff = action.Substring(1);
+                    if (buff.Contains("[")) buff = buff.Substring(0, action.IndexOf("[") - 1); // strip conditionals
+                    switch (buff)
                     {
-                        action = String.Concat(action, "[buff", keepUp, "<4.5]");
+                        case "WB":
+                            // If keeping up WB, we need to adjust for the HotR cooldown to keep full uptime
+                            action = action.Replace("^WB", "HotR[buffWB<4.5]");
+                            break;
+                        case "SS":
+                        case "EF": // TODO: do we EF1 or EF3 when EF runs out?
+                            // Ability name same as buff name
+                            action = action.Replace("^" + buff, buff + "[buff" + buff + "=0]");
+                            break;
+                        default:
+                            throw new Exception("Mechanics for keeping up " + buff + " not yet implemented.");
                     }
-                    // otherwise, we can just look for 0-duration as EF/SS are off-GCD
-                    else
-                    {
-                        action = String.Concat(action, "[buff", keepUp, "=0]");
-                    }
+                    // TODO keep up & numeric suffix (such as ^EF4) not supported together.
+                    // To properly support this, we should change the regex and
+                    // add capture groups to pull out the ability/buff
+                    // and prefixes and suffixes.
                 }
                 // Process any conditionals, remove from action string
                 while (action.Contains("["))
@@ -123,10 +135,6 @@ namespace Matlabadin
                         // Use AS if it will generate HP
                         abilityConditionals[i].Add((gp, sm, state) => sm.TimeRemaining(state, Buff.GC) > 0);
                         action = action.Substring(0, action.Length - 1);
-                        break;
-                    case "WB":
-                        // Use HotR for Weakened Blows
-                        action = "HotR";
                         break;
                 }
                 Ability ability = (Ability)Enum.Parse(typeof(Ability), action);
