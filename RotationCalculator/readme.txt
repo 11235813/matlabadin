@@ -1,11 +1,13 @@
 Matlabadin C# Finite State Machine Calculator
 
+Dev note: NUnit is used for unit testing. Download from http://www.nunit.org/
+
 See http://maintankadin.failsafedesign.com/forum/viewtopic.php?f=6&t=29317 for outline 
 
 Project Structure:
 	Matlabadin: FSM algorithm implementation compiling to fsm.exe command-line tool
 	Matlabadin.RotationUI: partially implemented interface for graph traversal
-	Matlabadin.Tests: test suite for algorithm code
+	Matlabadin.Tests: test suite for algorithm code	
 
 Matlabadin project structure:
 	Ability.cs: enum definition of all possible abilities

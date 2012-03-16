@@ -1,10 +1,10 @@
 ﻿using Matlabadin;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 
 namespace Matlabadin.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class RotationPriorityQueueTest : MatlabadinTest
     {
         private void DoTest(string queue, int hp, Ability expected)
@@ -16,7 +16,7 @@ namespace Matlabadin.Tests
         {
             Assert.AreEqual(expected, gp.Rotation.ActionToTake(gp, gp, state));
         }
-        [TestMethod]
+        [Test]
         public void ShouldUseSingleAbilityOffCooldown()
         {
             Action<string> doTest = (ability) =>
@@ -33,7 +33,7 @@ namespace Matlabadin.Tests
             doTest("EF");
             doTest("WoG");
         }
-        [TestMethod]
+        [Test]
         public void SotRShouldRequire3HP()
         {
             DoTest("SotR", 0, Ability.Nothing);
@@ -41,7 +41,7 @@ namespace Matlabadin.Tests
             DoTest("SotR", 2, Ability.Nothing);
             DoTest("SotR", 3, Ability.SotR);
         }
-        [TestMethod]
+        [Test]
         public void SSShouldRequire3HP()
         {
             DoTest("SS", 0, Ability.Nothing);
@@ -51,19 +51,19 @@ namespace Matlabadin.Tests
             DoTest("SS", 4, Ability.SS);
             DoTest("SS", 5, Ability.SS);
         }
-        [TestMethod]
+        [Test]
         public void EFShouldRequire1HP()
         {
             DoTest("EF0", 0, Ability.Nothing);
             DoTest("EF0", 1, Ability.EF);
         }
-        [TestMethod]
+        [Test]
         public void WoGShouldRequire1HP()
         {
             DoTest("WoG0", 0, Ability.Nothing);
             DoTest("WoG0", 1, Ability.WoG);
         }
-        [TestMethod]
+        [Test]
         public void EFShouldDefaultToEF3()
         {
             DoTest("EF", 0, Ability.Nothing);
@@ -87,7 +87,7 @@ namespace Matlabadin.Tests
             DoTest("EF[HP>=1]", 4, Ability.EF);
             DoTest("EF[HP>=1]", 5, Ability.EF);
         }
-        [TestMethod]
+        [Test]
         public void NumericSuffixShouldIndicateMinHolyPowerToUseAbility()
         {
             DoTest("J0", 0, Ability.J);
@@ -99,20 +99,20 @@ namespace Matlabadin.Tests
             DoTest("J5", 4, Ability.Nothing);
             DoTest("J5", 5, Ability.J);
         }
-        [TestMethod]
+        [Test]
         public void ShouldPrioritiseHigherAbilities()
         {
             DoTest("CS>Cons", 0, Ability.CS);
             DoTest("Cons>CS", 0, Ability.Cons);
         }
-        [TestMethod]
+        [Test]
         public void ASPlusShouldUseASIfWillGenerateHP()
         {
             Int64GraphParameters gp = NoHitExpertise("AS+>CS");
             DoTest(gp, GetState(gp, Buff.GC, 1), Ability.AS);
             DoTest(gp, 0, Ability.CS);
         }
-        [TestMethod]
+        [Test]
         public void HPConditionalShouldNotRequireConditional()
         {
             Int64GraphParameters gp = NoHitExpertise("Cons[HP=2]");
@@ -121,7 +121,7 @@ namespace Matlabadin.Tests
             DoTest(gp, 2, Ability.Cons);
             DoTest(gp, 3, Ability.Nothing);
         }
-        [TestMethod]
+        [Test]
         public void ConditionalsTests()
         {
             Int64GraphParameters gp;
@@ -167,7 +167,7 @@ namespace Matlabadin.Tests
             DoTest(gp, GetState(gp, Ability.Cons, 3), Ability.CS);
             DoTest(gp, GetState(gp, Ability.Cons, 6), Ability.CS);
         }
-        [TestMethod]
+        [Test]
         public void KeepUpWBShouldCastHotRWhenBuffLessThan4_5Seconds()
         {
             var gp = new Int64GraphParameters(new RotationPriorityQueue<ulong>("^WB"), 3, 1, 1);
@@ -177,7 +177,7 @@ namespace Matlabadin.Tests
             DoTest(gp, GetState(gp, Buff.WB, 1), Ability.HotR);
             DoTest(gp, GetState(gp, Buff.WB, 0), Ability.HotR);
         }
-        [TestMethod]
+        [Test]
         public void KeepUpSSShouldCastSSWhenBuffExpired()
         {
             var gp = NoHitExpertise("^SS");
@@ -185,7 +185,7 @@ namespace Matlabadin.Tests
             DoTest(gp, GetState(gp, Buff.SS, 1, 3), Ability.Nothing);
             DoTest(gp, GetState(gp, Buff.SS, 0, 3), Ability.SS);
         }
-        [TestMethod]
+        [Test]
         public void KeepUpEFShouldCastEFWhenBuffExpired()
         {
             var gp = NoHitExpertise("^EF");
@@ -193,7 +193,7 @@ namespace Matlabadin.Tests
             DoTest(gp, GetState(gp, Buff.EF, 1, 3), Ability.Nothing);
             DoTest(gp, GetState(gp, Buff.EF, 0, 3), Ability.EF);
         }
-        [TestMethod]
+        [Test]
         public void KeepUpEFShouldUseCastEFAt3HP()
         {
             var gp = NoHitExpertise("^EF");
@@ -202,14 +202,14 @@ namespace Matlabadin.Tests
             DoTest(gp, GetState(gp, Buff.EF, 0, 1), Ability.Nothing);
             DoTest(gp, GetState(gp, Buff.EF, 0, 0), Ability.Nothing);
         }
-        [TestMethod]
+        [Test]
         public void KeepUpShouldRetainConditionals()
         {
             var gp = NoHitExpertise("^EF[cdCS>0]>CS");
             DoTest(gp, GetState(gp, Buff.EF, 0, 3), Ability.CS);
             DoTest(gp, GetState(gp, Ability.CS, 1, 3), Ability.EF);
         }
-        [TestMethod]
+        [Test]
         // ^ with numeric holy power suffix not supported at this time
         // to properly support then, we should change the regex and add capture groups
         public void KeepUpShouldRetainSuffix()

@@ -1,13 +1,13 @@
 ﻿using Matlabadin;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 
 namespace Matlabadin.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class GraphParametersTest : MatlabadinTest
     {
-        [TestMethod]
+        [Test]
         public void PropertyValuesShouldCorrespondToConstructorArguments()
         {
             int stepsPerGcd = 3;
@@ -19,7 +19,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual(stepsPerGcd, gp.StepsPerGcd);
             Assert.AreEqual(0.5, gp.StepDuration);
         }
-        [TestMethod]
+        [Test]
         public void AbilityCooldownsShouldMatchMoPTalentCalculator()
         {
             Int64GraphParameters target = NoHitExpertise("");
@@ -34,13 +34,13 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0, target.StepDuration * target.AbilityCooldownInSteps(Ability.EF));
             //Assert.AreEqual(0, target.StepDuration * target.AbilityCooldownInSteps(Ability.FoL));
         }
-        [TestMethod]
+        [Test]
         public void GCProcRateShouldMatchMoPTalentCalculator()
         {
             // state space compression:
             Assert.AreEqual(0.4, GP.GCProcRate);
         }
-        [TestMethod]
+        [Test]
         public void BuffDurationInStepsShouldMatchMoPTalentCalculator()
         {
             Int64GraphParameters target = new Int64GraphParameters(AllAbilityRotation, 3, 1, 1);
@@ -50,7 +50,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual(30, target.StepDuration * target.BuffDurationInSteps(Buff.WB));
             Assert.AreEqual(6, target.StepDuration * target.BuffDurationInSteps(Buff.SotRSB));
         }
-        [TestMethod]
+        [Test]
         public void WoGSotRShouldBeOffGCD()
         {
             foreach (Ability a in new Ability[] {
@@ -61,7 +61,7 @@ namespace Matlabadin.Tests
                 Assert.AreEqual(0, GP.AbilityCastTimeInSteps(a));
             }
         }
-        [TestMethod]
+        [Test]
         public void AbilityCastTimeInStepsShouldBe1GCD()
         {
             foreach (Ability a in new Ability[] {
@@ -77,18 +77,18 @@ namespace Matlabadin.Tests
                 Assert.AreEqual(GP.StepsPerGcd, GP.AbilityCastTimeInSteps(a));
             }
         }
-        [TestMethod]
+        [Test]
         public void AbilityCastTimeInSteps_Nothing_ShouldBeSingleStep()
         {
             Assert.AreEqual(1, GP.AbilityCastTimeInSteps(Ability.Nothing));
         }
-        [TestMethod]
+        [Test]
         public void ShouldHaveSameShapeIfParametersMatch()
         {
             Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, 3, 1.0, 1.0);
             Assert.IsTrue(gp.HasSameShape(new Int64GraphParameters(AllAbilityRotation, 3, 1.0, 1.0)));
         }
-        [TestMethod]
+        [Test]
         public void ShouldHaveSameShapeIfOnlyDifferByNonZeroTransitionMagnitides()
         {
             Action<double, double, double, double, bool> DoTest = (mehit1, rhit1, mehit2, rhit2, result) =>
@@ -102,7 +102,7 @@ namespace Matlabadin.Tests
             DoTest(0.8, 0.8, 0.0, 0.9, false);
             DoTest(0.8, 0.8, 0.9, 0.0, false);
         }
-        [TestMethod]
+        [Test]
         public void ShouldNotHaveSameShapeIfRotationsDiffer()
         {
             Assert.IsFalse(
@@ -111,7 +111,7 @@ namespace Matlabadin.Tests
                 new Int64GraphParameters(new RotationPriorityQueue<ulong>("Cons"), 3 , 1.0, 1.0)
                 ));
         }
-        [TestMethod]
+        [Test]
         public void ShouldNotHaveSameShapeIfStepsPerGCDDiffer()
         {
             Assert.IsFalse(
@@ -120,7 +120,7 @@ namespace Matlabadin.Tests
                 new Int64GraphParameters(AllAbilityRotation, 1, 1.0, 1.0)
                 ));
         }
-        [TestMethod]
+        [Test]
         public void HotRCDShouldMatchCS()
         {
             // state space compression:

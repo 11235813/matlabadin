@@ -2,11 +2,11 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Matlabadin.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class Int64StateManagerTest : StateManagerTest<Int64GraphParameters, ulong>
     {
         public override Int64GraphParameters StateManager

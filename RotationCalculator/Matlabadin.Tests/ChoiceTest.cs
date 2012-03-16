@@ -2,18 +2,18 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Matlabadin.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ChoiceTest : MatlabadinTest
     {
         double[] PR = new double[] { 1 };
         int[][] BD1 = new int[][] { new int[] { 0 }, new int[] { 0 }, new int[] { 0 }, new int[] { 0 } };
         int[][] BD2 = new int[][] { new int[] { 0, 0, }, new int[] { 0, 0, }, new int[] { 0, 0, }, new int[] { 0, 0, } };
         int[][] BD3 = new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } };
-        [TestMethod]
+        [Test]
         public void ChoiceShouldExposeOptions()
         {
             Choice c = new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3);
@@ -21,32 +21,32 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0.2, c.pr[1]);
             Assert.AreEqual(0.1, c.pr[2]);
         }
-        [TestMethod]
+        [Test]
         public void ChoiceShouldExposeDuration()
         {
             Assert.AreEqual(3, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3).stepsDuration);
             Assert.AreEqual(5, new Choice(Ability.CS, 5, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3).stepsDuration);
         }
-        [TestMethod]
+        [Test]
         public void ActionShouldBeAbility()
         {
             Assert.AreEqual("CS", new Choice(Ability.CS, 3, PR, 3, false, BD1).Action);
             Assert.AreEqual("J", new Choice(Ability.J, 3, PR, 3, false, BD1).Action);
             Assert.AreEqual("Nothing", new Choice(Ability.Nothing, 3, PR, 3, false, BD1).Action);
         }
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void WoGSS_ShouldBeSetForWogOnly()
         {
             new Choice(Ability.CS, 3, PR, 3, true, BD1);
         }
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void BuffDuration_ShouldNotExceedStepsDuration()
         {
             new Choice(Ability.CS, 3, PR, 3, true, new int[][] { new int[] { 0 }, new int[] { 0 }, new int[] { 7 }, new int[] { 0 } });
         }
-        [TestMethod]
+        [Test]
         public void ActionShouldSuffixSSForWoGOnly()
         {
             Assert.AreEqual("CS", new Choice(Ability.CS, 3, PR, 3, false, BD1).Action);
@@ -54,7 +54,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual("WoG(SS)", new Choice(Ability.WoG, 3, PR, 3, true, BD1).Action);
             Assert.AreEqual("WoG2(SS)", new Choice(Ability.WoG, 3, PR, 2, true, BD1).Action);
         }
-        [TestMethod]
+        [Test]
         public void ActionShouldSuffixHPForWoGAndEFWhenLessThan3()
         {
             Assert.AreEqual("EF0", new Choice(Ability.EF, 3, PR, 0, false, BD1).Action);
@@ -70,7 +70,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual("WoG", new Choice(Ability.WoG, 3, PR, 4, false, BD1).Action);
             Assert.AreEqual("WoG", new Choice(Ability.WoG, 3, PR, 5, false, BD1).Action);
         }
-        [TestMethod]
+        [Test]
         public void ChoiceDefineEqualityAndHashCode()
         {
             Choice c11 = new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3);
@@ -100,7 +100,7 @@ namespace Matlabadin.Tests
             Assert.AreNotEqual(new Choice(Ability.SS, 3, new double[] { 0.7, 0.3 }, 0, false, BD2),
                                new Choice(Ability.SS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3));
         }
-        [TestMethod]
+        [Test]
         public void EqualityShouldIncludeBuffDuration()
         {
             Choice c = new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3);
@@ -117,7 +117,7 @@ namespace Matlabadin.Tests
             Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 1, 0, } }));
             Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 1, } }));
         }
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ConcatenateShouldNotAllowConcatenationToActualAbilities()
         {
@@ -125,21 +125,21 @@ namespace Matlabadin.Tests
             Choice cNothing = new Choice(Ability.Nothing, 3, PR, 0, false, BD1);
             cCS.Concatenate(cNothing);
         }
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ConcatenateShouldNotAllowConcatenationWhenThereIsAChoiceOfNextStates()
         {
             Choice cNothing = new Choice(Ability.Nothing, 3, new double[] { 0.5, 0.4, 0.1 }, 0, false, BD3);
             cNothing.Concatenate(cNothing);
         }
-        [TestMethod]
+        [Test]
         public void ConcatenateShouldAddStepsDurations()
         {
             Choice cNothing = new Choice(Ability.Nothing, 1, new double[] { 1 }, 0, false, BD1);
             Choice c = cNothing.Concatenate(cNothing);
             Assert.AreEqual(2, c.stepsDuration, 2);
         }
-        [TestMethod]
+        [Test]
         public void ConcatenateShouldAddBuffDurations()
         {
             Choice cNothing = new Choice(Ability.Nothing, 3, new double[] { 1 }, 0, false, new int[][] { new int[] { 0 }, new int[] { 1 }, new int[] { 2 }, new int[] { 3 } });
@@ -149,7 +149,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual(4, c.buffDuration[2][0]);
             Assert.AreEqual(6, c.buffDuration[3][0]);
         }
-        [TestMethod]
+        [Test]
         public void ConcatenateShouldSetHPBasedOnAbilityUsage()
         {
             Choice cNothing = new Choice(Ability.Nothing, 1, new double[] { 1 }, 1, false, BD1);
@@ -158,7 +158,7 @@ namespace Matlabadin.Tests
             // Test data only possible if we introduce HP decay modelling which is unlikely
             Assert.IsTrue(c.Action.Contains("1"));
         }
-        [TestMethod]
+        [Test]
         public void ConcatenateShouldSetPrBasedOnContatenatedChoice()
         {
             double[] pr = new double[] { 0.5, 0.5 };
