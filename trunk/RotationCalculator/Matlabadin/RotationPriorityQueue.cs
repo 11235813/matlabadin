@@ -68,10 +68,45 @@ namespace Matlabadin
         {
             if (String.IsNullOrEmpty(queue)) return; // nothing to do for a rotation of nothing
             Match queueMatch = Regex.Match(">" + queue, @"^(?<element>>([^\[>\]]+(\[[^\]]+\])*))*$"); // add a > to the start of the queue then separate
-            foreach (string rawActionString in queueMatch.Groups["element"].Captures.Cast<Capture>().Select(c => c.Value))
+            /*  Regular Expression dissection for Theck's sanity
+             *      @"                         #designate as a literal string
+             *      ^                          #signify the position before the first character
+             *      (?<element>                #start the first group, this labels it "element" so we can pick it out later
+             *          >                      #look for the '>' character (signifies start of an element)
+             *          (                      #start the second group (ability plus numerical HP modifier)
+             *              [^\[>\]]+          #don't match (^) open bracket ([), greater than (>), or close bracket (]) - this picks up alphanumerics (i.e. 'SotR5') and ^ (i.e. "^WB")
+             *              (                  #start the third group (conditionals)
+             *                  \[             #match open bracket
+             *                      [^\]]+     #don't match anything with one or more closed brackets in-between the open and closed (this prevents i.e. [HP=3][buffWB=0] from matching as one conditional)
+             *                  \]             #match close bracket
+             *              )*                 #close third group, * signifies optional (0 or more instances) - this allows for SotR5 as well as SotR5[x][y][z] and anything in between
+             *          )                      #close second group, not optional - we need to have something here, otherwise there's no ability defined
+             *      )*                         #close first group, * signifies optional (0 or more instances) - this allows for ability chains (i.e. '>J>AS>SotR5[buffSS=0]' contains 3 instances of group 1)
+             *      $                          #signify the position after last character
+             *      "                          #end string
+             *  Summary: we look for groups of ( > ( XXX# ( [cond1][cond2] ) ) ), i.e. ">J[HP<5]" or ">^WB[buffWB<0]" or ">Sotr5[HP<4]".  
+             *  Group 3 (conditionals) are optional, Group 2 (ability designation) is not.  Group 1 is optional, in theory, but it would mean an empty queue if it were.
+             */
+            foreach (string rawActionString in queueMatch.Groups["element"].Captures.Cast<Capture>().Select(c => c.Value))  //queueMatch.Groups["element"] isolates the list of Group 1 captures (i.e. each >^XX#[cond] entry), this converts each capture into a raw string for processing
             {
                 var conditions = new List<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>();
                 Match actionMatch = Regex.Match(rawActionString, @"^>(?<ability>[^\[>\]0-9]+)(?<numericSuffix>[0-9]*)(?<conditional>\[[^\]]+\])*$");
+                /* Regular Expression dissection for Theck's sanity
+                 *          @"                              #designate a literal string
+                 *          ^                               #position of first character
+                 *          >                               #each capture starts with >, we discard that
+                 *          (?<ability>                     #Group 1 is the ability 
+                 *              [^\[>\]0-9]+                #ability is a sequence of characters which contains no (^) [, >, ] characters or numbers (0-9); one or more characters in length (+)
+                 *          )
+                 *          (?<numericSuffix>               #Group 2 is the numeric suffix
+                 *              [0-9]*                      #numeric suffix contains a sequence of zero or more (*) numbers
+                 *          )
+                 *          (?<conditional>                 #Group 3 is conditionals
+                 *              \[[^\]]+\]                  #a conditional has the form [x], where x contains no bracket characters ( [^\] = no ])
+                 *          )*                              #close group, look for zero or more (*) sequential group 3 entries (conditionals)
+                 *          $"                              #signify position after last character, end string
+                 * 
+                 */
                 if (!actionMatch.Success) throw new InvalidOperationException(String.Format("Invalid rotation {0}", queue));
 
                 string numericSuffixString = actionMatch.Groups["numericSuffix"].Value;
@@ -98,13 +133,14 @@ namespace Matlabadin
                         conditionalStrings.Add(String.Format("[buff{0}=0]", abilityString));
                         break;
                 }
-                if (!String.IsNullOrEmpty(numericSuffixString))
+                //convert numerical suffix to conditional (i.e. SotR5 => SotR[HP>=5])
+                if (!String.IsNullOrEmpty(numericSuffixString))  
                 {
                     conditionalStrings.Add(String.Format("[HP>={0}]", numericSuffixString));
                 }
                 List<Ability> conditionAbilityList;
                 bool hpConditionEncountered;
-                conditions.AddRange(ProcessConditions(conditionalStrings, out conditionAbilityList, out hpConditionEncountered));
+                conditions.AddRange(ProcessConditions(conditionalStrings, out conditionAbilityList, out hpConditionEncountered));  //process conditionals
 
                 Ability ability = (Ability)Enum.Parse(typeof(Ability), abilityString);
                 switch (ability) // Special ability-specific conditions go here

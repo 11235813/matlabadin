@@ -3,20 +3,19 @@
 queue.st={...
     %barebones first
     %default queues 
-    'SotR>CS>J>AS>Cons';
-    'SotR>CS>AS>J>Cons';
-    'SotR>HotR>J>AS>Cons';
-    'SotR>J>CS>AS>Cons';
-    'SotR>CS>AS+>J>AS>Cons';
+    'SotR5>CS>J>AS>Cons';
+    'SotR5>CS>AS>J>Cons';
+    'SotR5>HotR>J>AS>Cons';
+    'SotR5>J>CS>AS>Cons';
+    'SotR5>CS>AS+>J>AS>Cons';
+    
+    %Defensive queues
+    '^WB>^SS5>SotR5>CS>J>AS>Cons';
 
     %WoG
-    'WoG>CS>J>AS';
-    'WoG>SotR>CS>J>AS';
-    'WoG>CS>AS+>J>AS';
-    'WoG>CS>J>AS>Cons>HW';
-    'WoG>SotR>CS>AS+>J>AS';
-    'WoG>SotR>CS>J>AS>Cons>HW';
-    'WoG>SotR>CS>AS+>J>AS>Cons>HW';
+    'WoG5>CS>J>AS';
+    'WoG5>CS>J>AS>Cons';
+    'WoG5>CS>AS+>J>AS';
     };
 
 

@@ -26,12 +26,11 @@ end
 
 %generate FSM results
 if length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswing)==1
-    [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit, c.mdf.rahit); 
+    [c.rot.actionPr, c.rot.metadata, c.rot.ssuptime, ...
+        c.rot.efuptime, c.rot.wbuptime, c.rot.sbuptime] = ...
+        memoized_fsm(c.exec.queue, c.mdf.mehit, c.mdf.rahit); 
     %convert actionPr to CPS array
     c.rot.cps=action2cps(c);
-    %EF and SS uptime to come
-    c.rot.efuptime=0;
-    c.rot.ssuptime=0;
     %TODO: empties tracking
     c.rot.empties=0;
     
@@ -42,12 +41,12 @@ if length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswing)==
 %haste, str scaling (via parry->parryhaste)
 elseif length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswing)>1
     %only need one fsm generation
-    [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit, c.mdf.rahit);
+    [c.rot.actionPr, c.rot.metadata, c.rot.ssuptime, ...
+        c.rot.efuptime, c.rot.wbuptime, c.rot.sbuptime] = ...
+        memoized_fsm(c.exec.queue, c.mdf.mehit, c.mdf.rahit);
     %the conversion to a CPS array needs to be handled appropriately though
     for j=1:length(c.player.wswing)
         [c.rot.cps(:,j)]=action2cps(c,j);
-        c.rot.efuptime(j)=0;
-        c.rot.ssuptime(j)=0;
         %TODO: empties tracking
         c.rot.empties=0;
     end
@@ -64,10 +63,10 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
             %iteration.  This data is automatically stored in cps, and this
             %prevents us from having to do awkward multiple-indexed cell
             %operations within c.rot.actionPr.
-            [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j));
+            [c.rot.actionPr, c.rot.metadata, c.rot.ssuptime(j), ...
+                c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j)] = ...
+                memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j));
             [c.rot.cps(:,j)]=action2cps(c,j);
-            c.rot.efuptime(j)=0;
-            c.rot.ssuptime(j)=0;
             %TODO: empties tracking
             c.rot.empties=0;
         end
@@ -79,10 +78,10 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
             %iteration.  This data is automatically stored in cps, and this
             %prevents us from having to do awkward multiple-indexed cell
             %operations within c.rot.actionPr.
-            [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j));
+            [c.rot.actionPr, c.rot.metadataa, c.rot.ssuptime(j), ...
+                c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j)] = ...
+                memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j));
             [c.rot.cps(:,j)]=action2cps(c,j);
-            c.rot.efuptime(j)=0;
-            c.rot.ssuptime(j)=0;
             %TODO: empties tracking
             c.rot.empties=0;
         end
@@ -93,16 +92,16 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
 elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.mdf.mehit, c.mdf.rahit, c.talent.short(3));
+        fsm_gen(c.exec.queue, c.mdf.mehit, c.mdf.rahit);
         for j=1:length(c.mdf.mehit)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
             %prevents us from having to do awkward multiple-indexed cell
             %operations within c.rot.actionPr.
-            [c.rot.actionPr, c.rot.metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit);
+            [c.rot.actionPr, c.rot.metadataa, c.rot.ssuptime(j), ...
+                c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j)] = ...
+                memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit);
             [c.rot.cps(:,j)]=action2cps(c,j);
-            c.rot.efuptime(j)=0;
-            c.rot.ssuptime(j)=0;
             %TODO: empties tracking
             c.rot.empties=0;
             
@@ -115,10 +114,10 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
             %iteration.  This data is automatically stored in cps, and this
             %prevents us from having to do awkward multiple-indexed cell
             %operations within c.rot.actionPr.
-            [actionPr, metadata] = memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit);
+            [actionPr, metadataa, c.rot.ssuptime(j), ...
+                c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j)] = ...
+                memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit);
             [c.rot.cps(:,j)]=action2cps(c,j);
-            c.rot.efuptime(j)=0;
-            c.rot.ssuptime(j)=0;
             %TODO: empties tracking
             c.rot.empties=0;
         end

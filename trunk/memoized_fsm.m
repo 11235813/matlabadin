@@ -34,6 +34,7 @@ function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime] = memoize
     rotationKey = strrep(rotationKey, '*', 'star');
     rotationKey = strrep(rotationKey, '''', 'prime');
     rotationKey = strrep(rotationKey, '+', 'plus');
+    rotationKey = strrep(rotationKey, '^', 'up');
     optionsKey = sprintf('T%g_%0.5f_%0.5f', fsm_steps_per_gcd(), mehit, rhit);
     optionsKey = strrep(optionsKey,'_1.00000','_1_');
     optionsKey = strrep(optionsKey,'_0.','_');

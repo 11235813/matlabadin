@@ -65,7 +65,7 @@ idxm=logical(...
 %note that this also requires c.exec.seal to be in 3-char format
 cps(strcmpi(c.exec.seal,c.abil.val.label))= ...
     sum(cps(idxr)).*c.mdf.rahit(jra) + sum(cps(idxm)).*c.mdf.mehit(jme) ... %active sources
-    + c.mdf.mehit./c.player.wswing(jws);   %melee swings
+    + c.mdf.mehit(jme)./c.player.wswing(jws);   %melee swings
 
 %censure
 cps(strcmpi('Censure',c.abil.val.label))= 1./c.player.censTick;

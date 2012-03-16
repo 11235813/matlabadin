@@ -13,10 +13,10 @@ def_db;
 %low hit, SotR/SoT build
 %set melee hit to 2%, expertise to 5%
 %do this by altering shirt stats
-c(1)=build_config('hit',2,'exp',5); 
+cfg(1)=build_config('hit',2,'exp',5);
 
 %low hit, WoG/SoI build
-c(2)=build_config('hit',2,'exp',5,'seal','SoI');
+cfg(2)=build_config('hit',2,'exp',5,'seal','SoI');
 
 %% Stat components
 stat={'exp';'hit';'str';'ap';'sta';'crit';'agi';'haste';'sp';'int';'mas'};
@@ -35,32 +35,32 @@ stat_conversions
 % icv=10.*[ipconv.exp ipconv.hit ipconv.str ipconv.ap ipconv.sta ipconv.crit...
 %     ipconv.agi ipconv.has ipconv.sp ipconv.int ipconv.mas];
 dstat=10;
-
+for m=1:M; icv(m,1)=eval(['ipconv.' stat{m}]); end;
 
 %% Strength calcs
 %reset extra structure
 str_range=-100+linspace(1,1500,250);
 [temp idx]=min(abs(str_range));
-sdps=zeros(M,length(str_range),length(c));
-sdps0=zeros(size(sdps));
+sdps=zeros(M,length(str_range),length(cfg));shps=sdps;
+sdps0=zeros(size(sdps));shps0=sdps0;
 
 tic
-for g=1:length(c)
+for g=1:length(cfg)
     %set configuration variables
-    cfg=c(g);
+    c=cfg(g);
     
     %construct extra fields
-    cfg.extra=extra_init;
-    cfg.extra.val.str=str_range;
+    c.extra=extra_init;
+    c.extra.val.str=str_range;
     
     %calculate baseline DPS
-    cfg=stat_model(cfg);
-    cfg=ability_model(cfg);
-    cfg=rotation_model(cfg);
+    c=stat_model(c);
+    c=ability_model(c);
+    c=rotation_model(c);
     
     %store baseline
-    sdps0(1:M,:,g)=repmat(cfg.rot.dps,[M 1 1]);
-    shps0(1:M,:,g)=repmat(cfg.rot.hps,[M 1 1]);
+    sdps0(1:M,:,g)=repmat(c.rot.dps,[M 1 1]);
+    shps0(1:M,:,g)=repmat(c.rot.hps,[M 1 1]);
     
     %waitbar
     csswb=waitbar(0,'Calculating STR Scaling');
@@ -68,225 +68,203 @@ for g=1:length(c)
     
     %for each stat
     for m=1:M
-        waitbar(m./M,csswb,['Calculating STR Scaling for ' stat{m} ...
-                            ' in cfg ' int2str(g) '/' int2str(length(c))]);
+        waitbar(m./M,csswb,['Calculating STR scaling for ' stat{m} ...
+                            ' in cfg ' int2str(g) '/' int2str(length(cfg))]);
                         
         %set each stat to dstat extra
-        eval(char(['extra.itm.' stat{m} '=dstat.*ipconv.' stat{m} ';']))
+        eval(char(['c.extra.itm.' stat{m} '=dstat;']))
 
         %recalculate DPS
-        cfg=stat_model(cfg);
-        cfg=ability_model(cfg);
-        cfg=rotation_model(cfg);
+        c=stat_model(c);
+        c=ability_model(c);
+        c=rotation_model(c);
         
-        sdps(m,:,c)=cfg.rot.dps;
-        shps(m,:,c)=cfg.rot.hps;
+        sdps(m,:,g)=c.rot.dps;
+        shps(m,:,g)=c.rot.hps;
         
         %set each stat back to 0 extra
-        eval(char(['extra.itm.' stat{m} '=0;']))
-
-        %recalculate DPS
-        cfg=stat_model(cfg);
-        cfg=ability_model(cfg);
-        cfg=rotation_model(cfg);
-        
-        sdps0(m,:,c)=tmprot.dps+proc.dps;
-        shps0(m,:,c)=tmprot.hps+proc.hps;
+        eval(char(['c.extra.itm.' stat{m} '=0;']))
 
     end
     close(csswb)
+    
+    %store variables for plots
+    xS(:,g)=c.player.armorystr';
 end
 toc
 %% Strength Graphs / Table
-sdiffdps=(sdps-sdps0).*10./repmat(dstat',[1 size(sdps,2) size(sdps,3)]);
-sdiffhps=(shps-shps0).*10./repmat(dstat',[1 size(shps,2) size(shps,3)]);
-xS=player.armorystr';
-yS1=squeeze(sdiffdps(:,:,1))';
-yS2=squeeze(sdiffdps(:,:,2))';
+yS=(sdps-sdps0);
+ySh=(shps-shps0);
 
-disp('SHPS and stat weights for config #1')
-[char(stat) repmat(' ',length(stat),2)  num2str(sdiffhps(:,idx,1)) repmat(' ',length(stat),3) num2str(sdiffdps(:,idx,1)./dstat')]
-disp('SHPS and stat weights for config #2')
-[char(stat) repmat(' ',length(stat),2)  num2str(sdiffhps(:,idx,2)) repmat(' ',length(stat),3) num2str(sdiffdps(:,idx,2)./dstat')]
-disp('Stat DPS values for config #1')
-
-figure(50)
+for g=1:length(cfg)
+figure(50+g-1)
 set(gcf,'Position',[290    92   706   414])
-plot(xS,yS1)
-xlim([min(player.armorystr) max(player.armorystr)])
+plot(xS(:,g),yS(:,:,g))
+xlim([min(xS(:,g)) max(xS(:,g))])
 legend(stat,'Location','EastOutside')
 xlabel('Armory Strength')
 ylabel('DPS per 10 itemization points')
-title([cfg(1).label ', '  num2str(cfg(1).veng*100,'%2.1f') '% Veng, ' num2str(cfg(1).hit,'%2.1f') '% hit, ' num2str(cfg(1).exp,'%2.1f') ' expertise'])
+title([cfg(g).exec.queue ', ' cfg(g).exec.seal ', '  num2str(cfg(g).exec.veng*100,'%2.1f') '% Veng, ' num2str(cfg(g).player.mehit,'%2.1f') '% hit, ' num2str(cfg(g).player.exp,'%2.1f') '% expertise'])
 
-figure(51)
-set(gcf,'Position',[290    92   706   414])
-plot(xS,yS2)
-xlim([min(xS) max(xS)])
-legend(stat,'Location','EastOutside')
-xlabel('Armory Strength')
-ylabel('DPS per 10 itemization points')
-title([cfg(2).label ', ' num2str(cfg(2).veng*100,'%2.1f') '% Veng, ' num2str(cfg(2).hit,'%2.1f') '% hit, ' num2str(cfg(2).exp,'%2.1f') ' expertise'])
 
-%% Hit graph
-tic
-for c=1:length(cfg)
-    
-    %reset extra structure
-    extra_init;
+disp(['DPS and SHPS stat weights for ' cfg(g).exec.queue ', ' cfg(g).exec.seal])
+ldat=2+(1:M);
+li=DataTable();
+li{ldat,1}=stat;
+li{1:2,2}={'DPS';'ppt'};
+li{ldat,2}=yS(:,idx,g)./dstat./icv;
+li{1:2,3}={'SHPS';'ppt'};
+li{ldat,3}=ySh(:,idx,g)./dstat./icv;
+li{1:2,4}={'DPS';'pipt'};
+li{ldat,4}=yS(:,idx,g)./dstat;
+li{1:2,5}={'SHPS';'pipt'};
+li{ldat,5}=ySh(:,idx,g)./dstat;
 
-    %set configuration variables
-    egs(1)=cfg(c).helm;
-    exec=execution_model('veng',cfg(c).veng,'seal',cfg(c).seal);
-    glyph=cfg(c).glyph;
-    talent=cfg(c).talent;
-    queue.rot=cfg(c).queue;
-    gear_stats;
-    talents;
-    stat_model;
+% li.setColumnTextAlignment(2,'left')
+% li.setColumnTextAlignment(3:6,'center')
+% li.setColumnFormat(2:4,'%6.0f')
+li.setColumnFormat(2:5,'%1.3f')
+li.toText()
 
-    %store items in cfg for plots
-    cfg(c).exp=player.exp;
-    
-    %define hit range such that it covers 0 to 10%
-    extra.val.hit=(-player.phhit+linspace(0,10,100)).*cnv.hit_phhit;
-[temp idx]=min(abs(extra.val.hit));
-    
-    csswb=waitbar(0,'Calculating Hit Scaling');
-    set(csswb,'Position',get(csswb,'Position')+[0 85 0 0]);
-    for m=1:M
-        waitbar(m./M,csswb,['Calculating Hit Scaling for ' stat{m} ...
-                            ' in cfg ' int2str(c) '/' int2str(length(cfg))]);
-        %set each stat to dstat extra
-        eval(char(['extra.itm.' stat{m} '=dstat(m);']))
-
-        stat_model;ability_model;rotation_model;
-        
-        tmprot.dps=rot(cfg(c).rot).totdps;
-        tmprot.hps=rot(cfg(c).rot).tothps;
-        dynamic_model;
-        hdps(m,:,c)=tmprot.dps+proc.dps;
-        hhps(m,:,c)=tmprot.hps+proc.hps;
-
-        %set each stat back to 0 extra
-        eval(char(['extra.itm.' stat{m} '=0;']))
-
-        stat_model;ability_model;rotation_model;
-        tmprot.dps=rot(cfg(c).rot).totdps;
-        tmprot.hps=rot(cfg(c).rot).tothps;
-        dynamic_model;
-        hdps0(m,:,c)=tmprot.dps+proc.dps;
-        hhps0(m,:,c)=tmprot.hps+proc.hps;
-        
-        toc
-        
-    end
-    close(csswb)
 end
-toc
-hdiffdps=(hdps-hdps0).*10./repmat(dstat',[1 size(hdps,2) size(hdps,3)]);
-hdiffhps=(hhps-hhps0).*10./repmat(dstat',[1 size(hhps,2) size(hhps,3)]);
-xH=player.phhit';
-yH1=squeeze(hdiffdps(:,:,1))';
-yH2=squeeze(hdiffdps(:,:,2))';
 
-% disp('SHPS per 10 stat points for config #1')
-% [char(stat) num2str(hdiffhps(:,idx,1))]
-% disp('SHPS per 10 stat points for config #2')
-% [char(stat) num2str(hdiffhps(:,idx,2))]
+%% Hit calcs
+hit_range=(-c.player.mehit+linspace(0,12,100)).*cnv.hit_hit;
+[temp idx]=min(abs(hit_range));
+hdps=zeros(M,length(hit_range),length(cfg));hhps=hdps;
+hdps0=zeros(size(hdps));hhps0=hdps0;
 
-figure(52)
-set(gcf,'Position',[290    92   706   414])
-plot(xH,yH1)
-xlim([min(player.phhit) max(player.phhit)])
-legend(stat,'Location','EastOutside')
-xlabel('Melee hit % against lvl 80')
-ylabel('DPS per 10 itemization points')
-title([cfg(1).label ', '  num2str(cfg(1).veng*100,'%2.1f') '% Veng, ' num2str(cfg(1).exp(1),'%2.1f') ' expertise'])
-
-figure(53)
-set(gcf,'Position',[290    92   706   414])
-plot(xH,yH2)
-xlim([min(xH) max(xH)])
-legend(stat,'Location','EastOutside')
-xlabel('Melee hit % against lvl 80')
-ylabel('DPS per 10 itemization points')
-title([cfg(2).label ', '  num2str(cfg(2).veng*100,'%2.1f') '% Veng, '  num2str(cfg(2).exp(1),'%2.1f') ' expertise'])
-    
-%% Exp graph
 tic
-for c=1:length(cfg)
-    
-    %reset extra structure
-    extra_init;
-
+for g=1:length(cfg)
     %set configuration variables
-    egs(1)=cfg(c).helm;
-    exec=execution_model('veng',cfg(c).veng,'seal',cfg(c).seal);
-    glyph=cfg(c).glyph;
-    talent=cfg(c).talent;
-    queue.rot=cfg(c).queue;
-    gear_stats;
-    talents;
-    stat_model;
+    c=cfg(g);
     
-    %store items in cfg for plots
-    cfg(c).hit=player.phhit;
+    %construct extra fields
+    c.extra=extra_init;
+    c.extra.val.hit=hit_range;
     
-    %Set expertise to cover range 0 to 60
-    extra.val.exp=(-player.exp+linspace(0,60,100)).*cnv.exp_exp;
-
-    csswb=waitbar(0,'Calculating Exp Scaling');
+    %calculate baseline DPS
+    c=stat_model(c);
+    c=ability_model(c);
+    c=rotation_model(c);
+    
+    %store baseline
+    hdps0(1:M,:,g)=repmat(c.rot.dps,[M 1 1]);
+    hhps0(1:M,:,g)=repmat(c.rot.hps,[M 1 1]);
+    
+    %waitbar
+    csswb=waitbar(0,'Calculating STR Scaling');
     set(csswb,'Position',get(csswb,'Position')+[0 85 0 0]);
+    
+    %for each stat
     for m=1:M
-        waitbar(m./M,csswb,['Calculating Exp Scaling for ' stat{m} ...
-                            ' in cfg ' int2str(c) '/' int2str(length(cfg))]);
+        waitbar(m./M,csswb,['Calculating hit scaling for ' stat{m} ...
+                            ' in cfg ' int2str(g) '/' int2str(length(cfg))]);
+                        
         %set each stat to dstat extra
-        eval(char(['extra.itm.' stat{m} '=dstat(m);']))
+        eval(char(['c.extra.itm.' stat{m} '=dstat;']))
 
-        stat_model;ability_model;rotation_model;
-        tmprot.dps=rot(cfg(c).rot).totdps;
-        tmprot.hps=rot(cfg(c).rot).tothps;
-        dynamic_model;
-        edps(m,:,c)=tmprot.dps+proc.dps;
-        ehps(m,:,c)=tmprot.hps+proc.hps;
-                
+        %recalculate DPS
+        c=stat_model(c);
+        c=ability_model(c);
+        c=rotation_model(c);
+        
+        hdps(m,:,g)=c.rot.dps;
+        hhps(m,:,g)=c.rot.hps;
+        
         %set each stat back to 0 extra
-        eval(char(['extra.itm.' stat{m} '=0;']))
-
-        stat_model;ability_model;rotation_model;
-        tmprot.dps=rot(cfg(c).rot).totdps;
-        tmprot.hps=rot(cfg(c).rot).tothps;
-        dynamic_model;
-        edps0(m,:,c)=tmprot.dps+proc.dps;
-        ehps0(m,:,c)=tmprot.hps+proc.hps;
+        eval(char(['c.extra.itm.' stat{m} '=0;']))
 
     end
     close(csswb)
+    
+    %store variables for plots
+    xH(:,g)=c.player.mehit';
 end
 toc
-ediffdps=(edps-edps0).*10./repmat(dstat',[1 size(edps,2) size(edps,3)]);
-ediffhps=(ehps-ehps0).*10./repmat(dstat',[1 size(ehps,2) size(ehps,3)]);
-xE=player.exp';
-yE1=squeeze(ediffdps(:,:,1))';
-yE2=squeeze(ediffdps(:,:,2))';
+%% Hit Graphs
+yH=(hdps-hdps0);
+yHh=(hhps-hhps0);
 
-
-figure(54)
+for g=1:length(cfg)
+figure(60+g-1)
 set(gcf,'Position',[290    92   706   414])
-plot(xE,yE1)
-xlim([min(player.exp) max(player.exp)])
+plot(xH(:,g),yH(:,:,g))
+xlim([min(xH(:,g)) max(xH(:,g))])
 legend(stat,'Location','EastOutside')
-xlabel('Expertise skill')
+xlabel('Melee Hit %')
 ylabel('DPS per 10 itemization points')
-title([cfg(1).label ', '  num2str(cfg(1).veng*100,'%2.1f') '% Veng, ' num2str(cfg(1).hit(1),'%2.1f') '% hit'])
+title([cfg(g).exec.queue ', ' cfg(g).exec.seal ', '  num2str(cfg(g).exec.veng*100,'%2.1f') '% Veng, ' num2str(cfg(g).player.mehit,'%2.1f') '% hit, ' num2str(cfg(g).player.exp,'%2.1f') '% expertise'])
 
+end
 
-figure(55)
+    
+%% Exp Calcs
+exp_range=(-c.player.exp+linspace(0,15,100)).*cnv.exp_exp;;
+[temp idx]=min(abs(exp_range));
+edps=zeros(M,length(exp_range),length(cfg));ehps=edps;
+edps0=zeros(size(hdps));ehps0=edps0;
+
+tic
+for g=1:length(cfg)
+    %set configuration variables
+    c=cfg(g);
+    
+    %construct extra fields
+    c.extra=extra_init;
+    c.extra.val.exp=exp_range;
+    
+    %calculate baseline DPS
+    c=stat_model(c);
+    c=ability_model(c);
+    c=rotation_model(c);
+    
+    %store baseline
+    edps0(1:M,:,g)=repmat(c.rot.dps,[M 1 1]);
+    ehps0(1:M,:,g)=repmat(c.rot.hps,[M 1 1]);
+    
+    %waitbar
+    csswb=waitbar(0,'Calculating STR Scaling');
+    set(csswb,'Position',get(csswb,'Position')+[0 85 0 0]);
+    
+    %for each stat
+    for m=1:M
+        waitbar(m./M,csswb,['Calculating hit scaling for ' stat{m} ...
+                            ' in cfg ' int2str(g) '/' int2str(length(cfg))]);
+                        
+        %set each stat to dstat extra
+        eval(char(['c.extra.itm.' stat{m} '=dstat;']))
+
+        %recalculate DPS
+        c=stat_model(c);
+        c=ability_model(c);
+        c=rotation_model(c);
+        
+        edps(m,:,g)=c.rot.dps;
+        ehps(m,:,g)=c.rot.hps;
+        
+        %set each stat back to 0 extra
+        eval(char(['c.extra.itm.' stat{m} '=0;']))
+
+    end
+    close(csswb)
+    
+    %store variables for plots
+    xE(:,g)=c.player.exp';
+end
+toc
+%% Exp Graphs
+yE=(edps-edps0);
+yEh=(ehps-ehps0);
+
+for g=1:length(cfg)
+figure(70+g-1)
 set(gcf,'Position',[290    92   706   414])
-plot(xE,yE2)
-xlim([min(xE) max(xE)])
+plot(xE(:,g),yE(:,:,g))
+xlim([min(xE(:,g)) max(xE(:,g))])
 legend(stat,'Location','EastOutside')
-xlabel('Expertise skill')
+xlabel('Expertise %')
 ylabel('DPS per 10 itemization points')
-title([cfg(2).label ', '  num2str(cfg(2).veng*100,'%2.1f') '% Veng, ' num2str(cfg(2).hit(1),'%2.1f') '% hit'])
+title([cfg(g).exec.queue ', ' cfg(g).exec.seal ', '  num2str(cfg(g).exec.veng*100,'%2.1f') '% Veng, ' num2str(cfg(g).player.mehit,'%2.1f') '% hit, ' num2str(cfg(g).player.exp,'%2.1f') '% expertise'])
+
+end
