@@ -66,153 +66,125 @@ namespace Matlabadin
         }
         private void ProcessQueueString(string queue)
         {
-            string remainingQueue = queue;
-            int i = 0;
-            while (!String.IsNullOrEmpty(remainingQueue))
+            if (String.IsNullOrEmpty(queue)) return; // nothing to do for a rotation of nothing
+            Match queueMatch = Regex.Match(">" + queue, @"^(?<element>>([^\[>\]]+(\[[^\]]+\])*))*$"); // add a > to the start of the queue then separate
+            foreach (string rawActionString in queueMatch.Groups["element"].Captures.Cast<Capture>().Select(c => c.Value))
             {
-                List<Ability> conditionalAbilityList = new List<Ability>();
-                Match actionMatch = Regex.Match(remainingQueue, @"^(?<first>[^\[>\]]+(\[[^\]]+\])*)(>([^\[>\]]+(\[[^\]]+\])*))*");
+                var conditions = new List<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>();
+                Match actionMatch = Regex.Match(rawActionString, @"^>(?<ability>[^\[>\]0-9]+)(?<numericSuffix>[0-9]*)(?<conditional>\[[^\]]+\])*$");
                 if (!actionMatch.Success) throw new InvalidOperationException(String.Format("Invalid rotation {0}", queue));
-                abilityConditionals.Add(new List<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>());
 
-                string rawActionString = actionMatch.Groups["first"].Value;
-                string action = rawActionString;
-                // Check for "keep up" operator
-                if (action.StartsWith("^"))
+                string numericSuffixString = actionMatch.Groups["numericSuffix"].Value;
+                string abilityString = actionMatch.Groups["ability"].Value;
+                List<string> conditionalStrings = actionMatch.Groups["conditional"].Captures.Cast<Capture>().Select(c => c.Value).ToList();
+                // Special ability shorthands go here
+                switch (abilityString)
                 {
-                    string buff = action.Substring(1);
-                    if (buff.Contains("[")) buff = buff.Substring(0, action.IndexOf("[") - 1); // strip conditionals
-                    switch (buff)
-                    {
-                        case "WB":
-                            // If keeping up WB, we need to adjust for the HotR cooldown to keep full uptime
-                            action = action.Replace("^WB", "HotR[buffWB<4.5]");
-                            break;
-                        case "SS":
-                        case "EF": // TODO: do we EF1 or EF3 when EF runs out?
-                            // Ability name same as buff name
-                            action = action.Replace("^" + buff, buff + "[buff" + buff + "=0]");
-                            break;
-                        default:
-                            throw new Exception("Mechanics for keeping up " + buff + " not yet implemented.");
-                    }
-                    // TODO keep up & numeric suffix (such as ^EF4) not supported together.
-                    // To properly support this, we should change the regex and
-                    // add capture groups to pull out the ability/buff
-                    // and prefixes and suffixes.
-                }
-                // Process any conditionals, remove from action string
-                while (action.Contains("["))
-                {
-                    action = ProcessConditional(i, conditionalAbilityList, action);
-                }
-                // Check for numeric suffic
-                if (Char.IsNumber(action[action.Length - 1]))
-                {
-                    // Add holy power condition
-                    int minHP = Int32.Parse(action.Substring(action.Length - 1));
-                    abilityConditionals[i].Add((gp, sm, state) => sm.HP(state) >= minHP);
-                    action = action.Substring(0, action.Length - 1);
-                }
-                else if (!rawActionString.Contains("HP"))
-                {
-                    // no HP conditions on EF or WoG = default to 3 HP usage
-                    switch (action)
-                    {
-                        case "EF":
-                        case "WoG":
-                            abilityConditionals[i].Add((gp, sm, state) => sm.HP(state) >= 3);
-                            break;
-                    }
-                }
-                switch (action) // Special ability-specific conditions go here
-                {
-                    case "SS":
-                    case "SotR":
-                        abilityConditionals[i].Add((gp, sm, state) => sm.HP(state) >= 3);
-                        break;
                     case "AS+":
                         // Use AS if it will generate HP
-                        abilityConditionals[i].Add((gp, sm, state) => sm.TimeRemaining(state, Buff.GC) > 0);
-                        action = action.Substring(0, action.Length - 1);
+                        conditionalStrings.Add("[buffGC>0]");
+                        conditions.Add((gp, sm, state) => sm.TimeRemaining(state, Buff.GC) > 0);
+                        abilityString = "AS";
+                        break;
+                    case "^WB":
+                        // If keeping up WB, we need to adjust for the HotR cooldown to keep full uptime
+                        abilityString = "HotR";
+                        conditionalStrings.Add("[buffWB<4.5]");
+                        break;
+                    case "^SS":
+                    case "^EF":
+                        // TODO: do we EF1 or EF3 when EF runs out?
+                        abilityString = abilityString.Substring(1);
+                        conditionalStrings.Add(String.Format("[buff{0}=0]", abilityString));
                         break;
                 }
-                Ability ability = (Ability)Enum.Parse(typeof(Ability), action);
-                if (!conditionalAbilityList.Contains(ability))
+                if (!String.IsNullOrEmpty(numericSuffixString))
+                {
+                    conditionalStrings.Add(String.Format("[HP>={0}]", numericSuffixString));
+                }
+                List<Ability> conditionAbilityList;
+                bool hpConditionEncountered;
+                conditions.AddRange(ProcessConditions(conditionalStrings, out conditionAbilityList, out hpConditionEncountered));
+
+                Ability ability = (Ability)Enum.Parse(typeof(Ability), abilityString);
+                switch (ability) // Special ability-specific conditions go here
+                {
+                    case Ability.SS:
+                    case Ability.SotR:
+                        // Requires 3 HP to use
+                        conditions.Add((gp, sm, state) => sm.HP(state) >= 3);
+                        break;
+                    case Ability.EF:
+                    case Ability.WoG:
+                        // Requires 1 HP to use
+                        conditions.Add((gp, sm, state) => sm.HP(state) >= 1);
+                        // no HP conditions on EF or WoG = default to 3 HP usage
+                        if (!hpConditionEncountered)
+                        {
+                            conditions.Add((gp, sm, state) => sm.HP(state) >= 3);
+                        }
+                        break;
+                }
+                if (!conditionAbilityList.Contains(ability))
                 {
                     // Ability must be off CD if no CD specified
                     // Delayed casts are modelled by specifying a cooldown conditional (eg CS[cdCS<=0.5])
-                    abilityConditionals[i].Add((gp, sm, state) => sm.CooldownRemaining(state, ability) == 0);
+                    conditions.Add((gp, sm, state) => sm.CooldownRemaining(state, ability) == 0);
                 }
+                // add to rotation
                 abilityQueue.Add(ability);
-                // move on to the next item in the queue
-                remainingQueue = remainingQueue.Substring(rawActionString.Length);
-                remainingQueue = remainingQueue.Trim('>');
-                i++;
+                abilityConditionals.Add(conditions);
             }
         }
 
-        private string ProcessConditional(int i, List<Ability> conditionalAbilityList, string action)
+        private IEnumerable<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>
+            ProcessConditions(List<string> conditionalStrings, out List<Ability> conditionAbilityList, out bool hpConditionEncountered)
         {
-            Match conditionMatch = Regex.Match(action, @"\[(?<type>(cd)|(buff|HP))(?<conditional>\w*)(?<operation>[><=]+)(?<value>\d*\.?\d*)\]");
-            if (!conditionMatch.Success) throw new ArgumentException("Malformed conditional in rotation.");
-            string type = conditionMatch.Groups["type"].Value;
-            string conditional = conditionMatch.Groups["conditional"].Value;
-            string operation = conditionMatch.Groups["operation"].Value;
-            double value = Double.Parse(conditionMatch.Groups["value"].Value);
-            Func<GraphParameters<TState>, IStateManager<TState>, TState, bool> condition;
-            if (type == "HP")
+            hpConditionEncountered = false;
+            conditionAbilityList = new List<Ability>();
+            var conditions = new List<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>();
+            foreach (string conditionString in conditionalStrings)
             {
-                condition = GetHPConditionalMethod(operation, value);
+                Match conditionMatch = Regex.Match(conditionString, @"^\[(?<type>(cd)|(buff|HP))(?<conditional>\w*)(?<operation>[><=]+)(?<value>\d*\.?\d*)\]$");
+                string type = conditionMatch.Groups["type"].Value;
+                string conditional = conditionMatch.Groups["conditional"].Value;
+                string operation = conditionMatch.Groups["operation"].Value;
+                double value = Double.Parse(conditionMatch.Groups["value"].Value);
+                Func<GraphParameters<TState>, IStateManager<TState>, TState, double> getStateValue;
+                if (type == "HP")
+                {
+                    getStateValue = (gp, sm, state) => sm.HP(state);
+                    hpConditionEncountered = true;
+                }
+                else if (type == "cd")
+                {
+                    Ability a = (Ability)Enum.Parse(typeof(Ability), conditional);
+                    getStateValue = (gp, sm, state) => sm.CooldownRemaining(state, a) * gp.StepDuration;
+                    conditionAbilityList.Add(a);
+                }
+                else if (type == "buff")
+                {
+                    Buff b = (Buff)Enum.Parse(typeof(Buff), conditional);
+                    getStateValue = (gp, sm, state) => sm.TimeRemaining(state, b) * gp.StepDuration;
+                }
+                else
+                {
+                    throw new ArgumentException(String.Format("Unable to process conditional {0} with unknown type {1}", conditionString, type));
+                }
+                Func<GraphParameters<TState>, IStateManager<TState>, TState, bool> condition = null;
+                switch (operation)
+                {
+                    case "=": condition = (gp, sm, state) => getStateValue(gp, sm, state) == value; break;
+                    case "==": condition = (gp, sm, state) => getStateValue(gp, sm, state) == value; break;
+                    case ">": condition = (gp, sm, state) => getStateValue(gp, sm, state) > value; break;
+                    case ">=": condition = (gp, sm, state) => getStateValue(gp, sm, state) >= value; break;
+                    case "<": condition = (gp, sm, state) => getStateValue(gp, sm, state) < value; break;
+                    case "<=": condition = (gp, sm, state) => getStateValue(gp, sm, state) <= value; break;
+                }
+                if (condition == null) throw new ArgumentException("Unknown conditional operator {0}", operation);
+                conditions.Add(condition);
             }
-            else
-            {
-                condition = GetCdBuffConditionalMethod(conditionalAbilityList, type, conditional, operation, value);
-            }
-            if (condition == null) throw new ArgumentException("Unknown conditional operator {0}", operation);
-            abilityConditionals[i].Add(condition);
-            action = action.Replace(conditionMatch.Value, "");
-            return action;
-        }
-        private static Func<GraphParameters<TState>, IStateManager<TState>, TState, bool> GetHPConditionalMethod(string operation, double value)
-        {
-            Func<GraphParameters<TState>, IStateManager<TState>, TState, bool> condition = null;
-            switch (operation)
-            {
-                case "=": condition = (gp, sm, state) => sm.HP(state) == (int)(value); break;
-                case "==": condition = (gp, sm, state) => sm.HP(state) == (int)(value); break;
-                case ">": condition = (gp, sm, state) => sm.HP(state) > (int)(value); break;
-                case ">=": condition = (gp, sm, state) => sm.HP(state) >= (int)(value); break;
-                case "<": condition = (gp, sm, state) => sm.HP(state) < (int)(value); break;
-                case "<=": condition = (gp, sm, state) => sm.HP(state) <= (int)(value); break;
-            }
-            return condition;
-        }
-        private static Func<GraphParameters<TState>, IStateManager<TState>, TState, bool> GetCdBuffConditionalMethod(List<Ability> conditionalAbilityList, string type, string conditional, string operation, double value)
-        {
-            Func<IStateManager<TState>, TState, int> getRemaining;
-            if (type == "cd")
-            {
-                Ability a = (Ability)Enum.Parse(typeof(Ability), conditional);
-                getRemaining = (sm, state) => sm.CooldownRemaining(state, a);
-                conditionalAbilityList.Add(a);
-            }
-            else //if (type == "buff")
-            {
-                Buff b = (Buff)Enum.Parse(typeof(Buff), conditional);
-                getRemaining = (sm, state) => sm.TimeRemaining(state, b);
-            }
-            Func<GraphParameters<TState>, IStateManager<TState>, TState, bool> condition = null;
-            switch (operation)
-            {
-                case "=": condition = (gp, sm, state) => getRemaining(sm, state) == (int)(value / gp.StepDuration); break;
-                case "==": condition = (gp, sm, state) => getRemaining(sm, state) == (int)(value / gp.StepDuration); break;
-                case ">": condition = (gp, sm, state) => getRemaining(sm, state) > (int)(value / gp.StepDuration); break;
-                case ">=": condition = (gp, sm, state) => getRemaining(sm, state) >= (int)(value / gp.StepDuration); break;
-                case "<": condition = (gp, sm, state) => getRemaining(sm, state) < (int)(value / gp.StepDuration); break;
-                case "<=": condition = (gp, sm, state) => getRemaining(sm, state) <= (int)(value / gp.StepDuration); break;
-            }
-            return condition;
+            return conditions;
         }
         public bool Contains(Ability a)
         {
