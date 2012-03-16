@@ -2,11 +2,11 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Matlabadin.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class MatlabadinGraphTest : MatlabadinTest
     {
         private int iterationsTaken;
@@ -32,7 +32,7 @@ namespace Matlabadin.Tests
                 }
             }
         }
-        [TestMethod]
+        [Test]
         public void GenerateGraph_ShouldOnlyGenerateNonZeroTransitions()
         {
             Int64GraphParameters gp = NoMiss("J");
@@ -40,7 +40,7 @@ namespace Matlabadin.Tests
             SanityCheckGraph(mg);
             Assert.IsFalse(mg.nextState.Any(ns => ns.Any(s => s == 0))); // starting state (0) should be unreachable for a J rotation with no miss
         }
-        [TestMethod]
+        [Test]
         public void GenerateGraph_NextStateTransitionsShouldAlwaysBeSet()
         {
             Int64GraphParameters gp = NoMiss("J");
@@ -65,7 +65,7 @@ namespace Matlabadin.Tests
             SanityCheckGraph(mg);
             Assert.AreEqual(2, mg.index.Length); // Cons; Nothing
         }
-        [TestMethod]
+        [Test]
         public void CalculateNextStateProbability_ShouldAdvanceStateProbabilitiesByOneState()
         {
             Int64GraphParameters gp = NoMiss("J");
@@ -80,7 +80,7 @@ namespace Matlabadin.Tests
             pr = mg.CalculateNextStateProbability(pr);
             Assert.AreEqual(1, pr[mg.lookup[GetState(gp, Ability.J, 9, 2)]]);
         }
-        [TestMethod]
+        [Test]
         public void CalculateNextStateProbability_ShouldDecay()
         {
             Int64GraphParameters gp = NoMiss("J");
@@ -92,7 +92,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0.5, pr[mg.lookup[GetState(gp, Ability.J, 9, 1)]]);
             Assert.AreEqual(0.5, pr[0]);
         }
-        [TestMethod]
+        [Test]
         public void ConvergeStateProbability_CSShouldConvergeTo50_50With5HP()
         {
             Int64GraphParameters gp = NoMiss("J");
@@ -101,7 +101,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0.5, pr[mg.lookup[GetState(gp, Ability.J, 9, 5)]], Tolerance);
             Assert.AreEqual(0.5, pr[mg.lookup[GetState(gp, Ability.J, 0, 5)]], Tolerance);
         }
-        [TestMethod]
+        [Test]
         public void CalculateResults_ShouldDisplayNotNothing()
         {
             Int64GraphParameters gp = NoMiss("CS");
@@ -110,7 +110,7 @@ namespace Matlabadin.Tests
             var result = mg.CalculateResults(pr);
             Assert.IsFalse(result.Action.ContainsKey("Nothing"));
         }
-        [TestMethod]
+        [Test]
         public void ConvergeStateProbability_ShouldStopAfterRelativeToleranceAchieved()
         {
             Int64GraphParameters gp = NoMiss("CS");
@@ -135,7 +135,7 @@ namespace Matlabadin.Tests
             // go back a stride and check that our tolerance was not achieved
             Assert.IsTrue(finalRelError > relTol);
         }
-        [TestMethod]
+        [Test]
         public void ConvergeStateProbability_ShouldStopAfterAbsoluteToleranceAchieved()
         {
             Int64GraphParameters gp = NoMiss("CS");
@@ -160,7 +160,7 @@ namespace Matlabadin.Tests
             // go back a stride and check that our tolerance was not achieved
             Assert.IsTrue(finalAbsError > absTol);
         }
-        [TestMethod]
+        [Test]
         public void ConvergeStateProbability_ShouldConverge()
         {
             Int64GraphParameters gp = new Int64GraphParameters(
@@ -171,7 +171,7 @@ namespace Matlabadin.Tests
             mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, maxIterations: maxIterations);
             Assert.AreNotEqual(maxIterations, iterationsTaken);
         }
-        [TestMethod]
+        [Test]
         public void CalculateAggregates_Cons()
         {
             Int64GraphParameters gp = NoHitExpertise("Cons");
@@ -181,7 +181,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual(1, result.Action.Count);
             Assert.AreEqual(1.0 / 9.0, result.Action["Cons"], Tolerance); // Cons every 9s
         }
-        [TestMethod]
+        [Test]
         public void CalculateAggregates_SotRCS()
         {
             Int64GraphParameters gp = NoMiss("SotR>CS");
@@ -191,7 +191,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual(1d / 4.5, result.Action["CS"], Tolerance); // once every 4.5s
             Assert.AreEqual(1d / 4.5 / 3, result.Action["SotR"], Tolerance); // once every third CS
         }
-        [TestMethod]
+        [Test]
         public void CalculateAggregates_SotRCSJ()
         {
             Int64GraphParameters gp = NoMiss("SotR>CS>J");
@@ -202,7 +202,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual(2d / (3 * 4.5), result.Action["J"], Tolerance); // CS & J clash - J gets delayed 1 GCD every 2nd cycle to 2 J per 3 CS
             Assert.AreEqual(5d / 13.5 / 3, result.Action["SotR"], Tolerance * 10); // 5 HP per 13.5s cycle; 3 HP per cast
         }
-        [TestMethod]
+        [Test]
         public void SSUptimeShouldBeCalculated()
         {
             Int64GraphParameters gp = NoMiss("SS>CS");
@@ -211,7 +211,7 @@ namespace Matlabadin.Tests
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
             Assert.AreEqual(1, result.BuffUptime[(int)Buff.SS], 1e-7); // 100% uptime
         }
-        [TestMethod]
+        [Test]
         public void EFUptimeShouldBeCalculated()
         {
             Int64GraphParameters gp = NoMiss("EF>CS");
@@ -220,7 +220,7 @@ namespace Matlabadin.Tests
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
             Assert.AreEqual(1, result.BuffUptime[(int)Buff.EF], 1e-7); // 100% uptime
         }
-        [TestMethod]
+        [Test]
         public void WBUptimeShouldBeCalculated()
         {
             Int64GraphParameters gp = NoMiss("HotR");
@@ -235,7 +235,7 @@ namespace Matlabadin.Tests
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
             Assert.AreEqual(0, result.BuffUptime[(int)Buff.WB], 1e-7); // 0% uptime since HotR never connects
         }
-        [TestMethod]
+        [Test]
         public void SotRSBUptimeShouldBeCalculated()
         {
             Int64GraphParameters gp = NoMiss("SotR>CS>J");
@@ -244,7 +244,7 @@ namespace Matlabadin.Tests
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
             Assert.AreEqual(5d / 13.5 / 3 * 6, result.BuffUptime[(int)Buff.SotRSB], Tolerance * 100); // 5hp per 13.5s - cast requires 3, buff lasts 6s
         }
-        [TestMethod]
+        [Test]
         public void CloneShouldReduceConvergenceTimeForSameResult()
         {
             Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<ulong>("SotR>CS>AS>J"), 1, 0.8, 0.95);

@@ -2,11 +2,11 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Matlabadin.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ArrayStateManagerTest : StateManagerTest<ArrayStateManager, StateArray>
     {
         public override ArrayStateManager StateManager
