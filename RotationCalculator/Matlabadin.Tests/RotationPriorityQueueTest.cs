@@ -42,6 +42,52 @@ namespace Matlabadin.Tests
             DoTest("SotR", 3, Ability.SotR);
         }
         [TestMethod]
+        public void SSShouldRequire3HP()
+        {
+            DoTest("SS", 0, Ability.Nothing);
+            DoTest("SS", 1, Ability.Nothing);
+            DoTest("SS", 2, Ability.Nothing);
+            DoTest("SS", 3, Ability.SS);
+            DoTest("SS", 4, Ability.SS);
+            DoTest("SS", 5, Ability.SS);
+        }
+        [TestMethod]
+        public void EFShouldRequire1HP()
+        {
+            DoTest("EF0", 0, Ability.Nothing);
+            DoTest("EF0", 1, Ability.EF);
+        }
+        [TestMethod]
+        public void WoGShouldRequire1HP()
+        {
+            DoTest("WoG0", 0, Ability.Nothing);
+            DoTest("WoG0", 1, Ability.WoG);
+        }
+        [TestMethod]
+        public void EFShouldDefaultToEF3()
+        {
+            DoTest("EF", 0, Ability.Nothing);
+            DoTest("EF", 1, Ability.Nothing);
+            DoTest("EF", 2, Ability.Nothing);
+            DoTest("EF", 3, Ability.EF);
+            DoTest("EF", 4, Ability.EF);
+            DoTest("EF", 5, Ability.EF);
+
+            DoTest("EF1", 0, Ability.Nothing);
+            DoTest("EF1", 1, Ability.EF);
+            DoTest("EF1", 2, Ability.EF);
+            DoTest("EF1", 3, Ability.EF);
+            DoTest("EF1", 4, Ability.EF);
+            DoTest("EF1", 5, Ability.EF);
+
+            DoTest("EF[HP>=1]", 0, Ability.Nothing);
+            DoTest("EF[HP>=1]", 1, Ability.EF);
+            DoTest("EF[HP>=1]", 2, Ability.EF);
+            DoTest("EF[HP>=1]", 3, Ability.EF);
+            DoTest("EF[HP>=1]", 4, Ability.EF);
+            DoTest("EF[HP>=1]", 5, Ability.EF);
+        }
+        [TestMethod]
         public void NumericSuffixShouldIndicateMinHolyPowerToUseAbility()
         {
             DoTest("J0", 0, Ability.J);

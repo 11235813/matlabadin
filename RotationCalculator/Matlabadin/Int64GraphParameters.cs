@@ -22,7 +22,7 @@ namespace Matlabadin
         }
         #region Bit-Encoded State Graph Parameters
         /// <summary>
-        /// Calculates the big packing required to encode the state in an unsigned 64 bit integer
+        /// Calculates the bit packing required to encode the state in an unsigned 64 bit integer
         /// </summary>
         private void CalculateBitOffsets()
         {
