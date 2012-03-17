@@ -13,52 +13,52 @@ def_db;
 %low hit, SotR/SoT build
 %set melee hit to 2%, expertise to 5%
 %do this by altering shirt stats
-c(1)=build_config('hit',2,'exp',5); 
+cfg(1)=build_config('hit',2,'exp',5); 
 
 %low hit, WoG/SoI build
-c(2)=build_config('hit',2,'exp',5,'seal','SoI');
+cfg(2)=build_config('hit',2,'exp',5,'seal','SoI');
 
 %hit-cap and exp soft-cap
-c(3)=build_config('hit',7.5,'exp',7.5);
+cfg(3)=build_config('hit',7.5,'exp',7.5);
 
 %% Generate DPS for each config
 queue_model; %lists the queues we're interested in
 
 %preallocate arrays for speed
-dps=zeros(length(c),length(queue.st));
+dps=zeros(length(cfg),length(queue.st));
 hps=dps;efssUptime=dps;empties=dps;
 dps2=dps;hps2=dps;
 
-for g=1:length(c)
+for g=1:length(cfg)
     %set configuration variables
     
-    cfg=c(g);
-    cfg=stat_model(cfg);
-    cfg=ability_model(cfg);
+    c=cfg(g);
+    c=stat_model(c);
+    c=ability_model(c);
     
-    wb=waitbar(0,['Calculating CFG # ' int2str(g) ' / ' int2str(length(c))]);
+    wb=waitbar(0,['Calculating CFG # ' int2str(g) ' / ' int2str(length(cfg))]);
     tic
     for q=1:length(queue.st)
         %update waitbar
         waitbar(q/length(queue.st),wb)
         
         %set queue value
-        cfg.exec.queue=queue.st{q};
+        c.exec.queue=queue.st{q};
         
         %calculate DPS
-        cfg=rotation_model(cfg);
+        c=rotation_model(c);
         
         %store stuff for debugging
-        crs_debug(q,g).meta=cfg.rot.metadata;
-        crs_debug(q,g).action=cfg.rot.actionPr;
-        crs_debug(q,g).cps=cfg.rot.cps;
+        crs_debug(q,g).meta=c.rot.metadata;
+        crs_debug(q,g).action=c.rot.actionPr;
+        crs_debug(q,g).cps=c.rot.cps;
         
         %store values for plot
-        dps(q,g)=cfg.rot.dps;
-        hps(q,g)=cfg.rot.hps;
-        efssUptime(q,g)=max([cfg.rot.efuptime;cfg.rot.ssuptime]);
-        empties(q,g)=cfg.rot.empties; %TODO: fix in [CR] once actionPr working again
-        hpg(q,g)=cfg.rot.hpg;
+        dps(q,g)=c.rot.dps;
+        hps(q,g)=c.rot.hps;
+        efssUptime(q,g)=max([c.rot.efuptime;c.rot.ssuptime]);
+        empties(q,g)=c.rot.empties; %TODO: fix in [CR] once actionPr working again
+        hpg(q,g)=c.rot.hpg;
         
         %Old code for empties - for reference
         %empties(q,g)=sum(cfg.rot.cps((length(cfg.rot.cps)-1):length(cfg.rot.cps)));
@@ -86,9 +86,9 @@ end
 L=length(queue.st);
 ldat=2+[1:L];
 
-for g=1:length(c)
+for g=1:length(cfg)
 
-disp([num2str(c(g).player.mehit,'%1.2f') '% hit, ' num2str(c(g).player.exp,'%1.2f') '% exp'])    
+disp([num2str(cfg(g).player.mehit,'%1.2f') '% hit, ' num2str(cfg(g).player.exp,'%1.2f') '% exp'])    
     
 li=DataTable();
 li{1:2,1}={' ';'Q#'};      
@@ -125,7 +125,7 @@ queue.stsubset={ ...
     };
     
 li=lidb{1};
-disp([num2str(c(1).player.mehit,'%1.2f') '% hit, ' num2str(c(1).player.exp,'%1.2f') '% exp'])    
+disp([num2str(cfg(1).player.mehit,'%1.2f') '% hit, ' num2str(cfg(1).player.exp,'%1.2f') '% exp'])    
 
 for q=1:size(queue.stsubset,1)
     ind(q)=find(strcmp(queue.st,queue.stsubset{q}));
