@@ -118,7 +118,6 @@ namespace Matlabadin
                     case "AS+":
                         // Use AS if it will generate HP
                         conditionalStrings.Add("[buffGC>0]");
-                        conditions.Add((gp, sm, state) => sm.TimeRemaining(state, Buff.GC) > 0);
                         abilityString = "AS";
                         break;
                     case "^WB":
