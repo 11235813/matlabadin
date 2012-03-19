@@ -31,8 +31,10 @@ if length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswing)==
         memoized_fsm(c.exec.queue, c.mdf.mehit, c.mdf.rahit); 
     %convert actionPr to CPS array
     c.rot.cps=action2cps(c);
-    %TODO: empties tracking
-    c.rot.empties=0;
+    %empties tracking - this is "dead time"; to get % empty GCDs multiply
+    %by 3/2
+    c.rot.eps=c.rot.cps(size(c.rot.cps,1));
+    c.rot.epct=c.rot.eps.*3/2;
     
 %otherwise, we need some array handling, and may want to take advantage
 %of parallelization
@@ -47,8 +49,9 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswin
     %the conversion to a CPS array needs to be handled appropriately though
     for j=1:length(c.player.wswing)
         [c.rot.cps(:,j)]=action2cps(c,j);
-        %TODO: empties tracking
-        c.rot.empties=0;
+        %empties tracking
+        c.rot.eps(j)=c.rot.cps(size(c.rot.cps,1),j);
+        c.rot.epct(j)=c.rot.eps(j).*3/2;
     end
         
     
@@ -67,8 +70,9 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
                 c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j)] = ...
                 memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j));
             [c.rot.cps(:,j)]=action2cps(c,j);
-            %TODO: empties tracking
-            c.rot.empties=0;
+            %empties tracking
+            c.rot.eps(j)=c.rot.cps(size(c.rot.cps,1),j);
+            c.rot.epct(j)=c.rot.eps(j).*3/2;
         end
     else
         wb=waitbar(0,'Generating/Loading FSM data');
@@ -82,8 +86,9 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
                 c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j)] = ...
                 memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j));
             [c.rot.cps(:,j)]=action2cps(c,j);
-            %TODO: empties tracking
-            c.rot.empties=0;
+            %empties tracking
+            c.rot.eps(j)=c.rot.cps(size(c.rot.cps,1),j);
+            c.rot.epct(j)=c.rot.eps(j).*3/2;
         end
         close(wb)
     end
@@ -102,8 +107,9 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
                 c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j)] = ...
                 memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit);
             [c.rot.cps(:,j)]=action2cps(c,j);
-            %TODO: empties tracking
-            c.rot.empties=0;
+            %empties tracking
+            c.rot.eps(j)=c.rot.cps(size(c.rot.cps,1),j);
+            c.rot.epct(j)=c.rot.eps(j).*3/2;
             
         end
     else
@@ -118,8 +124,9 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
                 c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j)] = ...
                 memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit);
             [c.rot.cps(:,j)]=action2cps(c,j);
-            %TODO: empties tracking
-            c.rot.empties=0;
+            %empties tracking
+            c.rot.eps(j)=c.rot.cps(size(c.rot.cps,1),j);
+            c.rot.epct(j)=c.rot.eps(j).*3/2;
         end
         close(wb)
     end

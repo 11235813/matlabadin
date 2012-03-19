@@ -57,14 +57,8 @@ for g=1:length(cfg)
         dps(q,g)=c.rot.dps;
         hps(q,g)=c.rot.hps;
         efssUptime(q,g)=max([c.rot.efuptime;c.rot.ssuptime]);
-        empties(q,g)=c.rot.empties; %TODO: fix in [CR] once actionPr working again
+        empties(q,g)=c.rot.epct.*100; 
         hpg(q,g)=c.rot.hpg;
-        
-        %Old code for empties - for reference
-        %empties(q,g)=sum(cfg.rot.cps((length(cfg.rot.cps)-1):length(cfg.rot.cps)));
-        %alternatively, grab the "nothing" output of actionPr if it's
-        %re-implemented
-        %empties(kk)=1/1.5-sum([actionPr{2,:}]);
         
         %if desired, repeate for lower vengeance
         %         cfg.exec.veng=0.3;
@@ -101,7 +95,7 @@ li{1:2,4}={'SHPS';'V=100%'};
 li{ldat,4}=hps(:,g);
 li{1:2,5}={'SS/EF';'Uptime%'};
 li{ldat,5}=efssUptime(:,g);
-li{1:2,6}={' ';'Empty%'};
+li{1:2,6}={'Empty';'GCD%'};
 li{ldat,6}=empties(:,g);
 li{1:2,7}={'HPG';'per s'};
 li{ldat,7}=hpg(:,g);

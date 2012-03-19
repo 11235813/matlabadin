@@ -40,7 +40,7 @@ for m=1:M; icv(m,1)=eval(['ipconv.' stat{m}]); end;
 %% Strength calcs
 %reset extra structure
 str_range=-100+linspace(1,1500,250);
-[temp idx]=min(abs(str_range));
+[~, idx]=min(abs(str_range));
 sdps=zeros(M,length(str_range),length(cfg));shps=sdps;
 sdps0=zeros(size(sdps));shps0=sdps0;
 
@@ -130,7 +130,7 @@ end
 
 %% Hit calcs
 hit_range=(-c.player.mehit+linspace(0,12,100)).*cnv.hit_hit;
-[temp idx]=min(abs(hit_range));
+% [temp idx]=min(abs(hit_range));
 hdps=zeros(M,length(hit_range),length(cfg));hhps=hdps;
 hdps0=zeros(size(hdps));hhps0=hdps0;
 
@@ -200,8 +200,8 @@ end
 
     
 %% Exp Calcs
-exp_range=(-c.player.exp+linspace(0,15,100)).*cnv.exp_exp;;
-[temp idx]=min(abs(exp_range));
+exp_range=(-c.player.exp+linspace(0,15,100)).*cnv.exp_exp;
+% [temp idx]=min(abs(exp_range));
 edps=zeros(M,length(exp_range),length(cfg));ehps=edps;
 edps0=zeros(size(hdps));ehps0=edps0;
 
