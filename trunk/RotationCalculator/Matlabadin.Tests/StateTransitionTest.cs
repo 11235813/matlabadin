@@ -8,9 +8,9 @@ namespace Matlabadin.Tests
 {
     [TestFixture]
     public class StateTransitionTest : MatlabadinTest
-    {        
+    {
         [Test]
-        public void UseAbilityShouldSetAbilityCDAndNotAdvanceGCD()
+        public void UseAbilityShouldSetAbilityCDAndNotAdvanceTime()
         {
             foreach (Ability a in new Ability[] {
                 Ability.Nothing,
@@ -26,6 +26,32 @@ namespace Matlabadin.Tests
             })
             {
                 Assert.AreEqual(Math.Max(0, GP.AbilityCooldownInSteps(a)), SM.CooldownRemaining(StateTransition<ulong>.UseAbility(GP, SM, 3, a), a));
+            }
+        }
+        [Test]
+        public void UseAbilityShouldSetGCD()
+        {
+            // On GCD
+            foreach (Ability a in new Ability[] {
+                Ability.HotR,
+                Ability.CS,
+                Ability.J,
+                Ability.AS,
+                Ability.Cons,
+            })
+            {
+                Assert.AreEqual(GP.StepsPerGcd, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 3, a), Buff.GCD));
+            }
+            // Off GCD
+            foreach (Ability a in new Ability[] {
+                Ability.Nothing,
+                Ability.SotR,
+                Ability.WoG,
+                Ability.EF,
+                Ability.SS,
+            })
+            {
+                Assert.AreEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 3, a), Buff.GCD));
             }
         }
         [Test]
@@ -164,7 +190,7 @@ namespace Matlabadin.Tests
         private void TestNextState(Int64GraphParameters gp, ulong state, Ability a,
             ulong[] expectedState,
             double[] expectedPr,
-            int expectedStepsDuration = 3)
+            int expectedStepsDuration = 0)
         {
             StateTransition<ulong> st = new StateTransition<ulong>(gp, gp, state, a);
             ulong[] s = st.NextStates;
@@ -180,14 +206,14 @@ namespace Matlabadin.Tests
         }
         private void TestNextState(Int64GraphParameters gp, ulong state, Ability a,
             double expectedPr1, ulong expectedState1,
-            int expectedStepsDuration = 3)
+            int expectedStepsDuration = 0)
         {
             TestNextState(gp, state, a, new ulong[] { expectedState1 }, new double[] { expectedPr1 }, expectedStepsDuration);
         }
         private void TestNextState(Int64GraphParameters gp, ulong state, Ability a,
             double expectedPr1, ulong expectedState1,
             double expectedPr2, ulong expectedState2,            
-            int expectedStepsDuration = 3)
+            int expectedStepsDuration = 0)
         {
             TestNextState(gp, state, a, new ulong[] { expectedState1, expectedState2 }, new double[] { expectedPr1, expectedPr2 }, expectedStepsDuration);
         }
@@ -195,7 +221,7 @@ namespace Matlabadin.Tests
             double expectedPr1, ulong expectedState1,
             double expectedPr2, ulong expectedState2,
             double expectedPr3, ulong expectedState3,
-            int expectedStepsDuration = 3)
+            int expectedStepsDuration = 0)
         {
             TestNextState(gp, state, a, new ulong[] { expectedState1, expectedState2, expectedState3 }, new double[] { expectedPr1, expectedPr2, expectedPr3 }, expectedStepsDuration);
         }
@@ -204,7 +230,7 @@ namespace Matlabadin.Tests
         {
             Int64GraphParameters gp = NoMiss(R.PriorityQueue);
             TestNextState(gp, 0, Ability.J,
-               1, SM.AdvanceTime(StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.J, hit: true), 3)
+               1, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.J, hit: true)
            );
         }
         [Test]
@@ -212,14 +238,14 @@ namespace Matlabadin.Tests
         {
             Int64GraphParameters gp = new Int64GraphParameters(R, 3, 0.8, 1);
             TestNextState(gp, 0, Ability.CS,
-                0.2, SM.AdvanceTime(StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: false), 3), // miss
-                0.8 * 0.6, SM.AdvanceTime(StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true), 3), // hit
-                0.8 * 0.4, SM.AdvanceTime(StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true, gcProc: true), 3) // GrCr proc
+                0.2, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: false), // miss
+                0.8 * 0.6, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true), // hit
+                0.8 * 0.4, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true, gcProc: true) // GrCr proc
             );
             gp = NoMiss(R.PriorityQueue);
             TestNextState(gp, 0, Ability.CS,
-               0.6, SM.AdvanceTime(StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true), 3),
-               0.4, SM.AdvanceTime(StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true, gcProc: true), 3)
+               0.6, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true),
+               0.4, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true, gcProc: true)
            );
         }
         [Test]
@@ -228,17 +254,17 @@ namespace Matlabadin.Tests
             Int64GraphParameters gp = new Int64GraphParameters(R, 3, 0.1, 0.8);
             ulong state = GetState(SM, Buff.GC, 1); // with GC
             TestNextState(gp, state, Ability.AS,
-                0.2, SM.AdvanceTime(StateTransition<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: false), 3),
-                0.8, SM.AdvanceTime(StateTransition<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: true), 3) // hit
+                0.2, StateTransition<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: false),
+                0.8, StateTransition<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: true) // hit
             );
             state = 0; // without GC buff
             TestNextState(gp, state, Ability.AS,
-                0.2, SM.AdvanceTime(StateTransition<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: false), 3),
-                0.8, SM.AdvanceTime(StateTransition<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: true), 3) // hit
+                0.2, StateTransition<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: false),
+                0.8, StateTransition<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: true) // hit
             );
             gp = NoMiss(R.PriorityQueue);
             TestNextState(gp, state, Ability.AS,
-                1, SM.AdvanceTime(StateTransition<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: true), 3) // hit
+                1, StateTransition<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: true) // hit
             );
         }
         [Test]
@@ -246,12 +272,12 @@ namespace Matlabadin.Tests
         {
             Int64GraphParameters gp = new Int64GraphParameters(R, 3, 0, 0.6);
             TestNextState(gp, 0, Ability.AS,
-                0.4, SM.AdvanceTime(StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.AS, hit: false), 3),
-                0.6, SM.AdvanceTime(StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.AS, hit: true), 3) // hit
+                0.4, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.AS, hit: false),
+                0.6, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.AS, hit: true) // hit
             );
             TestNextState(gp, 0, Ability.J,
-                0.4, SM.AdvanceTime(StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.J, hit: false), 3),
-                0.6, SM.AdvanceTime(StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.J, hit: true), 3) // hit
+                0.4, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.J, hit: false),
+                0.6, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.J, hit: true) // hit
             );
         }
         [Test]
@@ -276,10 +302,10 @@ namespace Matlabadin.Tests
             Int64GraphParameters gp = new Int64GraphParameters(R, 3, 0.8, 0);
             ulong state = GetState(SM, Ability.HotR, 1, 3);
             TestNextState(gp, state, Ability.HotR,
-                0.2, GetState(SM, Ability.HotR, 9 - 3, 3),
-                0.8 * 0.6, GetState(SM, Ability.HotR, 9 - 3, GetState(SM, Buff.WB, 60 - 3, 4)),
-                0.8 * 0.4, GetState(SM, Ability.HotR, 9 - 3, GetState(SM, Buff.WB, 60 - 3, Buff.GC, 13 - 3, 4)),
-                4 // 4 steps
+                0.2, GetState(SM, Ability.HotR, 9, GetState(SM, Buff.GCD, 3, 3)), // miss
+                0.8 * 0.6, GetState(SM, Ability.HotR, 9, GetState(SM, Buff.WB, 60, Buff.GCD, 3, 4)), // hit
+                0.8 * 0.4, GetState(SM, Ability.HotR, 9, GetState(SM, Buff.WB, 60, Buff.GC, 13, Buff.GCD, 3, 4)), // hit & GC
+                1 // 1 step wait
             );
         }
         [Test]
@@ -294,13 +320,17 @@ namespace Matlabadin.Tests
             }
         }
         [Test]
-        public void CalculateStateTransition_SotR_WoG_ShouldAdvanceTimeBy0Steps()
+        public void CalculateStateTransition_Ability_ShouldAdvanceTimeBy0Steps()
         {
             var st = new StateTransition<ulong>(GP, SM, GetState(SM, Ability.CS, 3, 3), Ability.SotR);
             Assert.AreEqual(0, st.Choice.stepsDuration);
             Assert.IsTrue(st.StatePostAbility.SequenceEqual(st.NextStates));
             
             st = new StateTransition<ulong>(GP, SM, GetState(SM, Ability.CS, 3, 3), Ability.WoG);
+            Assert.AreEqual(0, st.Choice.stepsDuration);
+            Assert.IsTrue(st.StatePostAbility.SequenceEqual(st.NextStates));
+
+            st = new StateTransition<ulong>(GP, SM, GetState(SM, Ability.CS, 3, 3), Ability.Cons);
             Assert.AreEqual(0, st.Choice.stepsDuration);
             Assert.IsTrue(st.StatePostAbility.SequenceEqual(st.NextStates));
         }
@@ -312,12 +342,13 @@ namespace Matlabadin.Tests
                 1 // 1 step duration
             );
         }
-        [Test]
-        public void CalculatesStatePostAbility_ShouledAdvanceTimeByGCD()
+        //[Test]
+        public void CalculatesStatePostAbility_ShouldAdvanceTimeByAbilityCastTime()
         {
+            Assert.Inconclusive("No cast time abilities to test this yet");
             var st = new StateTransition<ulong>(GP, SM, 0, Ability.CS);
-            Assert.AreEqual(GP.StepsPerGcd, st.Choice.stepsDuration);
-            Assert.IsFalse(st.StatePostAbility.SequenceEqual(st.NextStates));
+            Assert.AreEqual(GP.StepsPerGcd, 0);
+            Assert.IsTrue(st.StatePostAbility.SequenceEqual(st.NextStates));
         }
         [Test]
         public void CalculateStateTransition_ShouldWaitForAbilityCDBeforeCasting()
@@ -331,8 +362,8 @@ namespace Matlabadin.Tests
             var st = new StateTransition<ulong>(GP, SM, GetState(SM, Ability.Cons, 1), Ability.Cons);
             Assert.AreEqual(GetState(SM, Ability.Cons, 1), st.StateInitial);
             Assert.AreEqual(0UL, st.StatePreAbility);
-            Assert.IsTrue(st.StatePostAbility.SequenceEqual(new ulong[] { GetState(SM, Ability.Cons, 18) } ));
-            Assert.IsTrue(st.NextStates.SequenceEqual(new ulong[] { GetState(SM, Ability.Cons, 15) } ));
+            Assert.IsTrue(st.StatePostAbility.SequenceEqual(new ulong[] { GetState(SM, Ability.Cons, 18, GetState(SM, Buff.GCD, 3)) } ));
+            Assert.IsTrue(st.NextStates.SequenceEqual(st.StatePostAbility));
         }
         [Test]
         public void CalculateTransition_ShouldUseRotationAbility()
@@ -366,21 +397,21 @@ namespace Matlabadin.Tests
         {
             // 1 step left on WB
             // 2 step wait time
-            // 3 step GCD
-            // = 1 step uptime for miss, 4 step uptime for hit
+            // 0 step GCD
+            // = 1 step uptime for miss, 1 step uptime for hit
             var st = new StateTransition<ulong>(GP, SM, GetState(SM, Ability.HotR, 2, GetState(SM, Buff.WB, 1, 3)), Ability.HotR);
             Assert.AreEqual(GetState(SM, Ability.HotR, 2, GetState(SM, Buff.WB, 1, 3)), st.StateInitial);
             Assert.AreEqual(3UL, st.StatePreAbility);
-            Assert.AreEqual(5, st.Choice.stepsDuration); // 2 wait steps, 3s cast
+            Assert.AreEqual(2, st.Choice.stepsDuration); // 2 wait steps, 0s cast
             Assert.AreEqual(1, st.Choice.buffDuration[(int)Buff.WB][0]); // miss
-            Assert.AreEqual(4, st.Choice.buffDuration[(int)Buff.WB][1]); // hit
-            Assert.AreEqual(4, st.Choice.buffDuration[(int)Buff.WB][2]); // hit & gc
+            Assert.AreEqual(1, st.Choice.buffDuration[(int)Buff.WB][1]); // hit
+            Assert.AreEqual(1, st.Choice.buffDuration[(int)Buff.WB][2]); // hit & gc
         }
         [Test]
         public void Choice_StepsDurationShouldIncludeWaitTime()
         {
             var st = new StateTransition<ulong>(GP, SM, GetState(SM, Ability.CS, 1, 3), Ability.CS);
-            Assert.AreEqual(4, st.Choice.stepsDuration);
+            Assert.AreEqual(1, st.Choice.stepsDuration);
         }
         [Test]
         public void Choice_wogss_ShouldBeSetOnlyForWog()
@@ -392,8 +423,8 @@ namespace Matlabadin.Tests
         [Test]
         public void Choice_BuffDurationShouldNotExceedStepDuration()
         {
-            Assert.AreEqual(3, new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SS, 5), Ability.Cons).Choice.buffDuration[(int)Buff.SS][0]);
-            Assert.AreEqual(1, new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SS, 1), Ability.Cons).Choice.buffDuration[(int)Buff.SS][0]);
+            Assert.AreEqual(1, new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SS, 5), Ability.Nothing).Choice.buffDuration[(int)Buff.SS][0]);
+            Assert.AreEqual(1, new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SS, 1), Ability.Nothing).Choice.buffDuration[(int)Buff.SS][0]);
         }
         [Test]
         public void Choice_BuffDurationShouldBeSetIffTracked()
@@ -406,9 +437,9 @@ namespace Matlabadin.Tests
         [Test]
         public void Choice_HotR_ShouldSetWBOnlyForHitTransitions()
         {
-            Assert.AreEqual(0, new StateTransition<ulong>(GP, SM, 0, Ability.HotR).Choice.buffDuration[(int)Buff.WB][0]); // miss
-            Assert.AreEqual(3, new StateTransition<ulong>(GP, SM, 0, Ability.HotR).Choice.buffDuration[(int)Buff.WB][1]); // hit
-            Assert.AreEqual(3, new StateTransition<ulong>(GP, SM, 0, Ability.HotR).Choice.buffDuration[(int)Buff.WB][2]); // hit & gc proc
+            Assert.IsFalse(SM.TimeRemaining(new StateTransition<ulong>(GP, SM, 0, Ability.HotR).NextStates[0], Buff.WB) > 0); // miss
+            Assert.IsTrue(SM.TimeRemaining(new StateTransition<ulong>(GP, SM, 0, Ability.HotR).NextStates[1], Buff.WB) > 0); // hit
+            Assert.IsTrue(SM.TimeRemaining(new StateTransition<ulong>(GP, SM, 0, Ability.HotR).NextStates[2], Buff.WB) > 0); // hit & gc proc
         }
     }
 }

@@ -111,6 +111,7 @@ namespace Matlabadin
         {
             // check if we have to wait
             int waitSteps = sm.CooldownRemaining(StateInitial, ability);
+            if (gp.AbilityOnGcd(ability)) waitSteps = Math.Max(waitSteps, sm.TimeRemaining(StateInitial, Buff.GCD));
             // Advance time to before ability usage
             StatePreAbility = waitSteps == 0 ? StateInitial : sm.AdvanceTime(StateInitial, waitSteps);
 
@@ -127,7 +128,8 @@ namespace Matlabadin
             // Calculate uptime of tracked buffs. 
             // during this transition, how many steps was the tracked buff active for?
             // (in the case of HotR - this will depend on which state we are transitioning to
-            // since Weakening Blows uptime depends on whether HotR hit or not)
+            // since Weakening Blows uptime depends on whether HotR hit or not). SotR buff may
+            // also exhibit this behaviour
             int[][] buffSteps = new int[(int)Buff.UptimeTrackedBuffs][];
             for (int i = 0; i < (int)Buff.UptimeTrackedBuffs; i++)
             {
@@ -267,15 +269,16 @@ namespace Matlabadin
             bool hit = true,
             bool gcProc = false)
         {
+            if (sm.CooldownRemaining(state, ability) > 0) throw new InvalidOperationException(String.Format("Attempting to use {0} whilest still on cooldown", ability));
+            if (gp.AbilityOnGcd(ability) && sm.TimeRemaining(state, Buff.GCD) > 0) throw new InvalidOperationException(String.Format("Attempting to use {0} before GCD complete", ability));
             TState nextState = state;
-            if (sm.CooldownRemaining(state, ability) > 0) throw new InvalidOperationException("Attempting to use ability still on cooldown");
+            int hp = sm.HP(nextState);
+            int availableHp = Math.Min(3, hp);
             int abilityCooldown = gp.AbilityCooldownInSteps(ability);
             if (abilityCooldown > 0)
             {
                 nextState = sm.SetCooldownRemaining(nextState, ability, abilityCooldown);
             }
-            int hp = sm.HP(nextState);
-            int availableHp = Math.Min(3, hp);
             switch (ability)
             {
                 case Ability.WoG:
@@ -331,6 +334,10 @@ namespace Matlabadin
             {
                 nextState = sm.SetCooldownRemaining(nextState, Ability.AS, 0);
                 nextState = sm.SetTimeRemaining(nextState, Buff.GC, gp.BuffDurationInSteps(Buff.GC));
+            }
+            if (gp.AbilityTriggersGcd(ability))
+            {
+                nextState = sm.SetTimeRemaining(nextState, Buff.GCD, gp.StepsPerGcd);
             }
             return nextState;
         }

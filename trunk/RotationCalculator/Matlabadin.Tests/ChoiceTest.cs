@@ -10,9 +10,9 @@ namespace Matlabadin.Tests
     public class ChoiceTest : MatlabadinTest
     {
         double[] PR = new double[] { 1 };
-        int[][] BD1 = new int[][] { new int[] { 0 }, new int[] { 0 }, new int[] { 0 }, new int[] { 0 } };
-        int[][] BD2 = new int[][] { new int[] { 0, 0, }, new int[] { 0, 0, }, new int[] { 0, 0, }, new int[] { 0, 0, } };
-        int[][] BD3 = new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } };
+        int[][] BD1 = new int[][] { new int[] { 0 }, new int[] { 0 }, new int[] { 0 }, new int[] { 0 }, new int[] { 0 } };
+        int[][] BD2 = new int[][] { new int[] { 0, 0, }, new int[] { 0, 0, }, new int[] { 0, 0, }, new int[] { 0, 0, }, new int[] { 0, 0, } };
+        int[][] BD3 = new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } };
         [Test]
         public void ChoiceShouldExposeOptions()
         {
@@ -44,7 +44,7 @@ namespace Matlabadin.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void BuffDuration_ShouldNotExceedStepsDuration()
         {
-            new Choice(Ability.CS, 3, PR, 3, true, new int[][] { new int[] { 0 }, new int[] { 0 }, new int[] { 7 }, new int[] { 0 } });
+            new Choice(Ability.CS, 3, PR, 3, false, new int[][] { new int[] { 0 }, new int[] { 0 }, new int[] { 0 }, new int[] { 7 }, new int[] { 0 } });
         }
         [Test]
         public void ActionShouldSuffixSSForWoGOnly()
@@ -104,18 +104,18 @@ namespace Matlabadin.Tests
         public void EqualityShouldIncludeBuffDuration()
         {
             Choice c = new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, BD3);
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 1, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 1, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 1, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 1, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 1, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 1, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 1, 0, 0, }, new int[] { 0, 0, 0, } }));
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 1, 0, }, new int[] { 0, 0, 0, } }));
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 1, }, new int[] { 0, 0, 0, } }));
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 1, 0, 0, } }));
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 1, 0, } }));
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 1, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 1, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 1, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 1, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 1, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 1, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 1, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 1, 0, 0, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 1, 0, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 1, }, new int[] { 0, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 1, 0, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 1, 0, } }));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 1, } }));
         }
         [Test]
         [ExpectedException(typeof(InvalidOperationException))]
@@ -142,12 +142,13 @@ namespace Matlabadin.Tests
         [Test]
         public void ConcatenateShouldAddBuffDurations()
         {
-            Choice cNothing = new Choice(Ability.Nothing, 3, new double[] { 1 }, 0, false, new int[][] { new int[] { 0 }, new int[] { 1 }, new int[] { 2 }, new int[] { 3 } });
+            Choice cNothing = new Choice(Ability.Nothing, 4, new double[] { 1 }, 0, false, new int[][] { new int[] { 0 }, new int[] { 1 }, new int[] { 2 }, new int[] { 3 }, new int[] { 4 }, });
             Choice c = cNothing.Concatenate(cNothing);
             Assert.AreEqual(0, c.buffDuration[0][0]);
             Assert.AreEqual(2, c.buffDuration[1][0]);
             Assert.AreEqual(4, c.buffDuration[2][0]);
             Assert.AreEqual(6, c.buffDuration[3][0]);
+            Assert.AreEqual(8, c.buffDuration[4][0]);
         }
         [Test]
         public void ConcatenateShouldSetHPBasedOnAbilityUsage()

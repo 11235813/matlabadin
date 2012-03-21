@@ -74,11 +74,11 @@ namespace Matlabadin.Tests
             pr[0] = 1;
             pr = mg.CalculateNextStateProbability(pr);
             Assert.AreEqual(1, pr.Sum());
-            Assert.AreEqual(1, pr[mg.lookup[GetState(gp, Ability.J, 9, 1)]]);
+            Assert.AreEqual(1, pr[mg.lookup[GetState(gp, Ability.J, 12, GetState(gp, Buff.GCD, 3, 1))]]);
             pr = mg.CalculateNextStateProbability(pr);
             Assert.AreEqual(1, pr[mg.lookup[GetState(gp, Ability.J, 0, 1)]]);
             pr = mg.CalculateNextStateProbability(pr);
-            Assert.AreEqual(1, pr[mg.lookup[GetState(gp, Ability.J, 9, 2)]]);
+            Assert.AreEqual(1, pr[mg.lookup[GetState(gp, Ability.J, 12, GetState(gp, Buff.GCD, 3, 2))]]);
         }
         [Test]
         public void CalculateNextStateProbability_ShouldDecay()
@@ -89,7 +89,7 @@ namespace Matlabadin.Tests
             pr[0] = 1;
             pr = mg.CalculateNextStateProbability(pr, 0.5);
             Assert.AreEqual(1, pr.Sum());
-            Assert.AreEqual(0.5, pr[mg.lookup[GetState(gp, Ability.J, 9, 1)]]);
+            Assert.AreEqual(0.5, pr[mg.lookup[GetState(gp, Ability.J, 12, GetState(gp, Buff.GCD, 3, 1))]]);
             Assert.AreEqual(0.5, pr[0]);
         }
         [Test]
@@ -98,7 +98,7 @@ namespace Matlabadin.Tests
             Int64GraphParameters gp = NoMiss("J");
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             double[] pr = mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance);
-            Assert.AreEqual(0.5, pr[mg.lookup[GetState(gp, Ability.J, 9, 5)]], Tolerance);
+            Assert.AreEqual(0.5, pr[mg.lookup[GetState(gp, Ability.J, 12, GetState(gp, Buff.GCD, 3, 5))]], Tolerance);
             Assert.AreEqual(0.5, pr[mg.lookup[GetState(gp, Ability.J, 0, 5)]], Tolerance);
         }
         [Test]
@@ -198,8 +198,8 @@ namespace Matlabadin.Tests
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(1d / 4.5, result.Action["CS"], Tolerance); // 1 per 4.5s
-            Assert.AreEqual(2d / (3 * 4.5), result.Action["J"], Tolerance); // CS & J clash - J gets delayed 1 GCD every 2nd cycle to 2 J per 3 CS
+            Assert.AreEqual(1d / 4.5, result.Action["CS"], Tolerance * 10); // 1 per 4.5s
+            Assert.AreEqual(2d / (3 * 4.5), result.Action["J"], Tolerance * 10); // CS & J clash - J gets delayed 1 GCD every 2nd cycle to 2 J per 3 CS
             Assert.AreEqual(5d / 13.5 / 3, result.Action["SotR"], Tolerance * 10); // 5 HP per 13.5s cycle; 3 HP per cast
         }
         [Test]

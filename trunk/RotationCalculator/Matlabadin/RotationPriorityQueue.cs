@@ -137,11 +137,10 @@ namespace Matlabadin
                 {
                     conditionalStrings.Add(String.Format("[HP>={0}]", numericSuffixString));
                 }
+                Ability ability = (Ability)Enum.Parse(typeof(Ability), abilityString);
                 List<Ability> conditionAbilityList;
                 bool hpConditionEncountered;
-                conditions.AddRange(ProcessConditions(conditionalStrings, out conditionAbilityList, out hpConditionEncountered));  //process conditionals
-
-                Ability ability = (Ability)Enum.Parse(typeof(Ability), abilityString);
+                conditions.AddRange(ProcessConditions(ability, conditionalStrings, out conditionAbilityList, out hpConditionEncountered));  //process conditionals
                 switch (ability) // Special ability-specific conditions go here
                 {
                     case Ability.SS:
@@ -163,8 +162,9 @@ namespace Matlabadin
                 if (!conditionAbilityList.Contains(ability))
                 {
                     // Ability must be off CD if no CD specified
-                    // Delayed casts are modelled by specifying a cooldown conditional (eg CS[cdCS<=0.5])
+                    // Delayed casts are modelled by in conditionals specifying a cooldown conditional (eg CS[cdCS<=0.5])
                     conditions.Add((gp, sm, state) => sm.CooldownRemaining(state, ability) == 0);
+                    conditions.Add((gp, sm, state) => !gp.AbilityOnGcd(ability) || sm.TimeRemaining(state, Buff.GCD) == 0);
                 }
                 // add to rotation
                 abilityQueue.Add(ability);
@@ -173,7 +173,7 @@ namespace Matlabadin
         }
 
         private IEnumerable<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>
-            ProcessConditions(List<string> conditionalStrings, out List<Ability> conditionAbilityList, out bool hpConditionEncountered)
+            ProcessConditions(Ability ability, List<string> conditionalStrings, out List<Ability> conditionAbilityList, out bool hpConditionEncountered)
         {
             hpConditionEncountered = false;
             conditionAbilityList = new List<Ability>();
@@ -194,7 +194,11 @@ namespace Matlabadin
                 else if (type == "cd")
                 {
                     Ability a = (Ability)Enum.Parse(typeof(Ability), conditional);
-                    getStateValue = (gp, sm, state) => sm.CooldownRemaining(state, a) * gp.StepDuration;
+                    getStateValue = (gp, sm, state) =>
+                        Math.Max(sm.CooldownRemaining(state, a),
+                            // Include GCD on self if applicable
+                            (a == ability && gp.AbilityOnGcd(ability)) ? sm.TimeRemaining(state, Buff.GCD) : 0
+                            ) * gp.StepDuration;
                     conditionAbilityList.Add(a);
                 }
                 else if (type == "buff")

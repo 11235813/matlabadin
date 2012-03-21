@@ -16,7 +16,7 @@ namespace Matlabadin
         {
             double[] abilityCooldowns = { 4.5, 6, 9, 9, }; // CS, J, AS, Cons
             // GC buff duration extended by 0.5s since the server takes time to apply the buff and it is active 4 GCDs after triggering
-            double[] buffDurations = { 30, 30, 30, 6, 6.5, }; // EF, SS, WB, SotRSB, GC
+            double[] buffDurations = { 1.5, 30, 30, 30, 6, 6.5, }; // GCD, EF, SS, WB, SotRSB, GC
             this.StepDuration = 1.5 / stepsPerGcd;
             this.StepsPerGcd = stepsPerGcd;
             this.abilitySteps = abilityCooldowns.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();
@@ -28,6 +28,19 @@ namespace Matlabadin
         public double StepDuration { get; private set; }
         public int StepsPerGcd { get; private set; }
         public double GCProcRate { get { return 0.4; } }
+        public bool AbilityOnGcd(Ability ability)
+        {
+            return ability == Ability.HotR || ability >= Ability.CooldownIndicator;
+        }
+        public bool AbilityTriggersGcd(Ability ability)
+        {
+            return AbilityOnGcd(ability);
+        }
+        public int GcdDurationTriggeredByAbilityInSteps(Ability ability)
+        {
+            if (AbilityTriggersGcd(ability)) return this.BuffDurationInSteps(Buff.GCD);
+            else return 0;
+        }
         public int AbilityCooldownInSteps(Ability ability)
         {
             if (ability == Ability.HotR) return AbilityCooldownInSteps(Ability.CS);
@@ -43,16 +56,11 @@ namespace Matlabadin
         {
             switch (ability)
             {
-                case Ability.WoG:
-                case Ability.SotR:
-                    // Off-GCD
-                    return 0;
                 case Ability.Nothing:
-                    // only a single step advance
-                    return 1; 
+                    // single step advance
+                    return 1;
                 default:
-                    // everything else (we would realistically use while tanking) is 1 GCD duration
-                    return this.StepsPerGcd;
+                    return 0;
             }
         }
         public int BuffDurationInSteps(Buff buff)

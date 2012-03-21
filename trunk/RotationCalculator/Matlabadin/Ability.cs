@@ -13,7 +13,7 @@ namespace Matlabadin
         /// <summary>
         /// Special case ability: do nothing
         /// </summary>
-        Nothing,
+        Nothing, // modelled as an off-GCD 1 step cast time ability
         SotR,
         WoG,
         EF,

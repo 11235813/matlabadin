@@ -138,6 +138,7 @@ namespace Matlabadin
             {
                 stream.WriteLine("{0},{1}", key, result.Action[key]);
             }
+            stream.WriteLine("Uptime_GCD,{0}", result.BuffUptime[(int)Buff.GCD]);
             stream.WriteLine("Uptime_SacredShield,{0}", result.BuffUptime[(int)Buff.SS]);
             stream.WriteLine("Uptime_EternalFlame,{0}", result.BuffUptime[(int)Buff.EF]);
             stream.WriteLine("Uptime_WeakenedBlows,{0}", result.BuffUptime[(int)Buff.WB]);

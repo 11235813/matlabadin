@@ -128,10 +128,10 @@ namespace Matlabadin
                 sumtpr += tpr;
                 double currentPr;
                 if (!cps.TryGetValue(c.Action, out currentPr)) currentPr = 0;
-                //if (c.Ability != Ability.Nothing)
-                //{
+                if (c.Ability != Ability.Nothing)
+                {
                     cps[c.Action] = currentPr + pr[i];
-                //}
+                }
                 // aggregate buff durations
                 for (int k = 0; k < c.pr.Length; k++) // for each state transition
                 {

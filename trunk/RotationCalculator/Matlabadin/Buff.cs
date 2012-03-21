@@ -11,6 +11,10 @@ namespace Matlabadin
     public enum Buff
     {
         /// <summary>
+        /// Global Cooldown tracked as a buff
+        /// </summary>
+        GCD,
+        /// <summary>
         /// Sacred Shield
         /// </summary>
         SS,
@@ -35,6 +39,7 @@ namespace Matlabadin
         // AW,
         // TODO: EF, Holy Avenger & Selfless Healer require stacks as well as a duration - these require extra state storage (similar to Holy Power).
         // HA, SH
+
         Count,
         UptimeTrackedBuffs = SotRSB + 1,
     }

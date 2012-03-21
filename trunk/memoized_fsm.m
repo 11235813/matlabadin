@@ -1,9 +1,10 @@
-function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime] = memoized_fsm(rotation, mehit, rhit)
+function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = memoized_fsm(rotation, mehit, rhit)
     global fsm_cache_actionPr;
     global fsm_cache_efUptime;
     global fsm_cache_ssUptime;
     global fsm_cache_wbUptime;
     global fsm_cache_sbUptime;
+    global fsm_cache_gcdUptime;
     global fsm_cache_metadata;
 	% Check that we're not caching outdated mechanics
     if exist('RotationCalculator') ~= 7
@@ -19,6 +20,7 @@ function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime] = memoize
 		fsm_cache_efUptime = {};
         fsm_cache_wbUptime = {};
 		fsm_cache_sbUptime = {};
+        fsm_cache_gcdUptime= {};
 	end
 	
     rotationKey = rotation;
@@ -47,12 +49,13 @@ function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime] = memoize
         efUptime = fsm_cache_efUptime.(rotationKey).(optionsKey);
         wbUptime = fsm_cache_wbUptime.(rotationKey).(optionsKey);
         sbUptime = fsm_cache_sbUptime.(rotationKey).(optionsKey);
+        gcdUptime = fsm_cache_gcdUptime.(rotationKey).(optionsKey);
         return;
     end
     fileCell = fsm_gen(rotation, mehit, rhit);
     filename = fileCell{1};
     % read from the data file
-    [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime] = load_fsm_csv(filename);
+    [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = load_fsm_csv(filename);
     % TODO: sanity check that file params match our args
     fsm_cache_actionPr.(rotationKey).(optionsKey) = actionPr;
     fsm_cache_metadata.(rotationKey).(optionsKey) = metadata;
@@ -60,8 +63,9 @@ function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime] = memoize
     fsm_cache_efUptime.(rotationKey).(optionsKey) = efUptime;
     fsm_cache_wbUptime.(rotationKey).(optionsKey) = wbUptime;
     fsm_cache_sbUptime.(rotationKey).(optionsKey) = sbUptime;
+    fsm_cache_gcdUptime.(rotationKey).(optionsKey) = gcdUptime;
 end
-function [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime] = load_fsm_csv(filename)
+function [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = load_fsm_csv(filename)
     addpath .\helper_func\
 	fid = fopen(filename, 'rt');
 	i = 1;
@@ -80,6 +84,8 @@ function [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime] = load_fsm
             wbUptime = linePr;
         elseif strcmp(lineAction, 'Uptime_SotRShieldBlock')
             sbUptime = linePr;
+        elseif strcmp(lineAction, 'Uptime_GCD')
+            gcdUptime = linePr;
 		elseif length(lineAction) > 6 && strcmp('Stats_', lineAction(1:6))
 			metadata.(lineAction) = lineTxtPr;
 		elseif length(lineAction) > 6 && strcmp('Param_', lineAction(1:6))

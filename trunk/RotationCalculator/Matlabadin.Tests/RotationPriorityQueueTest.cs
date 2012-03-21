@@ -34,6 +34,36 @@ namespace Matlabadin.Tests
             doTest("WoG");
         }
         [Test]
+        public void ActionToTake_ShouldNotCastAbilitiesOnGcdBeforeGcdComplete()
+        {
+            Action<string, Ability> doTest = (rotation, expected) =>
+            {
+                Int64GraphParameters gp = NoHitExpertise(rotation);
+                DoTest(gp, gp.SetTimeRemaining(gp.SetHP(0, 3), Buff.GCD, 1), expected);
+            };
+            doTest("CS", Ability.Nothing);
+            doTest("Cons", Ability.Nothing);
+            doTest("AS", Ability.Nothing);
+            doTest("J", Ability.Nothing);
+            doTest("SotR", Ability.SotR);
+            doTest("SS", Ability.SS);
+            doTest("EF", Ability.EF);
+            doTest("WoG", Ability.WoG);
+        }
+        [Test]
+        public void DelayedCastShouldWaitForGcdCompletion()
+        {
+            Action<string, Ability> doTest = (rotation, expected) =>
+            {
+                Int64GraphParameters gp = NoHitExpertise(rotation);
+                DoTest(gp, gp.SetTimeRemaining(gp.SetHP(0, 3), Buff.GCD, 2), expected);
+            };
+            doTest("CS", Ability.Nothing);
+            doTest("CS[cdCS<=0.5]", Ability.Nothing);
+            doTest("CS[cdCS<=1]", Ability.CS);
+            doTest("CS[cdCS<=1.5]", Ability.CS);
+        }
+        [Test]
         public void SotRShouldRequire3HP()
         {
             DoTest("SotR", 0, Ability.Nothing);

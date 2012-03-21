@@ -20,6 +20,51 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0.5, gp.StepDuration);
         }
         [Test]
+        public void AbilityTriggersGCD_ShouldTriggerForCDAbilities()
+        {
+            GraphParameters<ulong> gp = new GraphParameters<ulong>(AllAbilityRotation, 3, 1, 1);
+            Assert.IsFalse(gp.AbilityTriggersGcd(Ability.Nothing));
+            Assert.IsFalse(gp.AbilityTriggersGcd(Ability.SotR));
+            Assert.IsFalse(gp.AbilityTriggersGcd(Ability.WoG));
+            Assert.IsFalse(gp.AbilityTriggersGcd(Ability.EF));
+            Assert.IsFalse(gp.AbilityTriggersGcd(Ability.SS));
+            Assert.IsTrue(gp.AbilityTriggersGcd(Ability.HotR));
+            Assert.IsTrue(gp.AbilityTriggersGcd(Ability.CS));
+            Assert.IsTrue(gp.AbilityTriggersGcd(Ability.J));
+            Assert.IsTrue(gp.AbilityTriggersGcd(Ability.AS));
+            Assert.IsTrue(gp.AbilityTriggersGcd(Ability.Cons));
+        }
+        [Test]
+        public void AbilityOnGCD_ShouldBeTrueForCDAbilities()
+        {
+            GraphParameters<ulong> gp = new GraphParameters<ulong>(AllAbilityRotation, 3, 1, 1);
+            Assert.IsFalse(gp.AbilityOnGcd(Ability.Nothing));
+            Assert.IsFalse(gp.AbilityOnGcd(Ability.SotR));
+            Assert.IsFalse(gp.AbilityOnGcd(Ability.WoG));
+            Assert.IsFalse(gp.AbilityOnGcd(Ability.EF));
+            Assert.IsFalse(gp.AbilityOnGcd(Ability.SS));
+            Assert.IsTrue(gp.AbilityOnGcd(Ability.HotR));
+            Assert.IsTrue(gp.AbilityOnGcd(Ability.CS));
+            Assert.IsTrue(gp.AbilityOnGcd(Ability.J));
+            Assert.IsTrue(gp.AbilityOnGcd(Ability.AS));
+            Assert.IsTrue(gp.AbilityOnGcd(Ability.Cons));
+        }
+        [Test]
+        public void GcdDurationTriggeredByAbilityInSteps_ShouldBeGCDForGCDAbilities()
+        {
+            GraphParameters<ulong> gp = new GraphParameters<ulong>(AllAbilityRotation, 3, 1, 1);
+            Assert.AreEqual(0, gp.GcdDurationTriggeredByAbilityInSteps(Ability.Nothing));
+            Assert.AreEqual(0, gp.GcdDurationTriggeredByAbilityInSteps(Ability.SotR));
+            Assert.AreEqual(0, gp.GcdDurationTriggeredByAbilityInSteps(Ability.WoG));
+            Assert.AreEqual(0, gp.GcdDurationTriggeredByAbilityInSteps(Ability.EF));
+            Assert.AreEqual(0, gp.GcdDurationTriggeredByAbilityInSteps(Ability.SS));
+            Assert.AreEqual(gp.StepsPerGcd, gp.GcdDurationTriggeredByAbilityInSteps(Ability.HotR));
+            Assert.AreEqual(gp.StepsPerGcd, gp.GcdDurationTriggeredByAbilityInSteps(Ability.CS));
+            Assert.AreEqual(gp.StepsPerGcd, gp.GcdDurationTriggeredByAbilityInSteps(Ability.J));
+            Assert.AreEqual(gp.StepsPerGcd, gp.GcdDurationTriggeredByAbilityInSteps(Ability.AS));
+            Assert.AreEqual(gp.StepsPerGcd, gp.GcdDurationTriggeredByAbilityInSteps(Ability.Cons));
+        }
+        [Test]
         public void AbilityCooldownsShouldMatchMoPTalentCalculator()
         {
             Int64GraphParameters target = NoHitExpertise("");
@@ -62,7 +107,7 @@ namespace Matlabadin.Tests
             }
         }
         [Test]
-        public void AbilityCastTimeInStepsShouldBe1GCD()
+        public void AbilityCastTimeInStepsShouldBe0()
         {
             foreach (Ability a in new Ability[] {
                 Ability.HotR,
@@ -74,11 +119,11 @@ namespace Matlabadin.Tests
                 Ability.EF,
             })
             {
-                Assert.AreEqual(GP.StepsPerGcd, GP.AbilityCastTimeInSteps(a));
+                Assert.AreEqual(0, GP.AbilityCastTimeInSteps(a));
             }
         }
         [Test]
-        public void AbilityCastTimeInSteps_Nothing_ShouldBeSingleStep()
+        public void AbilityCastTimeInSteps_Nothing_ShouldBeOneStep()
         {
             Assert.AreEqual(1, GP.AbilityCastTimeInSteps(Ability.Nothing));
         }
