@@ -31,23 +31,31 @@ namespace Matlabadin
             this.pr = pr;
         }
         // Output related
-        public string Action
+        public virtual string[] Action
         {
             get
             {
                 if (action == null)
                 {
-                    action = ability.ToString();
-                    if (hp < 3 && (ability == Ability.WoG || ability == Ability.EF)) {
-                        action += hp.ToString();
+                    if (ability == Ability.Nothing)
+                    {
+                        action = new string[0];
                     }
-                    if (wogss) action += "(SS)";
+                    else
+                    {
+                        action = new string[] { ability.ToString() };
+                        if (hp < 3 && (ability == Ability.WoG || ability == Ability.EF))
+                        {
+                            action[0] += hp.ToString();
+                        }
+                        if (wogss) action[0] += "(SS)";
+                    }
                 }
                 return action;
             }
         }
         public Ability Ability { get { return this.ability; } }
-        private string action;
+        private string[] action;
         private readonly Ability ability;
         private readonly bool wogss;
         private readonly int hp;
@@ -68,7 +76,8 @@ namespace Matlabadin
                 && stepsDuration == c.stepsDuration
                 && buffDuration.Length == c.buffDuration.Length
                 && buffDuration.Zip(c.buffDuration, (a, b) => a.SequenceEqual(b)).All(e => e) // jagged arrays match
-                && pr.SequenceEqual(c.pr);
+                && pr.SequenceEqual(c.pr)
+                && Action.SequenceEqual(c.Action);
         }
         public override int GetHashCode()
         {
@@ -80,6 +89,20 @@ namespace Matlabadin
             hash += (int)ability << (7 + 9 + 3 + 1);
             return hash;
         }
+        private Choice(Choice first, Choice second)
+        {
+            if (first.pr.Length != 1)
+            {
+                throw new InvalidOperationException("Cannot concatenate to a choice that has multiple next states");
+            }
+            this.ability = first.ability == Ability.Nothing ? second.ability : first.ability;
+            this.stepsDuration = first.stepsDuration + second.stepsDuration;
+            this.pr = second.pr;
+            this.hp = first.hp;
+            // Add the buff duration of the single transition to the choice buff durations
+            this.buffDuration = first.buffDuration.Zip(second.buffDuration, (singleElement, duration) => duration.Select(d => d + singleElement[0]).ToArray()).ToArray();
+            this.action = first.Action.Concat(second.Action).ToArray();
+        }
         /// <summary>
         /// Peforms the current choice, then the given choice
         /// </summary>
@@ -87,23 +110,7 @@ namespace Matlabadin
         /// <returns></returns>
         public Choice Concatenate(Choice choice)
         {
-            if (this.Ability != Ability.Nothing)
-            {
-                throw new InvalidOperationException("Can only concatenate to an Ability.Nothing state");
-            }
-            if (this.pr.Length != 1)
-            {
-                throw new InvalidOperationException("Cannot concatenate to a choice that has multiple next states");
-            }
-            return new Choice(
-                choice.Ability,
-                this.stepsDuration + choice.stepsDuration,
-                choice.pr,
-                choice.hp,
-                choice.wogss,
-                // Add the buff durations of the single transition to the choice buff durations
-                buffDuration.Zip(choice.buffDuration, (singleElement, duration) => duration.Select(d => d + singleElement[0]).ToArray()).ToArray()
-                );
+            return new Choice(this, choice);
         }
     }
 }

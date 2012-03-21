@@ -373,24 +373,42 @@ namespace Matlabadin.Tests
             Assert.AreEqual(r.ActionToTake(gp, gp, 0), StateTransition<ulong>.CalculateTransition(gp, gp, 0).Choice.Ability);
         }
         [Test]
-        public void CalculateTransition_ShouldConcatenateConsecutiveNothingStates()
+        public void CalculateTransition_ShouldConcatentateSingleTransitionStates()
         {
-            var r = new RotationPriorityQueue<ulong>("J");
-            var gp = new Int64GraphParameters(r, 3, 1, 1);
-            Choice c = StateTransition<ulong>.CalculateTransition(gp, gp, GetState(gp, Ability.J, 4)).Choice;
-            Assert.AreEqual(Ability.Nothing, c.Ability);
-            Assert.AreEqual(4, c.stepsDuration);
+            var r = new RotationPriorityQueue<ulong>("WoG>Cons>CS");
+            var gp = new Int64GraphParameters(r, 3, 0.9, 0.9);
+            Choice c = StateTransition<ulong>.CalculateTransition(gp, gp, 3).Choice;
+            Assert.AreEqual("WoG", c.Action[0]);
+            Assert.AreEqual("Cons", c.Action[1]);
+            Assert.AreEqual("CS", c.Action[2]);
+            Assert.AreEqual(3, c.stepsDuration); // WoG->Cons->CS as a single transition
         }
         [Test]
-        public void CalculateTransition_ShouldNotConcatenateLoop()
+        public void CalculateTransition_ShouldConcatentateLoopToSelf()
         {
-            var r = new RotationPriorityQueue<ulong>("");
+            var r = new RotationPriorityQueue<ulong>("Cons");
+            var gp = new Int64GraphParameters(r, 3, 0.9, 0.9);
+            Choice c = StateTransition<ulong>.CalculateTransition(gp, gp, 3).Choice;
+            Assert.AreEqual("Cons", c.Action[0]);
+            Assert.AreEqual(6 * gp.StepsPerGcd, c.stepsDuration); // Cons every 6 GCDs
+        }
+        [Test]
+        public void CalculateTransition_ShouldConcatentateTillFirstLoop()
+        {
+            var r = new RotationPriorityQueue<ulong>("WoG>J");
             var gp = new Int64GraphParameters(r, 3, 1, 1);
-            var st = StateTransition<ulong>.CalculateTransition(gp, gp, GetState(gp, Buff.GC, 4));
-            Assert.AreEqual(Ability.Nothing, st.Choice.Ability);
-            // Should stop when we get to the zero state the first time
-            Assert.AreEqual(4, st.Choice.stepsDuration);
-            Assert.AreEqual(0UL, st.NextStates[0]);
+            Choice c = StateTransition<ulong>.CalculateTransition(gp, gp, 5).Choice;
+            Assert.AreEqual(1, c.Action.Length);
+            Assert.AreEqual("WoG", c.Action[0]); // We cast WoG @ 5HP then are inside a J-J-J-WoG cycle (0-3 HP) so we don't concatenate any further
+            Assert.AreEqual(0, c.stepsDuration);
+
+            r = new RotationPriorityQueue<ulong>("WoG5>J");
+            gp = new Int64GraphParameters(r, 3, 1, 1);
+            c = StateTransition<ulong>.CalculateTransition(gp, gp, 0).Choice;
+            Assert.AreEqual(2, c.Action.Length);
+            Assert.AreEqual("J", c.Action[0]);
+            Assert.AreEqual("J", c.Action[1]); // We cast J twice then enter a J-J-J-WoG5 cycle (2-5 HP) so we don't concatenate any further
+            Assert.AreEqual(4 * gp.StepsPerGcd, c.stepsDuration); // 6s CD = 4 GCDs cast J @ 0 and again @ 6s then enter the cycle
         }
         [Test]
         public void Choice_ShouldSetBuffUptimeBasedOnInitialStateAndPostAbilityDurations()
@@ -416,9 +434,9 @@ namespace Matlabadin.Tests
         [Test]
         public void Choice_wogss_ShouldBeSetOnlyForWog()
         {
-            Assert.IsTrue(new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SS, 1, 1), Ability.WoG).Choice.Action.Contains("(SS)"));
-            Assert.IsFalse(new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SS, 0, 1), Ability.WoG).Choice.Action.Contains("(SS)"));
-            Assert.IsFalse(new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SS, 1, 1), Ability.CS).Choice.Action.Contains("(SS)"));
+            Assert.IsTrue(new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SS, 1, 1), Ability.WoG).Choice.Action[0].Contains("(SS)"));
+            Assert.IsFalse(new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SS, 0, 1), Ability.WoG).Choice.Action[0].Contains("(SS)"));
+            Assert.IsFalse(new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SS, 1, 1), Ability.CS).Choice.Action[0].Contains("(SS)"));
         }
         [Test]
         public void Choice_BuffDurationShouldNotExceedStepDuration()

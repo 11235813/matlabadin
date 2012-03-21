@@ -30,9 +30,8 @@ namespace Matlabadin.Tests
         [Test]
         public void ActionShouldBeAbility()
         {
-            Assert.AreEqual("CS", new Choice(Ability.CS, 3, PR, 3, false, BD1).Action);
-            Assert.AreEqual("J", new Choice(Ability.J, 3, PR, 3, false, BD1).Action);
-            Assert.AreEqual("Nothing", new Choice(Ability.Nothing, 3, PR, 3, false, BD1).Action);
+            Assert.AreEqual("CS", new Choice(Ability.CS, 3, PR, 3, false, BD1).Action[0]);
+            Assert.AreEqual("J", new Choice(Ability.J, 3, PR, 3, false, BD1).Action[0]);
         }
         [Test]
         [ExpectedException(typeof(ArgumentException))]
@@ -49,26 +48,26 @@ namespace Matlabadin.Tests
         [Test]
         public void ActionShouldSuffixSSForWoGOnly()
         {
-            Assert.AreEqual("CS", new Choice(Ability.CS, 3, PR, 3, false, BD1).Action);
-            Assert.AreEqual("WoG", new Choice(Ability.WoG, 3, PR, 3, false, BD1).Action);
-            Assert.AreEqual("WoG(SS)", new Choice(Ability.WoG, 3, PR, 3, true, BD1).Action);
-            Assert.AreEqual("WoG2(SS)", new Choice(Ability.WoG, 3, PR, 2, true, BD1).Action);
+            Assert.AreEqual("CS", new Choice(Ability.CS, 3, PR, 3, false, BD1).Action[0]);
+            Assert.AreEqual("WoG", new Choice(Ability.WoG, 3, PR, 3, false, BD1).Action[0]);
+            Assert.AreEqual("WoG(SS)", new Choice(Ability.WoG, 3, PR, 3, true, BD1).Action[0]);
+            Assert.AreEqual("WoG2(SS)", new Choice(Ability.WoG, 3, PR, 2, true, BD1).Action[0]);
         }
         [Test]
         public void ActionShouldSuffixHPForWoGAndEFWhenLessThan3()
         {
-            Assert.AreEqual("EF0", new Choice(Ability.EF, 3, PR, 0, false, BD1).Action);
-            Assert.AreEqual("EF1", new Choice(Ability.EF, 3, PR, 1, false, BD1).Action);
-            Assert.AreEqual("EF2", new Choice(Ability.EF, 3, PR, 2, false, BD1).Action);
-            Assert.AreEqual("EF", new Choice(Ability.EF, 3, PR, 3, false, BD1).Action);
-            Assert.AreEqual("EF", new Choice(Ability.EF, 3, PR, 4, false, BD1).Action);
-            Assert.AreEqual("EF", new Choice(Ability.EF, 3, PR, 5, false, BD1).Action);
-            Assert.AreEqual("WoG0", new Choice(Ability.WoG, 3, PR, 0, false, BD1).Action);
-            Assert.AreEqual("WoG1", new Choice(Ability.WoG, 3, PR, 1, false, BD1).Action);
-            Assert.AreEqual("WoG2", new Choice(Ability.WoG, 3, PR, 2, false, BD1).Action);
-            Assert.AreEqual("WoG", new Choice(Ability.WoG, 3, PR, 3, false, BD1).Action);
-            Assert.AreEqual("WoG", new Choice(Ability.WoG, 3, PR, 4, false, BD1).Action);
-            Assert.AreEqual("WoG", new Choice(Ability.WoG, 3, PR, 5, false, BD1).Action);
+            Assert.AreEqual("EF0", new Choice(Ability.EF, 3, PR, 0, false, BD1).Action[0]);
+            Assert.AreEqual("EF1", new Choice(Ability.EF, 3, PR, 1, false, BD1).Action[0]);
+            Assert.AreEqual("EF2", new Choice(Ability.EF, 3, PR, 2, false, BD1).Action[0]);
+            Assert.AreEqual("EF", new Choice(Ability.EF, 3, PR, 3, false, BD1).Action[0]);
+            Assert.AreEqual("EF", new Choice(Ability.EF, 3, PR, 4, false, BD1).Action[0]);
+            Assert.AreEqual("EF", new Choice(Ability.EF, 3, PR, 5, false, BD1).Action[0]);
+            Assert.AreEqual("WoG0", new Choice(Ability.WoG, 3, PR, 0, false, BD1).Action[0]);
+            Assert.AreEqual("WoG1", new Choice(Ability.WoG, 3, PR, 1, false, BD1).Action[0]);
+            Assert.AreEqual("WoG2", new Choice(Ability.WoG, 3, PR, 2, false, BD1).Action[0]);
+            Assert.AreEqual("WoG", new Choice(Ability.WoG, 3, PR, 3, false, BD1).Action[0]);
+            Assert.AreEqual("WoG", new Choice(Ability.WoG, 3, PR, 4, false, BD1).Action[0]);
+            Assert.AreEqual("WoG", new Choice(Ability.WoG, 3, PR, 5, false, BD1).Action[0]);
         }
         [Test]
         public void ChoiceDefineEqualityAndHashCode()
@@ -118,12 +117,31 @@ namespace Matlabadin.Tests
             Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, new int[][] { new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 0, }, new int[] { 0, 0, 1, } }));
         }
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void ConcatenateShouldNotAllowConcatenationToActualAbilities()
+        public void Concatenate_ShouldUseFirstAbilityUnlessNothing()
         {
+            Choice cCons = new Choice(Ability.Cons, 3, PR, 0, false, BD1);
             Choice cCS = new Choice(Ability.CS, 3, PR, 0, false, BD1);
             Choice cNothing = new Choice(Ability.Nothing, 3, PR, 0, false, BD1);
-            cCS.Concatenate(cNothing);
+            Assert.AreEqual(Ability.Cons, cNothing.Concatenate(cCons).Ability);
+            Assert.AreEqual(Ability.Cons, cCons.Concatenate(cNothing).Ability);
+            Assert.AreEqual(Ability.Cons, cCons.Concatenate(cCS).Ability);
+        }
+        [Test]
+        public void Concatenate_ShouldAppendActions()
+        {
+            Choice cCons = new Choice(Ability.Cons, 3, PR, 0, false, BD1);
+            Choice cNothing = new Choice(Ability.Nothing, 3, PR, 0, false, BD1);
+            Choice cCS = new Choice(Ability.CS, 3, PR, 0, false, BD1);
+            Choice c = cCons.Concatenate(cNothing).Concatenate(cCS);
+            Assert.AreEqual("Cons", c.Action[0]);
+            Assert.AreEqual("CS", c.Action[1]);
+        }
+        [Test]
+        public void NothingShouldHaveNoAction()
+        {
+            Choice cNothing = new Choice(Ability.Nothing, 3, PR, 0, false, BD1);
+            Assert.IsNotNull(cNothing.Action);
+            Assert.AreEqual(0, cNothing.Action.Length);
         }
         [Test]
         [ExpectedException(typeof(InvalidOperationException))]
@@ -157,7 +175,7 @@ namespace Matlabadin.Tests
             Choice c = cNothing.Concatenate(
                 new Choice(Ability.WoG, 0, new double[] { 1 }, 1, false, BD1));
             // Test data only possible if we introduce HP decay modelling which is unlikely
-            Assert.IsTrue(c.Action.Contains("1"));
+            Assert.IsTrue(c.Action[0].Contains("1"));
         }
         [Test]
         public void ConcatenateShouldSetPrBasedOnContatenatedChoice()
