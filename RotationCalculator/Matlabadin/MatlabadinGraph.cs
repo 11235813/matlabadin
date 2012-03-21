@@ -126,11 +126,11 @@ namespace Matlabadin
                 double t = c.stepsDuration * GraphParameters.StepDuration;
                 double tpr = t * pr[i];
                 sumtpr += tpr;
-                double currentPr;
-                if (!cps.TryGetValue(c.Action, out currentPr)) currentPr = 0;
-                if (c.Ability != Ability.Nothing)
+                foreach (string action in c.Action)
                 {
-                    cps[c.Action] = currentPr + pr[i];
+                    double currentPr;
+                    if (!cps.TryGetValue(action, out currentPr)) currentPr = 0;
+                    cps[action] = currentPr + pr[i];
                 }
                 // aggregate buff durations
                 for (int k = 0; k < c.pr.Length; k++) // for each state transition
@@ -144,6 +144,7 @@ namespace Matlabadin
                     }
                 }
             }
+            cps.Remove("Nothing"); // Nothing casts are not a meaningful measure of anything
             return new ActionSummary()
             {
                 Action = cps.ToDictionary(kvp => kvp.Key, kvp => kvp.Value / sumtpr),

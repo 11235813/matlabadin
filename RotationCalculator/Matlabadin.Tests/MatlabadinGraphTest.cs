@@ -46,24 +46,14 @@ namespace Matlabadin.Tests
             Int64GraphParameters gp = NoMiss("J");
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             SanityCheckGraph(mg);
-            // 0 HP
-            // -> 1 HP J
-            // -> 1 HP Nothing
-            // -> 2 HP J
-            // -> 2 HP Nothing
-            // -> 3 HP J
-            // -> 3 HP Nothing
-            // -> 4 HP J
-            // -> 4 HP Nothing
-            // -> 5 HP J
-            // -> 5 HP Nothing
-            // = 11 states
-            Assert.AreEqual(11, mg.index.Length);
+            // 0 HP -> J @ 5 HP cycle
+            // J @ 5 HP -> J @ 5 HP 
+            Assert.AreEqual(2, mg.index.Length);
 
             gp = NoMiss("Cons");
             mg = new MatlabadinGraph<ulong>(gp, gp);
             SanityCheckGraph(mg);
-            Assert.AreEqual(2, mg.index.Length); // Cons; Nothing
+            Assert.AreEqual(1, mg.index.Length); // Cons cycle
         }
         [Test]
         public void CalculateNextStateProbability_ShouldAdvanceStateProbabilitiesByOneState()
@@ -74,11 +64,10 @@ namespace Matlabadin.Tests
             pr[0] = 1;
             pr = mg.CalculateNextStateProbability(pr);
             Assert.AreEqual(1, pr.Sum());
-            Assert.AreEqual(1, pr[mg.lookup[GetState(gp, Ability.J, 12, GetState(gp, Buff.GCD, 3, 1))]]);
+            Assert.AreEqual(1, pr[1]); // 5HP J cycle
             pr = mg.CalculateNextStateProbability(pr);
-            Assert.AreEqual(1, pr[mg.lookup[GetState(gp, Ability.J, 0, 1)]]);
-            pr = mg.CalculateNextStateProbability(pr);
-            Assert.AreEqual(1, pr[mg.lookup[GetState(gp, Ability.J, 12, GetState(gp, Buff.GCD, 3, 2))]]);
+            Assert.AreEqual(1, pr.Sum());
+            Assert.AreEqual(1, pr[1]); // 5HP J cycle
         }
         [Test]
         public void CalculateNextStateProbability_ShouldDecay()
@@ -89,13 +78,26 @@ namespace Matlabadin.Tests
             pr[0] = 1;
             pr = mg.CalculateNextStateProbability(pr, 0.5);
             Assert.AreEqual(1, pr.Sum());
-            Assert.AreEqual(0.5, pr[mg.lookup[GetState(gp, Ability.J, 12, GetState(gp, Buff.GCD, 3, 1))]]);
+            Assert.AreEqual(0.5, pr[1]);
             Assert.AreEqual(0.5, pr[0]);
         }
-        [Test]
-        public void ConvergeStateProbability_CSShouldConvergeTo50_50With5HP()
+        //[Test]
+        //[Ignore]
+        // Test no longer tests what it was intended to test
+        // This test is a decay convergence test to ensure cycles such as A->B->A
+        // with an initial state or pr(A) = 1, pr(B) = 0
+        // actually converge to something and don't bounce between pr(A) = 1, pr(B) = 0 & pr(A) = 0, pr(B) = 1.
+        // Since the graph cycle compression feature has been added, the two final states look like:
+        // HP=5, cdJ=0 => HP=5, cdJ=0; action=J
+        // HP=5, cdJ=12 => HP=5, cdJ=12; action=J
+        // instead of 
+        // HP=5, cdJ=0 => HP=5, cdJ=12; action=J
+        // HP=5, cdJ=12 => HP=5, cdJ=0; action=Nothing
+        // which means we need new test data & I currently can't think of a simple rotation that will
+        // generate a graph of the appropriate shape
+        public void ConvergeStateProbability_JShouldConvergeTo50_50With5HP()
         {
-            Int64GraphParameters gp = NoMiss("J");
+            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<ulong>("J"), 3, 1, 1);
             MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
             double[] pr = mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance);
             Assert.AreEqual(0.5, pr[mg.lookup[GetState(gp, Ability.J, 12, GetState(gp, Buff.GCD, 3, 5))]], Tolerance);

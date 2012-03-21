@@ -46,28 +46,42 @@ namespace Matlabadin
             TState state)
         {
             StateTransition<TState> transition = new StateTransition<TState>(gp, sm, state);
-            // Coalesse consecutive Nothing->Nothing transitions
+            // Coalesse consecutive single-choice transitions
             List<TState> concatenatedTransitions = null;
-            while (transition.Choice.Ability == Ability.Nothing
-                && transition.NextStates.Length == 1
-                && gp.Rotation.ActionToTake(gp, sm, transition.NextStates[0]) == Ability.Nothing // we doing nothing in the next state
-                ) 
+            List<Choice> concatenatedChoices = null;
+            while (transition.NextStates.Length == 1)
             {
                 if (concatenatedTransitions == null)
                 {
                     concatenatedTransitions = new List<TState>();
-                    concatenatedTransitions.Add(transition.StateInitial);
-                    concatenatedTransitions.Add(transition.NextStates[0]);
+                    concatenatedChoices = new List<Choice>();
                 }
-                StateTransition<TState> nextTransition = new StateTransition<TState>(gp, sm, transition.NextStates[0]);
-                if (concatenatedTransitions.Contains(nextTransition.NextStates[0]))
+                // A->B->C->A should convert to an A->A transition
+                if (transition.NextStates[0].Equals(transition.StateInitial))
                 {
-                    // prevent infinite looping on degenerate rotations such as never casting anything
-                    break;
+                    return transition;
                 }
+                // A->B->C->B should convert to an A->B transition
+                // NOTE: this operation can break the graph up into subgraphs. Consider:
+                // A->B->C->A, D->A, E->B
+                // This will be broken up into D->A->A, E->B->B
+                // This behaviour is acceptable since a) cycles of single transitions are
+                // pr sinks and b) A->A & B->B are equivalent from an action aggregation
+                // perspective.
+                for (int i = 0; i < concatenatedTransitions.Count; i++)
+                {
+                    if (transition.NextStates[0].Equals(concatenatedTransitions[i]))
+                    {
+                        // roll back our concatenation to the start of the cycle we just detected
+                        transition.Choice = concatenatedChoices[i];
+                        return transition;
+                    }
+                }
+                concatenatedTransitions.Add(transition.NextStates[0]);
+                concatenatedChoices.Add(transition.Choice);
+                StateTransition<TState> nextTransition = new StateTransition<TState>(gp, sm, transition.NextStates[0]);
                 transition.Choice = transition.Choice.Concatenate(nextTransition.Choice);
                 transition.NextStates = nextTransition.NextStates;
-                concatenatedTransitions.Add(transition.NextStates[0]);
             }
             return transition;
         }
