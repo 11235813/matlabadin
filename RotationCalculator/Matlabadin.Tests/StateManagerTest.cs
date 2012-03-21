@@ -43,7 +43,7 @@ namespace Matlabadin.Tests
             for (int i = 0; i < (int)Buff.Count; i++)
             {
                 Buff b = (Buff)i;
-                for (int j = 0; j <= 5; j++)
+                for (int j = 0; j <= GP.BuffDurationInSteps(b); j++)
                 {
                     Assert.AreEqual(j, StateManager.TimeRemaining(StateManager.SetTimeRemaining(StateManager.InitialState(), b, j), b));
                 }

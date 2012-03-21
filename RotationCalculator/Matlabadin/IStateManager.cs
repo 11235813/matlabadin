@@ -21,7 +21,7 @@ namespace Matlabadin
         /// </summary>
         /// <param name="state">state</param>
         /// <param name="ability">Ability</param>
-        /// <returns>Cooldown remaining in steps</returns>
+        /// <returns>Cooldown remaining in steps, including any GCD cooldown preventing ability casting</returns>
         int CooldownRemaining(TState state, Ability ability);
         /// <summary>
         /// Time remaining on the given buff.
