@@ -35,17 +35,17 @@ player.hopo=3;  %TODO: probably no reason to consider 1- or 2-HP SotR/WoG anymor
 %TODO: Retest all hit conditions for seals
 
 %Seal of Truth (fully stacked)
-raw.SealofTruth=    0.10.*player.wdamage.*mdf.spdmg; 
+raw.SealofTruth=    0.14.*player.wdamage.*mdf.spdmg;  %TODO: Check if this is 14% weapon damage or 14% of the attack's damage?
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
 heal.SealofTruth=   0;
-threat.SealofTruth= dmg.SealofTruth.*mdf.RFury;
+threat.SealofTruth= 0; %wowdb flag - generates no threat
 mcost.SealofTruth=0;
 
 %Censure (fully stacked)
 %As we do not model interruptions, Cens is assumed to be perpetually
 %refreshed (full uptime).
 %TODO: possibly nullify if SoT not active
-raw.Censure=        (0.014.*player.hsp+0.0270.*player.ap).*5 ...
+raw.Censure=        (0.018.*player.hsp+0.0350.*player.ap).*5 ...
                     .*mdf.spdmg; %per tick (for 5 stacks)
 dmg.Censure=        raw.Censure.*mdf.phcrit.*target.resrdx; %automatical connect, phys crit/CM
 dps.Censure=        dmg.Censure./player.censTick;
@@ -55,27 +55,26 @@ threat.Censure=     dmg.Censure.*mdf.RFury;
 tps.Censure=        threat.Censure./player.censTick;
 
 %Seal of Righteousness - now seal of cleave
-raw.SealofRighteousness=    gear.swing.*(0.011.*player.ap+0.022.*player.hsp) ...
-                            .*mdf.spdmg;
+raw.SealofRighteousness=    0.05.*player.wdamage.*mdf.spdmg;
 dmg.SealofRighteousness=    raw.SealofRighteousness.*mdf.phcrit.*target.resrdx; %automatical connect
 heal.SealofRighteousness=   0;
-threat.SealofRighteousness= dmg.SealofRighteousness.*mdf.RFury;
+threat.SealofRighteousness= 0; %wowdb flag - generates no threat
 mcost.SealofRighteousness=  0;
 
-%Seal of Command - possibly low-level seal
-raw.SealofCommand=          gear.swing.*(0.005.*player.ap+0.01.*player.hsp) ...
-                            .*mdf.spdmg;
-dmg.SealofCommand=          raw.SealofCommand.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
-heal.SealofCommand=         0;
-threat.SealofCommand=       dmg.SealofCommand.*mdf.RFury;
-mcost.SealofCommand=        0;
+%Seal of Command - replaced by SoT
+% raw.SealofCommand=          gear.swing.*(0.005.*player.ap+0.01.*player.hsp) ...
+%                             .*mdf.spdmg;
+% dmg.SealofCommand=          raw.SealofCommand.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
+% heal.SealofCommand=         0;
+% threat.SealofCommand=       0;
+% mcost.SealofCommand=        0;
 
 
 %Seal of Insight (15 PPM, not haste-normalized)
 raw.SealofInsight=          0.15.*(player.hsp+player.ap);
 dmg.SealofInsight=          0;
-heal.SealofInsight=         raw.SealofInsight.*(15.*gear.swing./60);
-threat.SealofInsight=       max(dmg.SealofInsight,heal.SealofInsight).*mdf.hthreat.*mdf.RFury./exec.npccount;
+heal.SealofInsight=         raw.SealofInsight.*(1+mdf.SoI).*(15.*gear.swing./60); %Check if this has changed to 15% proc or if it's still 15 PPM
+threat.SealofInsight=       max(dmg.SealofInsight,heal.SealofInsight).*mdf.hthreat.*mdf.RFury./exec.npccount; %this is also flagged as generating no threat
 mcost.SealofInsight=        -0.04.*base.mana;
 
 
@@ -119,9 +118,6 @@ raw.CrusaderStrike= 1.00.*player.ndamage.*mdf.phdmg.*(1+mdf.pvphands);
 dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.memodel.*mdf.CScrit;
 heal.CrusaderStrike=0;
 threat.CrusaderStrike=max(dmg.CrusaderStrike,heal.CrusaderStrike).*mdf.RFury;
-net.CrusaderStrike{1}=dmg.CrusaderStrike+dmg.activeseal.*mdf.mehit;
-net.CrusaderStrike{2}=heal.CrusaderStrike+heal.activeseal.*mdf.mehit;
-net.CrusaderStrike{3}=threat.CrusaderStrike+threat.activeseal.*mdf.mehit;
 mcost.CrusaderStrike=0.1.*mdf.glyphAscetic.*base.mana;
 
 %Hammer of the Righteous
@@ -140,9 +136,6 @@ raw.HammerNova=   (728.8813374+0.18.*player.ap).*mdf.spdmg.*(1+mdf.glyphHotR);
 dmg.HammerNova=   raw.HammerNova.*mdf.mehit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 heal.HammerNova=   0;
 threat.HammerNova=max(dmg.HammerNova,heal.HammerNova).*mdf.RFury;
-net.HammerNova{1}=dmg.HammerNova; %doesn't proc seals
-net.HammerNova{2}=heal.HammerNova;
-net.HammerNova{3}=threat.HammerNova;
 
 %Melee attacks
 raw.Melee=          player.wdamage.*mdf.phdmg;
@@ -152,9 +145,6 @@ heal.Melee=         0;
 hps.Melee=          0;
 threat.Melee=       max(dmg.Melee,heal.Melee).*mdf.RFury;
 tps.Melee=          threat.Melee./player.wswing;
-net.Melee{1}=       dmg.Melee+dmg.activeseal.*mdf.mehit;
-net.Melee{2}=       heal.Melee+heal.activeseal.*mdf.mehit;
-net.Melee{3}=       threat.Melee+threat.activeseal.*mdf.mehit;
 
 %Shield of the Righteous (can be blocked)
 mdf.hpscale=(player.hopo==1)+3.*(player.hopo==2)+6.*(player.hopo==3);
@@ -164,9 +154,6 @@ dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit...
 heal.ShieldoftheRighteous=0;
 % threat.ShieldoftheRighteous{1}=raw.ShieldoftheRighteous.*mdf.RFury;
 threat.ShieldoftheRighteous=dmg.ShieldoftheRighteous.*mdf.RFury;
-net.ShieldoftheRighteous{1}=dmg.ShieldoftheRighteous+dmg.activeseal;
-net.ShieldoftheRighteous{2}=heal.ShieldoftheRighteous+heal.activeseal.*mdf.mehit;
-net.ShieldoftheRighteous{3}=threat.ShieldoftheRighteous+threat.activeseal.*mdf.mehit;
 mcost.ShieldoftheRighteous=0;
 
 %% Ranged abilities
@@ -176,9 +163,6 @@ raw.AvengersShield= (3113.187994+0.419.*player.ap+0.21.*player.hsp).*mdf.spdmg.*
 dmg.AvengersShield= raw.AvengersShield.*mdf.rahit.*mdf.phcrit.*target.resrdx;
 heal.AvengersShield=0;
 threat.AvengersShield=max(dmg.AvengersShield,heal.AvengersShield).*mdf.RFury;
-net.AvengersShield{1}=dmg.AvengersShield+dmg.activeseal.*mdf.rahit.*mdf.tseal;
-net.AvengersShield{2}=heal.AvengersShield;
-net.AvengersShield{3}=threat.AvengersShield+threat.activeseal.*mdf.rahit.*mdf.tseal;
 mcost.AvengersShield=0.07.*base.mana;
 
 %Judgment (the seal of choice is defined in execution_model)
@@ -188,9 +172,6 @@ dmg.Judgment=      raw.Judgment.*mdf.rahit.*target.resrdx;
 heal.Judgment=     0.25.*dmg.Judgment.*mdf.t13x2P;
 threat.Judgment=   max(dmg.Judgment,heal.Judgment).*mdf.RFury;
 mcost.Judgment=    0.05.*base.mana;
-net.Judgment{1}=   dmg.Judgment+dmg.activeseal.*mdf.rahit;
-net.Judgment{2}=   heal.Judgment+heal.activeseal.*mdf.rahit;
-net.Judgment{3}=   threat.Judgment+threat.activeseal.*mdf.rahit;
 
 %Ret-Only in MoP
 % %Hammer of Wrath (can be blocked)
@@ -198,9 +179,6 @@ net.Judgment{3}=   threat.Judgment+threat.activeseal.*mdf.rahit;
 % dmg.HammerofWrath= raw.HammerofWrath.*mdf.ramodel.*mdf.HoWcrit.*target.resrdx;
 % heal.HammerofWrath=0;
 % threat.HammerofWrath=max(dmg.HammerofWrath,heal.HammerofWrath).*mdf.RFury;
-% net.HammerofWrath{1}=dmg.HammerofWrath+dmg.activeseal.*mdf.rahit;
-% net.HammerofWrath{2}=heal.HammerofWrath+heal.activeseal.*mdf.rahit;
-% net.HammerofWrath{3}=threat.HammerofWrath+threat.activeseal.*mdf.rahit;
 % mcost.HammerofWrath=0.12.*mdf.glyphHammerofWrath.*base.mana;
 
 %% Spell abilities
@@ -209,10 +187,7 @@ net.Judgment{3}=   threat.Judgment+threat.activeseal.*mdf.rahit;
 raw.Consecration =  (813.2998299+0.27.*player.hsp+0.27.*player.ap).*mdf.spdmg.*mdf.glyphCons;
 dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 heal.Consecration=  0;
-threat.Consecration=(max(dmg.Consecration,heal.Consecration)+12).*mdf.RFury;
-net.Consecration{1}=dmg.Consecration;
-net.Consecration{2}=heal.Consecration;
-net.Consecration{3}=threat.Consecration;
+threat.Consecration=(max(dmg.Consecration,heal.Consecration)+12).*mdf.RFury;  %TODO: wowdb flags as generating no threat
 mcost.Consecration = 0.07.*base.mana;
 
 %Ret-only in MoP
@@ -223,9 +198,6 @@ mcost.Consecration = 0.07.*base.mana;
 % dmg.Exorcism=       raw.Exorcism.*mdf.sphit.*mdf.Exorcrit.*target.resrdx;
 % heal.Exorcism=      0;
 % threat.Exorcism=    max(dmg.Exorcism,heal.Exorcism).*mdf.RFury;
-% net.Exorcism{1}=    dmg.Exorcism+dmg.activeseal.*mdf.sphit.*mdf.tseal;
-% net.Exorcism{2}=    heal.Exorcism;
-% net.Exorcism{3}=    threat.Exorcism+threat.activeseal.*mdf.sphit.*mdf.tseal;
 % mcost.Exorcism = 0.3.*base.mana;
 % 
 % %Holy Wrath
@@ -233,20 +205,14 @@ mcost.Consecration = 0.07.*base.mana;
 % dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.HWcrit.*target.resrdx;
 % heal.HolyWrath=     0;
 % threat.HolyWrath=   max(dmg.HolyWrath,heal.HolyWrath).*mdf.RFury;
-% net.HolyWrath{1}=   dmg.HolyWrath;
-% net.HolyWrath{2}=   heal.HolyWrath;
-% net.HolyWrath{3}=   threat.HolyWrath;
 % mcost.HolyWrath = 0.2.*base.mana;
 
 %Word of Glory
 raw.WordofGlory=    (2133+0.2086.*player.hsp+0.1984.*player.ap).*player.hopo ...
-                    .*(1-exec.overh).*(1+mdf.glyphWoG+mdf.glyphSoI);
+                    .*(1-exec.overh).*(1+mdf.glyphWoG+mdf.SoI);
 dmg.WordofGlory=    0;
 heal.WordofGlory=   raw.WordofGlory.*mdf.WoGcrit;
 threat.WordofGlory= 11.*(exec.overh>0).*mdf.RFury./exec.npccount;
-net.WordofGlory{1}= dmg.WordofGlory;
-net.WordofGlory{2}= heal.WordofGlory;
-net.WordofGlory{3}= threat.WordofGlory;
 mcost.WordofGlory = 0;
 
 %Eternal Flame
