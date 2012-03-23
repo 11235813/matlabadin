@@ -60,6 +60,9 @@ mdf.GrCr=0.2.*spec.GrandCrusader;
 mdf.Sanct=0.1.*spec.Sanctuary; %both effects
 mdf.DivineBulwark=2.25.*spec.DivineBulwark;
 
+%% Abilities
+mdf.SoI = 0.05.*(strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)); %healing increase
+
 %% Talents
 mdf.EG=0.15.*talent.EternalGlory; %PH
 mdf.HolyShield=1.*talent.HolyShield; %PH

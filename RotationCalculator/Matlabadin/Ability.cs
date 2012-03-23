@@ -25,6 +25,7 @@ namespace Matlabadin
         J,
         AS,
         Cons,
+        HW,
         // AW,
         Count,
     }

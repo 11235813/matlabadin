@@ -68,10 +68,11 @@ namespace Matlabadin.Tests
         public void AbilityCooldownsShouldMatchMoPTalentCalculator()
         {
             Int64GraphParameters target = NoHitExpertise("");
-            Assert.AreEqual(9, target.StepDuration * target.AbilityCooldownInSteps(Ability.AS));
+            Assert.AreEqual(15, target.StepDuration * target.AbilityCooldownInSteps(Ability.AS));
             Assert.AreEqual(9, target.StepDuration * target.AbilityCooldownInSteps(Ability.Cons));
             Assert.AreEqual(4.5, target.StepDuration * target.AbilityCooldownInSteps(Ability.CS));
             Assert.AreEqual(4.5, target.StepDuration * target.AbilityCooldownInSteps(Ability.HotR));
+            Assert.AreEqual(9, target.StepDuration * target.AbilityCooldownInSteps(Ability.HW));
             Assert.AreEqual(6, target.StepDuration * target.AbilityCooldownInSteps(Ability.J));
             Assert.AreEqual(0, target.StepDuration * target.AbilityCooldownInSteps(Ability.SotR));
             Assert.AreEqual(0, target.StepDuration * target.AbilityCooldownInSteps(Ability.WoG));
@@ -83,7 +84,7 @@ namespace Matlabadin.Tests
         public void GCProcRateShouldMatchMoPTalentCalculator()
         {
             // state space compression:
-            Assert.AreEqual(0.4, GP.GCProcRate);
+            Assert.AreEqual(0.2, GP.GCProcRate);
         }
         [Test]
         public void BuffDurationInStepsShouldMatchMoPTalentCalculator()
