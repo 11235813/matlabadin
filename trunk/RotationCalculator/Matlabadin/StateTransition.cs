@@ -218,6 +218,7 @@ namespace Matlabadin
                     break;
                 // Can't miss
                 case Ability.Cons:
+                case Ability.HW:
                 case Ability.Nothing:
                 case Ability.WoG:
                 case Ability.EF:

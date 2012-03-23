@@ -53,10 +53,12 @@ cps(strcmpi('Melee',c.abil.val.label))=1./c.player.wswing(jws);
 
 
 %seal procs
+%find the indices of ranged abilties that proc seals
 idxr=logical(...
      strcmpi('AS',c.abil.val.label).*fsflag+ ...
      strcmpi('J',c.abil.val.label));
- 
+
+%find indices of melee abilities that proc seals
 idxm=logical(... 
      strcmpi('SotR',c.abil.val.label) + strcmpi('CS',c.abil.val.label)+...
      strcmpi('HotR',c.abil.val.label));
@@ -64,7 +66,8 @@ idxm=logical(...
 %currently assuming that seals will be "corrected" to uniform behavior
 %note that this also requires c.exec.seal to be in 3-char format
 cps(strcmpi(c.exec.seal,c.abil.val.label))= ...
-    sum(cps(idxr)).*c.mdf.rahit(jra) + sum(cps(idxm)).*c.mdf.mehit(jme) ... %active sources
+    sum(cps(idxr)).*c.mdf.rahit(jra) ...   %ranged abilities
+    + sum(cps(idxm)).*c.mdf.mehit(jme) ... %melee abilities
     + c.mdf.mehit(jme)./c.player.wswing(jws);   %melee swings
 
 %censure

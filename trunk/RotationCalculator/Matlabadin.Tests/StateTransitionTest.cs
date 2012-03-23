@@ -239,13 +239,13 @@ namespace Matlabadin.Tests
             Int64GraphParameters gp = new Int64GraphParameters(R, 3, 0.8, 1);
             TestNextState(gp, 0, Ability.CS,
                 0.2, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: false), // miss
-                0.8 * 0.6, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true), // hit
-                0.8 * 0.4, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true, gcProc: true) // GrCr proc
+                0.8 * 0.8, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true), // hit
+                0.8 * 0.2, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true, gcProc: true) // GrCr proc
             );
             gp = NoMiss(R.PriorityQueue);
             TestNextState(gp, 0, Ability.CS,
-               0.6, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true),
-               0.4, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true, gcProc: true)
+               0.8, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true),
+               0.2, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true, gcProc: true)
            );
         }
         [Test]
@@ -303,8 +303,8 @@ namespace Matlabadin.Tests
             ulong state = GetState(SM, Ability.HotR, 1, 3);
             TestNextState(gp, state, Ability.HotR,
                 0.2, GetState(SM, Ability.HotR, 9, GetState(SM, Buff.GCD, 3, 3)), // miss
-                0.8 * 0.6, GetState(SM, Ability.HotR, 9, GetState(SM, Buff.WB, 60, Buff.GCD, 3, 4)), // hit
-                0.8 * 0.4, GetState(SM, Ability.HotR, 9, GetState(SM, Buff.WB, 60, Buff.GC, 13, Buff.GCD, 3, 4)), // hit & GC
+                0.8 * 0.8, GetState(SM, Ability.HotR, 9, GetState(SM, Buff.WB, 60, Buff.GCD, 3, 4)), // hit
+                0.8 * 0.2, GetState(SM, Ability.HotR, 9, GetState(SM, Buff.WB, 60, Buff.GC, 13, Buff.GCD, 3, 4)), // hit & GC
                 1 // 1 step wait
             );
         }

@@ -14,7 +14,7 @@ namespace Matlabadin
             double rhit
             )
         {
-            double[] abilityCooldowns = { 4.5, 6, 9, 9, }; // CS, J, AS, Cons
+            double[] abilityCooldowns = { 4.5, 6, 15, 9, 9, }; // CS, J, AS, Cons, HW
             // GC buff duration extended by 0.5s since the server takes time to apply the buff and it is active 4 GCDs after triggering
             double[] buffDurations = { 1.5, 30, 30, 30, 6, 6.5, }; // GCD, EF, SS, WB, SotRSB, GC
             this.StepDuration = 1.5 / stepsPerGcd;
@@ -27,7 +27,7 @@ namespace Matlabadin
         }
         public double StepDuration { get; private set; }
         public int StepsPerGcd { get; private set; }
-        public double GCProcRate { get { return 0.4; } }
+        public double GCProcRate { get { return 0.2; } }
         public bool AbilityOnGcd(Ability ability)
         {
             return ability == Ability.HotR || ability >= Ability.CooldownIndicator;

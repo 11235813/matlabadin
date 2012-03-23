@@ -18,7 +18,7 @@ useParallel=1;
 %define relevant queues if not done already
 %TODO: maybe this makes more sense in c.rot?
 if isfield(c.exec,'queue')==0
-    c.exec.queue='SotR>CS>J>AS>Cons';
+    c.exec.queue='^WB>^SS>SotR>CS>J>AS>Cons>HW';
 end
 
 
@@ -27,14 +27,13 @@ end
 %generate FSM results
 if length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswing)==1
     [c.rot.actionPr, c.rot.metadata, c.rot.ssuptime, ...
-        c.rot.efuptime, c.rot.wbuptime, c.rot.sbuptime] = ...
+        c.rot.efuptime, c.rot.wbuptime, c.rot.sbuptime, ...
+        c.rot.gcduptime] = ...
         memoized_fsm(c.exec.queue, c.mdf.mehit, c.mdf.rahit); 
     %convert actionPr to CPS array
     c.rot.cps=action2cps(c);
-    %empties tracking - this is "dead time"; to get % empty GCDs multiply
-    %by 3/2
-    c.rot.eps=c.rot.cps(size(c.rot.cps,1));
-    c.rot.epct=c.rot.eps.*3/2;
+    %empties tracking - this is % empty gcds
+    c.rot.epct=1-c.rot.gcduptime;
     
 %otherwise, we need some array handling, and may want to take advantage
 %of parallelization
@@ -44,14 +43,14 @@ if length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswing)==
 elseif length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswing)>1
     %only need one fsm generation
     [c.rot.actionPr, c.rot.metadata, c.rot.ssuptime, ...
-        c.rot.efuptime, c.rot.wbuptime, c.rot.sbuptime] = ...
+        c.rot.efuptime, c.rot.wbuptime, c.rot.sbuptime, ...
+        c.rot.gcduptime] = ...
         memoized_fsm(c.exec.queue, c.mdf.mehit, c.mdf.rahit);
     %the conversion to a CPS array needs to be handled appropriately though
     for j=1:length(c.player.wswing)
         [c.rot.cps(:,j)]=action2cps(c,j);
         %empties tracking
-        c.rot.eps(j)=c.rot.cps(size(c.rot.cps,1),j);
-        c.rot.epct(j)=c.rot.eps(j).*3/2;
+        c.rot.epct(j)=1-c.rot.gcduptime;
     end
         
     
@@ -67,12 +66,12 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
             %prevents us from having to do awkward multiple-indexed cell
             %operations within c.rot.actionPr.
             [c.rot.actionPr, c.rot.metadata, c.rot.ssuptime(j), ...
-                c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j)] = ...
+                c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j), ...
+                c.rot.gcduptime(j)] = ...
                 memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j));
             [c.rot.cps(:,j)]=action2cps(c,j);
             %empties tracking
-            c.rot.eps(j)=c.rot.cps(size(c.rot.cps,1),j);
-            c.rot.epct(j)=c.rot.eps(j).*3/2;
+            c.rot.epct(j)=1-c.rot.gcduptime(j);
         end
     else
         wb=waitbar(0,'Generating/Loading FSM data');
@@ -83,12 +82,12 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
             %prevents us from having to do awkward multiple-indexed cell
             %operations within c.rot.actionPr.
             [c.rot.actionPr, c.rot.metadataa, c.rot.ssuptime(j), ...
-                c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j)] = ...
+                c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j), ...
+                c.rot.gcduptime(j)] = ...
                 memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j));
             [c.rot.cps(:,j)]=action2cps(c,j);
             %empties tracking
-            c.rot.eps(j)=c.rot.cps(size(c.rot.cps,1),j);
-            c.rot.epct(j)=c.rot.eps(j).*3/2;
+            c.rot.epct(j)=1-c.rot.gcduptime(j);
         end
         close(wb)
     end
@@ -104,12 +103,12 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
             %prevents us from having to do awkward multiple-indexed cell
             %operations within c.rot.actionPr.
             [c.rot.actionPr, c.rot.metadataa, c.rot.ssuptime(j), ...
-                c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j)] = ...
+                c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j), ...
+                c.rot.gcduptime(j)] = ...
                 memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit);
             [c.rot.cps(:,j)]=action2cps(c,j);
             %empties tracking
-            c.rot.eps(j)=c.rot.cps(size(c.rot.cps,1),j);
-            c.rot.epct(j)=c.rot.eps(j).*3/2;
+            c.rot.epct(j)=1-c.rot.gcduptime(j);
             
         end
     else
@@ -121,12 +120,12 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
             %prevents us from having to do awkward multiple-indexed cell
             %operations within c.rot.actionPr.
             [actionPr, metadataa, c.rot.ssuptime(j), ...
-                c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j)] = ...
+                c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j), ...
+                c.rot.gcduptime(j)] = ...
                 memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit);
             [c.rot.cps(:,j)]=action2cps(c,j);
             %empties tracking
-            c.rot.eps(j)=c.rot.cps(size(c.rot.cps,1),j);
-            c.rot.epct(j)=c.rot.eps(j).*3/2;
+            c.rot.epct(j)=1-c.rot.gcduptime(j);
         end
         close(wb)
     end
