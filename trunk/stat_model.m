@@ -72,18 +72,19 @@ mdf.DivinePurpose=1.*talent.DivinePurpose; %PH
 mdf.SacShield=1.*talent.SacredShield; %PH
 
 %% Glyphs
-mdf.glyphCS=5.*glyph.CrusaderStrike;             %CS crit chance
-mdf.glyphExo=0.2.*glyph.Exorcism;                %Exo output /TODO check DoT mechanics
-mdf.glyphHotR=0.1.*glyph.HammeroftheRighteous;   %HotR output
-mdf.glyphJ=0.1.*glyph.Judgement;                 %J output
-mdf.glyphSotR=1+0.1.*glyph.ShieldoftheRighteous; %SotR output
-mdf.glyphWoG=0.1.*glyph.WordofGlory;             %WoG output
-mdf.glyphCons=1+0.2.*glyph.Consecration;         %Consecration output (and cooldown)
-mdf.glyphFS=1+0.3.*glyph.FocusedShield;          %AS output
-mdf.glyphSoT=10/4.*glyph.SealofTruth.*mdf.rseal; %expertise bonus (T/R)
-mdf.glyphSoI=0.05.*glyph.SealofInsight.*(strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)); %healing output
-mdf.glyphAscetic=1-0.3*glyph.AsceticCrusader;
-mdf.glyphHammerofWrath=1-glyph.HammerofWrath;
+mdf.glyphAS=0.5.*glyph.AlabasterShield;         %Both effects
+mdf.glyphAC=1-0.3*glyph.AsceticCrusader;        %mcost redux
+mdf.glyphBH=0;                                  %NYI
+mdf.glyphBL=mdf.SoI.*glyph.BlessedLife;         %HPG, 1/20 sec
+mdf.glyphDS=0.1.*glyph.DivineStorm;             %passive healing
+mdf.glyphDJ=0.1.*glyph.DoubleJeopardy.*(exec.npccount>1); %assume alternating J if possible
+mdf.glyphFoL=0;                                 %NYI
+mdf.glyphFS=1+0.3.*glyph.FocusedShield;         %AS output
+mdf.glyphFW=1-glyph.FocusedWrath;               %Inverse Binary
+mdf.glyphHotR=0.1.*glyph.HammeroftheRighteous;  %HotR output
+mdf.glyphIT=glyph.ImmediateTruth;               %both effects
+mdf.glyphInq=0.9.*glyph.Inquisition;            %both effects
+mdf.glyphWoG=1+0.1.*glyph.WordofGlory;          %WoG output
 
 %% Meta Gems, Enchants, Plate Spec, Tier Bonus
 %%%%%%%%%%% META
@@ -331,7 +332,6 @@ player.aacrit=base.phcrit + ...                                            %base
     -npc.phcritsupp;                                                       %crit suppression
 
 %explicit crit for non-standard abilities
-player.CScrit=player.phcrit+mdf.glyphCS;         %RoL, glyph
 player.WoGcrit=player.hcrit+mdf.SacShield;       %Sacred Shield
 
 %enforce crit caps for two-roll
@@ -342,8 +342,6 @@ player.spcrit=max([min([player.spcrit;100.*ones(size(player.spcrit))]); ...
 player.hcrit=max([min([player.hcrit;100.*ones(size(player.hcrit))]); ...
     zeros(size(player.hcrit))]);
 
-player.CScrit=max([min([player.CScrit;100.*ones(size(player.CScrit))]); ...
-    zeros(size(player.CScrit))]);
 player.WoGcrit=max([min([player.WoGcrit;100.*ones(size(player.WoGcrit))]); ...
     zeros(size(player.WoGcrit))]);
 
@@ -352,7 +350,6 @@ mdf.phcrit=1+(mdf.phcritm-1).*player.phcrit./100;
 mdf.spcrit=1+(mdf.spcritm-1).*player.spcrit./100;
 mdf.hcrit=1+(mdf.hcritm-1).*player.hcrit./100;
 
-mdf.CScrit=1+(mdf.phcritm-1).*player.CScrit./100;
 mdf.WoGcrit=1+(mdf.hcritm-1).*player.WoGcrit./100;
 
 %% SP and AP
@@ -382,7 +379,7 @@ end
 
 %player expertise in percent
 player.rating.exp=(gear.exp+extra.exp+consum.exp);
-player.exp=base.exp+(player.rating.exp./cnv.exp_exp)+mdf.glyphSoT;
+player.exp=base.exp+(player.rating.exp./cnv.exp_exp);
 
 player.rating.hit=(gear.hit+extra.hit+consum.hit);
 player.mehit=player.rating.hit./cnv.hit_hit ...
