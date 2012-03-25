@@ -98,7 +98,9 @@ namespace Matlabadin
         }
         public ulong SetTimeRemaining(ulong state, Buff buff, int value)
         {
-            return Pack(state, BuffDurationStartBit[(int)buff], BuffDurationBits[(int)buff], value);
+            int numBits = BuffDurationBits[(int)buff];
+            if (value >= 1 << numBits) throw new ArgumentException(String.Format("Duration of {0} steps does not fit into {1} bits assigned to buff {2}", value, numBits, buff));
+            return Pack(state, BuffDurationStartBit[(int)buff], numBits, value);
         }
         public int HP(ulong state)
         {
@@ -115,7 +117,8 @@ namespace Matlabadin
         public ulong SetCooldownRemaining(ulong state, Ability ability, int cd)
         {
             int numBits = AbilityCooldownBits[(int)ability];
-            if (numBits <= 0) return state;
+            if (numBits <= 0 && cd == 0) return state;
+            if (cd >= 1 << numBits) throw new ArgumentException(String.Format("Cooldown of {0} steps does not fit into {1} bits assigned to ability {2}", cd, numBits, ability));
             return Pack(state, AbilityCooldownStartBit[(int)ability], AbilityCooldownBits[(int)ability], cd);
         }
         public ulong AdvanceTime(ulong state, int steps)

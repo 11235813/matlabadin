@@ -46,6 +46,6 @@ namespace Matlabadin.Tests
         public static RotationPriorityQueue<ulong> R { get { return AllAbilityRotation; } }
         public static IStateManager<ulong> SM { get { return AllAbilityStateManager; } }
         public static Int64GraphParameters GP { get { return AllAbilityGraphParameters; } }
-        private static Int64GraphParameters defaultParameters = NoHitExpertise("SS>EF>SotR>HotR>WoG>CS>J>AS>Cons");
+        private static Int64GraphParameters defaultParameters = NoHitExpertise("SS>EF>SotR>HotR>WoG>CS>J>AS>Cons>HW");
     }
 }

@@ -32,6 +32,7 @@ namespace Matlabadin.Tests
             doTest("SS");
             doTest("EF");
             doTest("WoG");
+            doTest("HW");
         }
         [Test]
         public void ActionToTake_ShouldNotCastAbilitiesOnGcdBeforeGcdComplete()

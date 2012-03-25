@@ -23,6 +23,7 @@ namespace Matlabadin.Tests
                 Ability.J,
                 Ability.AS,
                 Ability.Cons,
+                Ability.HW,
             })
             {
                 Assert.AreEqual(Math.Max(0, GP.AbilityCooldownInSteps(a)), SM.CooldownRemaining(StateTransition<ulong>.UseAbility(GP, SM, 3, a), a));
@@ -38,6 +39,7 @@ namespace Matlabadin.Tests
                 Ability.J,
                 Ability.AS,
                 Ability.Cons,
+                Ability.HW,
             })
             {
                 Assert.AreEqual(GP.StepsPerGcd, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 3, a), Buff.GCD));
@@ -311,7 +313,7 @@ namespace Matlabadin.Tests
         [Test]
         public void CalculatesNextState_SingleTransitionAbilities()
         {
-            foreach (Ability a in new Ability[] { Ability.Cons, Ability.Nothing, Ability.WoG, Ability.SS, Ability.EF })
+            foreach (Ability a in new Ability[] { Ability.Cons, Ability.Nothing, Ability.WoG, Ability.SS, Ability.EF, Ability.HW, })
             {
                 var st = new StateTransition<ulong>(GP, SM, 3, a);
                 Assert.AreEqual(1, st.NextStates.Length);
