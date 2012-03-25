@@ -16,5 +16,17 @@ namespace Matlabadin.Tests
                 return new Int64GraphParameters(R, 3, 0.5, 0.5);
             }
         }
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void SetCooldownRemaining_ShouldThrowExceptionForExcessiveCooldown()
+        {
+            StateManager.SetCooldownRemaining(0, Ability.CS, 16); // 9 step CD = 4 bits => 16 doesn't fit
+        }
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void SetTimeRemaining_ShouldThrowExceptionForExcessiveCooldown()
+        {
+            StateManager.SetTimeRemaining(0, Buff.GCD, 4); // 3 step CD = 2 bits => 4 doesn't fit
+        }
     }
 }
