@@ -15,7 +15,7 @@ namespace Matlabadin.Tests
             double rhit = 0.9;
             Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, stepsPerGcd, mehit, rhit);
             Assert.AreEqual(0.8, gp.MeleeHit);
-            Assert.AreEqual(0.9, gp.RangeHit);
+            Assert.AreEqual(0.9, gp.SpellHit);
             Assert.AreEqual(stepsPerGcd, gp.StepsPerGcd);
             Assert.AreEqual(0.5, gp.StepDuration);
         }

@@ -482,7 +482,7 @@ bl.wdps=player.wdamage./bl.wswing;
 %Hit & Damage modifier values
 mdf.phdmg=mdf.physdmg.*(1-target.phdr);
 mdf.mehit=1-(target.miss+target.dodge+target.parry)./100;
-mdf.rahit=1-target.miss./100; 
+% mdf.rahit=1-target.miss./100; 
 %TODO: mdf.spdmg is now redundant until mdf subclasses are implemented
 % mdf.spdmg=mdf.CoE.*mdf.ArcTac; %harmful only, healing does not benefit from these
 mdf.sphit=1-target.spmiss./100;
@@ -501,7 +501,7 @@ mdf.aamodel=(mdf.mehit) ...                  %hit
 
 %enforce block events for two-roll systems (no critical blocks)
 mdf.memodel=mdf.mehit+(mdf.blockrdx-1).*target.block./100;
-mdf.ramodel=mdf.rahit+(mdf.blockrdx-1).*target.block./100;
+% mdf.ramodel=mdf.rahit+(mdf.blockrdx-1).*target.block./100;
 
 %% PPM-based uptimes
 %this section will have to wait until we know which attacks survive, what

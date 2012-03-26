@@ -35,7 +35,7 @@ player.hopo=3;  %TODO: probably no reason to consider 1- or 2-HP SotR/WoG anymor
 %TODO: Retest all hit conditions for seals
 
 %Seal of Truth (fully stacked)
-raw.SealofTruth=    0.14.*player.wdamage.*(1+0.2.*mdf.glyphIT).*mdf.spdmg;  %TODO: Check if this is 14% weapon damage or 14% of the attack's damage?
+raw.SealofTruth=    0.14.*player.wdamage.*(1+0.2.*mdf.glyphIT).*mdf.spdmg;  
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
 heal.SealofTruth=   0;
 threat.SealofTruth= 0; %wowdb flag - generates no threat
@@ -148,7 +148,6 @@ raw.ShieldoftheRighteous= ((610.2+0.1.*player.ap).*6).*(1+mdf.glyphAS).*mdf.spdm
 dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit... 
                           .*target.resrdx; %melee hit
 heal.ShieldoftheRighteous=0;
-% threat.ShieldoftheRighteous{1}=raw.ShieldoftheRighteous.*mdf.RFury;
 threat.ShieldoftheRighteous=dmg.ShieldoftheRighteous.*mdf.RFury;
 mcost.ShieldoftheRighteous=0;
 
@@ -156,7 +155,7 @@ mcost.ShieldoftheRighteous=0;
 
 %Avenger's Shield (cannot be blocked)
 raw.AvengersShield= (3113.187994+0.419.*player.ap+0.21.*player.hsp).*mdf.spdmg.*mdf.glyphFS;
-dmg.AvengersShield= raw.AvengersShield.*mdf.rahit.*mdf.phcrit.*target.resrdx;
+dmg.AvengersShield= raw.AvengersShield.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.AvengersShield=0;
 threat.AvengersShield=max(dmg.AvengersShield,heal.AvengersShield).*mdf.RFury;
 mcost.AvengersShield=0.07.*base.mana;
@@ -164,8 +163,8 @@ mcost.AvengersShield=0.07.*base.mana;
 %Judgment (the seal of choice is defined in execution_model)
 raw.Judgment=       (1+0.2229.*player.hsp+0.1421.*player.ap) ...
                     .*(1+mdf.glyphDJ).*mdf.spdmg; 
-dmg.Judgment=      raw.Judgment.*mdf.rahit.*target.resrdx;
-heal.Judgment=     0.25.*dmg.Judgment.*mdf.t13x2P;
+dmg.Judgment=      raw.Judgment.*mdf.sphit.*mdf.spcrit.*target.resrdx;
+heal.Judgment=     0;
 threat.Judgment=   max(dmg.Judgment,heal.Judgment).*mdf.RFury;
 mcost.Judgment=    0.05.*base.mana;
 
@@ -230,7 +229,7 @@ mcost.SacredShield= 0;
 
 %% Consolidated arrays
 %TODO: rename val to something more descriptive
-val.length=max([length(dmg.CrusaderStrike) length(dmg.Consecration) length(dps.Melee) length(dps.Censure) length(mdf.mehit) length(mdf.rahit)]);
+val.length=max([length(dmg.CrusaderStrike) length(dmg.Consecration) length(dps.Melee) length(dps.Censure) length(mdf.mehit) length(mdf.sphit)]);
 val.zeros=zeros(1,val.length);
 val.ones=ones(1,val.length);
 val.label={'CS';'HotR';'HammerNova';'J';'AS';'Cons';'HW';'SotR';'WoG';...

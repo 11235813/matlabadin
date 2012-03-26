@@ -11,7 +11,7 @@ namespace Matlabadin
             RotationPriorityQueue<TState> rotation,
             int stepsPerGcd,
             double mehit,
-            double rhit
+            double sphit
             )
         {
             double[] abilityCooldowns = { 4.5, 6, 15, 9, 9, }; // CS, J, AS, Cons, HW
@@ -22,7 +22,7 @@ namespace Matlabadin
             this.abilitySteps = abilityCooldowns.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();
             this.buffSteps = buffDurations.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();
             this.MeleeHit = mehit;
-            this.RangeHit = rhit;
+            this.SpellHit = sphit;
             this.Rotation = rotation;
         }
         public double StepDuration { get; private set; }
@@ -72,7 +72,7 @@ namespace Matlabadin
             return this.Rotation.PriorityQueue == gp.Rotation.PriorityQueue
                 && this.StepsPerGcd == gp.StepsPerGcd
                 && hitGeneratesSameShape(this.MeleeHit, gp.MeleeHit)
-                && hitGeneratesSameShape(this.RangeHit, gp.RangeHit);
+                && hitGeneratesSameShape(this.SpellHit, gp.SpellHit);
         }
         private bool hitGeneratesSameShape(double hit1, double hit2)
         {
@@ -80,7 +80,7 @@ namespace Matlabadin
             return !(hit1 == 1.0 ^ hit2 == 1.0) && !(hit1 == 0.0 ^ hit2 == 0.0);
         }
         public double MeleeHit { get; private set; }
-        public double RangeHit { get; private set; }
+        public double SpellHit { get; private set; }
         public RotationPriorityQueue<TState> Rotation { get; private set; }
         private readonly int[] abilitySteps;
         private readonly int[] buffSteps;

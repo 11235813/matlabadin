@@ -5,25 +5,25 @@ function [cps] = action2cps(c,j)
 %
 %A2CPS takes one required input ("c", the configuration structure) and one
 %optional input ("j", the iteration number for calculations where mdf.mehit
-%or mdf.rahit or player.wswing are not singleton).
+%or mdf.sphit or player.wswing are not singleton).
 %
 %A2CPS returns one output, which is the cps array for the given input
 %conditions.
 
 %% smart array handling
-%j could refer to mdf.mehit, mdf.rahit, or player.wswing.  This section sorts out which is which
+%j could refer to mdf.mehit, mdf.sphit, or player.wswing.  This section sorts out which is which
 
 %assume all arrays are singleton
 jme=1;
-jra=1;
+jsp=1;
 jws=1;
 
 %handle non-singleton arrays
 if length(c.mdf.mehit)>1
     jme=j;
 end
-if length(c.mdf.rahit)>1
-    jra=j;
+if length(c.mdf.sphit)>1
+    jsp=j;
 end
 if length(c.player.wswing)>1
     jws=j;
@@ -52,21 +52,17 @@ cps(idx+1)=cps(idx);
 cps(strcmpi('Melee',c.abil.val.label))=1./c.player.wswing(jws);
 
 
-%seal procs
-%find the indices of ranged abilties that proc seals
-idxr=logical(...
-     strcmpi('AS',c.abil.val.label).*fsflag+ ...
-     strcmpi('J',c.abil.val.label));
+%% seal procs
 
 %find indices of melee abilities that proc seals
 idxm=logical(... 
-     strcmpi('SotR',c.abil.val.label) + strcmpi('CS',c.abil.val.label)+...
+     strcmpi('SotR',c.abil.val.label) +...
+     strcmpi('CS',c.abil.val.label)+...
      strcmpi('HotR',c.abil.val.label));
 
 %currently assuming that seals will be "corrected" to uniform behavior
 %note that this also requires c.exec.seal to be in 3-char format
 cps(strcmpi(c.exec.seal,c.abil.val.label))= ...
-    sum(cps(idxr)).*c.mdf.rahit(jra) ...   %ranged abilities
     + sum(cps(idxm)).*c.mdf.mehit(jme) ... %melee abilities
     + c.mdf.mehit(jme)./c.player.wswing(jws);   %melee swings
 

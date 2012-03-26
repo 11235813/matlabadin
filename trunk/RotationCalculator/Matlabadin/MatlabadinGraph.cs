@@ -23,7 +23,7 @@ namespace Matlabadin
         /// Clones a given graph.
         /// </summary>
         /// <remarks>Cloning will only succeed if the graphs only differ in their transition probabilities.
-        /// That is, they only differ in MeleeHit and RangeHit.</remarks>
+        /// That is, they only differ in MeleeHit and SpellHit.</remarks>
         /// <param name="graph">Graph to clone.</param>
         /// <param name="gp">New parameters</param>
         public MatlabadinGraph(MatlabadinGraph<TState> graph, GraphParameters<TState> gp)
