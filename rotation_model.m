@@ -25,11 +25,11 @@ end
 %% Crank
 
 %generate FSM results
-if length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswing)==1
+if length(c.mdf.mehit)==1 && length(c.mdf.sphit)==1 && length(c.player.wswing)==1
     [c.rot.actionPr, c.rot.metadata, c.rot.ssuptime, ...
         c.rot.efuptime, c.rot.wbuptime, c.rot.sbuptime, ...
         c.rot.gcduptime] = ...
-        memoized_fsm(c.exec.queue, c.mdf.mehit, c.mdf.rahit); 
+        memoized_fsm(c.exec.queue, c.mdf.mehit, c.mdf.sphit); 
     %convert actionPr to CPS array
     c.rot.cps=action2cps(c);
     %empties tracking - this is % empty gcds
@@ -38,14 +38,14 @@ if length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswing)==
 %otherwise, we need some array handling, and may want to take advantage
 %of parallelization
 
-%mdf.mehit and mdf.rahit have one element, but player.wswing is 1xN -
+%mdf.mehit and mdf.sphit have one element, but player.wswing is 1xN -
 %haste, str scaling (via parry->parryhaste)
-elseif length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswing)>1
+elseif length(c.mdf.mehit)==1 && length(c.mdf.sphit)==1 && length(c.player.wswing)>1
     %only need one fsm generation
     [c.rot.actionPr, c.rot.metadata, c.rot.ssuptime, ...
         c.rot.efuptime, c.rot.wbuptime, c.rot.sbuptime, ...
         c.rot.gcduptime] = ...
-        memoized_fsm(c.exec.queue, c.mdf.mehit, c.mdf.rahit);
+        memoized_fsm(c.exec.queue, c.mdf.mehit, c.mdf.sphit);
     %the conversion to a CPS array needs to be handled appropriately though
     for j=1:length(c.player.wswing)
         [c.rot.cps(:,j)]=action2cps(c,j);
@@ -54,12 +54,12 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswin
     end
         
     
-%both mdf.mehit and mdf.rahit have more than one element - assumed to
+%both mdf.mehit and mdf.sphit have more than one element - assumed to
 %be the same size
-elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
+elseif length(c.mdf.mehit)>1 && length(c.mdf.sphit)>1
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.mdf.mehit, c.mdf.rahit);
+        fsm_gen(c.exec.queue, c.mdf.mehit, c.mdf.sphit);
         for j=1:length(c.mdf.mehit)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
@@ -68,7 +68,7 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
             [c.rot.actionPr, c.rot.metadata, c.rot.ssuptime(j), ...
                 c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j), ...
                 c.rot.gcduptime(j)] = ...
-                memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j));
+                memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.sphit(j));
             [c.rot.cps(:,j)]=action2cps(c,j);
             %empties tracking
             c.rot.epct(j)=1-c.rot.gcduptime(j);
@@ -84,7 +84,7 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
             [c.rot.actionPr, c.rot.metadataa, c.rot.ssuptime(j), ...
                 c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j), ...
                 c.rot.gcduptime(j)] = ...
-                memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit(j));
+                memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.sphit(j));
             [c.rot.cps(:,j)]=action2cps(c,j);
             %empties tracking
             c.rot.epct(j)=1-c.rot.gcduptime(j);
@@ -93,10 +93,10 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
     end
     
     %only mdf.mehit has more than one element (hit-capped but not xp capped)
-elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
+elseif length(c.mdf.mehit)>1 && length(c.mdf.sphit)==1
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.mdf.mehit, c.mdf.rahit);
+        fsm_gen(c.exec.queue, c.mdf.mehit, c.mdf.sphit);
         for j=1:length(c.mdf.mehit)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
@@ -105,7 +105,7 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
             [c.rot.actionPr, c.rot.metadataa, c.rot.ssuptime(j), ...
                 c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j), ...
                 c.rot.gcduptime(j)] = ...
-                memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit);
+                memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.sphit);
             [c.rot.cps(:,j)]=action2cps(c,j);
             %empties tracking
             c.rot.epct(j)=1-c.rot.gcduptime(j);
@@ -122,7 +122,7 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
             [actionPr, metadataa, c.rot.ssuptime(j), ...
                 c.rot.efuptime(j), c.rot.wbuptime(j), c.rot.sbuptime(j), ...
                 c.rot.gcduptime(j)] = ...
-                memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.rahit);
+                memoized_fsm(c.exec.queue, c.mdf.mehit(j), c.mdf.sphit);
             [c.rot.cps(:,j)]=action2cps(c,j);
             %empties tracking
             c.rot.epct(j)=1-c.rot.gcduptime(j);
@@ -152,8 +152,8 @@ c.rot.hps=sum(c.rot.cps.*c.abil.val.heal);
 %calculate HPG
 c.rot.hpg=c.rot.cps(1,:).*c.mdf.mehit+... %CS
           c.rot.cps(2,:).*c.mdf.mehit+... %HotR
-          c.rot.cps(4,:).*c.mdf.rahit+... %J
-          c.rot.cps(5,:).*c.mdf.rahit;    %AS - need a way to differentiate between GrCr and non-GrCr casts
+          c.rot.cps(4,:).*c.mdf.sphit+... %J
+          c.rot.cps(5,:).*c.mdf.sphit;    %AS - need a way to differentiate between GrCr and non-GrCr casts
 
 %order fields alphabetically
 c=orderfields(c);

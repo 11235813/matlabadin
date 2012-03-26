@@ -212,8 +212,8 @@ namespace Matlabadin
                     };
                     pr = new double[]
                     {
-                        1 - gp.RangeHit,
-                        gp.RangeHit,
+                        1 - gp.SpellHit,
+                        gp.SpellHit,
                     };
                     break;
                 // Can't miss

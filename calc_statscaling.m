@@ -34,7 +34,7 @@ stat_conversions
 %stat itemization factors for weight calculations
 % icv=10.*[ipconv.exp ipconv.hit ipconv.str ipconv.ap ipconv.sta ipconv.crit...
 %     ipconv.agi ipconv.has ipconv.sp ipconv.int ipconv.mas];
-dstat=10;
+dstat=20;
 for m=1:M; icv(m,1)=eval(['ipconv.' stat{m}]); end;
 
 %% Strength calcs
@@ -93,8 +93,8 @@ for g=1:length(cfg)
 end
 toc
 %% Strength Graphs / Table
-yS=(sdps-sdps0);
-ySh=(shps-shps0);
+yS=(sdps-sdps0).*10./dstat; % parenthetical is for dstat increase, 10/dstat scales bonus for 10 ipoints
+ySh=(shps-shps0).*10./dstat;
 
 for g=1:length(cfg)
 figure(50+g-1)
@@ -104,7 +104,10 @@ xlim([min(xS(:,g)) max(xS(:,g))])
 legend(stat,'Location','EastOutside')
 xlabel('Armory Strength')
 ylabel('DPS per 10 itemization points')
-title([cfg(g).exec.queue ', ' cfg(g).exec.seal ', '  num2str(cfg(g).exec.veng*100,'%2.1f') '% Veng, ' num2str(cfg(g).player.mehit,'%2.1f') '% hit, ' num2str(cfg(g).player.exp,'%2.1f') '% expertise'])
+title([ strrep(cfg(g).exec.queue,'^','\^') ', ' cfg(g).exec.seal ', '  ...
+        num2str(cfg(g).exec.veng*100,'%2.1f') '% Veng, ' ...
+        num2str(cfg(g).player.mehit,'%2.1f') '% hit, ' ...
+        num2str(cfg(g).player.exp,'%2.1f') '% expertise'])
 
 
 disp(['DPS and SHPS stat weights for ' cfg(g).exec.queue ', ' cfg(g).exec.seal])
@@ -183,8 +186,8 @@ for g=1:length(cfg)
 end
 toc
 %% Hit Graphs
-yH=(hdps-hdps0);
-yHh=(hhps-hhps0);
+yH=(hdps-hdps0).*10./dstat;
+yHh=(hhps-hhps0).*10./dstat;
 
 for g=1:length(cfg)
 figure(60+g-1)
@@ -194,13 +197,15 @@ xlim([min(xH(:,g)) max(xH(:,g))])
 legend(stat,'Location','EastOutside')
 xlabel('Melee Hit %')
 ylabel('DPS per 10 itemization points')
-title([cfg(g).exec.queue ', ' cfg(g).exec.seal ', '  num2str(cfg(g).exec.veng*100,'%2.1f') '% Veng, ' num2str(cfg(g).player.mehit,'%2.1f') '% hit, ' num2str(cfg(g).player.exp,'%2.1f') '% expertise'])
+title([ strrep(cfg(g).exec.queue,'^','\^') ', ' cfg(g).exec.seal ', ' ...
+        num2str(cfg(g).exec.veng*100,'%2.1f') '% Veng, ' ...
+        num2str(cfg(g).player.exp,'%2.1f') '% expertise'])
 
 end
 
     
 %% Exp Calcs
-exp_range=(-c.player.exp+linspace(0,15,100)).*cnv.exp_exp;
+exp_range=(-c.player.exp+linspace(0,16,100)).*cnv.exp_exp;
 % [temp idx]=min(abs(exp_range));
 edps=zeros(M,length(exp_range),length(cfg));ehps=edps;
 edps0=zeros(size(hdps));ehps0=edps0;
@@ -254,8 +259,8 @@ for g=1:length(cfg)
 end
 toc
 %% Exp Graphs
-yE=(edps-edps0);
-yEh=(ehps-ehps0);
+yE=(edps-edps0).*10./dstat;
+yEh=(ehps-ehps0).*10./dstat;
 
 for g=1:length(cfg)
 figure(70+g-1)
@@ -265,6 +270,8 @@ xlim([min(xE(:,g)) max(xE(:,g))])
 legend(stat,'Location','EastOutside')
 xlabel('Expertise %')
 ylabel('DPS per 10 itemization points')
-title([cfg(g).exec.queue ', ' cfg(g).exec.seal ', '  num2str(cfg(g).exec.veng*100,'%2.1f') '% Veng, ' num2str(cfg(g).player.mehit,'%2.1f') '% hit, ' num2str(cfg(g).player.exp,'%2.1f') '% expertise'])
+title([ strrep(cfg(g).exec.queue,'^','\^') ', ' cfg(g).exec.seal ', '  ...
+        num2str(cfg(g).exec.veng*100,'%2.1f') '% Veng, ' ...
+        num2str(cfg(g).player.mehit,'%2.1f') '% hit'])
 
 end

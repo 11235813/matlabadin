@@ -11,12 +11,12 @@ namespace Matlabadin
             RotationPriorityQueue<ulong> rotation,
             int stepsPerGcd,
             double mehit,
-            double rhit)
+            double sphit)
             : base(
             rotation,
             stepsPerGcd,
             mehit,
-            rhit)
+            sphit)
         {
             CalculateBitOffsets();
         }

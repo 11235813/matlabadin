@@ -1,4 +1,4 @@
-function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = memoized_fsm(rotation, mehit, rhit)
+function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = memoized_fsm(rotation, mehit, sphit)
     global fsm_cache_actionPr;
     global fsm_cache_efUptime;
     global fsm_cache_ssUptime;
@@ -37,7 +37,7 @@ function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime
     rotationKey = strrep(rotationKey, '''', 'prime');
     rotationKey = strrep(rotationKey, '+', 'plus');
     rotationKey = strrep(rotationKey, '^', 'up');
-    optionsKey = sprintf('T%g_%0.5f_%0.5f', fsm_steps_per_gcd(), mehit, rhit);
+    optionsKey = sprintf('T%g_%0.5f_%0.5f', fsm_steps_per_gcd(), mehit, sphit);
     optionsKey = strrep(optionsKey,'_1.00000','_1_');
     optionsKey = strrep(optionsKey,'_0.','_');
     % check memory cache
@@ -52,7 +52,7 @@ function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime
         gcdUptime = fsm_cache_gcdUptime.(rotationKey).(optionsKey);
         return;
     end
-    fileCell = fsm_gen(rotation, mehit, rhit);
+    fileCell = fsm_gen(rotation, mehit, sphit);
     filename = fileCell{1};
     % read from the data file
     [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = load_fsm_csv(filename);
