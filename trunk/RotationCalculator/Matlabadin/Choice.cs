@@ -13,12 +13,14 @@ namespace Matlabadin
             double[] pr,
             int hp,
             bool wogss,
+            bool asgc,
             int[][] buffDuration
             )
         {
             if (pr == null) throw new ArgumentNullException("pr");
             if (buffDuration == null) throw new ArgumentNullException("buffDuration");
             if (wogss && ability != Ability.WoG) throw new ArgumentException("Sanity failure: wogss cannot be set if ability is not WoG");
+            if (asgc && ability != Ability.AS) throw new ArgumentException("Sanity failure: asgc cannot be set if ability is not AS");
             if (buffDuration.Any(bd => bd.Any(d => d > stepsDuration))) throw new ArgumentException("Sanity failure: buff duration cannot exceed step duration of transition");
             if (buffDuration.Length != (int)Buff.UptimeTrackedBuffs) throw new ArgumentException("Sanity failure: buffDuration array length invalid");
             if (Math.Abs(pr.Sum() - 1.0) > 0.0001) throw new ArgumentException("Sanity failure: transition probabilities do not sum to 1");
@@ -26,6 +28,7 @@ namespace Matlabadin
             this.ability = ability;
             this.hp = hp;
             this.wogss = wogss;
+            this.asgc = asgc;
             this.stepsDuration = stepsDuration;
             this.buffDuration = buffDuration;
             this.pr = pr;
@@ -49,6 +52,7 @@ namespace Matlabadin
                             action[0] += hp.ToString();
                         }
                         if (wogss) action[0] += "(SS)";
+                        if (asgc) action[0] += "(GC)";
                     }
                 }
                 return action;
@@ -58,6 +62,7 @@ namespace Matlabadin
         private string[] action;
         private readonly Ability ability;
         private readonly bool wogss;
+        private readonly bool asgc;
         private readonly int hp;
         public readonly int stepsDuration;
         public readonly int[][] buffDuration;
@@ -72,6 +77,7 @@ namespace Matlabadin
         {
             return ability == c.ability
                 && wogss == c.wogss
+                && asgc == c.asgc
                 && hp == c.hp
                 && stepsDuration == c.stepsDuration
                 && buffDuration.Length == c.buffDuration.Length
@@ -81,13 +87,14 @@ namespace Matlabadin
         }
         public override int GetHashCode()
         {
-            int hash = pr.Aggregate(0, (h, p) => h ^ p.GetHashCode());
-            hash ^= stepsDuration.GetHashCode(); // assuming ~< 7 bits
-            hash ^= ~(buffDuration.SelectMany(b => b).Aggregate(0, (h, p) => h ^ p.GetHashCode()) << 7);
-            hash ^= hp << (7 + 9);
-            if (wogss) hash ^= 1 << (7 + 9 + 3);
-            hash += (int)ability << (7 + 9 + 3 + 1);
-            return hash;
+            int prhash = pr.Aggregate(0, (h, p) => h ^ (int)(p * (1 << 30)));
+            int packed = stepsDuration;
+            packed = 6 * packed + hp;
+            packed = 2 * packed + (wogss ? 0 : 1);
+            packed = 2 * packed + (asgc ? 0 : 1);
+            packed = (int)Ability.Count * packed + (int)ability;
+            int buffHash = buffDuration.SelectMany(b => b).Aggregate(0, (p, dur) => p * (stepsDuration + 1) + dur);
+            return prhash ^ packed ^ buffHash;
         }
         private Choice(Choice first, Choice second)
         {

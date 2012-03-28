@@ -161,6 +161,7 @@ namespace Matlabadin
                 pr,
                 sm.HP(StateInitial),
                 ability == Ability.WoG && sm.TimeRemaining(StatePreAbility, Buff.SS) > 0,
+                ability == Ability.AS && sm.TimeRemaining(StatePreAbility, Buff.GC) > 0,
                 buffSteps);
         }
         /// <summary>
