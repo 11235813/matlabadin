@@ -1,4 +1,4 @@
-function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = memoized_fsm(rotation, mehit, sphit)
+function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = memoized_fsm(rotation, mehit, sphit, sh)
     global fsm_cache_actionPr;
     global fsm_cache_efUptime;
     global fsm_cache_ssUptime;
@@ -52,7 +52,7 @@ function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime
         gcdUptime = fsm_cache_gcdUptime.(rotationKey).(optionsKey);
         return;
     end
-    fileCell = fsm_gen(rotation, mehit, sphit);
+    fileCell = fsm_gen(rotation, mehit, sphit, sh);
     filename = fileCell{1};
     % read from the data file
     [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = load_fsm_csv(filename);

@@ -1,6 +1,13 @@
-function [generatedFile] = fsm_gen(rotation, mehitArray, rhitArray)
+function [generatedFile] = fsm_gen(rotation, mehitArray, rhitArray, shint)
 %fsm_gen calculates fsm for each mehit, rhit
 % call memoized_fsm to return the actual fsm data
+
+if shint
+    sh='true';
+else
+    sh='false';
+end
+    
 
 % check source timestamp
 if exist('RotationCalculator') ~= 7
@@ -46,7 +53,7 @@ for i=1:length(mehitArray)
     rotationKey = strrep(rotationKey, '*', 'star');
     rotationKey = strrep(rotationKey, '''', 'prime');
     rotationKey = strrep(rotationKey, '+', 'plus');
-    optionsKey = sprintf('T%g_%0.5f_%0.5f', fsm_steps_per_gcd(), mehit, rhit);
+    optionsKey = sprintf('T%g_%0.5f_%0.5f_%s', fsm_steps_per_gcd(), mehit, rhit, sh);
     optionsKey = strrep(optionsKey,'_1.00000','_1_');
     optionsKey = strrep(optionsKey,'_0.','_');
     dirname = strcat('data\\', rotationKey);
@@ -57,8 +64,8 @@ for i=1:length(mehitArray)
             mkdir(dirname);
         end
                 
-        fprintf(argfid, '%s %g %f %f %s\n', ...
-            rotation, fsm_steps_per_gcd(), mehit, rhit, filename);
+        fprintf(argfid, '%s %g %f %f %s %s\n', ...
+            rotation, fsm_steps_per_gcd(), mehit, rhit, sh, filename);
         generationRequired = 1;
     end
     generatedFile{i} = filename;
