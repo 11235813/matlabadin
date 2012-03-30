@@ -36,7 +36,7 @@ for i=1:length(mehitArray)
     rotationKey = rotation;
     rotationKey = strrep(rotationKey, '[', '');
     rotationKey = strrep(rotationKey, ']', '_');
-    rotationKey = strrep(rotationKey, '.', '_');    
+    rotationKey = strrep(rotationKey, '.', '_');
     rotationKey = strrep(rotationKey, '>=', 'ge');
     rotationKey = strrep(rotationKey, '<=', 'le');
     rotationKey = strrep(rotationKey, '==', 'eq');

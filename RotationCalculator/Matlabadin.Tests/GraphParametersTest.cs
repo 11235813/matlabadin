@@ -167,10 +167,38 @@ namespace Matlabadin.Tests
                 ));
         }
         [Test]
+        public void ShouldNotHaveSameShapeIfSHDiffers()
+        {
+            Assert.IsFalse(
+                new Int64GraphParameters(AllAbilityRotation, 3, 1.0, 1.0, false)
+                .HasSameShape(
+                new Int64GraphParameters(AllAbilityRotation, 3, 1.0, 1.0, true)
+                ));
+        }
+        [Test]
         public void HotRCDShouldMatchCS()
         {
             // state space compression:
             Assert.AreEqual(GP.AbilityCooldownInSteps(Ability.CS), GP.AbilityCooldownInSteps(Ability.HotR));
+        }
+        [Test]
+        public void MaxBuffStacks_ShouldBe1ExceptForSH()
+        {
+            for (int i = 0; i < (int)Buff.Count; i++)
+            {
+                Buff b = (Buff)i;
+                int expectedStacks = b == Buff.SH ? 2 : 1;
+                Assert.AreEqual(expectedStacks, GP.MaxBuffStacks(b));
+            }
+        }
+        [Test]
+        public void CanStack_ShouldBeSHOnly()
+        {
+            for (int i = 0; i < (int)Buff.Count; i++)
+            {
+                Buff b = (Buff)i;
+                Assert.AreEqual(b == Buff.SH, GP.CanStack(b));
+            }
         }
     }
 }

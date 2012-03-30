@@ -121,5 +121,56 @@ namespace Matlabadin.Tests
                 StateManager.SetCooldownRemaining(StateManager.SetCooldownRemaining(StateManager.InitialState(), Ability.Cons, 1), Ability.CS, 1)
                 ));
         }
+        [Test]
+        public void StacksShouldRoundtrip()
+        {
+            // Only SH has stacks
+            T state;
+            state = StateManager.SetTimeRemaining(StateManager.InitialState(), Buff.SH, 1);
+            state = StateManager.SetStacks(state, Buff.SH, 2);
+            Assert.AreEqual(2, StateManager.Stacks(state, Buff.SH));
+            state = StateManager.SetStacks(state, Buff.SH, 1);
+            Assert.AreEqual(1, StateManager.Stacks(state, Buff.SH));
+        }
+        [Test]
+        public void StacksShouldDefaultTo1()
+        {
+            for (int i = 0; i < (int)Buff.Count; i++)
+            {
+                Assert.AreEqual(1, StateManager.Stacks(StateManager.SetTimeRemaining(StateManager.InitialState(), (Buff)i, 1), (Buff)i));
+            }
+        }
+        [Test]
+        public void StacksShouldBeZeroForZeroDuration()
+        {
+            T state;
+            for (int i = 0; i < (int)Buff.Count; i++)
+            {
+                state = StateManager.SetTimeRemaining(StateManager.InitialState(), (Buff)i, 1);
+                state = StateManager.AdvanceTime(state, 1);
+                Assert.AreEqual(0, StateManager.Stacks(state, (Buff)i));
+            }
+            state = StateManager.SetTimeRemaining(StateManager.InitialState(), Buff.SH, 1);
+            state = StateManager.SetStacks(state, Buff.SH, 2);
+            state = StateManager.AdvanceTime(state, 1);
+            Assert.AreEqual(0, StateManager.Stacks(state, Buff.SH));
+        }
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void SetStacksShouldRequireNonZeroDuration()
+        {
+            StateManager.SetStacks(StateManager.InitialState(), Buff.SH, 1);
+        }
+        [Test]
+        public void SetStacks_Zero_ShouldCancelBuff()
+        {
+            T state;
+            for (int i = 0; i < (int)Buff.Count; i++)
+            {
+                state = StateManager.SetTimeRemaining(StateManager.InitialState(), (Buff)i, 1);
+                state = StateManager.SetStacks(state, (Buff)i, 0);
+                Assert.AreEqual(0, StateManager.TimeRemaining(state, (Buff)i));
+            }
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace Matlabadin
         WoG,
         EF,
         SS,
-        // FoL,
+        FoL,
         HotR, // treated as a special case since it is linked with CS
         CooldownIndicator, // Abilities MUST be separated into those without cooldowns (above) and those with cooldowns (below)
         CS,

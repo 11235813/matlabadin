@@ -199,6 +199,14 @@ namespace Matlabadin.Tests
             DoTest(gp, GetState(gp, Ability.Cons, 6), Ability.CS);
         }
         [Test]
+        public void BuffStacks_ConditionalsTests()
+        {
+            Int64GraphParameters gp = NoHitExpertise("FoL[#SH>=2]");
+            DoTest(gp, GetState(gp, 0, Buff.SH, 0), Ability.Nothing);
+            DoTest(gp, GetState(gp, 1, Buff.SH, 1), Ability.Nothing);
+            DoTest(gp, GetState(gp, 2, Buff.SH, 2), Ability.FoL);
+        }
+        [Test]
         public void KeepUpWBShouldCastHotRWhenBuffLessThan4_5Seconds()
         {
             var gp = new Int64GraphParameters(new RotationPriorityQueue<ulong>("^WB"), 3, 1, 1);
