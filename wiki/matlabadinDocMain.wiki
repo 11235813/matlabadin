@@ -1,0 +1,13 @@
+#summary matlabadin Documentation Main Page
+
+= Introduction =
+
+matlabadin is a mechanics simulation and testing (theorycrafting) package for the Paladin class in World of Warcraft. It is a combined matlab/C# code that uses a [http://en.wikipedia.org/wiki/Finite-state_machine Finite State Machine] (FSM) approach to model spell rotations, effects of glyph and talent choices, etc.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
