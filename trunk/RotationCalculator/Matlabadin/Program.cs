@@ -57,23 +57,25 @@ namespace Matlabadin
         }
         private static void ProcessParams(string[] args)
         {
-            if (args.Length < 5) Usage();
+            if (args.Length < 6) Usage();
             string rotation;
             int stepsPerGcd;
             double mehit, sphit;
+            bool sh;
             rotation = args[0];
             if (!Int32.TryParse(args[1], out stepsPerGcd)) Usage();
             if (!Double.TryParse(args[2], out mehit)) Usage();
             if (!Double.TryParse(args[3], out sphit)) Usage();
-            string file = args.Length >= 4 ? args[4] : null;
-            ProcessGraph(file, rotation, stepsPerGcd, mehit, sphit);
+            if (!Boolean.TryParse(args[4], out sh)) Usage();
+            string file = args.Length >= 5 ? args[5] : null;
+            ProcessGraph(file, rotation, stepsPerGcd, mehit, sphit, sh);
         }
         private static DateTime BuildTime = new FileInfo(typeof(Program).Assembly.Location).CreationTime;
-        private static void ProcessGraph(string file, string rotation, int stepsPerGcd, double mehit, double sphit)
+        private static void ProcessGraph(string file, string rotation, int stepsPerGcd, double mehit, double sphit, bool sh)
         {
             if (file == null)
             {
-                ProcessGraph(Console.Out, rotation, stepsPerGcd, mehit, sphit);
+                ProcessGraph(Console.Out, rotation, stepsPerGcd, mehit, sphit, sh);
             }
             else
             {
@@ -100,12 +102,12 @@ namespace Matlabadin
                 }
                 using (StringWriter sw = new StringWriter())
                 {
-                    ProcessGraph(sw, rotation, stepsPerGcd, mehit, sphit);
+                    ProcessGraph(sw, rotation, stepsPerGcd, mehit, sphit, sh);
                     File.WriteAllText(file, sw.ToString());
                 }
             }
         }
-        private static void ProcessGraph(TextWriter stream, string rotation, int stepsPerGcd, double mehit, double sphit)
+        private static void ProcessGraph(TextWriter stream, string rotation, int stepsPerGcd, double mehit, double sphit, bool sh)
         {
             if (mehit < BaseMeleeHit) Console.Error.WriteLine("Warning: {0} melee hit would require negative hit rating", mehit);
             if (sphit < BaseSpellHit) Console.Error.WriteLine("Warning: {0} spell hit would require negative hit rating", sphit);
@@ -113,7 +115,7 @@ namespace Matlabadin
             if (sphit > 1) { Console.Error.WriteLine("Warning: invalid range hit {0}", sphit); Usage(); }
             if (stepsPerGcd != 1 && stepsPerGcd != 3 && stepsPerGcd != 5) Console.Error.WriteLine("Warning: {0} steps per GCD is untested", stepsPerGcd);
             RotationPriorityQueue<ulong> queue = new RotationPriorityQueue<ulong>(rotation);
-            Int64GraphParameters gp = new Int64GraphParameters(queue, stepsPerGcd, mehit, sphit);
+            Int64GraphParameters gp = new Int64GraphParameters(queue, stepsPerGcd, mehit, sphit, sh);
             Stopwatch generateGraphStopWatch = new Stopwatch();
             generateGraphStopWatch.Start();
             double[] hintPr;
@@ -152,9 +154,10 @@ namespace Matlabadin
             stream.WriteLine("Stats_Time_GenerateGraph,{0}", generateGraphStopWatch.ElapsedMilliseconds);
             stream.WriteLine("Stats_Time_Converge,{0}", convergeStopWatch.ElapsedMilliseconds);
             stream.WriteLine("Stats_Time_Aggregate,{0}", aggregateStopWatch.ElapsedMilliseconds);
-            stream.WriteLine("Param_Rotation,{0}", rotation);
-            stream.WriteLine("Param_Hit_Melee,{0}", mehit);
-            stream.WriteLine("Param_Hit_Spell,{0}", sphit);
+            stream.WriteLine("Param_Rotation,{0}", gp.Rotation.PriorityQueue);
+            stream.WriteLine("Param_Hit_Melee,{0}", gp.MeleeHit);
+            stream.WriteLine("Param_Hit_Spell,{0}", gp.SpellHit);
+            stream.WriteLine("Param_SelflessHealer,{0}", gp.SelflessHealer);
         }
         private static void CacheGraph(MatlabadinGraph<ulong> mg, double[] pr)
         {
@@ -197,7 +200,7 @@ namespace Matlabadin
         private static Dictionary<string, List<Tuple<MatlabadinGraph<ulong>, double[]>>> existingGraphs = new Dictionary<string, List<Tuple<MatlabadinGraph<ulong>, double[]>>>();
         public static void Usage()
         {
-            string message = "Matlabadin.exe <rotation> <stepsPerGcd> <mehit> <sphit> [<outputfile>]" + Environment.NewLine
+            string message = "Matlabadin.exe <rotation> <stepsPerGcd> <mehit> <sphit> <selflessHealer> [<outputfile>]" + Environment.NewLine
                 + "Input parameters can also be read from the command line using the same argument format as above";
             Console.WriteLine(message);
             Console.Error.WriteLine(message);

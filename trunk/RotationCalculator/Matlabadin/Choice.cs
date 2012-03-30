@@ -14,6 +14,7 @@ namespace Matlabadin
             int hp,
             bool wogss,
             bool asgc,
+            int folsh,
             int[][] buffDuration
             )
         {
@@ -21,6 +22,7 @@ namespace Matlabadin
             if (buffDuration == null) throw new ArgumentNullException("buffDuration");
             if (wogss && ability != Ability.WoG) throw new ArgumentException("Sanity failure: wogss cannot be set if ability is not WoG");
             if (asgc && ability != Ability.AS) throw new ArgumentException("Sanity failure: asgc cannot be set if ability is not AS");
+            if (folsh > 0 && ability != Ability.FoL) throw new ArgumentException("Sanity failure: folsh cannot be nonz-zero if ability is not FoL");
             if (buffDuration.Any(bd => bd.Any(d => d > stepsDuration))) throw new ArgumentException("Sanity failure: buff duration cannot exceed step duration of transition");
             if (buffDuration.Length != (int)Buff.UptimeTrackedBuffs) throw new ArgumentException("Sanity failure: buffDuration array length invalid");
             if (Math.Abs(pr.Sum() - 1.0) > 0.0001) throw new ArgumentException("Sanity failure: transition probabilities do not sum to 1");
@@ -29,6 +31,7 @@ namespace Matlabadin
             this.hp = hp;
             this.wogss = wogss;
             this.asgc = asgc;
+            this.folsh = folsh;
             this.stepsDuration = stepsDuration;
             this.buffDuration = buffDuration;
             this.pr = pr;
@@ -53,6 +56,7 @@ namespace Matlabadin
                         }
                         if (wogss) action[0] += "(SS)";
                         if (asgc) action[0] += "(GC)";
+                        if (ability == Ability.FoL) action[0] += String.Format("(SH{0})", folsh);
                     }
                 }
                 return action;
@@ -63,6 +67,7 @@ namespace Matlabadin
         private readonly Ability ability;
         private readonly bool wogss;
         private readonly bool asgc;
+        private readonly int folsh;
         private readonly int hp;
         public readonly int stepsDuration;
         public readonly int[][] buffDuration;
@@ -78,6 +83,7 @@ namespace Matlabadin
             return ability == c.ability
                 && wogss == c.wogss
                 && asgc == c.asgc
+                && folsh == c.folsh
                 && hp == c.hp
                 && stepsDuration == c.stepsDuration
                 && buffDuration.Length == c.buffDuration.Length
@@ -89,12 +95,14 @@ namespace Matlabadin
         {
             int prhash = pr.Aggregate(0, (h, p) => h ^ (int)(p * (1 << 30)));
             int packed = stepsDuration;
-            packed = 6 * packed + hp;
-            packed = 2 * packed + (wogss ? 0 : 1);
-            packed = 2 * packed + (asgc ? 0 : 1);
-            packed = (int)Ability.Count * packed + (int)ability;
+            //packed = 6 * packed + hp;
+            //packed = 2 * packed + (wogss ? 0 : 1);
+            //packed = 2 * packed + (asgc ? 0 : 1);
+            //packed = 3 * packed + folsh;
+            //packed = (int)Ability.Count * packed + (int)ability;
             int buffHash = buffDuration.SelectMany(b => b).Aggregate(0, (p, dur) => p * (stepsDuration + 1) + dur);
-            return prhash ^ packed ^ buffHash;
+            int actionHash = Action.Aggregate(0, (h, a) => h ^ a.GetHashCode());
+            return prhash ^ packed ^ buffHash ^ actionHash;
         }
         private Choice(Choice first, Choice second)
         {

@@ -36,10 +36,11 @@ namespace Matlabadin
         /// Grand Crusader
         /// </summary>
         GC,
-        // AW,
-        // TODO: EF, Holy Avenger & Selfless Healer require stacks as well as a duration - these require extra state storage (similar to Holy Power).
-        // HA, SH
-
+        /// <summary>
+        /// Selfless Healer
+        /// </summary>
+        SH,
+        // AW, HA
         Count,
         UptimeTrackedBuffs = SotRSB + 1,
     }

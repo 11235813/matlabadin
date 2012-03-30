@@ -11,18 +11,21 @@ namespace Matlabadin
             RotationPriorityQueue<TState> rotation,
             int stepsPerGcd,
             double mehit,
-            double sphit
+            double sphit,
+            bool selflessHealer = false
             )
         {
             double[] abilityCooldowns = { 4.5, 6, 15, 9, 9, }; // CS, J, AS, Cons, HW
             // GC buff duration extended by 0.5s since the server takes time to apply the buff and it is active 4 GCDs after triggering
-            double[] buffDurations = { 1.5, 30, 30, 30, 6, 6.5, }; // GCD, EF, SS, WB, SotRSB, GC
+            double[] buffDurations = { 1.5, 30, 30, 30, 6, 6.5, 15 }; // GCD, EF, SS, WB, SotRSB, GC, SH
+            this.buffStacks = new int[] { 1, 1, 1, 1, 1, 1, 2 };
             this.StepDuration = 1.5 / stepsPerGcd;
             this.StepsPerGcd = stepsPerGcd;
             this.abilitySteps = abilityCooldowns.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();
             this.buffSteps = buffDurations.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();
             this.MeleeHit = mehit;
             this.SpellHit = sphit;
+            this.SelflessHealer = selflessHealer;
             this.Rotation = rotation;
         }
         public double StepDuration { get; private set; }
@@ -46,6 +49,14 @@ namespace Matlabadin
             if (ability == Ability.HotR) return AbilityCooldownInSteps(Ability.CS);
             if (ability <= Ability.CooldownIndicator) return 0;
             return abilitySteps[(int)ability - (int)Ability.CooldownIndicator - 1];
+        }
+        public int MaxBuffStacks(Buff buff)
+        {
+            return this.buffStacks[(int)buff];
+        }
+        public bool CanStack(Buff buff)
+        {
+            return buff == Buff.SH;
         }
         /// <summary>
         /// Returns the time it takes for an ability to be used.
@@ -72,7 +83,8 @@ namespace Matlabadin
             return this.Rotation.PriorityQueue == gp.Rotation.PriorityQueue
                 && this.StepsPerGcd == gp.StepsPerGcd
                 && hitGeneratesSameShape(this.MeleeHit, gp.MeleeHit)
-                && hitGeneratesSameShape(this.SpellHit, gp.SpellHit);
+                && hitGeneratesSameShape(this.SpellHit, gp.SpellHit)
+                && this.SelflessHealer == gp.SelflessHealer;
         }
         private bool hitGeneratesSameShape(double hit1, double hit2)
         {
@@ -81,8 +93,10 @@ namespace Matlabadin
         }
         public double MeleeHit { get; private set; }
         public double SpellHit { get; private set; }
+        public bool SelflessHealer { get; private set; }
         public RotationPriorityQueue<TState> Rotation { get; private set; }
         private readonly int[] abilitySteps;
         private readonly int[] buffSteps;
+        private readonly int[] buffStacks;
     }
 }

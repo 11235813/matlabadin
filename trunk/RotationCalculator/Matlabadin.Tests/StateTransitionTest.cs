@@ -189,6 +189,41 @@ namespace Matlabadin.Tests
             Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.HotR, hit: true, gcProc: true), Buff.WB));
             Assert.AreEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.HotR, hit: false), Buff.WB));
         }
+        [Test]
+        public void UseAbility_JHitShouldProcSH()
+        {
+            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, Buff.GC, 4), Ability.J, hit: true), Buff.SH));
+        }
+        [Test]
+        public void UseAbility_JMissShouldNotProcSH()
+        {
+            Assert.AreEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.J, hit: false), Buff.SH));
+        }
+        [Test]
+        public void UseAbility_JHitShouldStackSH()
+        {
+            Assert.AreEqual(2, SM.Stacks(StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, 1, Buff.SH, 4), Ability.J, hit: true), Buff.SH));
+        }
+        [Test]
+        public void UseAbility_J_SHShouldStackTwice()
+        {
+            Assert.AreEqual(1, SM.Stacks(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.J, hit: true), Buff.SH));
+            Assert.AreEqual(2, SM.Stacks(StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, 1, Buff.SH, 4), Ability.J, hit: true), Buff.SH));
+            Assert.AreEqual(2, SM.Stacks(StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, 2, Buff.SH, 4), Ability.J, hit: true), Buff.SH));
+        }
+        [Test]
+        public void UseAbility_FoLShouldConsumeSH()
+        {
+            Assert.AreEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, 2, Buff.SH, 4), Ability.FoL), Buff.SH));
+            Assert.AreEqual(0, SM.Stacks(StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, 2, Buff.SH, 4), Ability.FoL), Buff.SH));
+        }
+        [Test]
+        public void UseAbility_JWithoutSelfLessHealerShouldNotProcSH()
+        {
+            var gp = new Int64GraphParameters(AllAbilityRotation, 3, 1, 1, false);
+            var sm = gp;
+            Assert.AreEqual(0, sm.TimeRemaining(StateTransition<ulong>.UseAbility(gp, sm, 0, Ability.J, hit: true), Buff.SH));
+        }
         private void TestNextState(Int64GraphParameters gp, ulong state, Ability a,
             ulong[] expectedState,
             double[] expectedPr,

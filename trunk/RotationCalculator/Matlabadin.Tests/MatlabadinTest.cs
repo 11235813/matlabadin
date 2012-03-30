@@ -23,6 +23,10 @@ namespace Matlabadin.Tests
         {
             return sm.SetTimeRemaining((ulong)hp, buff1, cd1);
         }
+        public static ulong GetState(IStateManager<ulong> sm, int stacks, Buff buff1, int cd1, ulong hp = 0)
+        {
+            return sm.SetStacks(sm.SetTimeRemaining((ulong)hp, buff1, cd1), buff1, stacks);
+        }
         public static ulong GetState(IStateManager<ulong> sm, Buff buff1, int cd1, Buff buff2, int cd2, ulong hp = 0)
         {
             return sm.SetTimeRemaining(GetState(sm, buff1, cd1, hp), buff2, cd2);
@@ -33,11 +37,11 @@ namespace Matlabadin.Tests
         }
         public static Int64GraphParameters NoMiss(string rotation)
         {
-            return new Int64GraphParameters(new RotationPriorityQueue<ulong>(rotation), 3, 1, 1);
+            return new Int64GraphParameters(new RotationPriorityQueue<ulong>(rotation), 3, 1, 1, true);
         }
         public static Int64GraphParameters NoHitExpertise(string rotation)
         {
-            return new Int64GraphParameters(new RotationPriorityQueue<ulong>(rotation), 3, 1 - 0.08 - 0.065 - 0.14, 1 - 0.08);
+            return new Int64GraphParameters(new RotationPriorityQueue<ulong>(rotation), 3, 1 - 0.08 - 0.065 - 0.14, 1 - 0.08, true);
         }
         public static RotationPriorityQueue<ulong> AllAbilityRotation { get { return defaultParameters.Rotation; } }
         public static IStateManager<ulong> AllAbilityStateManager { get { return defaultParameters; } }
@@ -46,6 +50,6 @@ namespace Matlabadin.Tests
         public static RotationPriorityQueue<ulong> R { get { return AllAbilityRotation; } }
         public static IStateManager<ulong> SM { get { return AllAbilityStateManager; } }
         public static Int64GraphParameters GP { get { return AllAbilityGraphParameters; } }
-        private static Int64GraphParameters defaultParameters = NoHitExpertise("SS>EF>SotR>HotR>WoG>CS>J>AS>Cons>HW");
+        private static Int64GraphParameters defaultParameters = NoHitExpertise("SS>EF>SotR>HotR>WoG>CS>J>AS>Cons>HW>FoL");
     }
 }

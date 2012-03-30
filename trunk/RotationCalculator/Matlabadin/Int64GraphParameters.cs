@@ -11,12 +11,14 @@ namespace Matlabadin
             RotationPriorityQueue<ulong> rotation,
             int stepsPerGcd,
             double mehit,
-            double sphit)
+            double sphit,
+            bool selflessHealer = false)
             : base(
             rotation,
             stepsPerGcd,
             mehit,
-            sphit)
+            sphit,
+            selflessHealer)
         {
             CalculateBitOffsets();
         }
@@ -49,6 +51,8 @@ namespace Matlabadin
 
             BuffDurationStartBit = new int[(int)Buff.Count];
             BuffDurationBits = new int[(int)Buff.Count];
+            BuffStackStartBit = new int[(int)Buff.Count];
+            BuffStackBits = new int[(int)Buff.Count];
             for (int i = 0; i < (int)Buff.Count; i++)
             {
                 BuffDurationStartBit[i] = bit;
@@ -56,8 +60,14 @@ namespace Matlabadin
                 while (1 << BuffDurationBits[i] <= cd) BuffDurationBits[i]++;
                 bit += BuffDurationBits[i];
             }
+            for (int i = 0; i < (int)Buff.Count; i++)
+            {
+                BuffStackStartBit[i] = bit;
+                int stacks = this.MaxBuffStacks((Buff)i) - 1; // only store stacks > 1
+                while (1 << BuffStackBits[i] <= stacks) BuffStackBits[i]++;
+                bit += BuffStackBits[i];
+            }
             if (bit > 64) throw new ArgumentOutOfRangeException("bit-encoded state space larger than 64 bit");
-
             
             zeroCooldownBitMask = 0;
             for (int i = 0; i < AbilityCooldownStartBit.Length; i++)
@@ -73,6 +83,12 @@ namespace Matlabadin
         public int[] AbilityCooldownBits;
         public int[] BuffDurationStartBit;
         public int[] BuffDurationBits;
+        public int[] BuffStackStartBit;
+        /// <remarks>
+        /// Only buffs with multiple stacks need to be stored and the first stack is implicit in a non-zero duration.
+        /// Eg: if a buff can stack twice, we only need 1 bit of storage: 1 stack = 0x0, 2 stacks = 0x1.
+        /// </remarks>
+        public int[] BuffStackBits;
         private ulong zeroCooldownBitMask;
         #endregion
         #region IStateManager<ulong>
@@ -100,7 +116,12 @@ namespace Matlabadin
         {
             int numBits = BuffDurationBits[(int)buff];
             if (value >= 1 << numBits) throw new ArgumentException(String.Format("Duration of {0} steps does not fit into {1} bits assigned to buff {2}", value, numBits, buff));
-            return Pack(state, BuffDurationStartBit[(int)buff], numBits, value);
+            state = Pack(state, BuffDurationStartBit[(int)buff], numBits, value);
+            if (value == 0)
+            {
+                state = Pack(state, BuffStackStartBit[(int)buff], BuffStackBits[(int)buff], 0); // remove any buff stacks
+            }
+            return state;
         }
         public int HP(ulong state)
         {
@@ -130,8 +151,7 @@ namespace Matlabadin
             }
             for (int i = 0; i < (int)Buff.Count; i++)
             {
-                state = Pack(state, BuffDurationStartBit[i], BuffDurationBits[i],
-                    Math.Max(0, Unpack(state, BuffDurationStartBit[i], BuffDurationBits[i]) - steps));
+                state = SetTimeRemaining(state, (Buff)i, Math.Max(0, TimeRemaining(state, (Buff)i) - steps));
             }
             return state;
         }
@@ -142,6 +162,21 @@ namespace Matlabadin
         public bool ZeroCooldownRemainingForAllAbilities(ulong state)
         {
             return (zeroCooldownBitMask & state) == 0;
+        }
+        public int Stacks(ulong state, Buff buff)
+        {
+            if (TimeRemaining(state, buff) == 0) return 0;
+            return Unpack(state, BuffStackStartBit[(int)buff], BuffStackBits[(int)buff]) + 1;
+        }
+        public ulong SetStacks(ulong state, Buff buff, int stacks)
+        {
+            if (stacks == 0)
+            {
+                return SetTimeRemaining(state, buff, 0);
+            }
+            if (TimeRemaining(state, buff) == 0) throw new ArgumentException("Cannot set stacks of inactive buff");
+            if (stacks - 1 >= 1 << BuffStackBits[(int)buff]) throw new ArgumentException(String.Format("{0} Buff stacks do not fit into {1} stacks bits assigned {2}", stacks, BuffStackBits[(int)buff], buff));
+            return Pack(state, BuffStackStartBit[(int)buff], BuffStackBits[(int)buff], stacks - 1);
         }
         #endregion
         private static int Unpack(ulong state, int startBit, int numBits)

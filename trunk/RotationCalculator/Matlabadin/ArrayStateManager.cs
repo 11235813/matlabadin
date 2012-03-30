@@ -10,6 +10,7 @@ namespace Matlabadin
         public int hp;
         public int[] cd;
         public int[] duration;
+        public int[] stacks;
         public override bool Equals(object obj)
         {
             if (obj is StateArray) return Equals((StateArray)obj);
@@ -25,6 +26,7 @@ namespace Matlabadin
             for (int i = 0; i < this.duration.Length; i++)
             {
                 if (this.duration[i] != sa.duration[i]) return false;
+                if (this.stacks[i] != sa.stacks[i]) return false;
             }
             return true;
         }
@@ -33,6 +35,7 @@ namespace Matlabadin
             int hash = hp.GetHashCode();
             for (int i = 0; i < this.cd.Length; i++) hash |= (this.cd[i] << (i + 1)).GetHashCode();
             for (int i = 0; i < this.duration.Length; i++) hash |= (this.duration[i] << (i + 1 + this.cd.Length)).GetHashCode();
+            // TODO add stacks to hash
             return hash;
         }
         public static bool operator ==(StateArray a, StateArray b)
@@ -56,6 +59,7 @@ namespace Matlabadin
                 hp = 0,
                 cd = new int[(int)Ability.Count - (int)Ability.CooldownIndicator],
                 duration = new int[(int)Buff.Count],
+                stacks = new int[(int)Buff.Count],
             };
         }
         public int CooldownRemaining(StateArray state, Ability ability)
@@ -80,6 +84,7 @@ namespace Matlabadin
                 hp = Math.Min(state.hp + 1, 5),
                 cd = state.cd,
                 duration = state.duration,
+                stacks = state.stacks,
             };
         }
         public StateArray SetHP(StateArray state, int hp)
@@ -89,6 +94,7 @@ namespace Matlabadin
                 hp = hp,
                 cd = state.cd,
                 duration = state.duration,
+                stacks = state.stacks,
             };
         }
         public StateArray SetCooldownRemaining(StateArray state, Ability ability, int cd)
@@ -99,6 +105,7 @@ namespace Matlabadin
                 hp = state.hp,
                 cd = (int[])state.cd.Clone(),
                 duration = state.duration,
+                stacks = state.stacks,
             };
             sa.cd[(int)ability - (int)Ability.CooldownIndicator] = cd;
             return sa;
@@ -110,8 +117,10 @@ namespace Matlabadin
                 hp = state.hp,
                 cd = state.cd,
                 duration = (int[])state.duration.Clone(),
+                stacks = (int[])state.stacks.Clone(),
             };
             sa.duration[(int)buff] = value;
+            sa.stacks[(int)buff] = 1;
             return sa;
         }
         public StateArray AdvanceTime(StateArray state, int steps)
@@ -121,6 +130,7 @@ namespace Matlabadin
                 hp = state.hp,
                 cd = (int[])state.cd.Clone(),
                 duration = (int[])state.duration.Clone(),
+                stacks = (int[])state.stacks.Clone(),
             };
             for (int i = 0; i < (int)Ability.Count - (int)Ability.CooldownIndicator; i++)
             {
@@ -129,6 +139,10 @@ namespace Matlabadin
             for (int i = 0; i < (int)Buff.Count; i++)
             {
                 sa.duration[i] = Math.Max(0, sa.duration[i] - steps);
+                if (sa.duration[i] == 0)
+                {
+                    sa.stacks[i] = 0;
+                }
             }
             return sa;
         }
@@ -139,6 +153,31 @@ namespace Matlabadin
                 if (sa.cd[i] > 0) return false;
             }
             return true;
+        }
+        public int Stacks(StateArray state, Buff buff)
+        {
+            return state.stacks[(int)buff];
+        }
+        public StateArray SetStacks(StateArray state, Buff buff, int stacks)
+        {
+            if (TimeRemaining(state, buff) == 0) throw new ArgumentException("Cannot set stacks of inactive buff");
+            StateArray sa = new StateArray()
+            {
+                hp = state.hp,
+                cd = state.cd,
+                duration = (int[])state.duration.Clone(),
+                stacks = (int[])state.stacks.Clone(),
+            };
+            if (stacks == 0)
+            {
+                sa.duration[(int)buff] = 0;
+                sa.stacks[(int)buff] = 0;
+            }
+            else
+            {
+                sa.stacks[(int)buff] = stacks;
+            }
+            return sa;
         }
     }
 }

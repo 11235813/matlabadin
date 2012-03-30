@@ -22,15 +22,16 @@ namespace Matlabadin
     /// Conditionals: conditionals take the following form:
     /// [<type><Ability><op><value>]
     /// where
-    /// type is "buff" or "cd" or "HP" (if "HP", ability is omitted)
+    /// type is "buff" or "cd" or "HP" "#" (if "HP", ability is omitted)
     /// op is one of < > <= >= = 
     /// value is a numeric value
     /// 
-    /// Example: HW[cdCS>0][buffGC>1]>CS[buffInq>0]>Cons[HP=2]>Inq2
+    /// Example: HW[cdCS>0][buffGC>1]>CS[buffInq>0]>Cons[HP=2]>Inq2>J[#SH=0]
     ///  - will use Holy Wrath if Holy Wrath and Crusader Strike are off cooldown and the Grand Crusader buff has at least 1 second remaining
     ///  - will use Crusader Strike if Crusader Strike is off cooldown and the Inquisition self-buff is active
     ///  - will use Consecration if Consecration is off cooldown and Holy Power is 2
     ///  - will use Inquisition if 2 or more holy power is available
+    ///  - will use Judgement if there are zero Selfless Healer self-buff stacks
     ///  - will do nothing if the above abilities were not used
     /// 
     /// Note that all abilities have an implicit condition that the
@@ -180,18 +181,19 @@ namespace Matlabadin
             var conditions = new List<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>();
             foreach (string conditionString in conditionalStrings)
             {
-                Match conditionMatch = Regex.Match(conditionString, @"^\[(?<type>(cd)|(buff|HP))(?<conditional>\w*)(?<operation>[><=]+)(?<value>\d*\.?\d*)\]$");
+                Match conditionMatch = Regex.Match(conditionString, @"^\[(?<type>((cd)|(buff)|(HP)|(#)))(?<conditional>\w*)(?<operation>[><=]+)(?<value>\d*\.?\d*)\]$");
+                if (!conditionMatch.Success) throw new ArgumentException(String.Format("Unknown conditional {0}", conditionString));
                 string type = conditionMatch.Groups["type"].Value;
                 string conditional = conditionMatch.Groups["conditional"].Value;
                 string operation = conditionMatch.Groups["operation"].Value;
                 double value = Double.Parse(conditionMatch.Groups["value"].Value);
                 Func<GraphParameters<TState>, IStateManager<TState>, TState, double> getStateValue;
-                if (type == "HP")
+                if (type == "HP") // Holy Power
                 {
                     getStateValue = (gp, sm, state) => sm.HP(state);
                     hpConditionEncountered = true;
                 }
-                else if (type == "cd")
+                else if (type == "cd") // Ability cooldown
                 {
                     Ability a = (Ability)Enum.Parse(typeof(Ability), conditional);
                     getStateValue = (gp, sm, state) =>
@@ -201,10 +203,15 @@ namespace Matlabadin
                             ) * gp.StepDuration;
                     conditionAbilityList.Add(a);
                 }
-                else if (type == "buff")
+                else if (type == "buff") // Buff duration
                 {
                     Buff b = (Buff)Enum.Parse(typeof(Buff), conditional);
                     getStateValue = (gp, sm, state) => sm.TimeRemaining(state, b) * gp.StepDuration;
+                }
+                else if (type == "#") // Buff stacks
+                {
+                    Buff b = (Buff)Enum.Parse(typeof(Buff), conditional);
+                    getStateValue = (gp, sm, state) => sm.Stacks(state, b);
                 }
                 else
                 {

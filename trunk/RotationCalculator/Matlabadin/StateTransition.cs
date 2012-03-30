@@ -162,6 +162,7 @@ namespace Matlabadin
                 sm.HP(StateInitial),
                 ability == Ability.WoG && sm.TimeRemaining(StatePreAbility, Buff.SS) > 0,
                 ability == Ability.AS && sm.TimeRemaining(StatePreAbility, Buff.GC) > 0,
+                ability == Ability.FoL ? sm.Stacks(StatePreAbility, Buff.SH) : 0,
                 buffSteps);
         }
         /// <summary>
@@ -224,6 +225,7 @@ namespace Matlabadin
                 case Ability.WoG:
                 case Ability.EF:
                 case Ability.SS:
+                case Ability.FoL:
                     StatePostAbility = new TState[]
                     {
                         UseAbility(gp, sm, StatePreAbility, ability),
@@ -325,7 +327,12 @@ namespace Matlabadin
                     if (hit)
                     {
                         nextState = sm.IncHP(nextState);
-                        // TODO Selfless Healer buff
+                        if (gp.SelflessHealer)
+                        {
+                            int stacks = sm.Stacks(nextState, Buff.SH);
+                            nextState = sm.SetTimeRemaining(nextState, Buff.SH, gp.BuffDurationInSteps(Buff.SH));
+                            nextState = sm.SetStacks(nextState, Buff.SH, Math.Min(stacks + 1, gp.MaxBuffStacks(Buff.SH)));
+                        }
                     }
                     break;
                 case Ability.AS:
@@ -344,6 +351,9 @@ namespace Matlabadin
                     nextState = sm.SetHP(nextState, hp - availableHp);
                     nextState = sm.SetTimeRemaining(nextState, Buff.EF, gp.BuffDurationInSteps(Buff.EF));
                     // TODO efStacks = availableHp
+                    break;
+                case Ability.FoL:
+                    nextState = sm.SetStacks(nextState, Buff.SH, 0);
                     break;
             }
             if (gcProc)

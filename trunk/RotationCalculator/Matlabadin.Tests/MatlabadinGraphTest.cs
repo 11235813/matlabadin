@@ -205,6 +205,15 @@ namespace Matlabadin.Tests
             Assert.AreEqual(5d / 13.5 / 3, result.Action["SotR"], Tolerance * 10); // 5 HP per 13.5s cycle; 3 HP per cast
         }
         [Test]
+        public void CalculateAggregates_FoL()
+        {
+            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<ulong>("FoL[#SH=2]>SotR>CS>J"), 1, 1, 1, true);
+            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            var result = mg.CalculateResults(
+                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
+            Assert.IsTrue(result.Action.ContainsKey("FoL(SH2)"));
+        }
+        [Test]
         public void CalculateAggregates_SotRCSASJ()
         {
             Int64GraphParameters gp = NoMiss("CS>AS");
