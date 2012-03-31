@@ -1,1 +1,11 @@
-Sidebar for navigation.
+[matlabadinDocMain Main landing page]
+  * Brief description
+  * Important links
+    # History/origins (who, what, why, how)
+    # Installation/compilation
+    # Warnings/gotchas
+  * User guide
+    # Example
+  * File/code documentation
+    # Flowchart (high level flow, with links if feasible)
+    # Individual file documentation (file-by-file) 
