@@ -1,11 +1,13 @@
-[matlabadinDocMain Main landing page]
-  * Brief description
+#summary Sidebar for matlabadin Wiki
+
+  * [matlabadinDocMain#Introduction Introduction]
   * Important links
-    # History/origins (who, what, why, how)
-    # Installation/compilation
-    # Warnings/gotchas
+    * History/origins (who, what, why, how)
+    * Installation/compilation
+    * Warnings/gotchas
   * User guide
-    # Example
+    * Example
+    * FAQ
   * File/code documentation
-    # Flowchart (high level flow, with links if feasible)
-    # Individual file documentation (file-by-file) 
+    * Flowchart (high level flow, with links if feasible)
+    * Individual file documentation (file-by-file) 
