@@ -2,7 +2,7 @@
 
   * [matlabadinDocMain#Introduction Introduction]
   * Important links
-    * History/origins (who, what, why, how)
+    * [matlabadinDocMain#History History (who, what, why, how)]
     * Installation/compilation
     * Warnings/gotchas
   * User guide
