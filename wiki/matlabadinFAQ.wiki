@@ -11,7 +11,7 @@
   == Code-related ==
   * I think I found an mistake in the MATLAB/C# code!
     * Awesome! Make a note of the mistake, file, revision number and file a defect [http://code.google.com/p/matlabadin/issues/list issue]. Also perhaps consider joining us by contacting one of the project owners in trying to make this code better!
-  * I think I know an easier/faster/better way to do X
+  * I think I know an easier/faster/better way to do X, or would like to request a new feature.
     * Even better! Write up a description of your proposed change, file, revision number and file an enhancement [http://code.google.com/p/matlabadin/issues/list issue]. Also perhaps consider joining us by contacting one of the project owners in trying to make this code better!
   
   == Output-related ==
