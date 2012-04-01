@@ -15,10 +15,29 @@ namespace Matlabadin
             bool selflessHealer = false
             )
         {
-            double[] abilityCooldowns = { 4.5, 6, 15, 9, 9, }; // CS, J, AS, Cons, HW
+            double[] abilityCooldowns = {
+                4.5, 6, 15, // CS, J, AS,
+                9, 9, 180, // Cons, HW, AW,
+            };
+            this.onGcd = new bool[] {
+                false, false, false, // Nothing, SotR, WoG,
+                false, false, true, // EF, SS, FoL,
+                true, true, // HotR, CooldownIndicator, 
+                true, true, true, // CS, J, AS, 
+                true, true, false, // Cons, HW, AW,
+                true, // Count
+            };
             // GC buff duration extended by 0.5s since the server takes time to apply the buff and it is active 4 GCDs after triggering
-            double[] buffDurations = { 1.5, 30, 30, 30, 6, 6.5, 15 }; // GCD, EF, SS, WB, SotRSB, GC, SH
-            this.buffStacks = new int[] { 1, 1, 1, 1, 1, 1, 2 };
+            double[] buffDurations = {
+                1.5, 30, 30, // GCD, EF, SS,
+                30, 20, 6, // WB, AW, SotRSB,
+                6.5, 15, // GC, SH,
+            };
+            this.buffStacks = new int[] {
+                1, 1, 1,
+                1, 1, 1,
+                1, 2,
+            };
             this.StepDuration = 1.5 / stepsPerGcd;
             this.StepsPerGcd = stepsPerGcd;
             this.abilitySteps = abilityCooldowns.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();
@@ -27,13 +46,14 @@ namespace Matlabadin
             this.SpellHit = sphit;
             this.SelflessHealer = selflessHealer;
             this.Rotation = rotation;
+            
         }
         public double StepDuration { get; private set; }
         public int StepsPerGcd { get; private set; }
         public double GCProcRate { get { return 0.2; } }
         public bool AbilityOnGcd(Ability ability)
         {
-            return ability == Ability.HotR || ability >= Ability.CooldownIndicator;
+            return this.onGcd[(int)ability];
         }
         public bool AbilityTriggersGcd(Ability ability)
         {
@@ -98,5 +118,6 @@ namespace Matlabadin
         private readonly int[] abilitySteps;
         private readonly int[] buffSteps;
         private readonly int[] buffStacks;
+        private readonly bool[] onGcd;
     }
 }

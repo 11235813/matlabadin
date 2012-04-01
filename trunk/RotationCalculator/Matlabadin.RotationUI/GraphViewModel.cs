@@ -9,8 +9,8 @@ namespace Matlabadin.RotationUI
 {
     public class GraphViewModel : INotifyPropertyChanged
     {
-        private MatlabadinGraph<ulong> graph;
-        public GraphViewModel(MatlabadinGraph<ulong> graph, double[] pr)
+        private MatlabadinGraph<BitVectorState> graph;
+        public GraphViewModel(MatlabadinGraph<BitVectorState> graph, double[] pr)
         {
             this.graph = graph;
             nodes = new List<StateNodeViewModel>();
@@ -22,7 +22,7 @@ namespace Matlabadin.RotationUI
                     Choice = graph.choice[i],
                     NextTransitions = new List<TransitionViewModel>(),
                     PreviousTransitions = new List<TransitionViewModel>(),
-                    State = new StateViewModel<ulong>(graph.StateManager, graph.index[i]),
+                    State = new StateViewModel<BitVectorState>(graph.StateManager, graph.index[i]),
                 });
             }
             for (int i = 0; i < graph.Size; i++)

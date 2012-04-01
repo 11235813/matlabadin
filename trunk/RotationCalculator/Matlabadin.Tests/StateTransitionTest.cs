@@ -26,7 +26,7 @@ namespace Matlabadin.Tests
                 Ability.HW,
             })
             {
-                Assert.AreEqual(Math.Max(0, GP.AbilityCooldownInSteps(a)), SM.CooldownRemaining(StateTransition<ulong>.UseAbility(GP, SM, 3, a), a));
+                Assert.AreEqual(Math.Max(0, GP.AbilityCooldownInSteps(a)), SM.CooldownRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, a), a));
             }
         }
         [Test]
@@ -42,7 +42,7 @@ namespace Matlabadin.Tests
                 Ability.HW,
             })
             {
-                Assert.AreEqual(GP.StepsPerGcd, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 3, a), Buff.GCD));
+                Assert.AreEqual(GP.StepsPerGcd, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, a), Buff.GCD));
             }
             // Off GCD
             foreach (Ability a in new Ability[] {
@@ -53,184 +53,189 @@ namespace Matlabadin.Tests
                 Ability.SS,
             })
             {
-                Assert.AreEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 3, a), Buff.GCD));
+                Assert.AreEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, a), Buff.GCD));
             }
         }
         [Test]
         public void UseAbility_CSShouldGiveHPOnHitOnly()
         {
-            Assert.AreEqual(1, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.CS, hit: true)));
-            Assert.AreEqual(0, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.CS, hit: false)));
+            Assert.AreEqual(1, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.CS, hit: true)));
+            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.CS, hit: false)));
         }
         [Test]
         public void UseAbility_HotR_ShouldGiveHPOnHitOnly()
         {
-            Assert.AreEqual(1, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.HotR, hit: true)));
-            Assert.AreEqual(0, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.HotR, hit: false)));
+            Assert.AreEqual(1, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.HotR, hit: true)));
+            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.HotR, hit: false)));
         }
         [Test]
         public void UseAbility_HPShouldCapAt5()
         {
-            Assert.AreEqual(4, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 3, Ability.CS, hit: true)));
-            Assert.AreEqual(5, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 4, Ability.CS, hit: true)));
-            Assert.AreEqual(5, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 5, Ability.CS, hit: true)));
+            Assert.AreEqual(4, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.CS, hit: true)));
+            Assert.AreEqual(5, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 4, Ability.CS, hit: true)));
+            Assert.AreEqual(5, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 5, Ability.CS, hit: true)));
         }
         [Test]
         public void UseAbility_HotRShouldGiveHPOnHitOnly()
         {
-            Assert.AreEqual(1, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.HotR, hit: true)));
-            Assert.AreEqual(0, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.HotR, hit: false)));
+            Assert.AreEqual(1, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.HotR, hit: true)));
+            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.HotR, hit: false)));
         }
         [Test]
         public void UseAbility_SotRShouldConsumeHPOnHitOnly()
         {
-            Assert.AreEqual(0, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 3, Ability.SotR, hit: true)));
-            Assert.AreEqual(3, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 3, Ability.SotR, hit: false)));
+            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.SotR, hit: true)));
+            Assert.AreEqual(3, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.SotR, hit: false)));
         }
         [Test]
         public void UseAbility_SotRShouldConsume3HP()
         {
-            Assert.AreEqual(0, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 3, Ability.SotR, hit: true)));
-            Assert.AreEqual(2, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 5, Ability.SotR, hit: true)));
+            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.SotR, hit: true)));
+            Assert.AreEqual(2, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 5, Ability.SotR, hit: true)));
         }
         [Test]
         public void UseAbility_SotRShouldProcSBOnHit()
         {
-            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 3, Ability.SotR, hit: true), Buff.SotRSB));
-            Assert.AreEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 3, Ability.SotR, hit: false), Buff.SotRSB));
+            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.SotR, hit: true), Buff.SotRSB));
+            Assert.AreEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.SotR, hit: false), Buff.SotRSB));
         }
         [Test]
         public void UseAbility_JShouldGiveHPOnHitOnly()
         {
-            Assert.AreEqual(1, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.J, hit: true)));
-            Assert.AreEqual(0, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.J, hit: false)));
+            Assert.AreEqual(1, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.J, hit: true)));
+            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.J, hit: false)));
         }
         [Test]
         public void UseAbility_WoGShouldConsumeUpTo3HP()
         {
-            Assert.AreEqual(0, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 1, Ability.WoG)));
-            Assert.AreEqual(0, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 2, Ability.WoG)));
-            Assert.AreEqual(0, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 3, Ability.WoG)));
-            Assert.AreEqual(1, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 4, Ability.WoG)));
-            Assert.AreEqual(2, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 5, Ability.WoG)));
+            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 1, Ability.WoG)));
+            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 2, Ability.WoG)));
+            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.WoG)));
+            Assert.AreEqual(1, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 4, Ability.WoG)));
+            Assert.AreEqual(2, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 5, Ability.WoG)));
         }
         [Test]
         public void UseAbility_MaximumOf3HPShouldBeConsumed()
         {
-            Assert.AreEqual(2, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 5, Ability.WoG)));
-            Assert.AreEqual(2, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 5, Ability.SotR)));
-            Assert.AreEqual(2, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 5, Ability.EF)));
-            Assert.AreEqual(2, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 5, Ability.SS)));
+            Assert.AreEqual(2, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 5, Ability.WoG)));
+            Assert.AreEqual(2, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 5, Ability.SotR)));
+            Assert.AreEqual(2, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 5, Ability.EF)));
+            Assert.AreEqual(2, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 5, Ability.SS)));
         }
         [Test]
         public void UseAbility_GCSProcShouldSetGCBuff()
         {
-            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.CS, hit: true, gcProc: true), Buff.GC));
+            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.CS, hit: true, gcProc: true), Buff.GC));
         }
         [Test]
         public void UseAbility_GCUseShouldConsumeGC()
         {
-            Assert.AreEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, Buff.GC, 4), Ability.AS, hit: true), Buff.GC));
+            Assert.AreEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, Buff.GC, 4), Ability.AS, hit: true), Buff.GC));
         }
         [Test]
         public void UseAbility_ASGCShouldGiveHPOnCast() // UseAbility_ASShouldGiveHPIffGCActiveAndHit() // 4.1 patch change: AS cast on-hit
         {
-            Assert.AreEqual(0, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.AS, hit: true)));
-            Assert.AreEqual(0, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.AS, hit: false)));
-            Assert.AreEqual(1, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, Buff.GC, 1), Ability.AS, hit: true)));
-            Assert.AreEqual(1, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, Buff.GC, 1), Ability.AS, hit: false)));
+            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.AS, hit: true)));
+            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.AS, hit: false)));
+            Assert.AreEqual(1, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, Buff.GC, 1), Ability.AS, hit: true)));
+            Assert.AreEqual(1, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, Buff.GC, 1), Ability.AS, hit: false)));
         }
         [Test]
-        public void UseAbility_SSShouldSetSSBuff()
+        public void UseAbility_SS_ShouldSetSSBuff()
         {
-            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 3, Ability.SS), Buff.SS));
+            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.SS), Buff.SS));
+        }
+        [Test]
+        public void UseAbility_AW_ShouldSetAWBuff()
+        {
+            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.AW), Buff.AW));
         }
         [Test]
         public void UseAbility_SS_ShouldConsume3HP()
         {
-            Assert.AreEqual(0, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 3, Ability.SS)));
-            Assert.AreEqual(2, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 5, Ability.SS)));
+            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.SS)));
+            Assert.AreEqual(2, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 5, Ability.SS)));
         }
         [Test]
-        public void UseAbility_EFShouldSetEFBuff()
+        public void UseAbility_EF_ShouldSetEFBuff()
         {
-            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 3, Ability.EF), Buff.EF));
+            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.EF), Buff.EF));
         }
         [Test]
         public void UseAbility_EF_ShouldConsumeUpTo3HP()
         {
-            Assert.AreEqual(0, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 1, Ability.EF)));
-            Assert.AreEqual(0, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 2, Ability.EF)));
-            Assert.AreEqual(0, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 3, Ability.EF)));
-            Assert.AreEqual(1, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 4, Ability.EF)));
-            Assert.AreEqual(2, SM.HP(StateTransition<ulong>.UseAbility(GP, SM, 5, Ability.EF)));
+            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 1, Ability.EF)));
+            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 2, Ability.EF)));
+            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.EF)));
+            Assert.AreEqual(1, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 4, Ability.EF)));
+            Assert.AreEqual(2, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 5, Ability.EF)));
         }
         [Test]
         public void UseAbility_ASMissShouldConsumeGC()
         {
-            var state = StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, Buff.GC, 4), Ability.AS, hit: false);
+            var state = StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, Buff.GC, 4), Ability.AS, hit: false);
             Assert.AreEqual(0, SM.TimeRemaining(state, Buff.GC));
         }
         [Test]
         public void UseAbility_ASHitShouldConsumeGC()
         {
-            Assert.AreEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, Buff.GC, 4), Ability.AS, hit: true), Buff.GC));
+            Assert.AreEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, Buff.GC, 4), Ability.AS, hit: true), Buff.GC));
         }
         [Test]
         public void UseAbility_ShouldNotAdvanceTime()
         {
-            ulong state = StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, Ability.CS, 3), Ability.Nothing);
+            BitVectorState state = StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, Ability.CS, 3), Ability.Nothing);
             Assert.AreEqual(3, SM.CooldownRemaining(state, Ability.CS));
         }
         [Test]
         public void UseAbility_HotR_ShouldProcWB_OnHit()
         {
-            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.HotR, hit: true), Buff.WB));
-            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.HotR, hit: true, gcProc: true), Buff.WB));
-            Assert.AreEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.HotR, hit: false), Buff.WB));
+            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.HotR, hit: true), Buff.WB));
+            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.HotR, hit: true, gcProc: true), Buff.WB));
+            Assert.AreEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.HotR, hit: false), Buff.WB));
         }
         [Test]
         public void UseAbility_JHitShouldProcSH()
         {
-            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, Buff.GC, 4), Ability.J, hit: true), Buff.SH));
+            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, Buff.GC, 4), Ability.J, hit: true), Buff.SH));
         }
         [Test]
         public void UseAbility_JMissShouldNotProcSH()
         {
-            Assert.AreEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.J, hit: false), Buff.SH));
+            Assert.AreEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.J, hit: false), Buff.SH));
         }
         [Test]
         public void UseAbility_JHitShouldStackSH()
         {
-            Assert.AreEqual(2, SM.Stacks(StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, 1, Buff.SH, 4), Ability.J, hit: true), Buff.SH));
+            Assert.AreEqual(2, SM.Stacks(StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, 1, Buff.SH, 4), Ability.J, hit: true), Buff.SH));
         }
         [Test]
         public void UseAbility_J_SHShouldStackTwice()
         {
-            Assert.AreEqual(1, SM.Stacks(StateTransition<ulong>.UseAbility(GP, SM, 0, Ability.J, hit: true), Buff.SH));
-            Assert.AreEqual(2, SM.Stacks(StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, 1, Buff.SH, 4), Ability.J, hit: true), Buff.SH));
-            Assert.AreEqual(2, SM.Stacks(StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, 2, Buff.SH, 4), Ability.J, hit: true), Buff.SH));
+            Assert.AreEqual(1, SM.Stacks(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.J, hit: true), Buff.SH));
+            Assert.AreEqual(2, SM.Stacks(StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, 1, Buff.SH, 4), Ability.J, hit: true), Buff.SH));
+            Assert.AreEqual(2, SM.Stacks(StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, 2, Buff.SH, 4), Ability.J, hit: true), Buff.SH));
         }
         [Test]
         public void UseAbility_FoLShouldConsumeSH()
         {
-            Assert.AreEqual(0, SM.TimeRemaining(StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, 2, Buff.SH, 4), Ability.FoL), Buff.SH));
-            Assert.AreEqual(0, SM.Stacks(StateTransition<ulong>.UseAbility(GP, SM, GetState(SM, 2, Buff.SH, 4), Ability.FoL), Buff.SH));
+            Assert.AreEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, 2, Buff.SH, 4), Ability.FoL), Buff.SH));
+            Assert.AreEqual(0, SM.Stacks(StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, 2, Buff.SH, 4), Ability.FoL), Buff.SH));
         }
         [Test]
         public void UseAbility_JWithoutSelfLessHealerShouldNotProcSH()
         {
             var gp = new Int64GraphParameters(AllAbilityRotation, 3, 1, 1, false);
             var sm = gp;
-            Assert.AreEqual(0, sm.TimeRemaining(StateTransition<ulong>.UseAbility(gp, sm, 0, Ability.J, hit: true), Buff.SH));
+            Assert.AreEqual(0, sm.TimeRemaining(StateTransition<BitVectorState>.UseAbility(gp, sm, 0, Ability.J, hit: true), Buff.SH));
         }
-        private void TestNextState(Int64GraphParameters gp, ulong state, Ability a,
-            ulong[] expectedState,
+        private void TestNextState(Int64GraphParameters gp, BitVectorState state, Ability a,
+            BitVectorState[] expectedState,
             double[] expectedPr,
             int expectedStepsDuration = 0)
         {
-            StateTransition<ulong> st = new StateTransition<ulong>(gp, gp, state, a);
-            ulong[] s = st.NextStates;
+            StateTransition<BitVectorState> st = new StateTransition<BitVectorState>(gp, gp, state, a);
+            BitVectorState[] s = st.NextStates;
             Choice c = st.Choice;
             Assert.AreEqual(s.Length, c.pr.Length);
             Assert.AreEqual(expectedStepsDuration, c.stepsDuration);
@@ -241,33 +246,33 @@ namespace Matlabadin.Tests
             }
             Assert.AreEqual(1, c.pr.Sum(), 1e-15);
         }
-        private void TestNextState(Int64GraphParameters gp, ulong state, Ability a,
-            double expectedPr1, ulong expectedState1,
+        private void TestNextState(Int64GraphParameters gp, BitVectorState state, Ability a,
+            double expectedPr1, BitVectorState expectedState1,
             int expectedStepsDuration = 0)
         {
-            TestNextState(gp, state, a, new ulong[] { expectedState1 }, new double[] { expectedPr1 }, expectedStepsDuration);
+            TestNextState(gp, state, a, new BitVectorState[] { expectedState1 }, new double[] { expectedPr1 }, expectedStepsDuration);
         }
-        private void TestNextState(Int64GraphParameters gp, ulong state, Ability a,
-            double expectedPr1, ulong expectedState1,
-            double expectedPr2, ulong expectedState2,            
+        private void TestNextState(Int64GraphParameters gp, BitVectorState state, Ability a,
+            double expectedPr1, BitVectorState expectedState1,
+            double expectedPr2, BitVectorState expectedState2,            
             int expectedStepsDuration = 0)
         {
-            TestNextState(gp, state, a, new ulong[] { expectedState1, expectedState2 }, new double[] { expectedPr1, expectedPr2 }, expectedStepsDuration);
+            TestNextState(gp, state, a, new BitVectorState[] { expectedState1, expectedState2 }, new double[] { expectedPr1, expectedPr2 }, expectedStepsDuration);
         }
-        private void TestNextState(Int64GraphParameters gp, ulong state, Ability a,
-            double expectedPr1, ulong expectedState1,
-            double expectedPr2, ulong expectedState2,
-            double expectedPr3, ulong expectedState3,
+        private void TestNextState(Int64GraphParameters gp, BitVectorState state, Ability a,
+            double expectedPr1, BitVectorState expectedState1,
+            double expectedPr2, BitVectorState expectedState2,
+            double expectedPr3, BitVectorState expectedState3,
             int expectedStepsDuration = 0)
         {
-            TestNextState(gp, state, a, new ulong[] { expectedState1, expectedState2, expectedState3 }, new double[] { expectedPr1, expectedPr2, expectedPr3 }, expectedStepsDuration);
+            TestNextState(gp, state, a, new BitVectorState[] { expectedState1, expectedState2, expectedState3 }, new double[] { expectedPr1, expectedPr2, expectedPr3 }, expectedStepsDuration);
         }
         [Test]
         public void CalculatesNextState_ShouldOnlyGenerateNonZeroTransitions()
         {
             Int64GraphParameters gp = NoMiss(R.PriorityQueue);
             TestNextState(gp, 0, Ability.J,
-               1, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.J, hit: true)
+               1, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.J, hit: true)
            );
         }
         [Test]
@@ -275,33 +280,33 @@ namespace Matlabadin.Tests
         {
             Int64GraphParameters gp = new Int64GraphParameters(R, 3, 0.8, 1);
             TestNextState(gp, 0, Ability.CS,
-                0.2, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: false), // miss
-                0.8 * 0.8, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true), // hit
-                0.8 * 0.2, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true, gcProc: true) // GrCr proc
+                0.2, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.CS, hit: false), // miss
+                0.8 * 0.8, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.CS, hit: true), // hit
+                0.8 * 0.2, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.CS, hit: true, gcProc: true) // GrCr proc
             );
             gp = NoMiss(R.PriorityQueue);
             TestNextState(gp, 0, Ability.CS,
-               0.8, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true),
-               0.2, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.CS, hit: true, gcProc: true)
+               0.8, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.CS, hit: true),
+               0.2, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.CS, hit: true, gcProc: true)
            );
         }
         [Test]
         public void CalculatesNextState_AS()
         {
             Int64GraphParameters gp = new Int64GraphParameters(R, 3, 0.1, 0.8);
-            ulong state = GetState(SM, Buff.GC, 1); // with GC
+            BitVectorState state = GetState(SM, Buff.GC, 1); // with GC
             TestNextState(gp, state, Ability.AS,
-                0.2, StateTransition<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: false),
-                0.8, StateTransition<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: true) // hit
+                0.2, StateTransition<BitVectorState>.UseAbility(gp, gp, state, Ability.AS, hit: false),
+                0.8, StateTransition<BitVectorState>.UseAbility(gp, gp, state, Ability.AS, hit: true) // hit
             );
             state = 0; // without GC buff
             TestNextState(gp, state, Ability.AS,
-                0.2, StateTransition<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: false),
-                0.8, StateTransition<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: true) // hit
+                0.2, StateTransition<BitVectorState>.UseAbility(gp, gp, state, Ability.AS, hit: false),
+                0.8, StateTransition<BitVectorState>.UseAbility(gp, gp, state, Ability.AS, hit: true) // hit
             );
             gp = NoMiss(R.PriorityQueue);
             TestNextState(gp, state, Ability.AS,
-                1, StateTransition<ulong>.UseAbility(gp, gp, state, Ability.AS, hit: true) // hit
+                1, StateTransition<BitVectorState>.UseAbility(gp, gp, state, Ability.AS, hit: true) // hit
             );
         }
         [Test]
@@ -309,27 +314,27 @@ namespace Matlabadin.Tests
         {
             Int64GraphParameters gp = new Int64GraphParameters(R, 3, 0, 0.6);
             TestNextState(gp, 0, Ability.AS,
-                0.4, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.AS, hit: false),
-                0.6, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.AS, hit: true) // hit
+                0.4, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.AS, hit: false),
+                0.6, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.AS, hit: true) // hit
             );
             TestNextState(gp, 0, Ability.J,
-                0.4, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.J, hit: false),
-                0.6, StateTransition<ulong>.UseAbility(gp, gp, 0, Ability.J, hit: true) // hit
+                0.4, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.J, hit: false),
+                0.6, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.J, hit: true) // hit
             );
         }
         [Test]
         public void CalculatesNextState_SotRCanMiss()
         {
             Int64GraphParameters gp = new Int64GraphParameters(R, 3, 0.8, 0);
-            ulong state = 3UL;
+            BitVectorState state = 3UL;
             TestNextState(gp, state, Ability.SotR,
-                0.2, StateTransition<ulong>.UseAbility(gp, gp, state, Ability.SotR, hit: false),
-                0.8, StateTransition<ulong>.UseAbility(gp, gp, state, Ability.SotR, hit: true),
+                0.2, StateTransition<BitVectorState>.UseAbility(gp, gp, state, Ability.SotR, hit: false),
+                0.8, StateTransition<BitVectorState>.UseAbility(gp, gp, state, Ability.SotR, hit: true),
                 0
             );
             gp = NoMiss(R.PriorityQueue);
             TestNextState(gp, state, Ability.SotR,
-               1, StateTransition<ulong>.UseAbility(gp, gp, state, Ability.SotR, hit: true),
+               1, StateTransition<BitVectorState>.UseAbility(gp, gp, state, Ability.SotR, hit: true),
                0
            );
         }
@@ -337,7 +342,7 @@ namespace Matlabadin.Tests
         public void CalculatesNextState_HotR_ShouldProcWBGC()
         {
             Int64GraphParameters gp = new Int64GraphParameters(R, 3, 0.8, 0);
-            ulong state = GetState(SM, Ability.HotR, 1, 3);
+            BitVectorState state = GetState(SM, Ability.HotR, 1, 3);
             TestNextState(gp, state, Ability.HotR,
                 0.2, GetState(SM, Ability.HotR, 9, GetState(SM, Buff.GCD, 3, 3)), // miss
                 0.8 * 0.8, GetState(SM, Ability.HotR, 9, GetState(SM, Buff.WB, 60, Buff.GCD, 3, 4)), // hit
@@ -350,7 +355,7 @@ namespace Matlabadin.Tests
         {
             foreach (Ability a in new Ability[] { Ability.Cons, Ability.Nothing, Ability.WoG, Ability.SS, Ability.EF, Ability.HW, })
             {
-                var st = new StateTransition<ulong>(GP, SM, 3, a);
+                var st = new StateTransition<BitVectorState>(GP, SM, 3, a);
                 Assert.AreEqual(1, st.NextStates.Length);
                 Assert.AreEqual(1, st.Choice.pr.Length);
                 Assert.AreEqual(1d, st.Choice.pr[0]);
@@ -359,15 +364,15 @@ namespace Matlabadin.Tests
         [Test]
         public void CalculateStateTransition_Ability_ShouldAdvanceTimeBy0Steps()
         {
-            var st = new StateTransition<ulong>(GP, SM, GetState(SM, Ability.CS, 3, 3), Ability.SotR);
+            var st = new StateTransition<BitVectorState>(GP, SM, GetState(SM, Ability.CS, 3, 3), Ability.SotR);
             Assert.AreEqual(0, st.Choice.stepsDuration);
             Assert.IsTrue(st.StatePostAbility.SequenceEqual(st.NextStates));
             
-            st = new StateTransition<ulong>(GP, SM, GetState(SM, Ability.CS, 3, 3), Ability.WoG);
+            st = new StateTransition<BitVectorState>(GP, SM, GetState(SM, Ability.CS, 3, 3), Ability.WoG);
             Assert.AreEqual(0, st.Choice.stepsDuration);
             Assert.IsTrue(st.StatePostAbility.SequenceEqual(st.NextStates));
 
-            st = new StateTransition<ulong>(GP, SM, GetState(SM, Ability.CS, 3, 3), Ability.Cons);
+            st = new StateTransition<BitVectorState>(GP, SM, GetState(SM, Ability.CS, 3, 3), Ability.Cons);
             Assert.AreEqual(0, st.Choice.stepsDuration);
             Assert.IsTrue(st.StatePostAbility.SequenceEqual(st.NextStates));
         }
@@ -383,38 +388,38 @@ namespace Matlabadin.Tests
         public void CalculatesStatePostAbility_ShouldAdvanceTimeByAbilityCastTime()
         {
             Assert.Inconclusive("No cast time abilities to test this yet");
-            var st = new StateTransition<ulong>(GP, SM, 0, Ability.CS);
+            var st = new StateTransition<BitVectorState>(GP, SM, 0, Ability.CS);
             Assert.AreEqual(GP.StepsPerGcd, 0);
             Assert.IsTrue(st.StatePostAbility.SequenceEqual(st.NextStates));
         }
         [Test]
         public void CalculateStateTransition_ShouldWaitForAbilityCDBeforeCasting()
         {
-            var st = new StateTransition<ulong>(GP, SM, GetState(SM, Ability.CS, 1, 3), Ability.CS);
-            Assert.AreEqual(3UL, st.StatePreAbility);
+            var st = new StateTransition<BitVectorState>(GP, SM, GetState(SM, Ability.CS, 1, 3), Ability.CS);
+            Assert.AreEqual(new BitVectorState() { hpcd = 3 } , st.StatePreAbility);
         }
         [Test]
         public void CalculateStateTransition_ShouldSetAllStateProperties()
         {
-            var st = new StateTransition<ulong>(GP, SM, GetState(SM, Ability.Cons, 1), Ability.Cons);
+            var st = new StateTransition<BitVectorState>(GP, SM, GetState(SM, Ability.Cons, 1), Ability.Cons);
             Assert.AreEqual(GetState(SM, Ability.Cons, 1), st.StateInitial);
-            Assert.AreEqual(0UL, st.StatePreAbility);
-            Assert.IsTrue(st.StatePostAbility.SequenceEqual(new ulong[] { GetState(SM, Ability.Cons, 18, GetState(SM, Buff.GCD, 3)) } ));
+            Assert.AreEqual(new BitVectorState(), st.StatePreAbility);
+            Assert.IsTrue(st.StatePostAbility.SequenceEqual(new BitVectorState[] { GetState(SM, Ability.Cons, 18, GetState(SM, Buff.GCD, 3)) } ));
             Assert.IsTrue(st.NextStates.SequenceEqual(st.StatePostAbility));
         }
         [Test]
         public void CalculateTransition_ShouldUseRotationAbility()
         {
-            var r = new RotationPriorityQueue<ulong>("Cons");
+            var r = new RotationPriorityQueue<BitVectorState>("Cons");
             var gp = new Int64GraphParameters(r, 3, 1, 1);
-            Assert.AreEqual(r.ActionToTake(gp, gp, 0), StateTransition<ulong>.CalculateTransition(gp, gp, 0).Choice.Ability);
+            Assert.AreEqual(r.ActionToTake(gp, gp, 0), StateTransition<BitVectorState>.CalculateTransition(gp, gp, 0).Choice.Ability);
         }
         [Test]
         public void CalculateTransition_ShouldConcatentateSingleTransitionStates()
         {
-            var r = new RotationPriorityQueue<ulong>("WoG>Cons>CS");
+            var r = new RotationPriorityQueue<BitVectorState>("WoG>Cons>CS");
             var gp = new Int64GraphParameters(r, 3, 0.9, 0.9);
-            Choice c = StateTransition<ulong>.CalculateTransition(gp, gp, 3).Choice;
+            Choice c = StateTransition<BitVectorState>.CalculateTransition(gp, gp, 3).Choice;
             Assert.AreEqual("WoG", c.Action[0]);
             Assert.AreEqual("Cons", c.Action[1]);
             Assert.AreEqual("CS", c.Action[2]);
@@ -423,25 +428,25 @@ namespace Matlabadin.Tests
         [Test]
         public void CalculateTransition_ShouldConcatentateLoopToSelf()
         {
-            var r = new RotationPriorityQueue<ulong>("Cons");
+            var r = new RotationPriorityQueue<BitVectorState>("Cons");
             var gp = new Int64GraphParameters(r, 3, 0.9, 0.9);
-            Choice c = StateTransition<ulong>.CalculateTransition(gp, gp, 3).Choice;
+            Choice c = StateTransition<BitVectorState>.CalculateTransition(gp, gp, 3).Choice;
             Assert.AreEqual("Cons", c.Action[0]);
             Assert.AreEqual(6 * gp.StepsPerGcd, c.stepsDuration); // Cons every 6 GCDs
         }
         [Test]
         public void CalculateTransition_ShouldConcatentateTillFirstLoop()
         {
-            var r = new RotationPriorityQueue<ulong>("WoG>J");
+            var r = new RotationPriorityQueue<BitVectorState>("WoG>J");
             var gp = new Int64GraphParameters(r, 3, 1, 1);
-            Choice c = StateTransition<ulong>.CalculateTransition(gp, gp, 5).Choice;
+            Choice c = StateTransition<BitVectorState>.CalculateTransition(gp, gp, 5).Choice;
             Assert.AreEqual(1, c.Action.Length);
             Assert.AreEqual("WoG", c.Action[0]); // We cast WoG @ 5HP then are inside a J-J-J-WoG cycle (0-3 HP) so we don't concatenate any further
             Assert.AreEqual(0, c.stepsDuration);
 
-            r = new RotationPriorityQueue<ulong>("WoG5>J");
+            r = new RotationPriorityQueue<BitVectorState>("WoG5>J");
             gp = new Int64GraphParameters(r, 3, 1, 1);
-            c = StateTransition<ulong>.CalculateTransition(gp, gp, 0).Choice;
+            c = StateTransition<BitVectorState>.CalculateTransition(gp, gp, 0).Choice;
             Assert.AreEqual(2, c.Action.Length);
             Assert.AreEqual("J", c.Action[0]);
             Assert.AreEqual("J", c.Action[1]); // We cast J twice then enter a J-J-J-WoG5 cycle (2-5 HP) so we don't concatenate any further
@@ -454,9 +459,9 @@ namespace Matlabadin.Tests
             // 2 step wait time
             // 0 step GCD
             // = 1 step uptime for miss, 1 step uptime for hit
-            var st = new StateTransition<ulong>(GP, SM, GetState(SM, Ability.HotR, 2, GetState(SM, Buff.WB, 1, 3)), Ability.HotR);
+            var st = new StateTransition<BitVectorState>(GP, SM, GetState(SM, Ability.HotR, 2, GetState(SM, Buff.WB, 1, 3)), Ability.HotR);
             Assert.AreEqual(GetState(SM, Ability.HotR, 2, GetState(SM, Buff.WB, 1, 3)), st.StateInitial);
-            Assert.AreEqual(3UL, st.StatePreAbility);
+            Assert.AreEqual(new BitVectorState() { hpcd = 3 }, st.StatePreAbility);
             Assert.AreEqual(2, st.Choice.stepsDuration); // 2 wait steps, 0s cast
             Assert.AreEqual(1, st.Choice.buffDuration[(int)Buff.WB][0]); // miss
             Assert.AreEqual(1, st.Choice.buffDuration[(int)Buff.WB][1]); // hit
@@ -465,36 +470,36 @@ namespace Matlabadin.Tests
         [Test]
         public void Choice_StepsDurationShouldIncludeWaitTime()
         {
-            var st = new StateTransition<ulong>(GP, SM, GetState(SM, Ability.CS, 1, 3), Ability.CS);
+            var st = new StateTransition<BitVectorState>(GP, SM, GetState(SM, Ability.CS, 1, 3), Ability.CS);
             Assert.AreEqual(1, st.Choice.stepsDuration);
         }
         [Test]
         public void Choice_wogss_ShouldBeSetOnlyForWog()
         {
-            Assert.IsTrue(new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SS, 1, 1), Ability.WoG).Choice.Action[0].Contains("(SS)"));
-            Assert.IsFalse(new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SS, 0, 1), Ability.WoG).Choice.Action[0].Contains("(SS)"));
-            Assert.IsFalse(new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SS, 1, 1), Ability.CS).Choice.Action[0].Contains("(SS)"));
+            Assert.IsTrue(new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SS, 1, 1), Ability.WoG).Choice.Action[0].Contains("(SS)"));
+            Assert.IsFalse(new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SS, 0, 1), Ability.WoG).Choice.Action[0].Contains("(SS)"));
+            Assert.IsFalse(new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SS, 1, 1), Ability.CS).Choice.Action[0].Contains("(SS)"));
         }
         [Test]
         public void Choice_BuffDurationShouldNotExceedStepDuration()
         {
-            Assert.AreEqual(1, new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SS, 5), Ability.Nothing).Choice.buffDuration[(int)Buff.SS][0]);
-            Assert.AreEqual(1, new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SS, 1), Ability.Nothing).Choice.buffDuration[(int)Buff.SS][0]);
+            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SS, 5), Ability.Nothing).Choice.buffDuration[(int)Buff.SS][0]);
+            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SS, 1), Ability.Nothing).Choice.buffDuration[(int)Buff.SS][0]);
         }
         [Test]
         public void Choice_BuffDurationShouldBeSetIffTracked()
         {
-            Assert.AreEqual(1, new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SS, 1), Ability.Nothing).Choice.buffDuration[(int)Buff.SS][0]);
-            Assert.AreEqual(1, new StateTransition<ulong>(GP, SM, GetState(SM, Buff.EF, 1), Ability.Nothing).Choice.buffDuration[(int)Buff.EF][0]);
-            Assert.AreEqual(1, new StateTransition<ulong>(GP, SM, GetState(SM, Buff.WB, 1), Ability.Nothing).Choice.buffDuration[(int)Buff.WB][0]);
-            Assert.AreEqual(1, new StateTransition<ulong>(GP, SM, GetState(SM, Buff.SotRSB, 1), Ability.Nothing).Choice.buffDuration[(int)Buff.SotRSB][0]);
+            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SS, 1), Ability.Nothing).Choice.buffDuration[(int)Buff.SS][0]);
+            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.EF, 1), Ability.Nothing).Choice.buffDuration[(int)Buff.EF][0]);
+            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.WB, 1), Ability.Nothing).Choice.buffDuration[(int)Buff.WB][0]);
+            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SotRSB, 1), Ability.Nothing).Choice.buffDuration[(int)Buff.SotRSB][0]);
         }
         [Test]
         public void Choice_HotR_ShouldSetWBOnlyForHitTransitions()
         {
-            Assert.IsFalse(SM.TimeRemaining(new StateTransition<ulong>(GP, SM, 0, Ability.HotR).NextStates[0], Buff.WB) > 0); // miss
-            Assert.IsTrue(SM.TimeRemaining(new StateTransition<ulong>(GP, SM, 0, Ability.HotR).NextStates[1], Buff.WB) > 0); // hit
-            Assert.IsTrue(SM.TimeRemaining(new StateTransition<ulong>(GP, SM, 0, Ability.HotR).NextStates[2], Buff.WB) > 0); // hit & gc proc
+            Assert.IsFalse(SM.TimeRemaining(new StateTransition<BitVectorState>(GP, SM, 0, Ability.HotR).NextStates[0], Buff.WB) > 0); // miss
+            Assert.IsTrue(SM.TimeRemaining(new StateTransition<BitVectorState>(GP, SM, 0, Ability.HotR).NextStates[1], Buff.WB) > 0); // hit
+            Assert.IsTrue(SM.TimeRemaining(new StateTransition<BitVectorState>(GP, SM, 0, Ability.HotR).NextStates[2], Buff.WB) > 0); // hit & gc proc
         }
     }
 }

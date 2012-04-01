@@ -7,49 +7,77 @@ namespace Matlabadin.Tests
 {
     public class MatlabadinTest
     {
-        public static ulong GetState(IStateManager<ulong> sm, Ability ability, int cd, ulong hp = 0)
+        public static BitVectorState GetState(IStateManager<BitVectorState> sm, Ability ability, int cd)
         {
-            return sm.SetCooldownRemaining((ulong)hp, ability, cd);
+            return GetState(sm, ability, cd, new BitVectorState());
         }
-        public static ulong GetState(IStateManager<ulong> sm, Ability ability, int cd, Ability ability2, int cd2, ulong hp = 0)
+        public static BitVectorState GetState(IStateManager<BitVectorState> sm, Ability ability, int cd, BitVectorState state)
+        {
+            return sm.SetCooldownRemaining(state, ability, cd);
+        }
+        public static BitVectorState GetState(IStateManager<BitVectorState> sm, Ability ability, int cd, Ability ability2, int cd2)
+        {
+            return GetState(sm, ability, cd, ability2, cd2, new BitVectorState());
+        }
+        public static BitVectorState GetState(IStateManager<BitVectorState> sm, Ability ability, int cd, Ability ability2, int cd2, BitVectorState hp)
         {
             return sm.SetCooldownRemaining(GetState(sm, ability2, cd2, hp), ability, cd);
         }
-        public static ulong GetState(IStateManager<ulong> sm, Ability ability, int cd, Ability ability2, int cd2, Ability ability3, int cd3, ulong hp = 0)
+        public static BitVectorState GetState(IStateManager<BitVectorState> sm, Ability ability, int cd, Ability ability2, int cd2, Ability ability3, int cd3)
         {
-            return sm.SetCooldownRemaining(GetState(sm, ability2, cd2, ability3, cd3, hp), ability, cd);
+            return GetState(sm, ability, cd, ability2, cd2, ability3, cd3, new BitVectorState());
         }
-        public static ulong GetState(IStateManager<ulong> sm, Buff buff1, int cd1, ulong hp = 0)
+        public static BitVectorState GetState(IStateManager<BitVectorState> sm, Ability ability, int cd, Ability ability2, int cd2, Ability ability3, int cd3, BitVectorState state)
         {
-            return sm.SetTimeRemaining((ulong)hp, buff1, cd1);
+            return sm.SetCooldownRemaining(GetState(sm, ability2, cd2, ability3, cd3, state), ability, cd);
         }
-        public static ulong GetState(IStateManager<ulong> sm, int stacks, Buff buff1, int cd1, ulong hp = 0)
+        public static BitVectorState GetState(IStateManager<BitVectorState> sm, Buff buff1, int cd1)
         {
-            return sm.SetStacks(sm.SetTimeRemaining((ulong)hp, buff1, cd1), buff1, stacks);
+            return GetState(sm, buff1, cd1, new BitVectorState());
         }
-        public static ulong GetState(IStateManager<ulong> sm, Buff buff1, int cd1, Buff buff2, int cd2, ulong hp = 0)
+        public static BitVectorState GetState(IStateManager<BitVectorState> sm, Buff buff1, int cd1, BitVectorState state)
+        {
+            return sm.SetTimeRemaining(state, buff1, cd1);
+        }
+        public static BitVectorState GetState(IStateManager<BitVectorState> sm, int stacks, Buff buff1, int cd1)
+        {
+            return GetState(sm, stacks, buff1, cd1, new BitVectorState());
+        }
+        public static BitVectorState GetState(IStateManager<BitVectorState> sm, int stacks, Buff buff1, int cd1, BitVectorState hp)
+        {
+            return sm.SetStacks(sm.SetTimeRemaining(hp, buff1, cd1), buff1, stacks);
+        }
+        public static BitVectorState GetState(IStateManager<BitVectorState> sm, Buff buff1, int cd1, Buff buff2, int cd2)
+        {
+            return GetState(sm, buff1, cd1, buff2, cd2, new BitVectorState());
+        }
+        public static BitVectorState GetState(IStateManager<BitVectorState> sm, Buff buff1, int cd1, Buff buff2, int cd2, BitVectorState hp)
         {
             return sm.SetTimeRemaining(GetState(sm, buff1, cd1, hp), buff2, cd2);
         }
-        public static ulong GetState(IStateManager<ulong> sm, Buff buff1, int cd1, Buff buff2, int cd2, Buff buff3, int cd3, ulong hp = 0)
+        public static BitVectorState GetState(IStateManager<BitVectorState> sm, Buff buff1, int cd1, Buff buff2, int cd2, Buff buff3, int cd3)
+        {
+            return GetState(sm, buff1, cd1, buff2, cd2, buff3, cd3, new BitVectorState());
+        }
+        public static BitVectorState GetState(IStateManager<BitVectorState> sm, Buff buff1, int cd1, Buff buff2, int cd2, Buff buff3, int cd3, BitVectorState hp)
         {
             return sm.SetTimeRemaining(GetState(sm, buff1, cd1, buff2, cd2, hp), buff3, cd3);
         }
         public static Int64GraphParameters NoMiss(string rotation)
         {
-            return new Int64GraphParameters(new RotationPriorityQueue<ulong>(rotation), 3, 1, 1, true);
+            return new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>(rotation), 3, 1, 1, true);
         }
         public static Int64GraphParameters NoHitExpertise(string rotation)
         {
-            return new Int64GraphParameters(new RotationPriorityQueue<ulong>(rotation), 3, 1 - 0.08 - 0.065 - 0.14, 1 - 0.08, true);
+            return new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>(rotation), 3, 1 - 0.08 - 0.065 - 0.14, 1 - 0.08, true);
         }
-        public static RotationPriorityQueue<ulong> AllAbilityRotation { get { return defaultParameters.Rotation; } }
-        public static IStateManager<ulong> AllAbilityStateManager { get { return defaultParameters; } }
+        public static RotationPriorityQueue<BitVectorState> AllAbilityRotation { get { return defaultParameters.Rotation; } }
+        public static IStateManager<BitVectorState> AllAbilityStateManager { get { return defaultParameters; } }
         public static Int64GraphParameters AllAbilityGraphParameters { get { return defaultParameters; } }
         // Short-hand defaults tests where we just need a parameter passed and we don't particularly care what it contains
-        public static RotationPriorityQueue<ulong> R { get { return AllAbilityRotation; } }
-        public static IStateManager<ulong> SM { get { return AllAbilityStateManager; } }
+        public static RotationPriorityQueue<BitVectorState> R { get { return AllAbilityRotation; } }
+        public static IStateManager<BitVectorState> SM { get { return AllAbilityStateManager; } }
         public static Int64GraphParameters GP { get { return AllAbilityGraphParameters; } }
-        private static Int64GraphParameters defaultParameters = NoHitExpertise("SS>EF>SotR>HotR>WoG>CS>J>AS>Cons>HW>FoL");
+        private static Int64GraphParameters defaultParameters = NoHitExpertise("AW>SS>EF>SotR>HotR>WoG>CS>J>AS>Cons>HW>FoL");
     }
 }

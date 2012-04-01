@@ -10,9 +10,9 @@ namespace Matlabadin.Tests
         private void DoTest(string queue, int hp, Ability expected)
         {
             Int64GraphParameters gp = NoHitExpertise(queue);
-            Assert.AreEqual(expected, gp.Rotation.ActionToTake(gp, gp, (ulong)hp));
+            Assert.AreEqual(expected, gp.Rotation.ActionToTake(gp, gp, new BitVectorState() { hpcd = (ulong)hp, } ));
         }
-        private void DoTest(Int64GraphParameters gp, ulong state, Ability expected)
+        private void DoTest(Int64GraphParameters gp, BitVectorState state, Ability expected)
         {
             Assert.AreEqual(expected, gp.Rotation.ActionToTake(gp, gp, state));
         }
@@ -33,6 +33,7 @@ namespace Matlabadin.Tests
             doTest("EF");
             doTest("WoG");
             doTest("HW");
+            doTest("AW");
         }
         [Test]
         public void ActionToTake_ShouldNotCastAbilitiesOnGcdBeforeGcdComplete()
@@ -42,14 +43,27 @@ namespace Matlabadin.Tests
                 Int64GraphParameters gp = NoHitExpertise(rotation);
                 DoTest(gp, gp.SetTimeRemaining(gp.SetHP(0, 3), Buff.GCD, 1), expected);
             };
+            // On GCD
             doTest("CS", Ability.Nothing);
             doTest("Cons", Ability.Nothing);
             doTest("AS", Ability.Nothing);
             doTest("J", Ability.Nothing);
+            
+        }
+        [Test]
+        public void ActionToTake_ShouldCastAbilitiesOffGcdBeforeGcdComplete()
+        {
+            Action<string, Ability> doTest = (rotation, expected) =>
+            {
+                Int64GraphParameters gp = NoHitExpertise(rotation);
+                DoTest(gp, gp.SetTimeRemaining(gp.SetHP(0, 3), Buff.GCD, 1), expected);
+            };
+            // Off GCD
             doTest("SotR", Ability.SotR);
             doTest("SS", Ability.SS);
             doTest("EF", Ability.EF);
             doTest("WoG", Ability.WoG);
+            doTest("AW", Ability.AW);
         }
         [Test]
         public void DelayedCastShouldWaitForGcdCompletion()
@@ -209,7 +223,7 @@ namespace Matlabadin.Tests
         [Test]
         public void KeepUpWBShouldCastHotRWhenBuffLessThan4_5Seconds()
         {
-            var gp = new Int64GraphParameters(new RotationPriorityQueue<ulong>("^WB"), 3, 1, 1);
+            var gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB"), 3, 1, 1);
             DoTest(gp, GetState(gp, Buff.WB, 10), Ability.Nothing);
             DoTest(gp, GetState(gp, Buff.WB, 9), Ability.Nothing); // 4.5s = 3 GCD * 3 steps / GCD = 9 steps
             DoTest(gp, GetState(gp, Buff.WB, 8), Ability.HotR);

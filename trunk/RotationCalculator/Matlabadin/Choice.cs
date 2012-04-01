@@ -15,6 +15,7 @@ namespace Matlabadin
             bool wogss,
             bool asgc,
             int folsh,
+            bool aw,
             int[][] buffDuration
             )
         {
@@ -32,6 +33,7 @@ namespace Matlabadin
             this.wogss = wogss;
             this.asgc = asgc;
             this.folsh = folsh;
+            this.aw = aw;
             this.stepsDuration = stepsDuration;
             this.buffDuration = buffDuration;
             this.pr = pr;
@@ -57,6 +59,7 @@ namespace Matlabadin
                         if (wogss) action[0] += "(SS)";
                         if (asgc) action[0] += "(GC)";
                         if (ability == Ability.FoL) action[0] += String.Format("(SH{0})", folsh);
+                        if (aw) action[0] += "(AW)";
                     }
                 }
                 return action;
@@ -68,6 +71,7 @@ namespace Matlabadin
         private readonly bool wogss;
         private readonly bool asgc;
         private readonly int folsh;
+        private readonly bool aw;
         private readonly int hp;
         public readonly int stepsDuration;
         public readonly int[][] buffDuration;
@@ -84,6 +88,7 @@ namespace Matlabadin
                 && wogss == c.wogss
                 && asgc == c.asgc
                 && folsh == c.folsh
+                && aw == c.aw
                 && hp == c.hp
                 && stepsDuration == c.stepsDuration
                 && buffDuration.Length == c.buffDuration.Length

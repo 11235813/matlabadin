@@ -27,6 +27,10 @@ namespace Matlabadin
         /// </summary>
         WB,
         /// <summary>
+        /// Avenging Wrath
+        /// </summary>
+        AW,
+        /// <summary>
         /// SotR Shield Block buff
         /// </summary>
         SotRSB,
