@@ -5,3 +5,9 @@
 matlabadin is a mechanics simulation and testing (theorycrafting) package for the Paladin class in World of Warcraft. It is a combined matlab/C# code that uses a [http://en.wikipedia.org/wiki/Finite-state_machine Finite State Machine] (FSM) approach to model spell rotations, effects of glyph and talent choices, etc.
 
 This Wiki is currently a work in progress, so please pardon the dust and unpolished edges.
+
+= History =
+
+This program was originally developed in Matlab by Theck based on [http://www.failsafedesign.com/maintankadin/viewtopic.php?t=20085 Jonesy's Prot DPS/TPS spreadsheet], during the Wrath of the Lich King expansion (WoW 3.X, 2009) to investigate Paladin class mechanics. The code and Theck's findings were posted on the [http://maintankadin.failsafedesign.com/forum/ Maintankadin] forum, as a resource to all tankadins. 
+
+The program was upgraded and refined during the course of the Cataclysm expansion (WoW 4.X, 2010) and is currently being updated for the upcoming Mists of Pandaria expansion (WoW 5.X). The program now uses both Matlab and C#, and the number of contributors has grown.
