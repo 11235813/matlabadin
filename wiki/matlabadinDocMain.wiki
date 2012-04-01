@@ -8,9 +8,9 @@ This Wiki is currently a work in progress, so please pardon the dust and unpolis
 
 = History =
 
-This program was originally developed in Matlab by Theck based on [http://www.failsafedesign.com/maintankadin/viewtopic.php?t=20085 Jonesy's Prot DPS/TPS spreadsheet], during the Wrath of the Lich King expansion (WoW 3.X, 2009) to investigate Paladin class mechanics. The code and Theck's findings were posted on the [http://maintankadin.failsafedesign.com/forum/ Maintankadin] forum, as a resource to all tankadins. 
+This program was originally developed in MATLAB by Theck based on [http://www.failsafedesign.com/maintankadin/viewtopic.php?t=20085 Jonesy's Prot DPS/TPS spreadsheet], during the Wrath of the Lich King expansion (WoW 3.X, 2009) to investigate Paladin class mechanics. The code and Theck's findings were posted on the [http://maintankadin.failsafedesign.com/forum/ Maintankadin] forum, as a resource to all tankadins. 
 
-The program was upgraded and refined during the course of the Cataclysm expansion (WoW 4.X, 2010) and is currently being updated for the upcoming Mists of Pandaria expansion (WoW 5.X). The program now uses both Matlab and C#, with the FSM implementation implemented and maintained largely by Iminmmnni.
+The program was upgraded and refined during the course of the Cataclysm expansion (WoW 4.X, 2010) and is currently being updated for the upcoming Mists of Pandaria expansion (WoW 5.X). The program now uses both MATLAB and C# with the FSM implementation being mainly C# code, implemented originally by Iminmmnni.
 
 = How Can I Help? =
 Here's where the community comes in. The project need volunteers willing to help flesh out the code base and get it up and running. There are a number of ways that you can contribute. For example:
