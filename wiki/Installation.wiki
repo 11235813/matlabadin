@@ -1,0 +1,9 @@
+#summary Installation and Compilation Instructions
+
+= Requirements =
+  * MATLAB installation. The code has only been tested in MATLAB RXXX, though a free variant such as [http://www.gnu.org/software/octave/ Octave], [http://www.scilab.org/ Scilab], [http://freemat.sourceforge.net/ FreeMat] may also work (see FAQ: What if I don't have MATLAB?).
+  * C# compiler or [http://www.microsoft.com/net/ Microsoft .Net development framework]. [http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-csharp-express Microsoft Visual C# express 2010] is one such option.
+
+
+= Compiling the C# Portion =
+
