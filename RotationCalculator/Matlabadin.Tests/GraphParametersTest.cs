@@ -22,37 +22,43 @@ namespace Matlabadin.Tests
         [Test]
         public void AbilityTriggersGCD_ShouldTriggerForCDAbilities()
         {
-            GraphParameters<ulong> gp = new GraphParameters<ulong>(AllAbilityRotation, 3, 1, 1);
+            GraphParameters<BitVectorState> gp = new GraphParameters<BitVectorState>(AllAbilityRotation, 3, 1, 1);
+            // Ability.All test case
             Assert.IsFalse(gp.AbilityTriggersGcd(Ability.Nothing));
             Assert.IsFalse(gp.AbilityTriggersGcd(Ability.SotR));
             Assert.IsFalse(gp.AbilityTriggersGcd(Ability.WoG));
             Assert.IsFalse(gp.AbilityTriggersGcd(Ability.EF));
             Assert.IsFalse(gp.AbilityTriggersGcd(Ability.SS));
+            Assert.IsFalse(gp.AbilityTriggersGcd(Ability.AW));
             Assert.IsTrue(gp.AbilityTriggersGcd(Ability.HotR));
             Assert.IsTrue(gp.AbilityTriggersGcd(Ability.CS));
             Assert.IsTrue(gp.AbilityTriggersGcd(Ability.J));
             Assert.IsTrue(gp.AbilityTriggersGcd(Ability.AS));
             Assert.IsTrue(gp.AbilityTriggersGcd(Ability.Cons));
+            Assert.IsTrue(gp.AbilityTriggersGcd(Ability.FoL));
         }
         [Test]
         public void AbilityOnGCD_ShouldBeTrueForCDAbilities()
         {
-            GraphParameters<ulong> gp = new GraphParameters<ulong>(AllAbilityRotation, 3, 1, 1);
+            GraphParameters<BitVectorState> gp = new GraphParameters<BitVectorState>(AllAbilityRotation, 3, 1, 1);
+            // Ability.All test case
             Assert.IsFalse(gp.AbilityOnGcd(Ability.Nothing));
             Assert.IsFalse(gp.AbilityOnGcd(Ability.SotR));
             Assert.IsFalse(gp.AbilityOnGcd(Ability.WoG));
             Assert.IsFalse(gp.AbilityOnGcd(Ability.EF));
             Assert.IsFalse(gp.AbilityOnGcd(Ability.SS));
+            Assert.IsFalse(gp.AbilityOnGcd(Ability.AW));
             Assert.IsTrue(gp.AbilityOnGcd(Ability.HotR));
             Assert.IsTrue(gp.AbilityOnGcd(Ability.CS));
             Assert.IsTrue(gp.AbilityOnGcd(Ability.J));
             Assert.IsTrue(gp.AbilityOnGcd(Ability.AS));
             Assert.IsTrue(gp.AbilityOnGcd(Ability.Cons));
+            Assert.IsTrue(gp.AbilityOnGcd(Ability.FoL));
         }
         [Test]
         public void GcdDurationTriggeredByAbilityInSteps_ShouldBeGCDForGCDAbilities()
         {
-            GraphParameters<ulong> gp = new GraphParameters<ulong>(AllAbilityRotation, 3, 1, 1);
+            GraphParameters<BitVectorState> gp = new GraphParameters<BitVectorState>(AllAbilityRotation, 3, 1, 1);
             Assert.AreEqual(0, gp.GcdDurationTriggeredByAbilityInSteps(Ability.Nothing));
             Assert.AreEqual(0, gp.GcdDurationTriggeredByAbilityInSteps(Ability.SotR));
             Assert.AreEqual(0, gp.GcdDurationTriggeredByAbilityInSteps(Ability.WoG));
@@ -78,7 +84,8 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0, target.StepDuration * target.AbilityCooldownInSteps(Ability.WoG));
             Assert.AreEqual(0, target.StepDuration * target.AbilityCooldownInSteps(Ability.SS));
             Assert.AreEqual(0, target.StepDuration * target.AbilityCooldownInSteps(Ability.EF));
-            //Assert.AreEqual(0, target.StepDuration * target.AbilityCooldownInSteps(Ability.FoL));
+            Assert.AreEqual(180, target.StepDuration * target.AbilityCooldownInSteps(Ability.AW));
+            Assert.AreEqual(0, target.StepDuration * target.AbilityCooldownInSteps(Ability.FoL));
         }
         [Test]
         public void GCProcRateShouldMatchMoPTalentCalculator()
@@ -94,6 +101,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual(30, target.StepDuration * target.BuffDurationInSteps(Buff.SS));
             Assert.AreEqual(30, target.StepDuration * target.BuffDurationInSteps(Buff.EF));
             Assert.AreEqual(30, target.StepDuration * target.BuffDurationInSteps(Buff.WB));
+            Assert.AreEqual(20, target.StepDuration * target.BuffDurationInSteps(Buff.AW));
             Assert.AreEqual(6, target.StepDuration * target.BuffDurationInSteps(Buff.SotRSB));
         }
         [Test]
@@ -152,9 +160,9 @@ namespace Matlabadin.Tests
         public void ShouldNotHaveSameShapeIfRotationsDiffer()
         {
             Assert.IsFalse(
-                new Int64GraphParameters(new RotationPriorityQueue<ulong>("CS"), 3, 1.0, 1.0)
+                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), 3, 1.0, 1.0)
                 .HasSameShape(
-                new Int64GraphParameters(new RotationPriorityQueue<ulong>("Cons"), 3 , 1.0, 1.0)
+                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("Cons"), 3 , 1.0, 1.0)
                 ));
         }
         [Test]

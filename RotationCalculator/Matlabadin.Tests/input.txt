@@ -1,3 +1,4 @@
+^WB>^SS>AW5>SotR5>CS>AS+>J>Cons 3 0.9 0.9 false data\\default.csv
 WoG>SotR>CS>AS>J 3 0.800000 0.920000 false data\\AS-J.csv
 WoG>SotR>CS>J>AS 3 0.800000 0.920000 false data\\J-AS.csv
 SS[buffSS=0]>SotR5>J>AS+>CS>AS>Cons 3 0.9 0.9 false data\\SS_buffSSeq0-SotR5-J-ASstar-CS-AS-Cons.csv

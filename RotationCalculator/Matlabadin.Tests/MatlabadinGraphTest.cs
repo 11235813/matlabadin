@@ -12,7 +12,7 @@ namespace Matlabadin.Tests
         private int iterationsTaken;
         private double finalAbsError, finalRelError;
         public const double Tolerance = 1e-14;
-        public void SanityCheckGraph(MatlabadinGraph<ulong> mg)
+        public void SanityCheckGraph(MatlabadinGraph<BitVectorState> mg)
         {
             Assert.AreEqual(mg.Size, mg.index.Count());
             Assert.AreEqual(mg.Size, mg.lookup.Count());
@@ -36,7 +36,7 @@ namespace Matlabadin.Tests
         public void GenerateGraph_ShouldOnlyGenerateNonZeroTransitions()
         {
             Int64GraphParameters gp = NoMiss("J");
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             SanityCheckGraph(mg);
             Assert.IsFalse(mg.nextState.Any(ns => ns.Any(s => s == 0))); // starting state (0) should be unreachable for a J rotation with no miss
         }
@@ -44,14 +44,14 @@ namespace Matlabadin.Tests
         public void GenerateGraph_NextStateTransitionsShouldAlwaysBeSet()
         {
             Int64GraphParameters gp = NoMiss("J");
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             SanityCheckGraph(mg);
             // 0 HP -> J @ 5 HP cycle
             // J @ 5 HP -> J @ 5 HP 
             Assert.AreEqual(2, mg.index.Length);
 
             gp = NoMiss("Cons");
-            mg = new MatlabadinGraph<ulong>(gp, gp);
+            mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             SanityCheckGraph(mg);
             Assert.AreEqual(1, mg.index.Length); // Cons cycle
         }
@@ -59,7 +59,7 @@ namespace Matlabadin.Tests
         public void CalculateNextStateProbability_ShouldAdvanceStateProbabilitiesByOneState()
         {
             Int64GraphParameters gp = NoMiss("J");
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             double[] pr = new double[mg.index.Length];
             pr[0] = 1;
             pr = mg.CalculateNextStateProbability(pr);
@@ -73,7 +73,7 @@ namespace Matlabadin.Tests
         public void CalculateNextStateProbability_ShouldDecay()
         {
             Int64GraphParameters gp = NoMiss("J");
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             double[] pr = new double[mg.index.Length];
             pr[0] = 1;
             pr = mg.CalculateNextStateProbability(pr, 0.5);
@@ -97,8 +97,8 @@ namespace Matlabadin.Tests
         // generate a graph of the appropriate shape
         public void ConvergeStateProbability_JShouldConvergeTo50_50With5HP()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<ulong>("J"), 3, 1, 1);
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("J"), 3, 1, 1);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             double[] pr = mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance);
             Assert.AreEqual(0.5, pr[mg.lookup[GetState(gp, Ability.J, 12, GetState(gp, Buff.GCD, 3, 5))]], Tolerance);
             Assert.AreEqual(0.5, pr[mg.lookup[GetState(gp, Ability.J, 0, 5)]], Tolerance);
@@ -107,7 +107,7 @@ namespace Matlabadin.Tests
         public void CalculateResults_ShouldDisplayNotNothing()
         {
             Int64GraphParameters gp = NoMiss("CS");
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             double[] pr = mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance);
             var result = mg.CalculateResults(pr);
             Assert.IsFalse(result.Action.ContainsKey("Nothing"));
@@ -116,7 +116,7 @@ namespace Matlabadin.Tests
         public void ConvergeStateProbability_ShouldStopAfterRelativeToleranceAchieved()
         {
             Int64GraphParameters gp = NoMiss("CS");
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             double relTol = 1e-3;
             double absTol = 1e-14;
             int maxIterations = 4096;
@@ -141,7 +141,7 @@ namespace Matlabadin.Tests
         public void ConvergeStateProbability_ShouldStopAfterAbsoluteToleranceAchieved()
         {
             Int64GraphParameters gp = NoMiss("CS");
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             double relTol = 1e-14;
             double absTol = 1e-3;
             int maxIterations = 4096;
@@ -166,9 +166,9 @@ namespace Matlabadin.Tests
         public void ConvergeStateProbability_ShouldConverge()
         {
             Int64GraphParameters gp = new Int64GraphParameters(
-                new RotationPriorityQueue<ulong>("SotR5>CS>J>AS>Cons"),
+                new RotationPriorityQueue<BitVectorState>("SotR5>CS>J>AS>Cons"),
                 3, 0.98, 0.95);
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             int maxIterations = 8192; // 99% hit does not converge after 4096
             mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, maxIterations: maxIterations);
             Assert.AreNotEqual(maxIterations, iterationsTaken);
@@ -177,7 +177,7 @@ namespace Matlabadin.Tests
         public void CalculateAggregates_Cons()
         {
             Int64GraphParameters gp = NoHitExpertise("Cons");
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
             Assert.AreEqual(1, result.Action.Count);
@@ -187,7 +187,7 @@ namespace Matlabadin.Tests
         public void CalculateAggregates_SotRCS()
         {
             Int64GraphParameters gp = NoMiss("SotR>CS");
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
             Assert.AreEqual(1d / 4.5, result.Action["CS"], Tolerance); // once every 4.5s
@@ -197,7 +197,7 @@ namespace Matlabadin.Tests
         public void CalculateAggregates_SotRCSJ()
         {
             Int64GraphParameters gp = NoMiss("SotR>CS>J");
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
             Assert.AreEqual(1d / 4.5, result.Action["CS"], Tolerance * 10); // 1 per 4.5s
@@ -207,27 +207,46 @@ namespace Matlabadin.Tests
         [Test]
         public void CalculateAggregates_FoL()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<ulong>("FoL[#SH=2]>SotR>CS>J"), 1, 1, 1, true);
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("FoL[#SH=2]>SotR>CS>J"), 1, 1, 1, true);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
             Assert.IsTrue(result.Action.ContainsKey("FoL(SH2)"));
         }
         [Test]
+        public void CalculateAggregates_AWSuffix()
+        {
+            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("AW>CS"), 1, 1, 1, true);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
+            var result = mg.CalculateResults(
+                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
+            Assert.IsTrue(result.Action.ContainsKey("CS(AW)"));
+            Assert.IsTrue(result.Action.ContainsKey("CS"));
+        }
+        [Test]
         public void CalculateAggregates_SotRCSASJ()
         {
             Int64GraphParameters gp = NoMiss("CS>AS");
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
             Assert.IsTrue(result.Action.ContainsKey("AS")); // TODO: upper / lower bounds
             Assert.IsTrue(result.Action.ContainsKey("AS(GC)"));
         }
         [Test]
+        public void AWUptimeShouldBeCalculated()
+        {
+            Int64GraphParameters gp = NoMiss("AW");
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
+            var result = mg.CalculateResults(
+                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
+            Assert.AreEqual(20.0 / 180.0, result.BuffUptime[(int)Buff.AW], 1e-7); // 20s every 180s uptime
+        }
+        [Test]
         public void SSUptimeShouldBeCalculated()
         {
             Int64GraphParameters gp = NoMiss("SS>CS");
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
             Assert.AreEqual(1, result.BuffUptime[(int)Buff.SS], 1e-7); // 100% uptime
@@ -236,7 +255,7 @@ namespace Matlabadin.Tests
         public void EFUptimeShouldBeCalculated()
         {
             Int64GraphParameters gp = NoMiss("EF>CS");
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
             Assert.AreEqual(1, result.BuffUptime[(int)Buff.EF], 1e-7); // 100% uptime
@@ -245,13 +264,13 @@ namespace Matlabadin.Tests
         public void WBUptimeShouldBeCalculated()
         {
             Int64GraphParameters gp = NoMiss("HotR");
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
             Assert.AreEqual(1, result.BuffUptime[(int)Buff.WB], 1e-7); // 100% uptime
 
-            gp = new Int64GraphParameters(new RotationPriorityQueue<ulong>("HotR"), 3, 0, 0);
-            mg = new MatlabadinGraph<ulong>(gp, gp);
+            gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("HotR"), 3, 0, 0);
+            mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
             Assert.AreEqual(0, result.BuffUptime[(int)Buff.WB], 1e-7); // 0% uptime since HotR never connects
@@ -260,7 +279,7 @@ namespace Matlabadin.Tests
         public void SotRSBUptimeShouldBeCalculated()
         {
             Int64GraphParameters gp = NoMiss("SotR>CS>J");
-            MatlabadinGraph<ulong> mg = new MatlabadinGraph<ulong>(gp, gp);
+            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
             Assert.AreEqual(5d / 13.5 / 3 * 6, result.BuffUptime[(int)Buff.SotRSB], Tolerance * 100); // 5hp per 13.5s - cast requires 3, buff lasts 6s
@@ -268,19 +287,19 @@ namespace Matlabadin.Tests
         [Test]
         public void CloneShouldReduceConvergenceTimeForSameResult()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<ulong>("SotR>CS>AS>J"), 1, 0.8, 0.95);
-            MatlabadinGraph<ulong> rawGraph = new MatlabadinGraph<ulong>(gp, gp);
+            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("SotR>CS>AS>J"), 1, 0.8, 0.95);
+            MatlabadinGraph<BitVectorState> rawGraph = new MatlabadinGraph<BitVectorState>(gp, gp);
             int rawIterations;
             double[] rawPr = rawGraph.ConvergeStateProbability(out rawIterations, out finalRelError, out finalAbsError);
 
             // generate a graph with slightly different parameters
-            Int64GraphParameters seedGp = new Int64GraphParameters(new RotationPriorityQueue<ulong>("SotR>CS>AS>J"), 1, 0.81, 0.96);
-            MatlabadinGraph<ulong> seedGraph = new MatlabadinGraph<ulong>(seedGp, seedGp);
+            Int64GraphParameters seedGp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("SotR>CS>AS>J"), 1, 0.81, 0.96);
+            MatlabadinGraph<BitVectorState> seedGraph = new MatlabadinGraph<BitVectorState>(seedGp, seedGp);
             int seedIterations;
             double[] seedPr = seedGraph.ConvergeStateProbability(out seedIterations, out finalRelError, out finalAbsError);
 
             // now see how our clone performs
-            MatlabadinGraph<ulong> graph = new MatlabadinGraph<ulong>(seedGraph, gp);
+            MatlabadinGraph<BitVectorState> graph = new MatlabadinGraph<BitVectorState>(seedGraph, gp);
             int iterations;
             double[] pr = rawGraph.ConvergeStateProbability(out iterations, out finalRelError, out finalAbsError, initialState:seedPr);
             // check we actually ended up with the same results

@@ -59,14 +59,14 @@ namespace Matlabadin.Tests
         public void UnusedAbilitiesShouldHaveZeroBitSize()
         {
             // state space compression:
-            Int64GraphParameters target = new Int64GraphParameters(new RotationPriorityQueue<ulong>("CS>J"), 3, 0, 0);
+            Int64GraphParameters target = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS>J"), 3, 0, 0);
             Assert.AreEqual(0, target.AbilityCooldownBits[(int)Ability.Cons]);
             Assert.AreEqual(0, target.AbilityCooldownBits[(int)Ability.AS]);
             Assert.AreNotEqual(0, target.AbilityCooldownBits[(int)Ability.CS]);
             Assert.AreNotEqual(0, target.AbilityCooldownBits[(int)Ability.J]);
 
             // Don't break CS if we have HotR in the rotation
-            target = new Int64GraphParameters(new RotationPriorityQueue<ulong>("HotR"), 3, 0, 0);
+            target = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("HotR"), 3, 0, 0);
             Assert.AreNotEqual(0, target.AbilityCooldownBits[(int)Ability.CS]);
         }
         [Test]

@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Matlabadin.Tests
 {
     [TestFixture]
-    public class Int64StateManagerTest : StateManagerTest<Int64GraphParameters, ulong>
+    public class Int64StateManagerTest : StateManagerTest<Int64GraphParameters, BitVectorState>
     {
         public override Int64GraphParameters StateManager
         {

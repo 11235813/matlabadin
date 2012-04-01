@@ -7,7 +7,7 @@ namespace Matlabadin.RotationUI
 {
     public class StateNodeViewModel
     {
-        public StateViewModel<ulong> State { get; set; }
+        public StateViewModel<BitVectorState> State { get; set; }
         public Choice Choice { get; set; }
         public double Pr { get; set; }
         public List<TransitionViewModel> NextTransitions { get; set; }

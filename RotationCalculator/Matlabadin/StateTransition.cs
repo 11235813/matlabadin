@@ -163,6 +163,7 @@ namespace Matlabadin
                 ability == Ability.WoG && sm.TimeRemaining(StatePreAbility, Buff.SS) > 0,
                 ability == Ability.AS && sm.TimeRemaining(StatePreAbility, Buff.GC) > 0,
                 ability == Ability.FoL ? sm.Stacks(StatePreAbility, Buff.SH) : 0,
+                sm.TimeRemaining(StatePreAbility, Buff.AW) > 0,
                 buffSteps);
         }
         /// <summary>
@@ -226,6 +227,7 @@ namespace Matlabadin
                 case Ability.EF:
                 case Ability.SS:
                 case Ability.FoL:
+                case Ability.AW:
                     StatePostAbility = new TState[]
                     {
                         UseAbility(gp, sm, StatePreAbility, ability),
@@ -354,6 +356,9 @@ namespace Matlabadin
                     break;
                 case Ability.FoL:
                     nextState = sm.SetStacks(nextState, Buff.SH, 0);
+                    break;
+                case Ability.AW:
+                    nextState = sm.SetTimeRemaining(nextState, Buff.AW, gp.BuffDurationInSteps(Buff.AW));
                     break;
             }
             if (gcProc)

@@ -5,10 +5,44 @@ using System.Text;
 
 namespace Matlabadin
 {
-    public class Int64GraphParameters : GraphParameters<ulong>, IStateManager<ulong>
+    public struct BitVectorState
+    {
+        public ulong hpcd;
+        public ulong buff;
+        public static implicit operator BitVectorState(ulong hp)
+        {
+            return new BitVectorState()
+            {
+                hpcd = hp,
+                buff = 0L,
+            };
+        }
+        public override bool Equals(object obj)
+        {
+            if (obj is BitVectorState) return Equals((BitVectorState)obj);
+            return base.Equals(obj);
+        }
+        public bool Equals(BitVectorState state)
+        {
+            return this.hpcd == state.hpcd && this.buff == state.buff;
+        }
+        public override int GetHashCode()
+        {
+            return this.hpcd.GetHashCode() ^ this.buff.GetHashCode();
+        }
+        public static bool operator ==(BitVectorState a, BitVectorState b)
+        {
+            return a.Equals(b);
+        }
+        public static bool operator !=(BitVectorState a, BitVectorState b)
+        {
+            return !a.Equals(b);
+        }
+    }
+    public class Int64GraphParameters : GraphParameters<BitVectorState>, IStateManager<BitVectorState>
     {
         public Int64GraphParameters(
-            RotationPriorityQueue<ulong> rotation,
+            RotationPriorityQueue<BitVectorState> rotation,
             int stepsPerGcd,
             double mehit,
             double sphit,
@@ -48,7 +82,10 @@ namespace Matlabadin
             // CS & HotR shared CD
             AbilityCooldownStartBit[(int)Ability.HotR] = AbilityCooldownStartBit[(int)Ability.CS];
             AbilityCooldownBits[(int)Ability.HotR] = AbilityCooldownBits[(int)Ability.CS];
+            if (bit > 64) throw new ArgumentOutOfRangeException("HP & Ability CD bit-encoded state space larger than 64 bit");
 
+            // another 64 bits for buff durations
+            bit = 0;
             BuffDurationStartBit = new int[(int)Buff.Count];
             BuffDurationBits = new int[(int)Buff.Count];
             BuffStackStartBit = new int[(int)Buff.Count];
@@ -67,16 +104,7 @@ namespace Matlabadin
                 while (1 << BuffStackBits[i] <= stacks) BuffStackBits[i]++;
                 bit += BuffStackBits[i];
             }
-            if (bit > 64) throw new ArgumentOutOfRangeException("bit-encoded state space larger than 64 bit");
-            
-            zeroCooldownBitMask = 0;
-            for (int i = 0; i < AbilityCooldownStartBit.Length; i++)
-            {
-                for (int j = 0; j < AbilityCooldownBits[i]; j++)
-                {
-                    zeroCooldownBitMask |= 1UL << (AbilityCooldownStartBit[i] + j);
-                }
-            }
+            if (bit > 64) throw new ArgumentOutOfRangeException("Buff duration bit-encoded state space larger than 64 bit");
         }
         // should be private: exposed purely for testing purposes
         public int[] AbilityCooldownStartBit;
@@ -89,65 +117,66 @@ namespace Matlabadin
         /// Eg: if a buff can stack twice, we only need 1 bit of storage: 1 stack = 0x0, 2 stacks = 0x1.
         /// </remarks>
         public int[] BuffStackBits;
-        private ulong zeroCooldownBitMask;
         #endregion
-        #region IStateManager<ulong>
+        #region IStateManager<BitVectorState>
         /// <summary>
         /// Cooldown remaining on the given ability
         /// </summary>
         /// <param name="ability">Ability</param>
         /// <returns>Cooldown remaining in ms.</returns>
-        public int CooldownRemaining(ulong state, Ability ability)
+        public int CooldownRemaining(BitVectorState state, Ability ability)
         {
             int numBits = AbilityCooldownBits[(int)ability];
             if (numBits <= 0) return 0;
-            return Unpack(state, AbilityCooldownStartBit[(int)ability], AbilityCooldownBits[(int)ability]);
+            return Unpack(state.hpcd, AbilityCooldownStartBit[(int)ability], AbilityCooldownBits[(int)ability]);
         }
         /// <summary>
         /// Time remaining on the given buff.
         /// </summary>
         /// <param name="buff">Buff to check</param>
         /// <returns>Time remaining in ms.</returns>
-        public int TimeRemaining(ulong state, Buff buff)
+        public int TimeRemaining(BitVectorState state, Buff buff)
         {
-            return Unpack(state, BuffDurationStartBit[(int)buff], BuffDurationBits[(int)buff]);
+            return Unpack(state.buff, BuffDurationStartBit[(int)buff], BuffDurationBits[(int)buff]);
         }
-        public ulong SetTimeRemaining(ulong state, Buff buff, int value)
+        public BitVectorState SetTimeRemaining(BitVectorState state, Buff buff, int value)
         {
             int numBits = BuffDurationBits[(int)buff];
             if (value >= 1 << numBits) throw new ArgumentException(String.Format("Duration of {0} steps does not fit into {1} bits assigned to buff {2}", value, numBits, buff));
-            state = Pack(state, BuffDurationStartBit[(int)buff], numBits, value);
+            state.buff = Pack(state.buff, BuffDurationStartBit[(int)buff], numBits, value);
             if (value == 0)
             {
-                state = Pack(state, BuffStackStartBit[(int)buff], BuffStackBits[(int)buff], 0); // remove any buff stacks
+                state.buff = Pack(state.buff, BuffStackStartBit[(int)buff], BuffStackBits[(int)buff], 0); // remove any buff stacks
             }
             return state;
         }
-        public int HP(ulong state)
+        public int HP(BitVectorState state)
         {
-            return Unpack(state, 0, 3);
+            return Unpack(state.hpcd, 0, 3);
         }
-        public ulong IncHP(ulong state)
+        public BitVectorState IncHP(BitVectorState state)
         {
             return SetHP(state, Math.Min(5, HP(state) + 1));
         }
-        public ulong SetHP(ulong state, int hp)
+        public BitVectorState SetHP(BitVectorState state, int hp)
         {
-            return Pack(state, 0, 3, hp);
+            state.hpcd = Pack(state.hpcd, 0, 3, hp);
+            return state;
         }
-        public ulong SetCooldownRemaining(ulong state, Ability ability, int cd)
+        public BitVectorState SetCooldownRemaining(BitVectorState state, Ability ability, int cd)
         {
             int numBits = AbilityCooldownBits[(int)ability];
             if (numBits <= 0 && cd == 0) return state;
             if (cd >= 1 << numBits) throw new ArgumentException(String.Format("Cooldown of {0} steps does not fit into {1} bits assigned to ability {2}", cd, numBits, ability));
-            return Pack(state, AbilityCooldownStartBit[(int)ability], AbilityCooldownBits[(int)ability], cd);
+            state.hpcd = Pack(state.hpcd, AbilityCooldownStartBit[(int)ability], AbilityCooldownBits[(int)ability], cd);
+            return state;
         }
-        public ulong AdvanceTime(ulong state, int steps)
+        public BitVectorState AdvanceTime(BitVectorState state, int steps)
         {
             for (int offset = (int)Ability.CooldownIndicator + 1; offset < (int)Ability.Count; offset++)
             {
-                state = Pack(state, AbilityCooldownStartBit[offset], AbilityCooldownBits[offset],
-                    Math.Max(0, Unpack(state, AbilityCooldownStartBit[offset], AbilityCooldownBits[offset]) - steps));
+                state.hpcd = Pack(state.hpcd, AbilityCooldownStartBit[offset], AbilityCooldownBits[offset],
+                    Math.Max(0, Unpack(state.hpcd, AbilityCooldownStartBit[offset], AbilityCooldownBits[offset]) - steps));
             }
             for (int i = 0; i < (int)Buff.Count; i++)
             {
@@ -155,20 +184,24 @@ namespace Matlabadin
             }
             return state;
         }
-        public ulong InitialState()
+        public BitVectorState InitialState()
         {
-            return 0;
+            return new BitVectorState()
+                {
+                    hpcd = 0L,
+                    buff = 0L,
+                };
         }
-        public bool ZeroCooldownRemainingForAllAbilities(ulong state)
+        public bool ZeroCooldownRemainingForAllAbilities(BitVectorState state)
         {
-            return (zeroCooldownBitMask & state) == 0;
+            return state.hpcd <= 5;
         }
-        public int Stacks(ulong state, Buff buff)
+        public int Stacks(BitVectorState state, Buff buff)
         {
             if (TimeRemaining(state, buff) == 0) return 0;
-            return Unpack(state, BuffStackStartBit[(int)buff], BuffStackBits[(int)buff]) + 1;
+            return Unpack(state.buff, BuffStackStartBit[(int)buff], BuffStackBits[(int)buff]) + 1;
         }
-        public ulong SetStacks(ulong state, Buff buff, int stacks)
+        public BitVectorState SetStacks(BitVectorState state, Buff buff, int stacks)
         {
             if (stacks == 0)
             {
@@ -176,7 +209,8 @@ namespace Matlabadin
             }
             if (TimeRemaining(state, buff) == 0) throw new ArgumentException("Cannot set stacks of inactive buff");
             if (stacks - 1 >= 1 << BuffStackBits[(int)buff]) throw new ArgumentException(String.Format("{0} Buff stacks do not fit into {1} stacks bits assigned {2}", stacks, BuffStackBits[(int)buff], buff));
-            return Pack(state, BuffStackStartBit[(int)buff], BuffStackBits[(int)buff], stacks - 1);
+            state.buff = Pack(state.buff, BuffStackStartBit[(int)buff], BuffStackBits[(int)buff], stacks - 1);
+            return state;
         }
         #endregion
         private static int Unpack(ulong state, int startBit, int numBits)

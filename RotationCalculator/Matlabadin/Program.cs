@@ -114,12 +114,12 @@ namespace Matlabadin
             if (mehit > 1) { Console.Error.WriteLine("Warning: invalid melee hit {0}", mehit); Usage(); }
             if (sphit > 1) { Console.Error.WriteLine("Warning: invalid range hit {0}", sphit); Usage(); }
             if (stepsPerGcd != 1 && stepsPerGcd != 3 && stepsPerGcd != 5) Console.Error.WriteLine("Warning: {0} steps per GCD is untested", stepsPerGcd);
-            RotationPriorityQueue<ulong> queue = new RotationPriorityQueue<ulong>(rotation);
+            RotationPriorityQueue<BitVectorState> queue = new RotationPriorityQueue<BitVectorState>(rotation);
             Int64GraphParameters gp = new Int64GraphParameters(queue, stepsPerGcd, mehit, sphit, sh);
             Stopwatch generateGraphStopWatch = new Stopwatch();
             generateGraphStopWatch.Start();
             double[] hintPr;
-            MatlabadinGraph<ulong> graph = GenerateGraph(gp, rotation, out hintPr);
+            MatlabadinGraph<BitVectorState> graph = GenerateGraph(gp, rotation, out hintPr);
             generateGraphStopWatch.Stop();
             Stopwatch convergeStopWatch = new Stopwatch();
             convergeStopWatch.Start();
@@ -144,6 +144,7 @@ namespace Matlabadin
             stream.WriteLine("Uptime_SacredShield,{0}", result.BuffUptime[(int)Buff.SS]);
             stream.WriteLine("Uptime_EternalFlame,{0}", result.BuffUptime[(int)Buff.EF]);
             stream.WriteLine("Uptime_WeakenedBlows,{0}", result.BuffUptime[(int)Buff.WB]);
+            stream.WriteLine("Uptime_AvengingWrath,{0}", result.BuffUptime[(int)Buff.AW]);
             stream.WriteLine("Uptime_SotRShieldBlock,{0}", result.BuffUptime[(int)Buff.SotRSB]);
             stream.WriteLine("Stats_StateSize_Total,{0}", graph.Size);
             stream.WriteLine("Stats_StateSize_NonZero,{0}", pr.Count(p => p > 0));
@@ -159,23 +160,23 @@ namespace Matlabadin
             stream.WriteLine("Param_Hit_Spell,{0}", gp.SpellHit);
             stream.WriteLine("Param_SelflessHealer,{0}", gp.SelflessHealer);
         }
-        private static void CacheGraph(MatlabadinGraph<ulong> mg, double[] pr)
+        private static void CacheGraph(MatlabadinGraph<BitVectorState> mg, double[] pr)
         {
             string rotation = mg.GraphParameters.Rotation.PriorityQueue;
             lock (existingGraphs)
             {
                 if (!existingGraphs.ContainsKey(rotation))
                 {
-                    existingGraphs[rotation] = new List<Tuple<MatlabadinGraph<ulong>, double[]>>();
+                    existingGraphs[rotation] = new List<Tuple<MatlabadinGraph<BitVectorState>, double[]>>();
                 }
-                existingGraphs[rotation].Add(new Tuple<MatlabadinGraph<ulong>, double[]>(mg, pr));
+                existingGraphs[rotation].Add(new Tuple<MatlabadinGraph<BitVectorState>, double[]>(mg, pr));
             }
         }
-        private static MatlabadinGraph<ulong> GenerateGraph(Int64GraphParameters gp, string rotation, out double[] hintPr)
+        private static MatlabadinGraph<BitVectorState> GenerateGraph(Int64GraphParameters gp, string rotation, out double[] hintPr)
         {
             // If we have previously generated a graph for the rotation, we can reuse that one and we only need to recalculate
             // the state probabilities due to differing hit/expertise.
-            Tuple<MatlabadinGraph<ulong>, double[]> closestMatch = null;
+            Tuple<MatlabadinGraph<BitVectorState>, double[]> closestMatch = null;
             lock (existingGraphs)
             {
                 if (existingGraphs.ContainsKey(rotation))
@@ -192,12 +193,12 @@ namespace Matlabadin
             if (closestMatch != null)
             {
                 hintPr = closestMatch.Item2;
-                return new MatlabadinGraph<ulong>(closestMatch.Item1, gp);
+                return new MatlabadinGraph<BitVectorState>(closestMatch.Item1, gp);
             }
             hintPr = null;
-            return new MatlabadinGraph<ulong>(gp, gp);
+            return new MatlabadinGraph<BitVectorState>(gp, gp);
         }
-        private static Dictionary<string, List<Tuple<MatlabadinGraph<ulong>, double[]>>> existingGraphs = new Dictionary<string, List<Tuple<MatlabadinGraph<ulong>, double[]>>>();
+        private static Dictionary<string, List<Tuple<MatlabadinGraph<BitVectorState>, double[]>>> existingGraphs = new Dictionary<string, List<Tuple<MatlabadinGraph<BitVectorState>, double[]>>>();
         public static void Usage()
         {
             string message = "Matlabadin.exe <rotation> <stepsPerGcd> <mehit> <sphit> <selflessHealer> [<outputfile>]" + Environment.NewLine
