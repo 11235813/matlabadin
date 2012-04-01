@@ -5,10 +5,9 @@
     * [matlabadinDocMain#History History]
     * [matlabadinDocMain#How_Can_I_Help? How Can I Help?]
   * User guide
-    * Installation/compilation
-    * Warnings/gotchas
+    * [Installation Installation/compilation]
     * Example
-    * FAQ
+    * [matlabadinFAQ FAQ]
   * File/code documentation
     * Flowchart (high level flow, with links if feasible)
     * Individual file documentation (file-by-file) 
