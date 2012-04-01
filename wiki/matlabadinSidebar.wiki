@@ -3,9 +3,10 @@
   * [matlabadinDocMain#Introduction Introduction]
   * Important links
     * [matlabadinDocMain#History History]
+    * [matlabadinDocMain#How_Can_I_Help? How Can I Help?]
+  * User guide
     * Installation/compilation
     * Warnings/gotchas
-  * User guide
     * Example
     * FAQ
   * File/code documentation
