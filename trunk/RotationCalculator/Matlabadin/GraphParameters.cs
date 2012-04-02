@@ -30,7 +30,7 @@ namespace Matlabadin
             // GC buff duration extended by 0.5s since the server takes time to apply the buff and it is active 4 GCDs after triggering
             double[] buffDurations = {
                 1.5, 30, 30, // GCD, EF, SS,
-                30, 20, 6, // WB, AW, SotRSB,
+                20, 6, 30, // AW, SotRSB, WB,
                 6.5, 15, // GC, SH,
             };
             this.buffStacks = new int[] {

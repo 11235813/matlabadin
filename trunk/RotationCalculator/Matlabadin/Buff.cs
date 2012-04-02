@@ -23,10 +23,6 @@ namespace Matlabadin
         /// </summary>
         EF,
         /// <summary>
-        /// Weakened Blows
-        /// </summary>
-        WB,
-        /// <summary>
         /// Avenging Wrath
         /// </summary>
         AW,
@@ -34,6 +30,10 @@ namespace Matlabadin
         /// SotR Shield Block buff
         /// </summary>
         SotRSB,
+        /// <summary>
+        /// Weakened Blows
+        /// </summary>
+        WB,
         // ----- tracked buffs that we record and output go above this line ----- 
         // if you want to track additional buffs, UptimeTrackedBuffs needs to be changed
         /// <summary>
@@ -44,8 +44,10 @@ namespace Matlabadin
         /// Selfless Healer
         /// </summary>
         SH,
-        // AW, HA
+        // HA
         Count,
-        UptimeTrackedBuffs = SotRSB + 1,
+        UptimeTrackedUnforkedBuffs = SotRSB + 1,
+        UptimeTrackedForkedBuffs = WB + 1,
+        UptimeTrackedBuffs = WB + 1,
     }
 }

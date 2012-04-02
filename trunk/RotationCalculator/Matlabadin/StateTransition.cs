@@ -141,17 +141,33 @@ namespace Matlabadin
 
             // Calculate uptime of tracked buffs. 
             // during this transition, how many steps was the tracked buff active for?
-            // (in the case of HotR - this will depend on which state we are transitioning to
-            // since Weakening Blows uptime depends on whether HotR hit or not). SotR buff may
-            // also exhibit this behaviour
-            int[][] buffSteps = new int[(int)Buff.UptimeTrackedBuffs][];
-            for (int i = 0; i < (int)Buff.UptimeTrackedBuffs; i++)
+            int[] unforkedBuffSteps = new int[(int)Buff.UptimeTrackedUnforkedBuffs];
+            for (int i = 0; i < (int)Buff.UptimeTrackedUnforkedBuffs; i++)
             {
-                int waitBuffUptimeSteps = Math.Min(waitSteps, sm.TimeRemaining(StateInitial, (Buff)i));
-                buffSteps[i] = new int[StatePostAbility.Length];
+                unforkedBuffSteps[i] = Math.Min(waitSteps, sm.TimeRemaining(StateInitial, (Buff)i))
+                    + Math.Min(abilitySteps, sm.TimeRemaining(StatePostAbility[0], (Buff)i));
+#if DEBUG
+                for (int j = 1; j < StatePostAbility.Length; j++)
+                {
+                    if (Math.Min(abilitySteps, sm.TimeRemaining(StatePostAbility[j], (Buff)i)) !=
+                        Math.Min(abilitySteps, sm.TimeRemaining(StatePostAbility[0], (Buff)i)))
+                    {
+                        throw new InvalidOperationException("Sanity check failure: forked buff duration detected for unforked buff");
+                    }
+                }
+#endif
+            }
+            // In the case of Weakening Blows uptime this depends on whether HotR hit or not
+            // SotR buff may or may not also exhibit this behaviour
+            int[][] forkedBuffSteps = new int[(int)Buff.UptimeTrackedForkedBuffs - (int)Buff.UptimeTrackedUnforkedBuffs][];
+            for (int i = 0; i < (int)Buff.UptimeTrackedForkedBuffs - (int)Buff.UptimeTrackedUnforkedBuffs; i++)
+            {
+                Buff buff = (Buff)(i + (int)Buff.UptimeTrackedUnforkedBuffs);
+                int waitBuffUptimeSteps = Math.Min(waitSteps, sm.TimeRemaining(StateInitial, buff));
+                forkedBuffSteps[i] = new int[StatePostAbility.Length];
                 for (int j = 0; j < StatePostAbility.Length; j++)
                 {
-                    buffSteps[i][j] = waitBuffUptimeSteps + Math.Min(abilitySteps, sm.TimeRemaining(StatePostAbility[j], (Buff)i));
+                    forkedBuffSteps[i][j] = waitBuffUptimeSteps + Math.Min(abilitySteps, sm.TimeRemaining(StatePostAbility[j], buff));
                 }
             }
             // Create the choice
@@ -164,7 +180,8 @@ namespace Matlabadin
                 ability == Ability.AS && sm.TimeRemaining(StatePreAbility, Buff.GC) > 0,
                 ability == Ability.FoL ? sm.Stacks(StatePreAbility, Buff.SH) : 0,
                 sm.TimeRemaining(StatePreAbility, Buff.AW) > 0,
-                buffSteps);
+                unforkedBuffSteps,
+                forkedBuffSteps);
         }
         /// <summary>
         /// Calculates the set of possible states as a result of using the given ability

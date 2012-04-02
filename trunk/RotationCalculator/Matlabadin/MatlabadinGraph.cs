@@ -40,7 +40,7 @@ namespace Matlabadin
                 from kvp in graph.firstChoiceState
                 select new {
                     OldChoice = kvp.Key,
-                    NewChoice = StateTransition<TState>.CalculateTransition(GraphParameters, StateManager, kvp.Value).Choice,
+                    NewChoice = StateTransition<TState>.CalculateTransition(GraphParameters, StateManager, kvp.Value.Item2).Choice,
                     State = kvp.Value
                 };
             this.firstChoiceState = choiceConversion.ToDictionary(n => n.NewChoice, n => n.State);
@@ -63,7 +63,7 @@ namespace Matlabadin
             List<TState> index = new List<TState>();
             List<Choice> choice = new List<Choice>();
             List<int[]> nextState = new List<int[]>();
-            firstChoiceState = new Dictionary<Choice, TState>();
+            firstChoiceState = new Dictionary<Choice, Tuple<Choice, TState>>();
             index.Add(initialState);
             lookup[initialState] = 0;
             while (index.Count() > nextState.Count())
@@ -95,12 +95,12 @@ namespace Matlabadin
             if (firstChoiceState.ContainsKey(choice))
             {
                 // return the cached value
-                return firstChoiceState.Keys.First(c => c.Equals(choice));
+                return firstChoiceState[choice].Item1;
             }
             else
             {
                 // add to cache as this is the first state in which we have made this choice
-                firstChoiceState[choice] = state;
+                firstChoiceState[choice] = new Tuple<Choice,TState>(choice, state);
                 return choice;
             }
         }
@@ -133,14 +133,19 @@ namespace Matlabadin
                     cps[action] = currentPr + pr[i];
                 }
                 // aggregate buff durations
+                for (int j = 0; j < (int)Buff.UptimeTrackedUnforkedBuffs; j++) // for each buff
+                {
+                    if (c.unforkedBuffDuration[j] > c.stepsDuration) throw new Exception("Sanity check failure: buff duration exceeds step duration");
+                    sumbufftpr[j] += pr[i] * GraphParameters.StepDuration * c.unforkedBuffDuration[j];
+                }
                 for (int k = 0; k < c.pr.Length; k++) // for each state transition
                 {
                     double transitiontpr = pr[i] * c.pr[k] * GraphParameters.StepDuration;
-                    for (int j = 0; j < (int)Buff.UptimeTrackedBuffs; j++) // for each buff
+                    for (int j = 0; j < (int)Buff.UptimeTrackedForkedBuffs - (int)Buff.UptimeTrackedUnforkedBuffs; j++) // for each buff
                     {
-                        int buffDurationForTransition = c.buffDuration[j][k];
+                        int buffDurationForTransition = c.forkedBuffDuration[j][k];
                         if (buffDurationForTransition > c.stepsDuration) throw new Exception("Sanity check failure: buff duration exceeds step duration");
-                        sumbufftpr[j] += transitiontpr * buffDurationForTransition;
+                        sumbufftpr[j + (int)Buff.UptimeTrackedUnforkedBuffs] += transitiontpr * buffDurationForTransition;
                     }
                 }
             }
@@ -490,7 +495,7 @@ namespace Matlabadin
         public TState[] index; // maps state index to state
         public Choice[] choice; // maps state index to choice made
         public int[][] nextState; // maps state index to choice and corresponding next state indexes
-        private Dictionary<Choice, TState> firstChoiceState; // The first state in which given choice was encountered
+        private Dictionary<Choice, Tuple<Choice, TState>> firstChoiceState; // The first state in which given choice was encountered
         #region Debugging helpers
         public string StateToString(TState state)
         {
