@@ -463,9 +463,9 @@ namespace Matlabadin.Tests
             Assert.AreEqual(GetState(SM, Ability.HotR, 2, GetState(SM, Buff.WB, 1, 3)), st.StateInitial);
             Assert.AreEqual(new BitVectorState() { hpcd = 3 }, st.StatePreAbility);
             Assert.AreEqual(2, st.Choice.stepsDuration); // 2 wait steps, 0s cast
-            Assert.AreEqual(1, st.Choice.buffDuration[(int)Buff.WB][0]); // miss
-            Assert.AreEqual(1, st.Choice.buffDuration[(int)Buff.WB][1]); // hit
-            Assert.AreEqual(1, st.Choice.buffDuration[(int)Buff.WB][2]); // hit & gc
+            Assert.AreEqual(1, st.Choice.forkedBuffDuration[(int)Buff.WB - (int)Buff.UptimeTrackedUnforkedBuffs][0]); // miss
+            Assert.AreEqual(1, st.Choice.forkedBuffDuration[(int)Buff.WB - (int)Buff.UptimeTrackedUnforkedBuffs][1]); // hit
+            Assert.AreEqual(1, st.Choice.forkedBuffDuration[(int)Buff.WB - (int)Buff.UptimeTrackedUnforkedBuffs][2]); // hit & gc
         }
         [Test]
         public void Choice_StepsDurationShouldIncludeWaitTime()
@@ -483,16 +483,16 @@ namespace Matlabadin.Tests
         [Test]
         public void Choice_BuffDurationShouldNotExceedStepDuration()
         {
-            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SS, 5), Ability.Nothing).Choice.buffDuration[(int)Buff.SS][0]);
-            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SS, 1), Ability.Nothing).Choice.buffDuration[(int)Buff.SS][0]);
+            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SS, 5), Ability.Nothing).Choice.unforkedBuffDuration[(int)Buff.SS]);
+            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SS, 1), Ability.Nothing).Choice.unforkedBuffDuration[(int)Buff.SS]);
         }
         [Test]
         public void Choice_BuffDurationShouldBeSetIffTracked()
         {
-            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SS, 1), Ability.Nothing).Choice.buffDuration[(int)Buff.SS][0]);
-            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.EF, 1), Ability.Nothing).Choice.buffDuration[(int)Buff.EF][0]);
-            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.WB, 1), Ability.Nothing).Choice.buffDuration[(int)Buff.WB][0]);
-            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SotRSB, 1), Ability.Nothing).Choice.buffDuration[(int)Buff.SotRSB][0]);
+            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SS, 1), Ability.Nothing).Choice.unforkedBuffDuration[(int)Buff.SS]);
+            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.EF, 1), Ability.Nothing).Choice.unforkedBuffDuration[(int)Buff.EF]);
+            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.WB, 1), Ability.Nothing).Choice.forkedBuffDuration[(int)Buff.WB - (int)Buff.UptimeTrackedUnforkedBuffs][0]);
+            Assert.AreEqual(1, new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SotRSB, 1), Ability.Nothing).Choice.unforkedBuffDuration[(int)Buff.SotRSB]);
         }
         [Test]
         public void Choice_HotR_ShouldSetWBOnlyForHitTransitions()
