@@ -27,7 +27,7 @@ namespace Matlabadin.RotationUI
         public void GenerateGraph()
         {
             RotationPriorityQueue<BitVectorState> queue = new RotationPriorityQueue<BitVectorState>(Rotation);
-            Int64GraphParameters gp = new Int64GraphParameters(queue, StepsPerGCD, MeleeHit, RangeHit);
+            Int64GraphParameters gp = new Int64GraphParameters(queue, StepsPerGCD, PaladinSpec.Prot, PaladinTalents.None, 0, MeleeHit, RangeHit);
             MatlabadinGraph<BitVectorState> graph = new MatlabadinGraph<BitVectorState>(gp, gp);
             double[] pr = null;
             if (CalculatePr)

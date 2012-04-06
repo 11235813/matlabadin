@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="ChoiceTest.cs" />
     <Compile Include="ArrayStateManagerTest.cs" />
+    <Compile Include="PaladinHelperTest.cs" />
     <Compile Include="Int64StateManagerTest.cs" />
     <Compile Include="Int64GraphParametersTest.cs" />
     <Compile Include="MatlabadinGraphTest.cs" />
@@ -69,6 +70,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="input2.txt" />
     <Content Include="input.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
