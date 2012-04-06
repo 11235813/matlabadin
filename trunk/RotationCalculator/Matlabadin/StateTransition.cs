@@ -111,7 +111,9 @@ namespace Matlabadin
         {
             StateInitial = state;
             CalculateStateTransition(gp, sm, ability);
+#if DEBUG
             SanityCheck();
+#endif
         }
         /// <summary>
         /// Calculates the state transition state and choice information based on the <see cref="StateInitial"/> state.
@@ -137,7 +139,11 @@ namespace Matlabadin
 
             // Advance time after ability usage
             int abilitySteps = gp.AbilityCastTimeInSteps(ability);
-            NextStates = StatePostAbility.Select(s => sm.AdvanceTime(s, abilitySteps)).ToArray();
+            NextStates = new TState[StatePostAbility.Length];
+            for (int i = 0; i < StatePostAbility.Length; i++)
+            {
+                NextStates[i] = sm.AdvanceTime(StatePostAbility[i], abilitySteps);
+            }
 
             // Calculate uptime of tracked buffs. 
             // during this transition, how many steps was the tracked buff active for?
@@ -263,7 +269,8 @@ namespace Matlabadin
         /// <returns>Probability of each state transition with zero probability transitions culled</returns>
         private double[] CullStatePostAbilityZeroProbabilityTransitions(double[] pr)
         {
-            int zeroes = pr.Count(p => p == 0);
+            int zeroes = 0;
+            foreach(double p in pr) if (p == 0) zeroes++;
             if (zeroes != 0)
             {
                 int nonZeroCount = StatePostAbility.Length - zeroes;

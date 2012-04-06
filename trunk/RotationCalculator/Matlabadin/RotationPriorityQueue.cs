@@ -54,7 +54,16 @@ namespace Matlabadin
             {
                 Ability ability = abilityQueue[i];
                 // all conditionals must be met
-                if (abilityConditionals[i].All(f => f(gp, sm, state))) return ability;
+                bool conditionsMet = true;
+                foreach (var condition in abilityConditionals[i])
+                {
+                    if (!condition(gp, sm, state))
+                    {
+                        conditionsMet = false;
+                        break;
+                    }
+                }
+                if (conditionsMet) return ability;
             }
             return Ability.Nothing;
         }

@@ -61,18 +61,21 @@ namespace Matlabadin
             CalculateBitOffsets();
         }
         #region Bit-Encoded State Graph Parameters
+        public int BitsUsed { get { return this.hpcdBitsUsed + this.buffBitsUsed; } }
+        private int hpcdBitsUsed;
+        private int buffBitsUsed;
         /// <summary>
         /// Calculates the bit packing required to encode the state in an unsigned 64 bit integer
         /// </summary>
         private void CalculateBitOffsets()
         {
-            int bit = 3; // HP takes the first three bits
+            hpcdBitsUsed = 3; // HP takes the first three bits
             AbilityCooldownStartBit = new int[(int)Ability.Count];
             AbilityCooldownBits = new int[(int)Ability.Count];
             for (int i = (int)Ability.CooldownIndicator + 1; i < (int)Ability.Count; i++)
             {
                 //int i = offset - (int)Ability.CooldownIndicator - 1;
-                AbilityCooldownStartBit[i] = bit;
+                AbilityCooldownStartBit[i] = hpcdBitsUsed;
                 Ability a = (Ability)i;
                 int cd = AbilityCooldownInSteps(a);
                 // compress state space by not recording CDs for unused abilities
@@ -81,34 +84,34 @@ namespace Matlabadin
                     cd = 0;
                 }
                 while (1 << AbilityCooldownBits[i] <= cd) AbilityCooldownBits[i]++;
-                bit += AbilityCooldownBits[i];
+                hpcdBitsUsed += AbilityCooldownBits[i];
             }
             // CS & HotR shared CD
             AbilityCooldownStartBit[(int)Ability.HotR] = AbilityCooldownStartBit[(int)Ability.CS];
             AbilityCooldownBits[(int)Ability.HotR] = AbilityCooldownBits[(int)Ability.CS];
-            if (bit > 64) throw new ArgumentOutOfRangeException("HP & Ability CD bit-encoded state space larger than 64 bit");
+            if (hpcdBitsUsed > 64) throw new ArgumentOutOfRangeException("HP & Ability CD bit-encoded state space larger than 64 bit");
 
             // another 64 bits for buff durations
-            bit = 0;
+            buffBitsUsed = 0;
             BuffDurationStartBit = new int[(int)Buff.Count];
             BuffDurationBits = new int[(int)Buff.Count];
             BuffStackStartBit = new int[(int)Buff.Count];
             BuffStackBits = new int[(int)Buff.Count];
             for (int i = 0; i < (int)Buff.Count; i++)
             {
-                BuffDurationStartBit[i] = bit;
+                BuffDurationStartBit[i] = buffBitsUsed;
                 int cd = BuffDurationInSteps((Buff)i);
                 while (1 << BuffDurationBits[i] <= cd) BuffDurationBits[i]++;
-                bit += BuffDurationBits[i];
+                buffBitsUsed += BuffDurationBits[i];
             }
             for (int i = 0; i < (int)Buff.Count; i++)
             {
-                BuffStackStartBit[i] = bit;
+                BuffStackStartBit[i] = buffBitsUsed;
                 int stacks = this.MaxBuffStacks((Buff)i) - 1; // only store stacks > 1
                 while (1 << BuffStackBits[i] <= stacks) BuffStackBits[i]++;
-                bit += BuffStackBits[i];
+                buffBitsUsed += BuffStackBits[i];
             }
-            if (bit > 64) throw new ArgumentOutOfRangeException("Buff duration bit-encoded state space larger than 64 bit");
+            if (buffBitsUsed > 64) throw new ArgumentOutOfRangeException("Buff duration bit-encoded state space larger than 64 bit");
         }
         // should be private: exposed purely for testing purposes
         public int[] AbilityCooldownStartBit;
@@ -146,7 +149,9 @@ namespace Matlabadin
         public BitVectorState SetTimeRemaining(BitVectorState state, Buff buff, int value)
         {
             int numBits = BuffDurationBits[(int)buff];
+#if DEBUG
             if (value >= 1 << numBits) throw new ArgumentException(String.Format("Duration of {0} steps does not fit into {1} bits assigned to buff {2}", value, numBits, buff));
+#endif
             state.buff = Pack(state.buff, BuffDurationStartBit[(int)buff], numBits, value);
             if (value == 0)
             {
@@ -171,7 +176,9 @@ namespace Matlabadin
         {
             int numBits = AbilityCooldownBits[(int)ability];
             if (numBits <= 0 && cd == 0) return state;
+#if DEBUG
             if (cd >= 1 << numBits) throw new ArgumentException(String.Format("Cooldown of {0} steps does not fit into {1} bits assigned to ability {2}", cd, numBits, ability));
+#endif
             state.hpcd = Pack(state.hpcd, AbilityCooldownStartBit[(int)ability], AbilityCooldownBits[(int)ability], cd);
             return state;
         }
@@ -211,8 +218,10 @@ namespace Matlabadin
             {
                 return SetTimeRemaining(state, buff, 0);
             }
+#if DEBUG
             if (TimeRemaining(state, buff) == 0) throw new ArgumentException("Cannot set stacks of inactive buff");
             if (stacks - 1 >= 1 << BuffStackBits[(int)buff]) throw new ArgumentException(String.Format("{0} Buff stacks do not fit into {1} stacks bits assigned {2}", stacks, BuffStackBits[(int)buff], buff));
+#endif
             state.buff = Pack(state.buff, BuffStackStartBit[(int)buff], BuffStackBits[(int)buff], stacks - 1);
             return state;
         }
@@ -225,7 +234,9 @@ namespace Matlabadin
         }
         private static ulong Pack(ulong state, int startBit, int numBits, int value)
         {
+#if DEBUG
             if (value >= 1 << numBits || value < 0) throw new ArgumentOutOfRangeException(String.Format("value {0} does not fit in {1} bits", value, numBits));
+#endif                
             ulong bitsToClear = ((ulong)~(-1 << numBits)) << startBit;
             state &= ~bitsToClear;
             state |= (ulong)value << startBit;
