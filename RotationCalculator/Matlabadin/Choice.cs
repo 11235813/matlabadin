@@ -47,7 +47,7 @@ namespace Matlabadin
             }
             else
             {
-                action = new string[] { ability.ToString() };
+                action = new string[] { abilityStringLookup[(int)ability] };
                 if (hp < 3 && (ability == Ability.WoG || ability == Ability.EF))
                 {
                     action[0] += hp.ToString();
@@ -143,7 +143,23 @@ namespace Matlabadin
                     this.forkedBuffDuration[i][j] = firstDuration + second.forkedBuffDuration[i][j];
                 }
             }
-            this.action = first.Action.Concat(second.Action).ToArray();
+            // Concatenate actions
+            if (first.Action.Length == 0)
+            {
+                this.action = second.Action;
+            }
+            else if (second.Action.Length == 0)
+            {
+                this.action = first.Action;
+            }
+            else
+            {
+                string[] a = new string[first.Action.Length + second.Action.Length];
+                int i = 0;
+                foreach (string ac in first.Action) a[i++] = ac;
+                foreach (string ac in second.Action) a[i++] = ac;
+                this.action = a;
+            }
         }
         /// <summary>
         /// Peforms the current choice, then the given choice
@@ -154,5 +170,15 @@ namespace Matlabadin
         {
             return new Choice(this, choice);
         }
+        static Choice()
+        {
+            abilityStringLookup = new string[(int)Ability.Count];
+            for (int i = 0; i < (int)Ability.Count; i++)
+            {
+                abilityStringLookup[i] = ((Ability)i).ToString();
+            }
+        }
+        // precomputation optimisation removing ability.ToString() call from Choice constructor
+        private static readonly string[] abilityStringLookup;
     }
 }
