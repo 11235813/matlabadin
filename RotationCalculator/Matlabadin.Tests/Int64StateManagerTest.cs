@@ -13,7 +13,9 @@ namespace Matlabadin.Tests
         {
             get
             {
-                return new Int64GraphParameters(R, 3, 0.5, 0.5);
+                return new Int64GraphParameters(R, 3, PaladinSpec.Prot,
+                    PaladinTalents.SelflessHealer | PaladinTalents.EternalFlame | PaladinTalents.SacredShield,
+                    0, 0.5, 0.5);
             }
         }
         [Test]

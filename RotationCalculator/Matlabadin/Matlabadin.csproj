@@ -48,6 +48,7 @@
     <Compile Include="Int64GraphParameters.cs" />
     <Compile Include="ArrayStateManager.cs" />
     <Compile Include="IStateManager.cs" />
+    <Compile Include="PaladinSpec.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Choice.cs" />
     <Compile Include="GraphParameters.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="MatlabadinGraph.cs" />
     <Compile Include="RotationPriorityQueue.cs" />
     <Compile Include="StateTransition.cs" />
+    <Compile Include="PaladinTalents.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

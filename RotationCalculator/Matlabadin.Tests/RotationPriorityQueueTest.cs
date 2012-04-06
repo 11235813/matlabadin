@@ -223,7 +223,7 @@ namespace Matlabadin.Tests
         [Test]
         public void KeepUpWBShouldCastHotRWhenBuffLessThan4_5Seconds()
         {
-            var gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB"), 3, 1, 1);
+            var gp = NoHitExpertise("^WB");
             DoTest(gp, GetState(gp, Buff.WB, 10), Ability.Nothing);
             DoTest(gp, GetState(gp, Buff.WB, 9), Ability.Nothing); // 4.5s = 3 GCD * 3 steps / GCD = 9 steps
             DoTest(gp, GetState(gp, Buff.WB, 8), Ability.HotR);

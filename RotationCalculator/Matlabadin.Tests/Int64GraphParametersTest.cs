@@ -35,7 +35,7 @@ namespace Matlabadin.Tests
         [Test]
         public void CalculateBitOffsetsShouldPackAbilitiesAfterHP()
         {
-            Int64GraphParameters target = new Int64GraphParameters(R, 3, 0, 0);
+            Int64GraphParameters target = new Int64GraphParameters(R, 3, PaladinSpec.Prot, PaladinTalents.All, 0, 0, 0);
             Assert.AreEqual(3, target.AbilityCooldownStartBit[(int)Ability.CS]); // 3 bits for HP
             Assert.AreEqual(4, target.AbilityCooldownBits[(int)Ability.CS]); // 4.5s = 9 + 1 steps = 4 bits
             Assert.AreEqual(7, target.AbilityCooldownStartBit[(int)Ability.J]);
@@ -44,14 +44,14 @@ namespace Matlabadin.Tests
         [Test]
         public void NoCDShouldHaveZeroBitSize()
         {
-            Int64GraphParameters target = new Int64GraphParameters(R, 3, 0, 0);
+            Int64GraphParameters target = new Int64GraphParameters(R, 3, PaladinSpec.Prot, PaladinTalents.All, 0, 0, 0);
             Assert.AreEqual(0, target.AbilityCooldownBits[(int)Ability.SotR]);
             Assert.AreEqual(0, target.AbilityCooldownBits[(int)Ability.WoG]);
         }
         [Test]
         public void HotRShouldHaveSameBitsAsCS()
         {
-            Int64GraphParameters target = new Int64GraphParameters(R, 3, 0, 0);
+            Int64GraphParameters target = new Int64GraphParameters(R, 3, PaladinSpec.Prot, PaladinTalents.All, 0, 0, 0);
             Assert.AreEqual(target.AbilityCooldownStartBit[(int)Ability.HotR], target.AbilityCooldownStartBit[(int)Ability.CS]);
             Assert.AreEqual(target.AbilityCooldownBits[(int)Ability.HotR], target.AbilityCooldownBits[(int)Ability.CS]);
         }
@@ -59,14 +59,14 @@ namespace Matlabadin.Tests
         public void UnusedAbilitiesShouldHaveZeroBitSize()
         {
             // state space compression:
-            Int64GraphParameters target = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS>J"), 3, 0, 0);
+            Int64GraphParameters target = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS>J"), 3, PaladinSpec.Prot, PaladinTalents.All, 0, 0, 0);
             Assert.AreEqual(0, target.AbilityCooldownBits[(int)Ability.Cons]);
             Assert.AreEqual(0, target.AbilityCooldownBits[(int)Ability.AS]);
             Assert.AreNotEqual(0, target.AbilityCooldownBits[(int)Ability.CS]);
             Assert.AreNotEqual(0, target.AbilityCooldownBits[(int)Ability.J]);
 
             // Don't break CS if we have HotR in the rotation
-            target = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("HotR"), 3, 0, 0);
+            target = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("HotR"), 3, PaladinSpec.Prot, PaladinTalents.All, 0, 0, 0);
             Assert.AreNotEqual(0, target.AbilityCooldownBits[(int)Ability.CS]);
         }
         [Test]

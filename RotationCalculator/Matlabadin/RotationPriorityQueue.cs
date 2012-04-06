@@ -232,11 +232,8 @@ namespace Matlabadin
             }
             return conditions;
         }
-        public bool Contains(Ability a)
-        {
-            return abilityQueue.Contains(a);
-        }
         public string PriorityQueue { get; private set; }
+        public IEnumerable<Ability> AbilitiesUsed { get { return this.abilityQueue; } }
         private List<Ability> abilityQueue;
         private List<List<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>> abilityConditionals;
     }

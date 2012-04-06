@@ -203,7 +203,7 @@ namespace Matlabadin
                         UseAbility(gp, sm, StatePreAbility, ability, true), // hit
                         UseAbility(gp, sm, StatePreAbility, ability, true, gcProc: true), // hit & gc
                     };
-                    double gcProcPr = gp.MeleeHit * gp.GCProcRate;
+                    double gcProcPr = gp.MeleeHit * gp.GrandCrusaderProcRate;
                     pr = new double[]
                     {
                         1 - gp.MeleeHit,
@@ -346,7 +346,7 @@ namespace Matlabadin
                     if (hit)
                     {
                         nextState = sm.IncHP(nextState);
-                        if (gp.SelflessHealer)
+                        if (gp.Talents.Includes(PaladinTalents.SelflessHealer))
                         {
                             int stacks = sm.Stacks(nextState, Buff.SH);
                             nextState = sm.SetTimeRemaining(nextState, Buff.SH, gp.BuffDurationInSteps(Buff.SH));
