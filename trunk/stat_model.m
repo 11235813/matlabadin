@@ -64,12 +64,12 @@ mdf.DivineBulwark=2.25.*spec.DivineBulwark;
 mdf.SoI = 0.05.*(strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)); %healing increase
 
 %% Talents
-mdf.EG=0.15.*talent.EternalGlory; %PH
-mdf.HolyShield=1.*talent.HolyShield; %PH
+mdf.EternalFlame=1.*talent.EternalFlame; %PH
+mdf.SacShield=1.*talent.SacredShield; %PH
+mdf.UnbreakableSpirit=1.*talent.UnbreakableSpirit; %PH
 mdf.HolyAvenger=1.*talent.HolyAvenger; %PH
 mdf.SanctifiedWrath=1.*talent.SanctifiedWrath; %PH
 mdf.DivinePurpose=1.*talent.DivinePurpose; %PH
-mdf.SacShield=1.*talent.SacredShield; %PH
 
 %% Glyphs
 mdf.glyphAS=0.5.*glyph.AlabasterShield;         %Both effects
