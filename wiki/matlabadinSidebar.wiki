@@ -9,5 +9,5 @@
     * Example
     * [matlabadinFAQ FAQ]
   * File/code documentation
-    * Flowchart (high level flow, with links if feasible)
+    * [ProjectStructure Project Structure]
     * Individual file documentation (file-by-file) 

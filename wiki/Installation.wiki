@@ -1,7 +1,7 @@
 #summary Installation and Compilation Instructions
 
 = Requirements =
-  * MATLAB installation. The code has only been tested in MATLAB RXXX, though a free variant such as [http://www.gnu.org/software/octave/ Octave], [http://www.scilab.org/ Scilab], [http://freemat.sourceforge.net/ FreeMat] may also work (see FAQ: What if I don't have MATLAB?).
+  * MATLAB installation. The code has only been tested in MATLAB R2010b, though a free variant such as [http://www.gnu.org/software/octave/ Octave], [http://www.scilab.org/ Scilab], [http://freemat.sourceforge.net/ FreeMat] may also work (see FAQ: What if I don't have MATLAB?).
   * C# compiler or [http://www.microsoft.com/net/ Microsoft .Net development framework]. [http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-csharp-express Microsoft Visual C# express 2010] is one such option.
 
 = Getting the Code =
@@ -10,7 +10,7 @@ If you want to grab the latest code, you can do so over http or with any SVN cli
 = Compiling the C# Portion =
 The C# code that handles the FSM logic can be found in the [http://code.google.com/p/matlabadin/source/browse/#svn%2Ftrunk%2FRotationCalculator%2FMatlabadin RotationCalculator/Matlabadin] folder within the trunk.
 
-*basic compilation instructions*
+MATLAB should handle the compilation of the C# modules automagically, assuming you have a C# compiler where MATLAB can find it.
 
 
 = Warnings =
