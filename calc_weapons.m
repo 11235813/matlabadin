@@ -47,7 +47,7 @@ for g=1:length(cfg)
     c=ability_model(c);
     c=rotation_model(c);
     
-    wb=waitbar(0,['Calculating Weapons']);
+    wb=waitbar(0,['Calculating Weapons for config #' int2str(g)]);
     tic
     for m=1:M
         

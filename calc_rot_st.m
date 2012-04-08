@@ -97,7 +97,7 @@ li{1:2,5}={'SS/EF';'Uptime%'};
 li{ldat,5}=efssUptime(:,g);
 li{1:2,6}={'Empty';'GCD%'};
 li{ldat,6}=empties(:,g);
-li{1:2,7}={'HPG';'per s'};
+li{1:2,7}={'HPG';'/s'};
 li{ldat,7}=hpg(:,g);
 
 li.setColumnTextAlignment(2,'left')

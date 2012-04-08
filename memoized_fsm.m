@@ -1,4 +1,4 @@
-function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = memoized_fsm(rotation, mehit, sphit, sh)
+function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = memoized_fsm(rotation, spec, talentString, decimalHaste, mehit, sphit)
     global fsm_cache_actionPr;
     global fsm_cache_efUptime;
     global fsm_cache_ssUptime;
@@ -21,7 +21,7 @@ function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime
         fsm_cache_wbUptime = {};
 		fsm_cache_sbUptime = {};
         fsm_cache_gcdUptime= {};
-	end
+    end
 	
     rotationKey = rotation;
     rotationKey = strrep(rotationKey, '[', '');
@@ -37,33 +37,34 @@ function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime
     rotationKey = strrep(rotationKey, '''', 'prime');
     rotationKey = strrep(rotationKey, '+', 'plus');
     rotationKey = strrep(rotationKey, '^', 'up');
-    optionsKey = sprintf('T%g_%0.5f_%0.5f', fsm_steps_per_gcd(), mehit, sphit);
+    spectalKey = [spec '_' talentString];
+    optionsKey = sprintf('T%g_%0.5f_%0.5f_%0.5f', fsm_steps_per_gcd(), decimalHaste, mehit, sphit);
     optionsKey = strrep(optionsKey,'_1.00000','_1_');
     optionsKey = strrep(optionsKey,'_0.','_');
     % check memory cache
-    if isfield(fsm_cache_actionPr, rotationKey) && isfield(fsm_cache_actionPr.(rotationKey), optionsKey)
+    if isfield(fsm_cache_actionPr, rotationKey) && isfield(fsm_cache_actionPr.(rotationKey), spectalKey) && isfield(fsm_cache_actionPr.(rotationKey).(spectalKey), optionsKey)
         % warning('using cached result');
-        actionPr = fsm_cache_actionPr.(rotationKey).(optionsKey);
-        metadata = fsm_cache_metadata.(rotationKey).(optionsKey);
-        ssUptime = fsm_cache_ssUptime.(rotationKey).(optionsKey);
-        efUptime = fsm_cache_efUptime.(rotationKey).(optionsKey);
-        wbUptime = fsm_cache_wbUptime.(rotationKey).(optionsKey);
-        sbUptime = fsm_cache_sbUptime.(rotationKey).(optionsKey);
-        gcdUptime = fsm_cache_gcdUptime.(rotationKey).(optionsKey);
+        actionPr = fsm_cache_actionPr.(rotationKey).(spectalKey).(optionsKey);
+        metadata = fsm_cache_metadata.(rotationKey).(spectalKey).(optionsKey);
+        ssUptime = fsm_cache_ssUptime.(rotationKey).(spectalKey).(optionsKey);
+        efUptime = fsm_cache_efUptime.(rotationKey).(spectalKey).(optionsKey);
+        wbUptime = fsm_cache_wbUptime.(rotationKey).(spectalKey).(optionsKey);
+        sbUptime = fsm_cache_sbUptime.(rotationKey).(spectalKey).(optionsKey);
+        gcdUptime = fsm_cache_gcdUptime.(rotationKey).(spectalKey).(optionsKey);
         return;
     end
-    fileCell = fsm_gen(rotation, mehit, sphit, sh);
+    fileCell = fsm_gen(rotation, spec, talentString, decimalHaste, mehit, sphit);
     filename = fileCell{1};
     % read from the data file
     [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = load_fsm_csv(filename);
     % TODO: sanity check that file params match our args
-    fsm_cache_actionPr.(rotationKey).(optionsKey) = actionPr;
-    fsm_cache_metadata.(rotationKey).(optionsKey) = metadata;
-    fsm_cache_ssUptime.(rotationKey).(optionsKey) = ssUptime;
-    fsm_cache_efUptime.(rotationKey).(optionsKey) = efUptime;
-    fsm_cache_wbUptime.(rotationKey).(optionsKey) = wbUptime;
-    fsm_cache_sbUptime.(rotationKey).(optionsKey) = sbUptime;
-    fsm_cache_gcdUptime.(rotationKey).(optionsKey) = gcdUptime;
+    fsm_cache_actionPr.(rotationKey).(spectalKey).(optionsKey) = actionPr;
+    fsm_cache_metadata.(rotationKey).(spectalKey).(optionsKey) = metadata;
+    fsm_cache_ssUptime.(rotationKey).(spectalKey).(optionsKey) = ssUptime;
+    fsm_cache_efUptime.(rotationKey).(spectalKey).(optionsKey) = efUptime;
+    fsm_cache_wbUptime.(rotationKey).(spectalKey).(optionsKey) = wbUptime;
+    fsm_cache_sbUptime.(rotationKey).(spectalKey).(optionsKey) = sbUptime;
+    fsm_cache_gcdUptime.(rotationKey).(spectalKey).(optionsKey) = gcdUptime;
 end
 function [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = load_fsm_csv(filename)
     addpath .\helper_func\
@@ -89,6 +90,8 @@ function [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime]
 		elseif length(lineAction) > 6 && strcmp('Stats_', lineAction(1:6))
 			metadata.(lineAction) = lineTxtPr;
 		elseif length(lineAction) > 6 && strcmp('Param_', lineAction(1:6))
+			metadata.(lineAction) = lineTxtPr;
+		elseif length(lineAction) > 6 && strcmp('Uptime_', lineAction(1:6))
 			metadata.(lineAction) = lineTxtPr;
 		else
 			actionPr{1, i} = lineAction;

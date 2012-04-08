@@ -1,13 +1,6 @@
-function [generatedFile] = fsm_gen(rotation, mehitArray, rhitArray, shint)
+function [generatedFile] = fsm_gen(rotation, spec, talentString, decimalHaste, mehitArray, sphitArray)
 %fsm_gen calculates fsm for each mehit, rhit
 % call memoized_fsm to return the actual fsm data
-
-if shint
-    sh='true';
-else
-    sh='false';
-end
-    
 
 % check source timestamp
 if exist('RotationCalculator') ~= 7
@@ -21,7 +14,11 @@ if exist('fsm.exe') == 2 && fsmFileMetadata.datenum <= max(arrayfun(@(x) x.daten
 end
 if exist('fsm.exe') ~= 2 && exist('data') == 7
 	warning('Deleting data directory to ensure invalid data is not cached.');
-	rmdir('data', 's');
+    try
+        rmdir('data', 's');
+    catch exception
+        disp(exception)
+    end
 	if exist('data') == 7
 		error('Unable to delete data directory');
     end
@@ -35,10 +32,10 @@ argfid = fopen(argfile, 'w');
 generationRequired = 0;
 for i=1:length(mehitArray)
     mehit = mehitArray(i);
-    if length(rhitArray) > 1
-        rhit = rhitArray(i);
+    if length(sphitArray) > 1
+        rhit = sphitArray(i);
     else
-        rhit = rhitArray;
+        rhit = sphitArray;
     end
     rotationKey = rotation;
     rotationKey = strrep(rotationKey, '[', '');
@@ -53,10 +50,11 @@ for i=1:length(mehitArray)
     rotationKey = strrep(rotationKey, '*', 'star');
     rotationKey = strrep(rotationKey, '''', 'prime');
     rotationKey = strrep(rotationKey, '+', 'plus');
-    optionsKey = sprintf('T%g_%0.5f_%0.5f_%s', fsm_steps_per_gcd(), mehit, rhit, sh);
+    spectalKey = [spec '_' talentString];
+    optionsKey = sprintf('T%g_%0.5f_%0.5f_%0.5f', fsm_steps_per_gcd(), decimalHaste, mehit, rhit);
     optionsKey = strrep(optionsKey,'_1.00000','_1_');
     optionsKey = strrep(optionsKey,'_0.','_');
-    dirname = strcat('data\\', rotationKey);
+    dirname = strcat('data\\', rotationKey,'\\',spectalKey);
     filename = strcat(dirname, '\\', optionsKey, '.csv');
     % skip generation if the file already exists
     if exist(filename) ~= 2
@@ -64,8 +62,8 @@ for i=1:length(mehitArray)
             mkdir(dirname);
         end
                 
-        fprintf(argfid, '%s %g %f %f %s %s\n', ...
-            rotation, fsm_steps_per_gcd(), mehit, rhit, sh, filename);
+        fprintf(argfid, '%s %g %s %s %f %f %f %s \n', ...
+            rotation, fsm_steps_per_gcd(), spec, talentString, decimalHaste, mehit, rhit, filename);
         generationRequired = 1;
     end
     generatedFile{i} = filename;

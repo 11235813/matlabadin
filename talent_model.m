@@ -17,7 +17,7 @@ function [talent] =  talent_model(shortform)
 
 %% input handling
 if nargin<1 || (nargin==1 && isempty(shortform))
-    shortform=[1 1 3 3 3 1];
+    shortform=[0 0 3 0 0 0];
 else
     if sum(size(shortform)==[1 6])~=2
         error('talent_model input is not 1x6')
@@ -38,19 +38,19 @@ talent.FistofJustice=talent.short(2)==1;
 talent.Repentance=talent.short(2)==2;
 talent.BurdenofGuilt=talent.short(2)==3;
 %third tier
-talent.BlessedLife=talent.short(3)==1;
-talent.SacredShield=talent.short(3)==2;
-talent.ArdentDefender=talent.short(3)==3;
+talent.SelflessHealer=talent.short(3)==1;
+talent.EternalFlame=talent.short(3)==2;
+talent.SacredShield=talent.short(3)==3;
 %fourth tier
-talent.SelflessHealer=talent.short(4)==1;
-talent.EternalGlory=talent.short(4)==2;
-talent.HolyShield=talent.short(4)==3;
+talent.HandofPurity=talent.short(4)==1;
+talent.UnbreakableSpirit=talent.short(4)==2;
+talent.Clemency=talent.short(4)==3;
 %fifth tier
-talent.Veneration=talent.short(5)==1;
-talent.ActsofSacrifice=talent.short(5)==2;
-talent.Clemency=talent.short(5)==3;
+talent.HolyAvenger=talent.short(5)==1;
+talent.SanctifiedWrath=talent.short(5)==2;
+talent.DivinePurpose=talent.short(5)==3;
 %sixth tier
-talent.HolyAvenger=talent.short(6)==1;
-talent.SanctifiedWrath=talent.short(6)==2;
-talent.DivinePurpose=talent.short(6)==3;
+talent.HolyPrism=talent.short(6)==1;
+talent.LightsHammer=talent.short(6)==2;
+talent.ExecutionSentence=talent.short(6)==3;
 

@@ -1,4 +1,4 @@
-function [cps] = action2cps(c,j)
+function [cps hpg] = action2cps(c,j)
 %ACTION2CPS takes the actionPr returned by memoized_fsm and converts them
 %into a standardized "cast per second" array, including both active and
 %passive sources.
@@ -35,11 +35,15 @@ fsflag=c.mdf.glyphFS>1;
 
 %initialize cps vector
 cps=zeros(size(c.abil.val.label,1),1);
+asgc=0;
 
 %sort actionPr entries into cps
 for m=1:size(c.rot.actionPr,2)
     idx= strcmpi(c.rot.actionPr{1,m},c.abil.val.label);
     cps(idx)=c.rot.actionPr{2,m};    
+    if strcmp(c.rot.actionPr{1,m},'AS(GC)')
+        asgc=c.rot.actionPr{2,m};
+    end
 end
 
 %corrections
@@ -47,6 +51,10 @@ end
 %HotR->HammerNova
 idx=find(strcmpi('HotR',c.abil.val.label));
 cps(idx+1)=cps(idx);
+
+%AS(GC)->AS
+idx=find(strcmpi('AS',c.abil.val.label));
+cps(idx)=cps(idx)+asgc;
 
 %Melee swings
 cps(strcmpi('Melee',c.abil.val.label))=1./c.player.wswing(jws);
@@ -68,5 +76,11 @@ cps(strcmpi(c.exec.seal,c.abil.val.label))= ...
 
 %censure
 cps(strcmpi('Censure',c.abil.val.label))= 1./c.player.censTick;
+
+%% Holy Power Generation
+hpg=cps(strcmpi('CS',c.abil.val.label)).*c.mdf.mehit(jme)+... %CS
+    cps(strcmpi('HotR',c.abil.val.label)).*c.mdf.mehit(jme)+... %HotR
+    cps(strcmpi('J',c.abil.val.label)).*c.mdf.sphit(jsp)+... %J
+    asgc;    %AS(GC)
 
 end

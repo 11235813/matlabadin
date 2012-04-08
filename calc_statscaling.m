@@ -156,7 +156,7 @@ for g=1:length(cfg)
     hhps0(1:M,:,g)=repmat(c.rot.hps,[M 1 1]);
     
     %waitbar
-    csswb=waitbar(0,'Calculating STR Scaling');
+    csswb=waitbar(0,'Calculating hit Scaling');
     set(csswb,'Position',get(csswb,'Position')+[0 85 0 0]);
     
     %for each stat
@@ -229,12 +229,12 @@ for g=1:length(cfg)
     ehps0(1:M,:,g)=repmat(c.rot.hps,[M 1 1]);
     
     %waitbar
-    csswb=waitbar(0,'Calculating STR Scaling');
+    csswb=waitbar(0,'Calculating exp Scaling');
     set(csswb,'Position',get(csswb,'Position')+[0 85 0 0]);
     
     %for each stat
     for m=1:M
-        waitbar(m./M,csswb,['Calculating hit scaling for ' stat{m} ...
+        waitbar(m./M,csswb,['Calculating exp scaling for ' stat{m} ...
                             ' in cfg ' int2str(g) '/' int2str(length(cfg))]);
                         
         %set each stat to dstat extra

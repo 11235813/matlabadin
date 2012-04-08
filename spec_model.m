@@ -36,6 +36,7 @@ spec.BlindingLight=(level>87);
 
 %% prot
 if strcmp(tree,'prot')
+    spec.name='Prot';
     %Base bonuses for choosing prot (inherent @ level 10)
     spec.Vengeance=1;
     spec.GuardedbytheLight=1;
@@ -51,6 +52,7 @@ if strcmp(tree,'prot')
     
 %% ret    
 elseif strcmp(tree,'ret')
+    spec.name='Ret';
     %Base bonuses for choosing ret (inherent @ level 10)
     spec.TemplarsVerdict=1;
     spec.Sheathoflight=1;
