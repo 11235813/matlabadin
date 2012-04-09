@@ -76,10 +76,13 @@ if generationRequired
     end
 	if exist('fsm.exe') ~= 2
 		% Attempt to compile
+        % add /define:NOSANITYCHECKS to the command-line to improve
+        % graph generation performance
+        
 		% try 32 bit
-		system('%SYSTEMROOT%\Microsoft.NET\Framework\v4.0.30319\csc.exe /o+ /debug- /out:fsm.exe RotationCalculator\Matlabadin\*.cs ');%>nul 2>&1');
+		system('%SYSTEMROOT%\Microsoft.NET\Framework\v4.0.30319\csc.exe /o+ /debug- /out:fsm.exe RotationCalculator\Matlabadin\*.cs >NUL 2>&1');
 		% then overwrite with 64 bit if available
-		system('%SYSTEMROOT%\Microsoft.NET\Framework64\v4.0.30319\csc.exe /o+ /debug- /out:fsm.exe RotationCalculator\Matlabadin\*.cs > nul 2>&1');
+		system('%SYSTEMROOT%\Microsoft.NET\Framework64\v4.0.30319\csc.exe /o+ /debug- /out:fsm.exe RotationCalculator\Matlabadin\*.cs >NUL 2>&1');
 		if exist('fsm.exe') ~= 2
 			error('Please install version 4 of the .NET framework or mono. .NET 4 can be downloaded from: http://www.microsoft.com/downloads/en/details.aspx?FamilyID=5765d7a8-7722-4888-a970-ac39b33fd8ab&displaylang=en');
 		end

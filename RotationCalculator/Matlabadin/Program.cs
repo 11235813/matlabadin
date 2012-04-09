@@ -34,11 +34,21 @@ namespace Matlabadin
         private static void ParallelProcess(TextReader input)
         {
             List<Task> taskList = new List<Task>();
+            HashSet<string> processedInputs = new HashSet<string>();
             // Optimisation: order tasks to take advantage of graph reuse based on Task.Factory.Scheduler.MaximumConcurrencyLevel
             foreach (string[] inputArgs in GetInputs(input))
             {
                 string[] args = inputArgs;
-                taskList.Add(Task.Factory.StartNew(() => ProcessParams(args), TaskCreationOptions.PreferFairness));
+                string line = args.Aggregate("", (ln, s) => ln + " " + s);
+                if (processedInputs.Contains(line))
+                {
+                    Console.Error.WriteLine("Duplicate input detected - only generating graph once ({0})", line);
+                }
+                else
+                {
+                    processedInputs.Add(line);
+                    taskList.Add(Task.Factory.StartNew(() => ProcessParams(args), TaskCreationOptions.PreferFairness));
+                }
             }
             Task.WaitAll(taskList.ToArray());
         }
@@ -152,7 +162,6 @@ namespace Matlabadin
                 out absTolerance,
                 initialState: hintPr);
             convergeStopWatch.Stop();
-            CacheGraph(graph, pr);
             Stopwatch aggregateStopWatch = new Stopwatch();
             aggregateStopWatch.Start();
             ActionSummary result = graph.CalculateResults(pr);
@@ -183,6 +192,7 @@ namespace Matlabadin
             stream.WriteLine("Param_Haste,{0}", gp.Haste);
             stream.WriteLine("Param_Hit_Melee,{0}", gp.MeleeHit);
             stream.WriteLine("Param_Hit_Spell,{0}", gp.SpellHit);
+            CacheGraph(graph, pr);
         }
         private static void CacheGraph(MatlabadinGraph<BitVectorState> mg, double[] pr)
         {
