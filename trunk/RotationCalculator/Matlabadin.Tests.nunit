@@ -2,5 +2,7 @@
   <Settings activeconfig="Default" />
   <Config name="Default" binpathtype="Auto">
     <assembly path="Matlabadin.Tests\bin\Debug\Matlabadin.Tests.dll" />
+    <assembly path="Matlabadin\bin\Release\Matlabadin.exe" />
+    <assembly path="Matlabadin.Tests\bin\Release\Matlabadin.Tests.dll" />
   </Config>
 </NUnitProject>

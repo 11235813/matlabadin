@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="ChoiceTest.cs" />
     <Compile Include="ArrayStateManagerTest.cs" />
+    <Compile Include="IssueTests.cs" />
     <Compile Include="PaladinHelperTest.cs" />
     <Compile Include="Int64StateManagerTest.cs" />
     <Compile Include="Int64GraphParametersTest.cs" />
@@ -72,7 +73,10 @@
   <ItemGroup>
     <Content Include="input2.txt" />
     <Content Include="input.txt" />
+    <Content Include="testdata\issue19-set2.txt" />
+    <Content Include="testdata\issue19.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

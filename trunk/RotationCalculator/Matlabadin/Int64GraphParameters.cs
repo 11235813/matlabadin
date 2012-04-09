@@ -149,7 +149,7 @@ namespace Matlabadin
         public BitVectorState SetTimeRemaining(BitVectorState state, Buff buff, int value)
         {
             int numBits = BuffDurationBits[(int)buff];
-#if DEBUG
+#if !NOSANITYCHECKS
             if (value >= 1 << numBits) throw new ArgumentException(String.Format("Duration of {0} steps does not fit into {1} bits assigned to buff {2}", value, numBits, buff));
 #endif
             state.buff = Pack(state.buff, BuffDurationStartBit[(int)buff], numBits, value);
@@ -176,7 +176,7 @@ namespace Matlabadin
         {
             int numBits = AbilityCooldownBits[(int)ability];
             if (numBits <= 0 && cd == 0) return state;
-#if DEBUG
+#if !NOSANITYCHECKS
             if (cd >= 1 << numBits) throw new ArgumentException(String.Format("Cooldown of {0} steps does not fit into {1} bits assigned to ability {2}", cd, numBits, ability));
 #endif
             state.hpcd = Pack(state.hpcd, AbilityCooldownStartBit[(int)ability], AbilityCooldownBits[(int)ability], cd);
@@ -218,7 +218,7 @@ namespace Matlabadin
             {
                 return SetTimeRemaining(state, buff, 0);
             }
-#if DEBUG
+#if !NOSANITYCHECKS
             if (TimeRemaining(state, buff) == 0) throw new ArgumentException("Cannot set stacks of inactive buff");
             if (stacks - 1 >= 1 << BuffStackBits[(int)buff]) throw new ArgumentException(String.Format("{0} Buff stacks do not fit into {1} stacks bits assigned {2}", stacks, BuffStackBits[(int)buff], buff));
 #endif
@@ -234,7 +234,7 @@ namespace Matlabadin
         }
         private static ulong Pack(ulong state, int startBit, int numBits, int value)
         {
-#if DEBUG
+#if !NOSANITYCHECKS
             if (value >= 1 << numBits || value < 0) throw new ArgumentOutOfRangeException(String.Format("value {0} does not fit in {1} bits", value, numBits));
 #endif                
             ulong bitsToClear = ((ulong)~(-1 << numBits)) << startBit;

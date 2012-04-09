@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace Matlabadin
 {
@@ -18,6 +19,42 @@ namespace Matlabadin
             this.GraphParameters = gp;
             this.StateManager = sm;
             GenerateGraph();
+#if !NOSANITYCHECKS
+            SanityCheck();
+#endif
+        }
+        private void SanityCheck()
+        {
+            if (this.index.Length != this.lookup.Count) throw new Exception("Sanity failure: lookup size mismatch");
+            if (this.index.Length != this.nextState.Length) throw new Exception("Sanity failure: nextState size mismatch");
+            if (this.index.Length != this.choice.Length) throw new Exception("Sanity failure: choice size mismatch");
+            foreach (Choice c in this.choice)
+            {
+                if (c == null)
+                {
+                    throw new Exception("Sanity failure: null choice");
+                }
+                if (!firstChoiceState.ContainsKey(c))
+                {
+                    throw new Exception(String.Format("Sanity failure: missing choice {0} in firstChoiceState", c));
+                }   
+            }
+            foreach (Choice key in this.firstChoiceState.Keys)
+            {
+                if (firstChoiceState[key].Item1 != key) throw new Exception("Sanity failure: firstChoiceState maps choice to another choice");
+            }
+            for (int i = 0; i < index.Length; i++)
+            {
+                if (nextState[i].Length == 0) throw new Exception(String.Format("Sanity failure: no tranistion out of {0}th state", i));
+                if (nextState[i].Length != choice[i].pr.Length) throw new Exception(String.Format("Sanity failure: {0}th state choice pr has {1} transitions, expected {2}", i, choice[i].pr.Length, nextState[i].Length));
+                if (Math.Abs(choice[i].pr.Sum() - 1.0) > 1e-10) throw new Exception(String.Format("Sanity failure: {0}th state transition pr sum to {0}", i, choice[i].pr.Sum()));
+                if (choice[i].pr.Any(p => p == 0)) throw new Exception(String.Format("Sanity failure: {0}th state has zero probability transition", i));
+                for (int j = 0; j < nextState[i].Length; j++)
+                {
+                    // transitions are to valid states
+                    if (nextState[i][j] < 0 || nextState[i][j] >= Size) throw new Exception(String.Format("Sanity failure: {0}th state has invalid transition to state {1}", i, nextState[i][j]));
+                }
+            }
         }
         /// <summary>
         /// Clones a given graph.
@@ -29,23 +66,38 @@ namespace Matlabadin
         public MatlabadinGraph(MatlabadinGraph<TState> graph, GraphParameters<TState> gp)
         {
             if (!graph.GraphParameters.HasSameShape(gp)) throw new ArgumentException("Graphs do not have the same shape");
-            this.GraphParameters = gp;
-            this.StateManager = graph.StateManager;
-            this.lookup = graph.lookup;
-            this.index = graph.index;
-            this.nextState = graph.nextState;
-
-            // replace the choices in the existing graph with the new choices. Since the graph has the same shape we don't have to generate the entire graph
-            var choiceConversion =
-                from kvp in graph.firstChoiceState
-                select new {
-                    OldChoice = kvp.Key,
-                    NewChoice = StateTransition<TState>.CalculateTransition(GraphParameters, StateManager, kvp.Value.Item2).Choice,
-                    State = kvp.Value
-                };
-            this.firstChoiceState = choiceConversion.ToDictionary(n => n.NewChoice, n => n.State);
-            Dictionary<Choice, Choice> choiceRemapping = choiceConversion.ToDictionary(n => n.OldChoice, n => n.NewChoice);
-            this.choice = graph.choice.Select(c => choiceRemapping[c]).ToArray();
+            try
+            {
+                this.GraphParameters = gp;
+                this.StateManager = graph.StateManager; // reuse the statemanager from the old graph
+                this.lookup = graph.lookup;
+                this.index = graph.index;
+                this.nextState = graph.nextState;
+                // replace the choices in the existing graph with the new choices
+                // Since the graph has the same shape we don't have to generate the entire graph
+                this.firstChoiceState = new Dictionary<Choice, Tuple<Choice, TState>>();
+                Dictionary<Choice, Choice> choiceLookup = new Dictionary<Choice, Choice>();
+                foreach (var kvp in graph.firstChoiceState.Values)
+                {
+                    Choice oldChoice = kvp.Item1;
+                    TState state = kvp.Item2;
+                    Choice newChoice = StateTransition<TState>.CalculateTransition(GraphParameters, StateManager, state).Choice;
+                    this.firstChoiceState.Add(newChoice, new Tuple<Choice, TState>(newChoice, state));
+                    choiceLookup.Add(oldChoice, newChoice);
+                }
+                this.choice = new Choice[graph.Size];
+                for (int i = 0; i < this.choice.Length; i++)
+                {
+                    this.choice[i] = choiceLookup[graph.choice[i]];
+                }
+#if !NOSANITYCHECKS
+                SanityCheck();
+#endif
+            }
+            catch (Exception e)
+            {
+                throw new Exception(String.Format("Error cloning [{0}] to [{1}]", graph.GraphParameters.ParametersToString(), gp.ParametersToString()), e);
+            }
         }
         /// <summary>
         /// Number of distinct state in the graph

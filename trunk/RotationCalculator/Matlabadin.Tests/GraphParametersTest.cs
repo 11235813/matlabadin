@@ -240,6 +240,7 @@ namespace Matlabadin.Tests
             DoTest(0.8, 0.8, 0.9, 0.9, true);
             DoTest(0.8, 0.8, 0.0, 0.9, false);
             DoTest(0.8, 0.8, 0.9, 0.0, false);
+            DoTest(0.860152, 0.935152, 0.866212, 0.941212, true);
         }
         [Test]
         public void ShouldNotHaveSameShapeIfRotationsDiffer()

@@ -111,7 +111,7 @@ namespace Matlabadin
         {
             StateInitial = state;
             CalculateStateTransition(gp, sm, ability);
-#if DEBUG
+#if !NOSANITYCHECKS
             SanityCheck();
 #endif
         }
@@ -152,7 +152,7 @@ namespace Matlabadin
             {
                 unforkedBuffSteps[i] = Math.Min(waitSteps, sm.TimeRemaining(StateInitial, (Buff)i))
                     + Math.Min(abilitySteps, sm.TimeRemaining(StatePostAbility[0], (Buff)i));
-#if DEBUG
+#if !NOSANITYCHECKS
                 for (int j = 1; j < StatePostAbility.Length; j++)
                 {
                     if (Math.Min(abilitySteps, sm.TimeRemaining(StatePostAbility[j], (Buff)i)) !=

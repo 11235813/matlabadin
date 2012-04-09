@@ -20,7 +20,7 @@ namespace Matlabadin
             int[][] forkedBuffDuration
             )
         {
-#if DEBUG
+#if !NOSANITYCHECKS
             if (pr == null) throw new ArgumentNullException("pr");
             if (unforkedBuffDuration == null) throw new ArgumentNullException("buffDuration");
             if (forkedBuffDuration == null) throw new ArgumentNullException("buffDuration");
@@ -114,6 +114,15 @@ namespace Matlabadin
             }
             return hashcode;
         }
+        public override string ToString()
+        {
+            string s = this.action.Aggregate("Action:", (str, a) => str + ">" + a);
+            s += " duration:" + this.stepsDuration;
+            s += " pr: " + this.pr.Aggregate("", (str, p) => str + p + ",");
+            s += " unforked: " + this.unforkedBuffDuration.Aggregate("", (str, p) => str + p + ",");
+            s += " forked: " + this.forkedBuffDuration.Aggregate("", (str, f) => str + "[" + f.Aggregate("", (sa, p) => sa + p + ",") + "]");
+            return s;
+        }
         private int hashcode;
         private Choice(Choice first, Choice second)
         {
@@ -135,7 +144,7 @@ namespace Matlabadin
             {
                 this.forkedBuffDuration[i] = new int[second.pr.Length];
                 int firstDuration = first.forkedBuffDuration[i][0];
-#if DEBUG
+#if !NOSANITYCHECKS
                 if (first.forkedBuffDuration[i].Length != 1) throw new ArgumentException("Sanity check failure: Unable to concatenate non-linear forkedBuffDuration");
 #endif
                 for (int j = 0; j < second.pr.Length; j++)

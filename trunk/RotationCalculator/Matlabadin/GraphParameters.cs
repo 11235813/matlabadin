@@ -114,6 +114,16 @@ namespace Matlabadin
                     return 0;
             }
         }
+        public string ParametersToString()
+        {
+            return String.Format("{0} {1} {2} {3} {4} {5}",
+                this.Rotation.PriorityQueue,
+                this.Spec,
+                this.Talents.ToLongString(),
+                this.Haste,
+                this.MeleeHit,
+                this.SpellHit);
+        }
         public int BuffDurationInSteps(Buff buff)
         {
             return buffSteps[(int)buff];
