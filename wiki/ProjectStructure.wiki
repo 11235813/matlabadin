@@ -9,7 +9,7 @@
   * others?
     
   == Process Flow ==
-  image or text? - gotta map this out to tell which will be easier
+  [images/general_flow_12Apr12.png |thumb |alt=General Flow Chart Image |Basic flow schematic for matlabadin execution, as used in calc_sample.m]
 
 = Old Stuff Below Here =
 = Details =
