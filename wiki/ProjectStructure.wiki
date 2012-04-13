@@ -9,7 +9,7 @@
   * others?
     
   == Process Flow ==
-  [images/general_flow_12Apr12.png |thumb |alt=General Flow Chart Image |Basic flow schematic for matlabadin execution, as used in calc_sample.m]
+  http://code.google.com/p/matlabadin/source/browse/wiki/images/general_flow_12Apr12.png
 
 = Old Stuff Below Here =
 = Details =
