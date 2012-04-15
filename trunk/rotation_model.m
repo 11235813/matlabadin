@@ -17,7 +17,7 @@ useParallel=1;
 
 %define relevant queues if not done already
 %TODO: maybe this makes more sense in c.rot?
-if isfield(c.exec,'queue')==0
+if isfield(c.exec,'queue')==0 || isempty(c.exec.queue)
     c.exec.queue='^WB>^SS>SotR>CS>J>AS>Cons>HW';
 end
 

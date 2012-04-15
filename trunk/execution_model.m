@@ -23,7 +23,7 @@ function [exec] = execution_model(varargin)
 
 %% Input handling
 %populate all entries with empty arrays
-exec.npccount=[];exec.timein=[];exec.timeout=[];exec.behind=[];exec.seal=0;exec.veng=[];exec.overh=[];exec.pseq=[];
+exec.npccount=[];exec.timein=[];exec.timeout=[];exec.behind=[];exec.seal=0;exec.veng=[];exec.overh=[];exec.queue=[];
 %start filling entries with inputs
 if nargin>0
     for i=1:2:length(varargin)
@@ -44,8 +44,8 @@ if nargin>0
                exec.veng=value;
             case 'overh'
                exec.overh=value;
-            case 'pseq'
-                exec.pseq=value;
+            case 'queue'
+                exec.queue=value;
         end
     end
 end

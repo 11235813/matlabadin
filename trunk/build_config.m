@@ -59,8 +59,8 @@ if nargin>1
                e.veng=value;
             case 'overh'
                e.overh=value;
-            case 'pseq'
-                e.pseq=value;
+            case {'rot','pseq'}
+                e.queue=value;
             %buff_model
             case 'mode'
                 b.mode=value;
@@ -104,7 +104,7 @@ c.base=player_model('race',p.race,'prof',p.prof,'lvl',p.lvl);  %possibly rename 
 c.npc=npc_model(c.base,'lvl',n.lvl,'type',n.type,'swing',n.swing,'cast',n.cast,'phflag',n.phflag,'blockflag',n.blockflag,'outphys',n.out.phys,'outspell',n.out.spell);
 
 %invoke execution_model
-c.exec=execution_model('npccount',e.npccount,'timein',e.timein,'timeout',e.timeout,'behind',e.behind,'seal',e.seal,'veng',e.veng,'overh',e.overh,'pseq',e.pseq);
+c.exec=execution_model('npccount',e.npccount,'timein',e.timein,'timeout',e.timeout,'behind',e.behind,'seal',e.seal,'veng',e.veng,'overh',e.overh,'queue',e.queue);
 
 %activate buffs and consumables
 c.buff=buff_model('mode',b.mode,'item',b.item,'flask',b.flask,'belixir',b.belixir,'gelixir',b.gelixir,'potion',b.potion,'food',b.food);
