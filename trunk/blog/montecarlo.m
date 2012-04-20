@@ -1,17 +1,26 @@
-function [DTPS]=montecarlo(stat)
-  dhit=0;dexp=0;dhaste=0;dmastery=0;ddodge=0;
+function [DTPS statblock]=montecarlo(stat,val,simMins,plotFlag)
+dhit=0;dexp=0;dhaste=0;dmastery=0;ddodge=0;
+if nargin<4
+    plotFlag='plot';
+end
+if nargin<3
+    simMins=1000;
+end
+if nargin<2
+    val=600;
+end
 if nargin>=1
     switch stat
         case 'hit'
-            dhit=200;
+            dhit=val;
         case 'exp'
-            dexp=200;
+            dexp=val;
         case 'haste'
-            dhaste=200;
+            dhaste=val;
         case 'mastery'
-            dmastery=200;
+            dmastery=val;
         case 'dodge'    
-            ddodge=200;
+            ddodge=val;
     end
     
     
@@ -50,7 +59,7 @@ idSotRcd=5;
 idGCbuff=6;
 idDPBuff=7;
 
-simTime=1000*60;
+simTime=simMins*60;
 steps_per_sec=100;
 % time=0;             %initial time
 
@@ -186,9 +195,11 @@ G=gblocks./(allattacks-avoids);
 S=sblocks./(allattacks-avoids-gblocks-hits);
 Tsotr = max(t)./sum(debugG==6);
 Rsotr = 1/Tsotr;
+Rhpg=sum(debugHPG>0)/max(t);
 
 DTPS=sum((damage>0).*damage)./max(t);
 
+if ~strcmp(plotFlag,'noplot')
 figure(1)
 x=[0 0.25 0.5 0.7 1]; y=[avoidspct gblockspct sblockspct rblockspct hitspct];
 bar(x,y)
@@ -199,5 +210,11 @@ text(0.5-0.03,sblockspct+0.01,[num2str(sblockspct.*100,'%2.1f') '%'])
 text(0.7-0.03,rblockspct+0.01,[num2str(rblockspct.*100,'%2.1f') '%'])
 text(1-0.03,hitspct+0.01,[num2str(hitspct.*100,'%2.1f') '%'])
 title(['T=' int2str(simTime./60) ' min, G=' num2str(G.*100,'%2.1f') '%, S=' num2str(S.*100,'%2.1f') '%, Tsotr=' num2str(Tsotr,'%2.1f') ', DTPS=' num2str(DTPS.*100,'%2.2f')])
+end
+
+statblock.G=G;
+statblock.S=S;
+statblock.Tsotr=Tsotr;
+statblock.Rhpg=Rhpg;
 
 end
