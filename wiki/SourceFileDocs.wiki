@@ -1,0 +1,64 @@
+#summary Source Code File-by-File Documentation
+
+= Alphabetical List of Files in Trunk =
+In the table below, the links will take you to the doumentation page for the named source code file. Because these documentation pages are 
+manually generated they may differ from the most recent version. In the unlikely event that the difference is major, please report it and 
+we'll try to get it fixed up as soon as possible.
+
+== MATLAB M-Files ==
+|| *Filename*		|| *Rev. Documented*	|| *Date Documented*	||
+|| ability_model.m || r417 ||  22 April 12 ||
+|| action2cps.m || rXXX ||  XXDATEXX ||
+|| avoid_dr.m || rXXX ||  XXDATEXX ||
+|| buff_model.m || rXXX ||  XXDATEXX ||
+|| build_config.m || rXXX ||  XXDATEXX ||
+|| calc_glyphs.m || rXXX ||  XXDATEXX ||
+|| calc_rot_st.m || rXXX ||  XXDATEXX ||
+|| calc_sample.m || rXXX ||  XXDATEXX ||
+|| calc_statscaling.m || rXXX ||  XXDATEXX ||
+|| calc_weapons.m || rXXX ||  XXDATEXX ||
+|| def_db.m || rXXX ||  XXDATEXX ||
+|| derivations.m || rXXX ||  XXDATEXX ||
+|| enhance.m || rXXX ||  XXDATEXX ||
+|| equip.m || rXXX ||  XXDATEXX ||
+|| execution_model.m || rXXX ||  XXDATEXX ||
+|| extra_init.m || rXXX ||  XXDATEXX ||
+|| fsm_gen.m || rXXX ||  XXDATEXX ||
+|| fsm_steps_per_gcd.m || rXXX ||  XXDATEXX ||
+|| gear_db.m || rXXX ||  XXDATEXX ||
+|| gear_display.m || rXXX ||  XXDATEXX ||
+|| gear_sethitexp.m || rXXX ||  XXDATEXX ||
+|| gear_stats.m || rXXX ||  XXDATEXX ||
+|| glyph_model.m || rXXX ||  XXDATEXX ||
+|| memoized_fsm.m || rXXX ||  XXDATEXX ||
+|| npc_model.m || rXXX ||  XXDATEXX ||
+|| phr_model.m || rXXX ||  XXDATEXX ||
+|| player_model.m || rXXX ||  XXDATEXX ||
+|| queue_model.m || rXXX ||  XXDATEXX ||
+|| reforge.m || rXXX ||  XXDATEXX ||
+|| rotation_model.m || rXXX ||  XXDATEXX ||
+|| socket.m || rXXX ||  XXDATEXX ||
+|| spec_model.m || rXXX ||  XXDATEXX ||
+|| stat_conversions.m || rXXX ||  XXDATEXX ||
+|| stat_model.m || rXXX ||  XXDATEXX ||
+|| talent_model.m || rXXX ||  XXDATEXX ||
+
+== C# Files (RotationCalculator/Matlabadin) ==
+|| *Filename*		|| *Rev. Documented*	|| *Date Documented*	||
+|| Ability.cs || rXXX ||  XXDATEXX ||
+|| ActionSummary.cs || rXXX ||  XXDATEXX ||
+|| ArrayStateManager.cs || rXXX ||  XXDATEXX ||
+|| Buff.cs || rXXX ||  XXDATEXX ||
+|| Choice.cs || rXXX ||  XXDATEXX ||
+|| GraphParameters.cs || rXXX ||  XXDATEXX ||
+|| IStateManager.cs || rXXX ||  XXDATEXX ||
+|| Int64GraphParameters.cs || rXXX ||  XXDATEXX ||
+|| Matlabadin.csproj || rXXX ||  XXDATEXX ||
+|| MatlabadinGraph.cs || rXXX ||  XXDATEXX ||
+|| PaladinSpec.cs || rXXX ||  XXDATEXX ||
+|| PaladinTalents.cs || rXXX ||  XXDATEXX ||
+|| Program.cs || rXXX ||  XXDATEXX ||
+|| RotationPriorityQueue.cs || rXXX ||  XXDATEXX ||
+|| StateTransition.cs || rXXX ||  XXDATEXX ||
+|| app.config || rXXX ||  XXDATEXX ||
+|| AssemblyInfo.cs || rXXX ||  XXDATEXX ||

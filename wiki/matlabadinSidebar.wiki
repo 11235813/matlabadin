@@ -10,4 +10,4 @@
     * [matlabadinFAQ FAQ]
   * File/code documentation
     * [ProjectStructure Project Structure]
-    * Individual file documentation (file-by-file) 
+    * [SourceFileDocs File Documentation]
