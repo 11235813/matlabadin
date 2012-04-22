@@ -7,8 +7,8 @@ we'll try to get it fixed up as soon as possible.
 
 == MATLAB M-Files ==
 || *Filename*		|| *Rev. Documented*	|| *Date Documented*	||
-|| [ability_model.wiki ability_model.m] || r417 ||  22 April 12 ||
-|| [action2cps.wiki action2cps.m] || r441 ||  22 April 12 ||
+|| [ability_model ability_model.m] || r417 ||  22 April 12 ||
+|| [action2cps action2cps.m] || r441 ||  22 April 12 ||
 || avoid_dr.m || rXXX ||  XXDATEXX ||
 || buff_model.m || rXXX ||  XXDATEXX ||
 || build_config.m || rXXX ||  XXDATEXX ||
