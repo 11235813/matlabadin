@@ -53,19 +53,17 @@ stat_conversions
 
 %% Spec
 mdf.VengAP=0.05.*spec.Vengeance;
-mdf.GbtL_sta=0.15.*spec.GuardedbytheLight; %stamina bonus
-mdf.GbtL_sp=1.*spec.GuardedbytheLight; %spellpower bonus
+mdf.GbtL=0.05.*spec.GuardedbytheLight; %everything
 %TODO: RFury here instead of in buffs?
 mdf.GrCr=0.2.*spec.GrandCrusader;
-mdf.Sanct=0.1.*spec.Sanctuary; %both effects
-mdf.DivineBulwark=2.25.*spec.DivineBulwark;
+mdf.Sanct=0.15.*spec.Sanctuary; %both effects
+mdf.DivineBulwark=1.2.*spec.DivineBulwark;
 
 %% Abilities
 mdf.SoI = 0.05.*(strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)); %healing increase
 
 %% Talents
 mdf.EternalFlame=1.*talent.EternalFlame; %PH
-mdf.SacShield=1.*talent.SacredShield; %PH
 mdf.UnbreakableSpirit=1.*talent.UnbreakableSpirit; %PH
 mdf.HolyAvenger=1.*talent.HolyAvenger; %PH
 mdf.SanctifiedWrath=1.*talent.SanctifiedWrath; %PH
@@ -234,8 +232,8 @@ extra.parry=extra.itm.parry.*ipconv.parry   + extra.val.parry;
 
 %% Primary stats
 player.str=floor(base.stats.str.*mdf.stats)+floor((gear.str+extra.str+consum.str).*mdf.stats);
-player.sta=floor((base.stats.sta+mdf.mining).*(1+mdf.GbtL_sta).*mdf.stats.*mdf.plate)+ ...
-    floor((gear.sta+mdf.STA+extra.sta+consum.sta).*(1+mdf.GbtL_sta).*mdf.stats.*mdf.plate);
+player.sta=floor((base.stats.sta+mdf.mining).*(1+3.*mdf.GbtL).*mdf.stats.*mdf.plate)+ ...
+    floor((gear.sta+mdf.STA+extra.sta+consum.sta).*(1+3.*mdf.GbtL).*mdf.stats.*mdf.plate);
 player.agi=floor(base.stats.agi.*mdf.stats)+floor((gear.agi+extra.agi+consum.agi).*mdf.stats);
 player.int=floor(base.stats.int.*mdf.stats)+floor((gear.int+extra.int+consum.int).*mdf.stats);
 % player.spi=floor(base.stats.spi.*mdf.stats)+floor((gear.spi+extra.spi).*mdf.stats);
@@ -331,9 +329,6 @@ player.aacrit=base.phcrit + ...                                            %base
     mdf.crit ...                                                           %buffs
     -npc.phcritsupp;                                                       %crit suppression
 
-%explicit crit for non-standard abilities
-player.WoGcrit=player.hcrit+mdf.SacShield;       %Sacred Shield
-
 %enforce crit caps for two-roll
 player.phcrit=max([min([player.phcrit;100.*ones(size(player.phcrit))]); ...
     zeros(size(player.phcrit))]);
@@ -351,17 +346,6 @@ mdf.spcrit=1+(mdf.spcritm-1).*player.spcrit./100;
 mdf.hcrit=1+(mdf.hcritm-1).*player.hcrit./100;
 
 mdf.WoGcrit=1+(mdf.hcritm-1).*player.WoGcrit./100;
-
-%% SP and AP
-%AP gets computed later on, in the Vengeance subsection
-player.sp=floor((base.sp+gear.sp+extra.sp+consum.sp+floor(player.str.*mdf.GbtL_sp) ...
-    +(player.int-10).*cnv.int_sp).*mdf.SP);
-%for future use in case our spellpower and "holy spell power" are both
-%relevant.  hsp is what we get from TbtL, and only affects damage.  We're
-%back to the old 2.x "spell power" and "healing power" modle, it seems.
-player.hsp=player.sp;  
-%TODO: consider removing hsp, probably irrelevant now.  Check if GbtL works
-%similarly to the old TbtL (i.e., grants hsp but not sp).
 
 %% Mastery
 player.rating.mast=(gear.mast+extra.mas+consum.mast);
@@ -392,17 +376,17 @@ player.sphit=player.rating.hit./cnv.hit_hit ...
 %% Avoidance and Blocking
 player.rating.dodge=gear.dodge+consum.dodge;
 player.rating.parry=gear.parry+consum.parry ...
-                    +floor((player.str-base.stats.str).*0.27);
-%calculate DR for avoidance
-avoiddr=avoid_dr(player.rating.dodge, ... %dodge
-                 player.rating.parry); %parry
+                    +floor((player.str-base.stats.str).*0.27);                
+                
+%calculate DR for avoidance and block
+avoiddr=avoid_dr(player.rating.dodge./cnv.dodge_dodge, ... %dodge
+                 player.rating.parry./cnv.parry_parry, ... %parry
+                 player.mast./cnv.mast_block);             %block
 
-player.miss=base.miss-0.04.*npc.skillgap;
-player.dodge=base.dodge+avoiddr.dodgedr-0.04.*npc.skillgap;
-player.parry=base.parry+avoiddr.parrydr-0.04.*npc.skillgap;
-
-%TODO: determime DR equation
-player.block=base.block+mdf.DivineBulwark.*player.mast-0.04.*npc.skillgap;
+player.miss=base.miss-0.2.*npc.lvlgap;
+player.dodge=base.dodge+avoiddr.dodgedr-0.2.*npc.lvlgap;
+player.parry=base.parry+avoiddr.parrydr-0.2.*npc.lvlgap;
+player.block=base.block+200.*mdf.GbtL+avoiddr.blockdr-0.2.*npc.lvlgap;
 
 %check for bounding issues, based on the attack table
 player.miss=max([player.miss;zeros(size(player.miss))]);
@@ -419,11 +403,7 @@ player.parry=min([player.parry.*ones(arrsize.av); ...
 
 player.avoid=player.miss+player.dodge+player.parry;
 player.avoidpct=player.avoid./100;
-%TODO: add effective block?
-%player.eblock=(1-player.avoidpct).*player.block;
 
-%CTC on equivalent one-roll table
-% player.ectc=player.avoid+(1-player.avoidpct).*player.block;
 
 %% Boss Stats
 %TODO: This section is a bit weird.  we have the npc structure already, but
@@ -457,11 +437,17 @@ target.acoeff=2167.5*base.lvl-158167.5;
 player.phdr=min([player.armor./(player.armor+player.acoeff);0.75]);
 target.armor=npc.armor.*mdf.armor.*((290+mdf.SThrow.*10)./300); %fix ST
 target.phdr=target.armor./(target.armor+target.acoeff);
+%% AP & SP
 
-%Vengeance, total melee AP
+%Vengeance
 player.VengAP=(0.1.*base.health+player.sta).*exec.veng.*exec.timein;
+
+%total melee AP
 player.ap=floor((base.ap+gear.ap+(player.str-10).*cnv.str_ap+extra.ap ...
-    +player.VengAP+consum.ap).*mdf.AP);
+          +player.VengAP+consum.ap).*mdf.AP);
+
+%SP
+player.sp=10.*mdf.GbtL.*player.ap;
 
 %% Weapon Details
 player.wdamage=gear.avgdmg+player.ap./14.*gear.swing; %not normalized (AA, Reck, phys HotR)
