@@ -1,20 +1,21 @@
-function [avoiddr] =  avoid_dr(dodge,parry)
+function [avoiddr] =  avoid_dr(dodge,parry,block)
 %AVOID_DR calculates the amount of avoidance received from all sources
-%after diminishing returns.  It takes two inputs, in order:
-%dodge = dodge rating from all sources
-%parry = parry rating from all sources
+%after diminishing returns.  It takes three inputs:
+%dodge = pre-DR dodge pct 
+%parry = pre-DR parry pct
+%block = pre-DR block pct
 %NOTE THAT THIS COMPLETELY IGNORES SOURCES OF AVOIDANCE THAT ARE NOT
 %SUBJECT TO DIMINISHING RETURNS.  This includes talents, racials, and base
-%(naked) avoidance.  You have to add them in by hand to the output of this
-%function.
+%(naked) avoidance.  You have to add them to the output of this
+%function by hand .
 
 
 %%sanity check
 switch nargin
-    case {0,1}
+    case {0,1,2}
         error('Insufficient input arguments');
-    case 2
-        if (min(dodge)<0 || min(parry)<0)
+    case 3
+        if (min(dodge)<0 || min(parry)<0 || min(block)<0)
             error('At least one of the input arguments is negative.');
         end
     otherwise
@@ -22,19 +23,17 @@ switch nargin
 end
 
 %% Constants
-%rating conversions
-cnv.dodge_dodge=176.71890258;
-cnv.parry_parry=176.71890258;
 %DR coefficients (k)
 avoiddr.k=0.956;
 %Caps (c)
 avoiddr.c_dodge=65.631440;  %plate
 avoiddr.c_parry=65.631440;  %plate
+avoiddr.c_block=135.1;
 
 
 %% Calculate avoidance values
 %Dodge
-avoiddr.dodge=dodge./cnv.dodge_dodge;
+avoiddr.dodge=dodge;
 if avoiddr.dodge==0
     avoiddr.dodgedr=avoiddr.dodge;
 else
@@ -42,7 +41,7 @@ else
 end
 
 %Parry
-avoiddr.parry=parry./cnv.parry_parry;
+avoiddr.parry=parry;
 if avoiddr.parry==0
     avoiddr.parrydr=avoiddr.parry;
 else
@@ -51,4 +50,13 @@ end
 
 %total avoidance
 avoiddr.totavoid=avoiddr.dodgedr+avoiddr.parrydr;
+
+%Block
+avoiddr.block=block;
+if avoiddr.block==0
+    avoiddr.blockdr=avoiddr.block;
+else
+    avoiddr.blockdr=1./(1./avoiddr.c_block+avoiddr.k./avoiddr.block);
+end
+
 end

@@ -28,6 +28,8 @@ cnv.dodge_dodge=176.71890258;
 % cnv.agi_dodge=0;
 cnv.parry_parry=176.71890258;
 cnv.mast_mast=179.28004455;
+cnv.mast_block=1.2;
+cnv.mast_bog=1.2;
 
 %ipoint conversions
 ipconv.str=1;
