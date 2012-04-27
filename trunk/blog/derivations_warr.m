@@ -1,49 +1,47 @@
 %player info
 Ar=40000;   %armor
-A=0.3;     %decimal avoidance chance
+A=0.35;      %decimal avoidance chance
 Ad=0.1;     %decimal dodge chance
-Ap=Ad;
-Ap0=0.05;
+Ap=Ad;      %decimal parry chance
+Ap0=0.05;   %base parry (5%)
 Bc=0.55;    %decimal block chance
-Bcm=Bc-0.15; %block chance subject to DR
-Bv=0.3;    %decimal block value - default
-C=0.2;      %decimal crit block
-h=0.03;     %decimal hit percentage (2%=0.02)
+Bcm=Bc-0.15;%block chance subject to DR
+Bv=0.3;     %decimal block value - default
+C=0.37;      %decimal crit block
+h=0.02;     %decimal hit percentage (2%=0.02)
 e=0.02;     %decimal exp percentage (2%=0.02)
 s=0.1;      %decimal haste percentage (10%=0.1)
-x=0.01;     %decimal crit chance
-m=0.075;
-d=m;
-p=d;
-g=0.24;
-u=0.3;
-Raa0=1/2.6;
+x=0.05;     %decimal crit chance
+m=0.075;    %base chance to miss 
+d=m;        %base chance to be dodged 
+p=d;        %base chance to be parried
+g=0.24;     %chance for glancing blows
+u=0.3;      %Ultimatum proc rate
+Raa0=1/2.6; %Base auto-attack rate (1/weapon speed)
 
 %constants
 k=0.9560;           %Diminishing Returns k coefficient
 K=32573;            %Armor coefficient
 Cd=0.65631440;      %Diminishing Returns C coefficient - avoidance
 Cb=1.351;               %Diminishing Returns C coefficient - block 
-far=Ar+K;
+far=Ar+K;               %armor conversion factor
 fm=179.28004455;        %mastery rating->mast conversion
-fb=0.015;
-fcb=0.015;
-fd=176.71890258/0.01;  	%avoidance rating->pct conversion
+fb=0.015;               %mastery-to-block-chance conversion
+fcb=0.015;              %mastery-to-crit-block-chance conversion
+fd=176.71890258/0.01;  	%dodge rating->pct conversion
+fp=fd;                  %parry rating->pct conversion (same as dodge)
 fs=128.05715942/0.01; 	%haste rating->pct conversion
 fe=120.10880279/0.01;  	%expertise rating->pct conversion
 fh=120.10880279/0.01;   %hit rating->pct conversion
-fx=179.28004/0.01;
-fp=fd;
-
-Tbuff=6;            %Duration of SB buff, in seconds
-
+fx=179.28004/0.01;      %crit rating->pct conversion
 
 
 %boss info
+Tbuff=6;            %Duration of SB buff, in seconds
 Ratt=1/2;    %one / swing timer in seconds
 
 %% Auto-attack
-c=0.24.*(Ap0+Ap).*(Ratt./(Ratt0.*(1+s))-2.*Ratt.*(Ap0+Ap)./(Ratt0.*(1+s))+2.*(Ap0+Ap));
+c=0.24.*(Ap0+Ap).*(Ratt./(Raa0.*(1+s))-2.*Ratt.*(Ap0+Ap)./(Raa0.*(1+s))+2.*(Ap0+Ap));
 Raa = Raa0.*(1+s)+c.*Ratt;
 
 %% armor and avoidance mitigation factors
@@ -122,7 +120,8 @@ tracker
 
 %% Block mitigation factors
 phi_G = (1-Bc).*(1+C).*Bv;
-phi_BC = (1+G).*(1+C).*Bv;
+phi_BV = (G+(1-G).*Bc).*Bv;
+phi_BC = (1-G).*(1+C).*Bv;
 beta_cm = fb./k.*(1-Bcm./Cb).^2;
 beta_vm = fcb;
 
@@ -130,8 +129,8 @@ Fb = 1-G.*(1+C).*Bv - (1-G).*Bc.*(1+C).*Bv;
 
 %% parry-haste factors
 
-pi_s = Raa0 - 0.24.*(Ap0+Ap).*(1-(Ap0+Ap)).*Ratt./(Ratt0.*(1+s).^2);
-pi_p = 0.24.*Ratt.*Phi_av.*(Ratt.*(1-4.*(Ap0+Ap))./(Ratt0.*(1+s))+4.*(Ap0+Ap));
+pi_s = Raa0 - 0.24.*(Ap0+Ap).*(1-(Ap0+Ap)).*Ratt./(Raa0.*(1+s).^2);
+pi_p = 0.24.*Ratt.*Phi_av.*(Ratt.*(1-4.*(Ap0+Ap))./(Raa0.*(1+s))+4.*(Ap0+Ap));
 
 %% cyclic factors
 %here, we run into another situation where there's cyclic dependence
@@ -148,6 +147,7 @@ eta_2s=1;
 eta_2d=1;
 
 delt=[1 1 1 1 1 1 1 1];
+tracker=0;
 
 while sum(abs(delt))>1e-15;
     tracker=tracker+1;
@@ -169,11 +169,11 @@ while sum(abs(delt))>1e-15;
     eta_3h = 6.*(Rd+chi_d0-chi_tc);
     
     epsilon_x = N1./(1-x);
-    epsilon_h = eta_1h.*log(x)+eta_2h.*log(C)+eta_3h.*log(u);
-    epsilon_m = N2.*beta_vm./(1-C) + eta_2m.*log(C);
-    epsilon_s = eta_1s.*log(x)+eta_2s.*log(C);
-    epsilon_d = eta_2d.*log(C);
-    epsilon_p = eta_1p.*log(x)+epsilon_d;
+    epsilon_h = -eta_1h.*log(1-x)-eta_2h.*log(1-C)-eta_3h.*log(1-u);
+    epsilon_m = N2.*beta_vm./(1-C) - eta_2m.*log(1-C);
+    epsilon_s = -eta_1s.*log(1-x)-eta_2s.*log(1-C);
+    epsilon_d = -eta_2d.*log(1-C);
+    epsilon_p = -eta_1p.*log(1-x)+epsilon_d;
     
     %% Rage Generation / Shield Block
     
@@ -194,7 +194,7 @@ while sum(abs(delt))>1e-15;
     gamma_d=rho_d.*Tbuff;
     
     new = [gamma_m gamma_h gamma_s gamma_d eta_2m eta_2h eta_2s eta_2d];
-    delt=(new-old);
+    delt=(new-old)./old;
 
 end
 tracker
@@ -204,7 +204,7 @@ Phi_bs=gamma_s.*phi_G;
 Phi_bx=gamma_x.*phi_G;
 Phi_bp=gamma_p.*phi_G;
 Phi_bd=gamma_d.*phi_G;
-Phi_bm=gamma_m.*phi_G + beta_vm.*Bv + beta_cm.*phi_BC;
+Phi_bm=gamma_m.*phi_G + beta_vm.*phi_BV + beta_cm.*phi_BC;
 
 
 %% normalized damage reduction factors
@@ -216,11 +216,10 @@ Gamma_m = Far.*Fav.*Phi_bm./fm;
 Gamma_p = (Far.*Phi_av.*Fb + Far.*Fav.*Phi_bp)./fp;
 Gamma_d = (Far.*Phi_av.*Fb + Far.*Fav.*Phi_bd)./fd;
 
-[Gamma_ar Gamma_d Gamma_p Gamma_h Gamma_x Gamma_s Gamma_m]'.*1e5
+gammas=[Gamma_ar; Gamma_d; Gamma_p; Gamma_h; Gamma_x; Gamma_s; Gamma_m].*1e5;
+names={'\Gamma_ar'; '\Gamma_d';'\Gamma_p';'\Gamma_h';'\Gamma_x';'\Gamma_s';'\Gamma_m'};
+[char(names) repmat(' ',size(gammas,1),3) num2str(gammas,'%1.4f')]
 
+['G   ' num2str(G.*100,'%2.2f');'E   ' num2str(E.*100,'%2.2f')]
 
-%% sanity checks
-
-if (Rsb.*Tbuff)>1 
-    error('SB buff uptime exceeds 1')
-end
+['AA  ' num2str(RPS_AA,'%1.2f');'SS  ' num2str(RPS_SS,'%1.2f');'Sh  ' num2str(RPS_shout,'%1.2f');'TC -' num2str(RPS_TC,'%1.2f');'Tot ' num2str(RPS,'%2.2f')]
