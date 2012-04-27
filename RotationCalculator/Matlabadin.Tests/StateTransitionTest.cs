@@ -82,10 +82,10 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.HotR, hit: false)));
         }
         [Test]
-        public void UseAbility_SotRShouldConsumeHPOnHitOnly()
+        public void UseAbility_SotRShouldConsumeHPOnMiss_Issue20()
         {
             Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.SotR, hit: true)));
-            Assert.AreEqual(3, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.SotR, hit: false)));
+            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.SotR, hit: false)));
         }
         [Test]
         public void UseAbility_SotRShouldConsume3HP()
@@ -94,10 +94,10 @@ namespace Matlabadin.Tests
             Assert.AreEqual(2, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 5, Ability.SotR, hit: true)));
         }
         [Test]
-        public void UseAbility_SotRShouldProcSBOnHit()
+        public void UseAbility_SotRShouldProcSB_Issue20()
         {
             Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.SotR, hit: true), Buff.SotRSB));
-            Assert.AreEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.SotR, hit: false), Buff.SotRSB));
+            Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.SotR, hit: false), Buff.SotRSB));
         }
         [Test]
         public void UseAbility_JShouldGiveHPOnHitOnly()

@@ -330,7 +330,7 @@ namespace Matlabadin
                     break;
                 case Ability.SotR:
                     if (availableHp < 3) throw new InvalidOperationException("SotR cast with less than 3 HP");
-                    if (hit)
+                    if (true) // (hit) // Issue 20: SotR always consumes HP
                     {
                         nextState = sm.SetHP(nextState, hp - availableHp);
                         nextState = sm.SetTimeRemaining(nextState, Buff.SotRSB, gp.BuffDurationInSteps(Buff.SotRSB));
