@@ -23,7 +23,7 @@ end
 
 %repackage arguments for memoized_fsm and fsm_gen:
 talentString=strrep(int2str(c.talent.short),' ','');
-decimalHaste=c.player.phhaste./100;
+decimalHaste=c.player.sphaste./100;
 
 
 %% Crank
