@@ -69,36 +69,38 @@ namespace Matlabadin
         {
             if (args.Length < 6) Usage();
             string rotation;
-            int stepsPerGcd;
+            int stepsPerGcd, hastedStepsPerGcd;
             PaladinTalents talents;
             PaladinSpec spec;
-            double haste, mehit, sphit;
+            double mehit, sphit;
             rotation = args[0];
-            // 0            1           2           3       4       5       6       7
+            // "Matlabadin.exe <rotation> <talents> <spec> <stepsPerGcd> <hastedStepsPerGcd> <mehit> <sphit> [<outputfile>]" + Environment.NewLine
+            //                      0          1      2           3               4              5      6       7
             // <rotation> <stepsPerGcd> <spec> <talents> <haste> <mehit> <sphit> [<outfile>]
-            if (!Int32.TryParse(args[1], out stepsPerGcd)) Usage();
-            if (!PaladinSpecHelper.TryParse(args[2], out spec)) Usage();
-            if (!PaladinTalentsHelper.TryParse(args[3], out talents)) Usage();
-            if (!Double.TryParse(args[4], out haste)) Usage();
+            
+            if (!PaladinSpecHelper.TryParse(args[1], out spec)) Usage();
+            if (!PaladinTalentsHelper.TryParse(args[2], out talents)) Usage();
+            if (!Int32.TryParse(args[3], out stepsPerGcd)) Usage();
+            if (!Int32.TryParse(args[4], out hastedStepsPerGcd)) Usage();
             if (!Double.TryParse(args[5], out mehit)) Usage();
             if (!Double.TryParse(args[6], out sphit)) Usage();
             string file = args.Length >= 8 ? args[7] : null;
-            ProcessGraph(file, rotation, stepsPerGcd, spec, talents, haste, mehit, sphit);
+            ProcessGraph(file, rotation, spec, talents, stepsPerGcd, hastedStepsPerGcd, mehit, sphit);
         }
         private static DateTime BuildTime = new FileInfo(typeof(Program).Assembly.Location).CreationTime;
         private static void ProcessGraph(
             string file,
             string rotation,
-            int stepsPerGcd,
             PaladinSpec spec,
             PaladinTalents talents,
-            double haste,
+            int stepsPerGcd,
+            int hastedStepsPerGcd,
             double mehit,
             double sphit)
         {
             if (file == null)
             {
-                ProcessGraph(Console.Out, rotation, stepsPerGcd, spec, talents, haste, mehit, sphit);
+                ProcessGraph(Console.Out, rotation, spec, talents, stepsPerGcd, hastedStepsPerGcd, mehit, sphit);
             }
             else
             {
@@ -125,7 +127,7 @@ namespace Matlabadin
                 }
                 using (StringWriter sw = new StringWriter())
                 {
-                    ProcessGraph(sw, rotation, stepsPerGcd, spec, talents, haste, mehit, sphit);
+                    ProcessGraph(sw, rotation, spec, talents, stepsPerGcd, hastedStepsPerGcd, mehit, sphit);
                     File.WriteAllText(file, sw.ToString());
                 }
             }
@@ -133,10 +135,10 @@ namespace Matlabadin
         private static void ProcessGraph(
             TextWriter stream,
             string rotation,
-            int stepsPerGcd,
             PaladinSpec spec,
             PaladinTalents talents,
-            double haste,
+            int stepsPerGcd,
+            int hastedStepsPerGcd,
             double mehit,
             double sphit)
         {
@@ -144,9 +146,9 @@ namespace Matlabadin
             if (sphit < BaseSpellHit) Console.Error.WriteLine("Warning: {0} spell hit would require negative hit rating", sphit);
             if (mehit > 1) { Console.Error.WriteLine("Warning: invalid melee hit {0}", mehit); Usage(); }
             if (sphit > 1) { Console.Error.WriteLine("Warning: invalid range hit {0}", sphit); Usage(); }
-            if (stepsPerGcd != 1 && stepsPerGcd != 3 && stepsPerGcd != 5) Console.Error.WriteLine("Warning: {0} steps per GCD is untested", stepsPerGcd);
             RotationPriorityQueue<BitVectorState> queue = new RotationPriorityQueue<BitVectorState>(rotation);
-            Int64GraphParameters gp = new Int64GraphParameters(queue, stepsPerGcd, spec, talents, haste, mehit, sphit);
+            Int64GraphParameters gp = new Int64GraphParameters(queue, spec, talents, stepsPerGcd, hastedStepsPerGcd, mehit, sphit);
+            if (!String.IsNullOrEmpty(gp.ApproximationErrors)) Console.Error.WriteLine("Warning: Inexact duration modelling: {0}", gp.ApproximationErrors);
             Stopwatch generateGraphStopWatch = new Stopwatch();
             generateGraphStopWatch.Start();
             double[] hintPr;
@@ -176,8 +178,9 @@ namespace Matlabadin
             stream.WriteLine("Uptime_WeakenedBlows,{0}", result.BuffUptime[(int)Buff.WB]);
             stream.WriteLine("Uptime_AvengingWrath,{0}", result.BuffUptime[(int)Buff.AW]);
             stream.WriteLine("Uptime_SotRShieldBlock,{0}", result.BuffUptime[(int)Buff.SotRSB]);
-            stream.WriteLine("Stats_StateSize_Total,{0}", graph.Size);
-            stream.WriteLine("Stats_StateSize_NonZero,{0}", pr.Count(p => p > 0));
+            stream.WriteLine("Stats_StateSpace_TotalStatesTraversed,{0}", graph.Size);
+            stream.WriteLine("Stats_StateSpace_NonZero,{0}", pr.Count(p => p > 0));
+            stream.WriteLine("Stats_State_BitsRequired,{0}", gp.BitsUsed);
             stream.WriteLine("Stats_Iterations,{0}", iterationsPerformed);
             stream.WriteLine("Stats_ReusedExistingGraph,{0}", hintPr != null ? 1 : 0);
             stream.WriteLine("Stats_Tolerance_Relative,{0}", relTolerance);
@@ -185,13 +188,18 @@ namespace Matlabadin
             stream.WriteLine("Stats_Time_GenerateGraph,{0}", generateGraphStopWatch.ElapsedMilliseconds);
             stream.WriteLine("Stats_Time_Converge,{0}", convergeStopWatch.ElapsedMilliseconds);
             stream.WriteLine("Stats_Time_Aggregate,{0}", aggregateStopWatch.ElapsedMilliseconds);
+            stream.WriteLine("Stats_Time_Aggregate,{0}", aggregateStopWatch.ElapsedMilliseconds);
             stream.WriteLine("Param_Rotation,{0}", gp.Rotation.PriorityQueue);
-            stream.WriteLine("Param_StepsPerGCD,{0}", gp.StepsPerGcd);
+            stream.WriteLine("Param_StepsPerUnhastedGCD,{0}", gp.StepsPerUnhastedGcd);
+            stream.WriteLine("Param_StepsPerHastedGCD,{0}", gp.StepsPerHastedGcd);
             stream.WriteLine("Param_Spec,{0}", gp.Spec);
             stream.WriteLine("Param_Talents,{0}", gp.Talents.ToLongString());
-            stream.WriteLine("Param_Haste,{0}", gp.Haste);
             stream.WriteLine("Param_Hit_Melee,{0}", gp.MeleeHit);
             stream.WriteLine("Param_Hit_Spell,{0}", gp.SpellHit);
+            if (!String.IsNullOrWhiteSpace(gp.ApproximationErrors))
+            {
+                stream.WriteLine("Warnings_Fidelity,{0}", gp.ApproximationErrors);
+            }
             CacheGraph(graph, pr);
         }
         private static void CacheGraph(MatlabadinGraph<BitVectorState> mg, double[] pr)
@@ -235,11 +243,13 @@ namespace Matlabadin
         private static Dictionary<string, List<Tuple<MatlabadinGraph<BitVectorState>, double[]>>> existingGraphs = new Dictionary<string, List<Tuple<MatlabadinGraph<BitVectorState>, double[]>>>();
         public static void Usage()
         {
-            string message = "Matlabadin.exe <rotation> <stepsPerGcd> <talents> <spec> <haste> <mehit> <sphit> [<outputfile>]" + Environment.NewLine
+            string message = "Matlabadin.exe <rotation> <talents> <spec> <stepsPerGcd> <hastedStepsPerGcd> <mehit> <sphit> [<outputfile>]" + Environment.NewLine
                 + "Multiple parrallel executions can be performed by inputting multiple lines with each line containing the argument format as above." + Environment.NewLine
                 + "\t<spec>: Holy, Prot or Ret" + Environment.NewLine
                 + "\t<talents>: 6 digit string indicating the talent position in the calculator: 000000 = no talents, 001000 = Selfless Healer, 002000 = Eternal Flame, 002003 = EF & Execution Sentence, etc" + Environment.NewLine
-                + "\t<haste>: 0.0 = no haste, 1.0 = 100% haste (halving cast times & CDs)" + Environment.NewLine
+                + "\t<stepsPerGcd>: Steps per 1.5s interval" + Environment.NewLine
+                + "\t<hastedStepsPerGcd>: Number of steps a 1.5s interval is hasted to" + Environment.NewLine
+                + "\t\t eg: stepsPerGcd=3, hastedStepsPerGcd=2 = 1s GCD haste = 50% haste" + Environment.NewLine
                 + "\t<mehit>: Melee hit. 0.0 = 100% miss rate, 1.0 = 0% miss rate" + Environment.NewLine
                 + "\t<sphit>: Spell hit. 0.0 = 100% miss rate, 1.0 = 0% miss rate" + Environment.NewLine;
             Console.WriteLine(message);

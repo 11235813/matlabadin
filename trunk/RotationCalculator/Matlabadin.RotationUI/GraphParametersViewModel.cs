@@ -10,6 +10,7 @@ namespace Matlabadin.RotationUI
     {
         public string Rotation { get; set; }
         public int StepsPerGCD { get; set; }
+        public int HastedStepsPerGCD { get; set; }
         public double MeleeHit { get; set; }
         public double RangeHit { get; set; }
         public bool CalculatePr { get; set; }
@@ -27,7 +28,7 @@ namespace Matlabadin.RotationUI
         public void GenerateGraph()
         {
             RotationPriorityQueue<BitVectorState> queue = new RotationPriorityQueue<BitVectorState>(Rotation);
-            Int64GraphParameters gp = new Int64GraphParameters(queue, StepsPerGCD, PaladinSpec.Prot, PaladinTalents.None, 0, MeleeHit, RangeHit);
+            Int64GraphParameters gp = new Int64GraphParameters(queue, PaladinSpec.Prot, PaladinTalents.None, StepsPerGCD, HastedStepsPerGCD, MeleeHit, RangeHit);
             MatlabadinGraph<BitVectorState> graph = new MatlabadinGraph<BitVectorState>(gp, gp);
             double[] pr = null;
             if (CalculatePr)

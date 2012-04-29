@@ -215,9 +215,9 @@ namespace Matlabadin.Tests
         [Test]
         public void BuffStacks_ConditionalsTests()
         {
-            Int64GraphParameters gp = NoHitExpertise("FoL[#SH>=2]");
-            DoTest(gp, GetState(gp, 0, Buff.SH, 0), Ability.Nothing);
-            DoTest(gp, GetState(gp, 1, Buff.SH, 1), Ability.Nothing);
+            Int64GraphParameters gp = NoHitExpertise("FoL[#SH>=2]>J");
+            DoTest(gp, GetState(gp, 0, Buff.SH, 0), Ability.J);
+            DoTest(gp, GetState(gp, 1, Buff.SH, 1), Ability.J);
             DoTest(gp, GetState(gp, 2, Buff.SH, 2), Ability.FoL);
         }
         [Test]

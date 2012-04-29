@@ -245,6 +245,7 @@ namespace Matlabadin
                 // Can't miss
                 case Ability.Cons:
                 case Ability.HW:
+                case Ability.HoW:
                 case Ability.Nothing:
                 case Ability.WoG:
                 case Ability.EF:
@@ -392,7 +393,7 @@ namespace Matlabadin
             }
             if (gp.AbilityTriggersGcd(ability))
             {
-                nextState = sm.SetTimeRemaining(nextState, Buff.GCD, gp.StepsPerGcd);
+                nextState = sm.SetTimeRemaining(nextState, Buff.GCD, gp.StepsPerHastedGcd);
             }
             return nextState;
         }

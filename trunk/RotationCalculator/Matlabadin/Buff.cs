@@ -30,6 +30,7 @@ namespace Matlabadin
         /// SotR Shield Block buff
         /// </summary>
         SotRSB,
+        // ----- buffs whose uptime depends on an ability outcome (eg WB depends on whether HotR hits or not) go between here and the untracked buffs marker -----  
         /// <summary>
         /// Weakened Blows
         /// </summary>
@@ -44,6 +45,10 @@ namespace Matlabadin
         /// Selfless Healer
         /// </summary>
         SH,
+        /// <summary>
+        /// Bastion of Glory
+        /// </summary>
+        // BoG,
         // HA
         Count,
         UptimeTrackedUnforkedBuffs = SotRSB + 1,
