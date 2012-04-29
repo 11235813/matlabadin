@@ -9,8 +9,8 @@ we'll try to get it fixed up as soon as possible.
 || *Filename*		|| *Rev. Documented*	|| *Date Documented*	||
 || [ability_model ability_model.m] || r417 ||  22 April 12 ||
 || [action2cps action2cps.m] || r441 ||  22 April 12 ||
-|| avoid_dr.m || rXXX ||  XXDATEXX ||
-|| buff_model.m || rXXX ||  XXDATEXX ||
+|| [avoid_dr avoid_dr.m] || r455 ||  29 April 12 ||
+|| [buff_model buff_model.m] || r379 ||  29 April 12 ||
 || build_config.m || rXXX ||  XXDATEXX ||
 || calc_glyphs.m || rXXX ||  XXDATEXX ||
 || calc_rot_st.m || rXXX ||  XXDATEXX ||
