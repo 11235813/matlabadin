@@ -43,18 +43,18 @@ namespace Matlabadin
     {
         public Int64GraphParameters(
             RotationPriorityQueue<BitVectorState> rotation,
-            int stepsPerGcd,
             PaladinSpec spec,
             PaladinTalents talents,
-            double haste,
+            int stepsPerGcd,
+            int hastedstepsPerGcd,
             double mehit,
             double sphit)
             : base(
             rotation,
-            stepsPerGcd,
             spec,
             talents,
-            haste,
+            stepsPerGcd,
+            hastedstepsPerGcd,
             mehit,
             sphit)
         {
@@ -78,11 +78,6 @@ namespace Matlabadin
                 AbilityCooldownStartBit[i] = hpcdBitsUsed;
                 Ability a = (Ability)i;
                 int cd = AbilityCooldownInSteps(a);
-                // compress state space by not recording CDs for unused abilities
-                if (!Rotation.AbilitiesUsed.Contains(a) && !(a == Ability.CS && Rotation.AbilitiesUsed.Contains(Ability.HotR))) // don't remove CS if we have HotR
-                {
-                    cd = 0;
-                }
                 while (1 << AbilityCooldownBits[i] <= cd) AbilityCooldownBits[i]++;
                 hpcdBitsUsed += AbilityCooldownBits[i];
             }

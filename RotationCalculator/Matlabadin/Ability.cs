@@ -23,6 +23,7 @@ namespace Matlabadin
         CooldownIndicator, // Abilities MUST be separated into those without cooldowns (above) and those with cooldowns (below)
         CS,
         J,
+        HoW,
         AS,
         Cons,
         HW,

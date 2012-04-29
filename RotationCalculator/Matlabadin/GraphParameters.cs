@@ -7,16 +7,43 @@ namespace Matlabadin
 {
     public class GraphParameters<TState>
     {
+        private static readonly bool[] DefaultIsOnGcd = new bool[] {
+                false, false, false, // Nothing, SotR, WoG,
+                false, false, true, // EF, SS, FoL,
+                true, true, // HotR, CooldownIndicator, 
+                true, true, true, true, // CS, J, HoW, AS, 
+                true, true, false, // Cons, HW, AW,
+                true, // Count
+            };
+        private static readonly decimal[] DefaultUnhastedAbilityDuration = new decimal[] {
+                4.5m, 6, 6, 15, // CS, J, HoW, AS,
+                9, 9, 180, // Cons, HW, AW,
+            };
+        private static readonly bool[] AbilityCooldownReducedByHaste = new bool[] {
+                true, true, true, false, // CS, J, HoW, AS,
+                false, false, false, // Cons, HW, AW,
+            };
+        private static readonly decimal[] DefaultUnhastedBuffDuration = new decimal[] {
+                1.5m, 30, 30, // GCD, EF, SS,
+                20, 6, 30, // AW, SotRSB, WB,
+                6, 15, // GC, SH, 
+            };
+        private static readonly int[] DefaultMaximumBuffStacks = new int[] {
+                1, 1, 1,
+                1, 1, 1,
+                1, 2,
+            };
         public GraphParameters(
             RotationPriorityQueue<TState> rotation,
-            int stepsPerGcd,
             PaladinSpec spec = PaladinSpec.Prot,
             PaladinTalents talents = PaladinTalents.None,
-            double haste = 0.0,
+            int unhastedStepsPerGcd = 3,
+            int hastedStepsPerGcd = -1,
             double mehit = 1.0,
             double sphit = 1.0
             )
         {
+            if (hastedStepsPerGcd <= 0) hastedStepsPerGcd = unhastedStepsPerGcd; // default to no haste
             if (spec == PaladinSpec.Holy) throw new NotImplementedException("No plans to implement Holy");
             if (spec == PaladinSpec.Ret) throw new NotImplementedException("Ret NYI. See http://code.google.com/p/matlabadin/issues/list for status and priority");
             if ((talents & PaladinTalents.SpeedOfLight) != PaladinTalents.None) throw new NotImplementedException("SpeedOfLight NYI");
@@ -39,41 +66,93 @@ namespace Matlabadin
             if (rotation.AbilitiesUsed.Contains(Ability.SS) && (talents & PaladinTalents.SacredShield) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
 
             this.Rotation = rotation;
-            this.StepsPerGcd = stepsPerGcd;
+            this.StepsPerUnhastedGcd = unhastedStepsPerGcd;
+            this.StepsPerHastedGcd = hastedStepsPerGcd;
             this.Spec = spec;
             this.Talents = talents;
-            this.Haste = haste;
             this.MeleeHit = mehit;
             this.SpellHit = sphit;
 
-            this.StepDuration = 1.5 / stepsPerGcd;            
-            this.abilitySteps = new double[] {
-                4.5, 6, 15, // CS, J, AS,
-                9, 9, 180, // Cons, HW, AW,
-            }.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();
-            this.onGcd = new bool[] {
-                false, false, false, // Nothing, SotR, WoG,
-                false, false, true, // EF, SS, FoL,
-                true, true, // HotR, CooldownIndicator, 
-                true, true, true, // CS, J, AS, 
-                true, true, false, // Cons, HW, AW,
-                true, // Count
-            };
-            // GC buff duration extended by 0.5s since the server takes time to apply the buff and it is active 4 GCDs after triggering
-            this.buffSteps = new double[] {
-                1.5, 30, 30, // GCD, EF, SS,
-                20, 6, 30, // AW, SotRSB, WB,
-                6.5, 15, // GC, SH, 
-            }.Select(cd => (int)Math.Ceiling(cd * stepsPerGcd / 1.5)).ToArray();
-            this.buffStacks = new int[] {
-                1, 1, 1,
-                1, 1, 1,
-                1, 2,
-            };
+            this.ApproximationErrors = "";
+            this.stepDuration = 1.5 / this.StepsPerUnhastedGcd;
+            this.isOnGcd = DefaultIsOnGcd;
+            this.abilitySteps = DefaultUnhastedAbilityDuration
+                .Select((cd, i) => CalculateAbilityCooldowns(i + Ability.CooldownIndicator + 1, AbilityCooldownReducedByHaste[i], cd))
+                .ToArray();
+            this.buffSteps = DefaultUnhastedBuffDuration
+                .Select((cd, i) => CalculateBuffDuration((Buff)i, cd))
+                .ToArray();
+            this.buffStacks = DefaultMaximumBuffStacks;
+        }
+        private int CalculateAbilityCooldowns(Ability ability, bool isAffectedByHaste, decimal baseCooldown)
+        {
+            if (!Rotation.AbilitiesUsed.Contains(ability) &&
+                // don't remove CS if we have HotR
+                !(ability == Ability.CS && Rotation.AbilitiesUsed.Contains(Ability.HotR)))
+            {
+                // Remove CDs of abilities that we do not use
+                return 0;
+            }
+            return CalculateDurationInSteps(baseCooldown, isAffectedByHaste);
+        }
+        /// <remarks>
+        /// The main purpose of this is to reduce state space size by filtering out buffs not used in this rotation
+        /// </remarks>
+        private int CalculateBuffDuration(Buff buff, decimal baseDuration)
+        {
+            switch (buff)
+            {
+                case Buff.GCD:
+                    return this.StepsPerHastedGcd;
+                case Buff.SS:
+                    if (!this.Rotation.AbilitiesUsed.Contains(Ability.SS)) return 0;
+                    break;
+                case Buff.EF:
+                    if (!this.Rotation.AbilitiesUsed.Contains(Ability.EF)) return 0;
+                    break;
+                case Buff.AW:
+                    if (!this.Rotation.AbilitiesUsed.Contains(Ability.AW)) return 0;
+                    break;
+                case Buff.SotRSB:
+                    if (!this.Rotation.AbilitiesUsed.Contains(Ability.SotR)) return 0;
+                    break;
+                case Buff.WB:
+                    if (!this.Rotation.AbilitiesUsed.Contains(Ability.HotR)) return 0;
+                    break;
+                case Buff.GC:
+                    if (this.Spec != PaladinSpec.Prot) return 0;
+                    if (!(this.Rotation.AbilitiesUsed.Contains(Ability.HotR) || this.Rotation.AbilitiesUsed.Contains(Ability.CS))) return 0;
+                    break;
+                case Buff.SH:
+                    if (!this.Rotation.AbilitiesUsed.Contains(Ability.J)) return 0;
+                    if (!this.Talents.Includes(PaladinTalents.SelflessHealer)) return 0;
+                    break;
+                default:
+                    // If we haven't modelling it, we keep it
+                    throw new NotImplementedException("Parameter preconditions to triggering this buff must be specified in GraphParameters.CalculateBuffDuration()");
+            }
+            int stepsDuration = CalculateDurationInSteps(baseDuration, false);
+            // GC buff duration extended by 1 step since the server takes time to apply the buff and is still active 6s after triggering
+            if (buff == Buff.GC) stepsDuration++;
+            return stepsDuration;
+        }
+        private int CalculateDurationInSteps(decimal unhastedDurationInSeconds, bool isAffectedByHaste)
+        {
+            decimal hastedDurationInSteps = unhastedDurationInSeconds * (isAffectedByHaste ? this.StepsPerHastedGcd : this.StepsPerUnhastedGcd) / 1.5m;
+            decimal rounded = Math.Round(hastedDurationInSteps);
+            if (hastedDurationInSteps != rounded)
+            {
+                this.ApproximationErrors += String.Format("{0}s ({2} steps) duration approximated to {1}s ({3} steps).",
+                    hastedDurationInSteps * 1.5m / this.StepsPerUnhastedGcd,
+                    rounded * 1.5m / this.StepsPerUnhastedGcd,
+                    hastedDurationInSteps,
+                    rounded);
+            }
+            return (int)rounded;
         }
         public bool AbilityOnGcd(Ability ability)
         {
-            return this.onGcd[(int)ability];
+            return this.isOnGcd[(int)ability];
         }
         public bool AbilityTriggersGcd(Ability ability)
         {
@@ -92,6 +171,7 @@ namespace Matlabadin
         }
         public int MaxBuffStacks(Buff buff)
         {
+            if (this.buffSteps[(int)buff] == 0) return 0;
             return this.buffStacks[(int)buff];
         }
         public bool CanStack(Buff buff)
@@ -116,11 +196,12 @@ namespace Matlabadin
         }
         public string ParametersToString()
         {
-            return String.Format("{0} {1} {2} {3} {4} {5}",
+            return String.Format("{0} {1} {2} {3} {4} {5} {6}",
                 this.Rotation.PriorityQueue,
                 this.Spec,
                 this.Talents.ToLongString(),
-                this.Haste,
+                this.StepsPerUnhastedGcd,
+                this.StepsPerHastedGcd,
                 this.MeleeHit,
                 this.SpellHit);
         }
@@ -131,10 +212,10 @@ namespace Matlabadin
         public bool HasSameShape(GraphParameters<TState> gp)
         {
             return this.Rotation.PriorityQueue == gp.Rotation.PriorityQueue
-                && this.StepsPerGcd == gp.StepsPerGcd
+                && this.StepsPerUnhastedGcd == gp.StepsPerUnhastedGcd
                 && this.Spec == gp.Spec
                 && this.Talents == gp.Talents
-                && this.Haste == gp.Haste
+                && this.StepsPerHastedGcd == gp.StepsPerHastedGcd
                 && hitGeneratesSameShape(this.MeleeHit, gp.MeleeHit)
                 && hitGeneratesSameShape(this.SpellHit, gp.SpellHit);
         }
@@ -144,20 +225,24 @@ namespace Matlabadin
             return !(hit1 == 1.0 ^ hit2 == 1.0) && !(hit1 == 0.0 ^ hit2 == 0.0);
         }
         public double GrandCrusaderProcRate { get { return this.Spec == PaladinSpec.Prot ? 0.2 : 0.0; } }
-        public int HastedGcdSteps { get { throw new NotImplementedException(); } }
-        public double StepDuration { get; private set; }
+        public double StepDuration { get { return stepDuration; } }
+        /// <summary>
+        /// Human-readable output of any errors resulting in inexact graph parameters
+        /// </summary>
+        public string ApproximationErrors { get; private set; }
         #region parameters
         public RotationPriorityQueue<TState> Rotation { get; private set; }
         public PaladinTalents Talents { get; private set; }
         public PaladinSpec Spec { get; private set; }
-        public double Haste { get; private set; }
-        public int StepsPerGcd { get; private set; }
+        public int StepsPerUnhastedGcd { get; private set; }
+        public int StepsPerHastedGcd { get; private set; }
         public double MeleeHit { get; private set; }
         public double SpellHit { get; private set; }
         #endregion
         private readonly int[] abilitySteps;
         private readonly int[] buffSteps;
         private readonly int[] buffStacks;
-        private readonly bool[] onGcd;
+        private readonly bool[] isOnGcd;
+        private readonly double stepDuration;
     }
 }

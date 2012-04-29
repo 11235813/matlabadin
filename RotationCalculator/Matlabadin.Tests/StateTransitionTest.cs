@@ -21,6 +21,7 @@ namespace Matlabadin.Tests
                 Ability.HotR,
                 Ability.CS,
                 Ability.J,
+                Ability.HoW,
                 Ability.AS,
                 Ability.Cons,
                 Ability.HW,
@@ -30,19 +31,20 @@ namespace Matlabadin.Tests
             }
         }
         [Test]
-        public void UseAbilityShouldSetGCD()
+        public void UseAbilityShouldSetHastedGCD()
         {
             // On GCD
             foreach (Ability a in new Ability[] {
                 Ability.HotR,
                 Ability.CS,
                 Ability.J,
+                Ability.HoW,
                 Ability.AS,
                 Ability.Cons,
                 Ability.HW,
             })
             {
-                Assert.AreEqual(GP.StepsPerGcd, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, a), Buff.GCD));
+                Assert.AreEqual(GPFullHaste.StepsPerHastedGcd, GPFullHaste.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GPFullHaste, GPFullHaste, 3, a), Buff.GCD));
             }
             // Off GCD
             foreach (Ability a in new Ability[] {
@@ -53,7 +55,7 @@ namespace Matlabadin.Tests
                 Ability.SS,
             })
             {
-                Assert.AreEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, a), Buff.GCD));
+                Assert.AreEqual(0, GPFullHaste.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GPFullHaste, GPFullHaste, 3, a), Buff.GCD));
             }
         }
         [Test]
@@ -225,7 +227,7 @@ namespace Matlabadin.Tests
         [Test]
         public void UseAbility_JWithoutSelfLessHealerShouldNotProcSH()
         {
-            var gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("J"), 3, PaladinSpec.Prot, PaladinTalents.None, 0, 1, 1);
+            var gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("J"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1);
             var sm = gp;
             Assert.AreEqual(0, sm.TimeRemaining(StateTransition<BitVectorState>.UseAbility(gp, sm, 0, Ability.J, hit: true), Buff.SH));
         }
@@ -278,7 +280,7 @@ namespace Matlabadin.Tests
         [Test]
         public void CalculatesNextState_CS()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(R, 3, PaladinSpec.Prot, PaladinTalents.All, 0, 0.8, 1);
+            Int64GraphParameters gp = new Int64GraphParameters(R, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 0.8, 1);
             TestNextState(gp, 0, Ability.CS,
                 0.2, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.CS, hit: false), // miss
                 0.8 * 0.8, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.CS, hit: true), // hit
@@ -293,7 +295,7 @@ namespace Matlabadin.Tests
         [Test]
         public void CalculatesNextState_AS()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(R, 3, PaladinSpec.Prot, PaladinTalents.All, 0, 0.1, 0.8);
+            Int64GraphParameters gp = new Int64GraphParameters(R, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 0.1, 0.8);
             BitVectorState state = GetState(SM, Buff.GC, 1); // with GC
             TestNextState(gp, state, Ability.AS,
                 0.2, StateTransition<BitVectorState>.UseAbility(gp, gp, state, Ability.AS, hit: false),
@@ -312,7 +314,7 @@ namespace Matlabadin.Tests
         [Test]
         public void CalculatesNextState_AS_J_ShouldUseRangedHit()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(R, 3, PaladinSpec.Prot, PaladinTalents.All, 0, 0, 0.6);
+            Int64GraphParameters gp = new Int64GraphParameters(R, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 0, 0.6);
             TestNextState(gp, 0, Ability.AS,
                 0.4, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.AS, hit: false),
                 0.6, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.AS, hit: true) // hit
@@ -325,7 +327,7 @@ namespace Matlabadin.Tests
         [Test]
         public void CalculatesNextState_SotRCanMiss()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(R, 3, PaladinSpec.Prot, PaladinTalents.All, 0, 0.8, 0);
+            Int64GraphParameters gp = new Int64GraphParameters(R, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 0.8, 0);
             BitVectorState state = 3UL;
             TestNextState(gp, state, Ability.SotR,
                 0.2, StateTransition<BitVectorState>.UseAbility(gp, gp, state, Ability.SotR, hit: false),
@@ -341,7 +343,7 @@ namespace Matlabadin.Tests
         [Test]
         public void CalculatesNextState_HotR_ShouldProcWBGC()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(R, 3, PaladinSpec.Prot, PaladinTalents.All, 0, 0.8, 0);
+            Int64GraphParameters gp = new Int64GraphParameters(R, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 0.8, 0);
             BitVectorState state = GetState(SM, Ability.HotR, 1, 3);
             TestNextState(gp, state, Ability.HotR,
                 0.2, GetState(SM, Ability.HotR, 9, GetState(SM, Buff.GCD, 3, 3)), // miss
@@ -353,7 +355,7 @@ namespace Matlabadin.Tests
         [Test]
         public void CalculatesNextState_SingleTransitionAbilities()
         {
-            foreach (Ability a in new Ability[] { Ability.Cons, Ability.Nothing, Ability.WoG, Ability.SS, Ability.EF, Ability.HW, })
+            foreach (Ability a in new Ability[] { Ability.Cons, Ability.Nothing, Ability.WoG, Ability.SS, Ability.EF, Ability.HW, Ability.HoW, })
             {
                 var st = new StateTransition<BitVectorState>(GP, SM, 3, a);
                 Assert.AreEqual(1, st.NextStates.Length);
@@ -389,7 +391,7 @@ namespace Matlabadin.Tests
         {
             Assert.Inconclusive("No cast time abilities to test this yet");
             var st = new StateTransition<BitVectorState>(GP, SM, 0, Ability.CS);
-            Assert.AreEqual(GP.StepsPerGcd, 0);
+            Assert.AreEqual(GP.StepsPerUnhastedGcd, 0);
             Assert.IsTrue(st.StatePostAbility.SequenceEqual(st.NextStates));
         }
         [Test]
@@ -418,7 +420,7 @@ namespace Matlabadin.Tests
         public void CalculateTransition_ShouldConcatentateSingleTransitionStates()
         {
             var r = new RotationPriorityQueue<BitVectorState>("WoG>Cons>CS");
-            var gp = new Int64GraphParameters(r, 3, PaladinSpec.Prot, PaladinTalents.None, 0, 0.9, 0.9);
+            var gp = new Int64GraphParameters(r, PaladinSpec.Prot, PaladinTalents.None, 3, 0, 0.9, 0.9);
             Choice c = StateTransition<BitVectorState>.CalculateTransition(gp, gp, 3).Choice;
             Assert.AreEqual("WoG", c.Action[0]);
             Assert.AreEqual("Cons", c.Action[1]);
@@ -429,26 +431,26 @@ namespace Matlabadin.Tests
         public void CalculateTransition_ShouldConcatentateLoopToSelf()
         {
             var r = new RotationPriorityQueue<BitVectorState>("Cons");
-            var gp = new Int64GraphParameters(r, 3, PaladinSpec.Prot, PaladinTalents.None, 0, 0.9, 0.9);
+            var gp = new Int64GraphParameters(r, PaladinSpec.Prot, PaladinTalents.None, 3, 0, 0.9, 0.9);
             Choice c = StateTransition<BitVectorState>.CalculateTransition(gp, gp, 3).Choice;
             Assert.AreEqual("Cons", c.Action[0]);
-            Assert.AreEqual(6 * gp.StepsPerGcd, c.stepsDuration); // Cons every 6 GCDs
+            Assert.AreEqual(6 * gp.StepsPerUnhastedGcd, c.stepsDuration); // Cons every 6 GCDs
         }
         [Test]
         public void CalculateTransition_ShouldConcatentateTillFirstLoop()
         {
-            var gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("WoG>J"), 3, PaladinSpec.Prot, PaladinTalents.None, 0, 1, 1);
+            var gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("WoG>J"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1);
             Choice c = StateTransition<BitVectorState>.CalculateTransition(gp, gp, 5).Choice;
             Assert.AreEqual(1, c.Action.Length);
             Assert.AreEqual("WoG", c.Action[0]); // We cast WoG @ 5HP then are inside a J-J-J-WoG cycle (0-3 HP) so we don't concatenate any further
             Assert.AreEqual(0, c.stepsDuration);
 
-            gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("WoG5>J"), 3, PaladinSpec.Prot, PaladinTalents.None, 0, 1, 1);
+            gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("WoG5>J"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1);
             c = StateTransition<BitVectorState>.CalculateTransition(gp, gp, 0).Choice;
             Assert.AreEqual(2, c.Action.Length);
             Assert.AreEqual("J", c.Action[0]);
             Assert.AreEqual("J", c.Action[1]); // We cast J twice then enter a J-J-J-WoG5 cycle (2-5 HP) so we don't concatenate any further
-            Assert.AreEqual(4 * gp.StepsPerGcd, c.stepsDuration); // 6s CD = 4 GCDs cast J @ 0 and again @ 6s then enter the cycle
+            Assert.AreEqual(4 * gp.StepsPerUnhastedGcd, c.stepsDuration); // 6s CD = 4 GCDs cast J @ 0 and again @ 6s then enter the cycle
         }
         [Test]
         public void Choice_ShouldSetBuffUptimeBasedOnInitialStateAndPostAbilityDurations()

@@ -55,6 +55,7 @@ namespace Matlabadin.Tests
             foreach (Ability a in new Ability[] {
                 Ability.CS,
                 Ability.J,
+                Ability.HoW,
                 Ability.AS,
                 Ability.Cons
             })

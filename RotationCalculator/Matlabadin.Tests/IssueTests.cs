@@ -61,12 +61,12 @@ namespace Matlabadin.Tests
                 taskList.Add(Task.Factory.StartNew(() =>
                 {
                     Int64GraphParameters sourceGP = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB>^SS>SotR>CS>J>AS>Cons>HW"),
-                            3, PaladinSpec.Prot, PaladinTalents.SacredShield, 0.101718, mhit[loopi], rhit[loopi]);
+                            PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 0, mhit[loopi], rhit[loopi]);
                     MatlabadinGraph<BitVectorState> sourceGraph = new MatlabadinGraph<BitVectorState>(sourceGP, sourceGP);
                     for (int j = 0; j < mhit.Length; j++)
                     {
                         Int64GraphParameters destGP = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB>^SS>SotR>CS>J>AS>Cons>HW"),
-                                3, PaladinSpec.Prot, PaladinTalents.SacredShield, 0.101718, mhit[j], rhit[j]);
+                                PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 0, mhit[j], rhit[j]);
                         if (i != j && destGP.HasSameShape(sourceGP))
                         {
                             try
@@ -87,7 +87,7 @@ namespace Matlabadin.Tests
         public void Issue19_TestRaceCondition()
         {
             Int64GraphParameters sourceGP = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("SotR>CS>J"),
-                            3, PaladinSpec.Prot, PaladinTalents.SacredShield, 0.1, 0.9, 0.9);
+                            PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 0, 0.9, 0.9);
             MatlabadinGraph<BitVectorState> sourceGraph = new MatlabadinGraph<BitVectorState>(sourceGP, sourceGP);
             List<Task> taskList = new List<Task>();
             for (int i = 0; i < 128000; i++)
@@ -95,7 +95,7 @@ namespace Matlabadin.Tests
                 taskList.Add(Task.Factory.StartNew(() =>
                 {
                     Int64GraphParameters destGP = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("SotR>CS>J"),
-                                3, PaladinSpec.Prot, PaladinTalents.SacredShield, 0.1, 0.95, 0.95);
+                                PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 0, 0.95, 0.95);
                     MatlabadinGraph<BitVectorState> destGraph = new MatlabadinGraph<BitVectorState>(sourceGraph, destGP);
                 }, TaskCreationOptions.PreferFairness));
             }

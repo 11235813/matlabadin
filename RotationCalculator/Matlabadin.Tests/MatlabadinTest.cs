@@ -63,13 +63,13 @@ namespace Matlabadin.Tests
         {
             return sm.SetTimeRemaining(GetState(sm, buff1, cd1, buff2, cd2, hp), buff3, cd3);
         }
-        public static Int64GraphParameters NoMiss(string rotation)
+        public static Int64GraphParameters NoMiss(string rotation, int steps = 3, int hastedSteps = 0)
         {
-            return new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>(rotation), 3, PaladinSpec.Prot, PaladinTalents.All, 0, 1, 1);
+            return new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>(rotation), PaladinSpec.Prot, PaladinTalents.All, steps, hastedSteps, 1, 1);
         }
-        public static Int64GraphParameters NoHitExpertise(string rotation)
+        public static Int64GraphParameters NoHitExpertise(string rotation, int steps = 3, int hastedSteps = 0)
         {
-            return new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>(rotation), 3, PaladinSpec.Prot, PaladinTalents.All, 0, 1 - 0.08 - 0.065 - 0.14, 1 - 0.08);
+            return new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>(rotation), PaladinSpec.Prot, PaladinTalents.All, steps, hastedSteps, 1 - 0.08 - 0.065 - 0.14, 1 - 0.08);
         }
         public static RotationPriorityQueue<BitVectorState> AllAbilityRotation { get { return defaultParameters.Rotation; } }
         public static IStateManager<BitVectorState> AllAbilityStateManager { get { return defaultParameters; } }
@@ -79,6 +79,7 @@ namespace Matlabadin.Tests
         public static IStateManager<BitVectorState> SM { get { return AllAbilityStateManager; } }
         public static Int64GraphParameters GP { get { return AllAbilityGraphParameters; } }
         public static Int64GraphParameters GPNoMiss { get { return NoMiss(AllAbilityRotation.PriorityQueue); } }
-        private static Int64GraphParameters defaultParameters = NoHitExpertise("AW>SS>EF>SotR>HotR>WoG>CS>J>AS>Cons>HW>FoL");
+        public static Int64GraphParameters GPFullHaste { get { return NoMiss(AllAbilityRotation.PriorityQueue, 3, 2); } }
+        private static Int64GraphParameters defaultParameters = NoHitExpertise("AW>SS>EF>SotR>HotR>WoG>CS>J>AS>Cons>HW>HoW>FoL");
     }
 }
