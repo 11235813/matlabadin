@@ -1,0 +1,32 @@
+#summary Documentation for calc_rot_st.m r441
+
+= Function(s) Contained =
+
+NONE
+
+= Input(s) =
+
+|| variable || description || type ||
+|| NONE ||
+
+= Output(s) =
+
+|| variable || description || type ||
+|| NONE ||
+
+= Description =
+
+CALC_ROT_ST uses the FSM formalism to calculate damage for a variety of 
+different single-target rotations under different conditions
+
+This is a simulation script, not a function.
+
+= Functions Called =
+|| function ||
+|| [build_config build_config] ||
+|| [stat_model stat_model] ||
+|| [ability_model ability_model]||
+|| [rotation_model rotation_model]||
+
+= Caveats =
+NONE

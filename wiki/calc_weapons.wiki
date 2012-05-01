@@ -1,0 +1,31 @@
+#summary Documentation for calc_weapons.m r441
+
+= Function(s) Contained =
+
+NONE
+
+= Input(s) =
+
+|| variable || description || type ||
+|| NONE ||
+
+= Output(s) =
+
+|| variable || description || type ||
+|| NONE ||
+
+= Description =
+
+CALC_WEAPONS calculates DPS output for different weapons.
+
+This is a simulation script, not a function.
+
+= Functions Called =
+|| function ||
+|| [build_config build_config] ||
+|| [stat_model stat_model] ||
+|| [ability_model ability_model]||
+|| [rotation_model rotation_model]||
+
+= Caveats =
+NONE

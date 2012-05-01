@@ -1,0 +1,40 @@
+#summary Documentation for build_config.m r446
+
+= Function(s) Contained =
+
+{{{function [ c ] = build_config(varargin)}}}
+
+= Input(s) =
+
+|| variable || description || type ||
+|| varargin || variable length argument list || comma separated list ||
+
+= Output(s) =
+
+|| variable || description || type ||
+|| c		|| config structure || structure array || 
+
+= Description =
+
+BUILD_CONFIG is a function that constructs a configuration and calls all of the 
+functions required to carry out a calculation. In essence, it exists to allow you to create a number of
+configurations quickly and without having to re-type many of the common steps in a new script. 
+
+The inputs contained in varargin are defined in detail in the documentation for the particular functions that deal with them.
+
+= Functions Called =
+|| function ||
+|| [player_model player_model] ||
+|| [npc_model npc_model] ||
+|| [exec_model exec_model] ||
+|| [buff_model buff_model] ||
+|| [spec_model spec_model] ||
+|| [talent_model talent_model]||
+|| [glyph_model glyph_model]||
+|| [stat_model stat_model]||
+|| [gear_stats gear_stats]||
+|| [ability_model ability_model]||
+|| [rotation_model rotation_model]||
+
+= Caveats =
+NONE

@@ -11,12 +11,12 @@ we'll try to get it fixed up as soon as possible.
 || [action2cps action2cps.m] || r441 ||  22 April 12 ||
 || [avoid_dr avoid_dr.m] || r455 ||  29 April 12 ||
 || [buff_model buff_model.m] || r379 ||  29 April 12 ||
-|| build_config.m || rXXX ||  XXDATEXX ||
-|| calc_glyphs.m || rXXX ||  XXDATEXX ||
-|| calc_rot_st.m || rXXX ||  XXDATEXX ||
-|| calc_sample.m || rXXX ||  XXDATEXX ||
-|| calc_statscaling.m || rXXX ||  XXDATEXX ||
-|| calc_weapons.m || rXXX ||  XXDATEXX ||
+|| [build_config build_config.m] || r446 ||  29 April 12 ||
+|| [calc_glyphs calc_glyphs.m] || r412 ||  30 April 12 ||
+|| [calc_rot_st calc_rot_st.m] || r441 ||  30 April 12 ||
+|| [calc_sample calc_sample.m] || r455 ||  30 April 12 ||
+|| [calc_statscaling calc_statscaling.m] || r441 ||  1 May 12 ||
+|| [calc_weapons calc_weapons.m] || r441 ||  1 May 12 ||
 || def_db.m || rXXX ||  XXDATEXX ||
 || derivations.m || rXXX ||  XXDATEXX ||
 || enhance.m || rXXX ||  XXDATEXX ||

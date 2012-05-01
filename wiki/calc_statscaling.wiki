@@ -1,0 +1,31 @@
+#summary Documentation for calc_statscaling.m r441
+
+= Function(s) Contained =
+
+NONE
+
+= Input(s) =
+
+|| variable || description || type ||
+|| NONE ||
+
+= Output(s) =
+
+|| variable || description || type ||
+|| NONE ||
+
+= Description =
+
+CALC_STATSCALING uses the FSM formalism to calculate scaling of abilities with different stats.
+
+This is a simulation script, not a function.
+
+= Functions Called =
+|| function ||
+|| [build_config build_config] ||
+|| [stat_model stat_model] ||
+|| [ability_model ability_model]||
+|| [rotation_model rotation_model]||
+
+= Caveats =
+NONE

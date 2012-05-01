@@ -1,0 +1,42 @@
+#summary Documentation for calc_sample.m r455
+
+= Function(s) Contained =
+
+NONE
+
+= Input(s) =
+
+|| variable || description || type ||
+|| NONE ||
+
+= Output(s) =
+
+|| variable || description || type ||
+|| NONE ||
+
+= Description =
+
+CALC_SAMPLE is a sample simulation script, utilizing all of the basic functions
+of matlabadin.
+
+The sample constructs a single configuration, and steps through the procedure to calculate
+the DPS and Holy Power generation rate for a default rotation.
+
+This is a simulation script, not a function.
+
+= Functions Called =
+|| function ||
+|| [player_model player_model] ||
+|| [npc_model npc_model] ||
+|| [exec_model exec_model] ||
+|| [buff_model buff_model] ||
+|| [spec_model spec_model] ||
+|| [talent_model talent_model]||
+|| [glyph_model glyph_model]||
+|| [stat_model stat_model]||
+|| [gear_stats gear_stats]||
+|| [ability_model ability_model]||
+|| [rotation_model rotation_model]||
+
+= Caveats =
+NONE
