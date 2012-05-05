@@ -162,7 +162,7 @@ threat.Judgment=   max(dmg.Judgment,heal.Judgment).*mdf.RFury;
 mcost.Judgment=    0.059.*base.mana;
 
 %Hammer of Wrath (can be blocked)
-raw.HammerofWrath= (4454+1.61.*player.sp).*mdf.spdmg;
+raw.HammerofWrath= (1838+1.61.*player.sp).*mdf.spdmg;
 dmg.HammerofWrath= raw.HammerofWrath.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.HammerofWrath=0;
 mcost.HammerofWrath=0.03.*base.mana;
@@ -196,10 +196,9 @@ heal.EternalFlame=  raw.EternalFlame.*mdf.spcrit;
 threat.EternalFlame=1.*mdf.RFury./exec.npccount; %PH
 
 %Sacred Shield
-raw.SacredShield=   (1 + 1.*player.sp + 1.*player.ap).*player.hopo ... %PH
-                    .*(1-exec.overh);
+raw.SacredShield=   (5879 + 0.52.*player.sp).*5;  %total absorption per cast
 dmg.SacredShield=   0;
-heal.SacredShield=  raw.SacredShield; %can absorbs crit?
+heal.SacredShield=  raw.SacredShield; 
 threat.SacredShield=1.*mdf.RFury./exec.npccount; %PH
 
 %Holy Prism

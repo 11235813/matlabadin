@@ -29,8 +29,10 @@ end
 
 %% Define constants/variables
 bossSwingTimer=2;
+mastery=20;
 avoidance=0.2+1/(1/0.65631440+0.9560/(0.1128+0.01.*ddodge/176.71890258));
 blockChance=0.05+1/(1/1.351+0.9560/(0.7588+0.0225.*dmastery/179.28004455));
+DRmod=1-0.3-0.012.*(mastery+dmastery./179.28004455);
 haste=0.1+0.01.*dhaste./128.05715942;
 hit=0.02+0.01.*dhit./120.10880279;
 exp=0.02+0.01.*dexp./120.10880279;
@@ -78,7 +80,7 @@ for k=1:N
     t(k)=(k-1).*dt;
     
     %check for events
-    if sum(tbe<=0)>0  %if any of the event timers is 0 or less
+    if find(tbe<=0)  %if any of the event timers is 0 or less
         %something should happen in this time step
         
         
@@ -100,7 +102,7 @@ for k=1:N
                     else
                         %figure out damage value.  First, check for SotR
                         if tob(idSotR)>0
-                            drmult=0.5;
+                            drmult=DRmod;
                         else
                             drmult=1;
                         end
@@ -199,9 +201,9 @@ avoids=sum(dmg==0);
 avoidspct=avoids./length(dmg);
 blocks=sum(dmg==0.7);
 blockspct=blocks./length(dmg);
-dr1=sum(dmg==0.5);
+dr1=sum(dmg==DRmod);
 dr1pct=dr1./length(dmg);
-dr2=sum(dmg==0.5.*0.7);
+dr2=sum(dmg==DRmod*0.7);
 dr2pct=dr2./length(dmg);
 hits=sum(dmg==1);
 hitspct=hits./length(dmg);
@@ -219,10 +221,10 @@ hist(dmg,[0:0.05:1])
 xlim([-0.1 1.1])
 text(-0.05,avoids.*1.05,[num2str(avoidspct.*100,'%2.1f') '%'])
 text(0.7-0.05,blocks.*1.05,[num2str(blockspct.*100,'%2.1f') '%'])
-text(0.5-0.05,dr1.*1.05,[num2str(dr1pct.*100,'%2.1f') '%'])
-text(0.7.*0.5-0.05,dr2.*1.05,[num2str(dr2pct.*100,'%2.1f') '%'])
+text(DRmod-0.05,dr1.*1.05,[num2str(dr1pct.*100,'%2.1f') '%'])
+text(0.7.*DRmod-0.05,dr2.*1.05,[num2str(dr2pct.*100,'%2.1f') '%'])
 text(1-0.05,hits.*1.05,[num2str(hitspct.*100,'%2.1f') '%'])
-title(['T=' int2str(simTime./60) ' min, S=' num2str(S.*100,'%2.1f') '%, Tsotr=' num2str(Tsotr,'%2.1f') ', DTPS=' num2str(DTPS.*100,'%2.2f')])
+title(['T=' int2str(simTime./60) ' min, S=' num2str(S.*100,'%2.1f') '%, Tsotr=' num2str(Tsotr,'%2.1f') ', DR_{SotR}=' num2str(100.*(1-DRmod),'%2.1f') '%, DTPS=' num2str(DTPS.*100,'%2.2f')])
 end
 
 statblock.S=S;
