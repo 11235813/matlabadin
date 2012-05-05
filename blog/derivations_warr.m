@@ -51,8 +51,8 @@ Fav = (1-A);
 Phi_av = 1/k.*(1-Ad./Cd).^2;
 
 %% rotation factors
-Theta = 1-(m-h)-(d+p-e);
-Theta_s = 1-(2.*m-h-e);
+Theta = 1-max(0,(m-h))-max(0,(d+p-e));
+Theta_s = 1-max(0,(2.*m-h-e));
 
 Pi_2 = 0.6.*Theta.*(1-0.6.*Theta);
 Pi_3 = (1-0.6.*Theta).^2;
@@ -77,9 +77,9 @@ chi_d0=0.6.*(2-1.2.*Theta)./4.5 - 1.2.*(1-0.6.*Theta)./3;
 %% Enrage
 q1 = 1-x;
 q2 = 1-C;
-q3 = 1-u;
-N1 = 6.*((Rss+Rd+Rr).*Theta + Rtc.*Theta_s + Raa.*(Theta-g));
-N3 = 6.*Rd.*Theta;
+% q3 = 1-u;
+N1 = 6.*((Rss+(1+u).*Rd+Rr).*Theta + Rtc.*Theta_s + Raa.*(Theta-g));
+% N3 = 6.*Rd.*Theta;
 
 %unfortunately, N2 depends on G, while G depends on N2.  We deal with this
 %by guessing at G and then re-calculating iteratively:
@@ -97,11 +97,11 @@ while sum(abs(delt))>1e-15;
     
     N2 = 6.*Ratt.*(1-A).*(G + (1-G).*Bc);
     
-    E = 1 - 0.8.*q1.^N1.*q2.^N2.*q3.^N3;
+    E = 1 - 0.8.*q1.^N1.*q2.^N2;
     %% Rage Generation / Shield Block
     RPS_shout=1/3;
     RPS_SS=Theta.*(10.*Rrss+15.*Rsnb);
-    RPS_TC = 10/3 - 8/3.*Theta_s;
+    RPS_TC = 0;
     RPS_AA = Theta.*(1+0.5.*E).*(5.*Raa./Raa0);
     
     RPS = RPS_AA+RPS_SS+RPS_shout-RPS_TC;
@@ -166,10 +166,10 @@ while sum(abs(delt))>1e-15;
     eta_2h = 6.*Ratt.*(1-A).*(1-Bc).*gamma_h;
     eta_2s = 6.*Ratt.*(1-A).*(1-Bc).*gamma_s;
     
-    eta_3h = 6.*(Rd+chi_d0-chi_tc);
+    eta_3h = 0;
     
     epsilon_x = N1./(1-x);
-    epsilon_h = -eta_1h.*log(1-x)-eta_2h.*log(1-C)-eta_3h.*log(1-u);
+    epsilon_h = -eta_1h.*log(1-x)-eta_2h.*log(1-C);
     epsilon_m = N2.*beta_vm./(1-C) - eta_2m.*log(1-C);
     epsilon_s = -eta_1s.*log(1-x)-eta_2s.*log(1-C);
     epsilon_d = -eta_2d.*log(1-C);
@@ -218,8 +218,8 @@ Gamma_d = (Far.*Phi_av.*Fb + Far.*Fav.*Phi_bd)./fd;
 
 gammas=[Gamma_ar; Gamma_d; Gamma_p; Gamma_h; Gamma_x; Gamma_s; Gamma_m].*1e5;
 names={'\Gamma_ar'; '\Gamma_d';'\Gamma_p';'\Gamma_h';'\Gamma_x';'\Gamma_s';'\Gamma_m'};
-[char(names) repmat(' ',size(gammas,1),3) num2str(gammas,'%1.4f')]
+[char(names) repmat('=',7,1) num2str(gammas,'%1.4f')]
 
-['G   ' num2str(G.*100,'%2.2f');'E   ' num2str(E.*100,'%2.2f')]
+[char({'G';'E'}) repmat('=',2,1) char({num2str(G.*100,'%2.2f');num2str(E.*100,'%2.2f')})]
 
-['AA  ' num2str(RPS_AA,'%1.2f');'SS  ' num2str(RPS_SS,'%1.2f');'Sh  ' num2str(RPS_shout,'%1.2f');'TC -' num2str(RPS_TC,'%1.2f');'Tot ' num2str(RPS,'%2.2f')]
+[char({'AA';'SS';'Sh';'TC';'Tot'}) repmat('=',5,1) char({num2str(RPS_AA,'%1.2f');num2str(RPS_SS,'%1.2f');num2str(RPS_shout,'%1.2f');num2str(RPS_TC,'%1.2f');num2str(RPS,'%2.2f')})]
