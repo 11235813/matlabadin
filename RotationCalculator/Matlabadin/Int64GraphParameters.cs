@@ -45,16 +45,16 @@ namespace Matlabadin
             RotationPriorityQueue<BitVectorState> rotation,
             PaladinSpec spec,
             PaladinTalents talents,
-            int stepsPerGcd,
-            int hastedstepsPerGcd,
+            int stepsPerHastedGcd,
+            double haste,
             double mehit,
             double sphit)
             : base(
             rotation,
             spec,
             talents,
-            stepsPerGcd,
-            hastedstepsPerGcd,
+            stepsPerHastedGcd,
+            haste,
             mehit,
             sphit)
         {

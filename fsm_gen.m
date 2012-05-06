@@ -1,6 +1,5 @@
-function [generatedFile] = fsm_gen(rotation, spec, talentString, stepsPerUnhastedGcdArray, stepsPerHastedGcdArray, mehitArray, sphitArray)
-%fsm_gen calculates fsm for each
-% (stepsPerUnhastedGcdArray, stepsPerHastedGcdArray, mehit, rhit) paramter set
+function [generatedFile] = fsm_gen(rotation, spec, talentString, decimalHaste, mehitArray, sphitArray)
+%fsm_gen calculates fsm for each mehit, rhit
 % call memoized_fsm to return the actual fsm data
 
 % check source timestamp
@@ -31,26 +30,12 @@ generatedFile = cell(length(mehitArray),1);
 argfile = strcat('data\\fsm_gen_input_', num2str(ceil(rand.*1000000)), '.tmp');
 argfid = fopen(argfile, 'w');
 generationRequired = 0;
-for i=1:max([length(stepsPerUnhastedGcdArray), length(stepsPerHastedGcdArray), length(mehitArray), length(sphitArray)])
-    if length(stepsPerUnhastedGcdArray) > 1
-        stepsPerUnhastedGcd = stepsPerUnhastedGcdArray(i);
-    else
-        stepsPerUnhastedGcd = stepsPerUnhastedGcdArray;
-    end
-    if length(stepsPerHastedGcdArray) > 1
-        stepsPerHastedGcd = stepsPerHastedGcdArray(i);
-    else
-        stepsPerHastedGcd = stepsPerHastedGcdArray;
-    end
-    if length(mehitArray) > 1
-        mehit = mehitArray(i);
-    else
-        mehit = mehitArray;
-    end
+for i=1:length(mehitArray)
+    mehit = mehitArray(i);
     if length(sphitArray) > 1
-        sphit = sphitArray(i);
+        rhit = sphitArray(i);
     else
-        sphit = sphitArray;
+        rhit = sphitArray;
     end
     rotationKey = rotation;
     rotationKey = strrep(rotationKey, '[', '');
@@ -66,7 +51,7 @@ for i=1:max([length(stepsPerUnhastedGcdArray), length(stepsPerHastedGcdArray), l
     rotationKey = strrep(rotationKey, '''', 'prime');
     rotationKey = strrep(rotationKey, '+', 'plus');
     spectalKey = [spec '_' talentString];
-    optionsKey = sprintf('T%g_%g_%0.5f_%0.5f', stepsPerUnhastedGcd, stepsPerHastedGcd, mehit, sphit);
+    optionsKey = sprintf('T%g_%0.5f_%0.5f_%0.5f', fsm_steps_per_gcd(), decimalHaste, mehit, rhit);
     optionsKey = strrep(optionsKey,'_1.00000','_1_');
     optionsKey = strrep(optionsKey,'_0.','_');
     dirname = strcat('data\\', rotationKey,'\\',spectalKey);
@@ -77,8 +62,8 @@ for i=1:max([length(stepsPerUnhastedGcdArray), length(stepsPerHastedGcdArray), l
             mkdir(dirname);
         end
                 
-        fprintf(argfid, '%s %s %s %g %g %f %f %s \n', ...
-            rotation, spec, talentString, stepsPerUnhastedGcd, stepsPerHastedGcd, mehit, sphit, filename);
+        fprintf(argfid, '%s %g %s %s %f %f %f %s \n', ...
+            rotation, fsm_steps_per_gcd(), spec, talentString, decimalHaste, mehit, rhit, filename);
         generationRequired = 1;
     end
     generatedFile{i} = filename;
@@ -95,9 +80,9 @@ if generationRequired
         % graph generation performance
         
 		% try 32 bit
-		system('%SYSTEMROOT%\Microsoft.NET\Framework\v4.0.30319\csc.exe /o+ /define:NOSANITYCHECKS /debug- /out:fsm.exe RotationCalculator\Matlabadin\*.cs >NUL 2>&1');
+		system('%SYSTEMROOT%\Microsoft.NET\Framework\v4.0.30319\csc.exe /o+ /debug- /out:fsm.exe RotationCalculator\Matlabadin\*.cs >NUL 2>&1');
 		% then overwrite with 64 bit if available
-		system('%SYSTEMROOT%\Microsoft.NET\Framework64\v4.0.30319\csc.exe /o+ /define:NOSANITYCHECKS /debug- /out:fsm.exe RotationCalculator\Matlabadin\*.cs >NUL 2>&1');
+		system('%SYSTEMROOT%\Microsoft.NET\Framework64\v4.0.30319\csc.exe /o+ /debug- /out:fsm.exe RotationCalculator\Matlabadin\*.cs >NUL 2>&1');
 		if exist('fsm.exe') ~= 2
 			error('Please install version 4 of the .NET framework or mono. .NET 4 can be downloaded from: http://www.microsoft.com/downloads/en/details.aspx?FamilyID=5765d7a8-7722-4888-a970-ac39b33fd8ab&displaylang=en');
 		end
