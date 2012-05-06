@@ -217,12 +217,11 @@ namespace Matlabadin.Tests
         [Test]
         public void CalculateAggregates_Hasted()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS>Cons"), PaladinSpec.Prot, PaladinTalents.SelflessHealer, 3, 2, 1, 1);
+            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.SelflessHealer, 3, 0.5, 1, 1);
             MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
             Assert.AreEqual(1.0 / 3.0, result.Action["CS"], Tolerance); // once every 3s due to hasting
-            Assert.AreEqual(1.0 / 9.0, result.Action["Cons"], Tolerance); // once every 30s doesn't clash with hasted CS
         }
         [Test]
         public void CalculateAggregates_AWSuffix()
@@ -325,29 +324,29 @@ namespace Matlabadin.Tests
         [Test]
         public void Clone_ShouldRemapChoices()
         {
-            Int64GraphParameters gp1 = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB>^SS>SotR>CS>J>AS>Cons>HW"), PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 3, 0.825000, 0.900000);
+            Int64GraphParameters gp1 = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB>^SS>SotR>CS>J>AS>Cons>HW"), PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 0, 0.825000, 0.900000);
             MatlabadinGraph<BitVectorState> rawGraph = new MatlabadinGraph<BitVectorState>(gp1, gp1);
 
-            Int64GraphParameters gp2 = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB>^SS>SotR>CS>J>AS>Cons>HW"), PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 3, 0.857727, 0.932727);
+            Int64GraphParameters gp2 = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB>^SS>SotR>CS>J>AS>Cons>HW"), PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 0, 0.857727, 0.932727);
             MatlabadinGraph<BitVectorState> cloneGraph = new MatlabadinGraph<BitVectorState>(rawGraph, gp2);
         }
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void Clone_ShouldNotAllowUnmatchedClones()
         {
-            Int64GraphParameters gp1 = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB>^SS>SotR>CS>J>AS>Cons>HW"), PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 3, 0.825000, 0.900000);
+            Int64GraphParameters gp1 = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB>^SS>SotR>CS>J>AS>Cons>HW"), PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 0, 0.825000, 0.900000);
             MatlabadinGraph<BitVectorState> rawGraph = new MatlabadinGraph<BitVectorState>(gp1, gp1);
 
-            Int64GraphParameters gp2 = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB>^SS>SotR>CS>J>AS>Cons>HW"), PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 3, 0.900000, 1.000000);
+            Int64GraphParameters gp2 = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB>^SS>SotR>CS>J>AS>Cons>HW"), PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 0, 0.900000, 1.000000);
             MatlabadinGraph<BitVectorState> cloneGraph = new MatlabadinGraph<BitVectorState>(rawGraph, gp2);
         }
         [Test]
         public void Issue19_CloneFailure()
         {
-            Int64GraphParameters gp1 = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB>^SS>SotR>CS>J>AS>Cons>HW"), PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 3, 0.860152, 0.935152);
+            Int64GraphParameters gp1 = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB>^SS>SotR>CS>J>AS>Cons>HW"), PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 0, 0.860152, 0.935152);
             MatlabadinGraph<BitVectorState> rawGraph = new MatlabadinGraph<BitVectorState>(gp1, gp1);
 
-            Int64GraphParameters gp2 = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB>^SS>SotR>CS>J>AS>Cons>HW"), PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 3, 0.866212, 0.941212);
+            Int64GraphParameters gp2 = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB>^SS>SotR>CS>J>AS>Cons>HW"), PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 0, 0.866212, 0.941212);
             MatlabadinGraph<BitVectorState> cloneGraph = new MatlabadinGraph<BitVectorState>(rawGraph, gp2);
         }
     }

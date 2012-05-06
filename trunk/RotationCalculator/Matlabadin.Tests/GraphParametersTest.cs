@@ -175,19 +175,19 @@ namespace Matlabadin.Tests
         public void ApproximationErrors_Should_Be_Set_For_Inexact_modelling()
         {
             // 1 step per GCD does not model 20s AW duration exactly
-            Assert.IsFalse(String.IsNullOrEmpty(NoMiss(GP.Rotation.PriorityQueue, 1, 1).ApproximationErrors));
+            Assert.IsFalse(String.IsNullOrEmpty(NoMiss(GP.Rotation.PriorityQueue, 1, 0).ApproximationErrors));
         }
         [Test]
         public void PropertyValuesShouldCorrespondToConstructorArguments()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 15, 13, 0.8, 0.9);
+            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 5, 0.5, 0.8, 0.9);
             Assert.AreEqual(0.8, gp.MeleeHit);
             Assert.AreEqual(0.9, gp.SpellHit);
             Assert.AreEqual(PaladinTalents.All, gp.Talents);
             Assert.AreEqual(PaladinSpec.Prot, gp.Spec);
-            Assert.AreEqual(15, gp.StepsPerUnhastedGcd);
-            Assert.AreEqual(13, gp.StepsPerHastedGcd);
-            Assert.AreEqual(1.5 / 15, gp.StepDuration);
+            Assert.AreEqual(5, gp.StepsPerHastedGcd);
+            Assert.AreEqual(0.5, gp.Haste);
+            Assert.AreEqual((1.5 / (1.0 + 0.5)) / 5, gp.StepDuration);
         }
         [Test]
         public void AbilityTriggersGCD_ShouldTriggerForCDAbilities()
@@ -288,7 +288,36 @@ namespace Matlabadin.Tests
         public void GcdDurationShouldBeReducedByHaste()
         {
             Assert.AreEqual(GPFullHaste.StepsPerHastedGcd, GPFullHaste.BuffDurationInSteps(Buff.GCD));
-            Assert.AreNotEqual(GPFullHaste.StepsPerUnhastedGcd, GPFullHaste.BuffDurationInSteps(Buff.GCD));
+            //Assert.AreNotEqual(GPFullHaste.StepsPerUnhastedGcd, GPFullHaste.BuffDurationInSteps(Buff.GCD));
+        }
+        [Test]
+        public void HasteClippingShouldIncreaseCooldown()
+        {
+            // 1 step = 1.5s => 180s = 120 steps
+            Assert.AreEqual(120, NoMiss(AllAbilityRotation.PriorityQueue, 1, 0).AbilityCooldownInSteps(Ability.AW));
+            // 1 step = 1.363636363636364 => 132 steps
+            Assert.AreEqual(132, NoMiss(AllAbilityRotation.PriorityQueue, 1, 0.1).AbilityCooldownInSteps(Ability.AW));
+            // 132.12 => 133
+            Assert.AreEqual(133, NoMiss(AllAbilityRotation.PriorityQueue, 1, 0.101).AbilityCooldownInSteps(Ability.AW));
+            // 132.84 => 133
+            Assert.AreEqual(133, NoMiss(AllAbilityRotation.PriorityQueue, 1, 0.107).AbilityCooldownInSteps(Ability.AW));
+        }
+        [Test]
+        public void HasteClippingShouldDecreaseBuffDuration()
+        {
+            // 1 step = 1.5s => 30s = 20 steps
+            Assert.AreEqual(20, NoMiss(AllAbilityRotation.PriorityQueue, 1, 0).BuffDurationInSteps(Buff.WB));
+            // 6.6s steps = 6
+            Assert.AreEqual(22, NoMiss(AllAbilityRotation.PriorityQueue, 1, 0.1).BuffDurationInSteps(Buff.WB));
+            // 22.1 => 22
+            Assert.AreEqual(22, NoMiss(AllAbilityRotation.PriorityQueue, 1, 0.105).BuffDurationInSteps(Buff.WB));
+            // 20.98 => 21
+            Assert.AreEqual(20, NoMiss(AllAbilityRotation.PriorityQueue, 1, 0.049).BuffDurationInSteps(Buff.WB));
+        }
+        [Test]
+        public void HasteShouldIncreaseStepsOfNonhastedAbilities()
+        {
+            Assert.IsTrue(GPFullHaste.AbilityCooldownInSteps(Ability.AW) > GP.AbilityCooldownInSteps(Ability.AW));
         }
         [Test]
         public void WoGSotRShouldBeOffGCD()
@@ -390,9 +419,9 @@ namespace Matlabadin.Tests
         public void ShouldNotHaveSameShapeIfHastedSteps()
         {
             Assert.IsFalse(
-                new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 3, 1.0, 1.0)
+                new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0.5, 1.0, 1.0)
                 .HasSameShape(
-                new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 2, 1.0, 1.0)
+                new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 6, 0.25, 1.0, 1.0)
                 ));
         }
         [Test]

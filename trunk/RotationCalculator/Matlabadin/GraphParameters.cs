@@ -15,16 +15,16 @@ namespace Matlabadin
                 true, true, false, // Cons, HW, AW,
                 true, // Count
             };
-        private static readonly decimal[] DefaultUnhastedAbilityDuration = new decimal[] {
-                4.5m, 6, 6, 15, // CS, J, HoW, AS,
+        private static readonly double[] DefaultUnhastedAbilityDuration = new double[] {
+                4.5, 6, 6, 15, // CS, J, HoW, AS,
                 9, 9, 180, // Cons, HW, AW,
             };
         private static readonly bool[] AbilityCooldownReducedByHaste = new bool[] {
                 true, true, true, false, // CS, J, HoW, AS,
-                false, false, false, // Cons, HW, AW,
+                true, true, false, // Cons, HW, AW,
             };
-        private static readonly decimal[] DefaultUnhastedBuffDuration = new decimal[] {
-                1.5m, 30, 30, // GCD, EF, SS,
+        private static readonly double[] DefaultUnhastedBuffDuration = new double[] {
+                1.5, 30, 30, // GCD, EF, SS,
                 20, 6, 30, // AW, SotRSB, WB,
                 6, 15, // GC, SH, 
             };
@@ -37,15 +37,15 @@ namespace Matlabadin
             RotationPriorityQueue<TState> rotation,
             PaladinSpec spec = PaladinSpec.Prot,
             PaladinTalents talents = PaladinTalents.None,
-            int unhastedStepsPerGcd = 3,
-            int hastedStepsPerGcd = -1,
+            int stepsPerHastedGcd = 3,
+            double haste = 0.0,
             double mehit = 1.0,
             double sphit = 1.0
             )
         {
-            if (hastedStepsPerGcd <= 0) hastedStepsPerGcd = unhastedStepsPerGcd; // default to no haste
             if (spec == PaladinSpec.Holy) throw new NotImplementedException("No plans to implement Holy");
             if (spec == PaladinSpec.Ret) throw new NotImplementedException("Ret NYI. See http://code.google.com/p/matlabadin/issues/list for status and priority");
+            if (haste > 0.5) throw new NotImplementedException("GCD clipping from >50% haste not yet implemented");
             if ((talents & PaladinTalents.SpeedOfLight) != PaladinTalents.None) throw new NotImplementedException("SpeedOfLight NYI");
             if ((talents & PaladinTalents.LongArmOfTheLaw) != PaladinTalents.None) throw new NotImplementedException("LongArmOfTheLaw NYI");
             if ((talents & PaladinTalents.PursuitOfJustice) != PaladinTalents.None) throw new NotImplementedException("PursuitOfJustice NYI");
@@ -66,15 +66,15 @@ namespace Matlabadin
             if (rotation.AbilitiesUsed.Contains(Ability.SS) && (talents & PaladinTalents.SacredShield) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
 
             this.Rotation = rotation;
-            this.StepsPerUnhastedGcd = unhastedStepsPerGcd;
-            this.StepsPerHastedGcd = hastedStepsPerGcd;
             this.Spec = spec;
             this.Talents = talents;
+            this.StepsPerHastedGcd = stepsPerHastedGcd;
+            this.Haste = haste;
             this.MeleeHit = mehit;
             this.SpellHit = sphit;
 
             this.ApproximationErrors = "";
-            this.stepDuration = 1.5 / this.StepsPerUnhastedGcd;
+            this.stepDuration = 1.5 / (this.StepsPerHastedGcd * (1.0 + haste));
             this.isOnGcd = DefaultIsOnGcd;
             this.abilitySteps = DefaultUnhastedAbilityDuration
                 .Select((cd, i) => CalculateAbilityCooldowns(i + Ability.CooldownIndicator + 1, AbilityCooldownReducedByHaste[i], cd))
@@ -84,7 +84,7 @@ namespace Matlabadin
                 .ToArray();
             this.buffStacks = DefaultMaximumBuffStacks;
         }
-        private int CalculateAbilityCooldowns(Ability ability, bool isAffectedByHaste, decimal baseCooldown)
+        private int CalculateAbilityCooldowns(Ability ability, bool isAffectedByHaste, double baseCooldown)
         {
             if (!Rotation.AbilitiesUsed.Contains(ability) &&
                 // don't remove CS if we have HotR
@@ -93,12 +93,12 @@ namespace Matlabadin
                 // Remove CDs of abilities that we do not use
                 return 0;
             }
-            return CalculateDurationInSteps(baseCooldown, isAffectedByHaste);
+            return CalculateDurationInSteps(baseCooldown, isAffectedByHaste, x => (int)Math.Ceiling(x));
         }
         /// <remarks>
         /// The main purpose of this is to reduce state space size by filtering out buffs not used in this rotation
         /// </remarks>
-        private int CalculateBuffDuration(Buff buff, decimal baseDuration)
+        private int CalculateBuffDuration(Buff buff, double baseDuration)
         {
             switch (buff)
             {
@@ -131,22 +131,31 @@ namespace Matlabadin
                     // If we haven't modelling it, we keep it
                     throw new NotImplementedException("Parameter preconditions to triggering this buff must be specified in GraphParameters.CalculateBuffDuration()");
             }
-            int stepsDuration = CalculateDurationInSteps(baseDuration, false);
+            int stepsDuration = CalculateDurationInSteps(baseDuration, false, x => (int)Math.Floor(x));
             // GC buff duration extended by 1 step since the server takes time to apply the buff and is still active 6s after triggering
             if (buff == Buff.GC) stepsDuration++;
             return stepsDuration;
         }
-        private int CalculateDurationInSteps(decimal unhastedDurationInSeconds, bool isAffectedByHaste)
+        private int CalculateDurationInSteps(double unhastedDurationInSeconds, bool isAffectedByHaste, Func<double, int> roundingFunction)
         {
-            decimal hastedDurationInSteps = unhastedDurationInSeconds * (isAffectedByHaste ? this.StepsPerHastedGcd : this.StepsPerUnhastedGcd) / 1.5m;
-            decimal rounded = Math.Round(hastedDurationInSteps);
+            double hastedDurationInSteps;
+            if (isAffectedByHaste)
+            {
+                hastedDurationInSteps = this.StepsPerHastedGcd * unhastedDurationInSeconds / 1.5;
+            }
+            else
+            {
+                double unhastedDurationInSteps = this.StepsPerHastedGcd * unhastedDurationInSeconds / 1.5;
+                hastedDurationInSteps = (1.0 + this.Haste) * unhastedDurationInSteps;
+            }
+            int rounded = roundingFunction(hastedDurationInSteps);
             if (hastedDurationInSteps != rounded)
             {
-                this.ApproximationErrors += String.Format("{0}s ({2} steps) duration approximated to {1}s ({3} steps).",
-                    hastedDurationInSteps * 1.5m / this.StepsPerUnhastedGcd,
-                    rounded * 1.5m / this.StepsPerUnhastedGcd,
+                this.ApproximationErrors += String.Format("{0}s duration approximated to {1}s ({2} steps);",
                     hastedDurationInSteps,
-                    rounded);
+                    rounded * this.stepDuration,
+                    rounded
+                );
             }
             return (int)rounded;
         }
@@ -200,8 +209,8 @@ namespace Matlabadin
                 this.Rotation.PriorityQueue,
                 this.Spec,
                 this.Talents.ToLongString(),
-                this.StepsPerUnhastedGcd,
                 this.StepsPerHastedGcd,
+                this.Haste,
                 this.MeleeHit,
                 this.SpellHit);
         }
@@ -212,10 +221,10 @@ namespace Matlabadin
         public bool HasSameShape(GraphParameters<TState> gp)
         {
             return this.Rotation.PriorityQueue == gp.Rotation.PriorityQueue
-                && this.StepsPerUnhastedGcd == gp.StepsPerUnhastedGcd
                 && this.Spec == gp.Spec
                 && this.Talents == gp.Talents
                 && this.StepsPerHastedGcd == gp.StepsPerHastedGcd
+                && this.Haste == gp.Haste
                 && hitGeneratesSameShape(this.MeleeHit, gp.MeleeHit)
                 && hitGeneratesSameShape(this.SpellHit, gp.SpellHit);
         }
@@ -234,8 +243,8 @@ namespace Matlabadin
         public RotationPriorityQueue<TState> Rotation { get; private set; }
         public PaladinTalents Talents { get; private set; }
         public PaladinSpec Spec { get; private set; }
-        public int StepsPerUnhastedGcd { get; private set; }
         public int StepsPerHastedGcd { get; private set; }
+        public double Haste { get; private set; }
         public double MeleeHit { get; private set; }
         public double SpellHit { get; private set; }
         #endregion

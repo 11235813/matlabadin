@@ -386,14 +386,6 @@ namespace Matlabadin.Tests
                 1 // 1 step duration
             );
         }
-        //[Test]
-        public void CalculatesStatePostAbility_ShouldAdvanceTimeByAbilityCastTime()
-        {
-            Assert.Inconclusive("No cast time abilities to test this yet");
-            var st = new StateTransition<BitVectorState>(GP, SM, 0, Ability.CS);
-            Assert.AreEqual(GP.StepsPerUnhastedGcd, 0);
-            Assert.IsTrue(st.StatePostAbility.SequenceEqual(st.NextStates));
-        }
         [Test]
         public void CalculateStateTransition_ShouldWaitForAbilityCDBeforeCasting()
         {
@@ -434,7 +426,7 @@ namespace Matlabadin.Tests
             var gp = new Int64GraphParameters(r, PaladinSpec.Prot, PaladinTalents.None, 3, 0, 0.9, 0.9);
             Choice c = StateTransition<BitVectorState>.CalculateTransition(gp, gp, 3).Choice;
             Assert.AreEqual("Cons", c.Action[0]);
-            Assert.AreEqual(6 * gp.StepsPerUnhastedGcd, c.stepsDuration); // Cons every 6 GCDs
+            Assert.AreEqual(6 * gp.StepsPerHastedGcd, c.stepsDuration); // Cons every 6 GCDs
         }
         [Test]
         public void CalculateTransition_ShouldConcatentateTillFirstLoop()
@@ -450,7 +442,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual(2, c.Action.Length);
             Assert.AreEqual("J", c.Action[0]);
             Assert.AreEqual("J", c.Action[1]); // We cast J twice then enter a J-J-J-WoG5 cycle (2-5 HP) so we don't concatenate any further
-            Assert.AreEqual(4 * gp.StepsPerUnhastedGcd, c.stepsDuration); // 6s CD = 4 GCDs cast J @ 0 and again @ 6s then enter the cycle
+            Assert.AreEqual(4 * gp.StepsPerHastedGcd, c.stepsDuration); // 6s CD = 4 GCDs cast J @ 0 and again @ 6s then enter the cycle
         }
         [Test]
         public void Choice_ShouldSetBuffUptimeBasedOnInitialStateAndPostAbilityDurations()
