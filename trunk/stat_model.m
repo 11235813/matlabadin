@@ -337,15 +337,11 @@ player.spcrit=max([min([player.spcrit;100.*ones(size(player.spcrit))]); ...
 player.hcrit=max([min([player.hcrit;100.*ones(size(player.hcrit))]); ...
     zeros(size(player.hcrit))]);
 
-player.WoGcrit=max([min([player.WoGcrit;100.*ones(size(player.WoGcrit))]); ...
-    zeros(size(player.WoGcrit))]);
-
 %Crit modifier values
 mdf.phcrit=1+(mdf.phcritm-1).*player.phcrit./100;
 mdf.spcrit=1+(mdf.spcritm-1).*player.spcrit./100;
 mdf.hcrit=1+(mdf.hcritm-1).*player.hcrit./100;
 
-mdf.WoGcrit=1+(mdf.hcritm-1).*player.WoGcrit./100;
 
 %% Mastery
 player.rating.mast=(gear.mast+extra.mas+consum.mast);
