@@ -74,8 +74,8 @@ namespace Matlabadin
             PaladinSpec spec;
             double haste, mehit, sphit;
             rotation = args[0];
-            // "Matlabadin.exe <rotation> <talents> <spec> <stepsPerGcd> <hasted> <mehit> <sphit> [<outputfile>]" + Environment.NewLine
-            //                      0          1      2           3         4         5      6       7
+            // "Matlabadin.exe <rotation> <spec> <talents> <stepsPerGcd> <hasted> <mehit> <sphit> [<outputfile>]" + Environment.NewLine
+            //                      0       1       2           3          4         5       6        7
             if (!PaladinSpecHelper.TryParse(args[1], out spec)) Usage();
             if (!PaladinTalentsHelper.TryParse(args[2], out talents)) Usage();
             if (!Int32.TryParse(args[3], out stepsPerHastedGcd)) Usage();
@@ -247,7 +247,7 @@ namespace Matlabadin
         private static Dictionary<string, List<Tuple<MatlabadinGraph<BitVectorState>, double[]>>> existingGraphs = new Dictionary<string, List<Tuple<MatlabadinGraph<BitVectorState>, double[]>>>();
         public static void Usage()
         {
-            string message = "Matlabadin.exe <rotation> <talents> <spec> <stepsPerHastesGcd> <haste> <mehit> <sphit> [<outputfile>]" + Environment.NewLine
+            string message = "Matlabadin.exe <rotation> <spec> <talents> <stepsPerHastesGcd> <haste> <mehit> <sphit> [<outputfile>]" + Environment.NewLine
                 + "Multiple parrallel executions can be performed by inputting multiple lines with each line containing the argument format as above." + Environment.NewLine
                 + "\t<spec>: Holy, Prot or Ret" + Environment.NewLine
                 + "\t<talents>: 6 digit string indicating the talent position in the calculator: 000000 = no talents, 001000 = Selfless Healer, 002000 = Eternal Flame, 002003 = EF & Execution Sentence, etc" + Environment.NewLine

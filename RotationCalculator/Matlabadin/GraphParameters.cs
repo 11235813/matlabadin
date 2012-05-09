@@ -25,8 +25,8 @@ namespace Matlabadin
             };
         private static readonly double[] DefaultUnhastedBuffDuration = new double[] {
                 1.5, 30, 30, // GCD, EF, SS,
-                20, 6, 30, // AW, SotRSB, WB,
-                6, 15, // GC, SH, 
+                20, 3, 30, // AW, SotRSB, WB,
+                6.3, 15, // GC, SH, 
             };
         private static readonly int[] DefaultMaximumBuffStacks = new int[] {
                 1, 1, 1,
@@ -152,7 +152,7 @@ namespace Matlabadin
             if (hastedDurationInSteps != rounded)
             {
                 this.ApproximationErrors += String.Format("{0}s duration approximated to {1}s ({2} steps);",
-                    hastedDurationInSteps,
+                    unhastedDurationInSeconds,
                     rounded * this.stepDuration,
                     rounded
                 );

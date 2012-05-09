@@ -62,8 +62,8 @@ for i=1:length(mehitArray)
             mkdir(dirname);
         end
                 
-        fprintf(argfid, '%s %g %s %s %f %f %f %s \n', ...
-            rotation, fsm_steps_per_gcd(), spec, talentString, decimalHaste, mehit, rhit, filename);
+        fprintf(argfid, '%s %s %s %g %f %f %f %s \n', ...
+            rotation, spec, talentString, fsm_steps_per_gcd(), decimalHaste, mehit, rhit, filename);
         generationRequired = 1;
     end
     generatedFile{i} = filename;
