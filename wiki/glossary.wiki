@@ -1,0 +1,29 @@
+#summary matlabadin Glossary
+
+= Glossary =
+  * *AS* - [http://www.wowhead.com/spell=31935 Avenger's Shield].  Can also be used to represent [http://www.wowhead.com/?item=41101 Glyph of Avenger's Shield] when referring to glyphs.
+  * * AM* - Active Mitigation
+  * * CS* - [http://www.wowhead.com/spell=35395 Crusader Strike].  Can also mean [http://cata.wowhead.com/item=41098 Glyph of Crusader Strike] when referring to glyphs.
+  * * Cons* - [http://www.wowhead.com/spell=26573 Consecration], or [http://www.wowhead.com/item=41099 Glyph of Consecration] when referring to glyphs.
+  * * DivPurp* - Divine Purpose.
+  * * DP* - Divine Purpose.  In rare situations, could also mean Divine Protection.
+  * * FoL* - Flash of Light
+  * * GC* or * GrCr* - [http://www.wowhead.com/spell=85043 Grand Crusader].
+  * * HA* - Holy Avenger
+  * * HotR* - [http://www.wowhead.com/spell=53595 Hammer of the Righteous] or [http://cata.wowhead.com/item=45742 Glyph of Hammer of the Righteous] depending on context.
+  * * HoPo* - Holy Power.
+  * * HP* - Holy Power, or on rare occasions Hit Points.  This should be clear enough by the context.
+  * * HW* - [http://www.wowhead.com/spell=2812 Holy Wrath].
+  * * J* or * Jud*- [http://cata.wowhead.com/spell=20271 Judgement], or [http://www.wowhead.com/?item=41092 Glyph of Judgement] when referring to glyphs. 
+  * * JotW* - [http://www.wowhead.com/spell=31878 Judgements of the Wise].
+  * * SH* - Selfless Healer
+  * * ShoR* [http://www.wowhead.com/spell=53600 Shield of the Righteous], deprecated in favor of SotR.  You may still catch me using it by accident though.
+  * * SoI* - [http://www.wowhead.com/spell=20165/seal-of-insight Seal of Insight].  Can also refer to [http://www.wowhead.com/spell=54943 Glyph of Seal of Insight] when discussing glyphs.
+  * * SoR* - [http://www.wowhead.com/spell=20154 Seal of Righteousness]
+  * * SoT* - [http://www.wowhead.com/?spell=31801 Seal of Truth].  Can also refer to [http://www.wowhead.com/spell=56416 Glyph of Seal of Truth] when discussing glyphs.
+  * * SotR* - [http://www.wowhead.com/spell=53600 Shield of the Righteous].  In rotation simulations, SotR# refers to using SotR at #-holy-power.  In other words, SotR5 means, "SotR if and only if we have 5 holy power."
+  * * SW* - Sanctified Wrath
+  * * TbtL* - [http://www.wowhead.com/spell=53592 Touched by the Light].
+  * * Veng* - [http://www.wowhead.com/spell=84839 Vengeance].
+  * * WB* - Weakened Blows
+  * * WoG* - [http://www.wowhead.com/spell=85673 Word of Glory]
