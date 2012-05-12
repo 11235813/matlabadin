@@ -8,7 +8,7 @@
     * [Installation Installation/compilation]
     * Example
     * [matlabadinFAQ FAQ]
-	* [glossary Glossary]
+    * [glossary Glossary]
   * File/code documentation
     * [ProjectStructure Project Structure]
     * [SourceFileDocs File Documentation]
