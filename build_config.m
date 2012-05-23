@@ -6,7 +6,7 @@ global ddb
 %populate all entries with empty arrays
 p.race=[];p.prof=0;p.lvl=[]; %player_model
 n.lvl=[];n.type=[];n.swing=[];n.cast=[];n.phflag=[];n.blockflag=[];n.out.phys=[];n.out.spell=[]; %npc_model
-e.npccount=[];e.timein=[];e.timeout=[];e.behind=[];e.seal=0;e.veng=[];e.overh=[];e.pseq=[]; %exec_model
+e.npccount=[];e.timein=[];e.timeout=[];e.behind=[];e.seal=0;e.veng=[];e.overh=[];e.queue=[]; %exec_model
 b.mode=[];b.item=[];b.flask=[];b.belixir=[];b.gelixir=[];b.potion=[];b.food=[]; %buff_model
 s.spec=[]; %spec_model
 t.shortform=[]; %talent_model
