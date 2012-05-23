@@ -26,6 +26,9 @@ if nargin>=1
     
 end
 
+%% Initialize different random streams
+RandStream.setDefaultStream ...
+     (RandStream('mt19937ar','seed',sum(100*clock)));
 
 %% Define constants/variables
 bossSwingTimer=2;
