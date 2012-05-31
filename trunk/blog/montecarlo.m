@@ -1,5 +1,8 @@
-function [DTPS statblock]=montecarlo(stat,val,simMins,plotFlag)
+function [DTPS statblock]=montecarlo(stat,val,simMins,plotFlag,tocFlag)
 dhit=0;dexp=0;dhaste=0;dmastery=0;ddodge=0;
+if nargin<5
+    tocFlag='toc';
+end
 if nargin<4
     plotFlag='plot';
 end
@@ -194,7 +197,9 @@ for k=1:N
     tbe=tbe-dt;
     tob=tob-dt;
 end
-toc
+if ~strcmp(tocFlag,'notoc')
+    toc
+end
 
 %% compile for plots
 dmg=damage(find(damage>=0));
