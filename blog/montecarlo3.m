@@ -1,7 +1,7 @@
 clear
 stats={' ','dodge','hit','exp','haste','mastery'};
-simMins=10000;
-numSims=10;
+simMins=10;
+numSims=10000;
 statAmount=600;
 
 if matlabpool('size')>0
@@ -41,28 +41,29 @@ std_drps=std(drps);
 norm_mean_drps=mean_drps./max(mean_drps);
 norm_std_drps=std_drps./max(mean_drps);
 
-%% plots
-figure(2);
-hist(normDTPS(:,2));
-h = findobj(gca,'Type','patch');
-set(h,'FaceColor','r','EdgeColor','w')
-% xlim([0.25 1])
-hold on
-hist(normDTPS(:,3));
-hold off
-ylabel(['Number of simulations (out of ' int2str(numSims) ')'])
-xlabel('Dodge (blue) or Hit (red)')
-
-
-figure(3)
-hist(Tsotr)
-ylabel(['Number of simulations (out of ' int2str(k) ')'])
-xlabel('T_{\rm SotR}')
- 
-figure(4)
-hist(Rhpg)
-ylabel(['Number of simulations (out of ' int2str(k) ')'])
-xlabel('R_{\rm HPG}')
+[mean_drps;std_drps]
+%% output
+% figure(2);
+% hist(normDTPS(:,2));
+% h = findobj(gca,'Type','patch');
+% set(h,'FaceColor','r','EdgeColor','w')
+% % xlim([0.25 1])
+% hold on
+% hist(normDTPS(:,3));
+% hold off
+% ylabel(['Number of simulations (out of ' int2str(numSims) ')'])
+% xlabel('Dodge (blue) or Hit (red)')
+% 
+% 
+% figure(3)
+% hist(Tsotr)
+% ylabel(['Number of simulations (out of ' int2str(k) ')'])
+% xlabel('T_{\rm SotR}')
+%  
+% figure(4)
+% hist(Rhpg)
+% ylabel(['Number of simulations (out of ' int2str(k) ')'])
+% xlabel('R_{\rm HPG}')
 
 % stdG=std(G)
 % stdS=std(S)
