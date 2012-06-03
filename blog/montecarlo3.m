@@ -14,10 +14,10 @@ W=waitbar(0,'Calculating');
 for k=1:length(stats)
     waitbar((k-1)./length(stats),W,['Calculating ' stats{k}]);
     parfor j=1:numSims
-        [dtps(j,k) statblock]=montecarlo(stats{k},statAmount,simMins,'noplot','notoc');
-        Rhpg(j,k)   =statblock.Rhpg;
-        S(j,k)      =statblock.S;
-        Tsotr(j,k)  =statblock.Tsotr;
+        [dtps(j,k) statblock(j,k)]=montecarlo(stats{k},statAmount,simMins,'noplot','notoc');
+        Rhpg(j,k)   =statblock(j,k).Rhpg;
+        S(j,k)      =statblock(j,k).S;
+        Tsotr(j,k)  =statblock(j,k).Tsotr;
     end
     waitbar(k./length(stats),W,['Calculating ' stats{k}]);
 end

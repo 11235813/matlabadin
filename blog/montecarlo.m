@@ -34,11 +34,11 @@ RandStream.setDefaultStream ...
      (RandStream('mt19937ar','seed',sum(100*clock)));
 
 %% Define constants/variables
-bossSwingTimer=2;
+bossSwingTimer=1.7;
 mastery=20;
 mast2pct=0.01;
 avoidance=0.2+1/(1/0.65631440+0.9560/(0.1128+0.01.*ddodge/176.71890258));
-blockChance=0.05+1/(1/1.351+0.9560/(0.7588+mast2pct.*dmastery/179.28004455));
+blockChance=0.15+1/(1/1.351+0.9560/(mast2pct.*(mastery+dmastery/179.28004455)));
 DRmod=1-0.3-mast2pct.*(mastery+dmastery./179.28004455);
 haste=0.1+0.01.*dhaste./128.05715942;
 hit=0.02+0.01.*dhit./120.10880279;
@@ -208,7 +208,7 @@ dmg=damage(find(damage>=0));
 S=sum(debugS>0)./length(debugS);
 avoids=sum(dmg==0);
 avoidspct=avoids./length(dmg);
-blocks=sum(dmg==0.7);
+blocks=sum(dmg==0.7)+sum(dmg==0.7.*DRmod);
 blockspct=blocks./length(dmg);
 dr1=sum(dmg==DRmod);
 dr1pct=dr1./length(dmg);
@@ -239,5 +239,11 @@ end
 statblock.S=S;
 statblock.Tsotr=Tsotr;
 statblock.Rhpg=Rhpg;
+statblock.blockChance=blockChance;
+statblock.avoidance=avoidance;
+statblock.sotraffected=(dr1pct+dr2pct)./(1-avoidance);
+statblock.blocked=blockspct;
+statblock.avoided=avoidspct;
+statblock.unmit=hitspct;
 
 end
