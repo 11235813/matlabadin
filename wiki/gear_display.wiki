@@ -1,0 +1,29 @@
+#summary Documentation for gear_display.m
+
+= Function(s) Contained =
+
+NONE
+
+= Input(s) =
+
+|| variable || description || type ||
+|| NONE ||
+
+= Output(s) =
+
+|| variable || description || type ||
+|| NONE ||
+
+= Description =
+
+This is a script to print out the equipment a particular configuration is using.
+
+= Functions Called =
+|| function ||
+|| execution_model ||
+|| player_model ||
+|| npc_model ||
+|| gear_stats ||
+|| buff_model ||
+|| stat_model ||
+|| ability_model|| 
