@@ -10,7 +10,7 @@ queue.st={...
     'SotR5>CS>AS+>J>AS>Cons>HW';
     
     %Defensive queues
-    '^WB>^SS5>SotR5>CS>J>AS>Cons>HW';
+    '^WB>^SS>SotR5>CS>J>AS>Cons>HW';
 
     %WoG
     'WoG5>CS>J>AS>HW';

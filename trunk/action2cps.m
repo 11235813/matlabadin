@@ -11,12 +11,14 @@ function [cps hpg] = action2cps(c,j)
 %conditions.
 
 %% smart array handling
-%j could refer to mdf.mehit, mdf.sphit, or player.wswing.  This section sorts out which is which
+%j could refer to mdf.mehit, mdf.sphit, player.sphaste, or player.wswing.  
+%This section sorts out which is which
 
 %assume all arrays are singleton
 jme=1;
 jsp=1;
 jws=1;
+jha=1;
 
 %handle non-singleton arrays
 if length(c.mdf.mehit)>1
@@ -27,6 +29,9 @@ if length(c.mdf.sphit)>1
 end
 if length(c.player.wswing)>1
     jws=j;
+end
+if length(c.player.sphaste)>1
+    jha=j;
 end
 
 %% CPS conversions    
@@ -75,7 +80,7 @@ cps(strcmpi(c.exec.seal,c.abil.val.label))= ...
     + c.mdf.mehit(jme)./c.player.wswing(jws);   %melee swings
 
 %censure
-cps(strcmpi('Censure',c.abil.val.label))= 1./c.player.censTick;
+cps(strcmpi('Censure',c.abil.val.label))= 1./c.player.censTick(jha);
 
 %% Holy Power Generation
 hpg=cps(strcmpi('CS',c.abil.val.label)).*c.mdf.mehit(jme)+... %CS

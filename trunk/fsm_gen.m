@@ -1,5 +1,5 @@
-function [generatedFile] = fsm_gen(rotation, spec, talentString, decimalHaste, mehitArray, sphitArray)
-%fsm_gen calculates fsm for each mehit, rhit
+function [generatedFile] = fsm_gen(rotation, spec, talentString, decimalHasteArray, mehitArray, sphitArray)
+%fsm_gen calculates fsm for each mehit, rhit, and decimalHaste
 % call memoized_fsm to return the actual fsm data
 
 % check source timestamp
@@ -26,16 +26,26 @@ end
 if exist('data') ~= 7
     mkdir('data');
 end
-generatedFile = cell(length(mehitArray),1);
+arrLength=max([length(mehitArray) length(decimalHasteArray)]);
+generatedFile = cell(arrLength,1);
 argfile = strcat('data\\fsm_gen_input_', num2str(ceil(rand.*1000000)), '.tmp');
 argfid = fopen(argfile, 'w');
 generationRequired = 0;
-for i=1:length(mehitArray)
-    mehit = mehitArray(i);
+for i=1:arrLength
+    if length(mehitArray) > 1
+        mehit = mehitArray(i);
+    else
+        mehit = mehitArray;
+    end
     if length(sphitArray) > 1
         rhit = sphitArray(i);
     else
         rhit = sphitArray;
+    end
+    if length(decimalHasteArray) > 1
+        decimalHaste = decimalHasteArray(i);
+    else
+        decimalHaste = decimalHasteArray;
     end
     rotationKey = rotation;
     rotationKey = strrep(rotationKey, '[', '');

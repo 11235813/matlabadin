@@ -37,13 +37,13 @@ RandStream.setDefaultStream ...
 bossSwingTimer=1.7;
 mastery=20;
 mast2pct=0.01;
-avoidance=0.2+1/(1/0.65631440+0.9560/(0.1128+0.01.*ddodge/176.71890258));
+avoidance=0.15+1/(1/0.65631440+0.9560/(0.1859+0.01.*ddodge/176.71890258));
 blockChance=0.15+1/(1/1.351+0.9560/(mast2pct.*(mastery+dmastery/179.28004455)));
 DRmod=1-0.3-mast2pct.*(mastery+dmastery./179.28004455);
-haste=0.1+0.01.*dhaste./128.05715942;
+haste=0.05+0.01.*dhaste./128.05715942;
 hit=0.02+0.01.*dhit./120.10880279;
 exp=0.02+0.01.*dexp./120.10880279;
-miss=0.075-hit;
+miss=max(0,0.075-hit);
 dodge=max(0,(0.075-exp));
 parry=max(0,(0.075-max((exp-0.075),0)));
 hp=0;
