@@ -1,8 +1,8 @@
 clear
 stats={' ','dodge','hit','exp','haste','mastery'};
-simMins=10;
-numSims=10000;
-statAmount=600;
+simMins=1000;
+numSims=100;
+statAmount=200;
 
 if matlabpool('size')>0
     matlabpool close
@@ -26,7 +26,7 @@ close(W)
 
     
 matlabpool close
-save(['montecarlo3data_' int2str(simMins) '_' int2str(numSims) '.mat'])
+save(['montecarlo3data_' int2str(simMins) '_' int2str(numSims) '_' int2str(statAmount) '.mat'])
 
 %% calculate stats
 mean_dtps=mean(dtps);
@@ -38,10 +38,13 @@ norm_dtps=dtps./mean_dtps(1);
 drps=repmat(dtps(:,1),1,size(dtps,2))-dtps;
 mean_drps=mean(drps);
 std_drps=std(drps);
+std_mean_drps=std_drps./sqrt(numSims);
 norm_mean_drps=mean_drps./max(mean_drps);
 norm_std_drps=std_drps./max(mean_drps);
 
-[mean_drps;std_drps]
+['N=' int2str(numSims) ', \tau=' int2str(simMins) ', stat=' int2str(statAmount)]
+[mean_drps;std_drps;std_mean_drps]
+[mean_drps;std_drps;std_mean_drps]./mean_drps(length(mean_drps))
 %% output
 % figure(2);
 % hist(normDTPS(:,2));

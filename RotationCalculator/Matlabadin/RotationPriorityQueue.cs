@@ -157,6 +157,7 @@ namespace Matlabadin
                     case Ability.SotR:
                         // Requires 3 HP to use
                         conditions.Add((gp, sm, state) => sm.HP(state) >= 3);
+                        // conditions.Add((gp, sm, state) => sm.TimeRemaining(state, Buff.SotRSB) == 0); // don't recast early - enable if recasts aren't additive
                         break;
                     case Ability.EF:
                     case Ability.WoG:

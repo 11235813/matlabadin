@@ -13,19 +13,22 @@ namespace Matlabadin
                 true, true, // HotR, CooldownIndicator, 
                 true, true, true, true, // CS, J, HoW, AS, 
                 true, true, false, // Cons, HW, AW,
+                true, true, true, // HP, LH, ES,
                 true, // Count
             };
         private static readonly double[] DefaultUnhastedAbilityDuration = new double[] {
                 4.5, 6, 6, 15, // CS, J, HoW, AS,
                 9, 9, 180, // Cons, HW, AW,
+                20, 60, 60, // HP, LH, ES,
             };
         private static readonly bool[] AbilityCooldownReducedByHaste = new bool[] {
                 true, true, true, false, // CS, J, HoW, AS,
                 true, true, false, // Cons, HW, AW,
+                false, false, false, // HP, LH, ES
             };
         private static readonly double[] DefaultUnhastedBuffDuration = new double[] {
                 1.5, 30, 30, // GCD, EF, SS,
-                20, 3, 30, // AW, SotRSB, WB,
+                20, 3, 30, // AW, SotRSB, WB,   note: may need to adjust AW based on Sanctified Wrath talent (boosts it to 30s)
                 6.3, 15, // GC, SH, 
             };
         private static readonly int[] DefaultMaximumBuffStacks = new int[] {
@@ -58,12 +61,15 @@ namespace Matlabadin
             if ((talents & PaladinTalents.HolyAvenger) != PaladinTalents.None) throw new NotImplementedException("HolyAvenger NYI");
             if ((talents & PaladinTalents.SanctifiedWrath) != PaladinTalents.None) throw new NotImplementedException("SanctifiedWrath NYI");
             if ((talents & PaladinTalents.DivinePurpose) != PaladinTalents.None) throw new NotImplementedException("DivinePurpose NYI");
-            if ((talents & PaladinTalents.HolyPrism) != PaladinTalents.None) throw new NotImplementedException("HolyPrism NYI");
-            if ((talents & PaladinTalents.LightsHammer) != PaladinTalents.None) throw new NotImplementedException("LightsHammer NYI");
-            if ((talents & PaladinTalents.ExecutionSentence) != PaladinTalents.None) throw new NotImplementedException("ExecutionSentence NYI");
+            //if ((talents & PaladinTalents.HolyPrism) != PaladinTalents.None) throw new NotImplementedException("HolyPrism NYI");
+            //if ((talents & PaladinTalents.LightsHammer) != PaladinTalents.None) throw new NotImplementedException("LightsHammer NYI");
+            //if ((talents & PaladinTalents.ExecutionSentence) != PaladinTalents.None) throw new NotImplementedException("ExecutionSentence NYI");
 
             if (rotation.AbilitiesUsed.Contains(Ability.EF) && (talents & PaladinTalents.EternalFlame) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
             if (rotation.AbilitiesUsed.Contains(Ability.SS) && (talents & PaladinTalents.SacredShield) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
+            if (rotation.AbilitiesUsed.Contains(Ability.HP) && (talents & PaladinTalents.HolyPrism) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
+            if (rotation.AbilitiesUsed.Contains(Ability.LH) && (talents & PaladinTalents.LightsHammer) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
+            if (rotation.AbilitiesUsed.Contains(Ability.ES) && (talents & PaladinTalents.ExecutionSentence) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
 
             this.Rotation = rotation;
             this.Spec = spec;
@@ -153,7 +159,7 @@ namespace Matlabadin
             {
                 this.ApproximationErrors += String.Format("{0}s duration approximated to {1}s ({2} steps);",
                     unhastedDurationInSeconds,
-                    rounded * this.stepDuration,
+                    System.Math.Round(rounded * this.stepDuration, 4),
                     rounded
                 );
             }

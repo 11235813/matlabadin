@@ -28,6 +28,9 @@ namespace Matlabadin
         Cons,
         HW,
         AW,
+        HP, // Holy Prism, L90 talent
+        LH, // Light's Hammer, L90 talent
+        ES, // Execution Sentence, L90 talent
         Count,
     }
 }

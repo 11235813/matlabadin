@@ -252,6 +252,9 @@ namespace Matlabadin
                 case Ability.SS:
                 case Ability.FoL:
                 case Ability.AW:
+                case Ability.HP:
+                case Ability.LH:
+                case Ability.ES:
                     StatePostAbility = new TState[]
                     {
                         UseAbility(gp, sm, StatePreAbility, ability),
@@ -370,8 +373,6 @@ namespace Matlabadin
                     nextState = sm.SetTimeRemaining(nextState, Buff.GC, 0);
                     break;
                 case Ability.SS:
-                    if (availableHp < 3) throw new InvalidOperationException("SS cast with less than 3 HP");
-                    nextState = sm.SetHP(nextState, hp - availableHp);
                     nextState = sm.SetTimeRemaining(nextState, Buff.SS, gp.BuffDurationInSteps(Buff.SS));
                     break;
                 case Ability.EF:
