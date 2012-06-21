@@ -45,7 +45,7 @@ mcost.SealofTruth=  0;
 %As we do not model interruptions, Cens is assumed to be perpetually
 %refreshed (full uptime).
 %TODO: possibly nullify if SoT not active
-raw.Censure=        (104 + 0.138.*player.sp).*5 ...
+raw.Censure=        (158 + 0.138.*player.sp).*5 ...
                     ./(1+mdf.glyphIT).*mdf.spdmg; %per tick (for 5 stacks)
 dmg.Censure=        raw.Censure.*mdf.phcrit.*target.resrdx; %automatical connect, phys crit/CM
 dps.Censure=        dmg.Censure./player.censTick;
@@ -108,7 +108,7 @@ end
 %% Melee abilities
 
 %Crusader Strike (can be blocked)
-raw.CrusaderStrike= 1.00.*player.ndamage.*mdf.phdmg.*(1+mdf.pvphands);
+raw.CrusaderStrike= 2.60.*player.ndamage.*mdf.phdmg.*(1+mdf.pvphands); %todo: check this, new tooltip
 dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.memodel.*mdf.phcrit;
 heal.CrusaderStrike=0;
 threat.CrusaderStrike=max(dmg.CrusaderStrike,heal.CrusaderStrike).*mdf.RFury;
@@ -123,7 +123,7 @@ threat.HammeroftheRighteous=max(dmg.HammeroftheRighteous,heal.HammeroftheRighteo
 mcost.HammeroftheRighteous=0.117.*base.mana; %TODO: check this
 
 %Nova connects automatically if HotR(phys) succeeds
-raw.HammerNova=   (728.8813374+0.18.*player.ap).*mdf.spdmg;
+raw.HammerNova=   (1050.5+0.18.*player.ap).*mdf.spdmg; %todo: check new nova damage scaling
 dmg.HammerNova=   raw.HammerNova.*mdf.mehit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 heal.HammerNova=   0;
 threat.HammerNova=max(dmg.HammerNova,heal.HammerNova).*mdf.RFury;
@@ -138,7 +138,7 @@ threat.Melee=       max(dmg.Melee,heal.Melee).*mdf.RFury;
 tps.Melee=          threat.Melee./player.wswing;
 
 %Shield of the Righteous (can be blocked)
-raw.ShieldoftheRighteous= ((610.2+0.1.*player.ap).*6).*(1+mdf.glyphAS).*mdf.spdmg;
+raw.ShieldoftheRighteous= (617.2+0.1.*player.ap).*(1+mdf.glyphAS).*mdf.spdmg; %todo: check new AP/SP scaling
 dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit... 
                           .*target.resrdx; %melee hit
 heal.ShieldoftheRighteous=0;
@@ -147,14 +147,14 @@ threat.ShieldoftheRighteous=dmg.ShieldoftheRighteous.*mdf.RFury;
 %% Spell abilities
 
 %Avenger's Shield (cannot be blocked)
-raw.AvengersShield= (3113.187994+0.419.*player.ap+0.21.*player.sp).*mdf.spdmg.*mdf.glyphFS;
+raw.AvengersShield= (4488+0.21.*player.sp).*mdf.spdmg.*mdf.glyphFS;
 dmg.AvengersShield= raw.AvengersShield.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.AvengersShield=0;
 threat.AvengersShield=max(dmg.AvengersShield,heal.AvengersShield).*mdf.RFury;
 mcost.AvengersShield=0.07.*base.mana;
 
 %Judgment (the seal of choice is defined in execution_model)
-raw.Judgment=       (1+0.2229.*player.sp+0.1421.*player.ap) ...
+raw.Judgment=       (702+0.635.*player.sp) ...
                     .*(1+mdf.glyphDJ).*mdf.spdmg; 
 dmg.Judgment=      raw.Judgment.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.Judgment=     0;
@@ -162,44 +162,45 @@ threat.Judgment=   max(dmg.Judgment,heal.Judgment).*mdf.RFury;
 mcost.Judgment=    0.059.*base.mana;
 
 %Hammer of Wrath (can be blocked)
-raw.HammerofWrath= (1838+1.61.*player.sp).*mdf.spdmg;
+raw.HammerofWrath= (1838.5+1.61.*player.sp).*mdf.spdmg;
 dmg.HammerofWrath= raw.HammerofWrath.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.HammerofWrath=0;
 mcost.HammerofWrath=0.03.*base.mana;
 
 %Consecration
-raw.Consecration =  (813.2998299+0.27.*player.sp+0.27.*player.ap).*mdf.spdmg;
+raw.Consecration =  (813.2998299+0.27.*player.sp+0.27.*player.ap).*mdf.spdmg; %todo: recheck ap/sp/base
 dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 heal.Consecration=  0;
 threat.Consecration=(max(dmg.Consecration,heal.Consecration)+12).*mdf.RFury;  %TODO: wowdb flags as generating no threat
 mcost.Consecration = 0.07.*base.mana;
 
 %Holy Wrath
-raw.HolyWrath=      (2402.8+0.61.*player.sp)./(1+(exec.npccount-1).*mdf.glyphFW).*mdf.spdmg;
+raw.HolyWrath=      (4300+0.91.*player.sp)./(1+(exec.npccount-1).*mdf.glyphFW).*mdf.spdmg;
 dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.HolyWrath=     0;
 threat.HolyWrath=   max(dmg.HolyWrath,heal.HolyWrath).*mdf.RFury;
 mcost.HolyWrath =   0.094.*base.mana;
 
 %Word of Glory
-raw.WordofGlory=    (2133+0.2086.*player.sp+0.1984.*player.ap).*player.hopo ...
+raw.WordofGlory=    (4340+0.419*player.sp).*player.hopo ...
                     .*(1-exec.overh).*(1+mdf.SoI);
 dmg.WordofGlory=    0;
 heal.WordofGlory=   raw.WordofGlory.*mdf.spcrit; %TODO: handle BoG stacks
 threat.WordofGlory= 11.*(exec.overh>0).*mdf.RFury./exec.npccount;
 
 %Eternal Flame
-raw.EternalFlame=   (1 + 1.*player.sp + 1.*player.ap).*player.hopo ... %PH
+raw.EternalFlame=   (1548 + 0.137.*player.sp).*player.hopo.*10 ... % 10 ticks
                     .*(1-exec.overh);
 dmg.EternalFlame=   0;
 heal.EternalFlame=  raw.EternalFlame.*mdf.spcrit;
 threat.EternalFlame=1.*mdf.RFury./exec.npccount; %PH
 
 %Sacred Shield
-raw.SacredShield=   (5879 + 0.52.*player.sp).*5;  %total absorption per cast
+raw.SacredShield=   (5879 + 0.78.*player.sp).*5;  %total absorption per cast
 dmg.SacredShield=   0;
 heal.SacredShield=  raw.SacredShield; 
 threat.SacredShield=1.*mdf.RFury./exec.npccount; %PH
+mcost.SacredShield=0.27.*base.mana;
 
 %Holy Prism
 raw.HolyPrism=      (12412 + 1.098.*player.sp).*mdf.spdmg;
@@ -207,8 +208,14 @@ dmg.HolyPrism=      raw.HolyPrism.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.HolyPrism=     (9304 + 0.823.*player.sp).*mdf.spcrit.*5; %5 targets
 mcost.HolyPrism =   0;
 
+%Holy Prism (cast on ally/self, damage is up to 5 nearby targets)
+raw.HolyPrismAlt=      (9304 + 0.823.*player.sp).*mdf.spdmg;
+dmg.HolyPrismAlt=      raw.HolyPrism.*mdf.sphit.*mdf.spcrit.*target.resrdx;
+heal.HolyPrismAlt=     (12412 + 1.098.*player.sp).*mdf.spcrit.*5; %5 targets
+mcost.HolyPrismAlt =   0;
+
 %Execution Sentence
-raw.ExecutionSentence = (1 + 0.*player.sp + 0.*player.ap).*mdf.spdmg;
+raw.ExecutionSentence = (10023 + 4.566.*player.sp).*mdf.spdmg;
 dmg.ExecutionSentence = raw.ExecutionSentence.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.ExecutionSentence = 0;
 mcost.ExecutionSentence = 0;
