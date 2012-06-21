@@ -43,6 +43,7 @@ gear.tooldps=egs(15).tooldps;
 
 %meta gems
 gear.meta=egs(1).meta;
+if isempty(gear.meta);gear.meta=0;end;
 
 %plate spec
 gear.isplate=(sum([egs.atype])==8);
