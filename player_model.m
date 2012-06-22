@@ -50,21 +50,21 @@ if nargin>0
     end
 end
 %default values of the input arguments
-if isempty(base.lvl)==1 base.lvl=85; end;
+if isempty(base.lvl)==1 base.lvl=90; end;
 if isempty(base.race)==1 base.race='Human'; end;
 if isnumeric(base.prof)==1 base.prof='BS JC'; end; %workaround for prof=='' 
 
 %enforce selected level
-if base.lvl<85 error('Player_model accepts only level 85 inputs'); end;
+if base.lvl<90 error('Player_model accepts only level 85 inputs'); end;
 
 %% Start building base structure
-if base.lvl==85
+if base.lvl==90
 %              STR-STA-AGI-INT-SPI  
-primary_stats=[164 156  97 106 117;
-               169 157  93 105 113;
-               165 156  94 106 116;
-               161 156  99 109 112;
-               169 157  93 102 116];
+primary_stats=[178 169 105 114 123;
+               183 170 101 113 122;
+               179 169 102 114 125;
+               175 169 107 117 121;
+               183 170 101 110 125];
 end
 %runtime string-numerical conversion
 if strcmpi('Human',base.race)||strcmpi('Hum',base.race)

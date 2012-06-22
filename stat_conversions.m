@@ -12,24 +12,24 @@
 
 
 %offensive stats
-cnv.agi_phcrit=203.08;
-cnv.int_spcrit=648.91;
+cnv.agi_phcrit=1259.51806640;
+cnv.int_spcrit=2533.66357421;
 cnv.str_ap=2;
 cnv.int_sp=1;
-cnv.crit_phcrit=179.28004455;
-cnv.crit_spcrit=179.28004455;
-cnv.hit_hit=120.10880279;
-cnv.exp_exp=30.02719688.*4;
-cnv.haste_phhaste=128.05715942;
-cnv.haste_sphaste=128.05715942;
+cnv.crit_phcrit=700;
+cnv.crit_spcrit=700;
+cnv.hit_hit=400;
+cnv.exp_exp=400;
+cnv.haste_phhaste=500;
+cnv.haste_sphaste=500;
 
 %defensive stats
-cnv.dodge_dodge=176.71890258;
+cnv.dodge_dodge=1035;
 % cnv.agi_dodge=0;
-cnv.parry_parry=176.71890258;
-cnv.mast_mast=179.28004455;
-cnv.mast_block=1.2;
-cnv.mast_bog=1.2;
+cnv.parry_parry=1035;
+cnv.mast_mast=700;
+cnv.mast_block=1;
+cnv.mast_bog=1;
 
 %ipoint conversions
 ipconv.str=1;
