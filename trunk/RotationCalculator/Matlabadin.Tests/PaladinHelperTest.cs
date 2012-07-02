@@ -88,7 +88,10 @@ namespace Matlabadin.Tests
             Assert.AreEqual(
                 PaladinTalents.SelflessHealer |
                 PaladinTalents.EternalFlame |
-                PaladinTalents.SacredShield,
+                PaladinTalents.SacredShield |
+                PaladinTalents.ExecutionSentence |
+                PaladinTalents.HolyPrism |
+                PaladinTalents.LightsHammer,
                 PaladinTalents.All);
         }
         [Test]

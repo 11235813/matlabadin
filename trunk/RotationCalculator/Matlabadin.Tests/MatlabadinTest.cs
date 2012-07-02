@@ -80,6 +80,6 @@ namespace Matlabadin.Tests
         public static Int64GraphParameters GP { get { return AllAbilityGraphParameters; } }
         public static Int64GraphParameters GPNoMiss { get { return NoMiss(AllAbilityRotation.PriorityQueue); } }
         public static Int64GraphParameters GPFullHaste { get { return NoMiss(AllAbilityRotation.PriorityQueue, 3, 0.5); } }
-        private static Int64GraphParameters defaultParameters = NoHitExpertise("AW>SS>EF>SotR>HotR>WoG>CS>J>AS>Cons>HW>HoW>FoL");
+        private static Int64GraphParameters defaultParameters = NoHitExpertise("AW>SS>EF>SotR>HotR>WoG>CS>J>AS>Cons>HW>HoW>FoL>ES>LH>HPr");
     }
 }

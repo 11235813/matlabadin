@@ -42,6 +42,10 @@ namespace Matlabadin.Tests
                 Ability.AS,
                 Ability.Cons,
                 Ability.HW,
+                Ability.SS,
+                Ability.ES,
+                Ability.HPr,
+                Ability.LH,
             })
             {
                 Assert.AreEqual(GPFullHaste.StepsPerHastedGcd, GPFullHaste.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GPFullHaste, GPFullHaste, 3, a), Buff.GCD));
@@ -52,7 +56,6 @@ namespace Matlabadin.Tests
                 Ability.SotR,
                 Ability.WoG,
                 Ability.EF,
-                Ability.SS,
             })
             {
                 Assert.AreEqual(0, GPFullHaste.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GPFullHaste, GPFullHaste, 3, a), Buff.GCD));
@@ -122,7 +125,6 @@ namespace Matlabadin.Tests
             Assert.AreEqual(2, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 5, Ability.WoG)));
             Assert.AreEqual(2, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 5, Ability.SotR)));
             Assert.AreEqual(2, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 5, Ability.EF)));
-            Assert.AreEqual(2, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 5, Ability.SS)));
         }
         [Test]
         public void UseAbility_GCSProcShouldSetGCBuff()
@@ -153,10 +155,10 @@ namespace Matlabadin.Tests
             Assert.AreNotEqual(0, SM.TimeRemaining(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.AW), Buff.AW));
         }
         [Test]
-        public void UseAbility_SS_ShouldConsume3HP()
+        public void UseAbility_SS_ShouldConsume0HP()
         {
-            Assert.AreEqual(0, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.SS)));
-            Assert.AreEqual(2, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 5, Ability.SS)));
+            Assert.AreEqual(3, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 3, Ability.SS)));
+            Assert.AreEqual(5, SM.HP(StateTransition<BitVectorState>.UseAbility(GP, SM, 5, Ability.SS)));
         }
         [Test]
         public void UseAbility_EF_ShouldSetEFBuff()

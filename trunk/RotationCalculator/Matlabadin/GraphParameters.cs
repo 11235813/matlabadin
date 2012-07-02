@@ -9,22 +9,22 @@ namespace Matlabadin
     {
         private static readonly bool[] DefaultIsOnGcd = new bool[] {
                 false, false, false, // Nothing, SotR, WoG,
-                false, false, true, // EF, SS, FoL,
+                false, true, true, // EF, SS, FoL,
                 true, true, // HotR, CooldownIndicator, 
                 true, true, true, true, // CS, J, HoW, AS, 
                 true, true, false, // Cons, HW, AW,
-                true, true, true, // HP, LH, ES,
+                true, true, true, // HPr, LH, ES,
                 true, // Count
             };
         private static readonly double[] DefaultUnhastedAbilityDuration = new double[] {
                 4.5, 6, 6, 15, // CS, J, HoW, AS,
                 9, 9, 180, // Cons, HW, AW,
-                20, 60, 60, // HP, LH, ES,
+                20, 60, 60, // HPr, LH, ES,
             };
         private static readonly bool[] AbilityCooldownReducedByHaste = new bool[] {
                 true, true, true, false, // CS, J, HoW, AS,
                 true, true, false, // Cons, HW, AW,
-                false, false, false, // HP, LH, ES
+                false, false, false, // HPr, LH, ES
             };
         private static readonly double[] DefaultUnhastedBuffDuration = new double[] {
                 1.5, 30, 30, // GCD, EF, SS,
@@ -61,13 +61,10 @@ namespace Matlabadin
             if ((talents & PaladinTalents.HolyAvenger) != PaladinTalents.None) throw new NotImplementedException("HolyAvenger NYI");
             if ((talents & PaladinTalents.SanctifiedWrath) != PaladinTalents.None) throw new NotImplementedException("SanctifiedWrath NYI");
             if ((talents & PaladinTalents.DivinePurpose) != PaladinTalents.None) throw new NotImplementedException("DivinePurpose NYI");
-            //if ((talents & PaladinTalents.HolyPrism) != PaladinTalents.None) throw new NotImplementedException("HolyPrism NYI");
-            //if ((talents & PaladinTalents.LightsHammer) != PaladinTalents.None) throw new NotImplementedException("LightsHammer NYI");
-            //if ((talents & PaladinTalents.ExecutionSentence) != PaladinTalents.None) throw new NotImplementedException("ExecutionSentence NYI");
 
             if (rotation.AbilitiesUsed.Contains(Ability.EF) && (talents & PaladinTalents.EternalFlame) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
             if (rotation.AbilitiesUsed.Contains(Ability.SS) && (talents & PaladinTalents.SacredShield) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
-            if (rotation.AbilitiesUsed.Contains(Ability.HP) && (talents & PaladinTalents.HolyPrism) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
+            if (rotation.AbilitiesUsed.Contains(Ability.HPr) && (talents & PaladinTalents.HolyPrism) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
             if (rotation.AbilitiesUsed.Contains(Ability.LH) && (talents & PaladinTalents.LightsHammer) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
             if (rotation.AbilitiesUsed.Contains(Ability.ES) && (talents & PaladinTalents.ExecutionSentence) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
 
@@ -79,13 +76,16 @@ namespace Matlabadin
             this.MeleeHit = mehit;
             this.SpellHit = sphit;
 
+            double[] talentedUnhastedBuffDuration = DefaultUnhastedBuffDuration.ToArray();
+            if (this.Talents.Includes(PaladinTalents.SanctifiedWrath)) talentedUnhastedBuffDuration[(int)Buff.AW] = 30;
+
             this.ApproximationErrors = "";
             this.stepDuration = 1.5 / (this.StepsPerHastedGcd * (1.0 + haste));
             this.isOnGcd = DefaultIsOnGcd;
             this.abilitySteps = DefaultUnhastedAbilityDuration
                 .Select((cd, i) => CalculateAbilityCooldowns(i + Ability.CooldownIndicator + 1, AbilityCooldownReducedByHaste[i], cd))
                 .ToArray();
-            this.buffSteps = DefaultUnhastedBuffDuration
+            this.buffSteps = talentedUnhastedBuffDuration
                 .Select((cd, i) => CalculateBuffDuration((Buff)i, cd))
                 .ToArray();
             this.buffStacks = DefaultMaximumBuffStacks;

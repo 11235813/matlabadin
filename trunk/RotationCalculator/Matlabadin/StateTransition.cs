@@ -252,7 +252,7 @@ namespace Matlabadin
                 case Ability.SS:
                 case Ability.FoL:
                 case Ability.AW:
-                case Ability.HP:
+                case Ability.HPr:
                 case Ability.LH:
                 case Ability.ES:
                     StatePostAbility = new TState[]
