@@ -58,24 +58,6 @@ namespace Matlabadin.Tests
         }
         [Test]
         [ExpectedException(typeof(NotImplementedException))]
-        public void UnhandledMechanicsShouldThrowException_ExecutionSentence()
-        {
-            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Prot, PaladinTalents.ExecutionSentence, 3, 0, 1, 1);
-        }
-        [Test]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void UnhandledMechanicsShouldThrowException_LightsHammer()
-        {
-            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Prot, PaladinTalents.LightsHammer, 3, 0, 1, 1);
-        }
-        [Test]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void UnhandledMechanicsShouldThrowException_HolyPrism()
-        {
-            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Prot, PaladinTalents.HolyPrism, 3, 0, 1, 1);
-        }
-        [Test]
-        [ExpectedException(typeof(NotImplementedException))]
         public void UnhandledMechanicsShouldThrowException_BurdenOfGuilt()
         {
             GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Prot, PaladinTalents.BurdenOfGuilt, 3, 0, 1, 1);
@@ -90,7 +72,7 @@ namespace Matlabadin.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void InvalidRotation_EFWithoutEF()
         {
-            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("SS"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1);
+            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("EF"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1);
         }
         [Test]
         public void Compression_Ability_ShouldHaveNoCooldownForUnusedAbilities()
@@ -104,6 +86,9 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0, gp.AbilityCooldownInSteps(Ability.Cons));
             Assert.AreEqual(0, gp.AbilityCooldownInSteps(Ability.HW));
             Assert.AreEqual(0, gp.AbilityCooldownInSteps(Ability.AW));
+            Assert.AreEqual(0, gp.AbilityCooldownInSteps(Ability.ES));
+            Assert.AreEqual(0, gp.AbilityCooldownInSteps(Ability.LH));
+            Assert.AreEqual(0, gp.AbilityCooldownInSteps(Ability.HPr));
         }
         [Test]
         public void Compression_Buff_SS_ShouldRequireInRotation_SS()
@@ -180,14 +165,14 @@ namespace Matlabadin.Tests
         [Test]
         public void PropertyValuesShouldCorrespondToConstructorArguments()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 5, 0.5, 0.8, 0.9);
+            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 2, 0.5, 0.8, 0.9);
             Assert.AreEqual(0.8, gp.MeleeHit);
             Assert.AreEqual(0.9, gp.SpellHit);
             Assert.AreEqual(PaladinTalents.All, gp.Talents);
             Assert.AreEqual(PaladinSpec.Prot, gp.Spec);
-            Assert.AreEqual(5, gp.StepsPerHastedGcd);
+            Assert.AreEqual(2, gp.StepsPerHastedGcd);
             Assert.AreEqual(0.5, gp.Haste);
-            Assert.AreEqual((1.5 / (1.0 + 0.5)) / 5, gp.StepDuration);
+            Assert.AreEqual((1.5 / (1.0 + 0.5)) / 2, gp.StepDuration);
         }
         [Test]
         public void AbilityTriggersGCD_ShouldTriggerForCDAbilities()
@@ -197,7 +182,7 @@ namespace Matlabadin.Tests
             Assert.IsFalse(GP.AbilityTriggersGcd(Ability.SotR));
             Assert.IsFalse(GP.AbilityTriggersGcd(Ability.WoG));
             Assert.IsFalse(GP.AbilityTriggersGcd(Ability.EF));
-            Assert.IsFalse(GP.AbilityTriggersGcd(Ability.SS));
+            Assert.IsTrue(GP.AbilityTriggersGcd(Ability.SS));
             Assert.IsFalse(GP.AbilityTriggersGcd(Ability.AW));
             Assert.IsTrue(GP.AbilityTriggersGcd(Ability.HotR));
             Assert.IsTrue(GP.AbilityTriggersGcd(Ability.CS));
@@ -205,6 +190,9 @@ namespace Matlabadin.Tests
             Assert.IsTrue(GP.AbilityTriggersGcd(Ability.AS));
             Assert.IsTrue(GP.AbilityTriggersGcd(Ability.Cons));
             Assert.IsTrue(GP.AbilityTriggersGcd(Ability.FoL));
+            Assert.IsTrue(GP.AbilityTriggersGcd(Ability.ES));
+            Assert.IsTrue(GP.AbilityTriggersGcd(Ability.HPr));
+            Assert.IsTrue(GP.AbilityTriggersGcd(Ability.LH));
         }
         [Test]
         public void AbilityOnGCD_ShouldBeTrueForCDAbilities()
@@ -214,7 +202,7 @@ namespace Matlabadin.Tests
             Assert.IsFalse(GP.AbilityOnGcd(Ability.SotR));
             Assert.IsFalse(GP.AbilityOnGcd(Ability.WoG));
             Assert.IsFalse(GP.AbilityOnGcd(Ability.EF));
-            Assert.IsFalse(GP.AbilityOnGcd(Ability.SS));
+            Assert.IsTrue(GP.AbilityOnGcd(Ability.SS));
             Assert.IsFalse(GP.AbilityOnGcd(Ability.AW));
             Assert.IsTrue(GP.AbilityOnGcd(Ability.HotR));
             Assert.IsTrue(GP.AbilityOnGcd(Ability.CS));
@@ -223,6 +211,9 @@ namespace Matlabadin.Tests
             Assert.IsTrue(GP.AbilityOnGcd(Ability.AS));
             Assert.IsTrue(GP.AbilityOnGcd(Ability.Cons));
             Assert.IsTrue(GP.AbilityOnGcd(Ability.FoL));
+            Assert.IsTrue(GP.AbilityOnGcd(Ability.ES));
+            Assert.IsTrue(GP.AbilityOnGcd(Ability.HPr));
+            Assert.IsTrue(GP.AbilityOnGcd(Ability.LH));
         }
         [Test]
         public void GcdDurationTriggeredByAbilityInSteps_ShouldBeGCDForGCDAbilities()
@@ -232,13 +223,16 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0, GPFullHaste.GcdDurationTriggeredByAbilityInSteps(Ability.SotR));
             Assert.AreEqual(0, GPFullHaste.GcdDurationTriggeredByAbilityInSteps(Ability.WoG));
             Assert.AreEqual(0, GPFullHaste.GcdDurationTriggeredByAbilityInSteps(Ability.EF));
-            Assert.AreEqual(0, GPFullHaste.GcdDurationTriggeredByAbilityInSteps(Ability.SS));
+            Assert.AreEqual(GPFullHaste.StepsPerHastedGcd, GPFullHaste.GcdDurationTriggeredByAbilityInSteps(Ability.SS));
             Assert.AreEqual(GPFullHaste.StepsPerHastedGcd, GPFullHaste.GcdDurationTriggeredByAbilityInSteps(Ability.HotR));
             Assert.AreEqual(GPFullHaste.StepsPerHastedGcd, GPFullHaste.GcdDurationTriggeredByAbilityInSteps(Ability.CS));
             Assert.AreEqual(GPFullHaste.StepsPerHastedGcd, GPFullHaste.GcdDurationTriggeredByAbilityInSteps(Ability.J));
             Assert.AreEqual(GPFullHaste.StepsPerHastedGcd, GPFullHaste.GcdDurationTriggeredByAbilityInSteps(Ability.HoW));
             Assert.AreEqual(GPFullHaste.StepsPerHastedGcd, GPFullHaste.GcdDurationTriggeredByAbilityInSteps(Ability.AS));
             Assert.AreEqual(GPFullHaste.StepsPerHastedGcd, GPFullHaste.GcdDurationTriggeredByAbilityInSteps(Ability.Cons));
+            Assert.AreEqual(GPFullHaste.StepsPerHastedGcd, GPFullHaste.GcdDurationTriggeredByAbilityInSteps(Ability.ES));
+            Assert.AreEqual(GPFullHaste.StepsPerHastedGcd, GPFullHaste.GcdDurationTriggeredByAbilityInSteps(Ability.HPr));
+            Assert.AreEqual(GPFullHaste.StepsPerHastedGcd, GPFullHaste.GcdDurationTriggeredByAbilityInSteps(Ability.LH));
         }
         [Test]
         public void CooldownShouldBeHastedFor_CS_HotR_HoW_J()
@@ -251,7 +245,7 @@ namespace Matlabadin.Tests
         [Test]
         public void AbilityCooldownsShouldMatchMoPTalentCalculator()
         {
-            var target = new GraphParameters<object>(new RotationPriorityQueue<object>("AS>Cons>CS>HotR>HW>J>HoW>SotR>WoG>SS>EF>AW>FoL"), PaladinSpec.Prot, PaladinTalents.All);
+            var target = new GraphParameters<object>(new RotationPriorityQueue<object>("AS>Cons>CS>HotR>HW>J>HoW>SotR>WoG>SS>EF>AW>FoL>ES>LH>HPr"), PaladinSpec.Prot, PaladinTalents.All);
             Assert.AreEqual(15, target.StepDuration * target.AbilityCooldownInSteps(Ability.AS));
             Assert.AreEqual(9, target.StepDuration * target.AbilityCooldownInSteps(Ability.Cons));
             Assert.AreEqual(4.5, target.StepDuration * target.AbilityCooldownInSteps(Ability.CS));
@@ -265,6 +259,9 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0, target.StepDuration * target.AbilityCooldownInSteps(Ability.EF));
             Assert.AreEqual(180, target.StepDuration * target.AbilityCooldownInSteps(Ability.AW));
             Assert.AreEqual(0, target.StepDuration * target.AbilityCooldownInSteps(Ability.FoL));
+            Assert.AreEqual(60, target.StepDuration * target.AbilityCooldownInSteps(Ability.ES));
+            Assert.AreEqual(60, target.StepDuration * target.AbilityCooldownInSteps(Ability.LH));
+            Assert.AreEqual(20, target.StepDuration * target.AbilityCooldownInSteps(Ability.HPr));
         }
         [Test]
         public void GCProcRateShouldMatchMoPTalentCalculator()
@@ -279,10 +276,16 @@ namespace Matlabadin.Tests
             Assert.AreEqual(30, GP.StepDuration * GP.BuffDurationInSteps(Buff.SS));
             Assert.AreEqual(30, GP.StepDuration * GP.BuffDurationInSteps(Buff.EF));
             Assert.AreEqual(20, GP.StepDuration * GP.BuffDurationInSteps(Buff.AW));
-            Assert.AreEqual(6, GP.StepDuration * GP.BuffDurationInSteps(Buff.SotRSB));
+            Assert.AreEqual(3, GP.StepDuration * GP.BuffDurationInSteps(Buff.SotRSB));
             Assert.AreEqual(30, GP.StepDuration * GP.BuffDurationInSteps(Buff.WB));
             Assert.AreEqual(6 + 0.5, GP.StepDuration * GP.BuffDurationInSteps(Buff.GC)); // extra step to model buff gain delay
             Assert.AreEqual(15, GP.StepDuration * GP.BuffDurationInSteps(Buff.SH));
+        }
+        [Test]
+        public void AW_BuffDurationShouldBeExtendedBySancifiedWrath()
+        {
+            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.SanctifiedWrath, 5, 0.5, 0.8, 0.9);
+            Assert.AreEqual(30, gp.StepDuration * gp.BuffDurationInSteps(Buff.AW));
         }
         [Test]
         public void GcdDurationShouldBeReducedByHaste()
@@ -421,7 +424,7 @@ namespace Matlabadin.Tests
             Assert.IsFalse(
                 new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0.5, 1.0, 1.0)
                 .HasSameShape(
-                new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 6, 0.25, 1.0, 1.0)
+                new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 1, 0.25, 1.0, 1.0)
                 ));
         }
         [Test]

@@ -48,7 +48,10 @@ namespace Matlabadin.Tests
             doTest("Cons", Ability.Nothing);
             doTest("AS", Ability.Nothing);
             doTest("J", Ability.Nothing);
-            
+            doTest("SS", Ability.Nothing);
+            doTest("ES", Ability.Nothing);
+            doTest("HPr", Ability.Nothing);
+            doTest("LH", Ability.Nothing);
         }
         [Test]
         public void ActionToTake_ShouldCastAbilitiesOffGcdBeforeGcdComplete()
@@ -60,7 +63,6 @@ namespace Matlabadin.Tests
             };
             // Off GCD
             doTest("SotR", Ability.SotR);
-            doTest("SS", Ability.SS);
             doTest("EF", Ability.EF);
             doTest("WoG", Ability.WoG);
             doTest("AW", Ability.AW);
