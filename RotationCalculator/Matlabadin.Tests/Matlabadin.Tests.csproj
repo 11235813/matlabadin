@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="ChoiceTest.cs" />
     <Compile Include="ArrayStateManagerTest.cs" />
+    <Compile Include="MatlabadinSimTreeTest.cs" />
     <Compile Include="IssueTests.cs" />
     <Compile Include="PaladinHelperTest.cs" />
     <Compile Include="Int64StateManagerTest.cs" />
