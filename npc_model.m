@@ -75,15 +75,12 @@ npc.dodge=3+npc.lvlgap.*1.5;
 npc.parry=3+npc.lvlgap.*1.5;
 npc.block=3+npc.lvlgap.*1.5;
 
-%TODO: these need to be re-checked
 npc.glance=6.*(1+0.2.*npc.skillgap);
 npc.glancerdx=5.*(npc.lvlgap==0||npc.lvlgap==1) ...
     +15.*(npc.lvlgap==2)+25.*(npc.lvlgap==3);   %average damage reduction (5/5/15/25)
-npc.phcritsupp=1.*npc.lvlgap; %melee crit supp
+npc.critsupp=1.*npc.lvlgap; %melee crit supp
 
 %spell
 npc.spmiss=6+npc.lvlgap.*3;             %spell miss
-%TODO: check these, remove depecated
 npc.presist=0.*npc.lvlgap;              %level-based partial resists (nil in 4.0)
-npc.spcritsupp=1.*npc.lvlgap;           %spell crit supp
 end

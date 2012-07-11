@@ -309,17 +309,17 @@ player.phcrit=base.phcrit + ...                                            %base
     player.agi./cnv.agi_phcrit + ...                                       %AGI
     (player.rating.crit)./cnv.crit_phcrit + ... %crit rating
     mdf.crit ...                                                           %buffs
-    -npc.phcritsupp;                                                       %crit suppression
+    -npc.critsupp;                                                       %crit suppression
 
 %spell abilities ("spell crit")
 player.spcrit=base.spcrit + ...                                            %base spell crit
     player.int./cnv.int_spcrit + ...                                       %INT
     (player.rating.crit)./cnv.crit_spcrit + ... %crit rating
     mdf.crit ...                                                           %buffs
-    -npc.spcritsupp;                                                       %crit suppression
+    -npc.critsupp;                                                       %crit suppression
 
 %healing abilities ("heal crit")
-player.hcrit=player.spcrit+npc.spcritsupp; %TODO: why is this added? NPC spell crit suppression shouldn't affect heals
+player.hcrit=player.spcrit+npc.critsupp;
 
 %regular melee attacks (one-roll system)
 %this gets modified again after boss stats to enforce crit cap
@@ -327,7 +327,7 @@ player.aacrit=base.phcrit + ...                                            %base
     player.agi./cnv.agi_phcrit + ...                                       %AGI
     (player.rating.crit)./cnv.crit_phcrit + ... %crit rating
     mdf.crit ...                                                           %buffs
-    -npc.phcritsupp;                                                       %crit suppression
+    -npc.critsupp;                                                       %crit suppression
 
 %enforce crit caps for two-roll
 player.phcrit=max([min([player.phcrit;100.*ones(size(player.phcrit))]); ...
@@ -429,6 +429,7 @@ target.resrdx=(100-npc.presist)./100;
 %TODO: re-check formula
 player.acoeff=2167.5*npc.lvl-158167.5;
 target.acoeff=2167.5*base.lvl-158167.5;
+target.acoeff=25050; %FIXME
 %damage reduction
 player.phdr=min([player.armor./(player.armor+player.acoeff);0.75]);
 target.armor=npc.armor.*mdf.armor.*((290+mdf.SThrow.*10)./300); %fix ST
@@ -469,21 +470,21 @@ mdf.mehit=1-(target.miss+target.dodge+target.parry)./100;
 % mdf.spdmg=mdf.CoE.*mdf.ArcTac; %harmful only, healing does not benefit from these
 mdf.sphit=1-target.spmiss./100;
 
-%TODO: re-test whether aa is a one-roll system now
 %enforce one-roll system for auto-attacks
 arrsize.hit=max([size(player.mehit);size(player.sphit);size(player.exp)]);
 player.aacrit=max([min([player.aacrit.*ones(arrsize.hit); ...
-    (100-target.avoid-npc.glance-target.block)]);zeros(arrsize.hit)]);
+    (100-target.avoid-npc.glance)]);zeros(arrsize.hit)]);
+%add second roll (blocks), compute the average
 mdf.glancerdx=1-npc.glancerdx./100;
 mdf.blockrdx=0.7;
-mdf.aamodel=(mdf.mehit) ...                  %hit
+mdf.aamodel=(mdf.mehit ...                  %hit
     +(mdf.glancerdx-1).*npc.glance./100 ...  %glancing
-    +(mdf.blockrdx-1).*target.block./100 ... %block
-    +(mdf.phcritm-1).*player.aacrit./100;    %crit
+    +(mdf.phcritm-1).*player.aacrit./100) ...    %crit
+    .*(1+(mdf.blockrdx-1).*target.block./100); ... %block
 
-%enforce block events for two-roll systems (no critical blocks)
-mdf.memodel=mdf.mehit+(mdf.blockrdx-1).*target.block./100;
-% mdf.ramodel=mdf.rahit+(mdf.blockrdx-1).*target.block./100;
+%enforce block events for three-roll systems
+mdf.memodel=mdf.mehit.*(1+(mdf.blockrdx-1).*target.block./100);
+% mdf.ramodel=mdf.rahit.*(1+(mdf.blockrdx-1).*target.block./100);
 
 %% PPM-based uptimes
 %this section will have to wait until we know which attacks survive, what
