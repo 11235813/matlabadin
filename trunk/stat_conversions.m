@@ -16,18 +16,18 @@ cnv.agi_phcrit=1259.51806640;
 cnv.int_spcrit=2533.66357421;
 cnv.str_ap=2;
 cnv.int_sp=1;
-cnv.crit_phcrit=700;
-cnv.crit_spcrit=700;
-cnv.hit_hit=400;
-cnv.exp_exp=400;
-cnv.haste_phhaste=500;
-cnv.haste_sphaste=500;
+cnv.crit_phcrit=600;
+cnv.crit_spcrit=600;
+cnv.hit_hit=340;
+cnv.exp_exp=340;
+cnv.haste_phhaste=425;
+cnv.haste_sphaste=425;
 
 %defensive stats
-cnv.dodge_dodge=1035;
+cnv.dodge_dodge=885;
 % cnv.agi_dodge=0;
-cnv.parry_parry=1035;
-cnv.mast_mast=700;
+cnv.parry_parry=885;
+cnv.mast_mast=600;
 cnv.mast_block=1;
 cnv.mast_bog=1;
 
