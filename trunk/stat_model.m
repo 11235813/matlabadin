@@ -103,26 +103,25 @@ mdf.t13x2P=gear.tierbonusP(5); %Judgement bubbles
 mdf.t13x2R=gear.tierbonusR(5); %Judgement Hopo
 
 %% Professions
-%TODO: update for MoP
 %(passive bonuses, independent of gearing choices)
 if ((~isempty(base.prof))&&((~isempty(regexpi(base.prof,'Min'))) ...
         ||(~isempty(regexpi(base.prof,'Mining')))))
-    mdf.mining=120;
+    mdf.mining=480;
 else
     mdf.mining=0;
 end
 if ((~isempty(base.prof))&&((~isempty(regexpi(base.prof,'Skin'))) ...
         ||(~isempty(regexpi(base.prof,'Skinning')))))
-    mdf.skinning=80;
+    mdf.skinning=320;
 else
     mdf.skinning=0;
 end
 
 %% Raid Buffs
-mdf.STA=584.*buff.STA; %PWF/ComShout/BloodPact
-mdf.AP=1+0.2.*buff.AP; %BattleShout/Trueshot
-mdf.SP=1+0.1.*buff.SP; %Totemic Wrath / Demonic Pact / Arcane Brilliance
-mdf.mhaste=1+0.1.*buff.mhaste; % WFury/IcyTalons/HuntParty
+mdf.STA=1+0.1.*buff.STA; %PWF/ComShout/BloodPact
+mdf.AP=1+0.2.*buff.AP; %BatShout/TSA/HoW
+mdf.SP=1+0.1.*buff.SP; %BurningWrath/DarkIntent/ArcaneBrilliance
+mdf.mhaste=1-0.1.*buff.mhaste; % WFury/IcyTalons/HuntParty
 mdf.shaste=1+0.05.*buff.shaste; %WoAir/Moonkin/MindQuickening
 mdf.crit=5.*buff.crit; %LotP/Rampage/Moonkin/HAT/etc.
 mdf.mast=5.*buff.mast; %BoMight/Grace of Air
@@ -134,14 +133,14 @@ mdf.RFury=1+4.*buff.RFury;
 
 %Temporary buffs
 mdf.BLust=1+0.3.*buff.BLust;
-mdf.AvWrah=1+0.2.*buff.AWra;
+mdf.AvWr=1+0.2.*buff.AvWr;
 
 %% Raid Debufs
 %TODO: convert these to stat-based descriptors (in buff_model as well)
-mdf.physdmg=1+0.04.*buff.physdmg;
-mdf.spdmg=1+0.08.*buff.spdmg;
-mdf.wblow=1-0.1.*buff.wblow;
-mdf.armor=1-0.12.*buff.armor;
+mdf.PhysVuln=1+0.04.*buff.PhysVuln;
+mdf.spdmg=1+0.05.*buff.spdmg; %harmful only, healing spells do not benefut from it
+mdf.WeakBlow=1-0.1.*buff.WeakBlow;
+mdf.WeakArmor=1-0.12.*buff.WeakArmor;
 mdf.SThrow=1-0.2.*buff.SThrow;
 
 %% Consumables
@@ -232,8 +231,8 @@ extra.parry=extra.itm.parry.*ipconv.parry   + extra.val.parry;
 
 %% Primary stats
 player.str=floor(base.stats.str.*mdf.stats)+floor((gear.str+extra.str+consum.str).*mdf.stats);
-player.sta=floor((base.stats.sta+mdf.mining).*(1+3.*mdf.GbtL).*mdf.stats.*mdf.plate)+ ...
-    floor((gear.sta+mdf.STA+extra.sta+consum.sta).*(1+3.*mdf.GbtL).*mdf.stats.*mdf.plate);
+player.sta=floor((base.stats.sta+mdf.mining).*(1+3.*mdf.GbtL).*mdf.stats.*mdf.plate.*mdf.STA)+ ...
+    floor((gear.sta+extra.sta+consum.sta).*(1+3.*mdf.GbtL).*mdf.stats.*mdf.plate.*mdf.STA);
 player.agi=floor(base.stats.agi.*mdf.stats)+floor((gear.agi+extra.agi+consum.agi).*mdf.stats);
 player.int=floor(base.stats.int.*mdf.stats)+floor((gear.int+extra.int+consum.int).*mdf.stats);
 % player.spi=floor(base.stats.spi.*mdf.stats)+floor((gear.spi+extra.spi).*mdf.stats);
@@ -256,10 +255,7 @@ player.mana=base.mana; %no more int scaling
 
 %% Haste 
 player.rating.haste=gear.haste+extra.haste+consum.haste;
-player.phhaste=100.*( ...
-    (1 + player.rating.haste./cnv.haste_phhaste./100).* ...
-    mdf.mhaste ...
-    -1);
+player.phhaste=player.rating.haste./cnv.haste_phhaste;
 player.sphaste=100.*(...
     (1+player.rating.haste./cnv.haste_sphaste./100).* ...
     mdf.shaste ...
@@ -380,7 +376,7 @@ avoiddr=avoid_dr(player.rating.dodge./cnv.dodge_dodge, ... %dodge
                  player.mast./cnv.mast_block);             %block
 
 player.miss=base.miss-0.2.*npc.lvlgap;
-player.dodge=base.dodge+avoiddr.dodgedr-0.2.*npc.lvlgap;
+player.dodge=base.dodge+20.*mdf.Sanct+avoiddr.dodgedr-0.2.*npc.lvlgap;
 player.parry=base.parry+avoiddr.parrydr-0.2.*npc.lvlgap;
 player.block=base.block+200.*mdf.GbtL+avoiddr.blockdr-0.2.*npc.lvlgap;
 
@@ -413,8 +409,6 @@ player.avoidpct=player.avoid./100;
 %redundant target.block so that we can refer to it without having to remember
 %that it doesn't get modified by player stats.
 
-target.swing=npc.swing; %TODO: redundant, remove?
-
 target.miss=max([(npc.memiss-player.mehit);zeros(size(player.mehit))]);
 target.dodge=max([(npc.dodge-player.exp);zeros(size(player.exp))]);
 target.parry=max([(npc.parry.*(exec.behind==0)-max([(player.exp-7.5);zeros(size(player.exp))]));zeros(size(player.exp))]);
@@ -432,7 +426,7 @@ target.acoeff=2167.5*base.lvl-158167.5;
 target.acoeff=25050; %FIXME
 %damage reduction
 player.phdr=min([player.armor./(player.armor+player.acoeff);0.75]);
-target.armor=npc.armor.*mdf.armor.*((290+mdf.SThrow.*10)./300); %fix ST
+target.armor=npc.armor.*mdf.WeakArmor.*((290+mdf.SThrow.*10)./300); %fix ST
 target.phdr=target.armor./(target.armor+target.acoeff);
 %% AP & SP
 
@@ -449,9 +443,9 @@ player.sp=10.*mdf.GbtL.*player.ap;
 %% Weapon Details
 player.wdamage=gear.avgdmg+player.ap./14.*gear.swing; %not normalized (AA, Reck, phys HotR)
 player.ndamage=gear.avgdmg+player.ap./14.*2.4; %normalized attacks (hardcoded)
-player.swing=gear.swing./mdf.phhaste;
+player.swing=gear.swing.*mdf.mhaste./mdf.phhaste;
 %PHR corrections
-phr=phr_model(exec,player.swing,target.swing,player.parry,player.block,0); %TODO: placeholder for deprecated Reckoning talent, modify phr_model inputs
+phr=phr_model(exec,player.swing,npc.swing,player.parry,player.block,0); %TODO: placeholder for deprecated Reckoning talent, modify phr_model inputs
 % player.phs=phr.phs;     %store ph %TODO: I think this is redundant now?
 player.wswing=phr.phrs; %store st 
 player.wdps=player.wdamage./player.wswing;
@@ -463,11 +457,9 @@ bl.wdps=player.wdamage./bl.wswing;
 
 %% Other dynamic or inter-dependent corrections 
 %Hit & Damage modifier values
-mdf.phdmg=mdf.physdmg.*(1-target.phdr);
+mdf.phdmg=mdf.PhysVuln.*(1-target.phdr);
 mdf.mehit=1-(target.miss+target.dodge+target.parry)./100;
-% mdf.rahit=1-target.miss./100; 
-%TODO: mdf.spdmg is now redundant until mdf subclasses are implemented
-% mdf.spdmg=mdf.CoE.*mdf.ArcTac; %harmful only, healing does not benefit from these
+% mdf.rahit=1-target.miss./100;
 mdf.sphit=1-target.spmiss./100;
 
 %enforce one-roll system for auto-attacks
