@@ -56,31 +56,29 @@ if isempty(food)==1 food=87594; end;
 
 
 %% Player Buffs
-%Only 8 buff categories in MoP: HP, AP, SP, melee haste, spell haste,
-%crit, mastery, and stats
 
-%STA : Power word Fortitude / Commanding Shout / Blood Pact / Quiraji Fortitude
-buff.STA=((mode==0&&(isempty(item)||isempty(regexpi(item,'HP'))))||mode==3 ...
-    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'HP'))))));
-%multiplicative AP : Unleashed Rage / Trueshot Aura / Abomination's Might
+%multiplicative STA : Power Word Fortitude / Commanding Shout / Blood Pact / Quiraji Fortitude
+buff.STA=((mode==0&&(isempty(item)||isempty(regexpi(item,'STA'))))||mode==3 ...
+    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'STA'))))));
+%multiplicative AP : Battle Shout / Trueshot Aura / Horn of Winter
 buff.AP=((mode==0&&(isempty(item)||isempty(regexpi(item,'AP'))))||mode==3 ...
     ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'AP'))))));
-%multiplicative SP : Totemic Wrath / Demonic Pact
+%multiplicative SP : Burning Wrath / Dark Intent / Arcane Brilliance / Still Water
 buff.SP=((mode==0&&(isempty(item)||isempty(regexpi(item,'SP'))))||mode==3 ...
     ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'SP'))))));
-%melee haste : Windfury Totem / Improved Icy Talons / Hunting Party
+%physical attack speed : Unleashed Rage / Swiftblade's Cunning / Unholy Aura
 buff.mhaste=((mode==0&&(isempty(item)||isempty(regexpi(item,'mhaste'))))||mode==3 ...
     ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'mhaste'))))));
-%spell haste : Wrath of Air Totem / Improved Moonkin Form / Mind Quickening
+%spell haste : Shadowform / Moonkin Form / Elemental Oath
 buff.shaste=((mode==0&&(isempty(item)||isempty(regexpi(item,'shaste'))))||mode==3 ...
     ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'shaste'))))));
-%global crit : Leader of the Pack / Rampage / Moonkin Aura / Elemental Oath / Honor Among Thieves
+%global crit : Leader of the Pack / Arcane Brilliance
 buff.crit=((mode==0&&(isempty(item)||isempty(regexpi(item,'crit'))))||mode==3 ...
     ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'crit'))))));
-%mastery :  Blessing of  Might / Grace of Air Totem / ??
+%mastery :  Blessing of  Might / Grace of Air
 buff.mast=((mode==0&&(isempty(item)||isempty(regexpi(item,'mast'))))||mode==3 ...
     ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'mast'))))));
-%stats : Blessing of Kings / Mark of the Wild / Embrace of the Shale Spider
+%stats : Blessing of Kings / Mark of the Wild / Embrace of the Shale Spider / Legacy of the Emperor
 buff.stats=((mode==0&&(isempty(item)||isempty(regexpi(item,'stats'))))||mode==3 ...
     ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'stats'))))));
 
@@ -93,7 +91,7 @@ buff.BLust=((mode==0&&(isempty(item)||isempty(regexpi(item,'BLust'))))||mode==3 
 buff.Thorns=((mode==0&&(isempty(item)||isempty(regexpi(item,'Thorns'))))||mode==3 ...
     ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'Thorns'))))));
 %Avenging Wrath
-buff.AWra=((mode==0&&(isempty(item)||isempty(regexpi(item,'AWra')))) ...
+buff.AvWr=((mode==0&&(isempty(item)||isempty(regexpi(item,'AvWr')))) ...
     ||mode==2||mode==3||mode==4);
 %Righteous Fury
 buff.RFury=((mode==0&&(isempty(item)||isempty(regexpi(item,'RFury')))) ...
@@ -103,18 +101,18 @@ buff.RFury=((mode==0&&(isempty(item)||isempty(regexpi(item,'RFury')))) ...
 %Chill_up=0; %PLACEHOLDER
 
 %% Boss Debuffs
-%physical damage taken : Brittle Bones / Ebon Plaguebringer
-buff.physdmg=((mode==0&&(isempty(item)||isempty(regexpi(item,'physdmg'))))||mode==3 ...
-    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'physdmg'))))));
+%physical vulnerability : Brittle Bones / Ebon Plaguebringer / Colossus Smash / Judgements of the Bold
+buff.PhysVuln=((mode==0&&(isempty(item)||isempty(regexpi(item,'PhysVuln'))))||mode==3 ...
+    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'PhysVuln'))))));
 %spell damage taken : Curse of the Elements / Master Poisoner
 buff.spdmg=((mode==0&&(isempty(item)||isempty(regexpi(item,'spdmg'))))||mode==3 ...
     ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'spdmg'))))));
-%multiplicative armor : Sunder Armor / Expose Armor / Faerie Fire / Scorpid Venom
-buff.armor=((mode==0&&(isempty(item)||isempty(regexpi(item,'armor'))))||mode==3 ...
-    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'armor'))))));
-%physical damage done : Weakened Blows (various sources)
-buff.wblow=((mode==0&&(isempty(item)||isempty(regexpi(item,'wblow'))))||mode==3 ...
-    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'wblow'))))));
+%weakened armor : Sunder Armor / Expose Armor / Faerie Fire / Scorpid Venom
+buff.WeakArmor=((mode==0&&(isempty(item)||isempty(regexpi(item,'WeakArmor'))))||mode==3 ...
+    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'WeakArmor'))))));
+%weakened blows : Keg Smash / Scarlet Fever / Thrash / Hammer of the Righteous / Thunderclap
+buff.WeakBlow=((mode==0&&(isempty(item)||isempty(regexpi(item,'WeakBlow'))))||mode==3 ...
+    ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'WeakBlow'))))));
 %multiplicative armor : Shattering Throw
 buff.SThrow=((mode==0&&(isempty(item)||isempty(regexpi(item,'SThrow'))))||mode==3 ...
     ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'SThrow'))))));
