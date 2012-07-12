@@ -56,7 +56,7 @@ mdf.VengAP=0.05.*spec.Vengeance;
 mdf.GbtL=0.05.*spec.GuardedbytheLight; %everything
 %TODO: RFury here instead of in buffs?
 mdf.GrCr=0.2.*spec.GrandCrusader;
-mdf.Sanct=0.15.*spec.Sanctuary; %both effects
+mdf.Sanct=0.10.*spec.Sanctuary; %both effects
 mdf.DivineBulwark=1.2.*spec.DivineBulwark;
 
 %% Abilities
@@ -375,10 +375,10 @@ avoiddr=avoid_dr(player.rating.dodge./cnv.dodge_dodge, ... %dodge
                  player.rating.parry./cnv.parry_parry, ... %parry
                  player.mast./cnv.mast_block);             %block
 
-player.miss=base.miss-0.2.*npc.lvlgap;
-player.dodge=base.dodge+20.*mdf.Sanct+avoiddr.dodgedr-0.2.*npc.lvlgap;
-player.parry=base.parry+avoiddr.parrydr-0.2.*npc.lvlgap;
-player.block=base.block+200.*mdf.GbtL+avoiddr.blockdr-0.2.*npc.lvlgap;
+player.miss=base.miss-1.5.*npc.lvlgap;
+player.dodge=base.dodge+20.*mdf.Sanct+avoiddr.dodgedr-1.5.*npc.lvlgap;
+player.parry=base.parry+avoiddr.parrydr-1.5.*npc.lvlgap;
+player.block=base.block+200.*mdf.GbtL+avoiddr.blockdr-1.5.*npc.lvlgap;
 
 %check for bounding issues, based on the attack table
 player.miss=max([player.miss;zeros(size(player.miss))]);
@@ -423,7 +423,7 @@ target.resrdx=(100-npc.presist)./100;
 %TODO: re-check formula
 player.acoeff=2167.5*npc.lvl-158167.5;
 target.acoeff=2167.5*base.lvl-158167.5;
-target.acoeff=25050; %FIXME
+target.acoeff=46203.33; %FIXME
 %damage reduction
 player.phdr=min([player.armor./(player.armor+player.acoeff);0.75]);
 target.armor=npc.armor.*mdf.WeakArmor.*((290+mdf.SThrow.*10)./300); %fix ST
