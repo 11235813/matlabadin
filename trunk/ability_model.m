@@ -54,7 +54,7 @@ hps.Censure=        0;
 threat.Censure=     dmg.Censure.*mdf.RFury;
 tps.Censure=        threat.Censure./player.censTick;
 
-%Seal of Righteousness - now seal of cleave
+%Seal of Righteousness - now seal of cleave %TODO - verify tooltip
 raw.SealofRighteousness=    0.05.*player.ndamage.*mdf.spdmg;
 dmg.SealofRighteousness=    raw.SealofRighteousness.*mdf.phcrit.*target.resrdx; %automatical connect
 heal.SealofRighteousness=   0;
@@ -70,7 +70,7 @@ mcost.SealofRighteousness=  0;
 % mcost.SealofCommand=        0;
 
 
-%Seal of Insight (15 PPM, not haste-normalized)
+%Seal of Insight (15 PPM, not haste-normalized) %TODO - verify tooltip
 raw.SealofInsight=          0.15.*(player.sp+player.ap);
 dmg.SealofInsight=          0;
 heal.SealofInsight=         raw.SealofInsight.*(1+mdf.SoI).*(15.*gear.swing./60); %Check if this has changed to 15% proc or if it's still 15 PPM
@@ -108,7 +108,7 @@ end
 %% Melee abilities
 
 %Crusader Strike (can be blocked)
-raw.CrusaderStrike= 2.60.*player.ndamage.*mdf.phdmg.*(1+mdf.pvphands); %todo: check this, new tooltip
+raw.CrusaderStrike= 1.60.*player.ndamage.*mdf.phdmg.*(1+mdf.pvphands); %todo: check this, new tooltip
 dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.memodel.*mdf.phcrit;
 heal.CrusaderStrike=0;
 threat.CrusaderStrike=max(dmg.CrusaderStrike,heal.CrusaderStrike).*mdf.RFury;
@@ -123,7 +123,7 @@ threat.HammeroftheRighteous=max(dmg.HammeroftheRighteous,heal.HammeroftheRighteo
 mcost.HammeroftheRighteous=0.117.*base.mana; %TODO: check this
 
 %Nova connects automatically if HotR(phys) succeeds
-raw.HammerNova=   (1050.5+0.18.*player.ap).*mdf.spdmg; %todo: check new nova damage scaling
+raw.HammerNova=   (1050.5+0.234.*player.ap).*mdf.spdmg; %todo: check new nova damage scaling
 dmg.HammerNova=   raw.HammerNova.*mdf.mehit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 heal.HammerNova=   0;
 threat.HammerNova=max(dmg.HammerNova,heal.HammerNova).*mdf.RFury;
@@ -138,7 +138,7 @@ threat.Melee=       max(dmg.Melee,heal.Melee).*mdf.RFury;
 tps.Melee=          threat.Melee./player.wswing;
 
 %Shield of the Righteous (can be blocked)
-raw.ShieldoftheRighteous= (617.2+0.1.*player.ap).*(1+mdf.glyphAS).*mdf.spdmg; %todo: check new AP/SP scaling
+raw.ShieldoftheRighteous= (617+0.54.*player.ap).*(1+mdf.glyphAS).*mdf.spdmg; %todo: check new AP/SP scaling
 dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit... 
                           .*target.resrdx; %melee hit
 heal.ShieldoftheRighteous=0;
@@ -147,28 +147,28 @@ threat.ShieldoftheRighteous=dmg.ShieldoftheRighteous.*mdf.RFury;
 %% Spell abilities
 
 %Avenger's Shield (cannot be blocked)
-raw.AvengersShield= (4488+0.21.*player.sp).*mdf.spdmg.*mdf.glyphFS;
+raw.AvengersShield= (4488+0.21.*player.sp+0.545.*player.ap).*mdf.spdmg.*mdf.glyphFS;
 dmg.AvengersShield= raw.AvengersShield.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.AvengersShield=0;
 threat.AvengersShield=max(dmg.AvengersShield,heal.AvengersShield).*mdf.RFury;
 mcost.AvengersShield=0.07.*base.mana;
 
 %Judgment (the seal of choice is defined in execution_model)
-raw.Judgment=       (702+0.635.*player.sp) ...
+raw.Judgment=       (702+0.397.*player.ap+0.635*player.sp) ...
                     .*(1+mdf.glyphDJ).*mdf.spdmg; 
 dmg.Judgment=      raw.Judgment.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.Judgment=     0;
 threat.Judgment=   max(dmg.Judgment,heal.Judgment).*mdf.RFury;
 mcost.Judgment=    0.059.*base.mana;
 
-%Hammer of Wrath (can be blocked)
+%Hammer of Wrath (can be blocked) - TODO: verify tooltip
 raw.HammerofWrath= (1838.5+1.61.*player.sp).*mdf.spdmg;
 dmg.HammerofWrath= raw.HammerofWrath.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.HammerofWrath=0;
 mcost.HammerofWrath=0.03.*base.mana;
 
 %Consecration
-raw.Consecration =  (813.2998299+0.27.*player.sp+0.27.*player.ap).*mdf.spdmg; %todo: recheck ap/sp/base
+raw.Consecration =  (690+1.2.*player.sp).*mdf.spdmg; %todo: recheck ap/sp/base
 dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 heal.Consecration=  0;
 threat.Consecration=(max(dmg.Consecration,heal.Consecration)+12).*mdf.RFury;  %TODO: wowdb flags as generating no threat
