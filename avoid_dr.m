@@ -24,11 +24,11 @@ end
 
 %% Constants
 %DR coefficients (k)
-avoiddr.k=0.956;
+avoiddr.k=0.885;
 %Caps (c)
 avoiddr.c_dodge=65.631440;  %plate
-avoiddr.c_parry=65.631440;  %plate
-avoiddr.c_block=135.1;
+avoiddr.c_parry=232;  %plate, approximate
+% avoiddr.c_block=135.1;  %plate, approximate
 
 
 %% Calculate avoidance values
@@ -51,12 +51,13 @@ end
 %total avoidance
 avoiddr.totavoid=avoiddr.dodgedr+avoiddr.parrydr;
 
-%Block
+%Block - no DR anymore
 avoiddr.block=block;
-if avoiddr.block==0
-    avoiddr.blockdr=avoiddr.block;
-else
-    avoiddr.blockdr=1./(1./avoiddr.c_block+avoiddr.k./avoiddr.block);
-end
+% if avoiddr.block==0
+%     avoiddr.blockdr=avoiddr.block;
+% else
+%     avoiddr.blockdr=1./(1./avoiddr.c_block+avoiddr.k./avoiddr.block);
+% end
+avoiddr.blockdr=avoiddr.block;
 
 end
