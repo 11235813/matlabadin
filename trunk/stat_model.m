@@ -367,18 +367,27 @@ player.sphit=player.rating.hit./cnv.hit_hit ...
 
 %% Avoidance and Blocking
 player.rating.dodge=gear.dodge+consum.dodge;
-player.rating.parry=gear.parry+consum.parry ...
-                    +floor((player.str-base.stats.str).*0.27);                
+player.rating.parry=gear.parry+consum.parry;
+
+%pre-DR avoidance
+player.predr.block=player.mast./cnv.mast_block;
+player.predr.dodge=player.rating.dodge./cnv.dodge_dodge;
+player.predr.parry=player.rating.parry./cnv.parry_parry ...
+                    +floor((player.str-base.stats.str))./cnv.str_parry;                
                 
 %calculate DR for avoidance and block
-avoiddr=avoid_dr(player.rating.dodge./cnv.dodge_dodge, ... %dodge
-                 player.rating.parry./cnv.parry_parry, ... %parry
-                 player.mast./cnv.mast_block);             %block
+avoiddr=avoid_dr(player.predr.dodge, ... %dodge
+                 player.predr.parry, ... %parry
+                 player.predr.block);    %block
+             
+player.postdr.block=avoiddr.blockdr;
+player.postdr.dodge=avoiddr.dodgedr;
+player.postdr.parry=avoiddr.parrydr;
 
 player.miss=base.miss-1.5.*npc.lvlgap;
-player.dodge=base.dodge+20.*mdf.Sanct+avoiddr.dodgedr-1.5.*npc.lvlgap;
-player.parry=base.parry+avoiddr.parrydr-1.5.*npc.lvlgap;
-player.block=base.block+200.*mdf.GbtL+avoiddr.blockdr-1.5.*npc.lvlgap;
+player.dodge=base.dodge+20.*mdf.Sanct+player.postdr.dodge-1.5.*npc.lvlgap;
+player.parry=base.parry+player.postdr.parry-1.5.*npc.lvlgap;
+player.block=base.block+200.*mdf.GbtL+player.postdr.block-1.5.*npc.lvlgap;
 
 %check for bounding issues, based on the attack table
 player.miss=max([player.miss;zeros(size(player.miss))]);
@@ -450,7 +459,7 @@ phr=phr_model(exec,player.swing,npc.swing,player.parry,player.block,0); %TODO: p
 player.wswing=phr.phrs; %store st 
 player.wdps=player.wdamage./player.wswing;
 %alternate values during bloodlust-type effects
-phr=phr_model(exec,gear.swing./mdf.blphhaste,target.swing,player.parry,player.block,0); %TODO: see above
+phr=phr_model(exec,gear.swing./mdf.blphhaste,npc.swing,player.parry,player.block,0); %TODO: see above
 bl.wswing=phr.phrs; %store st
 bl.wdps=player.wdamage./bl.wswing;
 

@@ -25,7 +25,8 @@ cnv.haste_sphaste=425;
 
 %defensive stats
 cnv.dodge_dodge=885;
-% cnv.agi_dodge=0;
+cnv.str_parry=951.158596;
+% cnv.agi_dodge=951.158596;
 cnv.parry_parry=885;
 cnv.mast_mast=600;
 cnv.mast_block=1;

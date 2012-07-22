@@ -45,7 +45,7 @@ mcost.SealofTruth=  0;
 %As we do not model interruptions, Cens is assumed to be perpetually
 %refreshed (full uptime).
 %TODO: possibly nullify if SoT not active
-raw.Censure=        (158 + 0.138.*player.sp).*5 ...
+raw.Censure=        (126 + 0.11.*player.sp).*5 ...
                     ./(1+mdf.glyphIT).*mdf.spdmg; %per tick (for 5 stacks)
 dmg.Censure=        raw.Censure.*mdf.phcrit.*target.resrdx; %automatical connect, phys crit/CM
 dps.Censure=        dmg.Censure./player.censTick;
@@ -108,7 +108,7 @@ end
 %% Melee abilities
 
 %Crusader Strike (can be blocked)
-raw.CrusaderStrike= 1.60.*player.ndamage.*mdf.phdmg.*(1+mdf.pvphands); %todo: check this, new tooltip
+raw.CrusaderStrike= (1.30.*player.ndamage+913).*mdf.phdmg.*(1+mdf.pvphands); %todo: check this, new tooltip
 dmg.CrusaderStrike= raw.CrusaderStrike.*mdf.memodel.*mdf.phcrit;
 heal.CrusaderStrike=0;
 threat.CrusaderStrike=max(dmg.CrusaderStrike,heal.CrusaderStrike).*mdf.RFury;
@@ -162,7 +162,7 @@ threat.Judgment=   max(dmg.Judgment,heal.Judgment).*mdf.RFury;
 mcost.Judgment=    0.059.*base.mana;
 
 %Hammer of Wrath (can be blocked) - TODO: verify tooltip
-raw.HammerofWrath= (1838.5+1.61.*player.sp).*mdf.spdmg;
+raw.HammerofWrath= (1839.5+1.61.*player.sp).*mdf.spdmg;
 dmg.HammerofWrath= raw.HammerofWrath.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.HammerofWrath=0;
 mcost.HammerofWrath=0.03.*base.mana;
