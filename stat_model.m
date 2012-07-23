@@ -124,7 +124,7 @@ mdf.SP=1+0.1.*buff.SP; %BurningWrath/DarkIntent/ArcaneBrilliance
 mdf.mhaste=1-0.1.*buff.mhaste; % WFury/IcyTalons/HuntParty
 mdf.shaste=1+0.05.*buff.shaste; %WoAir/Moonkin/MindQuickening
 mdf.crit=5.*buff.crit; %LotP/Rampage/Moonkin/HAT/etc.
-mdf.mast=5.*buff.mast; %BoMight/Grace of Air
+mdf.mast=3000.*buff.mast; %BoMight/Grace of Air
 mdf.stats=1+0.05.*buff.stats; % BoK/MoW/Spider
 
 %other effects
@@ -340,8 +340,8 @@ mdf.hcrit=1+(mdf.hcritm-1).*player.hcrit./100;
 
 
 %% Mastery
-player.rating.mast=(gear.mast+extra.mas+consum.mast);
-player.mast=base.mast+mdf.mast+(player.rating.mast./cnv.mast_mast);
+player.rating.mast=(gear.mast+extra.mas+consum.mast+mdf.mast);
+player.mast=base.mast+(player.rating.mast./cnv.mast_mast);
 
 %% Hit Rating and Expertise
 %TODO: check percentages when stats are available
@@ -429,10 +429,8 @@ target.resrdx=(100-npc.presist)./100;
 
 %% Armor calcs
 %armor constant
-%TODO: re-check formula
-player.acoeff=2167.5*npc.lvl-158167.5;
-target.acoeff=2167.5*base.lvl-158167.5;
-target.acoeff=46203.33; %FIXME
+player.acoeff=4037.5*npc.lvl-317117.5;
+target.acoeff=4037.5*base.lvl-317117.5;
 %damage reduction
 player.phdr=min([player.armor./(player.armor+player.acoeff);0.75]);
 target.armor=npc.armor.*mdf.WeakArmor.*((290+mdf.SThrow.*10)./300); %fix ST
