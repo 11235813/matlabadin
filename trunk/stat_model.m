@@ -493,7 +493,7 @@ mdf.memodel=mdf.mehit.*(1+(mdf.blockrdx-1).*target.block./100);
 
 %% Power Gains
 %Low-priority at the moment.  
-player.mps=0.05.*base.mana/2;
+player.mps=0.06.*base.mana/2;
 % mps.Repl=0.01.*player.manapoints./10;
 
 %% Repack
