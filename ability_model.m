@@ -154,7 +154,7 @@ threat.AvengersShield=max(dmg.AvengersShield,heal.AvengersShield).*mdf.RFury;
 mcost.AvengersShield=0.07.*base.mana;
 
 %Judgment (the seal of choice is defined in execution_model)
-raw.Judgment=       (702+0.397.*player.ap+0.635*player.sp) ...
+raw.Judgment=       (702+0.397.*player.ap+0.635.*player.sp) ...
                     .*(1+mdf.glyphDJ).*mdf.spdmg; 
 dmg.Judgment=      raw.Judgment.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.Judgment=     0;
@@ -168,7 +168,7 @@ heal.HammerofWrath=0;
 mcost.HammerofWrath=0.03.*base.mana;
 
 %Consecration
-raw.Consecration =  (690+1.2.*player.sp).*mdf.spdmg; %todo: recheck ap/sp/base
+raw.Consecration =  (690+1.2.*player.sp).*mdf.spdmg; 
 dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 heal.Consecration=  0;
 threat.Consecration=(max(dmg.Consecration,heal.Consecration)+12).*mdf.RFury;  %TODO: wowdb flags as generating no threat
