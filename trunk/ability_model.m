@@ -133,7 +133,7 @@ heal.HammerNova=    0;
 threat.HammerNova=  max(dmg.HammerNova,heal.HammerNova).*mdf.RFury;
 mcost.HammerNova=   0;
 splash.HammerNova=  min([exec.npccount-1; 9]); %damage factor for secondary targets (multiples of dmg.*)
-label.HammerNova=   'HammerNova';
+label.HammerNova=   'HaNova';
 
 %Melee attacks
 raw.Melee=          player.wdamage.*mdf.phdmg;
@@ -204,36 +204,6 @@ mcost.HolyWrath =   0.094.*base.mana;
 splash.HolyWrath=   mdf.glyphFW.*(exec.npccount-1)./exec.npccount;
 label.HolyWrath=    'HW';
 
-%Word of Glory
-raw.WordofGlory=    (4340+0.419*player.sp).*player.hopo ...
-                    .*(1-exec.overh).*(1+mdf.SoI);
-dmg.WordofGlory=    0;
-heal.WordofGlory=   raw.WordofGlory.*mdf.spcrit; %TODO: handle BoG stacks
-threat.WordofGlory= 11.*(exec.overh>0).*mdf.RFury./exec.npccount;
-mcost.WordofGlory=  0;
-splash.WordofGlory=	0;
-label.WordofGlory=  'WoG';
-
-%Eternal Flame
-raw.EternalFlame=   ((4260.5 + 0.377.*player.sp).*player.hopo +... %Base Heal
-                    (1393+0.16.*player.sp).*10)... % 10 ticks
-                    .*(1-exec.overh);
-dmg.EternalFlame=   0;
-heal.EternalFlame=  raw.EternalFlame.*mdf.spcrit;
-threat.EternalFlame=1.*mdf.RFury./exec.npccount; %PH
-mcost.EternalFlame= 0;
-splash.EternalFlame=0;
-label.EternalFlame= 'EF';
-
-%Sacred Shield
-raw.SacredShield=   (5879 + 0.78.*player.sp).*5;  %total absorption per cast
-dmg.SacredShield=   0;
-heal.SacredShield=  raw.SacredShield; 
-threat.SacredShield=1.*mdf.RFury./exec.npccount; %PH
-mcost.SacredShield= 0.0.*base.mana;
-splash.SacredShield=0;
-label.SacredShield= 'SS';
-
 %Holy Prism
 raw.HolyPrism=      (12412 + 1.098.*player.sp).*mdf.spdmg;
 dmg.HolyPrism=      raw.HolyPrism.*mdf.sphit.*mdf.spcrit.*target.resrdx;
@@ -258,13 +228,54 @@ mcost.ExecutionSentence = 0;
 splash.ExecutionSentence=   0;
 label.ExecutionSentence =   'ES';
 
-%Light's Hammer
+%Light's Hammer (total damage from 8 ticks of Arcing Light)
 raw.LightsHammer=   (2792 + 0.247.*player.sp).*8.*mdf.spdmg;
 dmg.LightsHammer=   raw.LightsHammer.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.LightsHammer=  raw.LightsHammer.*mdf.spcrit;
 mcost.LightsHammer= 0;
 splash.LightsHammer=min([exec.npccount-1; 9]); %TODO: confirm target cap for LH
 label.LightsHammer= 'LH';
+
+%% Heals / Absorbs
+
+%Word of Glory
+raw.WordofGlory=    (4340+0.419*player.sp).*player.hopo ...
+                    .*(1-exec.overh).*(1+mdf.SoI);
+dmg.WordofGlory=    0;
+heal.WordofGlory=   raw.WordofGlory.*mdf.spcrit; %TODO: handle BoG stacks
+threat.WordofGlory= 11.*(exec.overh>0).*mdf.RFury./exec.npccount;
+mcost.WordofGlory=  0;
+splash.WordofGlory=	0;
+label.WordofGlory=  'WoG';
+
+%Eternal Flame direct heal
+raw.EternalFlame=   (4260.5 + 0.377.*player.sp).*player.hopo ... %Base Heal
+                    .*(1-exec.overh);
+dmg.EternalFlame=   0;
+heal.EternalFlame=  raw.EternalFlame.*mdf.spcrit;
+threat.EternalFlame=1.*mdf.RFury./exec.npccount; %PH
+mcost.EternalFlame= 0;
+splash.EternalFlame=0;
+label.EternalFlame= 'EF';
+
+%Eternal Flame HoT
+raw.EternalFlameHoT=   (1393+0.16.*player.sp).*player.hopo ... % 1 tick
+                        .*(1-exec.overh);
+dmg.EternalFlameHoT=   0;
+heal.EternalFlameHoT=  raw.EternalFlameHoT.*mdf.spcrit;
+threat.EternalFlameHoT=1.*mdf.RFury./exec.npccount;
+mcost.EternalFlameHoT= 0;
+splash.EternalFlameHoT=0;
+label.EternalFlameHoT= 'EF(HoT)';
+
+%Sacred Shield
+raw.SacredShield=   (5879 + 0.78.*player.sp);  %total absorption per tick
+dmg.SacredShield=   0;
+heal.SacredShield=  raw.SacredShield; 
+threat.SacredShield=1.*mdf.RFury./exec.npccount; %PH
+mcost.SacredShield= 0.0.*base.mana;
+splash.SacredShield=0;
+label.SacredShield= 'SS';
 
 %Ret-only in MoP
 % %Exorcism
@@ -284,8 +295,8 @@ val.zeros=zeros(1,val.length);
 val.ones=ones(1,val.length);
 val.name={'CrusaderStrike';'HammeroftheRighteous';'HammerNova'; ... %HP gen
           'Judgment';'AvengersShield';'Consecration';'HolyWrath';'HammerofWrath';... %Rotational
-          'ShieldoftheRighteous';'WordofGlory';'EternalFlame';... %HP sinks
-          'SacredShield'; ... %Talents (except EF)
+          'ShieldoftheRighteous';'WordofGlory';'EternalFlame';'EternalFlameHoT';... %HP sinks
+          'SacredShield'; 'HolyPrism';'LightsHammer';'ExecutionSentence'; ... %Talents (except EF)
           'SealofTruth';'SealofRighteousness';'SealofInsight';... %Seals
           'Censure';'Melee'}; %passive 
     
@@ -308,7 +319,7 @@ eval([rawstr '];']);
 eval([dmgstr '];']);
 eval([healstr '];']);
 eval([mcoststr '];']);
-eval([aoestr '].*val.dmg']);
+eval([aoestr '].*val.dmg;']);
 eval([labelstr '};']);
       
 %% Repack

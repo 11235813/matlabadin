@@ -91,7 +91,9 @@ function [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime]
 			metadata.(lineAction) = lineTxtPr;
 		elseif length(lineAction) > 6 && strcmp('Param_', lineAction(1:6))
 			metadata.(lineAction) = lineTxtPr;
-		elseif length(lineAction) > 6 && strcmp('Uptime_', lineAction(1:6))
+		elseif length(lineAction) > 7 && strcmp('Uptime_', lineAction(1:7))
+			metadata.(lineAction) = lineTxtPr;
+		elseif length(lineAction) > 9 && strcmp('Warnings_', lineAction(1:9))
 			metadata.(lineAction) = lineTxtPr;
 		else
 			actionPr{1, i} = lineAction;
