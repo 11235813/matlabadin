@@ -12,9 +12,10 @@ namespace Matlabadin
             int stepsDuration,
             double[] pr,
             int hp,
-            bool wogss,
+            bool wogbog,
             bool asgc,
             int folsh,
+            int bogStacks,
             bool aw,
             int[] unforkedBuffDuration,
             int[][] forkedBuffDuration
@@ -27,7 +28,7 @@ namespace Matlabadin
             if (unforkedBuffDuration.Length + forkedBuffDuration.Length != (int)Buff.UptimeTrackedBuffs) throw new ArgumentException("Sanity failure: buffDuration array length invalid");
             if (unforkedBuffDuration.Length != (int)Buff.UptimeTrackedUnforkedBuffs) throw new ArgumentException("Sanity failure: unforkedBuffDuration array length invalid");
             if (forkedBuffDuration.Length != (int)Buff.UptimeTrackedForkedBuffs - (int)Buff.UptimeTrackedUnforkedBuffs) throw new ArgumentException("Sanity failure: forkedBuffDuration array length invalid");
-            if (wogss && ability != Ability.WoG) throw new ArgumentException("Sanity failure: wogss cannot be set if ability is not WoG");
+            if (wogbog && ability != Ability.WoG) throw new ArgumentException("Sanity failure: wogbog cannot be set if ability is not WoG");
             if (asgc && ability != Ability.AS) throw new ArgumentException("Sanity failure: asgc cannot be set if ability is not AS");
             if (folsh > 0 && ability != Ability.FoL) throw new ArgumentException("Sanity failure: folsh cannot be nonz-zero if ability is not FoL");
             if (unforkedBuffDuration.Any(d => d > stepsDuration)) throw new ArgumentException("Sanity failure: buff duration cannot exceed step duration of transition");
@@ -52,7 +53,7 @@ namespace Matlabadin
                 {
                     action[0] += hp.ToString();
                 }
-                if (wogss) action[0] += "(SS)";
+                if (wogbog) action[0] += String.Format("(BoG{0})", bogStacks);
                 if (asgc) action[0] += "(GC)";
                 if (ability == Ability.FoL) action[0] += String.Format("(SH{0})", folsh);
                 if (aw) action[0] += "(AW)";

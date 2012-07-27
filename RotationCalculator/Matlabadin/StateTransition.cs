@@ -182,9 +182,10 @@ namespace Matlabadin
                 waitSteps + abilitySteps,
                 pr,
                 sm.HP(StateInitial),
-                ability == Ability.WoG && sm.TimeRemaining(StatePreAbility, Buff.SS) > 0,
+                ability == Ability.WoG && sm.TimeRemaining(StatePreAbility, Buff.BoG) > 0,
                 ability == Ability.AS && sm.TimeRemaining(StatePreAbility, Buff.GC) > 0,
                 ability == Ability.FoL ? sm.Stacks(StatePreAbility, Buff.SH) : 0,
+                ability == Ability.WoG ? sm.Stacks(StatePreAbility, Buff.BoG) : 0,
                 sm.TimeRemaining(StatePreAbility, Buff.AW) > 0,
                 unforkedBuffSteps,
                 forkedBuffSteps);
@@ -331,13 +332,22 @@ namespace Matlabadin
             {
                 case Ability.WoG:
                     nextState = sm.SetHP(nextState, hp - availableHp);
+                    //TODO: Divine Purpose code goes here
                     break;
                 case Ability.SotR:
                     if (availableHp < 3) throw new InvalidOperationException("SotR cast with less than 3 HP");
-                    if (true) // (hit) // Issue 20: SotR always consumes HP
+                    // use HP (always)
+                    nextState = sm.SetHP(nextState, hp - availableHp);
+                    // reset SotRSB duration to full
+                    nextState = sm.SetTimeRemaining(nextState, Buff.SotRSB, gp.BuffDurationInSteps(Buff.SotRSB));
+                    // set BoG duration to full, increment stacks
+                    int bogStacks = sm.Stacks(nextState, Buff.BoG);
+                    nextState = sm.SetTimeRemaining(nextState, Buff.BoG, gp.BuffDurationInSteps(Buff.BoG));
+                    nextState = sm.SetStacks(nextState, Buff.BoG, Math.Min(bogStacks + 1, gp.MaxBuffStacks(Buff.BoG)));
+                    // if it hits, we have the chance for divine purpose
+                    if (hit)
                     {
-                        nextState = sm.SetHP(nextState, hp - availableHp);
-                        nextState = sm.SetTimeRemaining(nextState, Buff.SotRSB, gp.BuffDurationInSteps(Buff.SotRSB));
+                        // TODO: Divine Purpose code goes here
                     }
                     break;
                 case Ability.HotR:
@@ -359,9 +369,9 @@ namespace Matlabadin
                         nextState = sm.IncHP(nextState);
                         if (gp.Talents.Includes(PaladinTalents.SelflessHealer))
                         {
-                            int stacks = sm.Stacks(nextState, Buff.SH);
+                            int shStacks = sm.Stacks(nextState, Buff.SH);
                             nextState = sm.SetTimeRemaining(nextState, Buff.SH, gp.BuffDurationInSteps(Buff.SH));
-                            nextState = sm.SetStacks(nextState, Buff.SH, Math.Min(stacks + 1, gp.MaxBuffStacks(Buff.SH)));
+                            nextState = sm.SetStacks(nextState, Buff.SH, Math.Min(shStacks + 1, gp.MaxBuffStacks(Buff.SH)));
                         }
                     }
                     break;

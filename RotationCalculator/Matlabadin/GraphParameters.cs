@@ -29,12 +29,12 @@ namespace Matlabadin
         private static readonly double[] DefaultUnhastedBuffDuration = new double[] {
                 1.5, 30, 30, // GCD, EF, SS,
                 20, 3, 30, // AW, SotRSB, WB,   note: may need to adjust AW based on Sanctified Wrath talent (boosts it to 30s)
-                6.3, 15, // GC, SH, 
+                6.3, 15, 20 // GC, SH, BoG
             };
         private static readonly int[] DefaultMaximumBuffStacks = new int[] {
                 1, 1, 1,
                 1, 1, 1,
-                1, 2,
+                1, 3, 5,
             };
 
         // constructor, does some simple sanity testing and calculates haste-effected GCD/CDs
@@ -133,6 +133,9 @@ namespace Matlabadin
                     if (!this.Rotation.AbilitiesUsed.Contains(Ability.J)) return 0;
                     if (!this.Talents.Includes(PaladinTalents.SelflessHealer)) return 0;
                     break;
+                case Buff.BoG:
+                    if (!this.Rotation.AbilitiesUsed.Contains(Ability.SotR)) return 0;
+                    break;
                 default:
                     // If we haven't modelling it, we keep it
                     throw new NotImplementedException("Parameter preconditions to triggering this buff must be specified in GraphParameters.CalculateBuffDuration()");
@@ -195,7 +198,7 @@ namespace Matlabadin
         }
         public bool CanStack(Buff buff)
         {
-            return buff == Buff.SH;
+            return (buff == Buff.SH || buff == Buff.BoG);
         }
         /// <summary>
         /// Returns the time it takes for an ability to be used.

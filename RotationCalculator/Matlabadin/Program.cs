@@ -76,8 +76,8 @@ namespace Matlabadin
             PaladinSpec spec;
             double haste, mehit, sphit;
             rotation = args[0];
-            // "Matlabadin.exe <rotation> <spec> <talents> <stepsPerGcd> <hasted> <mehit> <sphit> [<outputfile>]" + Environment.NewLine
-            //                      0       1       2           3          4         5       6        7
+            // "Matlabadin.exe <rotation> <spec> <talents> <stepsPerGcd> <haste> <mehit> <sphit> [<outputfile>]" + Environment.NewLine
+            //                      0       1       2           3           4       5       6        7
             if (!PaladinSpecHelper.TryParse(args[1], out spec)) Usage();
             if (!PaladinTalentsHelper.TryParse(args[2], out talents)) Usage();
             if (!Int32.TryParse(args[3], out stepsPerHastedGcd)) Usage();
