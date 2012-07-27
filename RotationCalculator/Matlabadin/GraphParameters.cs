@@ -36,6 +36,8 @@ namespace Matlabadin
                 1, 1, 1,
                 1, 2,
             };
+
+        // constructor, does some simple sanity testing and calculates haste-effected GCD/CDs
         public GraphParameters(
             RotationPriorityQueue<TState> rotation,
             PaladinSpec spec = PaladinSpec.Prot,
@@ -46,41 +48,21 @@ namespace Matlabadin
             double sphit = 1.0
             )
         {
+            // sanity checks -inputs
             if (spec == PaladinSpec.Holy) throw new NotImplementedException("No plans to implement Holy");
             if (spec == PaladinSpec.Ret) throw new NotImplementedException("Ret NYI. See http://code.google.com/p/matlabadin/issues/list for status and priority");
             if (haste > 0.5) throw new NotImplementedException("GCD clipping from >50% haste not yet implemented");
-            /// <remarks>
-            /// Commenting talents we have no intention of handling
-            /// </remarks>
-            /* if ((talents & PaladinTalents.SpeedOfLight) != PaladinTalents.None) throw new NotImplementedException("SpeedOfLight NYI");
-            if ((talents & PaladinTalents.LongArmOfTheLaw) != PaladinTalents.None) throw new NotImplementedException("LongArmOfTheLaw NYI");
-            if ((talents & PaladinTalents.PursuitOfJustice) != PaladinTalents.None) throw new NotImplementedException("PursuitOfJustice NYI");
-            if ((talents & PaladinTalents.FistOfJustice) != PaladinTalents.None) throw new NotImplementedException("FistOfJustice NYI");
-            if ((talents & PaladinTalents.Repentance) != PaladinTalents.None) throw new NotImplementedException("Repentance NYI");
-            if ((talents & PaladinTalents.BurdenOfGuilt) != PaladinTalents.None) throw new NotImplementedException("BurdenOfGuilt NYI");
-            if ((talents & PaladinTalents.HandOfPurity) != PaladinTalents.None) throw new NotImplementedException("HandOfPurity NYI");
-            if ((talents & PaladinTalents.UnbreakableSpirit) != PaladinTalents.None) throw new NotImplementedException("UnbreakableSpirit NYI");
-            if ((talents & PaladinTalents.Clemency) != PaladinTalents.None) throw new NotImplementedException("Clemency NYI");
-             */
+            
+            // sanity check on talents we haven't implemented yet
             if ((talents & PaladinTalents.HolyAvenger) != PaladinTalents.None) throw new NotImplementedException("HolyAvenger NYI");
             if ((talents & PaladinTalents.SanctifiedWrath) != PaladinTalents.None) throw new NotImplementedException("SanctifiedWrath NYI");
             if ((talents & PaladinTalents.DivinePurpose) != PaladinTalents.None) throw new NotImplementedException("DivinePurpose NYI");
 
-            /*
-            if (rotation.AbilitiesUsed.Contains(Ability.EF) && (talents & PaladinTalents.EternalFlame) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
-            if (rotation.AbilitiesUsed.Contains(Ability.SS) && (talents & PaladinTalents.SacredShield) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
-            */
-
-            /*
-            if (rotation.AbilitiesUsed.Contains(Ability.HPr) && (talents & PaladinTalents.HolyPrism) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
-            if (rotation.AbilitiesUsed.Contains(Ability.LH) && (talents & PaladinTalents.LightsHammer) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
-            if (rotation.AbilitiesUsed.Contains(Ability.ES) && (talents & PaladinTalents.ExecutionSentence) == PaladinTalents.None) throw new ArgumentException("Rotation contains ability not talented");
-             */
-
+            // sanity check on L45 and L90 talents - make sure no more than one of each is used in the rotation
             if (Convert.ToInt16(rotation.AbilitiesUsed.Contains(Ability.EF)) + Convert.ToInt16(rotation.AbilitiesUsed.Contains(Ability.SS)) > 1) throw new ArgumentException("Rotation contains more than one L45 Talent");
             if (Convert.ToInt16(rotation.AbilitiesUsed.Contains(Ability.HPr)) + Convert.ToInt16(rotation.AbilitiesUsed.Contains(Ability.LH)) + Convert.ToInt16(rotation.AbilitiesUsed.Contains(Ability.ES)) > 1) throw new ArgumentException("Rotation contains more than one L90 talent");
 
-
+            // commence construction
             this.Rotation = rotation;
             this.Spec = spec;
             this.Talents = talents;
@@ -89,8 +71,10 @@ namespace Matlabadin
             this.MeleeHit = mehit;
             this.SpellHit = sphit;
 
+            // set unhasted buff durations, account for talents and glyphs
             double[] talentedUnhastedBuffDuration = DefaultUnhastedBuffDuration.ToArray();
             if (this.Talents.Includes(PaladinTalents.SanctifiedWrath)) talentedUnhastedBuffDuration[(int)Buff.AW] = 30;
+            // insert GoHotR here
 
             this.ApproximationErrors = "";
             this.stepDuration = 1.5 / (this.StepsPerHastedGcd * (1.0 + haste));
@@ -103,6 +87,8 @@ namespace Matlabadin
                 .ToArray();
             this.buffStacks = DefaultMaximumBuffStacks;
         }
+
+        // This function calculates the ability cooldowns (in steps) after Sanctity of Battle
         private int CalculateAbilityCooldowns(Ability ability, bool isAffectedByHaste, double baseCooldown)
         {
             if (!Rotation.AbilitiesUsed.Contains(ability) &&
@@ -114,6 +100,7 @@ namespace Matlabadin
             }
             return CalculateDurationInSteps(baseCooldown, isAffectedByHaste, x => (int)Math.Ceiling(x));
         }
+
         /// <remarks>
         /// The main purpose of this is to reduce state space size by filtering out buffs not used in this rotation
         /// </remarks>
@@ -155,6 +142,8 @@ namespace Matlabadin
             if (buff == Buff.GC) stepsDuration++;
             return stepsDuration;
         }
+
+        // generic function to convert duration in seconds into steps, logs approximations
         private int CalculateDurationInSteps(double unhastedDurationInSeconds, bool isAffectedByHaste, Func<double, int> roundingFunction)
         {
             double hastedDurationInSteps;
@@ -178,6 +167,8 @@ namespace Matlabadin
             }
             return (int)rounded;
         }
+
+        // these are mostly self-explanatory
         public bool AbilityOnGcd(Ability ability)
         {
             return this.isOnGcd[(int)ability];

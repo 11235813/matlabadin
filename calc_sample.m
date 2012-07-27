@@ -9,7 +9,7 @@ def_db;
 %"c" is the default config structure name.  For sims which require multiple
 %configurations, we'll use c(1), c(2), etc.
 
-%Note that this entire section can be replaced with c=build_default_config
+%Note that this entire section can be replaced with c=build_config
 
 %invoke player model
 c.base=player_model;  %possibly rename "char_model"

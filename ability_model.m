@@ -196,8 +196,8 @@ splash.Consecration=min([exec.npccount-1; 9]);
 label.Consecration= 'Cons';
 
 %Holy Wrath
-raw.HolyWrath=      (4300+0.91.*player.sp)./(1+(exec.npccount-1).*mdf.glyphFW).*mdf.spdmg;
-dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.spcrit.*target.resrdx.*(1+mdf.glyphFiWr);
+raw.HolyWrath=      (4300+0.91.*player.sp)./(1+(exec.npccount-1).*mdf.glyphFW).*mdf.spdmg.*(1+mdf.glyphFiWr);
+dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.HolyWrath=     0;
 threat.HolyWrath=   max(dmg.HolyWrath,heal.HolyWrath).*mdf.RFury;
 mcost.HolyWrath =   0.094.*base.mana;

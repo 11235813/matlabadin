@@ -42,15 +42,15 @@ li{ldat,5}=round(c.abil.val.heal);
 % li.setColumnFormat(5:6,'%2.1f')
 li.toText()
 
-%% Plot #1 - Raw damage
+%% Plot #1 - Raw damage for basic rotational abilities
 set1=[find(strcmp('CS',c.abil.val.label)); find(strcmp('HotR',c.abil.val.label));...
     find(strcmp('HaNova',c.abil.val.label)); find(strcmp('J',c.abil.val.label)); ...
     find(strcmp('AS',c.abil.val.label)); find(strcmp('Cons',c.abil.val.label)); ...
     find(strcmp('HW',c.abil.val.label)); find(strcmp('HoW',c.abil.val.label)); ...
     find(strcmp('SotR',c.abil.val.label)); find(strcmp('Melee',c.abil.val.label));];
 
-figure(10)
-bar10=bar(round(c.abil.val.raw(set1)./1e3),'BarWidth',0.5,'BarLayout','stacked');
+figure(11)
+bar11=bar(round(c.abil.val.raw(set1)./1e3),'BarWidth',0.5,'BarLayout','stacked');
 % set(bar20(2),'FaceColor',[0.749 0.749 0]);
 xlim(0.5+[0 length(set1)])
 % maxy=ceil(max(sum(dmgplot,2))/5000)*5000;
@@ -62,11 +62,32 @@ xlabel('Ability')
 ylabel('Raw Damage (thousands)')
 title('100% Vengeance')
 
+%% Plot 2 - Raw damage for L90 talents (Cons/HW/HoW for comparison)
 set2=[find(strcmp('Cons',c.abil.val.label)); find(strcmp('HW',c.abil.val.label));find(strcmp('HoW',c.abil.val.label));  find(strcmp('HPr',c.abil.val.label)); find(strcmp('LH',c.abil.val.label)); find(strcmp('ES',c.abil.val.label));];
-figure(11)
-bar11=bar(round(c.abil.val.raw(set2)./1e3),'BarWidth',0.5,'BarLayout','stacked');
+figure(12)
+bar12=bar(round(c.abil.val.raw(set2)./1e3),'BarWidth',0.5,'BarLayout','stacked');
 xlim(0.5+[0 length(set2)])
 set(gca,'XTick',1:length(set2),'XTickLabel',{c.abil.val.label{set2}})
 xlabel('Ability')
 ylabel('Raw Damage (thousands)')
+title('100% Vengeance')
+
+%% Plot 3 - Raw damage for seals/censure
+set3=[find(strcmp('SoT',c.abil.val.label));find(strcmp('SoR',c.abil.val.label));find(strcmp('SoI',c.abil.val.label));find(strcmp('Censure',c.abil.val.label));];
+figure(13)
+bar13=bar(round(c.abil.val.raw(set3)./1e3),'BarWidth',0.5);
+xlim(0.5+[0 length(set3)])
+set(gca,'XTick',1:length(set3),'XTickLabel',{c.abil.val.label{set3}})
+xlabel('Ability')
+ylabel('Raw Damage (thousands)')
+title('100% Vengeance')
+
+%% Plot 4 - Raw healing 
+set4=[find(strcmp('WoG',c.abil.val.label));find(strcmp('EF',c.abil.val.label));find(strcmp('EF(HoT)',c.abil.val.label));find(strcmp('SS',c.abil.val.label));find(strcmp('LH',c.abil.val.label));];
+figure(14)
+bar14=bar(round(c.abil.val.raw(set4)./1e3),'BarWidth',0.5);
+xlim(0.5+[0 length(set4)])
+set(gca,'XTick',1:length(set4),'XTickLabel',{c.abil.val.label{set4}})
+xlabel('Ability')
+ylabel('Raw Healing (thousands)')
 title('100% Vengeance')
