@@ -37,6 +37,7 @@ function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime
     rotationKey = strrep(rotationKey, '''', 'prime');
     rotationKey = strrep(rotationKey, '+', 'plus');
     rotationKey = strrep(rotationKey, '^', 'up');
+    rotationKey = strrep(rotationKey, '#', 'num');
     spectalKey = [spec '_' talentString];
     optionsKey = sprintf('T%g_%0.5f_%0.5f_%0.5f', fsm_steps_per_gcd(), decimalHaste, mehit, sphit);
     optionsKey = strrep(optionsKey,'_1.00000','_1_');

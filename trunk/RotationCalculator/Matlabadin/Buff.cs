@@ -48,7 +48,7 @@ namespace Matlabadin
         /// <summary>
         /// Bastion of Glory
         /// </summary>
-        // BoG,
+        BoG,
         // HA
         Count,
         UptimeTrackedUnforkedBuffs = SotRSB + 1,
