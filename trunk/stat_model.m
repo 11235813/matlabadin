@@ -70,19 +70,19 @@ mdf.SanctifiedWrath=1.*talent.SanctifiedWrath; %PH
 mdf.DivinePurpose=1.*talent.DivinePurpose; %PH
 
 %% Glyphs
-mdf.glyphAS=0.5.*glyph.AlabasterShield;         %Both effects
+mdf.glyphAS=0.2.*glyph.AlabasterShield;         %placeholder, updated in dynamic_model
 mdf.glyphAC=1-0.3*glyph.AsceticCrusader;        %mcost redux
 mdf.glyphBH=0;                                  %NYI
-mdf.glyphBL=mdf.SoI.*glyph.BlessedLife;         %HPG, 1/20 sec
 mdf.glyphDS=0.1.*glyph.DivineStorm;             %passive healing
 mdf.glyphDJ=0.1.*glyph.DoubleJeopardy.*(exec.npccount>1); %assume alternating J if possible
 mdf.glyphFoL=0;                                 %NYI
 mdf.glyphFS=1+0.3.*glyph.FocusedShield;         %AS output
 mdf.glyphFW=1-glyph.FocusedWrath;               %Inverse Binary
-mdf.glyphHotR=0.1.*glyph.HammeroftheRighteous;  %HotR output
+mdf.glyphFiWr=0.5.*glyph.FinalWrath;            %Final Wrath, target <20%
+mdf.glyphHaWo=glyph.HarshWords;                 %Binary for WoG
 mdf.glyphIT=glyph.ImmediateTruth;               %both effects
 mdf.glyphInq=0.9.*glyph.Inquisition;            %both effects
-mdf.glyphWoG=1+0.1.*glyph.WordofGlory;          %WoG output
+mdf.glyphWoG=0.09.*glyph.WordofGlory;          %WoG DPS boost for 3 HP
 
 %% Meta Gems, Enchants, Plate Spec, Tier Bonus
 %%%%%%%%%%% META
@@ -404,7 +404,7 @@ player.parry=min([player.parry.*ones(arrsize.av); ...
 
 player.avoid=player.miss+player.dodge+player.parry;
 player.avoidpct=player.avoid./100;
-
+player.blockpct=player.block./100;
 
 %% Boss Stats
 %TODO: This section is a bit weird.  we have the npc structure already, but
@@ -484,6 +484,7 @@ mdf.aamodel=(mdf.mehit ...                  %hit
 %enforce block events for three-roll systems
 mdf.memodel=mdf.mehit.*(1+(mdf.blockrdx-1).*target.block./100);
 % mdf.ramodel=mdf.rahit.*(1+(mdf.blockrdx-1).*target.block./100);
+
 
 %% PPM-based uptimes
 %this section will have to wait until we know which attacks survive, what

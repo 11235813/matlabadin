@@ -246,11 +246,14 @@ if size(c.rot.cps,2)==1 && size(c.abil.val.dmg,2)>1
     c.rot.ssuptime=repmat(c.rot.ssuptime,1,size(c.abil.val.dmg,2));
 end
 
-%% TODO: put dynamic_model here?
+%% dynamic model - effects that depend on rotation details
 
+c=dynamic_model(c);
+
+             
 %% calculate total DPS and HPS
 %note that a2cps includes all active and passive sources
-c.rot.dps=sum(c.rot.cps.*c.abil.val.dmg);
+c.rot.dps=sum(c.rot.cps.*c.abil.val.dmg.*c.dyn.multdps)+c.dyn.flatdps;
 c.rot.hps=sum(c.rot.cps.*c.abil.val.heal);
 c.rot.mps=c.player.mps-sum(c.rot.cps.*c.abil.val.mcost); 
 

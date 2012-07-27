@@ -59,7 +59,7 @@ if nargin>1
                e.veng=value;
             case 'overh'
                e.overh=value;
-            case {'rot','pseq'}
+            case {'rot','pseq','queue'}
                 e.queue=value;
             %buff_model
             case 'mode'
@@ -127,7 +127,7 @@ c.gear=gear_stats(c.egs);
 %set hit/exp appropriately
 if isempty(gr.hit)==1; gr.hit=-1; end %set these to -1 if not specified
 if isempty(gr.exp)==1; gr.exp=-1; end %set these to -1 if not specified
-c=gear_sethitexp(c,gr.hit,gr.exp);
+c=gear_sethitexp(c,gr.hit,gr.exp); %ignores -1 inputs
 
 %generate the remaining fields
 c=stat_model(c);

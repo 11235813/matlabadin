@@ -16,7 +16,7 @@ def_db;
 cfg(1)=build_config('hit',2,'exp',5,'glyph',[0 0 0]); 
 
 %low hit, WoG/SoI build
-cfg(2)=build_config('hit',2,'exp',5,'seal','SoI','glyph',[0 0 0]);
+cfg(2)=build_config('hit',2,'exp',5,'seal','SoI','glyph',[0 0 0],'queue','^WB>^SS>WoG>CS>J>AS>Cons>HW');
 
 %hit-cap and exp soft-cap
 cfg(3)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0]);
@@ -65,18 +65,18 @@ glyphhps=hps-hps0;
 
 
 %% construct output arrays
-ldat=2+[1:qmax];
+ldat=3+[1:qmax]; %offset by header rows
 
 li=DataTable();
-li{1:2,1}={' ';'Glyph'};      
+li{1:3,1}={' ';'Glyph';'Base DPS (k)'};      
 li{ldat,1}=c.glyph.labels;
 
 for g=1:length(cfg)
     
-li{1:2,2*g}={['cfg' int2str(g)];'DPS'};
+li{1:3,2*g}={['cfg' int2str(g)];'DPS';num2str(roundn(dps0(1,g)./1e3,-1),'%2.1f')};
 li{ldat,2*g}=round(glyphdps(:,g));
 
-li{1:2,2*g+1}={['cfg' int2str(g)];'HPS'};
+li{1:3,2*g+1}={['cfg' int2str(g)];'HPS';num2str(roundn(hps0(1,g)./1e3,-1),'%2.1f')};
 li{ldat,2*g+1}=round(glyphhps(:,g));
 
 end
