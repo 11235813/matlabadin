@@ -14,6 +14,7 @@ namespace Matlabadin
     /// values of hit.</remarks>
     public class MatlabadinGraph<TState>
     {
+        // default constructor
         public MatlabadinGraph(GraphParameters<TState> gp, IStateManager<TState> sm)
         {
             this.GraphParameters = gp;
@@ -23,6 +24,8 @@ namespace Matlabadin
             SanityCheck();
 #endif
         }
+
+        // sanity checks on the graph
         private void SanityCheck()
         {
             if (this.index.Length != this.lookup.Count) throw new Exception("Sanity failure: lookup size mismatch");
@@ -56,6 +59,7 @@ namespace Matlabadin
                 }
             }
         }
+
         /// <summary>
         /// Clones a given graph.
         /// </summary>
@@ -99,12 +103,14 @@ namespace Matlabadin
                 throw new Exception(String.Format("Error cloning [{0}] to [{1}]", graph.GraphParameters.ParametersToString(), gp.ParametersToString()), e);
             }
         }
+
         /// <summary>
         /// Number of distinct state in the graph
         /// </summary>
         public int Size { get { return index.Length; } }
         public GraphParameters<TState> GraphParameters { get; private set; }
         public IStateManager<TState> StateManager { get; private set; }
+
         /// <summary>
         /// Generates the state transition graph for the given graph parameters
         /// </summary>
@@ -142,6 +148,7 @@ namespace Matlabadin
             this.choice = choice.ToArray();
             this.nextState = nextState.ToArray();
         }
+
         private Choice LookupStateChoice(Choice choice, TState state)
         {
             if (firstChoiceState.ContainsKey(choice))
@@ -156,6 +163,7 @@ namespace Matlabadin
                 return choice;
             }
         }
+
         /// <summary>
         /// Calculates state probabilities and outputs aggregated ability usage information.
         /// </summary>

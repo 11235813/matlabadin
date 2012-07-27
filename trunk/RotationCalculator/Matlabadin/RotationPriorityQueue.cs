@@ -48,6 +48,7 @@ namespace Matlabadin
     /// </summary>
     public class RotationPriorityQueue<TState>
     {
+        // function to determine which ability gets cast for a given Tstate, according to gp and sm
         public Ability ActionToTake(GraphParameters<TState> gp, IStateManager<TState> sm, TState state)
         {
             for (int i = 0; i < abilityQueue.Count; i++)
@@ -67,6 +68,8 @@ namespace Matlabadin
             }
             return Ability.Nothing;
         }
+
+        //constructor for RPQ from a rotation string, calls ProcessQueueString to convert short form to long form
         public RotationPriorityQueue(string queue)
         {
             this.PriorityQueue = queue;
@@ -74,9 +77,13 @@ namespace Matlabadin
             this.abilityConditionals = new List<List<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>>();
             ProcessQueueString(queue);
         }
+
+        // function that uses regexp to turn the queue into lists of abilities and conditionals
         private void ProcessQueueString(string queue)
         {
             if (String.IsNullOrEmpty(queue)) return; // nothing to do for a rotation of nothing
+
+            // first separate out each ability
             Match queueMatch = Regex.Match(">" + queue, @"^(?<element>>([^\[>\]]+(\[[^\]]+\])*))*$"); // add a > to the start of the queue then separate
             /*  Regular Expression dissection for Theck's sanity
              *      @"                         #designate as a literal string
@@ -97,6 +104,8 @@ namespace Matlabadin
              *  Summary: we look for groups of ( > ( XXX# ( [cond1][cond2] ) ) ), i.e. ">J[HP<5]" or ">^WB[buffWB<0]" or ">Sotr5[HP<4]".  
              *  Group 3 (conditionals) are optional, Group 2 (ability designation) is not.  Group 1 is optional, in theory, but it would mean an empty queue if it were.
              */
+
+            // next process each ability's raw string to extract action and conditionals
             foreach (string rawActionString in queueMatch.Groups["element"].Captures.Cast<Capture>().Select(c => c.Value))  //queueMatch.Groups["element"] isolates the list of Group 1 captures (i.e. each >^XX#[cond] entry), this converts each capture into a raw string for processing
             {
                 var conditions = new List<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>();
@@ -117,12 +126,16 @@ namespace Matlabadin
                  *          $"                              #signify position after last character, end string
                  * 
                  */
+                
+                // error if we weren't able to match toe format (invalid input)
                 if (!actionMatch.Success) throw new InvalidOperationException(String.Format("Invalid rotation {0}", queue));
 
+                // extract details from the different groups within actionMatch
                 string numericSuffixString = actionMatch.Groups["numericSuffix"].Value;
                 string abilityString = actionMatch.Groups["ability"].Value;
                 List<string> conditionalStrings = actionMatch.Groups["conditional"].Captures.Cast<Capture>().Select(c => c.Value).ToList();
-                // Special ability shorthands go here
+
+                // handle special ability shorthands like AS+, ^WB, etc
                 switch (abilityString)
                 {
                     case "AS+":
@@ -142,6 +155,7 @@ namespace Matlabadin
                         conditionalStrings.Add(String.Format("[buff{0}=0]", abilityString));
                         break;
                 }
+
                 //convert numerical suffix to conditional (i.e. SotR5 => SotR[HP>=5])
                 if (!String.IsNullOrEmpty(numericSuffixString))  
                 {
@@ -150,8 +164,12 @@ namespace Matlabadin
                 Ability ability = (Ability)Enum.Parse(typeof(Ability), abilityString);
                 List<Ability> conditionAbilityList;
                 bool hpConditionEncountered;
-                conditions.AddRange(ProcessConditions(ability, conditionalStrings, out conditionAbilityList, out hpConditionEncountered));  //process conditionals
-                switch (ability) // Special ability-specific conditions go here
+
+                //process standard conditionals (calls RPQ.ProcessConditions) 
+                conditions.AddRange(ProcessConditions(ability, conditionalStrings, out conditionAbilityList, out hpConditionEncountered));
+
+                // Special ability-specific conditions go here
+                switch (ability) 
                 {
                     case Ability.SS:
                     case Ability.SotR:
@@ -183,6 +201,7 @@ namespace Matlabadin
             }
         }
 
+        // conditional processing for standard conditionals
         private IEnumerable<Func<GraphParameters<TState>, IStateManager<TState>, TState, bool>>
             ProcessConditions(Ability ability, List<string> conditionalStrings, out List<Ability> conditionAbilityList, out bool hpConditionEncountered)
         {

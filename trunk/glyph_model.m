@@ -39,7 +39,7 @@ function [glyph] =  glyph_model(shortform)
 %% Input Handling
 
 if nargin<1 || (nargin==1 && isempty(shortform))
-    shortform=[9 11 14];
+    shortform=[2 9 12];
 else
     if size(shortform,1)~=1 || size(shortform,2)~=3
         error('glyph_model input is not 1x3')

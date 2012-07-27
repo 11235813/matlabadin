@@ -65,6 +65,8 @@ namespace Matlabadin
                 yield return line.Split(' ', '\t');
             }
         }
+
+        // process input parameters
         private static void ProcessParams(string[] args)
         {
             if (args.Length < 6) Usage();
@@ -85,7 +87,11 @@ namespace Matlabadin
             string file = args.Length >= 8 ? args[7] : null;
             ProcessGraph(file, rotation, spec, talents, stepsPerHastedGcd, haste, mehit, sphit);
         }
+        
+        // program build time for determining when to flush data
         private static DateTime BuildTime = new FileInfo(typeof(Program).Assembly.Location).CreationTime;
+
+        // Overloaded function call for ProcessGraph, this one takes a file input instead of a textstream and does simple file tests (existence, previous builds, etc)
         private static void ProcessGraph(
             string file,
             string rotation,
@@ -130,6 +136,8 @@ namespace Matlabadin
                 }
             }
         }
+
+        // This function performs the bulk of the graph processing
         private static void ProcessGraph(
             TextWriter stream,
             string rotation,
@@ -140,32 +148,61 @@ namespace Matlabadin
             double mehit,
             double sphit)
         {
+            // sanity checks on inputs
             if (mehit < BaseMeleeHit) Console.Error.WriteLine("Warning: {0} melee hit would require negative hit rating", mehit);
             if (sphit < BaseSpellHit) Console.Error.WriteLine("Warning: {0} spell hit would require negative hit rating", sphit);
             if (mehit > 1) { Console.Error.WriteLine("Warning: invalid melee hit {0}", mehit); Usage(); }
             if (sphit > 1) { Console.Error.WriteLine("Warning: invalid range hit {0}", sphit); Usage(); }
+
+            // create new RPQ object, translate rotation string into long form for passing to GraphParameters
             RotationPriorityQueue<BitVectorState> queue = new RotationPriorityQueue<BitVectorState>(rotation);
+
+            // create new GraphParameters object - contains basic graph parameter info, calculates ability/buff cooldowns/durations, shape comparisons, etc.
             Int64GraphParameters gp = new Int64GraphParameters(queue, spec, talents, stepsPerHastedGcd, haste, mehit, sphit);
+
+            // report any approximation errors
             if (!String.IsNullOrEmpty(gp.ApproximationErrors)) Console.Error.WriteLine("Warning: Inexact duration modelling: {0}", gp.ApproximationErrors);
+
+            // stopwatch for timing graph generation
             Stopwatch generateGraphStopWatch = new Stopwatch();
             generateGraphStopWatch.Start();
+
+            // generate the graph, output the hint priority to hintPr
             double[] hintPr;
             MatlabadinGraph<BitVectorState> graph = GenerateGraph(gp, rotation, out hintPr);
+
+            // stop timing graph generation
             generateGraphStopWatch.Stop();
+
+            // start timing graph convergence
             Stopwatch convergeStopWatch = new Stopwatch();
             convergeStopWatch.Start();
+
+            // variables pertaining to convergence
             int iterationsPerformed;
             double relTolerance, absTolerance;
+
+            // perform convergence on graph
             double[] pr = graph.ConvergeStateProbability(
                 out iterationsPerformed,
                 out relTolerance,
                 out absTolerance,
                 initialState: hintPr);
+
+            // stop timing convergence
             convergeStopWatch.Stop();
+
+            // stopwatch for aggregation of cast results
             Stopwatch aggregateStopWatch = new Stopwatch();
             aggregateStopWatch.Start();
+
+            // generate result, containing CPS data, uptimes, and statistics
             ActionSummary result = graph.CalculateResults(pr);
+
+            // stop timing aggregation
             aggregateStopWatch.Stop();
+
+            // take the data in result and write to file (stream)
             foreach (var key in result.Action.Keys.OrderBy(k => k))
             {
                 stream.WriteLine("{0},{1}", key, result.Action[key]);
@@ -194,6 +231,8 @@ namespace Matlabadin
             stream.WriteLine("Param_Haste,{0}", gp.Haste);
             stream.WriteLine("Param_Hit_Melee,{0}", gp.MeleeHit);
             stream.WriteLine("Param_Hit_Spell,{0}", gp.SpellHit);
+
+            // write approximation errors to file (stream)
             if (!String.IsNullOrWhiteSpace(gp.ApproximationErrors))
             {
                 foreach (string error in gp.ApproximationErrors.Split(';'))
@@ -204,8 +243,11 @@ namespace Matlabadin
                     }
                 }
             }
+            // cache the graph for future re-use
             CacheGraph(graph, pr);
         }
+
+        // function to cache graph
         private static void CacheGraph(MatlabadinGraph<BitVectorState> mg, double[] pr)
         {
             string rotation = mg.GraphParameters.Rotation.PriorityQueue;
@@ -218,6 +260,8 @@ namespace Matlabadin
                 existingGraphs[rotation].Add(new Tuple<MatlabadinGraph<BitVectorState>, double[]>(mg, pr));
             }
         }
+
+        // This function generates the graph described by gp, the graph class is described in MatlabadinGraph
         private static MatlabadinGraph<BitVectorState> GenerateGraph(Int64GraphParameters gp, string rotation, out double[] hintPr)
         {
             // If we have previously generated a graph for the rotation, we can reuse that one and we only need to recalculate
@@ -244,7 +288,11 @@ namespace Matlabadin
             hintPr = null;
             return new MatlabadinGraph<BitVectorState>(gp, gp);
         }
+
+
         private static Dictionary<string, List<Tuple<MatlabadinGraph<BitVectorState>, double[]>>> existingGraphs = new Dictionary<string, List<Tuple<MatlabadinGraph<BitVectorState>, double[]>>>();
+
+        // this is the error message that occurs if the fsm.exe inputs are incorrect
         public static void Usage()
         {
             string message = "Matlabadin.exe <rotation> <spec> <talents> <stepsPerHastesGcd> <haste> <mehit> <sphit> [<outputfile>]" + Environment.NewLine
