@@ -25,11 +25,13 @@ cens_mean=dmg.cens;
 sot_mean=dmg.sot;
 sor_mean=dmg.sor;
 hp_min=dmg.prism(:,1);hp_mean=dmg.prism(:,2);hp_max=dmg.prism(:,3);
+hpsca_min=dmg.prismself(:,1);hpsca_max=dmg.prismself(:,2);
 
-hpt_min=heal.prism(:,1);hpt_max=heal.prism(:,2);
+hpa_min=heal.prism(:,1);hpa_max=heal.prism(:,2);
 ef_min=heal.ef(:,1);ef_max=heal.ef(:,2);ef_tick=heal.ef(:,3);
 soi_mean=heal.soi;
 wog_min=heal.wog(:,1);wog_max=heal.wog(:,2);
+hpsc_min=heal.prismself(:,1);hpsc_max=heal.prismself(:,2);
 
 %% fits
 
@@ -66,7 +68,7 @@ sor_fo = fitoptions('Method','NonlinearLeastSquares','StartPoint',[0.05]);
 [sor_fit sor_gof] = fit(ndmean(ok),sor_mean(ok),sor_ft,sor_fo)
 
 %Holy Prism DD
-%expected based on tooltip:
+%expected based on tooltip: (11172-13654)+1.098*SP
 %(12412 + 1.098.*player.sp)
 %fit form a*x+b, expect a=1.098, b=12412
 ok=isfinite(hp_mean);
@@ -76,14 +78,14 @@ hp_fo = fitoptions('Method','NonlinearLeastSquares','StartPoint',[412]);
 [hp_fit2 hp_gof2] = fit(sp(ok),hp_max(ok),hp_ft,hp_fo)
 
 %Holy Prism tick (heals)
-%expected based on tooltip:
+%expected based on tooltip: (7536-9211)+0.74*SP
 %8374 + 0.74*sp
 %fit form a*x+b, expect a=0.74, b=8374
-ok=isfinite(hpt_min);
-hpt_ft=fittype('a*x+b');
-hpt_fo = fitoptions('Method','NonlinearLeastSquares','StartPoint',[0.74 8374]);
-[hpt_fit hpt_gof] = fit(sp(ok),hpt_min(ok),hpt_ft,hpt_fo)
-[hpt_fit2 hpt_gof2] = fit(sp(ok),hpt_max(ok),hpt_ft,hpt_fo)
+ok=isfinite(hpa_min);
+hpa_ft=fittype('a*x+b');
+hpa_fo = fitoptions('Method','NonlinearLeastSquares','StartPoint',[0.74 8374]);
+[hpa_fit hpa_gof] = fit(sp(ok),hpa_min(ok),hpa_ft,hpa_fo)
+[hpa_fit2 hpa_gof2] = fit(sp(ok),hpa_max(ok),hpa_ft,hpa_fo)
 %result consistent with (8374-10234)+0.823*sp, reverse effect from tooltip,
 %not benefitting from SoI 5% boost
 
@@ -105,9 +107,29 @@ soi_ft=fittype('a*x');
 soi_fo = fitoptions('Method','NonlinearLeastSquares','StartPoint',[0.45]);
 [soi_fit soi_gof] = fit(sp(ok),soi_mean(ok),soi_ft,soi_fo)
 
-%WoG - expected
+%WoG - expected (3694-4115)+0.377*sp
 ok=isfinite(wog_min);
 wog_ft=fittype('a*x+b');
 wog_fo = fitoptions('Method','NonlinearLeastSquares','StartPoint',[0.377 3694]);
 [wog_fit wog_gof]= fit(sp(ok),wog_min(ok),wog_ft,wog_fo)
 [wog_fit2 wog_gof2]= fit(sp(ok),wog_max(ok),wog_ft,wog_fo)
+
+
+%Holy Prism self-cast (heal)
+%expected from tooltip:
+%(10054-12289)+0.988*sp
+ok=isfinite(hpsc_min);
+hpsc_ft=fittype('a*x+10000+b');
+hpsc_fo = fitoptions('Method','NonlinearLeastSquares','StartPoint',[0.988 54]);
+[hpsc_fit hpsc_gof]= fit(sp(ok),hpsc_min(ok),hpsc_ft,hpsc_fo)
+[hpsc_fit2 hpsc_gof2]= fit(sp(ok),hpsc_max(ok),hpsc_ft,hpsc_fo)
+
+%Holy Prism self-cast (damage)
+%expected from tooltip:
+%(8374-10235)+0.823*sp
+ok=isfinite(hpsca_min);
+hpsca_ft=fittype('a*x+8374');
+hpsca_ft2=fittype('a*x+10235');
+hpsca_fo = fitoptions('Method','NonlinearLeastSquares','StartPoint',[0.823]);
+[hpsca_fit hpsca_gof]= fit(sp(ok),hpsca_min(ok),hpsca_ft,hpsca_fo)
+[hpsca_fit2 hpsca_gof2]= fit(sp(ok),hpsca_max(ok),hpsca_ft2,hpsca_fo)

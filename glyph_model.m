@@ -46,6 +46,9 @@ else
     end
 end
 
+%Sanity check on shortform - no double glyphs
+
+
 %% Glyphs (shorthand)
 glyph.short=shortform;
 
@@ -63,7 +66,9 @@ glyph.DoubleJeopardy=sum(glyph.short==q);q=q+1;
 glyph.FlashofLight=sum(glyph.short==q);q=q+1;
 glyph.FocusedShield=sum(glyph.short==q);q=q+1;
 glyph.FocusedWrath=sum(glyph.short==q);q=q+1;
+glyph.FinalWrath=sum(glyph.short==q);q=q+1;
 glyph.HammeroftheRighteous=sum(glyph.short==q);q=q+1;
+glyph.HarshWords=sum(glyph.short==q);q=q+1;
 glyph.ImmediateTruth=sum(glyph.short==q);q=q+1;
 glyph.Inquisition=sum(glyph.short==q);q=q+1;
 glyph.WordofGlory=sum(glyph.short==q);
@@ -78,7 +83,9 @@ glyph.labels={  'AlabasterShield';...
                 'Flash of Light';...
                 'Focused Shield';...
                 'Focused Wrath';...
+                'Final Wrath';...
                 'Hammer of the Righteous';...
+                'Harsh Words';...
                 'Immediate Truth';...
                 'Inquisition';...
                 'Word of Glory';};

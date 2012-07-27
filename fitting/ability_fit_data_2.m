@@ -50,7 +50,7 @@ es_ft=fittype('a*x+10000+b');
 es_fo = fitoptions('Method','NonlinearLeastSquares','StartPoint',[4.564 30]);
 [es_fit es_gof] = fit(sp,es_mean,es_ft,es_fo)
 
-%LH - expected: (2792+0.247*SP) every 2s
+%LH - expected: ((2513-3071)+0.247*SP) every 2s
 lh_ft=fittype('0.247*x+b');
 lh_fo = fitoptions('Method','NonlinearLeastSquares','StartPoint',[2000]);
 [lh_fit lh_gof] = fit(sp,lh_max,lh_ft,lh_fo)

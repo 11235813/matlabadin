@@ -40,7 +40,7 @@ fsflag=c.mdf.glyphFS>1;
 
 %initialize cps vector
 cps=zeros(size(c.abil.val.label,1),1);
-asgc=0;
+asgc=0;wog1=0;wog2=0;
 
 %sort actionPr entries into cps
 for m=1:size(c.rot.actionPr,2)
@@ -48,7 +48,11 @@ for m=1:size(c.rot.actionPr,2)
     cps(idx)=c.rot.actionPr{2,m};    
     if strcmp(c.rot.actionPr{1,m},'AS(GC)')
         asgc=c.rot.actionPr{2,m};
-    end
+    elseif strcmp(c.rot.actionPr{1,m},'WoG2')
+        wog2=c.rot.actionPr{2,m}.*2./3;
+    elseif strcmp(c.rot.actionPr{1,m},'WoG1')
+        wog1=c.rot.actionPr{2,m}./3;
+    end %TODO: repeat for EF
 end
 
 %corrections
@@ -60,6 +64,10 @@ cps(idx+1)=cps(idx);
 %AS(GC)->AS
 idx=find(strcmpi('AS',c.abil.val.label));
 cps(idx)=cps(idx)+asgc;
+
+%WoG2 & WoG1
+idx=find(strcmpi('WoG',c.abil.val.label));
+cps(idx)=cps(idx)+wog2+wog1;
 
 %Melee swings
 cps(strcmpi('Melee',c.abil.val.label))=1./c.player.wswing(jws);
