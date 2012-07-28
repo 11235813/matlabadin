@@ -123,5 +123,29 @@ namespace Matlabadin
             }
             return s.Trim(';');
         }
+        public static int CountAtLevel(this PaladinTalents talents, int level)
+        {
+            switch (level)
+            {
+                case 15: return CountTalents(talents, PaladinTalents.SpeedOfLight | PaladinTalents.LongArmOfTheLaw | PaladinTalents.PursuitOfJustice);
+                case 30: return CountTalents(talents, PaladinTalents.FistOfJustice | PaladinTalents.Repentance | PaladinTalents.BurdenOfGuilt);
+                case 45: return CountTalents(talents, PaladinTalents.SelflessHealer | PaladinTalents.EternalFlame | PaladinTalents.SacredShield);
+                case 60: return CountTalents(talents, PaladinTalents.HandOfPurity | PaladinTalents.UnbreakableSpirit | PaladinTalents.Clemency);
+                case 75: return CountTalents(talents, PaladinTalents.HolyAvenger | PaladinTalents.SanctifiedWrath | PaladinTalents.DivinePurpose);
+                case 90: return CountTalents(talents, PaladinTalents.HolyPrism | PaladinTalents.LightsHammer | PaladinTalents.ExecutionSentence);
+                default: throw new ArgumentException("Invalid Level");
+            }
+        }
+        private static int CountTalents(this PaladinTalents t, PaladinTalents talents)
+        {
+            return NumberOfSetBits((int)(t & talents));
+        }
+        private static int NumberOfSetBits(int i)
+        {
+            // http://stackoverflow.com/questions/109023/best-algorithm-to-count-the-number-of-set-bits-in-a-32-bit-integer
+            i = i - ((i >> 1) & 0x55555555);
+            i = (i & 0x33333333) + ((i >> 2) & 0x33333333);
+            return (((i + (i >> 4)) & 0x0F0F0F0F) * 0x01010101) >> 24;
+        }
     }
 }

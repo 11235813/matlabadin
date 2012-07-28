@@ -345,6 +345,10 @@ namespace Matlabadin
             int hp = sm.HP(nextState);
             int availableHp = Math.Min(3, hp);
             int abilityCooldown = gp.AbilityCooldownInSteps(ability);
+            if (gp.Spec == PaladinSpec.Prot && ability == Ability.J && gp.Talents.Includes(PaladinTalents.SanctifiedWrath) && sm.TimeRemaining(state, Buff.AW) > 0)
+            {
+                abilityCooldown = 0;
+            }
             if (abilityCooldown > 0)
             {
                 nextState = sm.SetCooldownRemaining(nextState, ability, abilityCooldown);
@@ -383,19 +387,19 @@ namespace Matlabadin
                     if (hit)
                     {
                         nextState = sm.SetTimeRemaining(nextState, Buff.WB, gp.BuffDurationInSteps(Buff.WB));
-                        nextState = sm.IncHP(nextState);
+                        nextState = IncHP(sm, state, nextState);
                     }
                     break;
                 case Ability.CS:
                     if (hit)
                     {
-                        nextState = sm.IncHP(nextState);
+                        nextState = IncHP(sm, state, nextState);
                     }
                     break;
                 case Ability.J:
                     if (hit)
                     {
-                        nextState = sm.IncHP(nextState);
+                        nextState = IncHP(sm, state, nextState);
                         if (gp.Talents.Includes(PaladinTalents.SelflessHealer))
                         {
                             int shStacks = sm.Stacks(nextState, Buff.SH);
@@ -407,7 +411,7 @@ namespace Matlabadin
                 case Ability.AS:
                     if (sm.TimeRemaining(nextState, Buff.GC) > 0) // GC HP is on cast
                     {
-                        nextState = sm.IncHP(nextState);
+                        nextState = IncHP(sm, state, nextState);
                     }
                     nextState = sm.SetTimeRemaining(nextState, Buff.GC, 0);
                     break;
@@ -449,6 +453,16 @@ namespace Matlabadin
             if (gp.AbilityTriggersGcd(ability))
             {
                 nextState = sm.SetTimeRemaining(nextState, Buff.GCD, gp.StepsPerHastedGcd);
+            }
+            return nextState;
+        }
+        private static TState IncHP(IStateManager<TState> sm, TState state, TState nextState)
+        {
+            nextState = sm.IncHP(nextState);
+            if (sm.TimeRemaining(state, Buff.HA) > 0)
+            {
+                nextState = sm.IncHP(nextState);
+                nextState = sm.IncHP(nextState);
             }
             return nextState;
         }

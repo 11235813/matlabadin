@@ -53,7 +53,10 @@ namespace Matlabadin
         /// Divine Purpose
         /// </summary>
         DP,
-        // HA
+        /// <summary>
+        /// Holy Avenger
+        /// </summary>
+        HA,
         Count,
         UptimeTrackedUnforkedBuffs = SotRSB + 1,
         UptimeTrackedForkedBuffs = WB + 1,

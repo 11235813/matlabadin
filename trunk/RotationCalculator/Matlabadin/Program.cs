@@ -161,7 +161,7 @@ namespace Matlabadin
             Int64GraphParameters gp = new Int64GraphParameters(queue, spec, talents, stepsPerHastedGcd, haste, mehit, sphit);
 
             // report any approximation errors
-            if (!String.IsNullOrEmpty(gp.ApproximationErrors)) Console.Error.WriteLine("Warning: Inexact duration modelling: {0}", gp.ApproximationErrors);
+            if (!String.IsNullOrEmpty(gp.Warnings)) Console.Error.WriteLine("Model Warnings: {0}", gp.Warnings);
 
             // stopwatch for timing graph generation
             Stopwatch generateGraphStopWatch = new Stopwatch();
@@ -233,9 +233,9 @@ namespace Matlabadin
             stream.WriteLine("Param_Hit_Spell,{0}", gp.SpellHit);
 
             // write approximation errors to file (stream)
-            if (!String.IsNullOrWhiteSpace(gp.ApproximationErrors))
+            if (!String.IsNullOrWhiteSpace(gp.Warnings))
             {
-                foreach (string error in gp.ApproximationErrors.Split(';'))
+                foreach (string error in gp.Warnings.Split(';'))
                 {
                     if (!String.IsNullOrWhiteSpace(error))
                     {

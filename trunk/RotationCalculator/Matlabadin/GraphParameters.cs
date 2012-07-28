@@ -14,27 +14,32 @@ namespace Matlabadin
                 true, true, true, true, // CS, J, HoW, AS, 
                 true, true, false, // Cons, HW, AW,
                 true, true, true, // HPr, LH, ES,
+                false, // HA
                 true, // Count
             };
         private static readonly double[] DefaultUnhastedAbilityDuration = new double[] {
                 4.5, 6, 6, 15, // CS, J, HoW, AS,
                 9, 9, 180, // Cons, HW, AW,
                 20, 60, 60, // HPr, LH, ES,
+                120, // HA
             };
         private static readonly bool[] AbilityCooldownReducedByHaste = new bool[] {
                 true, true, true, false, // CS, J, HoW, AS,
                 true, true, false, // Cons, HW, AW,
                 false, false, false, // HPr, LH, ES
+                false, // HA
             };
         private static readonly double[] DefaultUnhastedBuffDuration = new double[] {
                 1.5, 30, 30, // GCD, EF, SS,
-                20, 3, 30, // AW, SotRSB, WB,   note: may need to adjust AW based on Sanctified Wrath talent (boosts it to 30s)
+                20, 3, 30, // AW, SotRSB, WB,
                 6.3, 15, 20, 8, // GC, SH, BoG, DP
+                15, // HA
             };
         private static readonly int[] DefaultMaximumBuffStacks = new int[] {
                 1, 1, 1,
                 1, 1, 1,
                 1, 3, 5, 1,
+                1,
             };
 
         // constructor, does some simple sanity testing and calculates haste-effected GCD/CDs
@@ -48,19 +53,30 @@ namespace Matlabadin
             double sphit = 1.0
             )
         {
-            // sanity checks -inputs
+            // sanity checks inputs
             if (spec == PaladinSpec.Holy) throw new NotImplementedException("No plans to implement Holy");
             if (spec == PaladinSpec.Ret) throw new NotImplementedException("Ret NYI. See http://code.google.com/p/matlabadin/issues/list for status and priority");
             if (haste > 0.5) throw new NotImplementedException("GCD clipping from >50% haste not yet implemented");
             
-            // sanity check on talents we haven't implemented yet
-            if ((talents & PaladinTalents.HolyAvenger) != PaladinTalents.None) throw new NotImplementedException("HolyAvenger NYI");
-            if ((talents & PaladinTalents.SanctifiedWrath) != PaladinTalents.None) throw new NotImplementedException("SanctifiedWrath NYI");
-            //if ((talents & PaladinTalents.DivinePurpose) != PaladinTalents.None) throw new NotImplementedException("DivinePurpose NYI");
+            this.Warnings = "";
+
+            // sanity check rotation with abilities
+            if (rotation.AbilitiesUsed.Contains(Ability.HPr) && !talents.Includes(PaladinTalents.HolyPrism)) this.Warnings += String.Format("Rotation contains {0} without {1}; ", Ability.HPr, PaladinTalents.HolyPrism);
+            if (rotation.AbilitiesUsed.Contains(Ability.LH) && !talents.Includes(PaladinTalents.LightsHammer)) this.Warnings += String.Format("Rotation contains {0} without {1}; ", Ability.LH, PaladinTalents.LightsHammer); ;
+            if (rotation.AbilitiesUsed.Contains(Ability.ES) && !talents.Includes(PaladinTalents.ExecutionSentence)) this.Warnings += String.Format("Rotation contains {0} without {1}; ", Ability.ES, PaladinTalents.ExecutionSentence); ;
+            if (rotation.AbilitiesUsed.Contains(Ability.HA) && !talents.Includes(PaladinTalents.HolyAvenger)) this.Warnings += String.Format("Rotation contains {0} without {1}; ", Ability.HA, PaladinTalents.HolyAvenger); ;
+            if (rotation.AbilitiesUsed.Contains(Ability.SS) && !talents.Includes(PaladinTalents.SacredShield)) this.Warnings += String.Format("Rotation contains {0} without {1}; ", Ability.SS, PaladinTalents.SacredShield); ;
+            if (rotation.AbilitiesUsed.Contains(Ability.EF) && !talents.Includes(PaladinTalents.EternalFlame)) this.Warnings += String.Format("Rotation contains {0} without {1}; ", Ability.EF, PaladinTalents.EternalFlame); ;
+
+            // Sanity check talents:
 
             // sanity check on L45 and L90 talents - make sure no more than one of each is used in the rotation
-            if (Convert.ToInt16(rotation.AbilitiesUsed.Contains(Ability.EF)) + Convert.ToInt16(rotation.AbilitiesUsed.Contains(Ability.SS)) > 1) throw new ArgumentException("Rotation contains more than one L45 Talent");
-            if (Convert.ToInt16(rotation.AbilitiesUsed.Contains(Ability.HPr)) + Convert.ToInt16(rotation.AbilitiesUsed.Contains(Ability.LH)) + Convert.ToInt16(rotation.AbilitiesUsed.Contains(Ability.ES)) > 1) throw new ArgumentException("Rotation contains more than one L90 talent");
+            if (talents.CountAtLevel(15) > 1) this.Warnings += String.Format("Rotation contains more than one L{0} talent; ", 15);
+            if (talents.CountAtLevel(30) > 1) this.Warnings += String.Format("Rotation contains more than one L{0} talent; ", 30);
+            if (talents.CountAtLevel(45) > 1) this.Warnings += String.Format("Rotation contains more than one L{0} talent; ", 45);
+            if (talents.CountAtLevel(60) > 1) this.Warnings += String.Format("Rotation contains more than one L{0} talent; ", 60);
+            if (talents.CountAtLevel(75) > 1) this.Warnings += String.Format("Rotation contains more than one L{0} talent; ", 75);
+            if (talents.CountAtLevel(90) > 1) this.Warnings += String.Format("Rotation contains more than one L{0} talent; ", 90);
 
             // commence construction
             this.Rotation = rotation;
@@ -73,10 +89,9 @@ namespace Matlabadin
 
             // set unhasted buff durations, account for talents and glyphs
             double[] talentedUnhastedBuffDuration = DefaultUnhastedBuffDuration.ToArray();
-            if (this.Talents.Includes(PaladinTalents.SanctifiedWrath)) talentedUnhastedBuffDuration[(int)Buff.AW] = 30;
+            // if (this.Talents.Includes(PaladinTalents.SanctifiedWrath)) talentedUnhastedBuffDuration[(int)Buff.AW] = 30; // 2012-07-12 blizzard calculator does not extend duration
             // insert GoHotR here
 
-            this.ApproximationErrors = "";
             this.stepDuration = 1.5 / (this.StepsPerHastedGcd * (1.0 + haste));
             this.isOnGcd = DefaultIsOnGcd;
             this.abilitySteps = DefaultUnhastedAbilityDuration
@@ -140,6 +155,10 @@ namespace Matlabadin
                     if (!this.Talents.Includes(PaladinTalents.DivinePurpose)) return 0;
                     if (!(this.Rotation.AbilitiesUsed.Contains(Ability.SotR) || this.Rotation.AbilitiesUsed.Contains(Ability.WoG) || this.Rotation.AbilitiesUsed.Contains(Ability.EF))) return 0;
                     break;
+                case Buff.HA:
+                    if (!this.Talents.Includes(PaladinTalents.HolyAvenger)) return 0;
+                    if (!this.Rotation.AbilitiesUsed.Contains(Ability.HA)) return 0;
+                    break;
                 default:
                     // If we haven't modelling it, we keep it
                     throw new NotImplementedException("Parameter preconditions to triggering this buff must be specified in GraphParameters.CalculateBuffDuration()");
@@ -166,7 +185,7 @@ namespace Matlabadin
             int rounded = roundingFunction(hastedDurationInSteps);
             if (hastedDurationInSteps != rounded)
             {
-                this.ApproximationErrors += String.Format("{0}s duration approximated to {1}s ({2} steps);",
+                this.Warnings += String.Format("{0}s duration approximated to {1}s ({2} steps);",
                     unhastedDurationInSeconds,
                     System.Math.Round(rounded * this.stepDuration, 4),
                     rounded
@@ -256,7 +275,7 @@ namespace Matlabadin
         /// <summary>
         /// Human-readable output of any errors resulting in inexact graph parameters
         /// </summary>
-        public string ApproximationErrors { get; private set; }
+        public string Warnings { get; private set; }
         #region parameters
         public RotationPriorityQueue<TState> Rotation { get; private set; }
         public PaladinTalents Talents { get; private set; }
