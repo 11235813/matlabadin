@@ -52,12 +52,6 @@ namespace Matlabadin.Tests
         }
         [Test]
         [ExpectedException(typeof(NotImplementedException))]
-        public void UnhandledMechanicsShouldThrowException_DivinePurpose()
-        {
-            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Prot, PaladinTalents.DivinePurpose, 3, 0, 1, 1);
-        }
-        [Test]
-        [ExpectedException(typeof(NotImplementedException))]
         public void UnhandledMechanicsShouldThrowException_BurdenOfGuilt()
         {
             GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Prot, PaladinTalents.BurdenOfGuilt, 3, 0, 1, 1);
@@ -160,7 +154,7 @@ namespace Matlabadin.Tests
         public void ApproximationErrors_Should_Be_Set_For_Inexact_modelling()
         {
             // 1 step per GCD does not model 20s AW duration exactly
-            Assert.IsFalse(String.IsNullOrEmpty(NoMiss(GP.Rotation.PriorityQueue, 1, 0).ApproximationErrors));
+            Assert.IsFalse(String.IsNullOrEmpty(NoMiss(GP.Rotation.PriorityQueue, 1, 0).Warnings));
         }
         [Test]
         public void PropertyValuesShouldCorrespondToConstructorArguments()

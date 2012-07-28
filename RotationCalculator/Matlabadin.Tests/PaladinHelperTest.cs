@@ -111,5 +111,18 @@ namespace Matlabadin.Tests
             Assert.IsFalse(PaladinTalents.ExecutionSentence.Includes(PaladinTalents.EternalFlame));
             Assert.IsFalse(PaladinTalents.None.Includes(PaladinTalents.EternalFlame));
         }
+        [Test]
+        public void PaladinTalents_CountAtLevel()
+        {
+            PaladinTalents talents = PaladinTalents.FistOfJustice
+                | PaladinTalents.SelflessHealer | PaladinTalents.EternalFlame
+                | PaladinTalents.HandOfPurity | PaladinTalents.UnbreakableSpirit | PaladinTalents.Clemency;
+            Assert.AreEqual(0, talents.CountAtLevel(15));
+            Assert.AreEqual(1, talents.CountAtLevel(30));
+            Assert.AreEqual(2, talents.CountAtLevel(45));
+            Assert.AreEqual(3, talents.CountAtLevel(60));
+            Assert.AreEqual(0, talents.CountAtLevel(75));
+            Assert.AreEqual(0, talents.CountAtLevel(90));
+        }
     }
 }
