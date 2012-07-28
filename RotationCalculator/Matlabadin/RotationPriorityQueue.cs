@@ -173,18 +173,18 @@ namespace Matlabadin
                 {
                     case Ability.SS:
                     case Ability.SotR:
-                        // Requires 3 HP to use
-                        conditions.Add((gp, sm, state) => sm.HP(state) >= 3);
+                        // Requires 3 HP or DP to use
+                        conditions.Add((gp, sm, state) => ( sm.HP(state) >= 3 || sm.TimeRemaining(state, Buff.DP) > 0 ));
                         // conditions.Add((gp, sm, state) => sm.TimeRemaining(state, Buff.SotRSB) == 0); // don't recast early - enable if recasts aren't additive
                         break;
                     case Ability.EF:
                     case Ability.WoG:
-                        // Requires 1 HP to use
-                        conditions.Add((gp, sm, state) => sm.HP(state) >= 1);
+                        // Requires 1 HP or DP to use
+                        conditions.Add((gp, sm, state) => (sm.HP(state) >= 1 || sm.TimeRemaining(state, Buff.DP) > 0) );
                         // no HP conditions on EF or WoG = default to 3 HP usage
                         if (!hpConditionEncountered)
                         {
-                            conditions.Add((gp, sm, state) => sm.HP(state) >= 3);
+                            conditions.Add((gp, sm, state) => ( sm.HP(state) >= 3 || sm.TimeRemaining(state, Buff.DP) > 0 ));
                         }
                         break;
                 }

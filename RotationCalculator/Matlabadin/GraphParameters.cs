@@ -29,12 +29,12 @@ namespace Matlabadin
         private static readonly double[] DefaultUnhastedBuffDuration = new double[] {
                 1.5, 30, 30, // GCD, EF, SS,
                 20, 3, 30, // AW, SotRSB, WB,   note: may need to adjust AW based on Sanctified Wrath talent (boosts it to 30s)
-                6.3, 15, 20 // GC, SH, BoG
+                6.3, 15, 20, 8, // GC, SH, BoG, DP
             };
         private static readonly int[] DefaultMaximumBuffStacks = new int[] {
                 1, 1, 1,
                 1, 1, 1,
-                1, 3, 5,
+                1, 3, 5, 1,
             };
 
         // constructor, does some simple sanity testing and calculates haste-effected GCD/CDs
@@ -56,7 +56,7 @@ namespace Matlabadin
             // sanity check on talents we haven't implemented yet
             if ((talents & PaladinTalents.HolyAvenger) != PaladinTalents.None) throw new NotImplementedException("HolyAvenger NYI");
             if ((talents & PaladinTalents.SanctifiedWrath) != PaladinTalents.None) throw new NotImplementedException("SanctifiedWrath NYI");
-            if ((talents & PaladinTalents.DivinePurpose) != PaladinTalents.None) throw new NotImplementedException("DivinePurpose NYI");
+            //if ((talents & PaladinTalents.DivinePurpose) != PaladinTalents.None) throw new NotImplementedException("DivinePurpose NYI");
 
             // sanity check on L45 and L90 talents - make sure no more than one of each is used in the rotation
             if (Convert.ToInt16(rotation.AbilitiesUsed.Contains(Ability.EF)) + Convert.ToInt16(rotation.AbilitiesUsed.Contains(Ability.SS)) > 1) throw new ArgumentException("Rotation contains more than one L45 Talent");
@@ -135,6 +135,10 @@ namespace Matlabadin
                     break;
                 case Buff.BoG:
                     if (!this.Rotation.AbilitiesUsed.Contains(Ability.SotR)) return 0;
+                    break;
+                case Buff.DP:
+                    if (!this.Talents.Includes(PaladinTalents.DivinePurpose)) return 0;
+                    if (!(this.Rotation.AbilitiesUsed.Contains(Ability.SotR) || this.Rotation.AbilitiesUsed.Contains(Ability.WoG) || this.Rotation.AbilitiesUsed.Contains(Ability.EF))) return 0;
                     break;
                 default:
                     // If we haven't modelling it, we keep it
@@ -247,6 +251,7 @@ namespace Matlabadin
             return !(hit1 == 1.0 ^ hit2 == 1.0) && !(hit1 == 0.0 ^ hit2 == 0.0);
         }
         public double GrandCrusaderProcRate { get { return this.Spec == PaladinSpec.Prot ? 0.2 : 0.0; } }
+        public double DivinePurposeProcRate { get { return (this.Spec == PaladinSpec.Prot && this.Talents.Includes(PaladinTalents.DivinePurpose)) ? 0.2 : 0.0; } }
         public double StepDuration { get { return stepDuration; } }
         /// <summary>
         /// Human-readable output of any errors resulting in inexact graph parameters
