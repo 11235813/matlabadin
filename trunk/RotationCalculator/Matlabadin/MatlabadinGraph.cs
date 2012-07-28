@@ -14,7 +14,7 @@ namespace Matlabadin
     /// values of hit.</remarks>
     public class MatlabadinGraph<TState>
     {
-        // default constructor
+        // default constructor, called from Program.GenerateGraph
         public MatlabadinGraph(GraphParameters<TState> gp, IStateManager<TState> sm)
         {
             this.GraphParameters = gp;
@@ -112,7 +112,7 @@ namespace Matlabadin
         public IStateManager<TState> StateManager { get; private set; }
 
         /// <summary>
-        /// Generates the state transition graph for the given graph parameters
+        /// Generates the state transition graph for the given graph parameters; called by the constructor, calls StateTransition.CalculateTransition
         /// </summary>
         private void GenerateGraph()
         {

@@ -33,8 +33,9 @@ namespace Matlabadin
         /// Choice associated with the <see cref="StatePostAbility"/> next states
         /// </summary>
         public Choice Choice { get; private set; }
+
         /// <summary>
-        /// Calculates the state transitions from the given state
+        /// Calculates the state transitions from the given state; this is called from MatlabadinGraph.GenerateGraph()
         /// </summary>
         /// <param name="gp">Graph Parameters</param>
         /// <param name="sm">State Manager</param>
@@ -45,6 +46,7 @@ namespace Matlabadin
             IStateManager<TState> sm,
             TState state)
         {
+            // this calls the constructors below to create the StateTransition object
             StateTransition<TState> transition = new StateTransition<TState>(gp, sm, state);
             // Coalesse consecutive single-choice transitions
             List<TState> concatenatedTransitions = null;
@@ -85,8 +87,9 @@ namespace Matlabadin
             }
             return transition;
         }
+
         /// <summary>
-        /// Creates a StateTransition object from the given state
+        /// Creates a StateTransition object from the given state, called from StateTransition.CalculateTransition
         /// </summary>
         /// <param name="gp">Graph Parameters</param>
         /// <param name="sm">State Manager</param>
@@ -97,12 +100,13 @@ namespace Matlabadin
             TState state)
             : this(
                 gp,
-            sm,
-            state,
-            // Use the graph parameter rotation to determine the action to
-            gp.Rotation.ActionToTake(gp, sm, state))
+                sm,
+                state,
+                // Use the graph parameter rotation to determine the action to
+                gp.Rotation.ActionToTake(gp, sm, state))
         {
         }
+        // This constructor is called by the above one (note the different arguments), and it calls CalculateStateTransition
         public StateTransition(
             GraphParameters<TState> gp,
             IStateManager<TState> sm,
@@ -115,8 +119,9 @@ namespace Matlabadin
             SanityCheck();
 #endif
         }
+
         /// <summary>
-        /// Calculates the state transition state and choice information based on the <see cref="StateInitial"/> state.
+        /// Calculates the state transition state and choice information based on the <see cref="StateInitial"/> state.  Called from the constructor above
         /// </summary>
         /// <param name="gp">Graph Parameters</param>
         /// <param name="sm">State Manager</param>
@@ -187,11 +192,13 @@ namespace Matlabadin
                 ability == Ability.FoL ? sm.Stacks(StatePreAbility, Buff.SH) : 0,
                 ability == Ability.WoG ? sm.Stacks(StatePreAbility, Buff.BoG) : 0,
                 sm.TimeRemaining(StatePreAbility, Buff.AW) > 0,
+                sm.TimeRemaining(StatePreAbility, Buff.DP) > 0,
                 unforkedBuffSteps,
                 forkedBuffSteps);
         }
+
         /// <summary>
-        /// Calculates the set of possible states as a result of using the given ability
+        /// Calculates the set of possible states as a result of using the given ability, called from CalculateStateTransition
         /// </summary>
         /// <param name="gp">Graph Parameters</param>
         /// <param name="sm">State Manager</param>
@@ -222,12 +229,14 @@ namespace Matlabadin
                     StatePostAbility = new TState[]
                     {
                         UseAbility(gp, sm, StatePreAbility, ability, false), // miss
-                        UseAbility(gp, sm, StatePreAbility, ability, true), // hit
+                        UseAbility(gp, sm, StatePreAbility, ability, true), // hit & no DivPurp
+                        UseAbility(gp, sm, StatePreAbility, ability, true, dpProc: true), // hit & DivPurp
                     };
                     pr = new double[]
                     {
                         1 - gp.MeleeHit,
-                        gp.MeleeHit,
+                        gp.MeleeHit * (1-gp.DivinePurposeProcRate),
+                        gp.MeleeHit * gp.DivinePurposeProcRate,
                     };
                     break;
                 case Ability.J:
@@ -243,13 +252,24 @@ namespace Matlabadin
                         gp.SpellHit,
                     };
                     break;
+                case Ability.WoG:
+                case Ability.EF:
+                    StatePostAbility = new TState[]
+                    {
+                        UseAbility(gp, sm, StatePreAbility, ability, false), // no DivPurp
+                        UseAbility(gp, sm, StatePreAbility, ability, false, dpProc: true), // DivPurp
+                    };
+                    pr = new double[]
+                    {
+                        1 - gp.DivinePurposeProcRate,
+                        gp.DivinePurposeProcRate,
+                    };
+                    break;
                 // Can't miss
                 case Ability.Cons:
                 case Ability.HW:
                 case Ability.HoW:
                 case Ability.Nothing:
-                case Ability.WoG:
-                case Ability.EF:
                 case Ability.SS:
                 case Ability.FoL:
                 case Ability.AW:
@@ -316,7 +336,8 @@ namespace Matlabadin
             TState state,
             Ability ability,
             bool hit = true,
-            bool gcProc = false)
+            bool gcProc = false,
+            bool dpProc = false)
         {
             if (sm.CooldownRemaining(state, ability) > 0) throw new InvalidOperationException(String.Format("Attempting to use {0} whilest still on cooldown", ability));
             if (gp.AbilityOnGcd(ability) && sm.TimeRemaining(state, Buff.GCD) > 0) throw new InvalidOperationException(String.Format("Attempting to use {0} before GCD complete", ability));
@@ -331,24 +352,32 @@ namespace Matlabadin
             switch (ability)
             {
                 case Ability.WoG:
-                    nextState = sm.SetHP(nextState, hp - availableHp);
-                    //TODO: Divine Purpose code goes here
+                    if (sm.TimeRemaining(nextState, Buff.DP) > 0) // Consume DP first
+                    {
+                        nextState = sm.SetTimeRemaining(nextState, Buff.DP, 0);
+                    }
+                    else  // otherwise use HP
+                    {
+                        nextState = sm.SetHP(nextState, hp - availableHp);
+                    }
                     break;
                 case Ability.SotR:
-                    if (availableHp < 3) throw new InvalidOperationException("SotR cast with less than 3 HP");
-                    // use HP (always)
-                    nextState = sm.SetHP(nextState, hp - availableHp);
+                    if ((availableHp < 3) && (sm.TimeRemaining(nextState, Buff.DP) == 0) ) throw new InvalidOperationException("SotR cast with less than 3 HP and no DP");
+                    // use HP or DP (always)
+                    if (sm.TimeRemaining(nextState, Buff.DP) > 0) // Consume DP first
+                    {
+                        nextState = sm.SetTimeRemaining(nextState, Buff.DP, 0);
+                    }
+                    else // otherwise use HP
+                    {
+                        nextState = sm.SetHP(nextState, hp - availableHp);
+                    }
                     // reset SotRSB duration to full
                     nextState = sm.SetTimeRemaining(nextState, Buff.SotRSB, gp.BuffDurationInSteps(Buff.SotRSB));
                     // set BoG duration to full, increment stacks
                     int bogStacks = sm.Stacks(nextState, Buff.BoG);
                     nextState = sm.SetTimeRemaining(nextState, Buff.BoG, gp.BuffDurationInSteps(Buff.BoG));
                     nextState = sm.SetStacks(nextState, Buff.BoG, Math.Min(bogStacks + 1, gp.MaxBuffStacks(Buff.BoG)));
-                    // if it hits, we have the chance for divine purpose
-                    if (hit)
-                    {
-                        // TODO: Divine Purpose code goes here
-                    }
                     break;
                 case Ability.HotR:
                     if (hit)
@@ -386,7 +415,14 @@ namespace Matlabadin
                     nextState = sm.SetTimeRemaining(nextState, Buff.SS, gp.BuffDurationInSteps(Buff.SS));
                     break;
                 case Ability.EF:
-                    nextState = sm.SetHP(nextState, hp - availableHp);
+                    if (sm.TimeRemaining(nextState, Buff.DP) > 0)
+                    {
+                        nextState = sm.SetTimeRemaining(nextState, Buff.DP, 0);
+                    }
+                    else
+                    {
+                        nextState = sm.SetHP(nextState, hp - availableHp);
+                    }
                     nextState = sm.SetTimeRemaining(nextState, Buff.EF, gp.BuffDurationInSteps(Buff.EF));
                     // TODO efStacks = availableHp
                     break;
@@ -401,6 +437,14 @@ namespace Matlabadin
             {
                 nextState = sm.SetCooldownRemaining(nextState, Ability.AS, 0);
                 nextState = sm.SetTimeRemaining(nextState, Buff.GC, gp.BuffDurationInSteps(Buff.GC));
+            }
+            if (dpProc)
+            {
+                if (gp.Talents.Includes(PaladinTalents.DivinePurpose)) // this might be unnecessary since we set the proc rate to 0 in GraphParameters if untalented
+                {
+                    nextState = sm.SetTimeRemaining(nextState, Buff.DP, gp.BuffDurationInSteps(Buff.DP));
+                }
+
             }
             if (gp.AbilityTriggersGcd(ability))
             {
