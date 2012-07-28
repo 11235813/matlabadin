@@ -345,13 +345,14 @@ namespace Matlabadin
             int hp = sm.HP(nextState);
             int availableHp = Math.Min(3, hp);
             int abilityCooldown = gp.AbilityCooldownInSteps(ability);
-            if (gp.Spec == PaladinSpec.Prot && ability == Ability.J && gp.Talents.Includes(PaladinTalents.SanctifiedWrath) && sm.TimeRemaining(state, Buff.AW) > 0)
-            {
-                abilityCooldown = 0;
-            }
             if (abilityCooldown > 0)
             {
                 nextState = sm.SetCooldownRemaining(nextState, ability, abilityCooldown);
+            }
+            if (gp.Spec == PaladinSpec.Prot && ability == Ability.J && gp.Talents.Includes(PaladinTalents.SanctifiedWrath) && sm.TimeRemaining(state, Buff.AW) > 0)
+            {
+                // reduce CD by 50%
+                abilityCooldown /=2 ;
             }
             switch (ability)
             {

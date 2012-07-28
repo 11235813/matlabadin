@@ -89,7 +89,7 @@ namespace Matlabadin
 
             // set unhasted buff durations, account for talents and glyphs
             double[] talentedUnhastedBuffDuration = DefaultUnhastedBuffDuration.ToArray();
-            // if (this.Talents.Includes(PaladinTalents.SanctifiedWrath)) talentedUnhastedBuffDuration[(int)Buff.AW] = 30; // 2012-07-12 blizzard calculator does not extend duration
+            if (this.Talents.Includes(PaladinTalents.SanctifiedWrath)) talentedUnhastedBuffDuration[(int)Buff.AW] = 30;
             // insert GoHotR here
 
             this.stepDuration = 1.5 / (this.StepsPerHastedGcd * (1.0 + haste));
