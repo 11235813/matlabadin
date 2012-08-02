@@ -60,7 +60,7 @@ splash.Censure=     0;
 label.Censure=      'Censure';
 
 %Seal of Righteousness - now seal of cleave 
-raw.SealofRighteousness=    0.05.*player.ndamage.*mdf.spdmg;
+raw.SealofRighteousness=    0.07.*player.ndamage.*mdf.spdmg;
 dmg.SealofRighteousness=    raw.SealofRighteousness.*mdf.phcrit.*target.resrdx; %automatical connect
 heal.SealofRighteousness=   0;
 threat.SealofRighteousness= 0; %wowdb flag - generates no threat

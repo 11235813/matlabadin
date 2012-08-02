@@ -69,7 +69,15 @@ namespace Matlabadin
         // process input parameters
         private static void ProcessParams(string[] args)
         {
-            if (args.Length != 9) Usage();
+            if (args.Length != 9) 
+            { 
+                Console.Error.WriteLine("Warning: fsm.exe expected 9 inputs, got {0}", args.Length);
+                for (int temp = 0; temp <= args.Length; temp++)
+                {
+                    Console.Error.WriteLine("Arg # {0}: " + args[temp].ToString(), temp);
+                }
+                Usage(); 
+            }
             string rotation;
             int stepsPerHastedGcd;
             PaladinTalents talents;
@@ -77,14 +85,14 @@ namespace Matlabadin
             double haste, mehit, sphit;
             Buff[] permanentBuffs;
             rotation = args[0];
-            // "Matlabadin.exe <rotation> <spec> <talents> <stepsPerGcd> <haste> <mehit> <sphit> [<outputfile>]" + Environment.NewLine
-            //                      0       1       2           3           4       5       6        7
-            if (!PaladinSpecHelper.TryParse(args[1], out spec)) Usage();
-            if (!PaladinTalentsHelper.TryParse(args[2], out talents)) Usage();
-            if (!Int32.TryParse(args[3], out stepsPerHastedGcd)) Usage();
-            if (!Double.TryParse(args[4], out haste)) Usage();
-            if (!Double.TryParse(args[5], out mehit)) Usage();
-            if (!Double.TryParse(args[6], out sphit)) Usage();
+            // "Matlabadin.exe <rotation> <spec> <talents> <stepsPerGcd> <haste> <mehit> <sphit> <permanentBuffs> [<outputfile>]" + Environment.NewLine
+            //                      0       1       2           3           4       5       6          7                 8
+            if (!PaladinSpecHelper.TryParse(args[1], out spec)) { Console.Error.WriteLine("Warning: spec '{0}' failed to parse", spec.ToString()); Usage(); }
+            if (!PaladinTalentsHelper.TryParse(args[2], out talents)) { Console.Error.WriteLine("Warning: talents '{0}' failed to parse", talents.ToString()); Usage(); }
+            if (!Int32.TryParse(args[3], out stepsPerHastedGcd)) { Console.Error.WriteLine("Warning: stepsPerHastedGCD '{0}' failed to parse", stepsPerHastedGcd.ToString()); Usage(); }
+            if (!Double.TryParse(args[4], out haste)) { Console.Error.WriteLine("Warning: haste '{0}' failed to parse", haste.ToString()); Usage(); }
+            if (!Double.TryParse(args[5], out mehit)) { Console.Error.WriteLine("Warning: mehit '{0}' failed to parse", mehit.ToString()); Usage(); }
+            if (!Double.TryParse(args[6], out sphit)) { Console.Error.WriteLine("Warning: sphit '{0}' failed to parse", sphit.ToString()); Usage(); }
             permanentBuffs = ParseBuffs(args[7]);
             string file = args[8];
             ProcessGraph(file, rotation, spec, talents, stepsPerHastedGcd, haste, mehit, sphit, permanentBuffs);

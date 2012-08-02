@@ -1,4 +1,4 @@
-function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = memoized_fsm(rotation, spec, talentString, decimalHaste, mehit, sphit)
+function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = memoized_fsm(rotation, spec, talentString, decimalHaste, mehit, sphit, pBuffs)
     global fsm_cache_actionPr;
     global fsm_cache_efUptime;
     global fsm_cache_ssUptime;
@@ -23,25 +23,7 @@ function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime
         fsm_cache_gcdUptime= {};
     end
 	
-    rotationKey = rotation;
-    rotationKey = strrep(rotationKey, '[', '');
-    rotationKey = strrep(rotationKey, ']', '_');
-    rotationKey = strrep(rotationKey, '.', '_');    
-    rotationKey = strrep(rotationKey, '>=', 'ge');
-    rotationKey = strrep(rotationKey, '<=', 'le');
-    rotationKey = strrep(rotationKey, '==', 'eq');
-    rotationKey = strrep(rotationKey, '=', 'eq');
-    rotationKey = strrep(rotationKey, '<', 'lt');
-    rotationKey = strrep(rotationKey, '>', '_');
-    rotationKey = strrep(rotationKey, '*', 'star');
-    rotationKey = strrep(rotationKey, '''', 'prime');
-    rotationKey = strrep(rotationKey, '+', 'plus');
-    rotationKey = strrep(rotationKey, '^', 'up');
-    rotationKey = strrep(rotationKey, '#', 'num');
-    spectalKey = [spec '_' talentString];
-    optionsKey = sprintf('T%g_%0.5f_%0.5f_%0.5f', fsm_steps_per_gcd(), decimalHaste, mehit, sphit);
-    optionsKey = strrep(optionsKey,'_1.00000','_1_');
-    optionsKey = strrep(optionsKey,'_0.','_');
+    [rotationKey spectalKey optionsKey]=fsm_key(rotation, spec, talentString, decimalHaste, mehit, sphit, pBuffs);
     % check memory cache
     if isfield(fsm_cache_actionPr, rotationKey) && isfield(fsm_cache_actionPr.(rotationKey), spectalKey) && isfield(fsm_cache_actionPr.(rotationKey).(spectalKey), optionsKey)
         % warning('using cached result');
@@ -54,7 +36,7 @@ function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime
         gcdUptime = fsm_cache_gcdUptime.(rotationKey).(spectalKey).(optionsKey);
         return;
     end
-    fileCell = fsm_gen(rotation, spec, talentString, decimalHaste, mehit, sphit);
+    fileCell = fsm_gen(rotation, spec, talentString, decimalHaste, mehit, sphit, pBuffs);
     filename = fileCell{1};
     % read from the data file
     [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = load_fsm_csv(filename);

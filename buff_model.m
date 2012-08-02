@@ -90,12 +90,17 @@ buff.BLust=((mode==0&&(isempty(item)||isempty(regexpi(item,'BLust'))))||mode==3 
 %Thorns
 buff.Thorns=((mode==0&&(isempty(item)||isempty(regexpi(item,'Thorns'))))||mode==3 ...
     ||(mode==4&&((~isempty(item))&&(~isempty(regexpi(item,'Thorns'))))));
-%Avenging Wrath
-buff.AvWr=((mode==0&&(isempty(item)||isempty(regexpi(item,'AvWr')))) ...
-    ||mode==2||mode==3||mode==4);
 %Righteous Fury
 buff.RFury=((mode==0&&(isempty(item)||isempty(regexpi(item,'RFury')))) ...
     ||mode==2||mode==3||mode==4);
+
+%% Temporary effects
+%handled as permanent buffs 
+%TODO: add Bloodlust here
+%Avenging Wrath
+buff.AvWr=(~isempty(item) && ~isempty(regexpi(item,'AvWr')));
+%Holy Avenger
+buff.HoAv=(~isempty(item) && ~isempty(regexpi(item,'HoAv')));
 
 %% Player debuffs
 %Chill_up=0; %PLACEHOLDER
