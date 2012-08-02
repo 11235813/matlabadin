@@ -1,5 +1,5 @@
-function [generatedFile] = fsm_gen(rotation, spec, talentString, decimalHasteArray, mehitArray, sphitArray)
-%fsm_gen calculates fsm for each mehit, rhit, and decimalHaste
+function [generatedFile] = fsm_gen(rotation, spec, talentString, decimalHasteArray, mehitArray, sphitArray, pBuffs)
+%fsm_gen calculates fsm for each mehit, sphit, and decimalHaste
 % call memoized_fsm to return the actual fsm data
 
 % check source timestamp
@@ -38,32 +38,16 @@ for i=1:arrLength
         mehit = mehitArray;
     end
     if length(sphitArray) > 1
-        rhit = sphitArray(i);
+        sphit = sphitArray(i);
     else
-        rhit = sphitArray;
+        sphit = sphitArray;
     end
     if length(decimalHasteArray) > 1
         decimalHaste = decimalHasteArray(i);
     else
         decimalHaste = decimalHasteArray;
     end
-    rotationKey = rotation;
-    rotationKey = strrep(rotationKey, '[', '');
-    rotationKey = strrep(rotationKey, ']', '_');
-    rotationKey = strrep(rotationKey, '.', '_');
-    rotationKey = strrep(rotationKey, '>=', 'ge');
-    rotationKey = strrep(rotationKey, '<=', 'le');
-    rotationKey = strrep(rotationKey, '==', 'eq');
-    rotationKey = strrep(rotationKey, '=', 'eq');
-    rotationKey = strrep(rotationKey, '<', 'lt');
-    rotationKey = strrep(rotationKey, '>', '_');
-    rotationKey = strrep(rotationKey, '*', 'star');
-    rotationKey = strrep(rotationKey, '''', 'prime');
-    rotationKey = strrep(rotationKey, '+', 'plus');
-    spectalKey = [spec '_' talentString];
-    optionsKey = sprintf('T%g_%0.5f_%0.5f_%0.5f', fsm_steps_per_gcd(), decimalHaste, mehit, rhit);
-    optionsKey = strrep(optionsKey,'_1.00000','_1_');
-    optionsKey = strrep(optionsKey,'_0.','_');
+    [rotationKey spectalKey optionsKey]=fsm_key(rotation, spec, talentString, decimalHaste, mehit, sphit, pBuffs);
     dirname = strcat('data\\', rotationKey,'\\',spectalKey);
     filename = strcat(dirname, '\\', optionsKey, '.csv');
     % skip generation if the file already exists
@@ -72,8 +56,8 @@ for i=1:arrLength
             mkdir(dirname);
         end
                 
-        fprintf(argfid, '%s %s %s %g %f %f %f %s \n', ...
-            rotation, spec, talentString, fsm_steps_per_gcd(), decimalHaste, mehit, rhit, filename);
+        fprintf(argfid, '%s %s %s %g %f %f %f %s %s', ...
+            rotation, spec, talentString, fsm_steps_per_gcd(), decimalHaste, mehit, sphit, pBuffs, filename);
         generationRequired = 1;
     end
     generatedFile{i} = filename;
