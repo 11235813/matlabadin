@@ -69,12 +69,13 @@ namespace Matlabadin
         // process input parameters
         private static void ProcessParams(string[] args)
         {
-            if (args.Length < 6) Usage();
+            if (args.Length != 9) Usage();
             string rotation;
             int stepsPerHastedGcd;
             PaladinTalents talents;
             PaladinSpec spec;
             double haste, mehit, sphit;
+            Buff[] permanentBuffs;
             rotation = args[0];
             // "Matlabadin.exe <rotation> <spec> <talents> <stepsPerGcd> <haste> <mehit> <sphit> [<outputfile>]" + Environment.NewLine
             //                      0       1       2           3           4       5       6        7
@@ -84,10 +85,23 @@ namespace Matlabadin
             if (!Double.TryParse(args[4], out haste)) Usage();
             if (!Double.TryParse(args[5], out mehit)) Usage();
             if (!Double.TryParse(args[6], out sphit)) Usage();
-            string file = args.Length >= 8 ? args[7] : null;
-            ProcessGraph(file, rotation, spec, talents, stepsPerHastedGcd, haste, mehit, sphit);
+            permanentBuffs = ParseBuffs(args[7]);
+            string file = args[8];
+            ProcessGraph(file, rotation, spec, talents, stepsPerHastedGcd, haste, mehit, sphit, permanentBuffs);
         }
-        
+        private static Buff[] ParseBuffs(string commaSeparatedBuffList)
+        {
+            return (commaSeparatedBuffList ?? "")
+                .Split(',')
+                .Where(s => !String.IsNullOrWhiteSpace(s))
+                .Select(s =>
+                {
+                    Buff b;
+                    if (!Enum.TryParse<Buff>(s, out b)) throw new ArgumentException(String.Format("Cannot parse '{0}': unknown buff", s));
+                    return b;
+                })
+                .ToArray();
+        }
         // program build time for determining when to flush data
         private static DateTime BuildTime = new FileInfo(typeof(Program).Assembly.Location).CreationTime;
 
@@ -100,11 +114,12 @@ namespace Matlabadin
             int stepsPerHastedGcd,
             double haste,
             double mehit,
-            double sphit)
+            double sphit,
+            Buff[] permanentBuffs)
         {
             if (file == null)
             {
-                ProcessGraph(Console.Out, rotation, spec, talents, stepsPerHastedGcd, haste, mehit, sphit);
+                ProcessGraph(Console.Out, rotation, spec, talents, stepsPerHastedGcd, haste, mehit, sphit, permanentBuffs);
             }
             else
             {
@@ -131,7 +146,7 @@ namespace Matlabadin
                 }
                 using (StringWriter sw = new StringWriter())
                 {
-                    ProcessGraph(sw, rotation, spec, talents, stepsPerHastedGcd, haste, mehit, sphit);
+                    ProcessGraph(sw, rotation, spec, talents, stepsPerHastedGcd, haste, mehit, sphit, permanentBuffs);
                     File.WriteAllText(file, sw.ToString());
                 }
             }
@@ -146,7 +161,8 @@ namespace Matlabadin
             int stepsPerHastedGcd,
             double haste,
             double mehit,
-            double sphit)
+            double sphit,
+            Buff[] permanentBuffs)
         {
             // sanity checks on inputs
             if (mehit < BaseMeleeHit) Console.Error.WriteLine("Warning: {0} melee hit would require negative hit rating", mehit);
@@ -158,7 +174,7 @@ namespace Matlabadin
             RotationPriorityQueue<BitVectorState> queue = new RotationPriorityQueue<BitVectorState>(rotation);
 
             // create new GraphParameters object - contains basic graph parameter info, calculates ability/buff cooldowns/durations, shape comparisons, etc.
-            Int64GraphParameters gp = new Int64GraphParameters(queue, spec, talents, stepsPerHastedGcd, haste, mehit, sphit);
+            Int64GraphParameters gp = new Int64GraphParameters(queue, spec, talents, stepsPerHastedGcd, haste, mehit, sphit, permanentBuffs);
 
             // report any approximation errors
             if (!String.IsNullOrEmpty(gp.Warnings)) Console.Error.WriteLine("Model Warnings: {0}", gp.Warnings);
@@ -295,14 +311,16 @@ namespace Matlabadin
         // this is the error message that occurs if the fsm.exe inputs are incorrect
         public static void Usage()
         {
-            string message = "Matlabadin.exe <rotation> <spec> <talents> <stepsPerHastesGcd> <haste> <mehit> <sphit> [<outputfile>]" + Environment.NewLine
+            string message = "Matlabadin.exe <rotation> <spec> <talents> <stepsPerHastesGcd> <haste> <mehit> <sphit> <buffs> <outputfile>" + Environment.NewLine
                 + "Multiple parrallel executions can be performed by inputting multiple lines with each line containing the argument format as above." + Environment.NewLine
                 + "\t<spec>: Holy, Prot or Ret" + Environment.NewLine
                 + "\t<talents>: 6 digit string indicating the talent position in the calculator: 000000 = no talents, 001000 = Selfless Healer, 002000 = Eternal Flame, 002003 = EF & Execution Sentence, etc" + Environment.NewLine
                 + "\t<stepsPerGcd>: Steps per 1.5s interval" + Environment.NewLine
                 + "\t<haste>: Paper-doll haste. 0.5 haste = 50% = 1.0s hasted GCD" + Environment.NewLine
                 + "\t<mehit>: Melee hit. 0.0 = 100% miss rate, 1.0 = 0% miss rate" + Environment.NewLine
-                + "\t<sphit>: Spell hit. 0.0 = 100% miss rate, 1.0 = 0% miss rate" + Environment.NewLine;
+                + "\t<sphit>: Spell hit. 0.0 = 100% miss rate, 1.0 = 0% miss rate" + Environment.NewLine
+                + "\t<buffs>: comma-separated list of buffs to consider permanent" + Environment.NewLine
+                + "\t<outputfile>: file to write output to." + Environment.NewLine;
             Console.WriteLine(message);
             Console.Error.WriteLine(message);
             Environment.Exit(1);

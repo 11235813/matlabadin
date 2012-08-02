@@ -48,15 +48,17 @@ namespace Matlabadin
             int stepsPerHastedGcd,
             double haste,
             double mehit,
-            double sphit)
+            double sphit,
+            Buff[] permanentBuffs = null)
             : base(
-            rotation,
-            spec,
-            talents,
-            stepsPerHastedGcd,
-            haste,
-            mehit,
-            sphit)
+                rotation,
+                spec,
+                talents,
+                stepsPerHastedGcd,
+                haste,
+                mehit,
+                sphit,
+                permanentBuffs)
         {
             CalculateBitOffsets();
         }
@@ -96,6 +98,7 @@ namespace Matlabadin
             {
                 BuffDurationStartBit[i] = buffBitsUsed;
                 int cd = BuffDurationInSteps((Buff)i);
+                if (base.minBuffDuration[(int)i] > 0) cd = 0; // remove permanent buffs from state
                 while (1 << BuffDurationBits[i] <= cd) BuffDurationBits[i]++;
                 buffBitsUsed += BuffDurationBits[i];
             }
@@ -139,10 +142,12 @@ namespace Matlabadin
         /// <returns>Time remaining in ms.</returns>
         public int TimeRemaining(BitVectorState state, Buff buff)
         {
-            return Unpack(state.buff, BuffDurationStartBit[(int)buff], BuffDurationBits[(int)buff]);
+            return Unpack(state.buff, BuffDurationStartBit[(int)buff], BuffDurationBits[(int)buff])
+                + base.minBuffDuration[(int)buff];
         }
         public BitVectorState SetTimeRemaining(BitVectorState state, Buff buff, int value)
         {
+            if (base.minBuffDuration[(int)buff] > 0) return state; // bypass for permanent buffs
             int numBits = BuffDurationBits[(int)buff];
 #if !NOSANITYCHECKS
             if (value >= 1 << numBits) throw new ArgumentException(String.Format("Duration of {0} steps does not fit into {1} bits assigned to buff {2}", value, numBits, buff));

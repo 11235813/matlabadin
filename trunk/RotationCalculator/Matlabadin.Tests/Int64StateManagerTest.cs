@@ -15,7 +15,8 @@ namespace Matlabadin.Tests
             {
                 return new Int64GraphParameters(R, PaladinSpec.Prot,
                     PaladinTalents.SelflessHealer | PaladinTalents.EternalFlame | PaladinTalents.SacredShield |
-                    PaladinTalents.ExecutionSentence | PaladinTalents.LightsHammer |PaladinTalents.HolyPrism,
+                    PaladinTalents.ExecutionSentence | PaladinTalents.LightsHammer |PaladinTalents.HolyPrism |
+                    PaladinTalents.DivinePurpose,
                     3, 0, 0.5, 0.5);
             }
         }

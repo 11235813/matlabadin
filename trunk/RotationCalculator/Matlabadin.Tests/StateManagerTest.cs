@@ -112,10 +112,12 @@ namespace Matlabadin.Tests
             Assert.IsTrue(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetHP(StateManager.InitialState(), 3)));
             for (int i = 0; i < (int)Buff.Count; i++)
             {
+                if ((Buff)i == Buff.HA) continue; // ignore HA since we can't fit in the the state space
                 Assert.IsTrue(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetTimeRemaining(StateManager.InitialState(), (Buff)i, 1)));
             }
             for (int i = (int)Ability.CooldownIndicator + 1; i < (int)Ability.Count; i++)
             {
+                if ((Ability)i == Ability.HA) continue; // ignore HA since we can't fit in the the state space
                 Assert.IsFalse(StateManager.ZeroCooldownRemainingForAllAbilities(StateManager.SetCooldownRemaining(StateManager.InitialState(), (Ability)i, 1)));
             }
             Assert.IsFalse(StateManager.ZeroCooldownRemainingForAllAbilities(
@@ -125,7 +127,6 @@ namespace Matlabadin.Tests
         [Test]
         public void StacksShouldRoundtrip()
         {
-            // Only SH has stacks
             T state;
             state = StateManager.SetTimeRemaining(StateManager.InitialState(), Buff.SH, 1);
             state = StateManager.SetStacks(state, Buff.SH, 2);
@@ -138,6 +139,7 @@ namespace Matlabadin.Tests
         {
             for (int i = 0; i < (int)Buff.Count; i++)
             {
+                if ((Buff)i == Buff.HA) continue; // ignore HA since we can't fit in the the state space
                 Assert.AreEqual(1, StateManager.Stacks(StateManager.SetTimeRemaining(StateManager.InitialState(), (Buff)i, 1), (Buff)i));
             }
         }
@@ -147,6 +149,7 @@ namespace Matlabadin.Tests
             T state;
             for (int i = 0; i < (int)Buff.Count; i++)
             {
+                if ((Buff)i == Buff.HA) continue; // ignore HA since we can't fit in the the state space
                 state = StateManager.SetTimeRemaining(StateManager.InitialState(), (Buff)i, 1);
                 state = StateManager.AdvanceTime(state, 1);
                 Assert.AreEqual(0, StateManager.Stacks(state, (Buff)i));
@@ -168,6 +171,7 @@ namespace Matlabadin.Tests
             T state;
             for (int i = 0; i < (int)Buff.Count; i++)
             {
+                if ((Buff)i == Buff.HA) continue; // ignore HA since we can't fit in the the state space
                 state = StateManager.SetTimeRemaining(StateManager.InitialState(), (Buff)i, 1);
                 state = StateManager.SetStacks(state, (Buff)i, 0);
                 Assert.AreEqual(0, StateManager.TimeRemaining(state, (Buff)i));
