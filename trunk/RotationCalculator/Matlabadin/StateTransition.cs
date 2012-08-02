@@ -276,6 +276,7 @@ namespace Matlabadin
                 case Ability.HPr:
                 case Ability.LH:
                 case Ability.ES:
+                case Ability.HA:
                     StatePostAbility = new TState[]
                     {
                         UseAbility(gp, sm, StatePreAbility, ability),
@@ -436,6 +437,9 @@ namespace Matlabadin
                     break;
                 case Ability.AW:
                     nextState = sm.SetTimeRemaining(nextState, Buff.AW, gp.BuffDurationInSteps(Buff.AW));
+                    break;
+                case Ability.HA:
+                    nextState = sm.SetTimeRemaining(nextState, Buff.HA, gp.BuffDurationInSteps(Buff.HA));
                     break;
             }
             if (gcProc)
