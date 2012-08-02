@@ -50,7 +50,8 @@ namespace Matlabadin
             int stepsPerHastedGcd = 3,
             double haste = 0.0,
             double mehit = 1.0,
-            double sphit = 1.0
+            double sphit = 1.0,
+            Buff[] permanentBuffs = null
             )
         {
             // sanity checks inputs
@@ -86,6 +87,7 @@ namespace Matlabadin
             this.Haste = haste;
             this.MeleeHit = mehit;
             this.SpellHit = sphit;
+            this.PermanentBuffs = (permanentBuffs ?? new Buff[0]).OrderBy(x => (int)x).Distinct().ToArray();
 
             // set unhasted buff durations, account for talents and glyphs
             double[] talentedUnhastedBuffDuration = DefaultUnhastedBuffDuration.ToArray();
@@ -101,6 +103,7 @@ namespace Matlabadin
                 .Select((cd, i) => CalculateBuffDuration((Buff)i, cd))
                 .ToArray();
             this.buffStacks = DefaultMaximumBuffStacks;
+            this.minBuffDuration = DefaultUnhastedBuffDuration.Select((s, i) => this.PermanentBuffs.Contains((Buff)i) ? StepsPerHastedGcd : 0).ToArray();
         }
 
         // This function calculates the ability cooldowns (in steps) after Sanctity of Battle
@@ -216,7 +219,7 @@ namespace Matlabadin
         }
         public int MaxBuffStacks(Buff buff)
         {
-            if (this.buffSteps[(int)buff] == 0) return 0;
+            if (this.buffSteps[(int)buff] == 0 && this.minBuffDuration[(int)buff] != 0) return 0;
             return this.buffStacks[(int)buff];
         }
         public bool CanStack(Buff buff)
@@ -262,7 +265,8 @@ namespace Matlabadin
                 && this.StepsPerHastedGcd == gp.StepsPerHastedGcd
                 && this.Haste == gp.Haste
                 && hitGeneratesSameShape(this.MeleeHit, gp.MeleeHit)
-                && hitGeneratesSameShape(this.SpellHit, gp.SpellHit);
+                && hitGeneratesSameShape(this.SpellHit, gp.SpellHit)
+                && this.PermanentBuffs.SequenceEqual(gp.PermanentBuffs);
         }
         private bool hitGeneratesSameShape(double hit1, double hit2)
         {
@@ -284,11 +288,17 @@ namespace Matlabadin
         public double Haste { get; private set; }
         public double MeleeHit { get; private set; }
         public double SpellHit { get; private set; }
+        public Buff[] PermanentBuffs { get; private set; }
         #endregion
         private readonly int[] abilitySteps;
         private readonly int[] buffSteps;
         private readonly int[] buffStacks;
         private readonly bool[] isOnGcd;
         private readonly double stepDuration;
+        /// <summary>
+        /// Minimum duration of buff
+        /// </summary>
+        /// <remarks>Only non-zero if the buff is a <see cref="PermanentBuffs"/></remarks>
+        protected readonly int[] minBuffDuration;
     }
 }

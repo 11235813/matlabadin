@@ -8,23 +8,23 @@ namespace Matlabadin.Tests
     public class GraphParametersTest : MatlabadinTest
     {
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void RotationShouldBeValidForTalents()
         {
             GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("SS"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1);
+            Assert.IsFalse(String.IsNullOrEmpty(gp.Warnings));
         }
         // SH is fine, the rotation just won't ever cast FoL in the case of FoL[#SH=3] rotations
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void RotationShouldBeValidForTalents_EF()
         {
             GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("EF"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1);
+            Assert.IsFalse(String.IsNullOrEmpty(gp.Warnings));
         }
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void RotationShouldBeValidForTalents_SS()
         {
             GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("SS"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1);
+            Assert.IsFalse(String.IsNullOrEmpty(gp.Warnings));
         }
         [Test]
         [ExpectedException(typeof(NotImplementedException))]
@@ -39,34 +39,34 @@ namespace Matlabadin.Tests
             GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Ret, PaladinTalents.None, 3, 0, 1, 1);
         }
         [Test]
-        [ExpectedException(typeof(NotImplementedException))]
+        //[ExpectedException(typeof(NotImplementedException))]
         public void UnhandledMechanicsShouldThrowException_HolyAvenger()
         {
             GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Prot, PaladinTalents.HolyAvenger, 3, 0, 1, 1);
         }
-        [Test]
+        //[Test]
         [ExpectedException(typeof(NotImplementedException))]
         public void UnhandledMechanicsShouldThrowException_SanctifiedWrath()
         {
             GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Prot, PaladinTalents.SanctifiedWrath, 3, 0, 1, 1);
         }
-        [Test]
+        //[Test]
         [ExpectedException(typeof(NotImplementedException))]
         public void UnhandledMechanicsShouldThrowException_BurdenOfGuilt()
         {
             GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Prot, PaladinTalents.BurdenOfGuilt, 3, 0, 1, 1);
         }
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void InvalidRotation_SSWithoutSS()
         {
             GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("SS"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1);
+            Assert.IsTrue(gp.Warnings.Contains("SS"));
         }
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void InvalidRotation_EFWithoutEF()
         {
             GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("EF"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1);
+            Assert.IsTrue(gp.Warnings.Contains("EF"));
         }
         [Test]
         public void Compression_Ability_ShouldHaveNoCooldownForUnusedAbilities()
@@ -356,6 +356,18 @@ namespace Matlabadin.Tests
             Assert.IsTrue(gp.HasSameShape(new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 1.0, 1.0)));
         }
         [Test]
+        public void ShouldNotHaveSameShapeIfBuffsDiffer()
+        {
+            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 1.0, 1.0, new Buff[] { Buff.AW } );
+            Assert.IsFalse(gp.HasSameShape(new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 1.0, 1.0, new Buff[] { Buff.HA })));
+        }
+        [Test]
+        public void ShouldHaveSameShapeIfBuffsEquivalent()
+        {
+            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 1.0, 1.0, new Buff[] { Buff.HA, Buff.AW, });
+            Assert.IsTrue(gp.HasSameShape(new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 1.0, 1.0, new Buff[] { Buff.AW, Buff.HA, })));
+        }
+        [Test]
         public void ShouldHaveSameShapeIfOnlyDifferByNonZeroTransitionMagnitides()
         {
             Action<double, double, double, double, bool> DoTest = (mehit1, rhit1, mehit2, rhit2, result) =>
@@ -428,22 +440,24 @@ namespace Matlabadin.Tests
             Assert.AreEqual(GP.AbilityCooldownInSteps(Ability.CS), GP.AbilityCooldownInSteps(Ability.HotR));
         }
         [Test]
-        public void MaxBuffStacks_ShouldBe1ExceptForSH()
+        public void MaxBuffStacks_ShouldBe1ExceptForSH3_BoG5()
         {
             for (int i = 0; i < (int)Buff.Count; i++)
             {
                 Buff b = (Buff)i;
-                int expectedStacks = b == Buff.SH ? 2 : 1;
-                Assert.AreEqual(expectedStacks, GP.MaxBuffStacks(b));
+                int expectedStacks = 1;
+                if (b == Buff.SH) expectedStacks = 3;
+                if (b == Buff.BoG) expectedStacks = 5;
+                Assert.AreEqual(expectedStacks, GP.MaxBuffStacks(b), String.Format("Expected {1} stacks for {0}", b, expectedStacks));
             }
         }
         [Test]
-        public void CanStack_ShouldBeSHOnly()
+        public void CanStack_ShouldBeSHBoGOnly()
         {
             for (int i = 0; i < (int)Buff.Count; i++)
             {
                 Buff b = (Buff)i;
-                Assert.AreEqual(b == Buff.SH, GP.CanStack(b));
+                Assert.AreEqual(b == Buff.SH || b == Buff.BoG, GP.CanStack(b));
             }
         }
     }

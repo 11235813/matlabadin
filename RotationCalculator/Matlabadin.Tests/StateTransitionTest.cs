@@ -214,11 +214,12 @@ namespace Matlabadin.Tests
             Assert.AreEqual(2, SM.Stacks(StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, 1, Buff.SH, 4), Ability.J, hit: true), Buff.SH));
         }
         [Test]
-        public void UseAbility_J_SHShouldStackTwice()
+        public void UseAbility_J_SHShouldStackThrice()
         {
             Assert.AreEqual(1, SM.Stacks(StateTransition<BitVectorState>.UseAbility(GP, SM, 0, Ability.J, hit: true), Buff.SH));
             Assert.AreEqual(2, SM.Stacks(StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, 1, Buff.SH, 4), Ability.J, hit: true), Buff.SH));
-            Assert.AreEqual(2, SM.Stacks(StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, 2, Buff.SH, 4), Ability.J, hit: true), Buff.SH));
+            Assert.AreEqual(3, SM.Stacks(StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, 2, Buff.SH, 4), Ability.J, hit: true), Buff.SH));
+            Assert.AreEqual(3, SM.Stacks(StateTransition<BitVectorState>.UseAbility(GP, SM, GetState(SM, 3, Buff.SH, 4), Ability.J, hit: true), Buff.SH));
         }
         [Test]
         public void UseAbility_FoLShouldConsumeSH()
