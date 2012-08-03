@@ -159,7 +159,7 @@ namespace Matlabadin
                     if (!(this.Rotation.AbilitiesUsed.Contains(Ability.SotR) || this.Rotation.AbilitiesUsed.Contains(Ability.WoG) || this.Rotation.AbilitiesUsed.Contains(Ability.EF))) return 0;
                     break;
                 case Buff.HA:
-                    if (!this.Talents.Includes(PaladinTalents.HolyAvenger)) return 0;
+                    //if (!this.Talents.Includes(PaladinTalents.HolyAvenger)) return 0;  //interferes with queue-based talenting - i.e. leaving L75 talent blank and choosing based on queue.
                     if (!this.Rotation.AbilitiesUsed.Contains(Ability.HA)) return 0;
                     break;
                 default:

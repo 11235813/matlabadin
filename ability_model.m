@@ -118,7 +118,7 @@ label.CrusaderStrike=   'CS';
 
 %Hammer of the Righteous
 %physical (can be blocked)
-raw.HammeroftheRighteous=   0.2.*player.wdamage.*mdf.phdmg;
+raw.HammeroftheRighteous=   0.2.*player.ndamage.*mdf.phdmg;
 dmg.HammeroftheRighteous=   raw.HammeroftheRighteous.*mdf.memodel.*mdf.phcrit;
 heal.HammeroftheRighteous=  0;
 threat.HammeroftheRighteous=max(dmg.HammeroftheRighteous,heal.HammeroftheRighteous).*mdf.RFury;
@@ -127,7 +127,7 @@ splash.HammeroftheRighteous=0;
 label.HammeroftheRighteous= 'HotR';
 
 %Nova connects automatically if HotR(phys) succeeds
-raw.HammerNova=     (1050.5+0.234.*player.ap).*mdf.spdmg; %todo: check new nova damage scaling
+raw.HammerNova=     0.3.*player.ndamage.*mdf.spdmg; %todo: check new nova damage scaling
 dmg.HammerNova=     raw.HammerNova.*mdf.mehit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 heal.HammerNova=    0;
 threat.HammerNova=  max(dmg.HammerNova,heal.HammerNova).*mdf.RFury;
