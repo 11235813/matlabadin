@@ -78,7 +78,7 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.sphit)==1 && length(decimalHaste)=
 elseif length(c.mdf.mehit)==1 && length(c.mdf.sphit)==1 && length(decimalHaste)>1 
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.spec.name, talentString, decimalHaste, c.mdf.mehit, c.mdf.sphit);
+        fsm_gen(c.exec.queue, c.spec.name, talentString, decimalHaste, c.mdf.mehit, c.mdf.sphit, pBuffs);
         for j=1:length(decimalHaste)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
@@ -122,7 +122,7 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.sphit)==1 && length(decimalHaste)>
 elseif length(c.mdf.mehit)>1 && length(c.mdf.sphit)>1
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.spec.name, talentString, decimalHaste, c.mdf.mehit, c.mdf.sphit);
+        fsm_gen(c.exec.queue, c.spec.name, talentString, decimalHaste, c.mdf.mehit, c.mdf.sphit, pBuffs);
         for j=1:length(c.mdf.mehit)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
@@ -165,7 +165,7 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.sphit)>1
 elseif length(c.mdf.mehit)>1 && length(c.mdf.sphit)==1
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.spec.name, talentString, decimalHaste, c.mdf.mehit, c.mdf.sphit);
+        fsm_gen(c.exec.queue, c.spec.name, talentString, decimalHaste, c.mdf.mehit, c.mdf.sphit, pBuffs);
         for j=1:length(c.mdf.mehit)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this

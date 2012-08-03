@@ -20,8 +20,8 @@ else
 end
 
 %Glyph of Word of Glory
-c.dyn.glyphWoGUptime=min([6.*c.rot.cps(strcmp('WoG',c.abil.val.label));c.abil.val.ones]);
-
+c.dyn.glyphWoGUptime=min([6.*c.rot.cps(strcmp('WoG',c.abil.val.label),:);c.abil.val.ones]);
+%TODO: move this to FSM, fix
 
 %% Enchants
 
@@ -32,7 +32,7 @@ c.dyn.glyphWoGUptime=min([6.*c.rot.cps(strcmp('WoG',c.abil.val.label));c.abil.va
 c=ability_model(c);
 
 %define multiplicative and flat dps modifiers
-c.dyn.multdps=1+c.mdf.glyphWoG.*c.dyn.glyphWoGUptime;
+c.dyn.multdps=repmat(1+c.mdf.glyphWoG.*c.dyn.glyphWoGUptime,size(c.rot.cps,1),1);
 c.dyn.flatdps=0; %enchants would be added here
 end
 
