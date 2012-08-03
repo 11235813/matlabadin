@@ -354,7 +354,8 @@ namespace Matlabadin
             if (gp.Spec == PaladinSpec.Prot && ability == Ability.J && gp.Talents.Includes(PaladinTalents.SanctifiedWrath) && sm.TimeRemaining(state, Buff.AW) > 0)
             {
                 // reduce CD by 50%
-                abilityCooldown /=2 ;
+                abilityCooldown /= 2;
+                nextState = sm.SetCooldownRemaining(nextState, ability, abilityCooldown);
             }
             switch (ability)
             {
