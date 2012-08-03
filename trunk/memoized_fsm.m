@@ -1,9 +1,10 @@
-function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = memoized_fsm(rotation, spec, talentString, decimalHaste, mehit, sphit, pBuffs)
+function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentString, decimalHaste, mehit, sphit, pBuffs)
     global fsm_cache_actionPr;
     global fsm_cache_efUptime;
     global fsm_cache_ssUptime;
     global fsm_cache_wbUptime;
     global fsm_cache_sbUptime;
+    global fsm_cache_awUptime;
     global fsm_cache_gcdUptime;
     global fsm_cache_metadata;
 	% Check that we're not caching outdated mechanics
@@ -20,6 +21,7 @@ function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime
 		fsm_cache_efUptime = {};
         fsm_cache_wbUptime = {};
 		fsm_cache_sbUptime = {};
+		fsm_cache_awUptime = {};
         fsm_cache_gcdUptime= {};
     end
 	
@@ -29,27 +31,29 @@ function  [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime
         % warning('using cached result');
         actionPr = fsm_cache_actionPr.(rotationKey).(spectalKey).(optionsKey);
         metadata = fsm_cache_metadata.(rotationKey).(spectalKey).(optionsKey);
-        ssUptime = fsm_cache_ssUptime.(rotationKey).(spectalKey).(optionsKey);
-        efUptime = fsm_cache_efUptime.(rotationKey).(spectalKey).(optionsKey);
-        wbUptime = fsm_cache_wbUptime.(rotationKey).(spectalKey).(optionsKey);
-        sbUptime = fsm_cache_sbUptime.(rotationKey).(spectalKey).(optionsKey);
-        gcdUptime = fsm_cache_gcdUptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.ss = fsm_cache_ssUptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.ef = fsm_cache_efUptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.wb = fsm_cache_wbUptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.sb = fsm_cache_sbUptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.aw = fsm_cache_awUptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.gcd = fsm_cache_gcdUptime.(rotationKey).(spectalKey).(optionsKey);
         return;
     end
     fileCell = fsm_gen(rotation, spec, talentString, decimalHaste, mehit, sphit, pBuffs);
     filename = fileCell{1};
     % read from the data file
-    [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = load_fsm_csv(filename);
+    [actionPr, metadata, uptime] = load_fsm_csv(filename);
     % TODO: sanity check that file params match our args
     fsm_cache_actionPr.(rotationKey).(spectalKey).(optionsKey) = actionPr;
     fsm_cache_metadata.(rotationKey).(spectalKey).(optionsKey) = metadata;
-    fsm_cache_ssUptime.(rotationKey).(spectalKey).(optionsKey) = ssUptime;
-    fsm_cache_efUptime.(rotationKey).(spectalKey).(optionsKey) = efUptime;
-    fsm_cache_wbUptime.(rotationKey).(spectalKey).(optionsKey) = wbUptime;
-    fsm_cache_sbUptime.(rotationKey).(spectalKey).(optionsKey) = sbUptime;
-    fsm_cache_gcdUptime.(rotationKey).(spectalKey).(optionsKey) = gcdUptime;
+    fsm_cache_ssUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ss;
+    fsm_cache_efUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef;
+    fsm_cache_wbUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.wb;
+    fsm_cache_sbUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.sb;
+    fsm_cache_awUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.aw;
+    fsm_cache_gcdUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.gcd;
 end
-function [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime] = load_fsm_csv(filename)
+function [actionPr, metadata, uptime] = load_fsm_csv(filename)
     addpath .\helper_func\
 	fid = fopen(filename, 'rt');
 	i = 1;
@@ -61,15 +65,17 @@ function [actionPr, metadata, ssUptime, efUptime, wbUptime, sbUptime, gcdUptime]
 		lineTxtPr = rowEntry{2};
 		linePr = str2double(lineTxtPr);
 		if strcmp(lineAction, 'Uptime_SacredShield')
-            ssUptime = linePr;
+            uptime.ss = linePr;
         elseif strcmp(lineAction, 'Uptime_EternalFlame')
-            efUptime = linePr;
+            uptime.ef = linePr;
         elseif strcmp(lineAction, 'Uptime_WeakenedBlows')
-            wbUptime = linePr;
+            uptime.wb = linePr;
         elseif strcmp(lineAction, 'Uptime_SotRShieldBlock')
-            sbUptime = linePr;
+            uptime.sb = linePr;
+        elseif strcmp(lineAction, 'Uptime_AvengingWrath')
+            uptime.aw = linePr;
         elseif strcmp(lineAction, 'Uptime_GCD')
-            gcdUptime = linePr;
+            uptime.gcd = linePr;
 		elseif length(lineAction) > 6 && strcmp('Stats_', lineAction(1:6))
 			metadata.(lineAction) = lineTxtPr;
 		elseif length(lineAction) > 6 && strcmp('Param_', lineAction(1:6))

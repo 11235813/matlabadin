@@ -1,4 +1,4 @@
-function [cps hpg] = action2cps(c,j)
+function [cps ecps hpg] = action2cps(c,j)
 %ACTION2CPS takes the actionPr returned by memoized_fsm and converts them
 %into a standardized "cast per second" array, including both active and
 %passive sources.
@@ -7,8 +7,10 @@ function [cps hpg] = action2cps(c,j)
 %optional input ("j", the iteration number for calculations where mdf.mehit
 %or mdf.sphit or player.wswing are not singleton).
 %
-%A2CPS returns one output, which is the cps array for the given input
-%conditions.
+%A2CPS returns three outputs:
+% cps - which is the cps array for the given input conditions.
+% ecps - which is the multiplier that accounts for AW/BoG/etc
+% hpg - which is the holy power generation rate based on the cps data
 
 %% smart array handling
 %j could refer to mdf.mehit, mdf.sphit, player.sphaste, or player.wswing.  
@@ -35,65 +37,112 @@ if length(c.player.sphaste)>1
 end
 
 %% CPS conversions    
-%import focused shield glyph
-fsflag=c.mdf.glyphFS>1;
 
 %initialize cps vector
 cps=zeros(size(c.abil.val.label,1),1);
-asgc=0;wog1=0;wog2=0;
+ecps=cps;
+hpg=0;
 
 %sort actionPr entries into cps
 for m=1:size(c.rot.actionPr,2)
-    idx= strcmpi(c.rot.actionPr{1,m},c.abil.val.label);
-    cps(idx)=c.rot.actionPr{2,m};    
-    if strcmp(c.rot.actionPr{1,m},'AS(GC)')
-        asgc=c.rot.actionPr{2,m};
-    elseif strcmp(c.rot.actionPr{1,m},'WoG2')
-        wog2=c.rot.actionPr{2,m}.*2./3;
-    elseif strcmp(c.rot.actionPr{1,m},'WoG1')
-        wog1=c.rot.actionPr{2,m}./3;
-    end %TODO: repeat for EF
+    %reset GC temp var
+    asgc=0;
+    hpmod=1;
+    
+    %separate string into components
+    match=regexp(c.rot.actionPr{1,m},'\w*','match');
+    
+    %grab the CPS value
+    cpsval=c.rot.actionPr{2,m};
+    
+    %sanity check
+    if length(match)<1
+        error('regexp match failed on actionPr')
+    end
+    
+    %strip out any numeric modifiers
+    tok=regexp(match{1},'[a-zA-Z]*|\d','match');
+    abil=tok{1};hpval=3;
+    if length(tok)>1
+        hpval=tok(2);
+    end
+    
+    %find the index of the ability
+    idx= strcmpi(abil,c.abil.val.label);
+    
+    %add this to the CPS tally
+    cps(idx)=cps(idx)+cpsval;
+    
+    %compile ecps modifier
+    emod=hpval./3;
+    
+    %handle extra qualifiers
+    for q=2:length(match)
+        %text and number (bog)
+        switch match{q}
+            case 'GC'
+                asgc=cpsval;
+            case {'BoG1','BoG2','BoG3','BoG4','BoG5'}
+                %strip number
+                bogval=str2double(match{q}(length(match{q})));
+                emod=emod.*(1+(0.1+c.player.mast./100).*bogval);
+            case 'AW'
+                emod=emod.*1.2;
+            case 'HA'
+                hpmod=3;
+        end
+           
+    end
+    ecpsval=cpsval.*emod;
+    
+    %combine qualifiers
+    ecps(idx)=ecps(idx)+ecpsval;
+
+    %% Handle special cases (seals, etc.)
+    sealidx=strcmpi(c.exec.seal,c.abil.val.label);
+    
+    switch abil
+        case 'CS'
+            %seals, hpg
+            cps(sealidx)=cps(sealidx)+cpsval;
+            ecps(sealidx)=ecps(sealidx)+ecpsval.*c.mdf.mehit(jme);
+            hpg=hpg+cpsval.*c.mdf.mehit(jme).*hpmod;
+        case 'HotR'
+            %seals, hpg
+            cps(sealidx)=cps(sealidx)+cpsval;
+            ecps(sealidx)=ecps(sealidx)+ecpsval.*c.mdf.mehit(jme);
+            hpg=hpg+cpsval.*c.mdf.mehit(jme).*hpmod;
+            %HammerNova
+            idx=find(strcmpi('HaNova',c.abil.val.label));
+            cps(idx)=cpsval;
+            ecps(idx)=ecpsval;
+        case 'J'
+            %seals, hpg
+            cps(sealidx)=cps(sealidx)+cpsval;
+            ecps(sealidx)=ecps(sealidx)+ecpsval.*c.mdf.mehit(jme);
+            hpg=hpg+cpsval.*c.mdf.mehit(jme).*hpmod;
+        case 'SotR'
+            %seals
+            cps(sealidx)=cps(sealidx)+cpsval;
+            ecps(sealidx)=ecps(sealidx)+ecpsval.*c.mdf.mehit(jme);
+        case 'AS'
+            %hpg from GC
+            hpg=hpg+asgc.*hpmod;
+    end
+
 end
 
-%corrections
-
-%HotR->HammerNova
-idx=find(strcmpi('HotR',c.abil.val.label));
-cps(idx+1)=cps(idx);
-
-%AS(GC)->AS
-idx=find(strcmpi('AS',c.abil.val.label));
-cps(idx)=cps(idx)+asgc;
-
-%WoG2 & WoG1
-idx=find(strcmpi('WoG',c.abil.val.label));
-cps(idx)=cps(idx)+wog2+wog1;
-
+%% Melee
 %Melee swings
 cps(strcmpi('Melee',c.abil.val.label))=1./c.player.wswing(jws);
+ecps(strcmpi('Melee',c.abil.val.label))=(1+0.2.*c.rot.uptime(jme).aw)./c.player.wswing(jws);
+%seal procs
+cps(sealidx)=cps(sealidx)+1./c.player.wswing(jws);
+ecps(sealidx)=ecps(sealidx)+(1+0.2.*c.rot.uptime(jme).aw).*c.mdf.mehit(jme)./c.player.wswing(jws);
 
-
-%% seal procs
-
-%find indices of melee abilities that proc seals
-idxm=logical(... 
-     strcmpi('SotR',c.abil.val.label) +...
-     strcmpi('CS',c.abil.val.label)+...
-     strcmpi('HotR',c.abil.val.label));
-
-%currently assuming that seals will be "corrected" to uniform behavior
-%note that this also requires c.exec.seal to be in 3-char format
-cps(strcmpi(c.exec.seal,c.abil.val.label))= ...
-    + sum(cps(idxm)).*c.mdf.mehit(jme) ... %melee abilities
-    + c.mdf.mehit(jme)./c.player.wswing(jws);   %melee swings
-
-%censure
+%% Censure
 cps(strcmpi('Censure',c.abil.val.label))= 1./c.player.censTick(jha);
+ecps(strcmpi('Censure',c.abil.val.label))= (1+0.2.*c.rot.uptime(jme).aw)./c.player.censTick(jha);
 
-%% Holy Power Generation
-hpg=cps(strcmpi('CS',c.abil.val.label)).*c.mdf.mehit(jme)+... %CS
-    cps(strcmpi('HotR',c.abil.val.label)).*c.mdf.mehit(jme)+... %HotR
-    cps(strcmpi('J',c.abil.val.label)).*c.mdf.sphit(jsp)+... %J
-    asgc;    %AS(GC)
 
 end

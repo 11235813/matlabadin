@@ -18,6 +18,7 @@ namespace Matlabadin
             int bogStacks,
             bool aw,
             bool dp,
+            bool ha,
             int[] unforkedBuffDuration,
             int[][] forkedBuffDuration
             )
@@ -58,6 +59,7 @@ namespace Matlabadin
                 if (asgc) action[0] += "(GC)";
                 if (ability == Ability.FoL) action[0] += String.Format("(SH{0})", folsh);
                 if (aw) action[0] += "(AW)";
+                if (ha) action[0] += "(HA)";
             }
         }
         // Output related

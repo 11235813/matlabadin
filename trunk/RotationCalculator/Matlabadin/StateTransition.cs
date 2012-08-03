@@ -187,12 +187,13 @@ namespace Matlabadin
                 waitSteps + abilitySteps,
                 pr,
                 sm.HP(StateInitial),
-                ability == Ability.WoG && sm.TimeRemaining(StatePreAbility, Buff.BoG) > 0,
+                (ability == Ability.WoG || ability == Ability.EF) && sm.TimeRemaining(StatePreAbility, Buff.BoG) > 0,
                 ability == Ability.AS && sm.TimeRemaining(StatePreAbility, Buff.GC) > 0,
                 ability == Ability.FoL ? sm.Stacks(StatePreAbility, Buff.SH) : 0,
-                ability == Ability.WoG ? sm.Stacks(StatePreAbility, Buff.BoG) : 0,
+                (ability == Ability.WoG || ability == Ability.EF) ? sm.Stacks(StatePreAbility, Buff.BoG) : 0,
                 sm.TimeRemaining(StatePreAbility, Buff.AW) > 0,
                 sm.TimeRemaining(StatePreAbility, Buff.DP) > 0,
+                (ability == Ability.CS || ability == Ability.J || ability == Ability.HotR || (ability == Ability.AS && sm.TimeRemaining(StatePreAbility, Buff.GC) > 0)) && sm.TimeRemaining(StatePreAbility, Buff.HA) > 0,
                 unforkedBuffSteps,
                 forkedBuffSteps);
         }
