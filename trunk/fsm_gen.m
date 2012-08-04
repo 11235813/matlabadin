@@ -55,8 +55,7 @@ for i=1:arrLength
         if exist(dirname) ~= 7
             mkdir(dirname);
         end
-                
-        fprintf(argfid, '%s %s %s %g %f %f %f %s %s', ...
+        fprintf(argfid, '%s %s %s %g %f %f %f "%s" %s\n', ...
             rotation, spec, talentString, fsm_steps_per_gcd(), decimalHaste, mehit, sphit, pBuffs, filename);
         generationRequired = 1;
     end
