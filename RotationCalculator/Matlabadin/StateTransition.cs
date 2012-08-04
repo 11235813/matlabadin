@@ -194,6 +194,7 @@ namespace Matlabadin
                 sm.TimeRemaining(StatePreAbility, Buff.AW) > 0,
                 sm.TimeRemaining(StatePreAbility, Buff.DP) > 0,
                 (ability == Ability.CS || ability == Ability.J || ability == Ability.HotR || (ability == Ability.AS && sm.TimeRemaining(StatePreAbility, Buff.GC) > 0)) && sm.TimeRemaining(StatePreAbility, Buff.HA) > 0,
+                sm.TimeRemaining(StatePreAbility, Buff.GoWoG) > 0,
                 unforkedBuffSteps,
                 forkedBuffSteps);
         }
@@ -363,10 +364,18 @@ namespace Matlabadin
                     if (sm.TimeRemaining(nextState, Buff.DP) > 0) // Consume DP first
                     {
                         nextState = sm.SetTimeRemaining(nextState, Buff.DP, 0);
+                        //if (gp.Glyphs.Includes(PaladinGlyphs.GlyphofWordofGlory))
+                        //{
+                        //    nextState = sm.SetTimeRemaining(nextState, Buff.GoWoG, gp.BuffDurationInSteps(Buff.GoWoG));
+                        //}
                     }
                     else  // otherwise use HP
                     {
                         nextState = sm.SetHP(nextState, hp - availableHp);
+                        //if (gp.Glyphs.Includes(PaladinGlyphs.GlyphofWordofGlory))
+                        //{
+                        //    nextState = sm.SetTimeRemaining(nextState, Buff.GoWoG, availableHp / 3 * gp.BuffDurationInSteps(Buff.GoWoG));
+                        //}
                     }
                     break;
                 case Ability.SotR:

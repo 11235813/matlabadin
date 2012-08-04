@@ -33,13 +33,13 @@ namespace Matlabadin
                 1.5, 30, 30, // GCD, EF, SS,
                 20, 3, 30, // AW, SotRSB, WB,
                 6.3, 15, 20, 8, // GC, SH, BoG, DP
-                15, // HA
+                15, 9, // HA, GoWoG
             };
         private static readonly int[] DefaultMaximumBuffStacks = new int[] {
                 1, 1, 1,
                 1, 1, 1,
                 1, 3, 5, 1,
-                1,
+                1, 1,
             };
 
         // constructor, does some simple sanity testing and calculates haste-effected GCD/CDs
@@ -83,6 +83,7 @@ namespace Matlabadin
             this.Rotation = rotation;
             this.Spec = spec;
             this.Talents = talents;
+            this.Glyphs = talents;  // TODO: change to glyph input; ph for testing
             this.StepsPerHastedGcd = stepsPerHastedGcd;
             this.Haste = haste;
             this.MeleeHit = mehit;
@@ -161,6 +162,10 @@ namespace Matlabadin
                 case Buff.HA:
                     //if (!this.Talents.Includes(PaladinTalents.HolyAvenger)) return 0;  //interferes with queue-based talenting - i.e. leaving L75 talent blank and choosing based on queue.
                     if (!this.Rotation.AbilitiesUsed.Contains(Ability.HA)) return 0;
+                    break;
+                case Buff.GoWoG:
+                    //if (!this.Glyphs.Includes(PaladinGlyphs.GlyphofWordofGlory)) return 0;  //TODO: implement glyphs
+                    if (!this.Rotation.AbilitiesUsed.Contains(Ability.WoG)) return 0;
                     break;
                 default:
                     // If we haven't modelling it, we keep it
@@ -262,6 +267,7 @@ namespace Matlabadin
             return this.Rotation.PriorityQueue == gp.Rotation.PriorityQueue
                 && this.Spec == gp.Spec
                 && this.Talents == gp.Talents
+                && this.Glyphs == gp.Glyphs
                 && this.StepsPerHastedGcd == gp.StepsPerHastedGcd
                 && this.Haste == gp.Haste
                 && hitGeneratesSameShape(this.MeleeHit, gp.MeleeHit)
@@ -283,6 +289,7 @@ namespace Matlabadin
         #region parameters
         public RotationPriorityQueue<TState> Rotation { get; private set; }
         public PaladinTalents Talents { get; private set; }
+        public PaladinTalents Glyphs { get; private set; } // TODO: change to PaladinGlyhps class
         public PaladinSpec Spec { get; private set; }
         public int StepsPerHastedGcd { get; private set; }
         public double Haste { get; private set; }
