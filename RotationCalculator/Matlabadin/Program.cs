@@ -40,7 +40,12 @@ namespace Matlabadin
             {
                 string[] args = inputArgs;
                 string line = args.Aggregate("", (ln, s) => ln + " " + s);
-                if (processedInputs.Contains(line))
+                if (String.IsNullOrWhiteSpace(line))
+                {
+                    // ignore empty lines
+                    continue;
+                }
+                else if (processedInputs.Contains(line))
                 {
                     Console.Error.WriteLine("Duplicate input detected - only generating graph once ({0})", line);
                 }
@@ -62,22 +67,24 @@ namespace Matlabadin
                 line = input.ReadLine();
                 lineNumber++;
                 if (String.IsNullOrEmpty(line)) break;
-                yield return line.Split(' ', '\t');
+                yield return line.Split(' ', '\t', '\n', '\r');
             }
         }
 
         // process input parameters
         private static void ProcessParams(string[] args)
         {
-            if (args.Length != 9) 
-            { 
-                Console.Error.WriteLine("Warning: fsm.exe expected 9 inputs, got {0}", args.Length);
-                for (int temp = 0; temp <= args.Length; temp++)
-                {
-                    Console.Error.WriteLine("Arg # {0}: " + args[temp].ToString(), temp);
-                }
-                Usage(); 
+            if (args.Length != 9)
+            {
+                Console.Error.Write("Warning: fsm.exe expected 9 inputs, got {0}:", args.Length);
+                Console.Error.Write(args.Select((s, i) => String.Format("#{0}:\"{1}\";", i, s)).Aggregate("", (s, a) => s + a));
+                Console.Error.WriteLine();
             }
+            if (args.Length < 9) 
+            {
+                Usage();                
+            }
+            
             string rotation;
             int stepsPerHastedGcd;
             PaladinTalents talents;
@@ -101,6 +108,8 @@ namespace Matlabadin
         {
             return (commaSeparatedBuffList ?? "")
                 .Split(',')
+                .Where(s => !String.IsNullOrWhiteSpace(s))
+                .Select(s => s.Trim('"'))
                 .Where(s => !String.IsNullOrWhiteSpace(s))
                 .Select(s =>
                 {
@@ -255,6 +264,7 @@ namespace Matlabadin
             stream.WriteLine("Param_Haste,{0}", gp.Haste);
             stream.WriteLine("Param_Hit_Melee,{0}", gp.MeleeHit);
             stream.WriteLine("Param_Hit_Spell,{0}", gp.RangedHit);
+            stream.WriteLine("Param_Buffs_Permanent,{0}", gp.PermanentBuffs.Aggregate("", (s, b) => s + ";" + b.ToString()).Trim(';'));
 
             // write approximation errors to file (stream)
             if (!String.IsNullOrWhiteSpace(gp.Warnings))
