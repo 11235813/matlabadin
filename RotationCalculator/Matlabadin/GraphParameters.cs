@@ -86,7 +86,7 @@ namespace Matlabadin
             this.StepsPerHastedGcd = stepsPerHastedGcd;
             this.Haste = haste;
             this.MeleeHit = mehit;
-            this.SpellHit = sphit;
+            this.RangedHit = sphit;
             this.PermanentBuffs = (permanentBuffs ?? new Buff[0]).OrderBy(x => (int)x).Distinct().ToArray();
 
             // set unhasted buff durations, account for talents and glyphs
@@ -251,7 +251,7 @@ namespace Matlabadin
                 this.StepsPerHastedGcd,
                 this.Haste,
                 this.MeleeHit,
-                this.SpellHit);
+                this.RangedHit);
         }
         public int BuffDurationInSteps(Buff buff)
         {
@@ -265,7 +265,7 @@ namespace Matlabadin
                 && this.StepsPerHastedGcd == gp.StepsPerHastedGcd
                 && this.Haste == gp.Haste
                 && hitGeneratesSameShape(this.MeleeHit, gp.MeleeHit)
-                && hitGeneratesSameShape(this.SpellHit, gp.SpellHit)
+                && hitGeneratesSameShape(this.RangedHit, gp.RangedHit)
                 && this.PermanentBuffs.SequenceEqual(gp.PermanentBuffs);
         }
         private bool hitGeneratesSameShape(double hit1, double hit2)
@@ -287,7 +287,7 @@ namespace Matlabadin
         public int StepsPerHastedGcd { get; private set; }
         public double Haste { get; private set; }
         public double MeleeHit { get; private set; }
-        public double SpellHit { get; private set; }
+        public double RangedHit { get; private set; }
         public Buff[] PermanentBuffs { get; private set; }
         #endregion
         private readonly int[] abilitySteps;

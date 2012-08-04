@@ -15,11 +15,12 @@ def_db;
 %do this by altering shirt stats
 cfg(1)=build_config('hit',2,'exp',5); 
 
-%low hit, WoG/SoI build
-cfg(2)=build_config('hit',2,'exp',5,'seal','SoI');
-
 %hit-cap and exp soft-cap
-cfg(3)=build_config('hit',7.5,'exp',7.5);
+cfg(2)=build_config('hit',7.5,'exp',7.5);
+
+%low hit, WoG/SoI build
+cfg(3)=build_config('hit',2,'exp',5,'seal','SoI');
+
 
 %% Generate DPS for each config
 queue_model; %lists the queues we're interested in

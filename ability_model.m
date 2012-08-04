@@ -157,6 +157,19 @@ mcost.ShieldoftheRighteous=0;
 splash.ShieldoftheRighteous=0;
 label.ShieldoftheRighteous='SotR';
 
+%% 'Ranged' abilities
+%J is a melee attack with 30y range that cannot be dodged/parried
+
+%Judgment (the seal of choice is defined in execution_model)
+raw.Judgment=       (702+0.397.*player.ap+0.635.*player.sp) ...
+                    .*(1+mdf.glyphDJ).*mdf.spdmg; 
+dmg.Judgment=      raw.Judgment.*mdf.rahit.*mdf.spcrit.*target.resrdx;
+heal.Judgment=     0;
+threat.Judgment=   max(dmg.Judgment,heal.Judgment).*mdf.RFury;
+mcost.Judgment=    0.059.*base.mana;
+splash.Judgment=    0;
+label.Judgment=     'J';
+
 %% Spell abilities
 
 %Avenger's Shield (cannot be blocked)
@@ -167,16 +180,6 @@ threat.AvengersShield=max(dmg.AvengersShield,heal.AvengersShield).*mdf.RFury;
 mcost.AvengersShield=0.07.*base.mana;
 splash.AvengersShield=min([exec.npccount-1; 0+2.*(mdf.glyphFS==1)]);
 label.AvengersShield='AS';
-
-%Judgment (the seal of choice is defined in execution_model)
-raw.Judgment=       (702+0.397.*player.ap+0.635.*player.sp) ...
-                    .*(1+mdf.glyphDJ).*mdf.spdmg; 
-dmg.Judgment=      raw.Judgment.*mdf.sphit.*mdf.spcrit.*target.resrdx;
-heal.Judgment=     0;
-threat.Judgment=   max(dmg.Judgment,heal.Judgment).*mdf.RFury;
-mcost.Judgment=    0.059.*base.mana;
-splash.Judgment=    0;
-label.Judgment=     'J';
 
 %Hammer of Wrath (can be blocked) - TODO: verify blocking
 raw.HammerofWrath= (1839.5+1.61.*player.sp).*mdf.spdmg;

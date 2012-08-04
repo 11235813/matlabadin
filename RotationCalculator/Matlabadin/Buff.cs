@@ -56,7 +56,7 @@ namespace Matlabadin
         /// <summary>
         /// Holy Avenger
         /// </summary>
-        HA,
+        HA, 
         Count,
         UptimeTrackedUnforkedBuffs = SotRSB + 1,
         UptimeTrackedForkedBuffs = WB + 1,

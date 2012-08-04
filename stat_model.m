@@ -365,6 +365,9 @@ player.sphit=player.rating.hit./cnv.hit_hit ...
     +player.exp ... %TODO: check if this is min(player.exp,7.5) or whether exp over the 7.5% dodge cap still contributes
     +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
 
+player.rahit=player.rating.hit./cnv.hit_hit ...
+    +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
+
 %% Avoidance and Blocking
 player.rating.dodge=gear.dodge+consum.dodge;
 player.rating.parry=gear.parry+consum.parry;
@@ -466,7 +469,7 @@ bl.wdps=player.wdamage./bl.wswing;
 %Hit & Damage modifier values
 mdf.phdmg=mdf.PhysVuln.*(1-target.phdr);
 mdf.mehit=1-(target.miss+target.dodge+target.parry)./100;
-% mdf.rahit=1-target.miss./100;
+mdf.rahit=1-target.miss./100;
 mdf.sphit=1-target.spmiss./100;
 
 %enforce one-roll system for auto-attacks

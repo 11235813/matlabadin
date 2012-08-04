@@ -161,7 +161,7 @@ namespace Matlabadin.Tests
         {
             Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 2, 0.5, 0.8, 0.9);
             Assert.AreEqual(0.8, gp.MeleeHit);
-            Assert.AreEqual(0.9, gp.SpellHit);
+            Assert.AreEqual(0.9, gp.RangedHit);
             Assert.AreEqual(PaladinTalents.All, gp.Talents);
             Assert.AreEqual(PaladinSpec.Prot, gp.Spec);
             Assert.AreEqual(2, gp.StepsPerHastedGcd);
