@@ -171,7 +171,6 @@ namespace Matlabadin
                 // Special ability-specific conditions go here
                 switch (ability) 
                 {
-                    case Ability.SS:
                     case Ability.SotR:
                         // Requires 3 HP or DP to use
                         conditions.Add((gp, sm, state) => ( sm.HP(state) >= 3 || sm.TimeRemaining(state, Buff.DP) > 0 ));

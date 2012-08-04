@@ -18,7 +18,7 @@ function [cps ecps hpg] = action2cps(c,j)
 
 %assume all arrays are singleton
 jme=1;
-jsp=1;
+jra=1;
 jws=1;
 jha=1;
 
@@ -27,7 +27,7 @@ if length(c.mdf.mehit)>1
     jme=j;
 end
 if length(c.mdf.sphit)>1
-    jsp=j;
+    jra=j;
 end
 if length(c.player.wswing)>1
     jws=j;
@@ -90,6 +90,8 @@ for m=1:size(c.rot.actionPr,2)
                 emod=emod.*1.2;
             case 'HA'
                 hpmod=3;
+            case 'GoWoG'
+                emod=emod.*1.1;
         end
            
     end
@@ -99,7 +101,7 @@ for m=1:size(c.rot.actionPr,2)
     ecps(idx)=ecps(idx)+ecpsval;
 
     %% Handle special cases (seals, etc.)
-    sealidx=strcmpi(c.exec.seal,c.abil.val.label);
+    sealidx=find(strcmpi(c.exec.seal,c.abil.val.label));
     
     switch abil
         case 'CS'
@@ -117,10 +119,12 @@ for m=1:size(c.rot.actionPr,2)
             cps(idx)=cpsval;
             ecps(idx)=ecpsval;
         case 'J'
-            %seals, hpg
-            cps(sealidx)=cps(sealidx)+cpsval;
-            ecps(sealidx)=ecps(sealidx)+ecpsval.*c.mdf.mehit(jme);
-            hpg=hpg+cpsval.*c.mdf.mehit(jme).*hpmod;
+            %seals (only procs SoT), hpg
+            if sealidx==find(strcmpi('SoT',c.abil.val.label))
+                cps(sealidx)=cps(sealidx)+cpsval;
+                ecps(sealidx)=ecps(sealidx)+ecpsval.*c.mdf.mehit(jme);
+            end
+            hpg=hpg+cpsval.*c.mdf.rahit(jra).*hpmod;
         case 'SotR'
             %seals
             cps(sealidx)=cps(sealidx)+cpsval;
@@ -128,6 +132,10 @@ for m=1:size(c.rot.actionPr,2)
         case 'AS'
             %hpg from GC
             hpg=hpg+asgc.*hpmod;
+        case 'SS'
+            %uptime-based, not cast-based
+            cps(idx)=c.rot.uptime.ss./6;
+            ecps(idx)=c.rot.uptime.ss./6; %no modifiers on absorbs
     end
 
 end
@@ -144,5 +152,11 @@ ecps(sealidx)=ecps(sealidx)+(1+0.2.*c.rot.uptime(jme).aw).*c.mdf.mehit(jme)./c.p
 cps(strcmpi('Censure',c.abil.val.label))= 1./c.player.censTick(jha);
 ecps(strcmpi('Censure',c.abil.val.label))= (1+0.2.*c.rot.uptime(jme).aw)./c.player.censTick(jha);
 
+%% EF(HoT)
+%not affected by BoG, assume average overlap with AW, 
+%TODO: check that ticks are not haste-affected
+%TODO: this doesn't account for low-HP EF casts
+cps(strcmpi('EF(HoT)',c.abil.val.label))=c.rot.uptime.ef./3;
+ecps(strcmpi('EF(HoT)',c.abil.val.label))=c.rot.uptime.ef./3.*(1+0.2.*c.rot.uptime(jme).aw);
 
 end

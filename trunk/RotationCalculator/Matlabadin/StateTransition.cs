@@ -241,7 +241,6 @@ namespace Matlabadin
                     };
                     break;
                 case Ability.J:
-                case Ability.AS:
                     StatePostAbility = new TState[]
                     {
                         UseAbility(gp, sm, StatePreAbility, ability, false), // miss
@@ -249,8 +248,8 @@ namespace Matlabadin
                     };
                     pr = new double[]
                     {
-                        1 - gp.SpellHit,
-                        gp.SpellHit,
+                        1 - gp.RangedHit,
+                        gp.RangedHit,
                     };
                     break;
                 case Ability.WoG:
@@ -267,6 +266,7 @@ namespace Matlabadin
                     };
                     break;
                 // Can't miss
+                case Ability.AS:
                 case Ability.Cons:
                 case Ability.HW:
                 case Ability.HoW:
