@@ -56,7 +56,7 @@ my @items = qw(
 =head2 Relevant Item Levels
 
   my @ilvls = qw(
-    419 440 450 463 476 483 489 496 502 509
+    440 450 463 476 483 489 496 502 509 516
   );
 
 The C<@ilvls> array allows you to specify what item levels should be included 
@@ -66,7 +66,7 @@ it as new content is added and old content becomes irrelevant.
 =cut 
 
 my @ilvls = qw(
-  419 440 450 463 476 483 489 496 502 509
+  440 450 463 476 483 489 496 502 509 516
 );
 
 =head2 Item Filters

@@ -390,7 +390,7 @@ player.postdr.parry=avoiddr.parrydr;
 player.miss=base.miss-1.5.*npc.lvlgap;
 player.dodge=base.dodge+20.*mdf.Sanct+player.postdr.dodge-1.5.*npc.lvlgap;
 player.parry=base.parry+player.postdr.parry-1.5.*npc.lvlgap;
-player.block=base.block+player.mast+200.*mdf.GbtL+player.postdr.block-1.5.*npc.lvlgap;
+player.block=base.block+200.*mdf.GbtL+player.postdr.block-1.5.*npc.lvlgap;
 
 %check for bounding issues, based on the attack table
 player.miss=max([player.miss;zeros(size(player.miss))]);

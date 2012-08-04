@@ -10,51 +10,16 @@
 idb.sid(78166).name='Heavy Savage Armor Kit';
 idb.sid(78166).sta=44;
 
-%% Head
-idb.sid(86931).name='Arcanum of the Earthen Ring';
-idb.sid(86931).sta=90;
-idb.sid(86931).dodge=35;
-
-idb.sid(86933).name='Arcanum of the Dragonmaw/Wildhammer';
-idb.sid(86933).str=60;
-idb.sid(86933).mast=35;
 
 %% Shoulder
-idb.sid(86847).name='Inscription of Unbreakable Quartz';
-idb.sid(86847).sta=45;
-idb.sid(86847).dodge=20;
+%MoP
+idb.sid(126994).name='Greater Ox Horn Inscription';
+idb.sid(126994).sta=300;
+idb.sid(126994).dodge=100;
 
-idb.sid(86900).name='Inscription of Jagged Stone';
-idb.sid(86900).str=30;
-idb.sid(86900).crit=20;
-
-idb.sid(86909).name='Inscription of Shattered Crystal';
-idb.sid(86909).agi=30;
-idb.sid(86909).mast=20;
-
-idb.sid(86854).name='Greater Inscription of Unbreakable Quartz';
-idb.sid(86854).sta=75;
-idb.sid(86854).dodge=25;
-
-idb.sid(86901).name='Greater Inscription of Jagged Stone';
-idb.sid(86901).str=50;
-idb.sid(86901).crit=25;
-
-idb.sid(86907).name='Greater Inscription of Shattered Crystal';
-idb.sid(86907).agi=50;
-idb.sid(86907).mast=25;
-
-idb.sid(86375).name='Swiftsteel Inscription';
-idb.sid(86375).agi=130;
-idb.sid(86375).mast=25;
-
-idb.sid(86401).name='Lionsmane Inscription';
-idb.sid(86401).str=130;
-idb.sid(86401).crit=25;
-
-idb.sid(86402).name='Inscription of the Earth Prince';
-idb.sid(86402).sta=195;
-idb.sid(86402).dodge=25;
+idb.sid(126997).name='Greater Tiger Fang Inscription';
+idb.sid(126997).str=200;
+idb.sid(126997).crit=100;
 
 %% Cloak
 idb.sid(74234).name='Enchant Cloak - Protection';
@@ -63,28 +28,35 @@ idb.sid(74234).earmor=250;
 idb.sid(74247).name='Enchant Cloak - Greater Critical Strike';
 idb.sid(74247).crit=65;
 
-%% Chest
-idb.sid(74251).name='Enchant Chest - Greater Stamina';
-idb.sid(74251).sta=75;
+%MoP
+idb.sid(104401).name='Enchant Cloak - Greater Protection';
+idb.sid(104401).sta=200;
 
-idb.sid(74250).name='Enchant Chest - Peerless Stats';
-idb.sid(74250).sta=20;
-idb.sid(74250).str=20;
-idb.sid(74250).agi=20;
-idb.sid(74250).int=20;
+idb.sid(104398).name='Enchant Cloak - Accuracy';
+idb.sid(104398).hit=180;
+
+idb.sid(104404).name='Enchant Cloak - Superior Critical Strike';
+idb.sid(104404).hit=180;
+
+%% Chest
+idb.sid(104395).name='Enchant Chest - Glorious Stats';
+idb.sid(104395).sta=80;
+idb.sid(104395).str=80;
+idb.sid(104395).agi=80;
+idb.sid(104395).int=80;
+
+idb.sid(104397).name='Enchant Chest - Superior Stamina';
+idb.sid(104397).sta=300;
 
 %% Wrists
 idb.sid(62256).name='Enchant Bracer - Major Stamina';
 idb.sid(62256).sta=40;
 
-idb.sid(85007).name='Draconic Embossment - Stamina';
-idb.sid(85007).sta=195;
+idb.sid(124553).name='Fur Lining - Stamina';
+idb.sid(124553).sta=750;
 
-idb.sid(85009).name='Draconic Embossment - Strength';
-idb.sid(85009).sta=130;
-
-idb.sid(74229).name='Enchant Bracer - Dodge';
-idb.sid(74229).dodge=50;
+idb.sid(124554).name='Fur Lining - Strength';
+idb.sid(124554).str=500;
 
 idb.sid(74232).name='Enchant Bracer - Precision';
 idb.sid(74232).hit=50;
@@ -95,16 +67,18 @@ idb.sid(74239).exp=50;
 idb.sid(74248).name='Enchant Bracer - Greater Critical Strike';
 idb.sid(74248).crit=65;
 
-idb.sid(96261).name='Enchant Bracer - Major Strength';
-idb.sid(96261).str=50;
+%MoP
+idb.sid(104390).name='Enchant Bracer - Exceptional Strength';
+idb.sid(104390).str=170;
+
+idb.sid(104385).name='Enchant Bracer - Superior Dodge';
+idb.sid(104385).dodge=170;
+
+idb.sid(104338).name='Enchant Bracer - Mastery';
+idb.sid(104338).mast=170;
+
 
 %% Hands
-idb.sid(74254).name='Enchant Gloves - Mighty Strength';
-idb.sid(74254).str=50;
-
-idb.sid(74255).name='Enchant Gloves - Greater Mastery';
-idb.sid(74255).mast=65;
-
 idb.sid(74220).name='Enchant Gloves - Greater Expertise';
 idb.sid(74220).exp=50;
 
@@ -112,18 +86,24 @@ idb.sid(82175).name='Synapse Springs';
 
 idb.sid(82177).name='Quickflip Deflection Plates';
 
+%MoP
+idb.sid(104419).name='Enchant Gloves - Super Strength';
+idb.sid(104419).str=170;
+
+idb.sid(104420).name='Enchant Gloves - Superior Mastery';
+idb.sid(104420).mast=170;
+
+idb.sid(104417).name='Enchant Gloves - Superior Expertise';
+idb.sid(104417).exp=170;
+
+idb.sid(104416).name='Enchant Gloves - Greater Haste';
+idb.sid(104416).haste=170;
+
 %% Waist
-idb.sid(76168).name='Ebonsteel Belt Buckle';
-idb.sid(76168).socket='P';
+idb.sid(90046).name='Living Steel Belt Buckle';
+idb.sid(90046).socket='P';
 
 %% Legs
-idb.sid(78169).name='Scorched Leg Armor';
-idb.sid(78169).ap=110;
-idb.sid(78169).crit=45;
-
-idb.sid(78170).name='Twilight Leg Armor';
-idb.sid(78170).sta=85;
-idb.sid(78170).agi=45;
 
 idb.sid(78171).name='Dragonscale Leg Armor';
 idb.sid(78171).ap=190;
@@ -133,58 +113,56 @@ idb.sid(78172).name='Charscale Leg Armor';
 idb.sid(78172).sta=145;
 idb.sid(78172).agi=55;
 
-idb.sid(101598).name='Drakehide Leg Armor';
-idb.sid(101598).sta=145;
-idb.sid(101598).dodge=55;
+%MoP
+idb.sid(124128).name='Ironscale Leg Armor';
+idb.sid(124128).sta=430;
+idb.sid(124128).dodge=165;
+
+idb.sid(124129).name='Shadowleather Leg Armor';
+idb.sid(124129).agi=285;
+idb.sid(124129).crit=165;
+
+idb.sid(124127).name='Angerhide Leg Armor';
+idb.sid(124127).str=285;
+idb.sid(124127).crit=165;
+
+idb.sid(124125).name='Toughened Leg Armor';
+idb.sid(124125).sta=250;
+idb.sid(124125).dodge=100;
+
+idb.sid(124126).name='Brutal Leg Armor';
+idb.sid(124126).str=170;
+idb.sid(124126).crit=100;
+
+idb.sid(124124).name='Sha-Touched Leg Armor';
+idb.sid(124124).agi=170;
+idb.sid(124124).crit=100;
 
 %% Feet
 idb.sid(74189).name='Enchant Boots - Earthen Vitality';
 idb.sid(74189).sta=30;
 
-idb.sid(74252).name='Enchant Boots - Assassin''s Step';
-idb.sid(74252).agi=25;
+%MoP
+idb.sid(104414).name='Enchant Boots - Pandaren''s Step';
+idb.sid(104414).mast=140;
 
-idb.sid(74253).name='Enchant Boots - Lavawalker';
-idb.sid(74253).mast=35;
+idb.sid(104409).name='Enchant Boots - Blurred Speed';
+idb.sid(104409).agi=140;
 
-idb.sid(74213).name='Enchant Boots - Major Agility';
-idb.sid(74213).agi=35;
+idb.sid(104407).name='Enchant Boots - Greater Haste';
+idb.sid(104407).haste=175;
 
-idb.sid(74238).name='Enchant Boots - Mastery';
-idb.sid(74238).mast=50;
-
-idb.sid(74236).name='Enchant Boots - Precision';
-idb.sid(74236).hit=50;
+idb.sid(104408).name='Enchant Boots - Greater Precision';
+idb.sid(104408).hit=175;
 
 %% Rings
-idb.sid(74218).name='Enchant Ring - Greater Stamina';
-idb.sid(74218).sta=75;
+idb.sid(103463).name='Enchant Ring - Greater Stamina';
+idb.sid(103463).sta=160;
 
-idb.sid(74215).name='Enchant Ring - Strength';
-idb.sid(74215).str=50;
+idb.sid(103465).name='Enchant Ring - Strength';
+idb.sid(103465).str=160;
 
 %% Weapon
-%LK enchants
-idb.sid(59619).name='Enchant Weapon - Accuracy';
-idb.sid(59619).hit=25;
-idb.sid(59619).crit=25;
-
-idb.sid(38995).name='Enchant Weapon - Exceptional Agility';
-idb.sid(38995).agi=26;
-
-idb.sid(60621).name='Enchant Weapon - Greater Potency';
-idb.sid(60621).ap=50;
-
-idb.sid(27972).name='Enchant Weapon - Potency';
-idb.sid(27972).str=20;
-
-idb.sid(41976).name='Titanium Weapon Chain';
-idb.sid(41976).hit=28;
-
-idb.sid(55057).name='Pyrium Weapon Chain';
-idb.sid(55057).hit=40;
-
-
 %Cata enchants
 idb.sid(74195).name='Enchant Weapon - Mending';
 idb.sid(74195).procid=74195;
@@ -206,7 +184,27 @@ idb.sid(74246).procid=74246;
 idb.sid(74197).name='Enchant Weapon - Avalanche';
 idb.sid(74197).procid=74197;
 
+idb.sid(55057).name='Pyrium Weapon Chain';
+idb.sid(55057).hit=40;
+
+%MoP enchants
+idb.sid(104434).name='Enchant Weapon - Dancing Steel';
+idb.sid(104434).procid=0; %PH
+
+idb.sid(104442).name='Enchant Weapon - River''s Song';
+idb.sid(104442).procid=0; %PH
+
+idb.sid(104440).name='Enchant Weapon - Colossus';
+idb.sid(104440).procid=0; %PH
+
+idb.sid(104425).name='Enchant Weapon - Windsong';
+idb.sid(104425).procid=0; %PH
+
+idb.sid(104430).name='Enchant Weapon - Elemental Force';
+idb.sid(104430).procid=0; %PH
+
 %% Shield
+%Cata
 idb.sid(34009).name='Enchant Shield - Major Stamina';
 idb.sid(34009).sta=18;
 
@@ -215,6 +213,10 @@ idb.sid(74207).earmor=160;
 
 idb.sid(74226).name='Enchant Shield - Mastery';
 idb.sid(74226).mast=50;
+
+%MoP
+idb.sid(130758).name='Enchant Shield - Greater Parry';
+idb.sid(130758).parry=170;
 
 
 %% Consumables (invoked by buff_model)
@@ -294,247 +296,234 @@ idb.sid(62669).agi=90;
 
 %% Gems (nota bene : mixt gems are counted twice, so a green one will be YB)
 % Red
-idb.iid(52206).name='Bold Inferno Ruby';
-idb.iid(52206).str=40;
-idb.iid(52206).socket='R';
+idb.iid(76696).name='Bold Primordial Ruby';
+idb.iid(76696).str=160;
+idb.iid(76696).socket='R';
 
-idb.iid(52212).name='Delicate Inferno Ruby';
-idb.iid(52212).agi=40;
-idb.iid(52212).socket='R';
+idb.iid(76692).name='Delicate Primordial Ruby';
+idb.iid(76692).agi=160;
+idb.iid(76692).socket='R';
 
-idb.iid(52216).name='Flashing Inferno Ruby';
-idb.iid(52216).parry=40;
-idb.iid(52216).socket='R';
+idb.iid(76695).name='Flashing Primordial Ruby';
+idb.iid(76695).parry=320;
+idb.iid(76695).socket='R';
 
-idb.iid(52230).name='Precise Inferno Ruby';
-idb.iid(52230).exp=40;
-idb.iid(52230).socket='R';
+idb.iid(76693).name='Precise Primordial Ruby';
+idb.iid(76693).exp=160;
+idb.iid(76693).socket='R';
 
-idb.iid(52255).name='Bold Chimera''s Eye';
-idb.iid(52255).str=67;
-idb.iid(52255).socket='R';
+idb.iid(83141).name='Bold Serpent''s Eye';
+idb.iid(83141).str=320;
+idb.iid(83141).socket='R';
 
-idb.iid(52258).name='Delicate Chimera''s Eye';
-idb.iid(52258).agi=67;
-idb.iid(52258).socket='R';
+idb.iid(83151).name='Delicate Serpent''s Eye';
+idb.iid(83151).agi=320;
+idb.iid(83151).socket='R';
 
-idb.iid(52259).name='Flashing Chimera''s Eye';
-idb.iid(52259).parry=67;
-idb.iid(52259).socket='R';
+idb.iid(83152).name='Flashing Serpent''s Eye';
+idb.iid(83152).parry=480;
+idb.iid(83152).socket='R';
 
-idb.iid(52260).name='Precise Chimera''s Eye';
-idb.iid(52260).exp=67;
-idb.iid(52260).socket='R';
-
-idb.iid(71883).name='Bold Queen''s Garnet';
-idb.iid(71883).str=50;
-idb.iid(71883).socket='R';
-
-idb.iid(71879).name='Delicate Queen''s Garnet';
-idb.iid(71879).agi=50;
-idb.iid(71879).socket='R';
-
-idb.iid(71882).name='Flashing Queen''s Garnet';
-idb.iid(71882).parry=50;
-idb.iid(71882).socket='R';
-
-idb.iid(71880).name='Precise Queen''s Garnet';
-idb.iid(71880).exp=50;
-idb.iid(71880).socket='R';
+idb.iid(83147).name='Precise Serpent''s Eye';
+idb.iid(83147).exp=480;
+idb.iid(83147).socket='R';
 
 % Orange
-idb.iid(52204).name='Adept Ember Topaz';
-idb.iid(52204).agi=20;
-idb.iid(52204).mast=20;
-idb.iid(52204).socket='RY';
+idb.iid(76670).name='Adept Vermilion Onyx';
+idb.iid(76670).agi=80;
+idb.iid(76670).mast=160;
+idb.iid(76670).socket='RY';
 
-idb.iid(52215).name='Fine Ember Topaz';
-idb.iid(52215).parry=20;
-idb.iid(52215).mast=20;
-idb.iid(52215).socket='RY';
+idb.iid(76659).name='Crafty Vermilion Onyx';
+idb.iid(76659).exp=160;
+idb.iid(76659).crit=160;
+idb.iid(76659).socket='RY';
 
-idb.iid(52222).name='Inscribed Ember Topaz';
-idb.iid(52222).str=20;
-idb.iid(52222).crit=20;
-idb.iid(52222).socket='RY';
+idb.iid(76673).name='Fine Vermilion Onyx';
+idb.iid(76673).parry=160;
+idb.iid(76673).mast=160;
+idb.iid(76673).socket='RY';
 
-idb.iid(52224).name='Keen Ember Topaz';
-idb.iid(52224).exp=20;
-idb.iid(52224).mast=20;
-idb.iid(52224).socket='RY';
+idb.iid(76661).name='Inscribed Vermilion Onyx';
+idb.iid(76661).str=80;
+idb.iid(76661).crit=160;
+idb.iid(76661).socket='RY';
 
-idb.iid(52229).name='Polished Ember Topaz';
-idb.iid(52229).agi=20;
-idb.iid(52229).dodge=20;
-idb.iid(52229).socket='RY';
+idb.iid(76671).name='Keen Vermilion Onyx';
+idb.iid(76671).exp=160;
+idb.iid(76671).mast=160;
+idb.iid(76671).socket='RY';
 
-idb.iid(52240).name='Skillful Ember Topaz';
-idb.iid(52240).str=20;
-idb.iid(52240).mast=20;
-idb.iid(52240).socket='RY';
+idb.iid(76662).name='Polished Vermilion Onyx';
+idb.iid(76662).agi=80;
+idb.iid(76662).dodge=160;
+idb.iid(76662).socket='RY';
 
-idb.iid(52249).name='Resolute Ember Topaz';
-idb.iid(52249).exp=20;
-idb.iid(52249).dodge=20;
-idb.iid(52249).socket='RY';
+idb.iid(76674).name='Skillful Vermilion Onyx';
+idb.iid(76674).str=80;
+idb.iid(76674).mast=160;
+idb.iid(76674).socket='RY';
 
-idb.iid(71841).name='Crafty Lava Coral';
-idb.iid(71841).exp=25;
-idb.iid(71841).crit=25;
-idb.iid(71841).socket='RY';
+idb.iid(76663).name='Resolute Vermilion Onyx';
+idb.iid(76663).exp=160;
+idb.iid(76663).dodge=160;
+idb.iid(76663).socket='RY';
 
-idb.iid(71855).name='Fine Lava Coral';
-idb.iid(71855).parry=25;
-idb.iid(71855).mast=25;
-idb.iid(71855).socket='RY';
+idb.iid(88933).name='Crafty Sardonyx';
+idb.iid(88933).exp=200;
+idb.iid(88933).crit=200;
+idb.iid(88933).socket='RY';
 
-idb.iid(71843).name='Inscribed Lava Coral';
-idb.iid(71843).str=25;
-idb.iid(71843).crit=25;
-idb.iid(71843).socket='RY';
+idb.iid(88937).name='Fine Sardonyx';
+idb.iid(88937).parry=200;
+idb.iid(88937).mast=200;
+idb.iid(88937).socket='RY';
 
-idb.iid(71853).name='Keen Lava Coral';
-idb.iid(71853).exp=25;
-idb.iid(71853).mast=25;
-idb.iid(71853).socket='RY';
+idb.iid(88938).name='Inscribed Sardonyx';
+idb.iid(88938).str=100;
+idb.iid(88938).crit=200;
+idb.iid(88938).socket='RY';
 
-idb.iid(71856).name='Skillful Lava Coral';
-idb.iid(71856).str=25;
-idb.iid(71856).mast=25;
-idb.iid(71856).socket='RY';
+idb.iid(88939).name='Keen Sardonyx';
+idb.iid(88939).exp=200;
+idb.iid(88939).mast=200;
+idb.iid(88939).socket='RY';
+
+idb.iid(88946).name='Skillful Sardonyx';
+idb.iid(88946).str=100;
+idb.iid(88946).mast=200;
+idb.iid(88946).socket='RY';
 
 % Yellow
-idb.iid(52219).name='Fractured Amberjewel';
-idb.iid(52219).mast=40;
-idb.iid(52219).socket='Y';
+idb.iid(76700).name='Fractured Sun''s Radiance';
+idb.iid(76700).mast=320;
+idb.iid(76700).socket='Y';
 
-idb.iid(52247).name='Subtle Amberjewel';
-idb.iid(52247).dodge=40;
-idb.iid(52247).socket='Y';
+idb.iid(76698).name='Subtle Sun''s Radiance';
+idb.iid(76698).dodge=320;
+idb.iid(76698).socket='Y';
 
-idb.iid(52265).name='Subtle Chimera''s Eye';
-idb.iid(52265).dodge=67;
-idb.iid(52265).socket='Y';
+idb.iid(83145).name='Subtle Serpent''s Eye';
+idb.iid(83145).dodge=480;
+idb.iid(83145).socket='Y';
 
-idb.iid(52269).name='Fractured Chimera''s Eye';
-idb.iid(52269).mast=67;
-idb.iid(52269).socket='Y';
-
-idb.iid(71877).name='Fractured Lightstone';
-idb.iid(71877).mast=50;
-idb.iid(71877).socket='Y';
+idb.iid(83143).name='Fractured Serpent''s Eye';
+idb.iid(83143).mast=480;
+idb.iid(83143).socket='Y';
 
 % Green
-idb.iid(52227).name='Nimble Dream Emerald';
-idb.iid(52227).dodge=20;
-idb.iid(52227).hit=20;
-idb.iid(52227).socket='YB';
+idb.iid(76655).name='Nimble Wild Jade';
+idb.iid(76655).sta=120;
+idb.iid(76655).hit=160;
+idb.iid(76655).socket='YB';
 
-idb.iid(52231).name='Puissant Dream Emerald';
-idb.iid(52231).mast=20;
-idb.iid(52231).sta=30;
-idb.iid(52231).socket='YB';
+idb.iid(76656).name='Puissant Wild Jade';
+idb.iid(76656).mast=160;
+idb.iid(76656).sta=120;
+idb.iid(76656).socket='YB';
 
-idb.iid(52233).name='Regal Dream Emerald';
-idb.iid(52233).dodge=20;
-idb.iid(52233).sta=30;
-idb.iid(52233).socket='YB';
+idb.iid(76653).name='Regal Wild Jade';
+idb.iid(76653).dodge=160;
+idb.iid(76653).sta=120;
+idb.iid(76653).socket='YB';
 
-idb.iid(52237).name='Sensei''s Dream Emerald';
-idb.iid(52237).mast=20;
-idb.iid(52237).hit=20;
-idb.iid(52237).socket='YB';
+idb.iid(76643).name='Sensei''s Wild Jade';
+idb.iid(76643).mast=160;
+idb.iid(76643).hit=160;
+idb.iid(76643).socket='YB';
 
-idb.iid(71838).name='Puissant Elven Peridot';
-idb.iid(71838).mast=25;
-idb.iid(71838).sta=37;
-idb.iid(71838).socket='YB';
+idb.iid(88920).name='Puissant Adventurine';
+idb.iid(88920).mast=200;
+idb.iid(88920).sta=150;
+idb.iid(88920).socket='YB';
 
-idb.iid(71825).name='Sensei''s Elven Peridot';
-idb.iid(71825).mast=25;
-idb.iid(71825).hit=25;
-idb.iid(71825).socket='YB';
+idb.iid(88923).name='Sensei''s Adventurine';
+idb.iid(88923).mast=200;
+idb.iid(88923).hit=200;
+idb.iid(88923).socket='YB';
+
+idb.iid(88918).name='Nimble Adventurine';
+idb.iid(88918).sta=150;
+idb.iid(88918).hit=200;
+idb.iid(88918).socket='YB';
 
 % Blue
-idb.iid(52235).name='Rigid Ocean Sapphire';
-idb.iid(52235).hit=40;
-idb.iid(52235).socket='B';
+idb.iid(76636).name='Rigid River''s Heart';
+idb.iid(76636).hit=320;
+idb.iid(76636).socket='B';
 
-idb.iid(52242).name='Solid Ocean Sapphire';
-idb.iid(52242).sta=60;
-idb.iid(52242).socket='B';
+idb.iid(76639).name='Solid River''s Heart';
+idb.iid(76639).sta=240;
+idb.iid(76639).socket='B';
 
-idb.iid(52261).name='Solid Chimera''s Eye';
-idb.iid(52261).sta=101;
-idb.iid(52261).socket='B';
+idb.iid(83148).name='Solid Serpent''s Eye';
+idb.iid(83148).sta=480;
+idb.iid(83148).socket='B';
 
-idb.iid(52264).name='Rigid Chimera''s Eye';
-idb.iid(52264).hit=67;
-idb.iid(52264).socket='B';
-
-idb.iid(71817).name='Rigid Deepholm Iolite';
-idb.iid(71817).hit=50;
-idb.iid(71817).socket='B';
-
-idb.iid(71820).name='Solid Deepholm Iolite';
-idb.iid(71820).sta=75;
-idb.iid(71820).socket='B';
+idb.iid(83144).name='Rigid Serpent''s Eye';
+idb.iid(83144).hit=480;
+idb.iid(83144).socket='B';
 
 % Purple
-idb.iid(52203).name='Accurate Demonseye';
-idb.iid(52203).exp=20;
-idb.iid(52203).hit=20;
-idb.iid(52203).socket='RB';
+idb.iid(76681).name='Accurate Imperial Amethyst';
+idb.iid(76681).exp=160;
+idb.iid(76681).hit=160;
+idb.iid(76681).socket='RB';
 
-idb.iid(52210).name='Defender''s Demonseye';
-idb.iid(52210).parry=20;
-idb.iid(52210).sta=30;
-idb.iid(52210).socket='RB';
+idb.iid(76690).name='Defender''s Imperial Amethyst';
+idb.iid(76690).parry=160;
+idb.iid(76690).sta=120;
+idb.iid(76690).socket='RB';
 
-idb.iid(52213).name='Etched Demonseye';
-idb.iid(52213).str=20;
-idb.iid(52213).hit=20;
-idb.iid(52213).socket='RB';
+idb.iid(76684).name='Etched Imperial Amethyst';
+idb.iid(76684).str=80;
+idb.iid(76684).hit=160;
+idb.iid(76684).socket='RB';
 
-idb.iid(52220).name='Glinting Demonseye';
-idb.iid(52220).agi=20;
-idb.iid(52220).hit=20;
-idb.iid(52220).socket='RB';
+idb.iid(76680).name='Glinting Imperial Amethyst';
+idb.iid(76680).agi=80;
+idb.iid(76680).hit=160;
+idb.iid(76680).socket='RB';
 
-idb.iid(52221).name='Guardian''s Demonseye';
-idb.iid(52221).exp=20;
-idb.iid(52221).sta=30;
-idb.iid(52221).socket='RB';
+idb.iid(76688).name='Guardian''s Imperial Amethyst';
+idb.iid(76688).exp=160;
+idb.iid(76688).sta=120;
+idb.iid(76688).socket='RB';
 
-idb.iid(52234).name='Retaliating Demonseye';
-idb.iid(52234).parry=20;
-idb.iid(52234).hit=20;
-idb.iid(52234).socket='RB';
+idb.iid(76683).name='Retaliating Imperial Amethyst';
+idb.iid(76683).parry=160;
+idb.iid(76683).hit=160;
+idb.iid(76683).socket='RB';
 
-idb.iid(52238).name='Shifting Demonseye';
-idb.iid(52238).agi=20;
-idb.iid(52238).sta=30;
-idb.iid(52238).socket='RB';
+idb.iid(76687).name='Shifting Imperial Amethyst';
+idb.iid(76687).agi=80;
+idb.iid(76687).sta=120;
+idb.iid(76687).socket='RB';
 
-idb.iid(52243).name='Sovereign Demonseye';
-idb.iid(52243).str=20;
-idb.iid(52243).sta=30;
-idb.iid(52243).socket='RB';
+idb.iid(76691).name='Sovereign Imperial Amethyst';
+idb.iid(76691).str=80;
+idb.iid(76691).sta=120;
+idb.iid(76691).socket='RB';
 
-idb.iid(71863).name='Accurate Shadow Spinel';
-idb.iid(71863).exp=25;
-idb.iid(71863).hit=25;
-idb.iid(71863).socket='RB';
+idb.iid(88952).name='Accurate Zyanite';
+idb.iid(88952).exp=200;
+idb.iid(88952).hit=200;
+idb.iid(88952).socket='RB';
 
-idb.iid(71872).name='Defender''s Shadow Spinel';
-idb.iid(71872).parry=25;
-idb.iid(71872).sta=37;
-idb.iid(71872).socket='RB';
+idb.iid(88953).name='Defender''s Zyanite';
+idb.iid(88953).parry=200;
+idb.iid(88953).sta=150;
+idb.iid(88953).socket='RB';
 
-idb.iid(71866).name='Etched Shadow Spinel';
-idb.iid(71866).str=25;
-idb.iid(71866).hit=25;
-idb.iid(71866).socket='RB';
+idb.iid(88954).name='Etched Zyanite';
+idb.iid(88954).str=100;
+idb.iid(88954).hit=200;
+idb.iid(88954).socket='RB';
+
+idb.iid(88956).name='Guardian''s Zyanite';
+idb.iid(88956).sta=150;
+idb.iid(88956).exp=200;
+idb.iid(88956).socket='RB';
 
 % Prismatic /TODO check for lvl85 homologue
 idb.iid(49110).name='Nightmare Tear';
@@ -544,27 +533,27 @@ idb.iid(49110).agi=10;
 idb.iid(49110).socket='P';
 
 % Meta
-idb.iid(68779).name='Chaotic Shadowspirit Diamond';
-idb.iid(68779).str=54;
+idb.iid(68779).name='Reverberating Primal Diamond';
+idb.iid(68779).str=216;
 idb.iid(68779).meta=3;
 idb.iid(68779).socket='M';
 
-idb.iid(52293).name='Eternal Shadowspirit Diamond';
-idb.iid(52293).sta=81;
-idb.iid(52293).meta=2;
-idb.iid(52293).socket='M';
+idb.iid(76896).name='Eternal Primal Diamond';
+idb.iid(76896).dodge=432;
+idb.iid(76896).meta=2;
+idb.iid(76896).socket='M';
 
-idb.iid(52294).name='Austere Shadowspirit Diamond';
-idb.iid(52294).sta=81;
-idb.iid(52294).meta=1;
-idb.iid(52294).socket='M';
+idb.iid(76895).name='Austere Primal Diamond';
+idb.iid(76895).sta=324;
+idb.iid(76895).meta=1;
+idb.iid(76895).socket='M';
 
-idb.iid(52295).name='Effulgent Shadowspirit Diamond';
-idb.iid(52295).sta=81;
-idb.iid(52295).meta=4;
-idb.iid(52295).socket='M';
+idb.iid(76897).name='Effulgent Primal Diamond';
+idb.iid(76897).sta=324;
+idb.iid(76897).meta=4;
+idb.iid(76897).socket='M';
 
-idb.iid(52299).name='Powerful Shadowspirit Diamond';
-idb.iid(52299).sta=81;
-idb.iid(52299).meta=5;
-idb.iid(52299).socket='M';
+idb.iid(76891).name='Powerful Primal Diamond';
+idb.iid(76891).sta=324;
+idb.iid(76891).meta=5;
+idb.iid(76891).socket='M';

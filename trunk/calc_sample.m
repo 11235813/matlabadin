@@ -29,7 +29,7 @@ c.talent=talent_model();
 c.glyph=glyph_model();
 
 %load gear set
-c.egs=ddb.gearset{1}; %1=pre-raid , 2=T14, 3=T14H, 4=T15, 5=T15H
+c.egs=ddb.gearset{3}; %1=i450 , 2=i463, 3=T14LFR (483), 4=T14N (496), 5=T14H (509)
 
 %calculate relevant stats
 %TODO: this could be built into stat_model
