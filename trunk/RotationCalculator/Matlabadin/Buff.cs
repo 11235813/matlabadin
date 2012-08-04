@@ -56,7 +56,11 @@ namespace Matlabadin
         /// <summary>
         /// Holy Avenger
         /// </summary>
-        HA, 
+        HA,
+        /// <summary>
+        /// Glyph of WoG
+        /// </summary>
+        GoWoG,
         Count,
         UptimeTrackedUnforkedBuffs = SotRSB + 1,
         UptimeTrackedForkedBuffs = WB + 1,
