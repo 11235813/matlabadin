@@ -13,8 +13,8 @@ function [ c ] = dynamic_model( c )
 %Glyph of Alabaster Shield
 if isempty(find(c.rot.cps(strcmp('SotR',c.abil.val.label),:)<1e-7)) %if we don't cast SotR, cps=0
     c.mdf.glyphAS=0.2.*c.glyph.AlabasterShield.*...
-        min([c.player.blockpct.*(1-c.player.avoidpct)./c.npc.swing;...
-        c.rot.cps(strcmp('SotR',c.abil.val.label),:)])./c.rot.cps(strcmp('SotR',c.abil.val.label),:);
+        min([c.player.blockpct.*(1-c.player.avoidpct)./c.npc.swing.*c.abil.val.ones;...
+        c.rot.cps(strcmp('SotR',c.abil.val.label),:).*c.abil.val.ones])./c.rot.cps(strcmp('SotR',c.abil.val.label),:);
 else
     c.mdf.glyphAS=0;
 end

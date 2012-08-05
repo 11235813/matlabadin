@@ -58,6 +58,7 @@ function [actionPr, metadata, uptime] = load_fsm_csv(filename)
 	fid = fopen(filename, 'rt');
 	i = 1;
 	metadata = {};
+    uptime.ss=0;uptime.ef=0;uptime.wb=0;uptime.sb=0;uptime.aw=0;uptime.gcd=0; %initialize, otherwise the field ordering causes errors
 	while not(feof(fid))
 		txt = fgetl(fid);
 		rowEntry = strsplit(txt, ',');
