@@ -21,12 +21,15 @@ jme=1;
 jra=1;
 jws=1;
 jha=1;
+jss=1;
+jef=1;
+jaw=1;
 
 %handle non-singleton arrays
 if length(c.mdf.mehit)>1
     jme=j;
 end
-if length(c.mdf.sphit)>1
+if length(c.mdf.rahit)>1
     jra=j;
 end
 if length(c.player.wswing)>1
@@ -34,6 +37,15 @@ if length(c.player.wswing)>1
 end
 if length(c.player.sphaste)>1
     jha=j;
+end
+if length([c.rot.uptime.ss])>1
+    jss=j;
+end
+if length([c.rot.uptime.ef])>1
+    jef=j;
+end
+if length([c.rot.uptime.aw])>1
+    jaw=j;
 end
 
 %% CPS conversions    
@@ -134,8 +146,8 @@ for m=1:size(c.rot.actionPr,2)
             hpg=hpg+asgc.*hpmod;
         case 'SS'
             %uptime-based, not cast-based
-            cps(idx)=c.rot.uptime.ss./6;
-            ecps(idx)=c.rot.uptime.ss./6; %no modifiers on absorbs
+            cps(idx)=c.rot.uptime(jss).ss./6;
+            ecps(idx)=c.rot.uptime(jss).ss./6; %no modifiers on absorbs
     end
 
 end
@@ -143,20 +155,20 @@ end
 %% Melee
 %Melee swings
 cps(strcmpi('Melee',c.abil.val.label))=1./c.player.wswing(jws);
-ecps(strcmpi('Melee',c.abil.val.label))=(1+0.2.*c.rot.uptime(jme).aw)./c.player.wswing(jws);
+ecps(strcmpi('Melee',c.abil.val.label))=(1+0.2.*c.rot.uptime(jaw).aw)./c.player.wswing(jws);
 %seal procs
 cps(sealidx)=cps(sealidx)+1./c.player.wswing(jws);
-ecps(sealidx)=ecps(sealidx)+(1+0.2.*c.rot.uptime(jme).aw).*c.mdf.mehit(jme)./c.player.wswing(jws);
+ecps(sealidx)=ecps(sealidx)+(1+0.2.*c.rot.uptime(jaw).aw).*c.mdf.mehit(jme)./c.player.wswing(jws);
 
 %% Censure
 cps(strcmpi('Censure',c.abil.val.label))= 1./c.player.censTick(jha);
-ecps(strcmpi('Censure',c.abil.val.label))= (1+0.2.*c.rot.uptime(jme).aw)./c.player.censTick(jha);
+ecps(strcmpi('Censure',c.abil.val.label))= (1+0.2.*c.rot.uptime(jaw).aw)./c.player.censTick(jha);
 
 %% EF(HoT)
 %not affected by BoG, assume average overlap with AW, 
 %TODO: check that ticks are not haste-affected
 %TODO: this doesn't account for low-HP EF casts
-cps(strcmpi('EF(HoT)',c.abil.val.label))=c.rot.uptime.ef./3;
-ecps(strcmpi('EF(HoT)',c.abil.val.label))=c.rot.uptime.ef./3.*(1+0.2.*c.rot.uptime(jme).aw);
+cps(strcmpi('EF(HoT)',c.abil.val.label))=c.rot.uptime(jef).ef./3;
+ecps(strcmpi('EF(HoT)',c.abil.val.label))=c.rot.uptime(jef).ef./3.*(1+0.2.*c.rot.uptime(jaw).aw);
 
 end
