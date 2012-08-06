@@ -229,8 +229,8 @@ foreach my $id (@items) {
   
   # Tier set flag
   for ($item{setname} or '') {
-    /White Tiger Plate/      and print "idb.iid($id).istierP=[1];\n";
-    /White Tiger Battlegear/ and print "idb.iid($id).istierR=[1];\n";
+    /White Tiger Plate/      and print "idb.iid($id).istierP=[1 0 0];\n";
+    /White Tiger Battlegear/ and print "idb.iid($id).istierR=[1 0 0];\n";
   }
   
   print "\n";
