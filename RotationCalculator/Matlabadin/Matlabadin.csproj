@@ -49,6 +49,7 @@
     <Compile Include="ArrayStateManager.cs" />
     <Compile Include="IStateManager.cs" />
     <Compile Include="MatlabadinSimTree.cs" />
+    <Compile Include="PaladinGlyphs.cs" />
     <Compile Include="PaladinSpec.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Choice.cs" />

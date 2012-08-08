@@ -124,5 +124,26 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0, talents.CountAtLevel(75));
             Assert.AreEqual(0, talents.CountAtLevel(90));
         }
+        [Test]
+        public void PaladinGlyphsHelper_TryParse_ShouldUseGlyphEnumName()
+        {
+            PaladinGlyphs pt;
+            PaladinGlyphsHelper.TryParse("GoWoG", out pt); Assert.AreEqual(PaladinGlyphs.GoWoG, pt);
+            PaladinGlyphsHelper.TryParse("gowog", out pt); Assert.AreEqual(PaladinGlyphs.GoWoG, pt);
+        }
+        [Test]
+        public void PaladinGlyphsHelper_TryParse_ShouldCommaSeperateGlyphs()
+        {
+            PaladinGlyphs pt;
+            PaladinGlyphsHelper.TryParse("GoWoG,GoHotR", out pt); Assert.AreEqual(PaladinGlyphs.GoWoG | PaladinGlyphs.GoHotR, pt);
+        }
+        [Test]
+        public void PaladinGlyphs_Includes()
+        {
+            Assert.IsTrue(PaladinGlyphs.GoHotR.Includes(PaladinGlyphs.GoHotR));
+            Assert.IsTrue((PaladinGlyphs.GoHotR | PaladinGlyphs.GoWoG).Includes(PaladinGlyphs.GoHotR));
+            Assert.IsFalse(PaladinGlyphs.GoHotR.Includes(PaladinGlyphs.GoWoG));
+            Assert.IsFalse(PaladinGlyphs.None.Includes(PaladinGlyphs.GoWoG));
+        }
     }
 }

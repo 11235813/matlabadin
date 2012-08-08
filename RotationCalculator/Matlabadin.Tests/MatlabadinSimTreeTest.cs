@@ -38,7 +38,7 @@ namespace Matlabadin.Tests
         [Test]
         public void ShouldCalculateForkedBuffUptimePercentage()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("HotR"), PaladinSpec.Prot, PaladinTalents.All, 1, 0, 0.75, 0.75);
+            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("HotR"), PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 1, 0, 0.75, 0.75);
             MatlabadinSimTree<BitVectorState> mst = new MatlabadinSimTree<BitVectorState>(gp, gp);
             ActionSummary result = mst.Calculate(3);
             Assert.AreEqual(0.75, result.BuffUptime[(int)Buff.WB]); // 75% chance that HotR hit & WB up for all 3 steps
@@ -46,7 +46,7 @@ namespace Matlabadin.Tests
         [Test]
         public void ShouldNotTravereZeroProbabilityTransitions()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("SotR>CS"), PaladinSpec.Prot, PaladinTalents.All, 1, 0, 0, 0);
+            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("SotR>CS"), PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 1, 0, 0, 0);
             MatlabadinSimTree<BitVectorState> mst = new MatlabadinSimTree<BitVectorState>(gp, gp);
             ActionSummary result = mst.Calculate(128);
             Assert.IsFalse(result.Action.ContainsKey("SotR"));
@@ -54,7 +54,7 @@ namespace Matlabadin.Tests
         [Test]
         public void ShouldMergeAggregatePaths()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.All, 1, 0, 0.75, 0.75);
+            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 1, 0, 0.75, 0.75);
             MatlabadinSimTree<BitVectorState> mst = new MatlabadinSimTree<BitVectorState>(gp, gp);
             for (int i = 0; i < 8; i++)
             {
@@ -64,7 +64,7 @@ namespace Matlabadin.Tests
         [Test]
         public void ExecutionShouldBeUnder5Seconds()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB>^SS>AW5>SotR5>CS>J>AS>Cons"), PaladinSpec.Prot, PaladinTalents.All, 3, 0, 0.95, 0.95);
+            Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("^WB>^SS>AW5>SotR5>CS>J>AS>Cons"), PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 3, 0, 0.95, 0.95);
             MatlabadinSimTree<BitVectorState> mst = new MatlabadinSimTree<BitVectorState>(gp, gp);
             DateTime start = DateTime.Now;
             mst.Calculate(3 * 300); // 5min encounter

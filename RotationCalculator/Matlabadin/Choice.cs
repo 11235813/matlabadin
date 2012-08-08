@@ -19,7 +19,7 @@ namespace Matlabadin
             bool aw,
             bool dp,
             bool ha,
-            bool gowog,
+            int gowogStacks,
             int[] unforkedBuffDuration,
             int[][] forkedBuffDuration
             )
@@ -61,7 +61,7 @@ namespace Matlabadin
                 if (ability == Ability.FoL) action[0] += String.Format("(SH{0})", folsh);
                 if (aw) action[0] += "(AW)";
                 if (ha) action[0] += "(HA)";
-                if (gowog) action[0] += "(GoWoG)";
+                if (gowogStacks > 0) action[0] += String.Format("(GoWoG{0})", gowogStacks);
             }
         }
         // Output related
