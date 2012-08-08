@@ -17,6 +17,7 @@ namespace Matlabadin.Tests
                     PaladinTalents.SelflessHealer | PaladinTalents.EternalFlame | PaladinTalents.SacredShield |
                     PaladinTalents.ExecutionSentence | PaladinTalents.LightsHammer |PaladinTalents.HolyPrism |
                     PaladinTalents.DivinePurpose,
+                    PaladinGlyphs.GoWoG, 
                     3, 0, 0.5, 0.5);
             }
         }

@@ -39,7 +39,7 @@ namespace Matlabadin
                 1, 1, 1,
                 1, 1, 1,
                 1, 3, 5, 1,
-                1, 1,
+                1, 3,
             };
 
         // constructor, does some simple sanity testing and calculates haste-effected GCD/CDs
@@ -47,6 +47,7 @@ namespace Matlabadin
             RotationPriorityQueue<TState> rotation,
             PaladinSpec spec = PaladinSpec.Prot,
             PaladinTalents talents = PaladinTalents.None,
+            PaladinGlyphs glyphs = PaladinGlyphs.None,
             int stepsPerHastedGcd = 3,
             double haste = 0.0,
             double mehit = 1.0,
@@ -83,7 +84,7 @@ namespace Matlabadin
             this.Rotation = rotation;
             this.Spec = spec;
             this.Talents = talents;
-            this.Glyphs = talents;  // TODO: change to glyph input; ph for testing
+            this.Glyphs = glyphs;
             this.StepsPerHastedGcd = stepsPerHastedGcd;
             this.Haste = haste;
             this.MeleeHit = mehit;
@@ -93,7 +94,7 @@ namespace Matlabadin
             // set unhasted buff durations, account for talents and glyphs
             double[] talentedUnhastedBuffDuration = DefaultUnhastedBuffDuration.ToArray();
             if (this.Talents.Includes(PaladinTalents.SanctifiedWrath)) talentedUnhastedBuffDuration[(int)Buff.AW] = 30;
-            // insert GoHotR here
+            if (this.Glyphs.Includes(PaladinGlyphs.GoHotR)) talentedUnhastedBuffDuration[(int)Buff.WB] *= 1.5; // 50% longer
 
             this.stepDuration = 1.5 / (this.StepsPerHastedGcd * (1.0 + haste));
             this.isOnGcd = DefaultIsOnGcd;
@@ -164,8 +165,8 @@ namespace Matlabadin
                     if (!this.Rotation.AbilitiesUsed.Contains(Ability.HA)) return 0;
                     break;
                 case Buff.GoWoG:
-                    //if (!this.Glyphs.Includes(PaladinGlyphs.GlyphofWordofGlory)) return 0;  //TODO: implement glyphs
-                    if (!this.Rotation.AbilitiesUsed.Contains(Ability.WoG)) return 0;
+                    if (!this.Glyphs.Includes(PaladinGlyphs.GoWoG)) return 0;
+                    if (!this.Rotation.AbilitiesUsed.Contains(Ability.WoG) && !this.Rotation.AbilitiesUsed.Contains(Ability.EF)) return 0;
                     break;
                 default:
                     // If we haven't modelling it, we keep it
@@ -289,7 +290,7 @@ namespace Matlabadin
         #region parameters
         public RotationPriorityQueue<TState> Rotation { get; private set; }
         public PaladinTalents Talents { get; private set; }
-        public PaladinTalents Glyphs { get; private set; } // TODO: change to PaladinGlyhps class
+        public PaladinGlyphs Glyphs { get; private set; }
         public PaladinSpec Spec { get; private set; }
         public int StepsPerHastedGcd { get; private set; }
         public double Haste { get; private set; }

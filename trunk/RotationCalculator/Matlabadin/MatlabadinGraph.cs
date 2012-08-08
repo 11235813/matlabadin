@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.IO;
 
 namespace Matlabadin
 {
@@ -557,6 +558,90 @@ namespace Matlabadin
         public int[][] nextState; // maps state index to choice and corresponding next state indexes
         private Dictionary<Choice, Tuple<Choice, TState>> firstChoiceState; // The first state in which given choice was encountered
         #region Debugging helpers
+        public void GraphToCsv(TextWriter stream, double[] pr)
+        {
+            // Header line
+            stream.Write("Index,Pr,Action,StepsDuration,HP");
+            for (int i = 0; i < (int)Ability.Count; i++)
+            {
+                stream.Write(',');
+                stream.Write(((Ability)i).ToString());
+            }
+            for (int i = 0; i < (int)Buff.Count; i++)
+            {
+                stream.Write(',');
+                stream.Write(((Buff)i).ToString());
+                stream.Write(',');
+                stream.Write(((Buff)i).ToString());
+                stream.Write(" Stacks");
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                stream.Write(",TransitionPr");
+                stream.Write(i);
+                stream.Write(",TransitionNextState");
+                stream.Write(i);
+            }
+            stream.WriteLine();
+            for (int i = 0; i < Size; i++)
+            {
+                StateToCsv(stream, i, pr[i]);
+            }
+        }
+        private void StateToCsv(TextWriter stream, int offset, double pr)
+        {
+            if (offset >= this.Size) throw new ArgumentException();
+            TState state = this.index[offset];
+            stream.Write(offset);
+            stream.Write(',');
+            stream.Write(pr);
+            stream.Write(',');
+            if (choice[offset].Action.Length == 0)
+            {
+                stream.Write("Nothing");
+            }
+            else
+            {
+                stream.Write(choice[offset].Action[0]);
+                for (int i = 1; i < choice[offset].Action.Length; i++)
+                {
+                    stream.Write('>');
+                    stream.Write(choice[offset].Action[i]);
+                }
+            }
+            stream.Write(',');
+            stream.Write(choice[offset].stepsDuration);
+            // dump state
+            stream.Write(',');
+            stream.Write(StateManager.HP(state));
+            for (int i = 0; i < (int)Ability.Count; i++)
+            {
+                stream.Write(',');
+                stream.Write(StateManager.CooldownRemaining(state, (Ability)i));
+            }
+            for (int i = 0; i < (int)Buff.Count; i++)
+            {
+                stream.Write(',');
+                stream.Write(StateManager.TimeRemaining(state, (Buff)i));
+                stream.Write(',');
+                stream.Write(StateManager.Stacks(state, (Buff)i));
+            }
+            // Write transitions in order of likelyhood
+            foreach (var transition in choice[offset].pr
+                .Select((pri, i) =>
+                    new {
+                        Pr = pri,
+                        NextState = nextState[offset][i],
+                    })
+                .OrderByDescending(x => x.Pr))
+            {
+                stream.Write(',');
+                stream.Write(transition.Pr);
+                stream.Write(',');
+                stream.Write(transition.NextState);
+            }
+            stream.WriteLine();
+        }
         public string StateToString(TState state)
         {
             StringBuilder sb = new StringBuilder();

@@ -10,68 +10,68 @@ namespace Matlabadin.Tests
         [Test]
         public void RotationShouldBeValidForTalents()
         {
-            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("SS"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1);
+            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("SS"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1);
             Assert.IsFalse(String.IsNullOrEmpty(gp.Warnings));
         }
         // SH is fine, the rotation just won't ever cast FoL in the case of FoL[#SH=3] rotations
         [Test]
         public void RotationShouldBeValidForTalents_EF()
         {
-            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("EF"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1);
+            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("EF"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1);
             Assert.IsFalse(String.IsNullOrEmpty(gp.Warnings));
         }
         [Test]
         public void RotationShouldBeValidForTalents_SS()
         {
-            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("SS"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1);
+            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("SS"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1);
             Assert.IsFalse(String.IsNullOrEmpty(gp.Warnings));
         }
         [Test]
         [ExpectedException(typeof(NotImplementedException))]
         public void UnhandledMechanicsShouldThrowException_Holy()
         {
-            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Holy, PaladinTalents.None, 3, 0, 1, 1);
+            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Holy, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1);
         }
         [Test]
         [ExpectedException(typeof(NotImplementedException))]
         public void UnhandledMechanicsShouldThrowException_Ret()
         {
-            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Ret, PaladinTalents.None, 3, 0, 1, 1);
+            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Ret, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1);
         }
         [Test]
         //[ExpectedException(typeof(NotImplementedException))]
         public void UnhandledMechanicsShouldThrowException_HolyAvenger()
         {
-            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Prot, PaladinTalents.HolyAvenger, 3, 0, 1, 1);
+            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Prot, PaladinTalents.HolyAvenger, PaladinGlyphs.None, 3, 0, 1, 1);
         }
         //[Test]
         [ExpectedException(typeof(NotImplementedException))]
         public void UnhandledMechanicsShouldThrowException_SanctifiedWrath()
         {
-            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Prot, PaladinTalents.SanctifiedWrath, 3, 0, 1, 1);
+            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Prot, PaladinTalents.SanctifiedWrath, PaladinGlyphs.None, 3, 0, 1, 1);
         }
         //[Test]
         [ExpectedException(typeof(NotImplementedException))]
         public void UnhandledMechanicsShouldThrowException_BurdenOfGuilt()
         {
-            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Prot, PaladinTalents.BurdenOfGuilt, 3, 0, 1, 1);
+            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("J"), PaladinSpec.Prot, PaladinTalents.BurdenOfGuilt, PaladinGlyphs.None, 3, 0, 1, 1);
         }
         [Test]
         public void InvalidRotation_SSWithoutSS()
         {
-            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("SS"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1);
+            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("SS"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1);
             Assert.IsTrue(gp.Warnings.Contains("SS"));
         }
         [Test]
         public void InvalidRotation_EFWithoutEF()
         {
-            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("EF"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1);
+            GraphParameters<int> gp = new GraphParameters<int>(new RotationPriorityQueue<int>("EF"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1);
             Assert.IsTrue(gp.Warnings.Contains("EF"));
         }
         [Test]
         public void Compression_Ability_ShouldHaveNoCooldownForUnusedAbilities()
         {
-            var gp = new GraphParameters<int>(new RotationPriorityQueue<int>("SotR>HotR"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1);
+            var gp = new GraphParameters<int>(new RotationPriorityQueue<int>("SotR>HotR"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1);
             Assert.AreNotEqual(0, gp.AbilityCooldownInSteps(Ability.CS));
             Assert.AreNotEqual(0, gp.AbilityCooldownInSteps(Ability.HotR));
             Assert.AreEqual(0, gp.AbilityCooldownInSteps(Ability.J));
@@ -87,67 +87,67 @@ namespace Matlabadin.Tests
         [Test]
         public void Compression_Buff_SS_ShouldRequireInRotation_SS()
         {
-            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("SS"), PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 0, 1, 1)
+            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("SS"), PaladinSpec.Prot, PaladinTalents.SacredShield, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.SS));
-            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("CS"), PaladinSpec.Prot, PaladinTalents.SacredShield, 3, 0, 1, 1)
+            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("CS"), PaladinSpec.Prot, PaladinTalents.SacredShield, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.SS));
         }
         [Test]
         public void Compression_Buff_EF_ShouldRequireInRotation_EF()
         {
-            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("EF"), PaladinSpec.Prot, PaladinTalents.EternalFlame, 3, 0, 1, 1)
+            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("EF"), PaladinSpec.Prot, PaladinTalents.EternalFlame, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.EF));
-            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("CS"), PaladinSpec.Prot, PaladinTalents.EternalFlame, 3, 0, 1, 1)
+            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("CS"), PaladinSpec.Prot, PaladinTalents.EternalFlame, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.EF));
         }
         [Test]
         public void Compression_Buff_AW_ShouldRequireInRotation_AW()
         {
-            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("AW"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1)
+            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("AW"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.AW));
-            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("CS"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1)
+            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("CS"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.AW));
         }
         [Test]
         public void Compression_Buff_SotRSB_ShouldRequireInRotation_SotR()
         {
-            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("SotR"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1)
+            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("SotR"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.SotRSB));
-            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("CS"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1)
+            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("CS"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.SotRSB));
         }
         [Test]
         public void Compression_Buff_WB_ShouldRequireInRotation_HotR()
         {
-            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("HotR"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1)
+            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("HotR"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.WB));
-            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("CS"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1)
+            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("CS"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.WB));
         }
         [Test]
         public void Compression_Buff_GC_ShouldRequireInRotation_HotRorCS()
         {
-            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("HotR"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1)
+            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("HotR"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.GC));
-            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("CS"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1)
+            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("CS"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.GC));
-            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("Cons"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1)
+            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("Cons"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.GC));
         }
         [Test]
         public void Compression_Buff_SH_ShouldRequireInRotation_J()
         {
-            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("J"), PaladinSpec.Prot, PaladinTalents.SelflessHealer, 3, 0, 1, 1)
+            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("J"), PaladinSpec.Prot, PaladinTalents.SelflessHealer, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.SH));
-            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("Cons"), PaladinSpec.Prot, PaladinTalents.SelflessHealer, 3, 0, 1, 1)
+            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("Cons"), PaladinSpec.Prot, PaladinTalents.SelflessHealer, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.SH));
         }
         [Test]
         public void Compression_Buff_SH_ShouldRequireTalent_SelflessHealer()
         {
-            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("J"), PaladinSpec.Prot, PaladinTalents.SelflessHealer, 3, 0, 1, 1)
+            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("J"), PaladinSpec.Prot, PaladinTalents.SelflessHealer, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.SH));
-            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("J"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1, 1)
+            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("J"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.SH));
         }
         [Test]
@@ -159,11 +159,12 @@ namespace Matlabadin.Tests
         [Test]
         public void PropertyValuesShouldCorrespondToConstructorArguments()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 2, 0.5, 0.8, 0.9);
+            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.GoWoG, 2, 0.5, 0.8, 0.9);
             Assert.AreEqual(0.8, gp.MeleeHit);
             Assert.AreEqual(0.9, gp.RangedHit);
             Assert.AreEqual(PaladinTalents.All, gp.Talents);
             Assert.AreEqual(PaladinSpec.Prot, gp.Spec);
+            Assert.AreEqual(PaladinGlyphs.GoWoG, gp.Glyphs);
             Assert.AreEqual(2, gp.StepsPerHastedGcd);
             Assert.AreEqual(0.5, gp.Haste);
             Assert.AreEqual((1.5 / (1.0 + 0.5)) / 2, gp.StepDuration);
@@ -278,8 +279,15 @@ namespace Matlabadin.Tests
         [Test]
         public void AW_BuffDurationShouldBeExtendedBySancifiedWrath()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.SanctifiedWrath, 5, 0.5, 0.8, 0.9);
+            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.SanctifiedWrath, PaladinGlyphs.None, 5, 0.5, 0.8, 0.9);
             Assert.AreEqual(30, gp.StepDuration * gp.BuffDurationInSteps(Buff.AW));
+        }
+        [Test]
+        public void WB_BuffDurationShouldBeExtendedByGoHotR()
+        {
+            Int64GraphParameters gpWith = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("HotR"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.GoHotR, 5, 0.5, 0.8, 0.9);
+            Int64GraphParameters gpWithout = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("HotR"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 5, 0.5, 0.8, 0.9);
+            Assert.AreEqual(gpWith.BuffDurationInSteps(Buff.WB), gpWithout.BuffDurationInSteps(Buff.WB) * 1.5);
         }
         [Test]
         public void GcdDurationShouldBeReducedByHaste()
@@ -352,28 +360,28 @@ namespace Matlabadin.Tests
         [Test]
         public void ShouldHaveSameShapeIfParametersMatch()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 1.0, 1.0);
-            Assert.IsTrue(gp.HasSameShape(new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 1.0, 1.0)));
+            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 3, 0, 1.0, 1.0);
+            Assert.IsTrue(gp.HasSameShape(new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 3, 0, 1.0, 1.0)));
         }
         [Test]
         public void ShouldNotHaveSameShapeIfBuffsDiffer()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 1.0, 1.0, new Buff[] { Buff.AW } );
-            Assert.IsFalse(gp.HasSameShape(new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 1.0, 1.0, new Buff[] { Buff.HA })));
+            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 3, 0, 1.0, 1.0, new Buff[] { Buff.AW });
+            Assert.IsFalse(gp.HasSameShape(new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 3, 0, 1.0, 1.0, new Buff[] { Buff.HA })));
         }
         [Test]
         public void ShouldHaveSameShapeIfBuffsEquivalent()
         {
-            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 1.0, 1.0, new Buff[] { Buff.HA, Buff.AW, });
-            Assert.IsTrue(gp.HasSameShape(new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 1.0, 1.0, new Buff[] { Buff.AW, Buff.HA, })));
+            Int64GraphParameters gp = new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 3, 0, 1.0, 1.0, new Buff[] { Buff.HA, Buff.AW, });
+            Assert.IsTrue(gp.HasSameShape(new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 3, 0, 1.0, 1.0, new Buff[] { Buff.AW, Buff.HA, })));
         }
         [Test]
         public void ShouldHaveSameShapeIfOnlyDifferByNonZeroTransitionMagnitides()
         {
             Action<double, double, double, double, bool> DoTest = (mehit1, rhit1, mehit2, rhit2, result) =>
             {
-                Assert.AreEqual(result, new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0, mehit1, rhit1)
-                    .HasSameShape(new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0, mehit2, rhit2)));
+                Assert.AreEqual(result, new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 3, 0, mehit1, rhit1)
+                    .HasSameShape(new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 3, 0, mehit2, rhit2)));
             };
             DoTest(1.0, 1.0, 0.9, 1.0, false);
             DoTest(0.8, 1.0, 0.9, 1.0, true);
@@ -386,23 +394,37 @@ namespace Matlabadin.Tests
         public void ShouldNotHaveSameShapeIfRotationsDiffer()
         {
             Assert.IsFalse(
-                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.All, 3, 0, 1.0, 1.0)
+                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 3, 0, 1.0, 1.0)
                 .HasSameShape(
-                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("Cons"), PaladinSpec.Prot, PaladinTalents.All, 3, 0, 1.0, 1.0)
+                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("Cons"), PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 3, 0, 1.0, 1.0)
                 ));
         }
         [Test]
         public void ShouldNotHaveSameShapeIfTalentsDiffer()
         {
             Assert.IsTrue(
-                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.SelflessHealer, 3, 0, 1.0, 1.0)
+                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.SelflessHealer, PaladinGlyphs.None, 3, 0, 1.0, 1.0)
                 .HasSameShape(
-                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.SelflessHealer, 3, 0, 1.0, 1.0)
+                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.SelflessHealer, PaladinGlyphs.None, 3, 0, 1.0, 1.0)
                 ));
             Assert.IsFalse(
-                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.SelflessHealer, 3, 0, 1.0, 1.0)
+                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.SelflessHealer, PaladinGlyphs.None, 3, 0, 1.0, 1.0)
                 .HasSameShape(
-                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.SelflessHealer | PaladinTalents.EternalFlame, 3, 0, 1.0, 1.0)
+                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.SelflessHealer | PaladinTalents.EternalFlame, PaladinGlyphs.None, 3, 0, 1.0, 1.0)
+                ));
+        }
+        [Test]
+        public void ShouldNotHaveSameShapeIfGlyphDiffer()
+        {
+            Assert.IsTrue(
+                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.GoHotR, 3, 0, 1.0, 1.0)
+                .HasSameShape(
+                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.GoHotR, 3, 0, 1.0, 1.0)
+                ));
+            Assert.IsFalse(
+                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.GoHotR, 3, 0, 1.0, 1.0)
+                .HasSameShape(
+                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1.0, 1.0)
                 ));
         }
         [Test]
@@ -410,27 +432,27 @@ namespace Matlabadin.Tests
         public void ShouldNotHaveSameShapeIfSpecsDiffer()
         {
             Assert.IsFalse(
-                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Ret, PaladinTalents.None, 3, 0, 1.0, 1.0)
+                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Ret, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1.0, 1.0)
                 .HasSameShape(
-                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.None, 3, 0, 1.0, 1.0)
+                new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("CS"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1.0, 1.0)
                 ));
         }
         [Test]
         public void ShouldNotHaveSameShapeIfStepsPerGCDDiffer()
         {
             Assert.IsFalse(
-                new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0, 1.0, 1.0)
+                new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 3, 0, 1.0, 1.0)
                 .HasSameShape(
-                new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 1, 0, 1.0, 1.0)
+                new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 1, 0, 1.0, 1.0)
                 ));
         }
         [Test]
         public void ShouldNotHaveSameShapeIfHastedSteps()
         {
             Assert.IsFalse(
-                new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 3, 0.5, 1.0, 1.0)
+                new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 3, 0.5, 1.0, 1.0)
                 .HasSameShape(
-                new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, 1, 0.25, 1.0, 1.0)
+                new Int64GraphParameters(AllAbilityRotation, PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 1, 0.25, 1.0, 1.0)
                 ));
         }
         [Test]
@@ -440,7 +462,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual(GP.AbilityCooldownInSteps(Ability.CS), GP.AbilityCooldownInSteps(Ability.HotR));
         }
         [Test]
-        public void MaxBuffStacks_ShouldBe1ExceptForSH3_BoG5()
+        public void MaxBuffStacks_ShouldBe1ExceptForSH3_BoG5_GoWoG()
         {
             for (int i = 0; i < (int)Buff.Count; i++)
             {
@@ -448,6 +470,7 @@ namespace Matlabadin.Tests
                 int expectedStacks = 1;
                 if (b == Buff.SH) expectedStacks = 3;
                 if (b == Buff.BoG) expectedStacks = 5;
+                if (b == Buff.GoWoG) expectedStacks = 3;
                 Assert.AreEqual(expectedStacks, GP.MaxBuffStacks(b), String.Format("Expected {1} stacks for {0}", b, expectedStacks));
             }
         }

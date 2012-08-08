@@ -72,6 +72,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="input3.txt" />
     <Content Include="input2.txt" />
     <Content Include="input.txt" />
     <Content Include="testdata\issue19-set2.txt" />
