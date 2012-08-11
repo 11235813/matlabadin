@@ -1,0 +1,3 @@
+SotR>CS>AS>J Prot 000000 "" 3 0 0.95 0.95 "" data\\example-simple.csv:data\\example-simple-dump.csv
+SotR>CS>J>AS>ES>Cons>HW Prot 000003 "" 3 0 0.95 0.95 "" data\\example0.csv:data\\example0-dump.csv
+SotR>CS>J>AS>ES>Cons>HW Prot 000003 "" 3 0.01 0.95 0.95 "" data\\example1.csv:data\\example1-dump.csv
