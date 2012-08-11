@@ -194,20 +194,10 @@ namespace Matlabadin
                     cps[action] = currentPr + pr[i];
                 }
                 // aggregate buff durations
-                for (int j = 0; j < (int)Buff.UptimeTrackedUnforkedBuffs; j++) // for each buff
+                for (int j = 0; j < (int)Buff.UptimeTrackedBuffs; j++) // for each buff
                 {
-                    if (c.unforkedBuffDuration[j] > c.stepsDuration) throw new Exception("Sanity check failure: buff duration exceeds step duration");
-                    sumbufftpr[j] += pr[i] * GraphParameters.StepDuration * c.unforkedBuffDuration[j];
-                }
-                for (int k = 0; k < c.pr.Length; k++) // for each state transition
-                {
-                    double transitiontpr = pr[i] * c.pr[k] * GraphParameters.StepDuration;
-                    for (int j = 0; j < (int)Buff.UptimeTrackedForkedBuffs - (int)Buff.UptimeTrackedUnforkedBuffs; j++) // for each buff
-                    {
-                        int buffDurationForTransition = c.forkedBuffDuration[j][k];
-                        if (buffDurationForTransition > c.stepsDuration) throw new Exception("Sanity check failure: buff duration exceeds step duration");
-                        sumbufftpr[j + (int)Buff.UptimeTrackedUnforkedBuffs] += transitiontpr * buffDurationForTransition;
-                    }
+                    if (c.buffDuration[j] > c.stepsDuration) throw new Exception("Sanity check failure: buff duration exceeds step duration");
+                    sumbufftpr[j] += pr[i] * GraphParameters.StepDuration * c.buffDuration[j];
                 }
             }
             cps.Remove("Nothing"); // Nothing casts are not a meaningful measure of anything
