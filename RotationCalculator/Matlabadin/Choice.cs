@@ -20,34 +20,28 @@ namespace Matlabadin
             bool dp,
             bool ha,
             int gowogStacks,
-            int[] unforkedBuffDuration,
-            int[][] forkedBuffDuration
+            int[] buffDuration,
+            bool freeGcd
             )
         {
 #if !NOSANITYCHECKS
             if (pr == null) throw new ArgumentNullException("pr");
-            if (unforkedBuffDuration == null) throw new ArgumentNullException("buffDuration");
-            if (forkedBuffDuration == null) throw new ArgumentNullException("buffDuration");
-            if (unforkedBuffDuration.Length + forkedBuffDuration.Length != (int)Buff.UptimeTrackedBuffs) throw new ArgumentException("Sanity failure: buffDuration array length invalid");
-            if (unforkedBuffDuration.Length != (int)Buff.UptimeTrackedUnforkedBuffs) throw new ArgumentException("Sanity failure: unforkedBuffDuration array length invalid");
-            if (forkedBuffDuration.Length != (int)Buff.UptimeTrackedForkedBuffs - (int)Buff.UptimeTrackedUnforkedBuffs) throw new ArgumentException("Sanity failure: forkedBuffDuration array length invalid");
+            if (buffDuration == null) throw new ArgumentNullException("buffDuration");
+            if (buffDuration.Length != (int)Buff.UptimeTrackedBuffs) throw new ArgumentException("Sanity failure: buffDuration array length invalid");
             if (wogbog && !(ability == Ability.WoG || ability == Ability.EF) ) throw new ArgumentException("Sanity failure: wogbog cannot be set if ability is not WoG or EF");
             if (asgc && ability != Ability.AS) throw new ArgumentException("Sanity failure: asgc cannot be set if ability is not AS");
             if (folsh > 0 && ability != Ability.FoL) throw new ArgumentException("Sanity failure: folsh cannot be nonz-zero if ability is not FoL");
-            if (unforkedBuffDuration.Any(d => d > stepsDuration)) throw new ArgumentException("Sanity failure: buff duration cannot exceed step duration of transition");
-            if (forkedBuffDuration.Any(bd => bd.Any(d => d > stepsDuration))) throw new ArgumentException("Sanity failure: buff duration cannot exceed step duration of transition");
+            if (buffDuration.Any(d => d > stepsDuration)) throw new ArgumentException("Sanity failure: buff duration cannot exceed step duration of transition");
             if (Math.Abs(pr.Sum() - 1.0) > 0.0001) throw new ArgumentException("Sanity failure: transition probabilities do not sum to 1");
-            if (forkedBuffDuration.Any(bd => bd.Length != pr.Length)) throw new ArgumentException("Sanity failure: buff duration array length does not match probability array length");
 #endif
             this.ability = ability;
             this.stepsDuration = stepsDuration;
-            this.unforkedBuffDuration = unforkedBuffDuration;
-            this.forkedBuffDuration = forkedBuffDuration;
+            this.buffDuration = buffDuration;
             this.pr = pr;
 
             if (ability == Ability.Nothing)
             {
-                action = new string[0];
+                action = freeGcd ? nothingWithoutGcdCD : nothingWithGcdCD;
             }
             else
             {
@@ -71,13 +65,9 @@ namespace Matlabadin
         private readonly Ability ability;
         public readonly int stepsDuration;
         /// <summary>
-        /// Duration of buffs that do not change based on choice outcomes
+        /// Duration of buffs
         /// </summary>
-        public readonly int[] unforkedBuffDuration;
-        /// <summary>
-        /// Duration of buffs that can change
-        /// </summary>
-        public readonly int[][] forkedBuffDuration;
+        public readonly int[] buffDuration;
         /// <summary>
         /// transition likelyhoods
         /// </summary>
@@ -91,8 +81,7 @@ namespace Matlabadin
         {
             return hashcode == c.hashcode
                 && stepsDuration == c.stepsDuration
-                && unforkedBuffDuration.SequenceEqual(c.unforkedBuffDuration)
-                && forkedBuffDuration.Zip(c.forkedBuffDuration, (a, b) => a.SequenceEqual(b)).All(e => e) // jagged arrays match
+                && buffDuration.SequenceEqual(c.buffDuration)
                 && pr.SequenceEqual(c.pr)
                 && Action.SequenceEqual(c.Action);
         }
@@ -101,20 +90,9 @@ namespace Matlabadin
             if (hashcode == 0)
             {
                 hashcode = stepsDuration ^ pr.Aggregate(0, (h, p) => h ^ (int)(p * (1 << 30)));
-                for (int i = 0; i < (int)Buff.UptimeTrackedUnforkedBuffs; i++)
+                for (int i = 0; i < (int)Buff.UptimeTrackedBuffs; i++)
                 {
-                    hashcode ^= unforkedBuffDuration[i] << (5 + 2 * i);
-                }
-                for (int i = 0; i < (int)Buff.UptimeTrackedForkedBuffs - (int)Buff.UptimeTrackedUnforkedBuffs; i++)
-                {
-                    int[] forked = forkedBuffDuration[i];
-                    for (int j = 0; j < forked.Length; j++)
-                    {
-                        hashcode ^= forked[j] << (5 + i + j);
-                    }
-                }
-                for (int i = 0; i < action.Length; i++)
-                {
+                    hashcode ^= buffDuration[i] << (5 + 2 * i);
                 }
                 hashcode ^= Action.Aggregate(0, (h, a) => h ^ a.GetHashCode());
             }
@@ -125,8 +103,7 @@ namespace Matlabadin
             string s = this.action.Aggregate("Action:", (str, a) => str + ">" + a);
             s += " duration:" + this.stepsDuration;
             s += " pr: " + this.pr.Aggregate("", (str, p) => str + p + ",");
-            s += " unforked: " + this.unforkedBuffDuration.Aggregate("", (str, p) => str + p + ",");
-            s += " forked: " + this.forkedBuffDuration.Aggregate("", (str, f) => str + "[" + f.Aggregate("", (sa, p) => sa + p + ",") + "]");
+            s += " buff: " + this.buffDuration.Aggregate("", (str, p) => str + p + ",");
             return s;
         }
         private int hashcode;
@@ -140,23 +117,10 @@ namespace Matlabadin
             this.stepsDuration = first.stepsDuration + second.stepsDuration;
             this.pr = second.pr;
             // Add the buff durations
-            this.unforkedBuffDuration = new int[(int)Buff.UptimeTrackedUnforkedBuffs];
-            for (int i = 0; i < (int)Buff.UptimeTrackedUnforkedBuffs; i++)
+            this.buffDuration = new int[(int)Buff.UptimeTrackedBuffs];
+            for (int i = 0; i < (int)Buff.UptimeTrackedBuffs; i++)
             {
-                this.unforkedBuffDuration[i] = first.unforkedBuffDuration[i] + second.unforkedBuffDuration[i];
-            }
-            this.forkedBuffDuration = new int[(int)Buff.UptimeTrackedForkedBuffs - (int)Buff.UptimeTrackedUnforkedBuffs][];
-            for (int i = 0; i < (int)Buff.UptimeTrackedForkedBuffs - (int)Buff.UptimeTrackedUnforkedBuffs; i++)
-            {
-                this.forkedBuffDuration[i] = new int[second.pr.Length];
-                int firstDuration = first.forkedBuffDuration[i][0];
-#if !NOSANITYCHECKS
-                if (first.forkedBuffDuration[i].Length != 1) throw new ArgumentException("Sanity check failure: Unable to concatenate non-linear forkedBuffDuration");
-#endif
-                for (int j = 0; j < second.pr.Length; j++)
-                {
-                    this.forkedBuffDuration[i][j] = firstDuration + second.forkedBuffDuration[i][j];
-                }
+                this.buffDuration[i] = first.buffDuration[i] + second.buffDuration[i];
             }
             // Concatenate actions
             if (first.Action.Length == 0)
@@ -195,5 +159,7 @@ namespace Matlabadin
         }
         // precomputation optimisation removing ability.ToString() call from Choice constructor
         private static readonly string[] abilityStringLookup;
+        private static readonly string[] nothingWithGcdCD = new string[0];
+        private static readonly string[] nothingWithoutGcdCD = new string[] { "_" };
     }
 }

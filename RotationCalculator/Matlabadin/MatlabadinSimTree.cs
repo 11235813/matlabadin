@@ -119,7 +119,7 @@ namespace Matlabadin
                 if (c.stepsDuration > 0)
                 {
                     result.buffUptime = result.buffUptime.Zip(
-                        c.unforkedBuffDuration.Concat(c.forkedBuffDuration.Select(x => x[n])).Select(x => x * transitionPr * c.stepsDuration),
+                        c.buffDuration.Select(x => x * transitionPr * c.stepsDuration),
                         (a, b) => a * c.pr[n] + b).ToArray();
                 }
                 return result;

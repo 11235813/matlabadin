@@ -152,10 +152,10 @@ namespace Matlabadin
 
             // Calculate uptime of tracked buffs. 
             // during this transition, how many steps was the tracked buff active for?
-            int[] unforkedBuffSteps = new int[(int)Buff.UptimeTrackedUnforkedBuffs];
-            for (int i = 0; i < (int)Buff.UptimeTrackedUnforkedBuffs; i++)
+            int[] buffSteps = new int[(int)Buff.UptimeTrackedBuffs];
+            for (int i = 0; i < (int)Buff.UptimeTrackedBuffs; i++)
             {
-                unforkedBuffSteps[i] = Math.Min(waitSteps, sm.TimeRemaining(StateInitial, (Buff)i))
+                buffSteps[i] = Math.Min(waitSteps, sm.TimeRemaining(StateInitial, (Buff)i))
                     + Math.Min(abilitySteps, sm.TimeRemaining(StatePostAbility[0], (Buff)i));
 #if !NOSANITYCHECKS
                 for (int j = 1; j < StatePostAbility.Length; j++)
@@ -167,19 +167,6 @@ namespace Matlabadin
                     }
                 }
 #endif
-            }
-            // In the case of Weakening Blows uptime this depends on whether HotR hit or not
-            // SotR buff may or may not also exhibit this behaviour
-            int[][] forkedBuffSteps = new int[(int)Buff.UptimeTrackedForkedBuffs - (int)Buff.UptimeTrackedUnforkedBuffs][];
-            for (int i = 0; i < (int)Buff.UptimeTrackedForkedBuffs - (int)Buff.UptimeTrackedUnforkedBuffs; i++)
-            {
-                Buff buff = (Buff)(i + (int)Buff.UptimeTrackedUnforkedBuffs);
-                int waitBuffUptimeSteps = Math.Min(waitSteps, sm.TimeRemaining(StateInitial, buff));
-                forkedBuffSteps[i] = new int[StatePostAbility.Length];
-                for (int j = 0; j < StatePostAbility.Length; j++)
-                {
-                    forkedBuffSteps[i][j] = waitBuffUptimeSteps + Math.Min(abilitySteps, sm.TimeRemaining(StatePostAbility[j], buff));
-                }
             }
             // Create the choice
             Choice = new Choice(
@@ -195,8 +182,8 @@ namespace Matlabadin
                 sm.TimeRemaining(StatePreAbility, Buff.DP) > 0,
                 (ability == Ability.CS || ability == Ability.J || ability == Ability.HotR || (ability == Ability.AS && sm.TimeRemaining(StatePreAbility, Buff.GC) > 0)) && sm.TimeRemaining(StatePreAbility, Buff.HA) > 0,
                 sm.Stacks(StatePreAbility, Buff.GoWoG),
-                unforkedBuffSteps,
-                forkedBuffSteps);
+                buffSteps,
+                sm.TimeRemaining(StatePreAbility, Buff.GCD) == 0);
         }
 
         /// <summary>

@@ -30,7 +30,6 @@ namespace Matlabadin
         /// SotR Shield Block buff
         /// </summary>
         SotRSB,
-        // ----- buffs whose uptime depends on an ability outcome (eg WB depends on whether HotR hits or not) go between here and the untracked buffs marker -----  
         /// <summary>
         /// Weakened Blows
         /// </summary>
@@ -62,8 +61,6 @@ namespace Matlabadin
         /// </summary>
         GoWoG,
         Count,
-        UptimeTrackedUnforkedBuffs = SotRSB + 1,
-        UptimeTrackedForkedBuffs = WB + 1,
         UptimeTrackedBuffs = WB + 1,
     }
 }
