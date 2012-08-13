@@ -91,3 +91,14 @@ glyph.labels={  'AlabasterShield';...
                 'Immediate Truth';...
                 'Inquisition';...
                 'Word of Glory';};
+
+glyph.string='';
+if glyph.HammeroftheRighteous
+    glyph.string=[glyph.string 'GoHotR,'];
+end
+if glyph.WordofGlory
+    glyph.string=[glyph.string 'GoWoG,'];
+end
+if glyph.HarshWords
+    glyph.string=[glyph.string 'GoHaWo,'];
+end
