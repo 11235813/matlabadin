@@ -181,7 +181,8 @@ namespace Matlabadin.Tests
             MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(1, result.Action.Count);
+            Assert.AreEqual(2, result.Action.Count); // _
+            Assert.AreEqual(15.0 / 9.0, result.Action["_"], Tolerance); // 7.5s of 9s idle @ 0.5s step = 15 idle per 9s
             Assert.AreEqual(1.0 / 9.0, result.Action["Cons"], Tolerance); // Cons every 9s
         }
         [Test]

@@ -301,13 +301,11 @@ namespace Matlabadin.Tests
             Int64GraphParameters gp = new Int64GraphParameters(R, PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 3, 0, 0.1, 0.8);
             BitVectorState state = GetState(SM, Buff.GC, 1); // with GC
             TestNextState(gp, state, Ability.AS,
-                0.2, StateTransition<BitVectorState>.UseAbility(gp, gp, state, Ability.AS, hit: false),
-                0.8, StateTransition<BitVectorState>.UseAbility(gp, gp, state, Ability.AS, hit: true) // hit
+                1, StateTransition<BitVectorState>.UseAbility(gp, gp, state, Ability.AS)
             );
             state = 0; // without GC buff
             TestNextState(gp, state, Ability.AS,
-                0.2, StateTransition<BitVectorState>.UseAbility(gp, gp, state, Ability.AS, hit: false),
-                0.8, StateTransition<BitVectorState>.UseAbility(gp, gp, state, Ability.AS, hit: true) // hit
+                1, StateTransition<BitVectorState>.UseAbility(gp, gp, state, Ability.AS)
             );
             gp = NoMiss(R.PriorityQueue);
             TestNextState(gp, state, Ability.AS,
@@ -315,13 +313,9 @@ namespace Matlabadin.Tests
             );
         }
         [Test]
-        public void CalculatesNextState_AS_J_ShouldUseRangedHit()
+        public void CalculatesNextState_J_ShouldUseRangedHit()
         {
             Int64GraphParameters gp = new Int64GraphParameters(R, PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 3, 0, 0, 0.6);
-            TestNextState(gp, 0, Ability.AS,
-                0.4, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.AS, hit: false),
-                0.6, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.AS, hit: true) // hit
-            );
             TestNextState(gp, 0, Ability.J,
                 0.4, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.J, hit: false),
                 0.6, StateTransition<BitVectorState>.UseAbility(gp, gp, 0, Ability.J, hit: true) // hit
@@ -437,14 +431,14 @@ namespace Matlabadin.Tests
             var gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("WoG>J"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1);
             Choice c = StateTransition<BitVectorState>.CalculateTransition(gp, gp, 5).Choice;
             Assert.AreEqual(1, c.Action.Length);
-            Assert.AreEqual("WoG", c.Action[0]); // We cast WoG @ 5HP then are inside a J-J-J-WoG cycle (0-3 HP) so we don't concatenate any further
+            Assert.AreEqual("WoG", c.Action.Where(x => x != "_").First()); // We cast WoG @ 5HP then are inside a J-J-J-WoG cycle (0-3 HP) so we don't concatenate any further
             Assert.AreEqual(0, c.stepsDuration);
 
             gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("WoG5>J"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1);
             c = StateTransition<BitVectorState>.CalculateTransition(gp, gp, 0).Choice;
-            Assert.AreEqual(2, c.Action.Length);
-            Assert.AreEqual("J", c.Action[0]);
-            Assert.AreEqual("J", c.Action[1]); // We cast J twice then enter a J-J-J-WoG5 cycle (2-5 HP) so we don't concatenate any further
+            Assert.AreEqual(2, c.Action.Where(x => x != "_").Count());
+            Assert.AreEqual("J", c.Action.Where(x => x != "_").First());
+            Assert.AreEqual("J", c.Action.Where(x => x != "_").Skip(1).First()); // We cast J twice then enter a J-J-J-WoG5 cycle (2-5 HP) so we don't concatenate any further
             Assert.AreEqual(4 * gp.StepsPerHastedGcd, c.stepsDuration); // 6s CD = 4 GCDs cast J @ 0 and again @ 6s then enter the cycle
         }
         [Test]
@@ -452,13 +446,6 @@ namespace Matlabadin.Tests
         {
             var st = new StateTransition<BitVectorState>(GP, SM, GetState(SM, Ability.CS, 1, 3), Ability.CS);
             Assert.AreEqual(1, st.Choice.stepsDuration);
-        }
-        [Test]
-        public void Choice_wogss_ShouldBeSetOnlyForWog()
-        {
-            Assert.IsTrue(new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SS, 1, 1), Ability.WoG).Choice.Action[0].Contains("(SS)"));
-            Assert.IsFalse(new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SS, 0, 1), Ability.WoG).Choice.Action[0].Contains("(SS)"));
-            Assert.IsFalse(new StateTransition<BitVectorState>(GP, SM, GetState(SM, Buff.SS, 1, 1), Ability.CS).Choice.Action[0].Contains("(SS)"));
         }
         [Test]
         public void Choice_BuffDurationShouldNotExceedStepDuration()
