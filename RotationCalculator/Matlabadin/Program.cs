@@ -249,7 +249,10 @@ namespace Matlabadin
             // take the data in result and write to file (stream)
             foreach (var key in result.Action.Keys.OrderBy(k => k))
             {
-                stream.WriteLine("{0},{1}", key, result.Action[key]);
+                if (key != "_")
+                {
+                    stream.WriteLine("{0},{1}", key, result.Action[key]);
+                }
             }
             stream.WriteLine("Uptime_GCD,{0}", result.BuffUptime[(int)Buff.GCD]);
             stream.WriteLine("Uptime_SacredShield,{0}", result.BuffUptime[(int)Buff.SS]);
