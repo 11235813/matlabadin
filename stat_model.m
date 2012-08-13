@@ -52,7 +52,7 @@ mdf.rseal=mdf.tseal||strcmpi('Righteousness',exec.seal)||strcmpi('SoR',exec.seal
 stat_conversions
 
 %% Spec
-mdf.VengAP=0.05.*spec.Vengeance;
+% mdf.VengAP=0.05.*spec.Vengeance;
 mdf.GbtL=0.05.*spec.GuardedbytheLight; %everything
 %TODO: RFury here instead of in buffs?
 mdf.GrCr=0.2.*spec.GrandCrusader;
@@ -441,7 +441,8 @@ target.phdr=target.armor./(target.armor+target.acoeff);
 %% AP & SP
 
 %Vengeance
-player.VengAP=(0.1.*base.health+player.sta).*exec.veng.*exec.timein;
+% player.VengAP=(0.1.*base.health+player.sta).*exec.veng.*exec.timein;
+player.VengAP=exec.veng.*1e3.*exec.timein;
 
 %total melee AP
 player.ap=floor((base.ap+gear.ap+(player.str-10).*cnv.str_ap+extra.ap ...
