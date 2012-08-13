@@ -102,6 +102,12 @@ for m=1:size(c.rot.actionPr,2)
                 emod=emod.*1.2;
             case 'HA'
                 hpmod=3;
+                switch abil
+                    case {'CS','J','HotR'}
+                        emod=emod.*1.3;
+                    case 'AS'
+                        %add code to handle ASGC
+                end
             case 'GoWoG'
                 emod=emod.*1.1;
         end

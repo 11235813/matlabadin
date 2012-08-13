@@ -24,7 +24,7 @@ namespace Matlabadin
                 120, // HA
             };
         private static readonly bool[] AbilityCooldownReducedByHaste = new bool[] {
-                true, true, true, false, // CS, J, HoW, AS,
+                true, true, true, true, // CS, J, HoW, AS,
                 true, true, false, // Cons, HW, AW,
                 false, false, false, // HPr, LH, ES
                 false, // HA
@@ -281,7 +281,7 @@ namespace Matlabadin
             return !(hit1 == 1.0 ^ hit2 == 1.0) && !(hit1 == 0.0 ^ hit2 == 0.0);
         }
         public double GrandCrusaderProcRate { get { return this.Spec == PaladinSpec.Prot ? 0.2 : 0.0; } }
-        public double DivinePurposeProcRate { get { return (this.Spec == PaladinSpec.Prot && this.Talents.Includes(PaladinTalents.DivinePurpose)) ? 0.2 : 0.0; } }
+        public double DivinePurposeProcRate { get { return this.Talents.Includes(PaladinTalents.DivinePurpose) ? 0.25 : 0.0; } }
         public double StepDuration { get { return stepDuration; } }
         /// <summary>
         /// Human-readable output of any errors resulting in inexact graph parameters

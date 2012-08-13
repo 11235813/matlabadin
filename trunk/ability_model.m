@@ -35,7 +35,7 @@ player.hopo=3;  %TODO: probably no reason to consider 1- or 2-HP SotR/WoG anymor
 %TODO: Retest all hit conditions for seals
 
 %Seal of Truth (fully stacked)
-raw.SealofTruth=    0.14.*player.wdamage.*(1+0.3.*mdf.glyphIT).*mdf.spdmg;  
+raw.SealofTruth=    0.12.*player.wdamage.*(1+0.3.*mdf.glyphIT).*mdf.spdmg;  
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
 heal.SealofTruth=   0;
 threat.SealofTruth= 0; %wowdb flag - generates no threat
@@ -47,7 +47,7 @@ label.SealofTruth=  'SoT';
 %As we do not model interruptions, Cens is assumed to be perpetually
 %refreshed (full uptime).
 %TODO: possibly nullify if SoT not active
-raw.Censure=        (126 + 0.11.*player.sp).*5 ...
+raw.Censure=        (107 + 0.094.*player.sp).*5 ...
                     ./(1+mdf.glyphIT).*mdf.spdmg; %per tick (for 5 stacks)
 dmg.Censure=        raw.Censure.*mdf.phcrit.*target.resrdx; %automatical connect, phys crit/CM
 dps.Censure=        dmg.Censure./player.censTick;
@@ -60,7 +60,7 @@ splash.Censure=     0;
 label.Censure=      'Censure';
 
 %Seal of Righteousness - now seal of cleave 
-raw.SealofRighteousness=    0.07.*player.ndamage.*mdf.spdmg;
+raw.SealofRighteousness=    0.06.*player.ndamage.*mdf.spdmg;
 dmg.SealofRighteousness=    raw.SealofRighteousness.*mdf.phcrit.*target.resrdx; %automatical connect
 heal.SealofRighteousness=   0;
 threat.SealofRighteousness= 0; %wowdb flag - generates no threat
@@ -161,7 +161,7 @@ label.ShieldoftheRighteous='SotR';
 %J is a melee attack with 30y range that cannot be dodged/parried
 
 %Judgment (the seal of choice is defined in execution_model)
-raw.Judgment=       (702+0.397.*player.ap+0.635.*player.sp) ...
+raw.Judgment=       (562+0.318.*player.ap+0.508.*player.sp) ...
                     .*(1+mdf.glyphDJ).*mdf.spdmg; 
 dmg.Judgment=      raw.Judgment.*mdf.rahit.*mdf.spcrit.*target.resrdx;
 heal.Judgment=     0;
@@ -182,7 +182,7 @@ splash.AvengersShield=min([exec.npccount-1; 0+2.*(mdf.glyphFS==1)]);
 label.AvengersShield='AS';
 
 %Hammer of Wrath (can be blocked) - TODO: verify blocking
-raw.HammerofWrath= (1839.5+1.61.*player.sp).*mdf.spdmg;
+raw.HammerofWrath= (1470.5+1.288.*player.sp).*mdf.spdmg;
 dmg.HammerofWrath= raw.HammerofWrath.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.HammerofWrath=0;
 mcost.HammerofWrath=0.03.*base.mana;
@@ -207,24 +207,24 @@ mcost.HolyWrath =   0.094.*base.mana;
 splash.HolyWrath=   mdf.glyphFW.*(exec.npccount-1)./exec.npccount;
 label.HolyWrath=    'HW';
 
-%Holy Prism
-raw.HolyPrism=      (12412 + 1.098.*player.sp).*mdf.spdmg;
+%Holy Prism (cast on enemy, healing is up to 5 nearby targets)
+raw.HolyPrism=      (16136 + 1.428.*player.sp).*mdf.spdmg;
 dmg.HolyPrism=      raw.HolyPrism.*mdf.sphit.*mdf.spcrit.*target.resrdx;
-heal.HolyPrism=     (8374 + 0.740.*player.sp).*mdf.spcrit.*1; %1 out of 5 targets (i.e. self)
+heal.HolyPrism=     (10882 + 0.962.*player.sp).*mdf.spcrit.*1; %1 out of 5 targets (i.e. self)
 mcost.HolyPrism =   0;
 splash.HolyPrism=   0;
 label.HolyPrism=    'HPr';
 
 %Holy Prism (cast on ally/self, damage is up to 5 nearby targets)
-raw.HolyPrismAlt=      (9304 + 0.823.*player.sp).*mdf.spdmg;
+raw.HolyPrismAlt=      (10882 + 0.962.*player.sp).*mdf.spdmg;
 dmg.HolyPrismAlt=      raw.HolyPrism.*mdf.sphit.*mdf.spcrit.*target.resrdx;
-heal.HolyPrismAlt=     (11172 + 0.988.*player.sp).*mdf.spcrit; %1 out of 5 targets
+heal.HolyPrismAlt=     (16136 + 1.428.*player.sp).*mdf.spcrit; %1 out of 5 targets
 mcost.HolyPrismAlt =   0;
 splash.HolyPrism=      min([exec.npccount-1; 4]);
 label.HolyPrismAlt= 'HPrAlt'; %placeholder
 
 %Execution Sentence
-raw.ExecutionSentence = (10023 + 4.566.*player.sp).*mdf.spdmg;
+raw.ExecutionSentence = (12989 + 5.936.*player.sp).*mdf.spdmg;
 dmg.ExecutionSentence = raw.ExecutionSentence.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.ExecutionSentence = 0;
 mcost.ExecutionSentence = 0;
@@ -232,7 +232,7 @@ splash.ExecutionSentence=   0;
 label.ExecutionSentence =   'ES';
 
 %Light's Hammer (total damage from 8 ticks of Arcing Light)
-raw.LightsHammer=   (2792 + 0.247.*player.sp).*8.*mdf.spdmg;
+raw.LightsHammer=   (3630 + 0.321.*player.sp).*8.*mdf.spdmg;
 dmg.LightsHammer=   raw.LightsHammer.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.LightsHammer=  (2512 + 0.222*player.sp).*8.*mdf.spcrit;
 mcost.LightsHammer= 0;
@@ -242,7 +242,7 @@ label.LightsHammer= 'LH';
 %% Heals / Absorbs
 
 %Word of Glory
-raw.WordofGlory=    (4340+0.419*player.sp).*player.hopo.*(1+mdf.SoI);
+raw.WordofGlory=    (4260.5+0.377.*player.sp).*player.hopo.*(1+mdf.SoI);
 dmg.WordofGlory=    raw.WordofGlory.*mdf.glyphHaWo./(1+mdf.SoI); %Harsh Words glyph, TODO: test SoI interaction
 heal.WordofGlory=   raw.WordofGlory.*(1-mdf.glyphHaWo).*(1-exec.overh).*mdf.spcrit; %TODO: handle BoG stacks
 threat.WordofGlory= 11.*(exec.overh>0).*mdf.RFury./exec.npccount;
@@ -251,7 +251,7 @@ splash.WordofGlory=	0;
 label.WordofGlory=  'WoG';
 
 %Eternal Flame direct heal
-raw.EternalFlame=   (4260.5 + 0.377.*player.sp).*player.hopo; %Base Heal
+raw.EternalFlame=   (4260.5+0.377.*player.sp).*player.hopo; %Base Heal
 dmg.EternalFlame=   0;
 heal.EternalFlame=  raw.EternalFlame.*(1-exec.overh).*mdf.spcrit;
 threat.EternalFlame=1.*mdf.RFury./exec.npccount; %PH
@@ -260,7 +260,7 @@ splash.EternalFlame=0;
 label.EternalFlame= 'EF';
 
 %Eternal Flame HoT
-raw.EternalFlameHoT=   (1393+0.16.*player.sp).*player.hopo; % 1 tick
+raw.EternalFlameHoT=   (391+0.045.*player.sp).*player.hopo; % 1 tick
 dmg.EternalFlameHoT=   0;
 heal.EternalFlameHoT=  raw.EternalFlameHoT.*(1-exec.overh).*mdf.spcrit;
 threat.EternalFlameHoT=1.*mdf.RFury./exec.npccount;
