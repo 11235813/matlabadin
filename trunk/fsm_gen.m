@@ -1,4 +1,4 @@
-function [generatedFile] = fsm_gen(rotation, spec, talentString, decimalHasteArray, mehitArray, sphitArray, pBuffs)
+function [generatedFile] = fsm_gen(rotation, spec, talentString, glyphString, decimalHasteArray, mehitArray, sphitArray, pBuffs)
 %fsm_gen calculates fsm for each mehit, sphit, and decimalHaste
 % call memoized_fsm to return the actual fsm data
 
@@ -47,7 +47,7 @@ for i=1:arrLength
     else
         decimalHaste = decimalHasteArray;
     end
-    [rotationKey spectalKey optionsKey]=fsm_key(rotation, spec, talentString, decimalHaste, mehit, sphit, pBuffs);
+    [rotationKey spectalKey optionsKey]=fsm_key(rotation, spec, talentString, glyphString, decimalHaste, mehit, sphit, pBuffs);
     dirname = strcat('data\\', rotationKey,'\\',spectalKey);
     filename = strcat(dirname, '\\', optionsKey, '.csv');
     % skip generation if the file already exists
@@ -55,8 +55,8 @@ for i=1:arrLength
         if exist(dirname) ~= 7
             mkdir(dirname);
         end
-        fprintf(argfid, '%s %s %s %g %f %f %f "%s" %s\n', ...
-            rotation, spec, talentString, fsm_steps_per_gcd(), decimalHaste, mehit, sphit, pBuffs, filename);
+        fprintf(argfid, '%s %s %s %s %g %f %f %f "%s" %s\n', ...
+            rotation, spec, talentString, glyphString, fsm_steps_per_gcd(), decimalHaste, mehit, sphit, pBuffs, filename);
         generationRequired = 1;
     end
     generatedFile{i} = filename;

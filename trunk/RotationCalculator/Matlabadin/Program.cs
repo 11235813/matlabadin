@@ -95,13 +95,13 @@ namespace Matlabadin
             rotation = args[0];
             // "Matlabadin.exe <rotation> <spec> <talents> <glyphs> <stepsPerGcd> <haste> <mehit> <rahit> <permanentBuffs> [<outputfile>]" + Environment.NewLine
             //                      0       1        2        3           4         5        6       7          8                9
-            if (!PaladinSpecHelper.TryParse(args[1], out spec)) { Console.Error.WriteLine("Warning: spec '{0}' failed to parse", spec.ToString()); Usage(); }
-            if (!PaladinTalentsHelper.TryParse(args[2], out talents)) { Console.Error.WriteLine("Warning: talents '{0}' failed to parse", talents.ToString()); Usage(); }
-            if (!PaladinGlyphsHelper.TryParse(args[3].Trim('"'), out glyphs)) { Console.Error.WriteLine("Warning: glyphs '{0}' failed to parse", glyphs.ToString()); Usage(); }
-            if (!Int32.TryParse(args[4], out stepsPerHastedGcd)) { Console.Error.WriteLine("Warning: stepsPerHastedGCD '{0}' failed to parse", stepsPerHastedGcd.ToString()); Usage(); }
-            if (!Double.TryParse(args[5], out haste)) { Console.Error.WriteLine("Warning: haste '{0}' failed to parse", haste.ToString()); Usage(); }
-            if (!Double.TryParse(args[6], out mehit)) { Console.Error.WriteLine("Warning: mehit '{0}' failed to parse", mehit.ToString()); Usage(); }
-            if (!Double.TryParse(args[7], out rahit)) { Console.Error.WriteLine("Warning: rahit '{0}' failed to parse", rahit.ToString()); Usage(); }
+            if (!PaladinSpecHelper.TryParse(args[1], out spec)) { Console.Error.WriteLine("Warning: spec '{0}' failed to parse", args[1]); Usage(); }
+            if (!PaladinTalentsHelper.TryParse(args[2], out talents)) { Console.Error.WriteLine("Warning: talents '{0}' failed to parse", args[2]); Usage(); }
+            if (!PaladinGlyphsHelper.TryParse(args[3].Trim('"'), out glyphs)) { Console.Error.WriteLine("Warning: glyphs '{0}' failed to parse", args[3]); Usage(); }
+            if (!Int32.TryParse(args[4], out stepsPerHastedGcd)) { Console.Error.WriteLine("Warning: stepsPerHastedGCD '{0}' failed to parse", args[4]); Usage(); }
+            if (!Double.TryParse(args[5], out haste)) { Console.Error.WriteLine("Warning: haste '{0}' failed to parse", args[5]); Usage(); }
+            if (!Double.TryParse(args[6], out mehit)) { Console.Error.WriteLine("Warning: mehit '{0}' failed to parse", args[6]); Usage(); }
+            if (!Double.TryParse(args[7], out rahit)) { Console.Error.WriteLine("Warning: rahit '{0}' failed to parse", args[7]); Usage(); }
             permanentBuffs = ParseBuffs(args[8]);
             string file = args[9];
             ProcessGraph(file, rotation, spec, talents, glyphs, stepsPerHastedGcd, haste, mehit, rahit, permanentBuffs);
@@ -194,7 +194,7 @@ namespace Matlabadin
         {
             // sanity checks on inputs
             if (mehit < BaseMeleeHit) Console.Error.WriteLine("Warning: {0} melee hit would require negative hit rating", mehit);
-            if (rahit < BaseRangedHit) Console.Error.WriteLine("Warning: {0} spell hit would require negative hit rating", rahit);
+            if (rahit < BaseRangedHit) Console.Error.WriteLine("Warning: {0} ranged hit would require negative hit rating", rahit);
             if (mehit > 1) { Console.Error.WriteLine("Warning: invalid melee hit {0}", mehit); Usage(); }
             if (rahit > 1) { Console.Error.WriteLine("Warning: invalid range hit {0}", rahit); Usage(); }
 

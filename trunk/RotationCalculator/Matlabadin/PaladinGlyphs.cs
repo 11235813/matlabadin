@@ -22,7 +22,7 @@ namespace Matlabadin
                 result = PaladinGlyphs.None;
                 return true;
             }
-            return Enum.TryParse<PaladinGlyphs>((s ?? "").Replace("|", ",").Replace(";", ",").Replace(":", ","), true, out result);
+            return Enum.TryParse<PaladinGlyphs>((s ?? "").Replace("|", ",").Replace(";", ",").Replace(":", ",").TrimEnd(','), true, out result);
         }
         public static bool Includes(this PaladinGlyphs glyphs, PaladinGlyphs glyph)
         {
