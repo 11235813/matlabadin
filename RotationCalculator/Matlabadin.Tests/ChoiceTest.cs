@@ -169,12 +169,12 @@ namespace Matlabadin.Tests
         public void EqualityShouldIncludeBuffDuration()
         {
             Choice c = new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, false, 0, 0, false, false, false, 0, UBD, false);
-            Assert.AreEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, false, 0, 0, false, false, false, 0, new int[] { 0, 0, 0, 0, 0 }, false));
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, false, 0, 0, false, false, false, 0, new int[] { 1, 0, 0, 0, 0 }, false));
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, false, 0, 0, false, false, false, 0, new int[] { 0, 1, 0, 0, 0 }, false));
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, false, 0, 0, false, false, false, 0, new int[] { 0, 0, 1, 0, 0 }, false));
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, false, 0, 0, false, false, false, 0, new int[] { 0, 0, 0, 1, 0 }, false));
-            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, false, 0, 0, false, false, false, 0, new int[] { 0, 0, 0, 0, 1 }, false));
+            Assert.AreEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, false, 0, 0, false, false, false, 0, new int[] { 0, 0, 0, 0, 0, 0 }, false));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, false, 0, 0, false, false, false, 0, new int[] { 1, 0, 0, 0, 0, 0 }, false));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, false, 0, 0, false, false, false, 0, new int[] { 0, 1, 0, 0, 0, 0 }, false));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, false, 0, 0, false, false, false, 0, new int[] { 0, 0, 1, 0, 0, 0 }, false));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, false, 0, 0, false, false, false, 0, new int[] { 0, 0, 0, 1, 0, 0 }, false));
+            Assert.AreNotEqual(c, new Choice(Ability.CS, 3, new double[] { 0.7, 0.2, 0.1 }, 0, false, false, 0, 0, false, false, false, 0, new int[] { 0, 0, 0, 0, 1, 0 }, false));
         }
         [Test]
         public void Concatenate_ShouldUseFirstAbilityUnlessNothing()
@@ -220,13 +220,14 @@ namespace Matlabadin.Tests
         [Test]
         public void ConcatenateShouldAddBuffDurations()
         {
-            Choice cNothing = new Choice(Ability.Nothing, 5, new double[] { 1, }, 0, false, false, 0, 0, false, false, false, 0, new int[] { 1, 2, 3, 4, 5, }, false);
+            Choice cNothing = new Choice(Ability.Nothing, 5, new double[] { 1, }, 0, false, false, 0, 0, false, false, false, 0, new int[] { 1, 2, 3, 4, 5, 0, }, false);
             Choice c = cNothing.Concatenate(cNothing);
             Assert.AreEqual(2, c.buffDuration[0]);
             Assert.AreEqual(4, c.buffDuration[1]);
             Assert.AreEqual(6, c.buffDuration[2]);
             Assert.AreEqual(8, c.buffDuration[3]);
             Assert.AreEqual(10, c.buffDuration[4]);
+            Assert.AreEqual(0, c.buffDuration[5]);
         }
         [Test]
         public void ConcatenateShouldSetHPBasedOnAbilityUsage()

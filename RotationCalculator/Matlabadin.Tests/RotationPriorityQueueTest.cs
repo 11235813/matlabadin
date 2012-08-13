@@ -89,16 +89,6 @@ namespace Matlabadin.Tests
             DoTest("SotR", 3, Ability.SotR);
         }
         [Test]
-        public void SSShouldRequire3HP()
-        {
-            DoTest("SS", 0, Ability.Nothing);
-            DoTest("SS", 1, Ability.Nothing);
-            DoTest("SS", 2, Ability.Nothing);
-            DoTest("SS", 3, Ability.SS);
-            DoTest("SS", 4, Ability.SS);
-            DoTest("SS", 5, Ability.SS);
-        }
-        [Test]
         public void EFShouldRequire1HP()
         {
             DoTest("EF0", 0, Ability.Nothing);
