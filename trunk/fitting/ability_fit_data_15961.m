@@ -110,3 +110,9 @@ ok=isfinite(wog4_min);
 wog4_ft=fittype('(4030+0.377*x)*(1+0.01*y/b)','indep',{'x','y'},'depend', 'z' );
 wog4_fo=fitoptions(wog4_ft);wog4_fo.StartPoint=[260];
 [wog4_sfit wog4_sgof]=fit([sp4(ok), pvp4(ok)],wog4_min(ok),wog4_ft,wog4_fo)
+
+%Hpr self-cast surface fit
+ok=isfinite(hprsc4_min);
+hprsc4_ft=fittype('(14523+1.428*x)*(1+0.01*y/b)','indep',{'x','y'},'depend', 'z' );
+hprsc4_fo=fitoptions(hprsc4_ft);hprsc4_fo.StartPoint=[260];
+[hprsc4_sfit hprsc4_sgof]=fit([sp4(ok),pvp4(ok)],hprsc4_min(ok),hprsc4_ft,hprsc4_fo)
