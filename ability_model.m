@@ -108,11 +108,11 @@ end
 %% Melee abilities
 
 %Crusader Strike (can be blocked)
-raw.CrusaderStrike=     (1.30.*player.ndamage+913).*mdf.phdmg.*(1+mdf.pvphands); %todo: check this, new tooltip
+raw.CrusaderStrike=     (1.25.*player.ndamage+791).*mdf.phdmg.*(1+mdf.pvphands); %todo: check this, new tooltip
 dmg.CrusaderStrike=     raw.CrusaderStrike.*mdf.memodel.*mdf.phcrit;
 heal.CrusaderStrike=    0;
 threat.CrusaderStrike=  max(dmg.CrusaderStrike,heal.CrusaderStrike).*mdf.RFury;
-mcost.CrusaderStrike=   0.03.*mdf.glyphAC.*base.mana;
+mcost.CrusaderStrike=   0.15.*mdf.glyphAC.*base.mana;
 splash.CrusaderStrike=  0;
 label.CrusaderStrike=   'CS';
 
@@ -127,7 +127,7 @@ splash.HammeroftheRighteous=0;
 label.HammeroftheRighteous= 'HotR';
 
 %Nova connects automatically if HotR(phys) succeeds
-raw.HammerNova=     0.3.*player.ndamage.*mdf.spdmg; %todo: check new nova damage scaling
+raw.HammerNova=     0.35.*player.ndamage.*mdf.spdmg; %todo: check new nova damage scaling
 dmg.HammerNova=     raw.HammerNova.*mdf.mehit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 heal.HammerNova=    0;
 threat.HammerNova=  max(dmg.HammerNova,heal.HammerNova).*mdf.RFury;
@@ -148,7 +148,7 @@ splash.Melee=       0;
 label.Melee=        'Melee';
 
 %Shield of the Righteous (can be blocked)
-raw.ShieldoftheRighteous= (617+0.54.*player.ap).*(1+mdf.glyphAS).*mdf.spdmg; 
+raw.ShieldoftheRighteous= (836+0.617.*player.ap).*(1+mdf.glyphAS).*mdf.spdmg; 
 dmg.ShieldoftheRighteous= raw.ShieldoftheRighteous.*mdf.memodel.*mdf.phcrit... 
                           .*target.resrdx; %melee hit
 heal.ShieldoftheRighteous=0;
@@ -158,17 +158,24 @@ splash.ShieldoftheRighteous=0;
 label.ShieldoftheRighteous='SotR';
 
 %% 'Ranged' abilities
-%J is a melee attack with 30y range that cannot be dodged/parried
 
-%Judgment (the seal of choice is defined in execution_model)
-raw.Judgment=       (562+0.318.*player.ap+0.508.*player.sp) ...
+%J is a melee attack with 30y range that cannot be dodged/parried
+raw.Judgment=       (623+0.328.*player.ap+0.546.*player.sp) ...
                     .*(1+mdf.glyphDJ).*mdf.spdmg; 
-dmg.Judgment=      raw.Judgment.*mdf.rahit.*mdf.spcrit.*target.resrdx;
+dmg.Judgment=      raw.Judgment.*mdf.jdhit.*mdf.phcrit.*target.resrdx;
 heal.Judgment=     0;
 threat.Judgment=   max(dmg.Judgment,heal.Judgment).*mdf.RFury;
 mcost.Judgment=    0.059.*base.mana;
 splash.Judgment=    0;
 label.Judgment=     'J';
+
+%Hammer of Wrath is a true "ranged" that can be dodged but not parried
+raw.HammerofWrath= (1838+1.610.*player.sp).*mdf.spdmg;
+dmg.HammerofWrath= raw.HammerofWrath.*mdf.rahit.*mdf.phcrit.*target.resrdx;
+heal.HammerofWrath=0;
+mcost.HammerofWrath=0.03.*base.mana;
+splash.HammerofWrath=0;
+label.HammerofWrath='HoW';
 
 %% Spell abilities
 
@@ -181,16 +188,8 @@ mcost.AvengersShield=0.07.*base.mana;
 splash.AvengersShield=min([exec.npccount-1; 0+2.*(mdf.glyphFS==1)]);
 label.AvengersShield='AS';
 
-%Hammer of Wrath (can be blocked) - TODO: verify blocking
-raw.HammerofWrath= (1470.5+1.288.*player.sp).*mdf.spdmg;
-dmg.HammerofWrath= raw.HammerofWrath.*mdf.sphit.*mdf.spcrit.*target.resrdx;
-heal.HammerofWrath=0;
-mcost.HammerofWrath=0.03.*base.mana;
-splash.HammerofWrath=0;
-label.HammerofWrath='HoW';
-
-%Consecration
-raw.Consecration =  (690+1.2.*player.sp).*mdf.spdmg; 
+%Consecration (all 9 ticks)
+raw.Consecration =  (102.7+0.18.*player.sp)*9.*mdf.spdmg; 
 dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 heal.Consecration=  0;
 threat.Consecration=(max(dmg.Consecration,heal.Consecration)+12).*mdf.RFury;  %TODO: wowdb flags as generating no threat
@@ -242,16 +241,16 @@ label.LightsHammer= 'LH';
 %% Heals / Absorbs
 
 %Word of Glory
-raw.WordofGlory=    (4260.5+0.377.*player.sp).*player.hopo.*(1+mdf.SoI);
-dmg.WordofGlory=    raw.WordofGlory.*mdf.glyphHaWo./(1+mdf.SoI); %Harsh Words glyph, TODO: test SoI interaction
-heal.WordofGlory=   raw.WordofGlory.*(1-mdf.glyphHaWo).*(1-exec.overh).*mdf.spcrit; %TODO: handle BoG stacks
+raw.WordofGlory=    (5538+0.49.*player.sp).*player.hopo.*(1+mdf.SoI);
+dmg.WordofGlory=    raw.WordofGlory.*mdf.glyphHaWo.*mdf.sphit.*mdf.spcrit./(1+mdf.SoI); %Harsh Words glyph, TODO: test SoI interaction
+heal.WordofGlory=   raw.WordofGlory.*(1-mdf.glyphHaWo).*(1-exec.overh).*mdf.spcrit; 
 threat.WordofGlory= 11.*(exec.overh>0).*mdf.RFury./exec.npccount;
 mcost.WordofGlory=  0;
 splash.WordofGlory=	0;
 label.WordofGlory=  'WoG';
 
 %Eternal Flame direct heal
-raw.EternalFlame=   (4260.5+0.377.*player.sp).*player.hopo; %Base Heal
+raw.EternalFlame=   (5538+0.49.*player.sp).*player.hopo; %Base Heal
 dmg.EternalFlame=   0;
 heal.EternalFlame=  raw.EternalFlame.*(1-exec.overh).*mdf.spcrit;
 threat.EternalFlame=1.*mdf.RFury./exec.npccount; %PH
@@ -260,7 +259,7 @@ splash.EternalFlame=0;
 label.EternalFlame= 'EF';
 
 %Eternal Flame HoT
-raw.EternalFlameHoT=   (391+0.045.*player.sp).*player.hopo; % 1 tick
+raw.EternalFlameHoT=   (508+0.0585.*player.sp).*player.hopo; % 1 tick
 dmg.EternalFlameHoT=   0;
 heal.EternalFlameHoT=  raw.EternalFlameHoT.*(1-exec.overh).*mdf.spcrit;
 threat.EternalFlameHoT=1.*mdf.RFury./exec.npccount;

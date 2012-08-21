@@ -12,7 +12,7 @@ namespace Matlabadin
     public class Program
     {
 		public const double BaseMeleeHit = 1.0 - 0.075 - 0.075 - 0.075;
-		public const double BaseRangedHit = 1.0 - 0.075;
+		public const double BaseJudgeHit = 1.0 - 0.075;
         public static void Main(string[] args)
         {
             if (args.Length == 0)
@@ -194,7 +194,7 @@ namespace Matlabadin
         {
             // sanity checks on inputs
             if (mehit < BaseMeleeHit) Console.Error.WriteLine("Warning: {0} melee hit would require negative hit rating", mehit);
-            if (rahit < BaseRangedHit) Console.Error.WriteLine("Warning: {0} ranged hit would require negative hit rating", rahit);
+            if (rahit < BaseJudgeHit) Console.Error.WriteLine("Warning: {0} ranged hit would require negative hit rating", rahit);
             if (mehit > 1) { Console.Error.WriteLine("Warning: invalid melee hit {0}", mehit); Usage(); }
             if (rahit > 1) { Console.Error.WriteLine("Warning: invalid range hit {0}", rahit); Usage(); }
 
@@ -278,7 +278,7 @@ namespace Matlabadin
             stream.WriteLine("Param_StepsPerHastedGCD,{0}", gp.StepsPerHastedGcd);
             stream.WriteLine("Param_Haste,{0}", gp.Haste);
             stream.WriteLine("Param_Hit_Melee,{0}", gp.MeleeHit);
-            stream.WriteLine("Param_Hit_Spell,{0}", gp.RangedHit);
+            stream.WriteLine("Param_Hit_Spell,{0}", gp.JudgeHit);
             stream.WriteLine("Param_Buffs_Permanent,{0}", gp.PermanentBuffs.Aggregate("", (s, b) => s + ";" + b.ToString()).Trim(';'));
 
             // write approximation errors to file (stream)
@@ -334,7 +334,7 @@ namespace Matlabadin
                     closestMatch = existingGraphs[rotation]
                         .Where(mg => mg.Item1.GraphParameters.HasSameShape(gp))
                         .OrderBy(mg => (mg.Item1.GraphParameters.MeleeHit - gp.MeleeHit) * (mg.Item1.GraphParameters.MeleeHit - gp.MeleeHit)
-                            + (mg.Item1.GraphParameters.RangedHit - gp.RangedHit) * (mg.Item1.GraphParameters.RangedHit - gp.RangedHit))
+                            + (mg.Item1.GraphParameters.JudgeHit - gp.JudgeHit) * (mg.Item1.GraphParameters.JudgeHit - gp.JudgeHit))
                         .FirstOrDefault();
                 }
             }

@@ -16,7 +16,7 @@ def_db;
 cfg(1)=build_config('hit',2,'exp',5,'glyph',[0 0 0]); 
 
 %low hit, WoG/SoI build
-cfg(2)=build_config('hit',2,'exp',5,'seal','SoI','glyph',[0 0 0],'queue','^WB>^SS>WoG>CS>J>AS>Cons>HW');
+cfg(2)=build_config('hit',2,'exp',5,'glyph',[0 0 0],'queue','^WB>CS>J>AS>^SS>Cons>HW>WoG');
 
 %hit-cap and exp soft-cap
 cfg(3)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0]);
@@ -26,7 +26,7 @@ cfg(4)=build_config('hit',2,'exp',5,'glyph',[0 0 0],'npccount',3);
 
 
 %% sim 
-qmax=length(fieldnames(cfg(1).glyph))-2;
+qmax=length(fieldnames(cfg(1).glyph))-3;
 % tabledps=zeros(length(gtree),length(rot),2);
 
 for g=1:length(cfg)

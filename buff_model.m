@@ -98,9 +98,9 @@ buff.RFury=((mode==0&&(isempty(item)||isempty(regexpi(item,'RFury')))) ...
 %handled as permanent buffs 
 %TODO: add Bloodlust here
 %Avenging Wrath
-buff.AvWr=(~isempty(item) && ~isempty(regexpi(item,'AvWr')));
+buff.AW=(~isempty(item) && ~isempty(regexpi(item,'AW')));
 %Holy Avenger
-buff.HoAv=(~isempty(item) && ~isempty(regexpi(item,'HoAv')));
+buff.HA=(~isempty(item) && ~isempty(regexpi(item,'HA')));
 
 %% Player debuffs
 %Chill_up=0; %PLACEHOLDER

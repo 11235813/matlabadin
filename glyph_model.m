@@ -99,6 +99,6 @@ end
 if glyph.WordofGlory
     glyph.string=[glyph.string 'GoWoG,'];
 end
-if glyph.HarshWords
-    glyph.string=[glyph.string 'GoHaWo,'];
-end
+% if glyph.HarshWords
+%     glyph.string=[glyph.string 'GoHaWo,'];
+% end

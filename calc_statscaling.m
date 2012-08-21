@@ -13,20 +13,22 @@ def_db;
 %low hit, SotR/SoT build
 %set melee hit to 2%, expertise to 5%
 %do this by altering shirt stats
-cfg(1)=build_config('hit',2,'exp',5);
+cfg(1)=build_config('hit',5,'exp',5);
 
 %low hit, WoG/SoI build
-cfg(2)=build_config('hit',2,'exp',5,'seal','SoI');
+% cfg(2)=build_config('hit',2,'exp',5,'seal','SoI');
 
 %% Stat components
-stat={'exp';'hit';'str';'haste';'ap';'sta';'crit';'agi';'sp';'int';'mas'};
+stat={'hit';'str';'ap';'exp';'haste';'crit';'agi';'int'};
 M=length(stat);  %number of "extra" stats
 
 %load itemization factors (i.e. because 10 STR = 20 AP = 15 STA = 11.6 SP)
 stat_conversions
 
-%This is the amount of itemization to add for each stat
-dstat=30;
+%This is the amount of itemization to add for each stat.  A higher value is
+%chosen for smoothing; later on we scale the calculation to represent the
+%contribution of 10 ipoints worth of the stat.
+dstat=60;
 
 %this array is only for the table, so that we can generate per-point (ppt)
 %entries to go with the per-itemization-point (pipt) entries
@@ -34,7 +36,7 @@ for m=1:M; icv(m,1)=eval(['ipconv.' stat{m}]); end;
 
 %% Strength calcs
 %reset extra structure
-str_range=-100+linspace(1,1500,250);
+str_range=-100+linspace(1,1500,100);
 [~, idx]=min(abs(str_range));
 str_dps=zeros(M,length(str_range),length(cfg));str_hps=str_dps;
 str_dps0=zeros(size(str_dps));str_hps0=str_dps0;
@@ -101,7 +103,7 @@ plot(xStr(:,g),yStr(:,:,g))
 xlim([min(xStr(:,g)) max(xStr(:,g))])
 legend(stat,'Location','EastOutside')
 xlabel('Armory Strength')
-ylabel('DPS per 10 itemization points')
+ylabel(['DPS per 10 itemization points'])
 title([ strrep(cfg(g).exec.queue,'^','\^') ', ' cfg(g).exec.seal ', '  ...
         num2str(cfg(g).exec.veng*100,'%2.1f') '% Veng, ' ...
         num2str(cfg(g).player.mehit,'%2.1f') '% hit, ' ...
@@ -130,7 +132,7 @@ li.toText()
 end
 
 %% Hit calcs
-hit_range=(-c.player.mehit+linspace(0,12,100)).*cnv.hit_hit;
+hit_range=(-c.player.mehit+linspace(0,12,50)).*cnv.hit_hit;
 % [temp idx]=min(abs(hit_range));
 hit_dps=zeros(M,length(hit_range),length(cfg));hit_hps=hit_dps;
 hit_dps0=zeros(size(hit_dps));hit_hps0=hit_dps0;
@@ -206,7 +208,7 @@ end
 
     
 %% Exp Calcs
-exp_range=(-c.player.exp+linspace(0,16,100)).*cnv.exp_exp;
+exp_range=(-c.player.exp+linspace(0,16,50)).*cnv.exp_exp;
 % [temp idx]=min(abs(exp_range));
 exp_dps=zeros(M,length(exp_range),length(cfg));exp_hps=exp_dps;
 exp_dps0=zeros(size(exp_dps));exp_hps0=exp_dps0;
@@ -280,7 +282,7 @@ title([ strrep(cfg(g).exec.queue,'^','\^') ', ' cfg(g).exec.seal ', '  ...
 
 end
 %% Haste Calcs
-haste_range=linspace(0,15,100).*cnv.haste_sphaste;
+haste_range=linspace(0,15,50).*cnv.haste_phhaste;
 % [temp idx]=min(abs(exp_range));
 haste_dps=zeros(M,length(haste_range),length(cfg));haste_hps=haste_dps;
 haste_dps0=zeros(size(haste_dps));haste_hps0=haste_dps0;
@@ -331,7 +333,7 @@ for g=1:length(cfg)
     close(csswb)
     
     %store variables for plots
-    xHas(:,g)=c.player.sphaste';
+    xHas(:,g)=c.player.phhaste';
 end
 disp('Haste calc finished')
 toc
@@ -346,7 +348,7 @@ set(gcf,'DefaultAxesLineStyleOrder','-|--|:')
 plot(xHas(:,g),yHas(:,:,g))
 xlim([min(xHas(:,g)) max(xHas(:,g))])
 legend(stat,'Location','EastOutside')
-xlabel('Spell Haste %')
+xlabel('Melee Haste %')
 ylabel('DPS per 10 itemization points')
 title([ strrep(cfg(g).exec.queue,'^','\^') ', ' cfg(g).exec.seal ', '  ...
         num2str(cfg(g).exec.veng*100,'%2.1f') '% Veng, ' ...

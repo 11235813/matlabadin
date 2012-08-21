@@ -48,7 +48,7 @@ c=ability_model(c);
 
 %rotation 
 c=rotation_model(c);
-%dynamic_model; %TODO: put dynamic_model in rotation_model?
+
 disp('Success!')
 disp(['Total DPS for ' c.exec.queue ' is ' num2str(c.rot.dps,'%5.0f') ' DPS at ' num2str(c.player.mehit,'%1.2f') '% hit and ' num2str(c.player.exp,'%1.2f') '% exp'])
 disp(['Total HPG for ' c.exec.queue ' is ' num2str(c.rot.hpg,'%1.4f') '/s at ' num2str(c.player.mehit,'%1.2f') '% hit and ' num2str(c.player.exp,'%1.2f') '% exp'])
