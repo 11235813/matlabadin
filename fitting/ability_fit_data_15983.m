@@ -44,21 +44,21 @@ disp('-----WoG-----')
 %WoG surface fits
 %WoG tooltip: (4803-5351); EF tooltip: (5239-5837)
 ok=isfinite(wog1min);
-wog1min_ft=fittype('(b+0.49*x)*(1+0.01*y/2)','indep',{'x','y'},'depend', 'z' );
+wog1min_ft=fittype('(b+0.49*x)*(1+0.01*y/530)','indep',{'x','y'},'depend', 'z' );
 wog1min_fo=fitoptions(wog1min_ft);wog1min_fo.StartPoint=[5239];
-[wog1min_sfit wog1min_sgof]=fit([sp1(ok), pvppct1(ok)],wog1min(ok),wog1min_ft,wog1min_fo)
+[wog1min_sfit wog1min_sgof]=fit([sp1(ok), pvp1(ok)],wog1min(ok),wog1min_ft,wog1min_fo)
 
 ok=isfinite(wog1max);
-wog1max_ft=fittype('(b+0.49*x)*(1+0.01*y/2)','indep',{'x','y'},'depend', 'z' );
+wog1max_ft=fittype('(b+0.49*x)*(1+0.01*y/530)','indep',{'x','y'},'depend', 'z' );
 wog1max_fo=fitoptions(wog1max_ft);wog1max_fo.StartPoint=[5837];
-[wog1max_sfit wog1max_sgof]=fit([sp1(ok), pvppct1(ok)],wog1max(ok),wog1max_ft,wog1max_fo)
+[wog1max_sfit wog1max_sgof]=fit([sp1(ok), pvp1(ok)],wog1max(ok),wog1max_ft,wog1max_fo)
 
 disp('-----EF-----')
 %EF surface fit
 ok=isfinite(ef1min);
-ef1_ft=fittype('(b+0.49*x)*(1+0.01*y/2)','indep',{'x','y'},'depend', 'z' );
+ef1_ft=fittype('(b+0.49*x)*(1+0.01*y/530)','indep',{'x','y'},'depend', 'z' );
 ef1_fo=fitoptions(ef1_ft);ef1_fo.StartPoint=[5239];
-[ef1_sfit ef1_sgof]=fit([sp1(ok), pvppct1(ok)],ef1min(ok),ef1_ft,ef1_fo)
+[ef1_sfit ef1_sgof]=fit([sp1(ok), pvp1(ok)],ef1min(ok),ef1_ft,ef1_fo)
 
 disp('-----EF tick-----')
 %EF tick
