@@ -57,7 +57,8 @@ mdf.GbtL=0.05.*spec.GuardedbytheLight; %everything
 %TODO: RFury here instead of in buffs?
 mdf.GrCr=0.2.*spec.GrandCrusader;
 mdf.Sanct=0.10.*spec.Sanctuary; %both effects
-mdf.DivineBulwark=1.2.*spec.DivineBulwark;
+mdf.AW=0.2.*spec.AvengingWrath; %AW damage
+mdf.AWuptime=(20/180).*spec.AvengingWrath; %AW uptime
 
 %% Abilities
 mdf.SoI = 0.05.*(strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)); %healing increase
@@ -65,8 +66,10 @@ mdf.SoI = 0.05.*(strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)); %heali
 %% Talents
 mdf.EternalFlame=1.*talent.EternalFlame; %PH
 mdf.UnbreakableSpirit=1.*talent.UnbreakableSpirit; %PH
-mdf.HolyAvenger=1.*talent.HolyAvenger; %PH
-mdf.SanctifiedWrath=1.*talent.SanctifiedWrath; %PH
+mdf.HAdmg=0.3.*talent.HolyAvenger;          %HA damage
+mdf.HAuptime=(18/120).*talent.HolyAvenger;  %HA uptime
+mdf.SWuptime=1+0.5.*talent.SanctifiedWrath; %SW uptime increase
+mdf.SWheal=0.2.*talent.SanctifiedWrath;     %SW healing
 mdf.DivinePurpose=1.*talent.DivinePurpose; %PH
 
 %% Glyphs
@@ -82,7 +85,7 @@ mdf.glyphFiWr=0.5.*glyph.FinalWrath;            %Final Wrath, target <20%
 mdf.glyphHaWo=glyph.HarshWords;                 %Binary for WoG
 mdf.glyphIT=glyph.ImmediateTruth;               %both effects
 mdf.glyphInq=0.9.*glyph.Inquisition;            %both effects
-mdf.glyphWoG=0.09.*glyph.WordofGlory;          %WoG DPS boost for 3 HP
+mdf.glyphWoG=0.03.*glyph.WordofGlory;          %WoG DPS boost for 1 HP
 
 %% Meta Gems, Enchants, Plate Spec, Tier Bonus
 %%%%%%%%%%% META
@@ -133,7 +136,7 @@ mdf.RFury=1+4.*buff.RFury;
 
 %Temporary buffs
 mdf.BLust=1+0.3.*buff.BLust;
-mdf.AvWr=1+0.2.*buff.AvWr;
+mdf.AW=1+0.2.*buff.AW;
 
 %% Raid Debufs
 %TODO: convert these to stat-based descriptors (in buff_model as well)
@@ -342,6 +345,7 @@ mdf.hcrit=1+(mdf.hcritm-1).*player.hcrit./100;
 %% Mastery
 player.rating.mast=(gear.mast+extra.mas+consum.mast+mdf.mast);
 player.mast=base.mast+(player.rating.mast./cnv.mast_mast);
+mdf.BoG=0.1+player.mast/100;
 
 %% Hit Rating and Expertise
 %TODO: check percentages when stats are available
@@ -364,9 +368,9 @@ player.mehit=player.rating.hit./cnv.hit_hit ...
 player.sphit=player.rating.hit./cnv.hit_hit ...
     +player.exp ... %TODO: check if this is min(player.exp,7.5) or whether exp over the 7.5% dodge cap still contributes
     +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
-
-player.rahit=player.rating.hit./cnv.hit_hit ...
-    +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
+% 
+% player.rahit=player.rating.hit./cnv.hit_hit ...
+%     +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
 
 %% Avoidance and Blocking
 player.rating.dodge=gear.dodge+consum.dodge;
@@ -470,7 +474,8 @@ bl.wdps=player.wdamage./bl.wswing;
 %Hit & Damage modifier values
 mdf.phdmg=mdf.PhysVuln.*(1-target.phdr);
 mdf.mehit=1-(target.miss+target.dodge+target.parry)./100;
-mdf.rahit=1-target.miss./100;
+mdf.rahit=1-target.miss./100-target.dodge./100;
+mdf.jdhit=1-target.miss./100;
 mdf.sphit=1-target.spmiss./100;
 
 %enforce one-roll system for auto-attacks

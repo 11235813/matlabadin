@@ -18,8 +18,8 @@ cfg(1)=build_config('hit',2,'exp',5,'glyph',[0 0 0],'talents',[0 0 0 0 0 0]);
 %hit-cap and exp soft-cap
 cfg(2)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'talents',[0 0 0 0 0 0]);
 % 
-% %multiple targets
-% cfg(3)=build_config('hit',2,'exp',5,'glyph',[0 0 0],'npccount',3); 
+%multiple targets
+cfg(3)=build_config('hit',2,'exp',5,'glyph',[0 0 0],'npccount',5); 
 
 
 %% Sim
@@ -36,6 +36,7 @@ for g=1:length(cfg)
     %store baseline DPS
     dps0(g)=c.rot.dps;
     hps0(g)=c.rot.hps;
+    hpg0(g)=c.rot.hpg;
     
 %     wb=waitbar(0,['Calculating CFG # ' int2str(g) ' / ' int2str(length(cfg))]);
 
@@ -51,11 +52,12 @@ for g=1:length(cfg)
     %store DPS & HPS
     EF_dps(g)=c.rot.dps-dps0(g);
     EF_hps(g)=c.rot.hps-hps0(g);
+    EF_hpg(g)=c.rot.hpg-hpg0(g);
     
     %Sacred Shield
     c=cfg(g);
     c.talent=talent_model([0 0 3 0 0 0]);
-    c.exec.queue='^WB>^SS>SotR>CS>J>AS>Cons>HW';
+    c.exec.queue='^WB>SotR>CS>J>AS>^SS>Cons>HW';
     c=stat_model(c);
     c=ability_model(c);
     c=rotation_model(c);
@@ -63,26 +65,29 @@ for g=1:length(cfg)
     %store DPS & HPS
     SS_dps(g)=c.rot.dps-dps0(g);
     SS_hps(g)=c.rot.hps-hps0(g);
+    SS_hpg(g)=c.rot.hpg-hpg0(g);
     
     %% L75 Talents
     %Holy Avenger
     c=cfg(g);
     c.talent=talent_model([0 0 0 0 1 0]);
     c.exec.queue='^WB>SotR>CS>J>AS>Cons>HW';
-    c.buff.HoAv=1;
+    c.buff.HA=1;
     c=stat_model(c);
     c=ability_model(c);
     c=rotation_model(c);
     
     %store DPS & HPS
-    HA_dps(g)=(c.rot.dps-dps0(g)).*15./120;
-    HA_hps(g)=(c.rot.hps-hps0(g)).*15./120;
+    HA_dps(g)=(c.rot.dps-dps0(g)).*c.mdf.HAuptime;
+    HA_hps(g)=(c.rot.hps-hps0(g)).*c.mdf.HAuptime;
+    HA_hpg(g)=(c.rot.hpg-hpg0(g)).*c.mdf.HAuptime;
+    sbuHA(g)=c.rot.sbuptime;
     
     %Sanctified Wrath
     c=cfg(g);
     c.talent=talent_model([0 0 0 0 2 0]);
-    c.exec.queue='^WB>SotR>CS>J>AS>Cons>HW';
-    c.buff.AvWr=1;
+    c.exec.queue='^WB>SotR>J>CS>AS>Cons>HW';
+    c.buff.AW=1;
     c=stat_model(c);
     c=ability_model(c);
     c=rotation_model(c);
@@ -93,14 +98,17 @@ for g=1:length(cfg)
     d=rotation_model(d);
     
     %store DPS & HPS
-    SW_dps(g)=(c.rot.dps.*30./180+dps0(g).*150./180)-(d.rot.dps.*20./180+dps0(g).*160./180);
-    SW_hps(g)=(c.rot.hps.*30./180+hps0(g).*150./180)-(d.rot.hps.*20./180+hps0(g).*160./180);
+    swUptime=c.mdf.AWuptime.*c.mdf.SWuptime;
+    awUptime=c.mdf.AWuptime;
+    SW_dps(g)=(c.rot.dps.*swUptime+dps0(g).*(1-swUptime))-(d.rot.dps.*awUptime+dps0(g).*(1-awUptime));
+    SW_hps(g)=(c.rot.hps.*swUptime+hps0(g).*(1-swUptime))-(d.rot.hps.*awUptime+hps0(g).*(1-awUptime));
+    SW_hpg(g)=(c.rot.hpg.*swUptime+hpg0(g).*(1-swUptime))-(d.rot.hpg.*awUptime+hpg0(g).*(1-awUptime));
+    sbuSW(g)=c.rot.sbuptime;
     
     %Divine Purpose
     c=cfg(g);
     c.talent=talent_model([0 0 0 0 3 0]);
     c.exec.queue='^WB>SotR>CS>J>AS>Cons>HW';
-    c.buff.AW=1;
     c=stat_model(c);
     c=ability_model(c);
     c=rotation_model(c);
@@ -108,6 +116,8 @@ for g=1:length(cfg)
     %store DPS & HPS
     DP_dps(g)=c.rot.dps-dps0(g);
     DP_hps(g)=c.rot.hps-hps0(g);
+    DP_hpg(g)=c.rot.hpg-hpg0(g);
+    sbuDP(g)=c.rot.sbuptime;
     
     
     %% L90 Talents
@@ -119,6 +129,7 @@ for g=1:length(cfg)
     %store DPS & HPS
     HPr_dps(g)=c.rot.dps-dps0(g);
     HPr_hps(g)=c.rot.hps-hps0(g);
+    HPr_hpg(g)=c.rot.hpg-hpg0(g);
     
     %Light's Hammer
     c=cfg(g);
@@ -128,6 +139,7 @@ for g=1:length(cfg)
     %store DPS & HPS
     LH_dps(g)=c.rot.dps-dps0(g);
     LH_hps(g)=c.rot.hps-hps0(g);
+    LH_hpg(g)=c.rot.hpg-hpg0(g);
     
     %Execution Sentence
     c=cfg(g);
@@ -137,6 +149,7 @@ for g=1:length(cfg)
     %store DPS & HPS
     ES_dps(g)=c.rot.dps-dps0(g);
     ES_hps(g)=c.rot.hps-hps0(g);
+    ES_hpg(g)=c.rot.hpg-hpg0(g);
     
     
         
@@ -147,6 +160,7 @@ toc
 
 tal_dps=[EF_dps;SS_dps;HA_dps;SW_dps;DP_dps;HPr_dps;LH_dps;ES_dps];
 tal_hps=[EF_hps;SS_hps;HA_hps;SW_hps;DP_hps;HPr_hps;LH_hps;ES_hps];
+tal_hpg=roundn([EF_hpg;SS_hpg;HA_hpg;SW_hpg;DP_hpg;HPr_hpg;LH_hpg;ES_hpg],-3);
 tal_labels={'Eternal Flame';'Sacred Shield';'Holy Avenger';'Sanctified Wrath';...
             'Divine Purpose';'Holy Prism';'Light''s Hammer';'Execution Sentence'};
 
@@ -159,11 +173,15 @@ li{ldat,1}=tal_labels;
 
 for g=1:length(cfg)
     
-li{1:3,2*g}={['cfg' int2str(g)];'DPS';[num2str(roundn(dps0(g)./1e3,-1),'%2.1f') 'k']};
-li{ldat,2*g}=round(tal_dps(:,g));
+li{1:3,3*g-1}={['cfg' int2str(g)];'DPS';[num2str(roundn(dps0(g)./1e3,-1),'%2.1f') 'k']};
+li{ldat,3*g-1}=round(tal_dps(:,g));
 
-li{1:3,2*g+1}={['cfg' int2str(g)];'HPS';[num2str(roundn(hps0(1,g)./1e3,-1),'%2.1f') 'k']};
-li{ldat,2*g+1}=round(tal_hps(:,g));
+li{1:3,3*g}={['cfg' int2str(g)];'HPS';[num2str(roundn(hps0(1,g)./1e3,-1),'%2.1f') 'k']};
+li{ldat,3*g}=round(tal_hps(:,g));
+
+li{1:3,3*g+1}={['cfg' int2str(g)];'HPG';[num2str(roundn(hpg0(1,g),-3),'%1.3f')]};
+li{ldat,3*g+1}=tal_hpg(:,g);
+li.setColumnFormat(3*g+1,'%1.3g')
 
 end
 
@@ -171,6 +189,8 @@ end
 % li.setColumnTextAlignment(3:6,'center')
 % li.setColumnFormat(3:4,'%6.0f')
 % li.setColumnFormat(5:6,'%2.1f')
+
+disp(['---' int2str(round(c.player.VengAP./1000)) 'k Vengeance ---'])
 li.toText()
 
 %% plots

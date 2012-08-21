@@ -18,7 +18,7 @@ function [cps ecps hpg] = action2cps(c,j)
 
 %assume all arrays are singleton
 jme=1;
-jra=1;
+jjd=1;
 jws=1;
 jha=1;
 jss=1;
@@ -29,8 +29,8 @@ jaw=1;
 if length(c.mdf.mehit)>1
     jme=j;
 end
-if length(c.mdf.rahit)>1
-    jra=j;
+if length(c.mdf.jdhit)>1
+    jjd=j;
 end
 if length(c.player.wswing)>1
     jws=j;
@@ -60,6 +60,7 @@ for m=1:size(c.rot.actionPr,2)
     %reset GC temp var
     asgc=0;
     hpmod=1;
+    gchaflag=0;
     
     %separate string into components
     match=regexp(c.rot.actionPr{1,m},'\w*','match');
@@ -74,13 +75,18 @@ for m=1:size(c.rot.actionPr,2)
     
     %strip out any numeric modifiers
     tok=regexp(match{1},'[a-zA-Z]*|\d','match');
-    abil=tok{1};hpval=3;
+    abil=tok{1};
+    hpval=3;
     if length(tok)>1
         hpval=tok(2);
     end
     
     %find the index of the ability
-    idx= strcmpi(abil,c.abil.val.label);
+    idx=strcmpi(abil,c.abil.val.label);
+    
+    %flag as damage or healing
+    d=c.abil.val.dmg(idx)>0;
+    h=c.abil.val.heal(idx)>0;
     
     %add this to the CPS tally
     cps(idx)=cps(idx)+cpsval;
@@ -94,25 +100,33 @@ for m=1:size(c.rot.actionPr,2)
         switch match{q}
             case 'GC'
                 asgc=cpsval;
+                gchaflag=1;
             case {'BoG1','BoG2','BoG3','BoG4','BoG5'}
                 %strip number
                 bogval=str2double(match{q}(length(match{q})));
-                emod=emod.*(1+(0.1+c.player.mast./100).*bogval);
+                emod=emod.*(1+h.*c.mdf.BoG.*bogval); 
             case 'AW'
-                emod=emod.*1.2;
+                emod=emod.*d.*(1+c.mdf.AW);
             case 'HA'
                 hpmod=3;
                 switch abil
                     case {'CS','J','HotR'}
-                        emod=emod.*1.3;
+                        emod=emod.*(1+c.mdf.HAdmg);
                     case 'AS'
-                        %add code to handle ASGC
+                        if gchaflag %GC always comes before HA; AS only gets benefit if AS was cast w/ GC
+                            emod=emod.*(1+c.mdf.HAdmg);
+                        end
                 end
-            case 'GoWoG'
-                emod=emod.*1.1;
+            case 'GoWoG1'
+                emod=emod.*d.*(1+c.mdf.glyphWoG);
+            case 'GoWoG2'
+                emod=emod.*d.*(1+2.*c.mdf.glyphWoG);
+            case 'GoWoG3'
+                emod=emod.*d.*(1+3.*c.mdf.glyphWoG);
         end
            
     end
+    %effective cast per second (including modifiers)
     ecpsval=cpsval.*emod;
     
     %combine qualifiers
@@ -142,7 +156,7 @@ for m=1:size(c.rot.actionPr,2)
                 cps(sealidx)=cps(sealidx)+cpsval;
                 ecps(sealidx)=ecps(sealidx)+ecpsval.*c.mdf.mehit(jme);
             end
-            hpg=hpg+cpsval.*c.mdf.rahit(jra).*hpmod;
+            hpg=hpg+cpsval.*c.mdf.jdhit(jjd).*hpmod;
         case 'SotR'
             %seals
             cps(sealidx)=cps(sealidx)+cpsval;

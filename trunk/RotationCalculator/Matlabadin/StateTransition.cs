@@ -236,8 +236,8 @@ namespace Matlabadin
                     };
                     pr = new double[]
                     {
-                        1 - gp.RangedHit,
-                        gp.RangedHit,
+                        1 - gp.JudgeHit,
+                        gp.JudgeHit,
                     };
                     break;
                 case Ability.WoG:

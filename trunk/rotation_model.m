@@ -18,7 +18,7 @@ useParallel=1;
 %define relevant queues if not done already
 %TODO: maybe this makes more sense in c.rot?
 if isfield(c.exec,'queue')==0 || isempty(c.exec.queue)
-    c.exec.queue='^WB>^SS>SotR>CS>J>AS>Cons>HW';
+    c.exec.queue='^WB>CS>J>AS>^SS>Cons>HW>SotR';
 end
 
 %repackage arguments for memoized_fsm and fsm_gen:
@@ -26,10 +26,10 @@ talentString=strrep(int2str(c.talent.short),' ','');
 glyphString=c.glyph.string;
 decimalHaste=c.player.phhaste./100;
 pBuffs=',';
-if c.buff.AvWr
+if c.buff.AW
     pBuffs=[pBuffs 'AW,'];
 end
-if c.buff.HoAv
+if c.buff.HA
     pBuffs=[pBuffs 'HA,'];
 end
 % if c.buff.BLust
@@ -40,7 +40,7 @@ end
 %% Crank
 
 %generate FSM results
-if length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswing)==1
+if length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(c.player.wswing)==1
        [c.rot.actionPr, ...
         c.rot.metadata, ...
         c.rot.uptime] = memoized_fsm(c.exec.queue, ...
@@ -49,7 +49,7 @@ if length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswing)==
                                         glyphString, ...
                                         decimalHaste,...
                                         c.mdf.mehit, ...
-                                        c.mdf.rahit,...
+                                        c.mdf.jdhit,...
                                         pBuffs); 
     %convert actionPr to CPS array
     [c.rot.cps c.rot.ecps c.rot.hpg]=action2cps(c);
@@ -59,7 +59,7 @@ if length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(c.player.wswing)==
 
 %mdf.mehit, mdf.sphit, and decimalHaste have one element, but player.wswing is 1xN -
 %str scaling (via parry->parryhaste)
-elseif length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(decimalHaste)==1 && length(c.player.wswing)>1
+elseif length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(decimalHaste)==1 && length(c.player.wswing)>1
     %only need one fsm generation
        [c.rot.actionPr, ...
         c.rot.metadata, ...
@@ -69,7 +69,7 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(decimalHaste)=
                                         glyphString, ...
                                         decimalHaste,...
                                         c.mdf.mehit, ...
-                                        c.mdf.rahit,...
+                                        c.mdf.jdhit,...
                                         pBuffs); 
     %the conversion to a CPS array needs to be handled appropriately though
     for j=1:length(c.player.wswing)
@@ -78,10 +78,10 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(decimalHaste)=
 
 %mdf.mehit & mdf.sphit have one element, but decimalHaste is 1xN
 %haste scaling
-elseif length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(decimalHaste)>1 
+elseif length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(decimalHaste)>1 
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.spec.name, talentString, decimalHaste, c.mdf.mehit, c.mdf.rahit, pBuffs);
+        fsm_gen(c.exec.queue, c.spec.name, talentString, glyphString, decimalHaste, c.mdf.mehit, c.mdf.jdhit, pBuffs);
         for j=1:length(decimalHaste)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
@@ -95,7 +95,7 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(decimalHaste)>
                                                 glyphString, ...
                                                 decimalHaste(j),...
                                                 c.mdf.mehit, ...
-                                                c.mdf.rahit,...
+                                                c.mdf.jdhit,...
                                                 pBuffs);
             [c.rot.cps(:,j) c.rot.ecps(:,j) c.rot.hpg(j)]=action2cps(c,j);
         end
@@ -115,7 +115,7 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(decimalHaste)>
                                                 glyphString, ...
                                                 decimalHaste(j),...
                                                 c.mdf.mehit, ...
-                                                c.mdf.rahit,...
+                                                c.mdf.jdhit,...
                                                 pBuffs);
             [c.rot.cps(:,j) c.rot.ecps(:,j) c.rot.hpg(j)]=action2cps(c,j);
         end
@@ -124,10 +124,10 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.rahit)==1 && length(decimalHaste)>
     
 %both mdf.mehit and mdf.sphit have more than one element - assumed to
 %be the same size
-elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
+elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)>1
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.spec.name, talentString, decimalHaste, c.mdf.mehit, c.mdf.rahit, pBuffs);
+        fsm_gen(c.exec.queue, c.spec.name, talentString, glyphString, decimalHaste, c.mdf.mehit, c.mdf.jdhit, pBuffs);
         for j=1:length(c.mdf.mehit)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
@@ -141,7 +141,7 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
                                                 glyphString, ...
                                                 decimalHaste,...
                                                 c.mdf.mehit(j), ...
-                                                c.mdf.rahit(j),...
+                                                c.mdf.jdhit(j),...
                                                 pBuffs);
             [c.rot.cps(:,j) c.rot.ecps(:,j) c.rot.hpg(j)]=action2cps(c,j);
         end
@@ -161,7 +161,7 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
                                                 glyphString, ...
                                                 decimalHaste,...
                                                 c.mdf.mehit(j), ...
-                                                c.mdf.rahit(j),...
+                                                c.mdf.jdhit(j),...
                                                 pBuffs);
             [c.rot.cps(:,j) c.rot.ecps(:,j) c.rot.hpg(j)]=action2cps(c,j);
         end
@@ -169,10 +169,10 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)>1
     end
     
 %only mdf.mehit has more than one element (can this even happen anymore?)
-elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
+elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)==1
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.spec.name, talentString, decimalHaste, c.mdf.mehit, c.mdf.rahit, pBuffs);
+        fsm_gen(c.exec.queue, c.spec.name, talentString, glyphString, decimalHaste, c.mdf.mehit, c.mdf.jdhit, pBuffs);
         for j=1:length(c.mdf.mehit)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
@@ -186,7 +186,7 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
                                                 glyphString, ...
                                                 decimalHaste,...
                                                 c.mdf.mehit(j), ...
-                                                c.mdf.rahit,...
+                                                c.mdf.jdhit,...
                                                 pBuffs);
             [c.rot.cps(:,j) c.rot.ecps(:,j) c.rot.hpg(j)]=action2cps(c,j);
             
@@ -207,7 +207,7 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.rahit)==1
                                                 glyphString, ...
                                                 decimalHaste,...
                                                 c.mdf.mehit(j), ...
-                                                c.mdf.rahit,...
+                                                c.mdf.jdhit,...
                                                 pBuffs);
             [c.rot.cps(:,j) c.rot.ecps(:,j) c.rot.hpg(j)]=action2cps(c,j);
         end
