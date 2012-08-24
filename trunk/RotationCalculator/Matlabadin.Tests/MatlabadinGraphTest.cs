@@ -188,7 +188,7 @@ namespace Matlabadin.Tests
         [Test]
         public void CalculateAggregates_SotRCS()
         {
-            Int64GraphParameters gp = NoMiss("SotR>CS");
+            Int64GraphParameters gp = NoMissNoTalents("SotR>CS");
             MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
@@ -198,7 +198,7 @@ namespace Matlabadin.Tests
         [Test]
         public void CalculateAggregates_SotRCSJ()
         {
-            Int64GraphParameters gp = NoMiss("SotR>CS>J");
+            Int64GraphParameters gp = NoMissNoTalents("SotR>CS>J");
             MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
