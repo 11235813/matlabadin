@@ -33,7 +33,7 @@ namespace Matlabadin.Tests
             Int64GraphParameters gp = NoMiss("J");
             MatlabadinSimTree<BitVectorState> mst = new MatlabadinSimTree<BitVectorState>(gp, gp);
             ActionSummary result = mst.Calculate(6);
-            Assert.AreEqual(0.5, result.BuffUptime[(int)Buff.GCD]); // 3 GCD steps + 3 off-GCD steps
+            Assert.AreEqual(0.5, result.UptimeForBuff(Buff.GCD)); // 3 GCD steps + 3 off-GCD steps
         }
         [Test]
         public void ShouldCalculateForkedBuffUptimePercentage()
@@ -41,7 +41,7 @@ namespace Matlabadin.Tests
             Int64GraphParameters gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("HotR"), PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.None, 1, 0, 0.75, 0.75);
             MatlabadinSimTree<BitVectorState> mst = new MatlabadinSimTree<BitVectorState>(gp, gp);
             ActionSummary result = mst.Calculate(3);
-            Assert.AreEqual(0.75, result.BuffUptime[(int)Buff.WB]); // 75% chance that HotR hit & WB up for all 3 steps
+            Assert.AreEqual(0.75, result.UptimeForBuff(Buff.WB)); // 75% chance that HotR hit & WB up for all 3 steps
         }
         [Test]
         public void ShouldNotTravereZeroProbabilityTransitions()

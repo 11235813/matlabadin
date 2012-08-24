@@ -194,17 +194,28 @@ namespace Matlabadin
                     cps[action] = currentPr + pr[i];
                 }
                 // aggregate buff durations
-                for (int j = 0; j < (int)Buff.UptimeTrackedBuffs; j++) // for each buff
+                for (int j = 0; j < GraphParameters.BuffTrackingArraySize; j++)
                 {
                     if (c.buffDuration[j] > c.stepsDuration) throw new Exception("Sanity check failure: buff duration exceeds step duration");
                     sumbufftpr[j] += pr[i] * GraphParameters.StepDuration * c.buffDuration[j];
                 }
             }
             cps.Remove("Nothing"); // Nothing casts are not a meaningful measure of anything
+            double[] buffUptimeValues = sumbufftpr.Select(buffsumtpr => buffsumtpr / sumtpr).ToArray();
+            double[][] buffUptime = new double[(int)Buff.UptimeTrackedBuffs][];
+            int offset = 0;
+            for (int i = 0; i < (int)Buff.UptimeTrackedBuffs; i++)
+            {
+                Buff b = (Buff)i;
+                int maxStacks = GraphParameters.MaxBuffStacks(b);
+                if (maxStacks == 0) continue;
+                buffUptime[i] = buffUptimeValues.Skip(offset).Take(maxStacks).ToArray();
+                offset += maxStacks;
+            }
             return new ActionSummary()
             {
                 Action = cps.ToDictionary(kvp => kvp.Key, kvp => kvp.Value / sumtpr),
-                BuffUptime = sumbufftpr.Select(buffsumtpr => buffsumtpr / sumtpr).ToArray(),
+                BuffStacksUptime = buffUptime,
             };
         }
         /// <summary>

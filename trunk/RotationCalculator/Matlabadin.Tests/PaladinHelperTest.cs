@@ -83,18 +83,6 @@ namespace Matlabadin.Tests
             PaladinTalentsHelper.TryParse("SpeedOfLight", out pt); Assert.AreEqual(PaladinTalents.SpeedOfLight, pt);
         }
         [Test]
-        public void PaladinTalents_All_ShouldContainAllImplementedTalents()
-        {
-            Assert.AreEqual(
-                PaladinTalents.SelflessHealer |
-                PaladinTalents.EternalFlame |
-                PaladinTalents.SacredShield |
-                PaladinTalents.ExecutionSentence |
-                PaladinTalents.HolyPrism |
-                PaladinTalents.LightsHammer,
-                PaladinTalents.All);
-        }
-        [Test]
         public void PaladinTalents_ToLongString_ShouldSemicolonSeperateTalentsInTalentCalculatorOrder()
         {
             Assert.AreEqual("SpeedOfLight;SelflessHealer;EternalFlame;HolyPrism",

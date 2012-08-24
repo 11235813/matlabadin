@@ -278,7 +278,7 @@ namespace Matlabadin.Tests
             MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(20.0 / 180.0, result.BuffUptime[(int)Buff.AW], 1e-7); // 20s every 180s uptime
+            Assert.AreEqual(20.0 / 180.0, result.UptimeForBuff(Buff.AW), 1e-7); // 20s every 180s uptime
         }
         [Test]
         public void SSUptimeShouldBeCalculated()
@@ -287,7 +287,7 @@ namespace Matlabadin.Tests
             MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(1, result.BuffUptime[(int)Buff.SS], 1e-7); // 100% uptime
+            Assert.AreEqual(1, result.UptimeForBuff(Buff.SS), 1e-7); // 100% uptime
         }
         [Test]
         public void EFUptimeShouldBeCalculated()
@@ -296,7 +296,7 @@ namespace Matlabadin.Tests
             MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(1, result.BuffUptime[(int)Buff.EF], 1e-7); // 100% uptime
+            Assert.AreEqual(1, result.UptimeForBuff(Buff.EF), 1e-7); // 100% uptime
         }
         [Test]
         public void WBUptimeShouldBeCalculated()
@@ -305,13 +305,13 @@ namespace Matlabadin.Tests
             MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(1, result.BuffUptime[(int)Buff.WB], 1e-7); // 100% uptime
+            Assert.AreEqual(1, result.UptimeForBuff(Buff.WB), 1e-7); // 100% uptime
 
             gp = new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>("HotR"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 0, 0);
             mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(0, result.BuffUptime[(int)Buff.WB], 1e-7); // 0% uptime since HotR never connects
+            Assert.AreEqual(0, result.UptimeForBuff(Buff.WB), 1e-7); // 0% uptime since HotR never connects
         }
         [Test]
         public void SotRSBUptimeShouldBeCalculated()
@@ -320,7 +320,7 @@ namespace Matlabadin.Tests
             MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
             var result = mg.CalculateResults(
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(5d / 13.5 / 3 * 3, result.BuffUptime[(int)Buff.SotRSB], Tolerance * 100); // 5hp per 13.5s - cast requires 3, buff lasts 3s
+            Assert.AreEqual(5d / 13.5 / 3 * 3, result.UptimeForBuff(Buff.SotRSB), Tolerance * 100); // 5hp per 13.5s - cast requires 3, buff lasts 3s
         }
         [Test]
         public void CloneShouldReduceConvergenceTimeForSameResult()

@@ -27,7 +27,6 @@ namespace Matlabadin
 #if !NOSANITYCHECKS
             if (pr == null) throw new ArgumentNullException("pr");
             if (buffDuration == null) throw new ArgumentNullException("buffDuration");
-            if (buffDuration.Length != (int)Buff.UptimeTrackedBuffs) throw new ArgumentException("Sanity failure: buffDuration array length invalid");
             if (wogbog && !(ability == Ability.WoG || ability == Ability.EF) ) throw new ArgumentException("Sanity failure: wogbog cannot be set if ability is not WoG or EF");
             if (asgc && ability != Ability.AS) throw new ArgumentException("Sanity failure: asgc cannot be set if ability is not AS");
             if (folsh > 0 && ability != Ability.FoL) throw new ArgumentException("Sanity failure: folsh cannot be nonz-zero if ability is not FoL");
@@ -90,7 +89,7 @@ namespace Matlabadin
             if (hashcode == 0)
             {
                 hashcode = stepsDuration ^ pr.Aggregate(0, (h, p) => h ^ (int)(p * (1 << 30)));
-                for (int i = 0; i < (int)Buff.UptimeTrackedBuffs; i++)
+                for (int i = 0; i < buffDuration.Length; i++)
                 {
                     hashcode ^= buffDuration[i] << (5 + 2 * i);
                 }
@@ -117,8 +116,8 @@ namespace Matlabadin
             this.stepsDuration = first.stepsDuration + second.stepsDuration;
             this.pr = second.pr;
             // Add the buff durations
-            this.buffDuration = new int[(int)Buff.UptimeTrackedBuffs];
-            for (int i = 0; i < (int)Buff.UptimeTrackedBuffs; i++)
+            this.buffDuration = new int[first.buffDuration.Length];
+            for (int i = 0; i < first.buffDuration.Length; i++)
             {
                 this.buffDuration[i] = first.buffDuration[i] + second.buffDuration[i];
             }

@@ -152,11 +152,19 @@ namespace Matlabadin
 
             // Calculate uptime of tracked buffs. 
             // during this transition, how many steps was the tracked buff active for?
-            int[] buffSteps = new int[(int)Buff.UptimeTrackedBuffs];
+            int[] buffSteps = new int[gp.BuffTrackingArraySize];
+            int offset = 0;
             for (int i = 0; i < (int)Buff.UptimeTrackedBuffs; i++)
             {
-                buffSteps[i] = Math.Min(waitSteps, sm.TimeRemaining(StateInitial, (Buff)i))
-                    + Math.Min(abilitySteps, sm.TimeRemaining(StatePostAbility[0], (Buff)i));
+                Buff b = (Buff)i;
+                int maxStacks = gp.MaxBuffStacks(b);
+                if (maxStacks == 0) continue; // not tracking this buff: ignore
+                int stacks = sm.Stacks(StateInitial, b);
+                if (stacks != 0)
+                {
+                    buffSteps[offset + stacks - 1] = Math.Min(waitSteps, sm.TimeRemaining(StateInitial, b)) + Math.Min(abilitySteps, sm.TimeRemaining(StatePostAbility[0], b));
+                }
+                offset += maxStacks;
 #if !NOSANITYCHECKS
                 for (int j = 1; j < StatePostAbility.Length; j++)
                 {

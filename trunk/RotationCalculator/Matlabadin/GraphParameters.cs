@@ -31,9 +31,9 @@ namespace Matlabadin
             };
         private static readonly double[] DefaultUnhastedBuffDuration = new double[] {
                 1.5, 30, 30, // GCD, EF, SS,
-                20, 3, 30, 9, // AW, SotRSB, WB, GoWoG
+                20, 3, 30, 6, // AW, SotRSB, WB, GoWoG
                 6.3, 15, 20, 8, // GC, SH, BoG, DP
-                15, // HA 
+                18, // HA 
             };
         private static readonly int[] DefaultMaximumBuffStacks = new int[] {
                 1, 1, 1,
@@ -106,6 +106,10 @@ namespace Matlabadin
                 .ToArray();
             this.buffStacks = DefaultMaximumBuffStacks;
             this.minBuffDuration = DefaultUnhastedBuffDuration.Select((s, i) => this.PermanentBuffs.Contains((Buff)i) ? StepsPerHastedGcd : 0).ToArray();
+            // Only track buffs we can actually use as well as tracking each stack count seperately
+            this.BuffTrackingArraySize = Enumerable.Range(0, (int)Buff.UptimeTrackedBuffs)
+                .Select(i => MaxBuffStacks((Buff)i))
+                .Sum();
         }
 
         // This function calculates the ability cooldowns (in steps) after Sanctity of Battle
@@ -225,7 +229,7 @@ namespace Matlabadin
         }
         public int MaxBuffStacks(Buff buff)
         {
-            if (this.buffSteps[(int)buff] == 0 && this.minBuffDuration[(int)buff] != 0) return 0;
+            if (this.buffSteps[(int)buff] == 0 && this.minBuffDuration[(int)buff] == 0) return 0;
             return this.buffStacks[(int)buff];
         }
         public bool CanStack(Buff buff)
@@ -283,6 +287,7 @@ namespace Matlabadin
         public double GrandCrusaderProcRate { get { return this.Spec == PaladinSpec.Prot ? 0.2 : 0.0; } }
         public double DivinePurposeProcRate { get { return this.Talents.Includes(PaladinTalents.DivinePurpose) ? 0.25 : 0.0; } }
         public double StepDuration { get { return stepDuration; } }
+        public int BuffTrackingArraySize { get; private set; }
         /// <summary>
         /// Human-readable output of any errors resulting in inexact graph parameters
         /// </summary>
