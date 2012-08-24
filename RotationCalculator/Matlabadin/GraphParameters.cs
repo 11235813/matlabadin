@@ -31,15 +31,15 @@ namespace Matlabadin
             };
         private static readonly double[] DefaultUnhastedBuffDuration = new double[] {
                 1.5, 30, 30, // GCD, EF, SS,
-                20, 3, 30, // AW, SotRSB, WB,
+                20, 3, 30, 9, // AW, SotRSB, WB, GoWoG
                 6.3, 15, 20, 8, // GC, SH, BoG, DP
-                15, 9, // HA, GoWoG
+                15, // HA 
             };
         private static readonly int[] DefaultMaximumBuffStacks = new int[] {
                 1, 1, 1,
-                1, 1, 1,
+                1, 1, 1, 3,
                 1, 3, 5, 1,
-                1, 3,
+                1,
             };
 
         // constructor, does some simple sanity testing and calculates haste-effected GCD/CDs

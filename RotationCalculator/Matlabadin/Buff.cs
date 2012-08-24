@@ -34,6 +34,10 @@ namespace Matlabadin
         /// Weakened Blows
         /// </summary>
         WB,
+        /// <summary>
+        /// Glyph of WoG
+        /// </summary>
+        GoWoG,
         // ----- tracked buffs that we record and output go above this line ----- 
         // if you want to track additional buffs, UptimeTrackedBuffs needs to be changed
         /// <summary>
@@ -56,11 +60,7 @@ namespace Matlabadin
         /// Holy Avenger
         /// </summary>
         HA,
-        /// <summary>
-        /// Glyph of WoG
-        /// </summary>
-        GoWoG,
         Count,
-        UptimeTrackedBuffs = WB + 1,
+        UptimeTrackedBuffs = GoWoG + 1,
     }
 }
