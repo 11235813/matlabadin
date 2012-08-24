@@ -352,7 +352,7 @@ namespace Matlabadin.Tests
         [Test]
         public void CalculatesNextState_SingleTransitionAbilities()
         {
-            foreach (Ability a in new Ability[] { Ability.Cons, Ability.Nothing, Ability.WoG, Ability.SS, Ability.EF, Ability.HW, Ability.HoW, })
+            foreach (Ability a in new Ability[] { Ability.Cons, Ability.Nothing, Ability.SS, Ability.WoG, Ability.EF, Ability.HW, Ability.HoW, })
             {
                 var st = new StateTransition<BitVectorState>(GP, SM, 3, a);
                 Assert.AreEqual(1, st.NextStates.Length);

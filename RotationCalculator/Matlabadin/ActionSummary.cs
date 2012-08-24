@@ -17,6 +17,15 @@ namespace Matlabadin
         /// <summary>
         /// Uptime of tracked buffs
         /// </summary>
-        public double[] BuffUptime;
+        public double[][] BuffStacksUptime;
+        public double UptimeForBuff(Buff b, int stacks = -1)
+        {
+            if ((int)b >= BuffStacksUptime.Length) throw new InvalidOperationException("Sanity check failure: attempt to get uptime of untracked buff");
+            double[] a = BuffStacksUptime[(int)b];
+            if (a == null) return 0;
+            if (stacks == -1) return a.Sum(); // total uptime for buff regardless of number of stacks
+            if (stacks - 1 >= a.Length) return 0;
+            return a[stacks - 1];
+        }
     }
 }

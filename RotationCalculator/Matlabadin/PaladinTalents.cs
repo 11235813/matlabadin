@@ -39,7 +39,8 @@ namespace Matlabadin
         LightsHammer = 0x10000,
         ExecutionSentence = 0x20000,
         #endregion
-        All = 0x381C0,
+        All = 0x3FFFF,
+        //All = 0x381C0,
     }
     public static class PaladinTalentsHelper
     {

@@ -63,7 +63,8 @@ namespace Matlabadin
             double totalSeconds = simDurationInSteps * GraphParameters.StepDuration;
             return new ActionSummary
             {
-                BuffUptime = result.buffUptime.Select(x => x / simDurationInSteps).ToArray(),
+                // TODO refactor Matlabadin.CalculateResults() buff uptime remapping so it can be used here
+                //BuffUptime = result.buffUptime.Select(x => x / simDurationInSteps).ToArray(),
                 Action = result.actionPr.ToDictionary(x => x.Key, x => x.Value / totalSeconds),
             };
         }

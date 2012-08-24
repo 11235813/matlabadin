@@ -254,13 +254,16 @@ namespace Matlabadin
                     stream.WriteLine("{0},{1}", key, result.Action[key]);
                 }
             }
-            stream.WriteLine("Uptime_GCD,{0}", result.BuffUptime[(int)Buff.GCD]);
-            stream.WriteLine("Uptime_SacredShield,{0}", result.BuffUptime[(int)Buff.SS]);
-            stream.WriteLine("Uptime_EternalFlame,{0}", result.BuffUptime[(int)Buff.EF]);
-            stream.WriteLine("Uptime_WeakenedBlows,{0}", result.BuffUptime[(int)Buff.WB]);
-            stream.WriteLine("Uptime_AvengingWrath,{0}", result.BuffUptime[(int)Buff.AW]);
-            stream.WriteLine("Uptime_SotRShieldBlock,{0}", result.BuffUptime[(int)Buff.SotRSB]);
-            stream.WriteLine("Uptime_GlyphofWoG,{0}", result.BuffUptime[(int)Buff.GoWoG]);
+            stream.WriteLine("Uptime_GCD,{0}", result.UptimeForBuff(Buff.GCD));
+            stream.WriteLine("Uptime_SacredShield,{0}", result.UptimeForBuff(Buff.SS));
+            stream.WriteLine("Uptime_EternalFlame,{0}", result.UptimeForBuff(Buff.EF));
+            stream.WriteLine("Uptime_WeakenedBlows,{0}", result.UptimeForBuff(Buff.WB));
+            stream.WriteLine("Uptime_AvengingWrath,{0}", result.UptimeForBuff(Buff.AW));
+            stream.WriteLine("Uptime_SotRShieldBlock,{0}", result.UptimeForBuff(Buff.SotRSB));
+            stream.WriteLine("Uptime_GlyphofWoG,{0}", result.UptimeForBuff(Buff.GoWoG));
+            stream.WriteLine("Uptime_GlyphofWoG_1,{0}", result.UptimeForBuff(Buff.GoWoG, 1));
+            stream.WriteLine("Uptime_GlyphofWoG_2,{0}", result.UptimeForBuff(Buff.GoWoG, 2));
+            stream.WriteLine("Uptime_GlyphofWoG_3,{0}", result.UptimeForBuff(Buff.GoWoG, 3));
             stream.WriteLine("Stats_StateSpace_TotalStatesTraversed,{0}", graph.Size);
             stream.WriteLine("Stats_StateSpace_NonZero,{0}", pr.Count(p => p > 0));
             stream.WriteLine("Stats_State_BitsRequired,{0}", gp.BitsUsed);
@@ -305,13 +308,17 @@ namespace Matlabadin
                 }
             }
         }
-
         // function to cache graph
         private static void CacheGraph(MatlabadinGraph<BitVectorState> mg, double[] pr)
         {
             string rotation = mg.GraphParameters.Rotation.PriorityQueue;
             lock (existingGraphs)
             {
+                // memory usage reduction hack. A better approach would be to use
+                // an actual Cache object and prioritise graphs with
+                // sliding window retention. For now, we just drop them all on the floor.
+                if (existingGraphs.Count > 64) existingGraphs.Clear();
+
                 if (!existingGraphs.ContainsKey(rotation))
                 {
                     existingGraphs[rotation] = new List<Tuple<MatlabadinGraph<BitVectorState>, double[]>>();
