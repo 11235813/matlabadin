@@ -112,7 +112,7 @@ raw.CrusaderStrike=     (1.25.*player.ndamage+791).*mdf.phdmg.*(1+mdf.pvphands);
 dmg.CrusaderStrike=     raw.CrusaderStrike.*mdf.memodel.*mdf.phcrit;
 heal.CrusaderStrike=    0;
 threat.CrusaderStrike=  max(dmg.CrusaderStrike,heal.CrusaderStrike).*mdf.RFury;
-mcost.CrusaderStrike=   0.15.*mdf.glyphAC.*base.mana;
+mcost.CrusaderStrike=   0.03.*mdf.glyphAC.*base.mana;
 splash.CrusaderStrike=  0;
 label.CrusaderStrike=   'CS';
 

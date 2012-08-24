@@ -52,7 +52,7 @@ if length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(c.player.wswing)==
                                         c.mdf.jdhit,...
                                         pBuffs); 
     %convert actionPr to CPS array
-    [c.rot.cps c.rot.ecps c.rot.hpg]=action2cps(c);
+    [c.rot.cps c.rot.ecpsd c.rot.ecpsh c.rot.hpg]=action2cps(c);
     
 %otherwise, we need some array handling, and may want to take advantage
 %of parallelization
@@ -73,7 +73,7 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(decimalHaste)=
                                         pBuffs); 
     %the conversion to a CPS array needs to be handled appropriately though
     for j=1:length(c.player.wswing)
-        [c.rot.cps(:,j) c.rot.ecps(:,j) c.rot.hpg(j)]=action2cps(c,j);
+        [c.rot.cps(:,j) c.rot.ecpsd(:,j) c.rot.ecpsh(:,j) c.rot.hpg(j)]=action2cps(c,j);
     end
 
 %mdf.mehit & mdf.sphit have one element, but decimalHaste is 1xN
@@ -97,7 +97,7 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(decimalHaste)>
                                                 c.mdf.mehit, ...
                                                 c.mdf.jdhit,...
                                                 pBuffs);
-            [c.rot.cps(:,j) c.rot.ecps(:,j) c.rot.hpg(j)]=action2cps(c,j);
+            [c.rot.cps(:,j) c.rot.ecpsd(:,j) c.rot.ecpsh(:,j) c.rot.hpg(j)]=action2cps(c,j);
         end
     else
         wb=waitbar(0,'Generating/Loading FSM data');
@@ -117,7 +117,7 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(decimalHaste)>
                                                 c.mdf.mehit, ...
                                                 c.mdf.jdhit,...
                                                 pBuffs);
-            [c.rot.cps(:,j) c.rot.ecps(:,j) c.rot.hpg(j)]=action2cps(c,j);
+            [c.rot.cps(:,j) c.rot.ecpsd(:,j) c.rot.ecpsh(:,j) c.rot.hpg(j)]=action2cps(c,j);
         end
         close(wb)
     end  
@@ -143,7 +143,7 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)>1
                                                 c.mdf.mehit(j), ...
                                                 c.mdf.jdhit(j),...
                                                 pBuffs);
-            [c.rot.cps(:,j) c.rot.ecps(:,j) c.rot.hpg(j)]=action2cps(c,j);
+            [c.rot.cps(:,j) c.rot.ecpsd(:,j) c.rot.ecpsh(:,j) c.rot.hpg(j)]=action2cps(c,j);
         end
     else
         wb=waitbar(0,'Generating/Loading FSM data');
@@ -163,7 +163,7 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)>1
                                                 c.mdf.mehit(j), ...
                                                 c.mdf.jdhit(j),...
                                                 pBuffs);
-            [c.rot.cps(:,j) c.rot.ecps(:,j) c.rot.hpg(j)]=action2cps(c,j);
+            [c.rot.cps(:,j) c.rot.ecpsd(:,j) c.rot.ecpsh(:,j) c.rot.hpg(j)]=action2cps(c,j);
         end
         close(wb)
     end
@@ -188,7 +188,7 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)==1
                                                 c.mdf.mehit(j), ...
                                                 c.mdf.jdhit,...
                                                 pBuffs);
-            [c.rot.cps(:,j) c.rot.ecps(:,j) c.rot.hpg(j)]=action2cps(c,j);
+            [c.rot.cps(:,j) c.rot.ecpsd(:,j) c.rot.ecpsh(:,j) c.rot.hpg(j)]=action2cps(c,j);
             
         end
     else
@@ -209,7 +209,7 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)==1
                                                 c.mdf.mehit(j), ...
                                                 c.mdf.jdhit,...
                                                 pBuffs);
-            [c.rot.cps(:,j) c.rot.ecps(:,j) c.rot.hpg(j)]=action2cps(c,j);
+            [c.rot.cps(:,j) c.rot.ecpsd(:,j) c.rot.ecpsh(:,j) c.rot.hpg(j)]=action2cps(c,j);
         end
         close(wb)
     end
@@ -223,6 +223,7 @@ c.rot.efuptime=[c.rot.uptime.ef];
 c.rot.wbuptime=[c.rot.uptime.wb];
 c.rot.sbuptime=[c.rot.uptime.sb];
 c.rot.awuptime=[c.rot.uptime.aw];
+% c.rot.gowoguptime=[c.rot.uptime.gowog];
 c.rot.gcduptime=[c.rot.uptime.gcd];
 %empties tracking - this is % empty gcds
 c.rot.epct=1-[c.rot.uptime.gcd];
@@ -242,8 +243,8 @@ c=dynamic_model(c);
              
 %% calculate total DPS and HPS
 %note that a2cps includes all active and passive sources
-c.rot.dps=sum(c.rot.ecps.*c.abil.val.dmg.*c.dyn.multdps)+c.dyn.flatdps;
-c.rot.hps=sum(c.rot.ecps.*c.abil.val.heal);
+c.rot.dps=sum(c.rot.ecpsd.*c.abil.val.dmg.*c.dyn.multdps)+c.dyn.flatdps;
+c.rot.hps=sum(c.rot.ecpsh.*c.abil.val.heal);
 c.rot.mps=c.player.mps-sum(c.rot.cps.*c.abil.val.mcost); 
 
 %order fields alphabetically

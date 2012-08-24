@@ -1,4 +1,4 @@
-function [cps ecps hpg] = action2cps(c,j)
+function [cps ecpsd ecpsh hpg] = action2cps(c,j)
 %ACTION2CPS takes the actionPr returned by memoized_fsm and converts them
 %into a standardized "cast per second" array, including both active and
 %passive sources.
@@ -52,7 +52,8 @@ end
 
 %initialize cps vector
 cps=zeros(size(c.abil.val.label,1),1);
-ecps=cps;
+ecpsh=cps;
+ecpsd=cps;
 hpg=0;
 
 %sort actionPr entries into cps
@@ -92,7 +93,8 @@ for m=1:size(c.rot.actionPr,2)
     cps(idx)=cps(idx)+cpsval;
     
     %compile ecps modifier
-    emod=hpval./3;
+    emodd=hpval./3;
+    emodh=hpval./3;
     
     %handle extra qualifiers
     for q=2:length(match)
@@ -104,33 +106,33 @@ for m=1:size(c.rot.actionPr,2)
             case {'BoG1','BoG2','BoG3','BoG4','BoG5'}
                 %strip number
                 bogval=str2double(match{q}(length(match{q})));
-                emod=emod.*(1+h.*c.mdf.BoG.*bogval); 
+                emodh=emodh.*(1+h.*c.mdf.BoG.*bogval); 
             case 'AW'
-                emod=emod.*d.*(1+c.mdf.AW);
+                emodd=emodd.*d.*(1+c.mdf.AW);
             case 'HA'
                 hpmod=3;
                 switch abil
                     case {'CS','J','HotR'}
-                        emod=emod.*(1+c.mdf.HAdmg);
+                        emodd=emodd.*(1+c.mdf.HAdmg);
                     case 'AS'
                         if gchaflag %GC always comes before HA; AS only gets benefit if AS was cast w/ GC
-                            emod=emod.*(1+c.mdf.HAdmg);
+                            emodd=emodd.*(1+c.mdf.HAdmg);
                         end
                 end
             case 'GoWoG1'
-                emod=emod.*d.*(1+c.mdf.glyphWoG);
+                emodd=emodd.*(1+c.mdf.glyphWoG);
             case 'GoWoG2'
-                emod=emod.*d.*(1+2.*c.mdf.glyphWoG);
+                emodd=emodd.*(1+2.*c.mdf.glyphWoG);
             case 'GoWoG3'
-                emod=emod.*d.*(1+3.*c.mdf.glyphWoG);
+                emodd=emodd.*(1+3.*c.mdf.glyphWoG);
         end
            
     end
-    %effective cast per second (including modifiers)
-    ecpsval=cpsval.*emod;
+    
     
     %combine qualifiers
-    ecps(idx)=ecps(idx)+ecpsval;
+    ecpsd(idx)=ecpsd(idx)+cpsval.*emodd;
+    ecpsh(idx)=ecpsh(idx)+cpsval.*emodh;
 
     %% Handle special cases (seals, etc.)
     sealidx=find(strcmpi(c.exec.seal,c.abil.val.label));
@@ -139,35 +141,39 @@ for m=1:size(c.rot.actionPr,2)
         case 'CS'
             %seals, hpg
             cps(sealidx)=cps(sealidx)+cpsval;
-            ecps(sealidx)=ecps(sealidx)+ecpsval.*c.mdf.mehit(jme);
+            ecpsd(sealidx)=ecpsd(sealidx)+cpsval.*emodd.*c.mdf.mehit(jme);
+            ecpsh(sealidx)=ecpsh(sealidx)+cpsval.*emodh.*c.mdf.mehit(jme);
             hpg=hpg+cpsval.*c.mdf.mehit(jme).*hpmod;
         case 'HotR'
             %seals, hpg
             cps(sealidx)=cps(sealidx)+cpsval;
-            ecps(sealidx)=ecps(sealidx)+ecpsval.*c.mdf.mehit(jme);
+            ecpsd(sealidx)=ecpsd(sealidx)+cpsval.*emodd.*c.mdf.mehit(jme);
+            ecpsh(sealidx)=ecpsh(sealidx)+cpsval.*emodh.*c.mdf.mehit(jme);
             hpg=hpg+cpsval.*c.mdf.mehit(jme).*hpmod;
             %HammerNova
             idx=find(strcmpi('HaNova',c.abil.val.label));
             cps(idx)=cpsval;
-            ecps(idx)=ecpsval;
+            ecpsd(idx)=cpsval.*emodd;
         case 'J'
             %seals (only procs SoT), hpg
             if sealidx==find(strcmpi('SoT',c.abil.val.label))
                 cps(sealidx)=cps(sealidx)+cpsval;
-                ecps(sealidx)=ecps(sealidx)+ecpsval.*c.mdf.mehit(jme);
+                ecpsd(sealidx)=ecpsd(sealidx)+cpsval.*emodd.*c.mdf.jdhit(jjd);
+                ecpsh(sealidx)=ecpsh(sealidx)+cpsval.*emodh.*c.mdf.jdhit(jjd);
             end
             hpg=hpg+cpsval.*c.mdf.jdhit(jjd).*hpmod;
         case 'SotR'
             %seals
             cps(sealidx)=cps(sealidx)+cpsval;
-            ecps(sealidx)=ecps(sealidx)+ecpsval.*c.mdf.mehit(jme);
+            ecpsd(sealidx)=ecpsd(sealidx)+cpsval.*emodd.*c.mdf.mehit(jme);
+            ecpsh(sealidx)=ecpsh(sealidx)+cpsval.*emodh.*c.mdf.mehit(jme);
         case 'AS'
             %hpg from GC
             hpg=hpg+asgc.*hpmod;
         case 'SS'
             %uptime-based, not cast-based
             cps(idx)=c.rot.uptime(jss).ss./6;
-            ecps(idx)=c.rot.uptime(jss).ss./6; %no modifiers on absorbs
+            ecpsh(idx)=c.rot.uptime(jss).ss./6; %no modifiers on absorbs
     end
 
 end
@@ -175,20 +181,21 @@ end
 %% Melee
 %Melee swings
 cps(strcmpi('Melee',c.abil.val.label))=1./c.player.wswing(jws);
-ecps(strcmpi('Melee',c.abil.val.label))=(1+0.2.*c.rot.uptime(jaw).aw)./c.player.wswing(jws);
+ecpsd(strcmpi('Melee',c.abil.val.label))=(1+0.2.*c.rot.uptime(jaw).aw)./c.player.wswing(jws);
 %seal procs
 cps(sealidx)=cps(sealidx)+1./c.player.wswing(jws);
-ecps(sealidx)=ecps(sealidx)+(1+0.2.*c.rot.uptime(jaw).aw).*c.mdf.mehit(jme)./c.player.wswing(jws);
+ecpsd(sealidx)=ecpsd(sealidx)+(1+0.2.*c.rot.uptime(jaw).aw).*c.mdf.mehit(jme)./c.player.wswing(jws);
+ecpsh(sealidx)=ecpsh(sealidx)+(1+0.2.*c.rot.uptime(jaw).aw).*c.mdf.mehit(jme)./c.player.wswing(jws);
 
 %% Censure
 cps(strcmpi('Censure',c.abil.val.label))= 1./c.player.censTick(jha);
-ecps(strcmpi('Censure',c.abil.val.label))= (1+0.2.*c.rot.uptime(jaw).aw)./c.player.censTick(jha);
+ecpsd(strcmpi('Censure',c.abil.val.label))= (1+0.2.*c.rot.uptime(jaw).aw)./c.player.censTick(jha);
 
 %% EF(HoT)
 %not affected by BoG, assume average overlap with AW, 
 %TODO: check that ticks are not haste-affected
 %TODO: this doesn't account for low-HP EF casts
 cps(strcmpi('EF(HoT)',c.abil.val.label))=c.rot.uptime(jef).ef./3;
-ecps(strcmpi('EF(HoT)',c.abil.val.label))=c.rot.uptime(jef).ef./3.*(1+0.2.*c.rot.uptime(jaw).aw);
+ecpsh(strcmpi('EF(HoT)',c.abil.val.label))=c.rot.uptime(jef).ef./3.*(1+0.2.*c.rot.uptime(jaw).aw);
 
 end

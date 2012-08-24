@@ -260,6 +260,7 @@ namespace Matlabadin
             stream.WriteLine("Uptime_WeakenedBlows,{0}", result.BuffUptime[(int)Buff.WB]);
             stream.WriteLine("Uptime_AvengingWrath,{0}", result.BuffUptime[(int)Buff.AW]);
             stream.WriteLine("Uptime_SotRShieldBlock,{0}", result.BuffUptime[(int)Buff.SotRSB]);
+            stream.WriteLine("Uptime_GlyphofWoG,{0}", result.BuffUptime[(int)Buff.GoWoG]);
             stream.WriteLine("Stats_StateSpace_TotalStatesTraversed,{0}", graph.Size);
             stream.WriteLine("Stats_StateSpace_NonZero,{0}", pr.Count(p => p > 0));
             stream.WriteLine("Stats_State_BitsRequired,{0}", gp.BitsUsed);
