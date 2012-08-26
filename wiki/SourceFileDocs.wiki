@@ -28,8 +28,8 @@ we'll try to get it fixed up as soon as possible.
 || [gear_display gear_display.m] || r352 ||  10 June 12 ||
 || [gear_sethitexp gear_sethitexp.m] || r395 ||  10 June 12 ||
 || [gear_stats gear_stats.m] || r395 ||  10 June 12 ||
-|| glyph_model.m || rXXX ||  XXDATEXX ||
-|| memoized_fsm.m || rXXX ||  XXDATEXX ||
+|| [glyph_model glyph_model.m] || r518 ||  25 August 12 ||
+|| [memoized_fsm memoized_fsm.m] || r512 ||  25 August 12 ||
 || npc_model.m || rXXX ||  XXDATEXX ||
 || phr_model.m || rXXX ||  XXDATEXX ||
 || player_model.m || rXXX ||  XXDATEXX ||
