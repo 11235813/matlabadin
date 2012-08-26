@@ -223,7 +223,9 @@ c.rot.efuptime=[c.rot.uptime.ef];
 c.rot.wbuptime=[c.rot.uptime.wb];
 c.rot.sbuptime=[c.rot.uptime.sb];
 c.rot.awuptime=[c.rot.uptime.aw];
-% c.rot.gowoguptime=[c.rot.uptime.gowog];
+c.rot.gowog1uptime=[c.rot.uptime.gowog1];
+c.rot.gowog2uptime=[c.rot.uptime.gowog2];
+c.rot.gowog3uptime=[c.rot.uptime.gowog3];
 c.rot.gcduptime=[c.rot.uptime.gcd];
 %empties tracking - this is % empty gcds
 c.rot.epct=1-[c.rot.uptime.gcd];

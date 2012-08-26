@@ -31,7 +31,7 @@ namespace Matlabadin
             };
         private static readonly double[] DefaultUnhastedBuffDuration = new double[] {
                 1.5, 30, 30, // GCD, EF, SS,
-                20, 3, 30, 6, // AW, SotRSB, WB, GoWoG
+                20, 15, 30, 6, // AW, SotRSB, WB, GoWoG
                 6.3, 15, 20, 8, // GC, SH, BoG, DP
                 18, // HA 
             };
@@ -41,6 +41,7 @@ namespace Matlabadin
                 1, 3, 5, 1,
                 1,
             };
+        private static readonly double DefaultSotRBuffIncrement = 3;
 
         // constructor, does some simple sanity testing and calculates haste-effected GCD/CDs
         public GraphParameters(
@@ -267,6 +268,30 @@ namespace Matlabadin
         {
             return buffSteps[(int)buff];
         }
+        public int BuffAppendInSteps(Buff buff)
+        {
+            if (buff == Buff.SotRSB)
+            {
+                return this.CalculateDurationInSteps( DefaultSotRBuffIncrement, 
+                                                      false, 
+                                                      x => (int)Math.Ceiling(x));
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        //public int MaxBuffDurationInSteps(Buff buff)
+        //{
+        //    if (buff == Buff.SotRSB)
+        //    {
+        //        return (BuffDurationInSteps(buff) * 25); // arbitrarily chosen to be higher than we feasibly expect to produce
+        //    }
+        //    else
+        //    {
+        //        return BuffDurationInSteps(buff);
+        //    }
+        //}
         public bool HasSameShape(GraphParameters<TState> gp)
         {
             return this.Rotation.PriorityQueue == gp.Rotation.PriorityQueue

@@ -177,19 +177,21 @@ for m=1:size(c.rot.actionPr,2)
     end
 
 end
+%GoWoG average uptime
+c.rot.gowogavg=1+c.mdf.glyphWoG.*(c.rot.uptime.gowog1+2.*c.rot.uptime.gowog2+3.*c.rot.uptime.gowog3);
 
 %% Melee
 %Melee swings
 cps(strcmpi('Melee',c.abil.val.label))=1./c.player.wswing(jws);
-ecpsd(strcmpi('Melee',c.abil.val.label))=(1+0.2.*c.rot.uptime(jaw).aw)./c.player.wswing(jws);
+ecpsd(strcmpi('Melee',c.abil.val.label))=(1+0.2.*c.rot.uptime(jaw).aw).*c.rot.gowogavg./c.player.wswing(jws);
 %seal procs
 cps(sealidx)=cps(sealidx)+1./c.player.wswing(jws);
-ecpsd(sealidx)=ecpsd(sealidx)+(1+0.2.*c.rot.uptime(jaw).aw).*c.mdf.mehit(jme)./c.player.wswing(jws);
+ecpsd(sealidx)=ecpsd(sealidx)+(1+0.2.*c.rot.uptime(jaw).aw).*c.rot.gowogavg.*c.mdf.mehit(jme)./c.player.wswing(jws);
 ecpsh(sealidx)=ecpsh(sealidx)+(1+0.2.*c.rot.uptime(jaw).aw).*c.mdf.mehit(jme)./c.player.wswing(jws);
 
 %% Censure
 cps(strcmpi('Censure',c.abil.val.label))= 1./c.player.censTick(jha);
-ecpsd(strcmpi('Censure',c.abil.val.label))= (1+0.2.*c.rot.uptime(jaw).aw)./c.player.censTick(jha);
+ecpsd(strcmpi('Censure',c.abil.val.label))= (1+0.2.*c.rot.uptime(jaw).aw).*c.rot.gowogavg./c.player.censTick(jha);
 
 %% EF(HoT)
 %not affected by BoG, assume average overlap with AW, 

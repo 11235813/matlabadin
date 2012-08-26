@@ -16,7 +16,7 @@ def_db;
 cfg(1)=build_config('hit',2,'exp',5,'glyph',[0 0 0],'talents',[0 0 0 0 0 0]); 
 
 %hit-cap and exp soft-cap
-cfg(2)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'talents',[0 0 0 0 0 0]);
+cfg(2)=build_config('hit',7.5,'exp',15,'glyph',[0 0 0],'talents',[0 0 0 0 0 0]);
 % 
 %multiple targets
 cfg(3)=build_config('hit',2,'exp',5,'glyph',[0 0 0],'npccount',5); 
@@ -37,6 +37,7 @@ for g=1:length(cfg)
     dps0(g)=c.rot.dps;
     hps0(g)=c.rot.hps;
     hpg0(g)=c.rot.hpg;
+    sbu0(g)=c.rot.sbuptime;
     
 %     wb=waitbar(0,['Calculating CFG # ' int2str(g) ' / ' int2str(length(cfg))]);
 
@@ -53,6 +54,7 @@ for g=1:length(cfg)
     EF_dps(g)=c.rot.dps-dps0(g);
     EF_hps(g)=c.rot.hps-hps0(g);
     EF_hpg(g)=c.rot.hpg-hpg0(g);
+%     EF_sbu(g)=c.rot.sbuptime(g)-sbu0(g);
     
     %Sacred Shield
     c=cfg(g);
@@ -66,6 +68,7 @@ for g=1:length(cfg)
     SS_dps(g)=c.rot.dps-dps0(g);
     SS_hps(g)=c.rot.hps-hps0(g);
     SS_hpg(g)=c.rot.hpg-hpg0(g);
+%     SS_sbu(g)=c.rot.sbuptime(g)-sbu0(g);
     
     %% L75 Talents
     %Holy Avenger
@@ -81,7 +84,8 @@ for g=1:length(cfg)
     HA_dps(g)=(c.rot.dps-dps0(g)).*c.mdf.HAuptime;
     HA_hps(g)=(c.rot.hps-hps0(g)).*c.mdf.HAuptime;
     HA_hpg(g)=(c.rot.hpg-hpg0(g)).*c.mdf.HAuptime;
-    sbuHA(g)=c.rot.sbuptime;
+    HA_sbu(g)=c.rot.sbuptime;
+    HA_avgsbu(g)=sbu0(g)+(c.rot.sbuptime-sbu0(g)).*c.mdf.HAuptime;
     
     %Sanctified Wrath
     c=cfg(g);
@@ -103,7 +107,8 @@ for g=1:length(cfg)
     SW_dps(g)=(c.rot.dps.*swUptime+dps0(g).*(1-swUptime))-(d.rot.dps.*awUptime+dps0(g).*(1-awUptime));
     SW_hps(g)=(c.rot.hps.*swUptime+hps0(g).*(1-swUptime))-(d.rot.hps.*awUptime+hps0(g).*(1-awUptime));
     SW_hpg(g)=(c.rot.hpg.*swUptime+hpg0(g).*(1-swUptime))-(d.rot.hpg.*awUptime+hpg0(g).*(1-awUptime));
-    sbuSW(g)=c.rot.sbuptime;
+    SW_sbu(g)=c.rot.sbuptime;
+    SW_avgsbu(g)=sbu0(g)+(c.rot.sbuptime-sbu0(g)).*swUptime;
     
     %Divine Purpose
     c=cfg(g);
@@ -117,7 +122,8 @@ for g=1:length(cfg)
     DP_dps(g)=c.rot.dps-dps0(g);
     DP_hps(g)=c.rot.hps-hps0(g);
     DP_hpg(g)=c.rot.hpg-hpg0(g);
-    sbuDP(g)=c.rot.sbuptime;
+    DP_sbu(g)=c.rot.sbuptime;
+    DP_avgsbu(g)=c.rot.sbuptime;
     
     
     %% L90 Talents
@@ -161,6 +167,8 @@ toc
 tal_dps=[EF_dps;SS_dps;HA_dps;SW_dps;DP_dps;HPr_dps;LH_dps;ES_dps];
 tal_hps=[EF_hps;SS_hps;HA_hps;SW_hps;DP_hps;HPr_hps;LH_hps;ES_hps];
 tal_hpg=roundn([EF_hpg;SS_hpg;HA_hpg;SW_hpg;DP_hpg;HPr_hpg;LH_hpg;ES_hpg],-3);
+tal_sbu=[HA_sbu;SW_sbu;DP_sbu];
+tal_asbu=[HA_avgsbu;SW_avgsbu;DP_avgsbu];
 tal_labels={'Eternal Flame';'Sacred Shield';'Holy Avenger';'Sanctified Wrath';...
             'Divine Purpose';'Holy Prism';'Light''s Hammer';'Execution Sentence'};
 
@@ -173,16 +181,30 @@ li{ldat,1}=tal_labels;
 
 for g=1:length(cfg)
     
-li{1:3,3*g-1}={['cfg' int2str(g)];'DPS';[num2str(roundn(dps0(g)./1e3,-1),'%2.1f') 'k']};
-li{ldat,3*g-1}=round(tal_dps(:,g));
+    li{1:3,3*g-1}={['cfg' int2str(g)];'DPS';[num2str(roundn(dps0(g)./1e3,-1),'%2.1f') 'k']};
+    li{ldat,3*g-1}=round(tal_dps(:,g));
+    
+    li{1:3,3*g}={['cfg' int2str(g)];'HPS';[num2str(roundn(hps0(1,g)./1e3,-1),'%2.1f') 'k']};
+    li{ldat,3*g}=round(tal_hps(:,g));
+    
+    li{1:3,3*g+1}={['cfg' int2str(g)];'HPG';[num2str(roundn(hpg0(1,g),-3),'%1.3f')]};
+    li{ldat,3*g+1}=tal_hpg(:,g);
+    li.setColumnFormat(3*g+1,'%1.3g')
 
-li{1:3,3*g}={['cfg' int2str(g)];'HPS';[num2str(roundn(hps0(1,g)./1e3,-1),'%2.1f') 'k']};
-li{ldat,3*g}=round(tal_hps(:,g));
+end
 
-li{1:3,3*g+1}={['cfg' int2str(g)];'HPG';[num2str(roundn(hpg0(1,g),-3),'%1.3f')]};
-li{ldat,3*g+1}=tal_hpg(:,g);
-li.setColumnFormat(3*g+1,'%1.3g')
-
+li2=DataTable();
+li2{1:3,1}={' ';'Talent';'Base'};
+li2{4,1}=tal_labels{3};li2{5,1}=tal_labels{4};li2{6,1}=tal_labels{5};
+for g=1:length(cfg)
+    
+    li2{1:3,2*g}={['cfg' int2str(g)];'SBU';num2str(roundn(sbu0(g),-3),'%1.3f')};
+    li2{4:6,2*g}=tal_sbu(:,g);
+    li2.setColumnFormat(2*g,'%1.3g')
+    
+    li2{1:3,2*g+1}={['cfg' int2str(g)];'ASBU';num2str(roundn(sbu0(g),-3),'%1.3f')};
+    li2{4:6,2*g+1}=tal_asbu(:,g);
+    li2.setColumnFormat(2*g+1,'%1.3g')
 end
 
 % li.setColumnTextAlignment(2,'left')
@@ -192,5 +214,5 @@ end
 
 disp(['---' int2str(round(c.player.VengAP./1000)) 'k Vengeance ---'])
 li.toText()
-
+li2.toText()
 %% plots
