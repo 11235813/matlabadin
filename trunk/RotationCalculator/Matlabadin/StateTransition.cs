@@ -381,8 +381,11 @@ namespace Matlabadin
                     {
                         nextState = sm.SetHP(nextState, hp - availableHp);
                     }
-                    // reset SotRSB duration to full
-                    nextState = sm.SetTimeRemaining(nextState, Buff.SotRSB, gp.BuffDurationInSteps(Buff.SotRSB));
+                    // add 3 seconds to SotR buff; cap max duration at 15 seconds arbitrarily (unlikely to hit, would need 10 SotRs in a row to build this up)
+                    nextState = sm.SetTimeRemaining(nextState, 
+                                                    Buff.SotRSB, 
+                                                    Math.Min(sm.TimeRemaining(nextState, Buff.SotRSB) + gp.BuffAppendInSteps(Buff.SotRSB), gp.BuffDurationInSteps(Buff.SotRSB))
+                                                    );
                     // set BoG duration to full, increment stacks
                     int bogStacks = sm.Stacks(nextState, Buff.BoG);
                     nextState = sm.SetTimeRemaining(nextState, Buff.BoG, gp.BuffDurationInSteps(Buff.BoG));
