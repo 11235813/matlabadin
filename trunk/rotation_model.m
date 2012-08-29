@@ -221,7 +221,7 @@ end
 c.rot.ssuptime=[c.rot.uptime.ss];
 c.rot.efuptime=[c.rot.uptime.ef];
 c.rot.wbuptime=[c.rot.uptime.wb];
-c.rot.sbuptime=[c.rot.uptime.sb];
+% c.rot.sbuptime=[c.rot.uptime.sb];
 c.rot.awuptime=[c.rot.uptime.aw];
 c.rot.gowog1uptime=[c.rot.uptime.gowog1];
 c.rot.gowog2uptime=[c.rot.uptime.gowog2];
@@ -230,6 +230,8 @@ c.rot.gcduptime=[c.rot.uptime.gcd];
 %empties tracking - this is % empty gcds
 c.rot.epct=1-[c.rot.uptime.gcd];
 
+%SB uptime based on SotR cast rate
+c.rot.sbuptime=min([3.*c.rot.cps(strcmpi('SotR',c.abil.val.label),:);c.abil.val.ones]);
 
 %% correct for cases where cps is Nx1 but val.* is NxM
 if size(c.rot.cps,2)==1 && size(c.abil.val.dmg,2)>1

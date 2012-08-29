@@ -108,14 +108,14 @@ namespace Matlabadin.Tests
             Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("CS"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1)
                 .BuffDurationInSteps(Buff.AW));
         }
-        [Test]
-        public void Compression_Buff_SotRSB_ShouldRequireInRotation_SotR()
-        {
-            Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("SotR"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1)
-                .BuffDurationInSteps(Buff.SotRSB));
-            Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("CS"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1)
-                .BuffDurationInSteps(Buff.SotRSB));
-        }
+        //[Test]
+        //public void Compression_Buff_SotRSB_ShouldRequireInRotation_SotR()
+        //{
+        //    Assert.AreNotEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("SotR"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1)
+        //        .BuffDurationInSteps(Buff.SotRSB));
+        //    Assert.AreEqual(0, new GraphParameters<object>(new RotationPriorityQueue<object>("CS"), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, 3, 0, 1, 1)
+        //        .BuffDurationInSteps(Buff.SotRSB));
+        //}
         [Test]
         public void Compression_Buff_WB_ShouldRequireInRotation_HotR()
         {
@@ -273,7 +273,7 @@ namespace Matlabadin.Tests
             Assert.AreEqual(30, gp.StepDuration * gp.BuffDurationInSteps(Buff.SS));
             Assert.AreEqual(30, gp.StepDuration * gp.BuffDurationInSteps(Buff.EF));
             Assert.AreEqual(20, gp.StepDuration * gp.BuffDurationInSteps(Buff.AW));
-            Assert.AreEqual(3, gp.StepDuration * gp.BuffDurationInSteps(Buff.SotRSB));
+            //Assert.AreEqual(3, gp.StepDuration * gp.BuffDurationInSteps(Buff.SotRSB));
             Assert.AreEqual(30, gp.StepDuration * gp.BuffDurationInSteps(Buff.WB));
             Assert.AreEqual(6, gp.StepDuration * gp.BuffDurationInSteps(Buff.GoWoG));
             Assert.AreEqual(6 + 0.5, gp.StepDuration * gp.BuffDurationInSteps(Buff.GC)); // extra step to model buff gain delay

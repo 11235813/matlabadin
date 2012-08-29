@@ -31,17 +31,17 @@ namespace Matlabadin
             };
         private static readonly double[] DefaultUnhastedBuffDuration = new double[] {
                 1.5, 30, 30, // GCD, EF, SS,
-                20, 15, 30, 6, // AW, SotRSB, WB, GoWoG
+                20, 30, 6, // AW, WB, GoWoG
                 6.3, 15, 20, 8, // GC, SH, BoG, DP
                 18, // HA 
             };
         private static readonly int[] DefaultMaximumBuffStacks = new int[] {
                 1, 1, 1,
-                1, 1, 1, 3,
+                1, 1, 3,
                 1, 3, 5, 1,
                 1,
             };
-        private static readonly double DefaultSotRBuffIncrement = 3;
+        //private static readonly double DefaultSotRBuffIncrement = 3;
 
         // constructor, does some simple sanity testing and calculates haste-effected GCD/CDs
         public GraphParameters(
@@ -144,9 +144,9 @@ namespace Matlabadin
                 case Buff.AW:
                     if (!this.Rotation.AbilitiesUsed.Contains(Ability.AW)) return 0;
                     break;
-                case Buff.SotRSB:
-                    if (!this.Rotation.AbilitiesUsed.Contains(Ability.SotR)) return 0;
-                    break;
+                //case Buff.SotRSB:
+                //    if (!this.Rotation.AbilitiesUsed.Contains(Ability.SotR)) return 0;
+                //    break;
                 case Buff.WB:
                     if (!this.Rotation.AbilitiesUsed.Contains(Ability.HotR)) return 0;
                     break;
@@ -268,19 +268,19 @@ namespace Matlabadin
         {
             return buffSteps[(int)buff];
         }
-        public int BuffAppendInSteps(Buff buff)
-        {
-            if (buff == Buff.SotRSB)
-            {
-                return this.CalculateDurationInSteps( DefaultSotRBuffIncrement, 
-                                                      false, 
-                                                      x => (int)Math.Ceiling(x));
-            }
-            else
-            {
-                return 0;
-            }
-        }
+        //public int BuffAppendInSteps(Buff buff)
+        //{
+        //    if (buff == Buff.SotRSB)
+        //    {
+        //        return this.CalculateDurationInSteps( DefaultSotRBuffIncrement, 
+        //                                              false, 
+        //                                              x => (int)Math.Ceiling(x));
+        //    }
+        //    else
+        //    {
+        //        return 0;
+        //    }
+        //}
         //public int MaxBuffDurationInSteps(Buff buff)
         //{
         //    if (buff == Buff.SotRSB)

@@ -21,9 +21,11 @@ jme=1;
 jjd=1;
 jws=1;
 jha=1;
-jss=1;
-jef=1;
-jaw=1;
+jup=1;
+% jss=1;
+% jef=1;
+% jaw=1;
+% jwg=1;
 
 %handle non-singleton arrays
 if length(c.mdf.mehit)>1
@@ -38,15 +40,21 @@ end
 if length(c.player.sphaste)>1
     jha=j;
 end
-if length([c.rot.uptime.ss])>1
-    jss=j;
+if length(c.rot.uptime)>1
+    jup=1;
 end
-if length([c.rot.uptime.ef])>1
-    jef=j;
-end
-if length([c.rot.uptime.aw])>1
-    jaw=j;
-end
+% if length([c.rot.uptime.ss])>1
+%     jss=j;
+% end
+% if length([c.rot.uptime.ef])>1
+%     jef=j;
+% end
+% if length([c.rot.uptime.aw])>1
+%     jaw=j;
+% end
+% if length([c.rot.uptime.gowog1])>1
+%     jwg=j;
+% end
 
 %% CPS conversions    
 
@@ -172,32 +180,31 @@ for m=1:size(c.rot.actionPr,2)
             hpg=hpg+asgc.*hpmod;
         case 'SS'
             %uptime-based, not cast-based
-            cps(idx)=c.rot.uptime(jss).ss./6;
-            ecpsh(idx)=c.rot.uptime(jss).ss./6; %no modifiers on absorbs
+            cps(idx)=c.rot.uptime(jup).ss./6;
+            ecpsh(idx)=c.rot.uptime(jup).ss./6; %no modifiers on absorbs
     end
 
 end
 %GoWoG average uptime
-c.rot.gowogavg=1+c.mdf.glyphWoG.*(c.rot.uptime.gowog1+2.*c.rot.uptime.gowog2+3.*c.rot.uptime.gowog3);
+c.rot.gowogavg=1+c.mdf.glyphWoG.*(c.rot.uptime(jup).gowog1+2.*c.rot.uptime(jup).gowog2+3.*c.rot.uptime(jup).gowog3);
 
 %% Melee
 %Melee swings
 cps(strcmpi('Melee',c.abil.val.label))=1./c.player.wswing(jws);
-ecpsd(strcmpi('Melee',c.abil.val.label))=(1+0.2.*c.rot.uptime(jaw).aw).*c.rot.gowogavg./c.player.wswing(jws);
+ecpsd(strcmpi('Melee',c.abil.val.label))=(1+0.2.*c.rot.uptime(jup).aw).*c.rot.gowogavg./c.player.wswing(jws);
 %seal procs
 cps(sealidx)=cps(sealidx)+1./c.player.wswing(jws);
-ecpsd(sealidx)=ecpsd(sealidx)+(1+0.2.*c.rot.uptime(jaw).aw).*c.rot.gowogavg.*c.mdf.mehit(jme)./c.player.wswing(jws);
-ecpsh(sealidx)=ecpsh(sealidx)+(1+0.2.*c.rot.uptime(jaw).aw).*c.mdf.mehit(jme)./c.player.wswing(jws);
+ecpsd(sealidx)=ecpsd(sealidx)+(1+0.2.*c.rot.uptime(jup).aw).*c.rot.gowogavg.*c.mdf.mehit(jme)./c.player.wswing(jws);
+ecpsh(sealidx)=ecpsh(sealidx)+(1+0.2.*c.rot.uptime(jup).aw).*c.mdf.mehit(jme)./c.player.wswing(jws);
 
 %% Censure
 cps(strcmpi('Censure',c.abil.val.label))= 1./c.player.censTick(jha);
-ecpsd(strcmpi('Censure',c.abil.val.label))= (1+0.2.*c.rot.uptime(jaw).aw).*c.rot.gowogavg./c.player.censTick(jha);
+ecpsd(strcmpi('Censure',c.abil.val.label))= (1+0.2.*c.rot.uptime(jup).aw).*c.rot.gowogavg./c.player.censTick(jha);
 
 %% EF(HoT)
 %not affected by BoG, assume average overlap with AW, 
-%TODO: check that ticks are not haste-affected
 %TODO: this doesn't account for low-HP EF casts
-cps(strcmpi('EF(HoT)',c.abil.val.label))=c.rot.uptime(jef).ef./3;
-ecpsh(strcmpi('EF(HoT)',c.abil.val.label))=c.rot.uptime(jef).ef./3.*(1+0.2.*c.rot.uptime(jaw).aw);
+cps(strcmpi('EF(HoT)',c.abil.val.label))=c.rot.uptime(jup).ef./c.player.EFTick(jha);
+ecpsh(strcmpi('EF(HoT)',c.abil.val.label))=c.rot.uptime(jup).ef./c.player.EFTick(jha).*(1+0.2.*c.rot.uptime(jup).aw);
 
 end

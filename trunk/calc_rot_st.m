@@ -17,9 +17,9 @@ cfg(1)=build_config('hit',2,'exp',5);
 
 %hit-cap and exp soft-cap
 cfg(2)=build_config('hit',7.5,'exp',7.5);
-
+% 
 %low hit, WoG/SoI build
-cfg(3)=build_config('hit',2,'exp',5,'seal','SoI');
+cfg(3)=build_config('hit',7.5,'exp',7.5,'seal','SoI');
 
 
 %% Generate DPS for each config
@@ -34,6 +34,7 @@ for g=1:length(cfg)
     %set configuration variables
     
     c=cfg(g);
+    c.exec.veng=[ddb.v2];
     c=stat_model(c);
     c=ability_model(c);
     
@@ -62,12 +63,14 @@ for g=1:length(cfg)
         hpg(q,g)=c.rot.hpg;
         
         %if desired, repeate for lower vengeance
-        %         cfg.exec.veng=0.3;
-        %         cfg=ability_model(cfg);
-        %         cfg=rotation_model(cfg);
-        %         dps2(q,g)=cfg.rot.dps;
-        %         hps2(q,g)=cfg.rot.hps;
-        %
+        d=c;
+        d.exec.veng=[ddb.v1];
+        d=stat_model(d);
+        d=ability_model(d);
+        d=rotation_model(d);
+        dps2(q,g)=d.rot.dps;
+        hps2(q,g)=d.rot.hps;
+        
         
     end
     close(wb)
@@ -82,41 +85,44 @@ L=length(queue.st);
 ldat=2+[1:L];
 
 for g=1:length(cfg)
-
-disp([num2str(cfg(g).player.mehit,'%1.2f') '% hit, ' num2str(cfg(g).player.exp,'%1.2f') '% exp'])    
     
-li=DataTable();
-li{1:2,1}={' ';'Q#'};      
-li{ldat,1}=[1:L]';
-li{1:2,2}={' ';'Priority'};
-li{ldat,2}=queue.st;
-li{1:2,3}={'DPS';'V=100%'};
-li{ldat,3}=dps(:,g);
-li{1:2,4}={'SHPS';'V=100%'};
-li{ldat,4}=hps(:,g);
-li{1:2,5}={'SS/EF';'Uptime%'};
-li{ldat,5}=efssUptime(:,g);
-li{1:2,6}={'Empty';'GCD%'};
-li{ldat,6}=empties(:,g);
-li{1:2,7}={'HPG';'/s'};
-li{ldat,7}=hpg(:,g);
-
-li.setColumnTextAlignment(2,'left')
-% li.setColumnTextAlignment(3:6,'center')
-li.setColumnFormat(3:4,'%6.0f')
-li.setColumnFormat(5:6,'%2.1f')
-li.toText()
-
-lidb{g}=li;
+    disp(' ')
+    disp([num2str(cfg(g).player.mehit,'%1.2f') '% hit, ' num2str(cfg(g).player.exp,'%1.2f') '% exp, ' cfg(g).exec.seal])
+    
+    li=DataTable();
+    li{1:2,1}={' ';'Q#'};
+    li{ldat,1}=[1:L]';
+    li{1:2,2}={' ';'Priority'};
+    li{ldat,2}=queue.st;
+    li{1:2,3}={'DPS';['V=' int2str(ddb.v2) 'k']};
+    li{ldat,3}=dps(:,g);
+    li{1:2,4}={'SHPS';['V=' int2str(ddb.v2) 'k']};
+    li{ldat,4}=hps(:,g);
+    li{1:2,5}={'DPS';['V=' int2str(ddb.v1) 'k']};
+    li{ldat,5}=dps2(:,g);
+    li{1:2,6}={'SHPS';['V=' int2str(ddb.v1) 'k']};
+    li{ldat,6}=hps2(:,g);
+    li{1:2,7}={'SS/EF';'Up%'};
+    li{ldat,7}=efssUptime(:,g).*100;
+    li{1:2,8}={'Empty';'GCD%'};
+    li{ldat,8}=empties(:,g);
+    li{1:2,9}={' ';'HPG/s'};
+    li{ldat,9}=hpg(:,g);
+    
+    li.setColumnTextAlignment(2,'left')
+    % li.setColumnTextAlignment(3:6,'center')
+    li.setColumnFormat(3:6,'%6.0f')
+    li.setColumnFormat(7:8,'%2.1f')
+    li.toText()
+    
+    lidb{g}=li;
 end
 
 
 
 %% pretty-print output array, this is only for the first set.
 queue.stsubset={ ...
-    'SotR5>CS>J>AS>Cons>HW'; ...
-    'SotR5>CS>AS>J>Cons>HW'; ...
-    'WoG5>CS>J>AS>HW'; ...
+    'CS>J>AS>Cons>HW>SotR'; ...
     };
     
 li=lidb{1};

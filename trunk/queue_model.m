@@ -2,20 +2,30 @@
 
 queue.st={...
     %barebones first
-    %default queues 
-    'SotR5>CS>J>AS>Cons>HW';
-    'SotR5>CS>AS>J>Cons>HW';
-    'SotR5>HotR>J>AS>Cons>HW';
-    'SotR5>J>CS>AS>Cons>HW';
-    'SotR5>CS>AS+>J>AS>Cons>HW';
+    'CS>J>AS>Cons>HW>SotR';
+    'J>CS>AS>Cons>HW>SotR';
+    'CS>AS>J>Cons>HW>SotR';
+    'J>AS>CS>Cons>HW>SotR';
+    'HotR>J>AS>Cons>HW>SotR';
+    'CS>AS+>J>AS>Cons>HW>SotR';
+    'CS>J>AS>HW>Cons>SotR';
     
+        
     %Defensive queues
-    '^WB>^SS>SotR5>CS>J>AS>Cons>HW';
+    '^WB>CS>J>AS>Cons>HW>SotR';
+    '^WB>CS>J>AS>Cons>HW>SotR5';
+    '^WB>^SS>CS>J>AS>Cons>HW>SotR';
+    '^WB>CS>^SS>J>AS>Cons>HW>SotR';
+    '^WB>CS>J>^SS>AS>Cons>HW>SotR';
+    '^WB>CS>J>AS>^SS>Cons>HW>SotR';
+    '^WB>CS>J>AS>Cons>^SS>HW>SotR';
+    '^WB>CS>J>AS>Cons>HW>^SS>SotR';
 
     %WoG
-    'WoG5>CS>J>AS>HW';
-    'WoG5>CS>J>AS>Cons>HW';
-    'WoG5>CS>AS+>J>AS>Cons>HW';
+    '^WB>CS>J>AS>Cons>HW>WoG5';
+    '^WB>CS>J>AS>Cons>HW>EF';
+    '^WB>CS>J>AS>Cons>HW>^EF>SotR5';
+    '^WB>CS>J>AS>^SS>Cons>HW>WoG';
     };
 
 

@@ -11,37 +11,46 @@ cfg(1)=build_config;
 %second one for multi-target
 cfg(2)=build_config('npccount',4);
 
-%% Calculate stats and ability damages
-for i=1:length(cfg)
-cfg(i)=stat_model(cfg(i));
-cfg(i)=ability_model(cfg(i));
+%% Veng loop
+for v=[50,100]
+    
+    
+    %% Calculate stats and ability damages
+    for i=1:length(cfg)
+        cfg(i).exec.veng=v;
+        cfg(i)=stat_model(cfg(i));
+        cfg(i)=ability_model(cfg(i));
+    end
+    
+    %shorthand
+    c=cfg(1);d=cfg(2);
+    
+    %% Pretty-Print table
+    L=length(c.abil.val.label);
+    ldat=2+[1:L];
+    
+    li=DataTable();
+    li{1:2,1}={'Ability';' '};
+    li{ldat,1}=c.abil.val.label;
+    li{1:2,2}={'Raw';' '};
+    li{ldat,2}=round(c.abil.val.raw);
+    li{1:2,3}={'Dmg';' '};
+    li{ldat,3}=round(c.abil.val.dmg);
+    li{1:2,4}={'AoE';'(4T)'};
+    li{ldat,4}=round(d.abil.val.aoe./3);
+    li{1:2,5}={'Heal';' '};
+    li{ldat,5}=round(c.abil.val.heal);
+    
+    % li.setColumnTextAlignment(2,'left')
+    % % li.setColumnTextAlignment(3:6,'center')
+    % li.setColumnFormat(3:4,'%6.0f')
+    % li.setColumnFormat(5:6,'%2.1f')
+    disp(['---' int2str(round(c.player.VengAP./1000)) 'k Vengeance ---'])
+    li.toText()
+    
+    %% close Veng loop
 end
-
-%shorthand
-c=cfg(1);d=cfg(2);
-
-%% Pretty-Print table
-L=length(c.abil.val.label);
-ldat=2+[1:L];
-
-li=DataTable();
-li{1:2,1}={'Ability';' '};      
-li{ldat,1}=c.abil.val.label;
-li{1:2,2}={'Raw';' '};
-li{ldat,2}=round(c.abil.val.raw);
-li{1:2,3}={'Dmg';' '};
-li{ldat,3}=round(c.abil.val.dmg);
-li{1:2,4}={'AoE';'(4T)'};
-li{ldat,4}=round(d.abil.val.aoe./3);
-li{1:2,5}={'Heal';' '};
-li{ldat,5}=round(c.abil.val.heal);
-
-% li.setColumnTextAlignment(2,'left')
-% % li.setColumnTextAlignment(3:6,'center')
-% li.setColumnFormat(3:4,'%6.0f')
-% li.setColumnFormat(5:6,'%2.1f')
-disp(['---' int2str(round(c.player.VengAP./1000)) 'k Vengeance ---'])
-li.toText()
+%% Plots - high veng only
 
 %% Plot #1 - Raw damage for basic rotational abilities
 set1=[find(strcmp('CS',c.abil.val.label)); find(strcmp('HotR',c.abil.val.label));...

@@ -5,10 +5,10 @@ global ddb
 %% Gear Sets
 
 %default gems
-tempgems.blu=76636; %solid    (stam)
+tempgems.blu=76639; %solid    (stam)
 tempgems.red=76690; %defender (parry/stam)
 tempgems.yel=76656; %puissant (mast/stam)
-tempgems.pris=76636; %solid
+tempgems.pris=76639; %solid
 tempgems.meta=76895; %austere (armor)
 ddb.gemset{1}=tempgems;
 
@@ -160,5 +160,9 @@ ddb.gearset(5)={tempegs};
 tempglyphs=[1 12 0];
 ddb.glyphset{1}=tempglyphs;
 
+
+%% Vengeance
+ddb.v1=50;
+ddb.v2=100;
 
 clear tempegs tempgems tempglyphs temptree

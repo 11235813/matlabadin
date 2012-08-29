@@ -24,6 +24,9 @@ cfg(3)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0]);
 %multiple targets
 cfg(4)=build_config('hit',2,'exp',5,'glyph',[0 0 0],'npccount',3); 
 
+%% Vengeance levels
+for v=[ddb.v1,ddb.v2]
+
 
 %% sim 
 qmax=length(fieldnames(cfg(1).glyph))-3;
@@ -33,6 +36,7 @@ for g=1:length(cfg)
     %set configuration variables
     
     c=cfg(g);
+    c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
     c=rotation_model(c);
@@ -44,6 +48,7 @@ for g=1:length(cfg)
     for q=1:qmax
 
         c.glyph=glyph_model([q 0 0]);
+        c.exec.veng=v;
         c=stat_model(c);
         c=ability_model(c);
         c=rotation_model(c);
@@ -85,6 +90,8 @@ end
 % li.setColumnTextAlignment(3:6,'center')
 % li.setColumnFormat(3:4,'%6.0f')
 % li.setColumnFormat(5:6,'%2.1f')
+disp(' ');disp(' ');
+disp(['---' int2str(round(c.player.VengAP./1000)) 'k Vengeance ---'])
 li.toText()
 
 %% plots
@@ -110,3 +117,6 @@ li.toText()
 % legend({cfg(icols).plabel},'Location','Best')
 % xlabel('DPS')
 % title('100% Veng, legend contains rotation/seal/hit/exp')
+
+%% close Veng loop
+end

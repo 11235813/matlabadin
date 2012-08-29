@@ -313,15 +313,15 @@ namespace Matlabadin.Tests
                 mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
             Assert.AreEqual(0, result.UptimeForBuff(Buff.WB), 1e-7); // 0% uptime since HotR never connects
         }
-        [Test]
-        public void SotRSBUptimeShouldBeCalculated()
-        {
-            Int64GraphParameters gp = NoMiss("SotR>CS>J");
-            MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
-            var result = mg.CalculateResults(
-                mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
-            Assert.AreEqual(5d / 13.5 / 3 * 3, result.UptimeForBuff(Buff.SotRSB), Tolerance * 100); // 5hp per 13.5s - cast requires 3, buff lasts 3s
-        }
+        //[Test]
+        //public void SotRSBUptimeShouldBeCalculated()
+        //{
+        //    Int64GraphParameters gp = NoMiss("SotR>CS>J");
+        //    MatlabadinGraph<BitVectorState> mg = new MatlabadinGraph<BitVectorState>(gp, gp);
+        //    var result = mg.CalculateResults(
+        //        mg.ConvergeStateProbability(out iterationsTaken, out finalRelError, out finalAbsError, relTolerance: Tolerance, absTolerance: Tolerance));
+        //    Assert.AreEqual(5d / 13.5 / 3 * 3, result.UptimeForBuff(Buff.SotRSB), Tolerance * 100); // 5hp per 13.5s - cast requires 3, buff lasts 3s
+        //}
         [Test]
         public void CloneShouldReduceConvergenceTimeForSameResult()
         {
