@@ -19,15 +19,29 @@ cfg(2)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0]);
 
 
 %% List of weapons
-%ordered pairs of [itemid category], categories are 1=tank, 2=DPS, 3=SP
-weaplist=[  69609 1;    %Bloodlord's Protector
-            69639 1;    %Renataki's Soul Slicer
-            59459 3;    %Andoros, Fist of the Dragon King
-            71006 3;    %Volcanospike
-            71312 2;    %Gatecrasher
-            71406 1;    %Mandible of Beth'tilac (Heroic)
-            77193 1;    %Souldrinker
-            78371 2;    %Hand of Morchok (Heroic) 410
+%ordered pairs of [itemid category], categories are 1=tank, 2=DPS, 3=Agi
+weaplist=[  
+            81061 1;    %Ook's Hozen Slicer (Heroic)
+            81063 2;    %Dubious Handaxe (Heroic)
+            82971 3;    %Masterwork Ghost-Forged Blade
+            82972 2;    %Masterwork Phantasmal Hammer
+            89396 2;    %Amber Espada of Klaxxi'vess
+            89400 3;    %Amber Sledge of Klaxxi'vess
+            81062 3;    %Gao's Keg Tapper (Heroic)
+            81273 3;    %Siege-Captain's Scimitar (Heroic)
+            84968 2;    %Malevolent Gladiator's Slicer
+            87570 1;    %The Horseman's Sinister Slicer
+            87545 1;    %Inelava, Spirit of Inebriation
+            86789 1;    %Elegion, the Fanged Crescent (LFR)
+            88150 1;    %Krol Scimitar
+            86863 1;    %Scimitar of Seven Stars (LFR)
+            86906 1;    %Kilrak, Jaws of Terror (LFR)
+            86130 1;    %Elegion, the Fanged Crescent
+            85134 2;    %Malevolent Gladiator's Slicer (Elite)
+            86219 1;    %Scimitar of Seven Stars
+            86387 1;    %Kilrak, Jaws of Terror
+            87062 1;    %Elegion, the Fanged Crescent (Heroic)
+            86987 1;    %Kilrak, Jaws of Terror (Heroic)
           ];
       
 wids=weaplist(:,1);
@@ -47,7 +61,7 @@ for g=1:length(cfg)
     c=ability_model(c);
     c=rotation_model(c);
     
-    wb=waitbar(0,['Calculating Weapons for config #' int2str(g)]);
+    wb=waitbar(0,['Calculating Weapons for config #' int2str(g) ', ' c.egs(15).name]);
     tic
     for m=1:M
         
@@ -73,11 +87,12 @@ for g=1:length(cfg)
         %calculate DPS
         c=stat_model(c);
         c=ability_model(c);
+        waitbar(m/M,wb,['Calculating Weapons for config #' int2str(g) ', ' c.egs(15).name])
         c=rotation_model(c);
         
         wdps(m,g)=c.rot.dps;
         whps(m,g)=c.rot.hps;
-        waitbar(m/M,wb)
+        toc
         
     end
     close(wb)

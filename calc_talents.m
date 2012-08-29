@@ -21,7 +21,11 @@ cfg(2)=build_config('hit',7.5,'exp',15,'glyph',[0 0 0],'talents',[0 0 0 0 0 0]);
 %multiple targets
 cfg(3)=build_config('hit',2,'exp',5,'glyph',[0 0 0],'npccount',5); 
 
-
+%% Vengeance levels
+for v=[ddb.v1,ddb.v2]
+    
+    
+    
 %% Sim
 tic
 for g=1:length(cfg)
@@ -29,6 +33,7 @@ for g=1:length(cfg)
     %set configuration variables    
     c=cfg(g);
     c.exec.queue='^WB>SotR>CS>J>AS>Cons>HW';
+    c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
     c=rotation_model(c);
@@ -46,6 +51,7 @@ for g=1:length(cfg)
     c=cfg(g);
     c.talent=talent_model([0 0 2 0 0 0]);
     c.exec.queue='^WB>^EF>SotR>CS>J>AS>Cons>HW';
+    c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
     c=rotation_model(c);
@@ -60,6 +66,7 @@ for g=1:length(cfg)
     c=cfg(g);
     c.talent=talent_model([0 0 3 0 0 0]);
     c.exec.queue='^WB>SotR>CS>J>AS>^SS>Cons>HW';
+    c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
     c=rotation_model(c);
@@ -75,6 +82,7 @@ for g=1:length(cfg)
     c=cfg(g);
     c.talent=talent_model([0 0 0 0 1 0]);
     c.exec.queue='^WB>SotR>CS>J>AS>Cons>HW';
+    c.exec.veng=v;
     c.buff.HA=1;
     c=stat_model(c);
     c=ability_model(c);
@@ -91,6 +99,7 @@ for g=1:length(cfg)
     c=cfg(g);
     c.talent=talent_model([0 0 0 0 2 0]);
     c.exec.queue='^WB>SotR>J>CS>AS>Cons>HW';
+    c.exec.veng=v;
     c.buff.AW=1;
     c=stat_model(c);
     c=ability_model(c);
@@ -114,6 +123,7 @@ for g=1:length(cfg)
     c=cfg(g);
     c.talent=talent_model([0 0 0 0 3 0]);
     c.exec.queue='^WB>SotR>CS>J>AS>Cons>HW';
+    c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
     c=rotation_model(c);
@@ -130,6 +140,9 @@ for g=1:length(cfg)
     %Holy Prism
     c=cfg(g);
     c.exec.queue='^WB>SotR>CS>J>AS>HPr>Cons>HW';
+    c.exec.veng=v;
+    c=stat_model(c);
+    c=ability_model(c);
     c=rotation_model(c);
     
     %store DPS & HPS
@@ -140,6 +153,9 @@ for g=1:length(cfg)
     %Light's Hammer
     c=cfg(g);
     c.exec.queue='^WB>SotR>CS>J>AS>LH>Cons>HW';
+    c.exec.veng=v;
+    c=stat_model(c);
+    c=ability_model(c);
     c=rotation_model(c);
     
     %store DPS & HPS
@@ -150,6 +166,9 @@ for g=1:length(cfg)
     %Execution Sentence
     c=cfg(g);
     c.exec.queue='^WB>SotR>CS>J>AS>ES>Cons>HW';
+    c.exec.veng=v;
+    c=stat_model(c);
+    c=ability_model(c);
     c=rotation_model(c);
     
     %store DPS & HPS
@@ -195,16 +214,16 @@ end
 
 li2=DataTable();
 li2{1:3,1}={' ';'Talent';'Base'};
-li2{4,1}=tal_labels{3};li2{5,1}=tal_labels{4};li2{6,1}=tal_labels{5};
+li2{4:6,1}=[tal_labels(3:5)];%li2{5,1}=tal_labels{4};li2{6,1}=tal_labels{5};
 for g=1:length(cfg)
     
-    li2{1:3,2*g}={['cfg' int2str(g)];'SBU';num2str(roundn(sbu0(g),-3),'%1.3f')};
-    li2{4:6,2*g}=tal_sbu(:,g);
-    li2.setColumnFormat(2*g,'%1.3g')
+    li2{1:3,2*g}={['cfg' int2str(g)];'SBU%';num2str(roundn(sbu0(g).*100,-2),'%2.2f')};
+    li2{4:6,2*g}=tal_sbu(:,g).*100;
+    li2.setColumnFormat(2*g,'%2.2f')
     
-    li2{1:3,2*g+1}={['cfg' int2str(g)];'ASBU';num2str(roundn(sbu0(g),-3),'%1.3f')};
-    li2{4:6,2*g+1}=tal_asbu(:,g);
-    li2.setColumnFormat(2*g+1,'%1.3g')
+    li2{1:3,2*g+1}={['cfg' int2str(g)];'AvgU%';num2str(roundn(sbu0(g).*100,-2),'%2.2f')};
+    li2{4:6,2*g+1}=tal_asbu(:,g).*100;
+    li2.setColumnFormat(2*g+1,'%2.2f')
 end
 
 % li.setColumnTextAlignment(2,'left')
@@ -212,7 +231,12 @@ end
 % li.setColumnFormat(3:4,'%6.0f')
 % li.setColumnFormat(5:6,'%2.1f')
 
+disp(' ');disp(' ');
 disp(['---' int2str(round(c.player.VengAP./1000)) 'k Vengeance ---'])
 li.toText()
 li2.toText()
+
 %% plots
+
+%% close Veng loop
+end

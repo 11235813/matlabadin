@@ -18,7 +18,7 @@ namespace Matlabadin.RotationUI
             SS = sm.TimeRemaining(state, Buff.SS);
             EF = sm.TimeRemaining(state, Buff.EF);
             WB = sm.TimeRemaining(state, Buff.WB);
-            SB = sm.TimeRemaining(state, Buff.SotRSB);
+            //SB = sm.TimeRemaining(state, Buff.SotRSB);
         }
         public int HP { get; set; }
         public double CS { get; set; }

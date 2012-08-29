@@ -1,4 +1,4 @@
-function [ c ] = gear_sethitexp(c, hit, exp )
+function [ c ] = gear_sethitexp(c, hit, exp)
 %GEAR_SETHITEXP Sets the hit and expertise of a gear set to the specified
 %values (in percent) by modifying the shirt armor slot
 %   Detailed explanation goes here
@@ -9,10 +9,9 @@ end
 
 stat_conversions
 
-if nargin<2 || (hit==-1 && exp==-1)
-    
-    return
-end
+if isempty(hit); hit=-1; end
+if isempty(exp); exp=-1; end
+
 
 %clear shirt slot (in case we've run this previously)
 c.egs(18).hit=0;

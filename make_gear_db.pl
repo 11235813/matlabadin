@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# cmd line syntax: perl make_gear_db.pl --verbose >gear_db.m
 
 use strict;
 use warnings;
@@ -66,7 +67,7 @@ it as new content is added and old content becomes irrelevant.
 =cut 
 
 my @ilvls = qw(
-  440 450 463 476 483 489 496 502 509 516
+  440 450 457 463 470 476 483 489 490 496 502 509 516
 );
 
 =head2 Item Filters
@@ -95,6 +96,9 @@ my %search = (
   crit      => [ eq => 0 ],
   haste     => [ eq => 0 ],
   resil     => [ eq => 0 ],
+);
+my %searchwep = (
+  int       => [ eq => 0 ],
 );
 
 # End of configuration
@@ -160,7 +164,7 @@ for my $ilvl (@ilvls) {
       2,                              # weapons
       minle => $ilvl, maxle => $ilvl, # only current ilvl
       ub => 2,                        # pally gear
-      %search,                        # search criteria
+      %searchwep,                        # search criteria
     );
 
     if (@weapons) {
@@ -214,6 +218,7 @@ foreach my $id (@items) {
     print "idb.iid($id).$_=";
     if ($item{$_} =~ /[^0-9.]/) {
       $item{$_} =~ s/'/''/g;
+      $item{$_} =~ s/\\//g;
       print "'$item{$_}'";
     } else {
       print $item{$_} + 0;

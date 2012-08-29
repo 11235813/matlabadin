@@ -48,6 +48,10 @@ if isempty(gear.meta);gear.meta=0;end;
 %plate spec
 gear.isplate=(sum([egs.atype])==8);
 
+%ilvl
+gear.ilvl=mean([egs.ilvl]);
+gear.medilvl=median([egs.ilvl]);
+
 %tier bonus
 gear.istierP=sum(reshape([egs.istierP],3,length([egs.istierP])/3)');
 gear.istierR=sum(reshape([egs.istierR],3,length([egs.istierR])/3)');

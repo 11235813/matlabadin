@@ -19,17 +19,11 @@ cfg(1)=build_config('hit',5,'exp',5);
 % cfg(2)=build_config('hit',2,'exp',5,'seal','SoI');
 
 %% Stat components
-stat={'hit';'str';'ap';'exp';'haste';'crit';'agi';'int'};
+stat={'hit';'exp';'haste';'str';'ap';'crit';'agi';'int'};
 M=length(stat);  %number of "extra" stats
 
 %load itemization factors (i.e. because 10 STR = 20 AP = 15 STA = 11.6 SP)
 stat_conversions
-
-%This is the amount of itemization to add for each stat.  A higher value is
-%chosen for smoothing; later on we scale the calculation to represent the
-%contribution of 10 ipoints worth of the stat.
-dstat=60;
-
 %this array is only for the table, so that we can generate per-point (ppt)
 %entries to go with the per-itemization-point (pipt) entries
 for m=1:M; icv(m,1)=eval(['ipconv.' stat{m}]); end;
@@ -41,6 +35,12 @@ str_range=-100+linspace(1,1500,100);
 str_dps=zeros(M,length(str_range),length(cfg));str_hps=str_dps;
 str_dps0=zeros(size(str_dps));str_hps0=str_dps0;
 xStr=zeros(length(str_range),length(cfg));
+
+%This is the amount of itemization to add for each stat.  A higher value is
+%chosen for smoothing; later on we scale the calculation to represent the
+%contribution of 10 ipoints worth of the stat.
+dstatstr=50;
+
 
 tic
 for g=1:length(cfg)
@@ -70,7 +70,7 @@ for g=1:length(cfg)
                             ' in cfg ' int2str(g) '/' int2str(length(cfg))]);
                         
         %set each stat to dstat extra
-        eval(char(['c.extra.itm.' stat{m} '=dstat;']))
+        eval(char(['c.extra.itm.' stat{m} '=dstatstr;']))
 
         %recalculate DPS
         c=stat_model(c);
@@ -92,8 +92,8 @@ end
 disp('Str calc finished')
 toc
 %% Strength Graphs / Table
-yStr=(str_dps-str_dps0).*10./dstat; % parenthetical is for dstat increase, 10/dstat scales bonus for 10 ipoints
-zStr=(str_hps-str_hps0).*10./dstat;
+yStr=(str_dps-str_dps0).*10./dstatstr; % parenthetical is for dstatstr increase, 10/dstatstr scales bonus for 10 ipoints
+zStr=(str_hps-str_hps0).*10./dstatstr;
 
 for g=1:length(cfg)
 figure(50+g-1)
@@ -105,7 +105,7 @@ legend(stat,'Location','EastOutside')
 xlabel('Armory Strength')
 ylabel(['DPS per 10 itemization points'])
 title([ strrep(cfg(g).exec.queue,'^','\^') ', ' cfg(g).exec.seal ', '  ...
-        num2str(cfg(g).exec.veng*100,'%2.1f') '% Veng, ' ...
+        num2str(cfg(g).exec.veng,'%3.1f') 'k Veng, ' ...
         num2str(cfg(g).player.mehit,'%2.1f') '% hit, ' ...
         num2str(cfg(g).player.exp,'%2.1f') '% expertise'])
 
@@ -115,13 +115,13 @@ ldat=2+(1:M);
 li=DataTable();
 li{ldat,1}=stat;
 li{1:2,2}={'DPS';'ppt'};
-li{ldat,2}=yStr(:,idx,g)./dstat./icv;
+li{ldat,2}=yStr(:,idx,g)./dstatstr./icv;
 li{1:2,3}={'SHPS';'ppt'};
-li{ldat,3}=zStr(:,idx,g)./dstat./icv;
+li{ldat,3}=zStr(:,idx,g)./dstatstr./icv;
 li{1:2,4}={'DPS';'pipt'};
-li{ldat,4}=yStr(:,idx,g)./dstat;
+li{ldat,4}=yStr(:,idx,g)./dstatstr;
 li{1:2,5}={'SHPS';'pipt'};
-li{ldat,5}=zStr(:,idx,g)./dstat;
+li{ldat,5}=zStr(:,idx,g)./dstatstr;
 
 % li.setColumnTextAlignment(2,'left')
 % li.setColumnTextAlignment(3:6,'center')
@@ -137,6 +137,8 @@ hit_range=(-c.player.mehit+linspace(0,12,50)).*cnv.hit_hit;
 hit_dps=zeros(M,length(hit_range),length(cfg));hit_hps=hit_dps;
 hit_dps0=zeros(size(hit_dps));hit_hps0=hit_dps0;
 xHit=zeros(length(hit_range),length(cfg));
+
+dstathit=30;
 
 tic
 for g=1:length(cfg)
@@ -165,8 +167,8 @@ for g=1:length(cfg)
         waitbar(m./M,csswb,['Calculating hit scaling for ' stat{m} ...
                             ' in cfg ' int2str(g) '/' int2str(length(cfg))]);
                         
-        %set each stat to dstat extra
-        eval(char(['c.extra.itm.' stat{m} '=dstat;']))
+        %set each stat to dstathit extra
+        eval(char(['c.extra.itm.' stat{m} '=dstathit;']))
 
         %recalculate DPS
         c=stat_model(c);
@@ -188,8 +190,8 @@ end
 disp('Hit calc finished')
 toc
 %% Hit Graphs
-yHit=(hit_dps-hit_dps0).*10./dstat;
-zHit=(hit_hps-hit_hps0).*10./dstat;
+yHit=(hit_dps-hit_dps0).*10./dstathit;
+zHit=(hit_hps-hit_hps0).*10./dstathit;
 
 for g=1:length(cfg)
 figure(60+g-1)
@@ -201,7 +203,7 @@ legend(stat,'Location','EastOutside')
 xlabel('Melee Hit %')
 ylabel('DPS per 10 itemization points')
 title([ strrep(cfg(g).exec.queue,'^','\^') ', ' cfg(g).exec.seal ', ' ...
-        num2str(cfg(g).exec.veng*100,'%2.1f') '% Veng, ' ...
+        num2str(cfg(g).exec.veng,'%3.1f') 'k Veng, ' ...
         num2str(cfg(g).player.exp,'%2.1f') '% expertise'])
 
 end
@@ -213,6 +215,8 @@ exp_range=(-c.player.exp+linspace(0,16,50)).*cnv.exp_exp;
 exp_dps=zeros(M,length(exp_range),length(cfg));exp_hps=exp_dps;
 exp_dps0=zeros(size(exp_dps));exp_hps0=exp_dps0;
 xExp=zeros(length(exp_range),length(cfg));
+
+dstatexp=30;
 
 tic
 for g=1:length(cfg)
@@ -241,8 +245,8 @@ for g=1:length(cfg)
         waitbar(m./M,csswb,['Calculating exp scaling for ' stat{m} ...
                             ' in cfg ' int2str(g) '/' int2str(length(cfg))]);
                         
-        %set each stat to dstat extra
-        eval(char(['c.extra.itm.' stat{m} '=dstat;']))
+        %set each stat to dstathit extra
+        eval(char(['c.extra.itm.' stat{m} '=dstatexp;']))
 
         %recalculate DPS
         c=stat_model(c);
@@ -264,8 +268,8 @@ end
 disp('Exp calc finished')
 toc
 %% Exp Graphs
-yExp=(exp_dps-exp_dps0).*10./dstat;
-zExp=(exp_hps-exp_hps0).*10./dstat;
+yExp=(exp_dps-exp_dps0).*10./dstatexp;
+zExp=(exp_hps-exp_hps0).*10./dstatexp;
 
 for g=1:length(cfg)
 figure(70+g-1)
@@ -277,16 +281,18 @@ legend(stat,'Location','EastOutside')
 xlabel('Expertise %')
 ylabel('DPS per 10 itemization points')
 title([ strrep(cfg(g).exec.queue,'^','\^') ', ' cfg(g).exec.seal ', '  ...
-        num2str(cfg(g).exec.veng*100,'%2.1f') '% Veng, ' ...
+        num2str(cfg(g).exec.veng,'%3.1f') 'k Veng, ' ...
         num2str(cfg(g).player.mehit,'%2.1f') '% hit'])
 
 end
 %% Haste Calcs
-haste_range=linspace(0,15,50).*cnv.haste_phhaste;
+haste_range=linspace(0,15,30).*cnv.haste_phhaste;
 % [temp idx]=min(abs(exp_range));
 haste_dps=zeros(M,length(haste_range),length(cfg));haste_hps=haste_dps;
 haste_dps0=zeros(size(haste_dps));haste_hps0=haste_dps0;
 xHas=zeros(length(haste_range),length(cfg));
+
+dstathas=10;
 
 tic
 for g=1:length(cfg)
@@ -315,8 +321,8 @@ for g=1:length(cfg)
         waitbar(m./M,csswb,['Calculating haste scaling for ' stat{m} ...
                             ' in cfg ' int2str(g) '/' int2str(length(cfg))]);
                         
-        %set each stat to dstat extra
-        eval(char(['c.extra.itm.' stat{m} '=dstat;']))
+        %set each stat to dstathas extra
+        eval(char(['c.extra.itm.' stat{m} '=dstathas;']))
 
         %recalculate DPS
         c=stat_model(c);
@@ -338,8 +344,8 @@ end
 disp('Haste calc finished')
 toc
 %% Haste Graphs
-yHas=(haste_dps-haste_dps0).*10./dstat;
-zHas=(haste_hps-haste_hps0).*10./dstat;
+yHas=(haste_dps-haste_dps0).*10./dstathas;
+zHas=(haste_hps-haste_hps0).*10./dstathas;
 
 for g=1:length(cfg)
 figure(80+g-1)
@@ -351,7 +357,7 @@ legend(stat,'Location','EastOutside')
 xlabel('Melee Haste %')
 ylabel('DPS per 10 itemization points')
 title([ strrep(cfg(g).exec.queue,'^','\^') ', ' cfg(g).exec.seal ', '  ...
-        num2str(cfg(g).exec.veng*100,'%2.1f') '% Veng, ' ...
+        num2str(cfg(g).exec.veng,'%3.1f') 'k Veng, ' ...
         num2str(cfg(g).player.mehit,'%2.1f') '% hit'])
 
 end

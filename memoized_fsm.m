@@ -3,7 +3,7 @@ function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentStri
     global fsm_cache_efUptime;
     global fsm_cache_ssUptime;
     global fsm_cache_wbUptime;
-    global fsm_cache_sbUptime;
+%     global fsm_cache_sbUptime;
     global fsm_cache_awUptime;
     global fsm_cache_gowog1Uptime;
     global fsm_cache_gowog2Uptime;
@@ -23,7 +23,7 @@ function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentStri
 		fsm_cache_ssUptime = {};
 		fsm_cache_efUptime = {};
         fsm_cache_wbUptime = {};
-		fsm_cache_sbUptime = {};
+% 		fsm_cache_sbUptime = {};
 		fsm_cache_awUptime = {};
         fsm_cache_gowog1Uptime = {};
         fsm_cache_gowog2Uptime = {};
@@ -40,7 +40,7 @@ function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentStri
         uptime.ss = fsm_cache_ssUptime.(rotationKey).(spectalKey).(optionsKey);
         uptime.ef = fsm_cache_efUptime.(rotationKey).(spectalKey).(optionsKey);
         uptime.wb = fsm_cache_wbUptime.(rotationKey).(spectalKey).(optionsKey);
-        uptime.sb = fsm_cache_sbUptime.(rotationKey).(spectalKey).(optionsKey);
+%         uptime.sb = fsm_cache_sbUptime.(rotationKey).(spectalKey).(optionsKey);
         uptime.aw = fsm_cache_awUptime.(rotationKey).(spectalKey).(optionsKey);
         uptime.gowog1 = fsm_cache_gowog1Uptime.(rotationKey).(spectalKey).(optionsKey);
         uptime.gowog2 = fsm_cache_gowog2Uptime.(rotationKey).(spectalKey).(optionsKey);
@@ -58,7 +58,7 @@ function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentStri
     fsm_cache_ssUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ss;
     fsm_cache_efUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef;
     fsm_cache_wbUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.wb;
-    fsm_cache_sbUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.sb;
+%     fsm_cache_sbUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.sb;
     fsm_cache_gowog1Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.gowog1;
     fsm_cache_gowog2Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.gowog2;
     fsm_cache_gowog3Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.gowog3;
@@ -70,7 +70,7 @@ function [actionPr, metadata, uptime] = load_fsm_csv(filename)
 	fid = fopen(filename, 'rt');
 	i = 1;
 	metadata = {};
-    uptime.ss=0;uptime.ef=0;uptime.wb=0;uptime.sb=0;uptime.aw=0;uptime.gowog1=0;uptime.gowog2=0;uptime.gowog3=0;uptime.gcd=0; %initialize, otherwise the field ordering causes errors
+    uptime.ss=0;uptime.ef=0;uptime.wb=0;uptime.aw=0;uptime.gowog1=0;uptime.gowog2=0;uptime.gowog3=0;uptime.gcd=0; %initialize, otherwise the field ordering causes errors
 	while not(feof(fid))
 		txt = fgetl(fid);
 		rowEntry = strsplit(txt, ',');
@@ -83,8 +83,8 @@ function [actionPr, metadata, uptime] = load_fsm_csv(filename)
             uptime.ef = linePr;
         elseif strcmp(lineAction, 'Uptime_WeakenedBlows')
             uptime.wb = linePr;
-        elseif strcmp(lineAction, 'Uptime_SotRShieldBlock')
-            uptime.sb = linePr;
+%         elseif strcmp(lineAction, 'Uptime_SotRShieldBlock')
+%             uptime.sb = linePr;
         elseif strcmp(lineAction, 'Uptime_AvengingWrath')
             uptime.aw = linePr;
         elseif strcmp(lineAction, 'Uptime_GlyphofWoG_1')
