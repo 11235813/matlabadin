@@ -69,7 +69,7 @@ skillflag=npc.skillgap>10;
 
 %physical
 npc.armor=295.*npc.lvl-13983;
-npc.armor=24835; %TODO: FIXME (this is L93 armor)
+npc.armor=round(343.7.*npc.lvl-26997).*5; %works for 89-91, 93. 92 unknown
 
 npc.memiss=3+npc.lvlgap.*1.5;
 npc.dodge=3+npc.lvlgap.*1.5;
