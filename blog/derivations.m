@@ -2,7 +2,7 @@
 k=0.885;        %Diminishing Returns k coefficient
 K=58370;        %Armor coefficient
 Cd=0.65631440;  %Diminishing Returns C coefficient - dodge
-Cp=2.32;        %Diminishing Returns C coefficient - parry 
+Cp=2.361;        %Diminishing Returns C coefficient - parry 
 Cb=1.491;       %Diminishing Returns C coefficient - block
 fm=600/0.01;    %mastery rating-> mastery conversions
 % fmb=fm/0.01;        %mastery -> block pct conversion
@@ -24,18 +24,19 @@ Tbuff=3;            %Duration of SotR buff, in seconds
 Ar=55000;       %armor
 CSp=0.1;       %char sheet parry (total)
 CSd=0.07;       %char sheet dodge (total)
+baseStr=178;
 % CSd=[0.05:0.0025:0.3];
 % CSp=[0.03:0.0025:0.4];
 
-Ad=CSd-0.05;    %post-dr dodge (DR sources only)
-Ap=CSp-0.03;    %post-dr parry (DR sources only)
+Ad=CSd-0.0501;    %post-dr dodge (DR sources only)
+Ap=CSp-0.03-baseStr/fS/1.05;    %post-dr parry (DR sources only)
 A0=0.08;        %base avoidance (dodge/parry, miss=0 after boss)
-A=max(0.05+Ad-0.045,0)...
-  +max(0.03+Ap-0.045,0);  %total avoidance, should be CSd+CSp-9 (for boss)
+A=max(CSd-0.045,0)...
+  +max(CSp-0.045,0);  %total avoidance, should be CSd+CSp-9 (for boss)
 
 h=0.075;         %decimal hit percentage (2%=0.02)
 e=0.075;         %decimal exp percentage (2%=0.02)
-s=0.25;         %decimal haste percentage (10%=0.1)
+s=0.05;         %decimal haste percentage (10%=0.1)
 m=0.25;          %mastery 
 % s=[0.00:0.01:0.5];
 % h=[0.00:0.0025:0.075];
@@ -66,7 +67,7 @@ Rhpg = (thetam.*(1+alpha_GC).*(1+s).*Rcs...
 
 %SotR factors
 Us = Rhpg./(1-alpha_DP);Us=min(Us,ones(size(Us)));
-Ms = 0.3 + m;
+Ms = 0.3 + m;   
 Fs = 1-Us.*Ms;
 
 if Us==1
