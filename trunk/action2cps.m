@@ -144,6 +144,7 @@ for m=1:size(c.rot.actionPr,2)
 
     %% Handle special cases (seals, etc.)
     sealidx=find(strcmpi(c.exec.seal,c.abil.val.label));
+    censFlag=(strcmpi(c.exec.seal,'SoT') || strcmpi(c.exec.seal,'Truth'));
     
     switch abil
         case 'CS'
@@ -198,8 +199,8 @@ ecpsd(sealidx)=ecpsd(sealidx)+(1+0.2.*c.rot.uptime(jup).aw).*c.rot.gowogavg.*c.m
 ecpsh(sealidx)=ecpsh(sealidx)+(1+0.2.*c.rot.uptime(jup).aw).*c.mdf.mehit(jme)./c.player.wswing(jws);
 
 %% Censure
-cps(strcmpi('Censure',c.abil.val.label))= 1./c.player.censTick(jha);
-ecpsd(strcmpi('Censure',c.abil.val.label))= (1+0.2.*c.rot.uptime(jup).aw).*c.rot.gowogavg./c.player.censTick(jha);
+cps(strcmpi('Censure',c.abil.val.label))= censFlag./c.player.censTick(jha);
+ecpsd(strcmpi('Censure',c.abil.val.label))= censFlag.*(1+0.2.*c.rot.uptime(jup).aw).*c.rot.gowogavg./c.player.censTick(jha);
 
 %% EF(HoT)
 %not affected by BoG, assume average overlap with AW, 

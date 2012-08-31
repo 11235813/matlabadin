@@ -242,7 +242,7 @@ label.LightsHammer= 'LH';
 
 %Word of Glory
 raw.WordofGlory=    (5538+0.49.*player.sp).*player.hopo.*(1+mdf.SoI);
-dmg.WordofGlory=    raw.WordofGlory.*mdf.glyphHaWo.*mdf.sphit.*mdf.spcrit./(1+mdf.SoI); %Harsh Words glyph, TODO: test SoI interaction
+dmg.WordofGlory=    0.7691.*raw.WordofGlory.*mdf.glyphHaWo.*mdf.sphit.*mdf.spcrit./(1+mdf.SoI); %Harsh Words glyph, TODO: test SoI interaction
 heal.WordofGlory=   raw.WordofGlory.*(1-mdf.glyphHaWo).*(1-exec.overh).*mdf.spcrit; 
 threat.WordofGlory= 11.*(exec.overh>0).*mdf.RFury./exec.npccount;
 mcost.WordofGlory=  0;
