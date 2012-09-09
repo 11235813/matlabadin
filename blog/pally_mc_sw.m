@@ -1,8 +1,8 @@
 clear
-stats={' ','dodge','hit','exp','haste','mastery'};
-simMins=1000;
-numSims=100;
-statAmount=200;
+stats={' ','dodge','parry','hit','exp','haste','mastery'};
+simMins=10000;
+numSims=10;
+statAmount=500;
 
 if matlabpool('size')>0
     matlabpool close
@@ -14,10 +14,15 @@ W=waitbar(0,'Calculating');
 for k=1:length(stats)
     waitbar((k-1)./length(stats),W,['Calculating ' stats{k}]);
     parfor j=1:numSims
-        [dtps(j,k) statblock(j,k)]=montecarlo(stats{k},statAmount,simMins,'noplot','notoc');
+%     for j=1:numSims
+        tic
+        [dtps(j,k) statblock(j,k)]=pally_mc(stats{k},statAmount,simMins,'noplot','notoc');
         Rhpg(j,k)   =statblock(j,k).Rhpg;
         S(j,k)      =statblock(j,k).S;
         Tsotr(j,k)  =statblock(j,k).Tsotr;
+        MAmean(j,k) =statblock(j,k).meanma;
+        MAstd(j,k)  =statblock(j,k).stdma;
+        toc
     end
     waitbar(k./length(stats),W,['Calculating ' stats{k}]);
 end
@@ -26,7 +31,7 @@ close(W)
 
     
 matlabpool close
-save(['montecarlo3data_' int2str(simMins) '_' int2str(numSims) '_' int2str(statAmount) '.mat'])
+save(['pally_sw_data_' int2str(simMins) '_' int2str(numSims) '_' int2str(statAmount) '.mat'])
 
 %% calculate stats
 mean_dtps=mean(dtps);
@@ -42,9 +47,29 @@ std_mean_drps=std_drps./sqrt(numSims);
 norm_mean_drps=mean_drps./max(mean_drps);
 norm_std_drps=std_drps./max(mean_drps);
 
+%% Pretty print
+addpath('C:\Users\George\Documents\MATLAB\mop\helper_func')
+li=DataTable();
+L=length(mean_drps);
+
+li{1,2:L}=stats(2:length(stats));
+li{2,2:L}=mean_drps(2:length(mean_drps));
+li{3,2:L}=std_drps(2:length(mean_drps));
+li{4,2:L}=std_mean_drps(2:length(mean_drps));
+li{2:4,1}={'mean';'std';'std_mean'};
+
+li{6,2:L}=mean_drps(2:length(mean_drps))./mean_drps(length(mean_drps));
+li{7,2:L}=std_drps(2:length(mean_drps))./mean_drps(length(mean_drps));
+li{8,2:L}=std_mean_drps(2:length(mean_drps))./mean_drps(length(mean_drps));
+li{6:8,1}={'mean';'std';'std_mean'};
+
+li.setColumnFormat(2:L, '%1.4f');
+
 ['N=' int2str(numSims) ', \tau=' int2str(simMins) ', stat=' int2str(statAmount)]
-[mean_drps;std_drps;std_mean_drps]
-[mean_drps;std_drps;std_mean_drps]./mean_drps(length(mean_drps))
+% [mean_drps;std_drps;std_mean_drps]
+% [mean_drps;std_drps;std_mean_drps]./mean_drps(length(mean_drps))
+
+li.toText()
 %% output
 % figure(2);
 % hist(normDTPS(:,2));
