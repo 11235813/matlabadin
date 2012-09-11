@@ -40,9 +40,9 @@ buffedStr=9208;
 parryRating=4834;
 dodgeRating=4892;
 masteryRating=6758;
-hitRating=1521;
+hitRating=900;
 expRating=1777;
-hasteRating=0;
+hasteRating=621;
 
 %% Define constants/variables
 bossSwingTimer=1.5;
@@ -52,7 +52,8 @@ Cb=149.1;
 k=0.885;
 gcProcRate=0.2;
 gcBuffDuration=6.3;
-dpProcRate=0.25;
+% dpProcRate=0.25;
+dpProcRate=0;
 dpBuffDuration=8;
 
 
@@ -86,6 +87,10 @@ events={'Boss Swing Timer','GCD'};
 tbe = zeros(size(events));
 idBossSwing=1;
 idGCD=2;
+%start boss swing timer at 0.5 seconds, just to de-synch from GCD
+%not strictly necessary, I think, as HP generation should shuffle SotR
+%around significantly, but just to be safe...
+tbe(1)=0.5;
 
 buffs={'SotR duration','BoG Duration','CS cooldown','J cooldown','SotR cooldown','Grand Crusader duration','Div Pupr duration'};
 tob = zeros(size(buffs));
@@ -125,32 +130,12 @@ for k=1:N
         
         %event handling
         for j=1:length(ids)
+            
             switch ids(j)
-                
-                %boss swing
-                case idBossSwing
-                    %reset boss swing timer
-                    tbe(idBossSwing)=bossSwingTimer;
-                                        
-                    %check for avoid
-                    if rand < avoidance
-                        damage(k)=0;
-                    else
-                        %figure out damage value.  First, check for SotR
-                        if tob(idSotR)>0
-                            drmult=DRmod;
-                        else
-                            drmult=1;
-                        end
-                        %now check for block    
-                        if rand < block
-                            damage(k)=0.7.*drmult;
-                        else
-                            damage(k)=1.*drmult;
-                        end
-                    end
+                    
                 %if the GCD timer is up, see if there's something to cast                        
                 case idGCD
+                                        
                     %CS is first priority
                     if tob(idCScd)<=0
                         %put CS on cooldown, start GCD
@@ -188,31 +173,36 @@ for k=1:N
                         hp=hp+1;hp=min([hp 5]);hp=max([hp 0]);
                         debugHPG(k)=3; %debug flag
                     end
+                
+                %boss swing
+                case idBossSwing
+                                        
+                    %reset boss swing timer
+                    tbe(idBossSwing)=bossSwingTimer;
                     
-                    %check for 3+ HP and no SotR buff, if so cast SotR
-                    if ( hp>=3 || tob(idDPBuff)>0 ) && tob(idSotRcd)<=0 && tob(idSotR)<=0
-                        %set SotR CD, give 3 seconds of DR, 20s of BoG
-                        tob(idSotRcd)=1.5;
-                        tob(idSotR)=tob(idSotR)+3;
-                        tob(idBoG)=20;
-                        %Consume Divine Purpose proc if it exists
-                        if tob(idDPBuff)>0
-                           tob(idDPBuff)=0; 
-                        %otherwise, consume 3 HP
-                        elseif hp>=3
-                            hp=hp-3;
-                        %Just in case - debugging
+                    %check for avoid
+                    if rand < avoidance
+                        damage(k)=0;
+                    else
+                        %figure out damage value.  First, check for SotR
+                        if tob(idSotR)>0
+                            drmult=DRmod;
                         else
-                            error('WTF')
+                            drmult=1;
                         end
-                        %Divine Purpose procs
-                        if rand<dpProcRate
-                            tob(idDPBuff)=dpBuffDuration;
+                        %now check for block
+                        if rand < block
+                            damage(k)=0.7.*drmult;
+                        else
+                            damage(k)=1.*drmult;
                         end
                     end
                     
             end %close switch
-                                        
+                                             
+            %if SotR can be cast, do so
+            castSotRIfAble();
+            
         end %close event for
 
 %     end %close event if
@@ -293,5 +283,31 @@ statblock.avoided=avoidspct;
 statblock.unmit=hitspct;
 statblock.meanma=mean_ma;
 statblock.stdma=std_ma;
+
+
+    function castSotRIfAble()
+        
+        %check for 3+ HP and no SotR buff, if so cast SotR
+        if ( hp>=3 || tob(idDPBuff)>0 ) && tob(idSotRcd)<=0 && tob(idSotR)<=0
+            %set SotR CD, give 3 seconds of DR, 20s of BoG
+            tob(idSotRcd)=1.5;
+            tob(idSotR)=tob(idSotR)+3;
+            tob(idBoG)=20;
+            %Consume Divine Purpose proc if it exists
+            if tob(idDPBuff)>0
+                tob(idDPBuff)=0;
+                %otherwise, consume 3 HP
+            elseif hp>=3
+                hp=hp-3;
+                %Just in case - debugging
+            else
+                error('WTF')
+            end
+            %Divine Purpose procs
+            if rand<dpProcRate
+                tob(idDPBuff)=dpBuffDuration;
+            end
+        end
+    end
 
 end
