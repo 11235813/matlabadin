@@ -2,7 +2,7 @@ clear
 stats={' ','dodge','parry','hit','exp','haste','mastery'};
 simMins=10000;
 numSims=10;
-statAmount=500;
+statAmount=1500;
 
 if matlabpool('size')>0
     matlabpool close
@@ -31,7 +31,13 @@ close(W)
 
     
 matlabpool close
-save(['pally_sw_data_' int2str(simMins) '_' int2str(numSims) '_' int2str(statAmount) '.mat'])
+fbase=['pally_sw_data_' int2str(simMins) '_' int2str(numSims) '_' int2str(statAmount) '_short_'];
+i=0;
+while exist([fbase int2str(i) '.mat'])==2
+    i=i+1;
+end
+save([fbase int2str(i) '.mat'])
+% save(['pally_sw_data_' int2str(simMins) '_' int2str(numSims) '_' int2str(statAmount) '.mat'])
 
 %% calculate stats
 mean_dtps=mean(dtps);

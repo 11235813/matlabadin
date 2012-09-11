@@ -99,22 +99,20 @@ idGCD=2;
 tbe(1)=0.5;
 
 buffs={'SB duration','SB charge 1','SB charge 2','SnB duration','WB duration','SS cooldown',...
-       'Rev cooldown','BS cooldown','Tclap cooldown','CBE cd','Berserker Rage CD'};
+       'Rev cooldown','BS cooldown','Tclap cooldown','CBE cd'};
 tob = zeros(size(buffs));
 idSB=1;
 idSBcd1=2;
 idSBcd2=3;
 idSnB=4;
-idWB=5;
-idSScd=6;
-idRcd=7;
-idBScd=8;
-idTCcd=9;
-idCBEcd=10;
-idBRcd=11;
+idSScd=5;
+idRcd=6;
+idBScd=7;
+idBRcd=8;
+idCBEcd=9;
 
 simTime=simMins*60;
-steps_per_sec=2;
+steps_per_sec=10;
 
 %preallocate arrays
 N=floor(simTime.*steps_per_sec);
@@ -142,6 +140,22 @@ for k=1:N
     
     %event handling
     for j=1:length(ids)
+        
+        %if anything is happening, check off-GCD things
+        
+        %check for 60+ rage; if so cast SB
+        shieldBlockCast();
+        
+        %Berserker Rage - use if available
+        if tob(idBRcd)<=0 && rage<110 %don't over-cap
+            %set BR cooldown, start GCD
+            tob(idBRcd)=30;
+            %add rage
+            rage=rage+10;
+            rageGain=rageGain+10;
+        end          
+                   
+        %now handle the two types of events
         switch ids(j)
             
             %if the GCD timer is up, see if there's something to cast
@@ -155,8 +169,6 @@ for k=1:N
                     dsRage=0;
                 end
                 
-                %check for 60+ rage; if so cast SB
-                shieldBlockCast();
                 
                 %SS is first priority
                 if tob(idSScd)<=0
@@ -194,25 +206,7 @@ for k=1:N
                     tbe(idGCD)=1.5;
                     %add rage
                     rage=rage+20;
-                    rageGain=rageGain+20;                
-                %Berserker Rage - use if available
-                elseif tob(idBRcd)<=0
-                    %set BR cooldown, start GCD
-                    tob(idBRcd)=6;
-                    tbe(idGCD)=1.5;
-                    %add rage
-                    rage=rage+10;
-                    rageGain=rageGain+10;  
-                %Thunder Clap - use if WB isn't up
-                elseif tob(idWB)<=0 && tob(idTCcd)<=0
-                    %set TC cooldown, start GCD
-                    tob(idTCcd)=6;
-                    tbe(idGCD)=1.5;
-                    %check for hit
-                    if rand<(1-miss-dodge)
-                        %apply WB
-                        tob(idWB)=30;
-                    end
+                    rageGain=rageGain+20;
                 %Dev - use if empty and nothing else was used. Hold if we
                 %somehow caused a near-clash with SS
                 elseif tob(idSScd)>=0.2
@@ -237,10 +231,7 @@ for k=1:N
             
             %boss swing
             case idBossSwing
-                
-                %check for 60+ rage; if so cast SB
-                shieldBlockCast();
-                
+                                
                 %reset boss swing timer
                 tbe(idBossSwing)=bossSwingTimer;
                 
@@ -289,7 +280,7 @@ for k=1:N
     
     %% Debugging
     SBUptime(k,1)=tob(idSB);
-    WBUptime(k,1)=tob(idWB);
+%     WBUptime(k,1)=tob(idWB);
 %     SotRUptimeotR(k,1)=tob(idSotRcd);
 %     debugHP(k,1)=hp;
     

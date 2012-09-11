@@ -1,9 +1,11 @@
 clear
 stats={' ','dodge','parry','hit','exp','mastery'};
-simMins=10000; %10000
-numSims=50; %50
-statAmount=500;
-% startCond.rage=120;
+simMins=0.5; %10000
+numSims=1000000; %50
+% simMins=5000
+% numSims=5
+statAmount=1500;
+startCond.rage=120;
 
 if matlabpool('size')>0
     matlabpool close
@@ -18,7 +20,7 @@ for k=1:length(stats)
     parfor j=1:numSims
 %     for j=1:numSims
 %         tic
-        [dtps(j,k) statblock(j,k)]=warr_mc(stats{k},statAmount,simMins,'noplot','notoc');
+        [dtps(j,k) statblock(j,k)]=warr_mc(stats{k},statAmount,simMins,'noplot','notoc',startCond);
         Rrage(j,k)   =statblock(j,k).Rrage;
         S(j,k)      =statblock(j,k).S;
         Tsb(j,k)  =statblock(j,k).Tsb;
@@ -33,7 +35,7 @@ toc
 
     
 matlabpool close
-fbase=['warr_sw_data_' int2str(simMins) '_' int2str(numSims) '_' int2str(statAmount) '_'];
+fbase=['warr_sw_data_' int2str(simMins) '_' int2str(numSims) '_' int2str(statAmount) '_short_'];
 i=0;
 while exist([fbase int2str(i) '.mat'])==2
     i=i+1;
