@@ -180,7 +180,7 @@ namespace Matlabadin
             // pr(choice) = sum[all state=choice](pr) / sumtpr
             Dictionary<string, double> cps = new Dictionary<string, double>();
             double sumtpr = 0;
-            double[] sumbufftpr = new double[(int)Buff.UptimeTrackedBuffs];
+            double[] sumbufftpr = new double[GraphParameters.BuffTrackingArraySize];
             for (int i = 0; i < index.Length; i++)
             {
                 Choice c = choice[i];

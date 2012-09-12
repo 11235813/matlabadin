@@ -257,6 +257,12 @@ namespace Matlabadin
             stream.WriteLine("Uptime_GCD,{0}", result.UptimeForBuff(Buff.GCD));
             stream.WriteLine("Uptime_SacredShield,{0}", result.UptimeForBuff(Buff.SS));
             stream.WriteLine("Uptime_EternalFlame,{0}", result.UptimeForBuff(Buff.EF));
+            stream.WriteLine("Uptime_EternalFlame_Bog0,{0}", result.UptimeForBuff(Buff.EF, 1));
+            stream.WriteLine("Uptime_EternalFlame_Bog1,{0}", result.UptimeForBuff(Buff.EF, 2));
+            stream.WriteLine("Uptime_EternalFlame_Bog2,{0}", result.UptimeForBuff(Buff.EF, 3));
+            stream.WriteLine("Uptime_EternalFlame_Bog3,{0}", result.UptimeForBuff(Buff.EF, 4));
+            stream.WriteLine("Uptime_EternalFlame_Bog4,{0}", result.UptimeForBuff(Buff.EF, 5));
+            stream.WriteLine("Uptime_EternalFlame_Bog5,{0}", result.UptimeForBuff(Buff.EF, 6));
             stream.WriteLine("Uptime_WeakenedBlows,{0}", result.UptimeForBuff(Buff.WB));
             stream.WriteLine("Uptime_AvengingWrath,{0}", result.UptimeForBuff(Buff.AW));
             //stream.WriteLine("Uptime_SotRShieldBlock,{0}", result.UptimeForBuff(Buff.SotRSB));

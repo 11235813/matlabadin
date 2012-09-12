@@ -15,13 +15,13 @@ namespace Matlabadin
         /// </summary>
         GCD,
         /// <summary>
-        /// Sacred Shield
-        /// </summary>
-        SS,
-        /// <summary>
         /// Eternal Flame
         /// </summary>
         EF,
+        /// <summary>
+        /// Sacred Shield
+        /// </summary>
+        SS,
         /// <summary>
         /// Avenging Wrath
         /// </summary>

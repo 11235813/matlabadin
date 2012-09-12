@@ -36,7 +36,7 @@ namespace Matlabadin
                 18, // HA 
             };
         private static readonly int[] DefaultMaximumBuffStacks = new int[] {
-                1, 1, 1,
+                1, 1+5, 1, // Need to track EF with {0,1,2,3,4,5} BoG stacks
                 1, 1, 3,
                 1, 3, 5, 1,
                 1,
@@ -139,7 +139,8 @@ namespace Matlabadin
                     if (!this.Rotation.AbilitiesUsed.Contains(Ability.SS)) return 0;
                     break;
                 case Buff.EF:
-                    if (!this.Rotation.AbilitiesUsed.Contains(Ability.EF)) return 0;
+                    if (!this.Talents.Includes(PaladinTalents.EternalFlame)) return 0;
+                    if (!(this.Rotation.AbilitiesUsed.Contains(Ability.EF) || this.Rotation.AbilitiesUsed.Contains(Ability.WoG))) return 0;
                     break;
                 case Buff.AW:
                     if (!this.Rotation.AbilitiesUsed.Contains(Ability.AW)) return 0;
