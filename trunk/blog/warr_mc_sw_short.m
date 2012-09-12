@@ -6,6 +6,9 @@ numSims=1000000; %50
 % numSims=5
 statAmount=1500;
 startCond.rage=120;
+startCond.stepspersecond=10;
+startCond.prio='short';
+startCond.finisher='SBronly';
 
 if matlabpool('size')>0
     matlabpool close

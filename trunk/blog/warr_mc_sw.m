@@ -1,9 +1,12 @@
 clear
 stats={' ','dodge','parry','hit','exp','mastery'};
-simMins=10000; %10000
-numSims=50; %50
-statAmount=500;
-% startCond.rage=120;
+simMins=10; %10000
+numSims=5; %50
+statAmount=1500;
+startCond.rage=0;
+startCond.stepspersecond=2;
+startCond.prio='steadystate';
+startCond.finisher='SBrBleed';
 
 if matlabpool('size')>0
     matlabpool close
@@ -18,7 +21,7 @@ for k=1:length(stats)
     parfor j=1:numSims
 %     for j=1:numSims
 %         tic
-        [dtps(j,k) statblock(j,k)]=warr_mc(stats{k},statAmount,simMins,'noplot','notoc');
+        [dtps(j,k) statblock(j,k)]=warr_mc(stats{k},statAmount,simMins,'noplot','notoc',startCond);
         Rrage(j,k)   =statblock(j,k).Rrage;
         S(j,k)      =statblock(j,k).S;
         Tsb(j,k)  =statblock(j,k).Tsb;
