@@ -1,7 +1,7 @@
 clear
 stats={' ','dodge','parry','hit','exp','mastery'};
-simMins=10; %10000
-numSims=5; %50
+simMins=10000; %10000
+numSims=50; %50
 statAmount=1500;
 startCond.rage=0;
 startCond.stepspersecond=2;

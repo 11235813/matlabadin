@@ -13,10 +13,10 @@ if nargin<4
     plotFlag='plot';
 end
 if nargin<3
-    simMins=500;
+    simMins=1000;
 end
 if nargin<2
-    val=600;
+    val=1000;
 end
 if nargin>=1
     switch stat
@@ -56,11 +56,12 @@ expRating=0;
 meta=1; %toggle for block meta, 1 is on, 0 is off
 blockDmg=1-(0.3+meta./100);
 critBlockDmg=1-2.*(0.3+meta./100);
-% armorMit=0.45;
-% specMit=0.25;
+armorMit=1-0.45;
+specMit=1-0.25;
+wbMit=0.9;
 %% Define constants/variables
 bossSwingTimer=1.5;
-bossSwingDamage=250000;
+bossRawSwingDamage=250000;
 Cd=91.42;
 Cp=237.1;
 Cb=149.1;
@@ -69,8 +70,8 @@ SnBProcRate=0.3;
 SnBBuffDuration=5;
 
 %Vengeance info
-% preMitigationBossSwing=bossSwingDamage./(1-armorMit)./(1-specMit);
-avgVengAP=0.02*(bossSwingDamage./bossSwingTimer).*(20./bossSwingTimer);
+bossSwingDamage=bossRawSwingDamage.*armorMit.*specMit.*wbMit;
+avgVengAP=0.4*(bossRawSwingDamage./bossSwingTimer);
 shieldBarrierAbsorb=2*(1.1.*avgVengAP+0.2.*buffedStr)./bossSwingDamage;
 
 %% calculate stats
@@ -151,9 +152,11 @@ critblocks=0;
 hits=0;
 fullHits=0;
 fullCBAbsorbs=0;
+partialCBAbsorbs=0;
 fullBAbsorbs=0;
 partialBAbsorbs=0;
 partialAbsorbs=0;
+fullHitAbsorbs=0;
 
 %%for loop to do event handling
 tic
@@ -169,10 +172,18 @@ for k=1:N
     
     %event handling
     for j=1:length(ids)
+                
+        %Berserker Rage - use if available
+        if tob(idBRcd)<=0 && rage<110
+            %set BR cooldown, start GCD
+            tob(idBRcd)=30;
+            %add rage
+            rage=rage+10;
+            rageGain=rageGain+10;
+        end
+        
         switch ids(j)
-            
-                      
-            %if the GCD timer is up, see if there's something to cast
+                %if the GCD timer is up, see if there's something to cast
             case idGCD
                 
                 %Defensive Stance
@@ -229,6 +240,9 @@ for k=1:N
                                 fullAbsorbs=fullAbsorbs+1;
                                 fullCBAbsorbs=fullCBAbsorbs+1;
                             else
+                                if SBrAmount>0
+                                    partialCBAbsorbs=partialCBAbsorbs+1;
+                                end
                                 damage(k)=critBlockDmg-SBrAmount;
                                 SBrAmount=0;
                             end
@@ -244,11 +258,10 @@ for k=1:N
                                 damage(k)=0;
                                 SBrAmount-SBrAmount-blockDmg;
                                 fullAbsorbs=fullAbsorbs+1;
+                                fullBAbsorbs=fullBAbsorbs+1;
                             else
                                 damage(k)=blockDmg-SBrAmount;
-                                if SBrAmount>blockDmg
-                                    fullBAbsorbs=fullBAbsorbs+1;
-                                elseif SBrAmount>0
+                                if SBrAmount>0
                                     partialBAbsorbs=partialBAbsorbs+1;
                                 end
                                 SBrAmount=0;
@@ -259,6 +272,7 @@ for k=1:N
                         damage(k)=1-SBrAmount;
                         if SBrAmount>1
                             fullAbsorbs=fullAbsorbs+1;
+                            fullHitAbsorbs=fullHitAbsorbs+1;
                         end
                         if SBrAmount>0
                             partialAbsorbs=partialAbsorbs+1;
@@ -324,6 +338,8 @@ fullBAbsorbspct=fullBAbsorbs./length(dmg);
 partialBAbsorbspct=partialBAbsorbs./length(dmg);
 partialAbsorbspct=partialAbsorbs./length(dmg);
 fullHitspct=fullHits./length(dmg);
+fullHitAbsorbspct=fullHitAbsorbs./length(dmg);
+partialCBAbsorbspct=partialCBAbsorbs./length(dmg);
 
 
 Tsb = max(t)./SBCasts;
@@ -351,18 +367,20 @@ if ~strcmp(plotFlag,'noplot')
     xlabel('Hit size (in % of full hit)')
     ylabel(ylstr)
     offset=diff(get(gca,'YLim'))./20;
-    text(-7,(avoids+fullAbsorbs)./sf+2*offset,[num2str(avoidspct.*100,'%2.1f') '% avoids'])
-    text(-7,(avoids+fullAbsorbs)./sf+offset,[num2str(fullAbsorbspct.*100,'%2.1f') '% full Absorbs'])
+    text(-7,(avoids+fullAbsorbs)./sf+offset,[num2str(avoidspct.*100,'%2.1f') '% avoids'])
+    text(-7,(avoids+fullAbsorbs)./sf,[num2str(fullAbsorbspct.*100,'%2.2f') '% full Absorbs'])
   
-    text(100.*critBlockDmg-10,(b2-fullCBAbsorbs)./sf+2*offset,[num2str(b2pct.*100,'%2.1f') '% crit blocks'])
-    text(100.*critBlockDmg-10,(b2-fullCBAbsorbs)./sf+offset,[num2str(fullCBAbsorbspct.*100,'%2.1f') '% fuly absorbed'])
+    text(100.*critBlockDmg-10,(b2+partialBAbsorbs+partialAbsorbs)./sf+2*offset,[num2str(b2pct.*100,'%2.1f') '% crit blocks'])
+    text(100.*critBlockDmg-10,(b2+partialBAbsorbs+partialAbsorbs)./sf+offset,[num2str(partialCBAbsorbspct.*100,'%2.2f') '% partially absorbed'])
+    text(100.*critBlockDmg-10,(b2+partialBAbsorbs+partialAbsorbs)./sf,[num2str(fullCBAbsorbspct.*100,'%2.2f') '% fuly absorbed'])
    
-    text(100.*blockDmg-15,b1./sf+2*offset,[num2str(b1pct.*100,'%2.1f') '% blocked'])
-    text(100.*blockDmg-15,b1./sf+offset,[num2str(partialBAbsorbspct.*100,'%2.1f') '% partially absorbed'])
-    text(100.*blockDmg-15,b1./sf,[num2str(fullBAbsorbspct.*100,'%2.1f') '% fully absorbed'])
+    text(100.*blockDmg-15,(b1+partialAbsorbs)./sf+2*offset,[num2str(b1pct.*100,'%2.1f') '% blocked'])
+    text(100.*blockDmg-15,(b1+partialAbsorbs)./sf+offset,[num2str(partialBAbsorbspct.*100,'%2.2f') '% partially absorbed'])
+    text(100.*blockDmg-15,(b1+partialAbsorbs)./sf,[num2str(fullBAbsorbspct.*100,'%2.2f') '% fully absorbed'])
 
-    text(100-20,fullHits./sf+2*offset,[num2str(hitspct.*100,'%2.1f') '% full hits'])
-    text(100-20,fullHits./sf+offset,[num2str(partialAbsorbspct.*100,'%2.1f') '% partially absorbed'])
+    text(100-20,(fullHits+partialAbsorbs)./sf+2*offset,[num2str(hitspct.*100,'%2.1f') '% full hits'])
+    text(100-20,(fullHits+partialAbsorbs)./sf+offset,[num2str(partialAbsorbspct.*100,'%2.2f') '% partially absorbed'])
+    text(100-20,(fullHits+partialAbsorbs)./sf,[num2str(fullHitAbsorbspct.*100,'%2.2f') '% fully absorbed'])
     title(['T=' int2str(simTime./60) ' min, S=' num2str(S.*100,'%2.1f') '%, Tsb=' num2str(Tsb,'%2.1f') 's, R_{rage}=' num2str(Rrage,'%2.3f') '/s, DTPS=' num2str(DTPS.*bossSwingTimer.*100,'%2.2f') '%'])
     
     figure(2)
@@ -548,15 +566,7 @@ statblock.SBrCasts=SBrCasts;
                     tbe(idGCD)=1.5;
                     %add rage
                     rage=rage+20;
-                    rageGain=rageGain+20;                
-                %Berserker Rage - use if available
-                elseif tob(idBRcd)<=0
-                    %set BR cooldown, start GCD
-                    tob(idBRcd)=6;
-                    tbe(idGCD)=1.5;
-                    %add rage
-                    rage=rage+10;
-                    rageGain=rageGain+10;  
+                    rageGain=rageGain+20;            
                 %Thunder Clap - use if WB isn't up
                 elseif tob(idWB)<=0 && tob(idTCcd)<=0
                     %set TC cooldown, start GCD
