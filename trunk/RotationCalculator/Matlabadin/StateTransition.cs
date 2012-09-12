@@ -261,7 +261,7 @@ namespace Matlabadin
                         gp.DivinePurposeProcRate,
                     };
                     break;
-                // Can't miss
+                // Always transitions to the same state
                 case Ability.AS:
                 case Ability.Cons:
                 case Ability.HW:
@@ -355,6 +355,7 @@ namespace Matlabadin
             }
             switch (ability)
             {
+                case Ability.EF:
                 case Ability.WoG:
                     if (sm.TimeRemaining(nextState, Buff.DP) > 0) // Consume DP first
                     {
@@ -369,6 +370,13 @@ namespace Matlabadin
                         nextState = sm.SetTimeRemaining(nextState, Buff.GoWoG, gp.BuffDurationInSteps(Buff.GoWoG));
                         nextState = sm.SetStacks(nextState, Buff.GoWoG, availableHp);
                     }
+                    if (gp.Talents.Includes(PaladinTalents.EternalFlame))
+                    {
+                        int efBogStacks = sm.Stacks(nextState, Buff.BoG);
+                        nextState = sm.SetTimeRemaining(nextState, Buff.EF, gp.BuffDurationInSteps(Buff.EF));
+                        nextState = sm.SetStacks(nextState, Buff.EF, efBogStacks + 1);
+                    }
+                    nextState = sm.SetTimeRemaining(nextState, Buff.BoG, 0);
                     break;
                 case Ability.SotR:
                     if ((availableHp < 3) && (sm.TimeRemaining(nextState, Buff.DP) == 0) ) throw new InvalidOperationException("SotR cast with less than 3 HP and no DP");
@@ -387,9 +395,9 @@ namespace Matlabadin
                     //                                Math.Min(sm.TimeRemaining(nextState, Buff.SotRSB) + gp.BuffAppendInSteps(Buff.SotRSB), gp.BuffDurationInSteps(Buff.SotRSB))
                     //                                );
                     // set BoG duration to full, increment stacks
-                    int bogStacks = sm.Stacks(nextState, Buff.BoG);
+                    int sotrBogStacks = sm.Stacks(nextState, Buff.BoG);
                     nextState = sm.SetTimeRemaining(nextState, Buff.BoG, gp.BuffDurationInSteps(Buff.BoG));
-                    nextState = sm.SetStacks(nextState, Buff.BoG, Math.Min(bogStacks + 1, gp.MaxBuffStacks(Buff.BoG)));
+                    nextState = sm.SetStacks(nextState, Buff.BoG, Math.Min(sotrBogStacks + 1, gp.MaxBuffStacks(Buff.BoG)));
                     break;
                 case Ability.HotR:
                     if (hit)
@@ -425,23 +433,6 @@ namespace Matlabadin
                     break;
                 case Ability.SS:
                     nextState = sm.SetTimeRemaining(nextState, Buff.SS, gp.BuffDurationInSteps(Buff.SS));
-                    break;
-                case Ability.EF:
-                    if (sm.TimeRemaining(nextState, Buff.DP) > 0)
-                    {
-                        nextState = sm.SetTimeRemaining(nextState, Buff.DP, 0);
-                    }
-                    else
-                    {
-                        nextState = sm.SetHP(nextState, hp - availableHp);
-                    }
-                    nextState = sm.SetTimeRemaining(nextState, Buff.EF, gp.BuffDurationInSteps(Buff.EF));
-                    // TODO efStacks = availableHp
-                    if (gp.Glyphs.Includes(PaladinGlyphs.GoWoG))
-                    {
-                        nextState = sm.SetTimeRemaining(nextState, Buff.GoWoG, gp.BuffDurationInSteps(Buff.GoWoG));
-                        nextState = sm.SetStacks(nextState, Buff.GoWoG, availableHp);
-                    }
                     break;
                 case Ability.FoL:
                     nextState = sm.SetStacks(nextState, Buff.SH, 0);
