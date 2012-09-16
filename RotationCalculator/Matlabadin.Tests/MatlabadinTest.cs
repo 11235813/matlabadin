@@ -65,15 +65,15 @@ namespace Matlabadin.Tests
         }
         public static Int64GraphParameters NoMiss(string rotation, int steps = 3, double haste = 0)
         {
-            return new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>(rotation), PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.GoWoG, steps, haste, 1, 1);
+            return new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>(rotation), PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.GoWoG, steps, haste, haste, 1, 1);
         }
         public static Int64GraphParameters NoMissNoTalents(string rotation, int steps = 3, double haste = 0)
         {
-            return new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>(rotation), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, steps, haste, 1, 1);
+            return new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>(rotation), PaladinSpec.Prot, PaladinTalents.None, PaladinGlyphs.None, steps, haste, haste, 1, 1);
         }
         public static Int64GraphParameters NoHitExpertise(string rotation, int steps = 3, double haste = 0)
         {
-            return new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>(rotation), PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.GoWoG, steps, haste, 1 - 0.08 - 0.065 - 0.14, 1 - 0.08);
+            return new Int64GraphParameters(new RotationPriorityQueue<BitVectorState>(rotation), PaladinSpec.Prot, PaladinTalents.All, PaladinGlyphs.GoWoG, steps, haste, haste, 1 - 0.08 - 0.065 - 0.14, 1 - 0.08);
         }
         public static RotationPriorityQueue<BitVectorState> AllAbilityRotation { get { return defaultParameters.Rotation; } }
         public static IStateManager<BitVectorState> AllAbilityStateManager { get { return defaultParameters; } }

@@ -373,7 +373,7 @@ namespace Matlabadin
                     if (gp.Talents.Includes(PaladinTalents.EternalFlame))
                     {
                         int efBogStacks = sm.Stacks(nextState, Buff.BoG);
-                        nextState = sm.SetTimeRemaining(nextState, Buff.EF, gp.BuffDurationInSteps(Buff.EF));
+                        nextState = sm.SetTimeRemaining(nextState, Buff.EF, gp.BuffDurationInSteps(Buff.EF) + sm.TimeRemaining(nextState, Buff.EF) % gp.CalculateHoTTickInSteps(Buff.EF));
                         nextState = sm.SetStacks(nextState, Buff.EF, efBogStacks + 1);
                     }
                     nextState = sm.SetTimeRemaining(nextState, Buff.BoG, 0);
@@ -432,7 +432,7 @@ namespace Matlabadin
                     nextState = sm.SetTimeRemaining(nextState, Buff.GC, 0);
                     break;
                 case Ability.SS:
-                    nextState = sm.SetTimeRemaining(nextState, Buff.SS, gp.BuffDurationInSteps(Buff.SS));
+                    nextState = sm.SetTimeRemaining(nextState, Buff.SS, gp.BuffDurationInSteps(Buff.SS)+sm.TimeRemaining(nextState, Buff.SS) % gp.CalculateHoTTickInSteps(Buff.SS));
                     break;
                 case Ability.FoL:
                     nextState = sm.SetStacks(nextState, Buff.SH, 0);

@@ -1,5 +1,5 @@
-function [generatedFile] = fsm_gen(rotation, spec, talentString, glyphString, decimalHasteArray, mehitArray, sphitArray, pBuffs)
-%fsm_gen calculates fsm for each mehit, sphit, and decimalHaste
+function [generatedFile] = fsm_gen(rotation, spec, talentString, glyphString, mehasteArray, sphasteArray, mehitArray, sphitArray, pBuffs)
+%fsm_gen calculates fsm for each mehit, sphit, and mehaste
 % call memoized_fsm to return the actual fsm data
 
 % check source timestamp
@@ -26,7 +26,7 @@ end
 if exist('data') ~= 7
     mkdir('data');
 end
-arrLength=max([length(mehitArray) length(decimalHasteArray)]);
+arrLength=max([length(mehitArray) length(mehasteArray)]);
 generatedFile = cell(arrLength,1);
 argfile = strcat('data\\fsm_gen_input_', num2str(ceil(rand.*1000000)), '.tmp');
 argfid = fopen(argfile, 'w');
@@ -42,12 +42,17 @@ for i=1:arrLength
     else
         sphit = sphitArray;
     end
-    if length(decimalHasteArray) > 1
-        decimalHaste = decimalHasteArray(i);
+    if length(mehasteArray) > 1
+        mehaste = mehasteArray(i);
     else
-        decimalHaste = decimalHasteArray;
+        mehaste = mehasteArray;
     end
-    [rotationKey spectalKey optionsKey]=fsm_key(rotation, spec, talentString, glyphString, decimalHaste, mehit, sphit, pBuffs);
+    if length(sphasteArray) > 1
+        sphaste = sphasteArray(i);
+    else
+        sphaste = sphasteArray;
+    end
+    [rotationKey spectalKey optionsKey]=fsm_key(rotation, spec, talentString, glyphString, mehaste, sphaste, mehit, sphit, pBuffs);
     dirname = strcat('data\\', rotationKey,'\\',spectalKey);
     filename = strcat(dirname, '\\', optionsKey, '.csv');
     % skip generation if the file already exists
@@ -55,8 +60,8 @@ for i=1:arrLength
         if exist(dirname) ~= 7
             mkdir(dirname);
         end
-        fprintf(argfid, '%s %s %s %s %g %f %f %f "%s" %s\n', ...
-            rotation, spec, talentString, glyphString, fsm_steps_per_gcd(), decimalHaste, mehit, sphit, pBuffs, filename);
+        fprintf(argfid, '%s %s %s %s %g %f %f %f %f "%s" %s\n', ...
+            rotation, spec, talentString, glyphString, fsm_steps_per_gcd(), mehaste, sphaste, mehit, sphit, pBuffs, filename);
         generationRequired = 1;
     end
     generatedFile{i} = filename;

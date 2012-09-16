@@ -18,7 +18,7 @@ namespace Matlabadin.Tests
                     PaladinTalents.ExecutionSentence | PaladinTalents.LightsHammer |PaladinTalents.HolyPrism |
                     PaladinTalents.DivinePurpose,
                     PaladinGlyphs.GoWoG, 
-                    3, 0, 0.5, 0.5);
+                    3, 0, 0, 0.5, 0.5);
             }
         }
         [Test]

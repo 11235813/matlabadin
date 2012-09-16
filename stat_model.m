@@ -283,9 +283,11 @@ mdf.blsphaste=(1+bl.sphaste./100);
 %commented out all the unused code.
 cens.BaseTick=3;
 ef.BaseTick=3;
+ss.BaseTick=6;
 % cens.BaseDur=15;
 player.censTick=round(cens.BaseTick./mdf.sphaste.*1e3)./1e3; %spell haste
 player.EFTick=round(ef.BaseTick./mdf.sphaste.*1e3)./1e3;
+player.SSTick=round(ss.BaseTick./mdf.sphaste.*1e3)./1e3;
 % for kkk=1:length(mdf.sphaste)
 %     if rem(cens.BaseDur./cens.NetTick(kkk),1)==0.5 && rem(floor(cens.BaseDur./cens.NetTick(kkk)),2)==1
 %         cens.NumTicks(kkk)=floor(cens.BaseDur./cens.NetTick(kkk)+0.5);
