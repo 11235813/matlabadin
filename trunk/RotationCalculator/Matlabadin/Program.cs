@@ -74,13 +74,13 @@ namespace Matlabadin
         // process input parameters
         private static void ProcessParams(string[] args)
         {
-            if (args.Length != 10)
+            if (args.Length != 11)
             {
-                Console.Error.Write("Warning: fsm.exe expected 9 inputs, got {0}:", args.Length);
+                Console.Error.Write("Warning: fsm.exe expected 11 inputs, got {0}:", args.Length);
                 Console.Error.Write(args.Select((s, i) => String.Format("#{0}:\"{1}\";", i, s)).Aggregate("", (s, a) => s + a));
                 Console.Error.WriteLine();
             }
-            if (args.Length < 10) 
+            if (args.Length < 11) 
             {
                 Usage();                
             }
@@ -90,21 +90,22 @@ namespace Matlabadin
             PaladinTalents talents;
             PaladinGlyphs glyphs;
             int stepsPerHastedGcd;
-            double haste, mehit, rahit;
+            double mehaste, sphaste, mehit, rahit;
             Buff[] permanentBuffs;
             rotation = args[0];
-            // "Matlabadin.exe <rotation> <spec> <talents> <glyphs> <stepsPerGcd> <haste> <mehit> <rahit> <permanentBuffs> [<outputfile>]" + Environment.NewLine
-            //                      0       1        2        3           4         5        6       7          8                9
+            // "Matlabadin.exe <rotation> <spec> <talents> <glyphs> <stepsPerGcd> <mehaste> <sphaste> <mehit> <rahit> <permanentBuffs> [<outputfile>]" + Environment.NewLine
+            //                      0       1        2        3           4           5         6        7       8            9
             if (!PaladinSpecHelper.TryParse(args[1], out spec)) { Console.Error.WriteLine("Warning: spec '{0}' failed to parse", args[1]); Usage(); }
             if (!PaladinTalentsHelper.TryParse(args[2], out talents)) { Console.Error.WriteLine("Warning: talents '{0}' failed to parse", args[2]); Usage(); }
             if (!PaladinGlyphsHelper.TryParse(args[3].Trim('"'), out glyphs)) { Console.Error.WriteLine("Warning: glyphs '{0}' failed to parse", args[3]); Usage(); }
             if (!Int32.TryParse(args[4], out stepsPerHastedGcd)) { Console.Error.WriteLine("Warning: stepsPerHastedGCD '{0}' failed to parse", args[4]); Usage(); }
-            if (!Double.TryParse(args[5], out haste)) { Console.Error.WriteLine("Warning: haste '{0}' failed to parse", args[5]); Usage(); }
-            if (!Double.TryParse(args[6], out mehit)) { Console.Error.WriteLine("Warning: mehit '{0}' failed to parse", args[6]); Usage(); }
-            if (!Double.TryParse(args[7], out rahit)) { Console.Error.WriteLine("Warning: rahit '{0}' failed to parse", args[7]); Usage(); }
-            permanentBuffs = ParseBuffs(args[8]);
-            string file = args[9];
-            ProcessGraph(file, rotation, spec, talents, glyphs, stepsPerHastedGcd, haste, mehit, rahit, permanentBuffs);
+            if (!Double.TryParse(args[5], out mehaste)) { Console.Error.WriteLine("Warning: mehaste '{0}' failed to parse", args[5]); Usage(); }
+            if (!Double.TryParse(args[6], out sphaste)) { Console.Error.WriteLine("Warning: sphaste '{0}' failed to parse", args[6]); Usage(); }
+            if (!Double.TryParse(args[7], out mehit)) { Console.Error.WriteLine("Warning: mehit '{0}' failed to parse", args[7]); Usage(); }
+            if (!Double.TryParse(args[8], out rahit)) { Console.Error.WriteLine("Warning: rahit '{0}' failed to parse", args[8]); Usage(); }
+            permanentBuffs = ParseBuffs(args[9]);
+            string file = args[10];
+            ProcessGraph(file, rotation, spec, talents, glyphs, stepsPerHastedGcd, mehaste, sphaste, mehit, rahit, permanentBuffs);
         }
         private static Buff[] ParseBuffs(string commaSeparatedBuffList)
         {
@@ -132,14 +133,15 @@ namespace Matlabadin
             PaladinTalents talents,
             PaladinGlyphs glyphs,
             int stepsPerHastedGcd,
-            double haste,
+            double mehaste,
+            double sphaste,
             double mehit,
             double rahit,
             Buff[] permanentBuffs)
         {
             if (file == null)
             {
-                ProcessGraph(Console.Out, null, rotation, spec, talents, glyphs, stepsPerHastedGcd, haste, mehit, rahit, permanentBuffs);
+                ProcessGraph(Console.Out, null, rotation, spec, talents, glyphs, stepsPerHastedGcd, mehaste, sphaste, mehit, rahit, permanentBuffs);
             }
             else
             {
@@ -172,7 +174,7 @@ namespace Matlabadin
                 }
                 using (StringWriter sw = new StringWriter())
                 {
-                    ProcessGraph(sw, debugFile, rotation, spec, talents, glyphs, stepsPerHastedGcd, haste, mehit, rahit, permanentBuffs);
+                    ProcessGraph(sw, debugFile, rotation, spec, talents, glyphs, stepsPerHastedGcd, mehaste, sphaste, mehit, rahit, permanentBuffs);
                     File.WriteAllText(file, sw.ToString());
                 }
             }
@@ -187,7 +189,8 @@ namespace Matlabadin
             PaladinTalents talents,
             PaladinGlyphs glyphs,
             int stepsPerHastedGcd,
-            double haste,
+            double mehaste,
+            double sphaste,
             double mehit,
             double rahit,
             Buff[] permanentBuffs)
@@ -202,7 +205,7 @@ namespace Matlabadin
             RotationPriorityQueue<BitVectorState> queue = new RotationPriorityQueue<BitVectorState>(rotation);
 
             // create new GraphParameters object - contains basic graph parameter info, calculates ability/buff cooldowns/durations, shape comparisons, etc.
-            Int64GraphParameters gp = new Int64GraphParameters(queue, spec, talents, glyphs, stepsPerHastedGcd, haste, mehit, rahit, permanentBuffs);
+            Int64GraphParameters gp = new Int64GraphParameters(queue, spec, talents, glyphs, stepsPerHastedGcd, mehaste, sphaste, mehit, rahit, permanentBuffs);
 
             // report any approximation errors
             if (!String.IsNullOrEmpty(gp.Warnings)) Console.Error.WriteLine("Model Warnings: {0}", gp.Warnings);
@@ -286,7 +289,8 @@ namespace Matlabadin
             stream.WriteLine("Param_Talents,{0}", gp.Talents.ToLongString());
             stream.WriteLine("Param_Glyphs,{0}", gp.Glyphs.ToLongString());         
             stream.WriteLine("Param_StepsPerHastedGCD,{0}", gp.StepsPerHastedGcd);
-            stream.WriteLine("Param_Haste,{0}", gp.Haste);
+            stream.WriteLine("Param_Haste_Melee,{0}", gp.MeleeHaste);
+            stream.WriteLine("Param_Haste_Spell,{0}", gp.SpellHaste);
             stream.WriteLine("Param_Hit_Melee,{0}", gp.MeleeHit);
             stream.WriteLine("Param_Hit_Spell,{0}", gp.JudgeHit);
             stream.WriteLine("Param_Buffs_Permanent,{0}", gp.PermanentBuffs.Aggregate("", (s, b) => s + ";" + b.ToString()).Trim(';'));
@@ -367,13 +371,14 @@ namespace Matlabadin
         // this is the error message that occurs if the fsm.exe inputs are incorrect
         public static void Usage()
         {
-            string message = "Matlabadin.exe <rotation> <spec> <talents> <stepsPerHastesGcd> <haste> <mehit> <rahit> <buffs> <outputfile>" + Environment.NewLine
+            string message = "Matlabadin.exe <rotation> <spec> <talents> <stepsPerHastesGcd> <mehaste> <mehit> <rahit> <buffs> <outputfile>" + Environment.NewLine
                 + "Multiple parrallel executions can be performed by inputting multiple lines with each line containing the argument format as above." + Environment.NewLine
                 + "\t<spec>: Holy, Prot or Ret" + Environment.NewLine
                 + "\t<talents>: 6 digit string indicating the talent position in the calculator: 000000 = no talents, 001000 = Selfless Healer, 002000 = Eternal Flame, 002003 = EF & Execution Sentence, etc" + Environment.NewLine
                 + "\t<glyphs>: comma separated list of glyphs. Eg: \"GoWoG,GoHotR\"" + Environment.NewLine
                 + "\t<stepsPerGcd>: Steps per 1.5s interval" + Environment.NewLine
-                + "\t<haste>: Paper-doll haste. 0.5 haste = 50% = 1.0s hasted GCD" + Environment.NewLine
+                + "\t<mehaste>: Paper-doll melee haste. 0.5 haste = 50% = 1.0s hasted GCD" + Environment.NewLine
+                + "\t<sphaste>: Paper-doll spell haste. 0.5 haste = 50% = 1.0s hasted GCD" + Environment.NewLine
                 + "\t<mehit>: Melee hit. 0.0 = 100% miss rate, 1.0 = 0% miss rate" + Environment.NewLine
                 + "\t<rahit>: Ranged hit. 0.0 = 100% miss rate, 1.0 = 0% miss rate" + Environment.NewLine
                 + "\t<buffs>: comma-separated list of buffs to consider permanent" + Environment.NewLine

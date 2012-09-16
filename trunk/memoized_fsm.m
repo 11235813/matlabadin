@@ -1,6 +1,11 @@
-function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentString, glyphString, decimalHaste, mehit, sphit, pBuffs)
+function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentString, glyphString, mehaste, sphaste, mehit, sphit, pBuffs)
     global fsm_cache_actionPr;
-    global fsm_cache_efUptime;
+    global fsm_cache_ef0Uptime;
+    global fsm_cache_ef1Uptime;
+    global fsm_cache_ef2Uptime;
+    global fsm_cache_ef3Uptime;
+    global fsm_cache_ef4Uptime;
+    global fsm_cache_ef5Uptime;
     global fsm_cache_ssUptime;
     global fsm_cache_wbUptime;
 %     global fsm_cache_sbUptime;
@@ -21,7 +26,12 @@ function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentStri
 		fsm_cache_actionPr = {};
         fsm_cache_metadata = {};
 		fsm_cache_ssUptime = {};
-		fsm_cache_efUptime = {};
+		fsm_cache_ef0Uptime = {};
+        fsm_cache_ef1Uptime = {};
+        fsm_cache_ef2Uptime = {};
+        fsm_cache_ef3Uptime = {};
+        fsm_cache_ef4Uptime = {};
+        fsm_cache_ef5Uptime = {};
         fsm_cache_wbUptime = {};
 % 		fsm_cache_sbUptime = {};
 		fsm_cache_awUptime = {};
@@ -31,14 +41,19 @@ function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentStri
         fsm_cache_gcdUptime= {};
     end
 	
-    [rotationKey spectalKey optionsKey]=fsm_key(rotation, spec, talentString, glyphString, decimalHaste, mehit, sphit, pBuffs);
+    [rotationKey spectalKey optionsKey]=fsm_key(rotation, spec, talentString, glyphString, mehaste, sphaste, mehit, sphit, pBuffs);
     % check memory cache
     if isfield(fsm_cache_actionPr, rotationKey) && isfield(fsm_cache_actionPr.(rotationKey), spectalKey) && isfield(fsm_cache_actionPr.(rotationKey).(spectalKey), optionsKey)
         % warning('using cached result');
         actionPr = fsm_cache_actionPr.(rotationKey).(spectalKey).(optionsKey);
         metadata = fsm_cache_metadata.(rotationKey).(spectalKey).(optionsKey);
         uptime.ss = fsm_cache_ssUptime.(rotationKey).(spectalKey).(optionsKey);
-        uptime.ef = fsm_cache_efUptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.ef0 = fsm_cache_ef0Uptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.ef1 = fsm_cache_ef0Uptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.ef2 = fsm_cache_ef0Uptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.ef3 = fsm_cache_ef0Uptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.ef4 = fsm_cache_ef0Uptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.ef5 = fsm_cache_ef0Uptime.(rotationKey).(spectalKey).(optionsKey);
         uptime.wb = fsm_cache_wbUptime.(rotationKey).(spectalKey).(optionsKey);
 %         uptime.sb = fsm_cache_sbUptime.(rotationKey).(spectalKey).(optionsKey);
         uptime.aw = fsm_cache_awUptime.(rotationKey).(spectalKey).(optionsKey);
@@ -48,7 +63,7 @@ function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentStri
         uptime.gcd = fsm_cache_gcdUptime.(rotationKey).(spectalKey).(optionsKey);
         return;
     end
-    fileCell = fsm_gen(rotation, spec, talentString, glyphString, decimalHaste, mehit, sphit, pBuffs);
+    fileCell = fsm_gen(rotation, spec, talentString, glyphString, mehaste, sphaste, mehit, sphit, pBuffs);
     filename = fileCell{1};
     % read from the data file
     [actionPr, metadata, uptime] = load_fsm_csv(filename);
@@ -56,7 +71,12 @@ function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentStri
     fsm_cache_actionPr.(rotationKey).(spectalKey).(optionsKey) = actionPr;
     fsm_cache_metadata.(rotationKey).(spectalKey).(optionsKey) = metadata;
     fsm_cache_ssUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ss;
-    fsm_cache_efUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef;
+    fsm_cache_ef0Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef;
+    fsm_cache_ef1Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef;
+    fsm_cache_ef2Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef;
+    fsm_cache_ef3Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef;
+    fsm_cache_ef4Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef;
+    fsm_cache_ef5Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef;
     fsm_cache_wbUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.wb;
 %     fsm_cache_sbUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.sb;
     fsm_cache_gowog1Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.gowog1;
@@ -79,8 +99,18 @@ function [actionPr, metadata, uptime] = load_fsm_csv(filename)
 		linePr = str2double(lineTxtPr);
 		if strcmp(lineAction, 'Uptime_SacredShield')
             uptime.ss = linePr;
-        elseif strcmp(lineAction, 'Uptime_EternalFlame')
-            uptime.ef = linePr;
+        elseif strcmp(lineAction, 'Uptime_EternalFlame_Bog0')
+            uptime.ef0 = linePr;
+        elseif strcmp(lineAction, 'Uptime_EternalFlame_Bog1')
+            uptime.ef1 = linePr;
+        elseif strcmp(lineAction, 'Uptime_EternalFlame_Bog2')
+            uptime.ef2 = linePr;
+        elseif strcmp(lineAction, 'Uptime_EternalFlame_Bog3')
+            uptime.ef3 = linePr;
+        elseif strcmp(lineAction, 'Uptime_EternalFlame_Bog4')
+            uptime.ef4 = linePr;
+        elseif strcmp(lineAction, 'Uptime_EternalFlame_Bog5')
+            uptime.ef5 = linePr;
         elseif strcmp(lineAction, 'Uptime_WeakenedBlows')
             uptime.wb = linePr;
 %         elseif strcmp(lineAction, 'Uptime_SotRShieldBlock')

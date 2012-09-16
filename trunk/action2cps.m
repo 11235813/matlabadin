@@ -181,8 +181,8 @@ for m=1:size(c.rot.actionPr,2)
             hpg=hpg+asgc.*hpmod;
         case 'SS'
             %uptime-based, not cast-based
-            cps(idx)=c.rot.uptime(jup).ss./6;
-            ecpsh(idx)=c.rot.uptime(jup).ss./6; %no modifiers on absorbs
+            cps(idx)=c.rot.uptime(jup).ss./c.player.SSTick(jha);
+            ecpsh(idx)=c.rot.uptime(jup).ss./c.player.SSTick(jha); %no modifiers on absorbs
     end
 
 end
@@ -203,9 +203,20 @@ cps(strcmpi('Censure',c.abil.val.label))= censFlag./c.player.censTick(jha);
 ecpsd(strcmpi('Censure',c.abil.val.label))= censFlag.*(1+0.2.*c.rot.uptime(jup).aw).*c.rot.gowogavg./c.player.censTick(jha);
 
 %% EF(HoT)
-%not affected by BoG, assume average overlap with AW, 
 %TODO: this doesn't account for low-HP EF casts
-cps(strcmpi('EF(HoT)',c.abil.val.label))=c.rot.uptime(jup).ef./c.player.EFTick(jha);
-ecpsh(strcmpi('EF(HoT)',c.abil.val.label))=c.rot.uptime(jup).ef./c.player.EFTick(jha).*(1+0.2.*c.rot.uptime(jup).aw);
+%temp variables for shorter expressions
+a=c.rot.uptime(jup);
+b1=1+c.mdf.BoG;
+b2=1+2.*c.mdf.BoG;
+b3=1+3.*c.mdf.BoG;
+b4=1+4.*c.mdf.BoG;
+b5=1+5.*c.mdf.BoG;
+cps(strcmpi('EF(HoT)',c.abil.val.label))= ...
+    (a.ef0+a.ef1+a.ef2+a.ef3+a.ef4+a.ef5)...
+    ./c.player.EFTick(jha); %divide by tick spacing
+ecpsh(strcmpi('EF(HoT)',c.abil.val.label))= ...
+    (a.ef0+a.ef1.*b1+a.ef2.*b2+a.ef3.*b3+a.ef4.*b4+a.ef5.*b5)...
+    ./c.player.EFTick(jha)... %tick spacing
+    .*(1+0.2.*c.rot.uptime(jup).aw); %average effect of AW  
 
 end

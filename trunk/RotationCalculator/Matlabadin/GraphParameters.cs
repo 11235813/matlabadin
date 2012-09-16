@@ -35,11 +35,23 @@ namespace Matlabadin
                 6.3, 15, 20, 8, // GC, SH, BoG, DP
                 18, // HA 
             };
+        private static readonly double[] DefaultUnhastedBuffTickDuration = new double[] {
+                1.5, 3, 6, 
+                20, 30, 6, 
+                6.3, 15, 20, 8,
+                18,
+            };
         private static readonly int[] DefaultMaximumBuffStacks = new int[] {
                 1, 1+5, 1, // Need to track EF with {0,1,2,3,4,5} BoG stacks
                 1, 1, 3,
                 1, 3, 5, 1,
                 1,
+            };
+        private static readonly bool[] BuffDurationAffectedByHaste = new bool[] {
+                true, true, true, // GCD, EF, SS (GCD value irrelvant though)
+                false, false, false, // AW, WB, GoWoG,
+                false, false, false, false, // GC, SH, BoG, DP
+                false, // HA
             };
         //private static readonly double DefaultSotRBuffIncrement = 3;
 
@@ -50,7 +62,8 @@ namespace Matlabadin
             PaladinTalents talents = PaladinTalents.None,
             PaladinGlyphs glyphs = PaladinGlyphs.None,
             int stepsPerHastedGcd = 3,
-            double haste = 0.0,
+            double mehaste = 0.0,
+            double sphaste = 0.0,
             double mehit = 1.0,
             double jdhit = 1.0,
             Buff[] permanentBuffs = null
@@ -59,7 +72,7 @@ namespace Matlabadin
             // sanity checks inputs
             if (spec == PaladinSpec.Holy) throw new NotImplementedException("No plans to implement Holy");
             if (spec == PaladinSpec.Ret) throw new NotImplementedException("Ret NYI. See http://code.google.com/p/matlabadin/issues/list for status and priority");
-            if (haste > 0.5) throw new NotImplementedException("GCD clipping from >50% haste not yet implemented");
+            if (mehaste > 0.5) throw new NotImplementedException("GCD clipping from >50% haste not yet implemented");
             
             this.Warnings = "";
 
@@ -87,7 +100,8 @@ namespace Matlabadin
             this.Talents = talents;
             this.Glyphs = glyphs;
             this.StepsPerHastedGcd = stepsPerHastedGcd;
-            this.Haste = haste;
+            this.MeleeHaste = mehaste;
+            this.SpellHaste = sphaste;
             this.MeleeHit = mehit;
             this.JudgeHit = jdhit;
             this.PermanentBuffs = (permanentBuffs ?? new Buff[0]).OrderBy(x => (int)x).Distinct().ToArray();
@@ -97,7 +111,7 @@ namespace Matlabadin
             if (this.Talents.Includes(PaladinTalents.SanctifiedWrath)) talentedUnhastedBuffDuration[(int)Buff.AW] = 30;
             if (this.Glyphs.Includes(PaladinGlyphs.GoHotR)) talentedUnhastedBuffDuration[(int)Buff.WB] *= 1.5; // 50% longer
 
-            this.stepDuration = 1.5 / (this.StepsPerHastedGcd * (1.0 + haste));
+            this.stepDuration = 1.5 / (this.StepsPerHastedGcd * (1.0 + mehaste));
             this.isOnGcd = DefaultIsOnGcd;
             this.abilitySteps = DefaultUnhastedAbilityDuration
                 .Select((cd, i) => CalculateAbilityCooldowns(i + Ability.CooldownIndicator + 1, AbilityCooldownReducedByHaste[i], cd))
@@ -178,7 +192,16 @@ namespace Matlabadin
                     // If we haven't modelling it, we keep it
                     throw new NotImplementedException("Parameter preconditions to triggering this buff must be specified in GraphParameters.CalculateBuffDuration()");
             }
-            int stepsDuration = CalculateDurationInSteps(baseDuration, false, x => (int)Math.Floor(x));
+            int stepsDuration;
+            if (BuffDurationAffectedByHaste[(int)buff])
+            {   // we need the special HoT/DoT rounding function for these, 
+                stepsDuration = CalculateHoTDurationInSteps(baseDuration, DefaultUnhastedBuffTickDuration[(int)buff], x => (int)Math.Floor(x));
+            }
+            else
+            {   // otherwise can use the usual function
+                stepsDuration = CalculateDurationInSteps(baseDuration, false, x => (int)Math.Floor(x));
+            }
+            
             // GC buff duration extended by 1 step since the server takes time to apply the buff and is still active 6s after triggering
             if (buff == Buff.GC) stepsDuration++;
             return stepsDuration;
@@ -188,14 +211,14 @@ namespace Matlabadin
         private int CalculateDurationInSteps(double unhastedDurationInSeconds, bool isAffectedByHaste, Func<double, int> roundingFunction)
         {
             double hastedDurationInSteps;
-            if (isAffectedByHaste)
+            if (isAffectedByHaste) 
             {
                 hastedDurationInSteps = this.StepsPerHastedGcd * unhastedDurationInSeconds / 1.5;
             }
             else
             {
                 double unhastedDurationInSteps = this.StepsPerHastedGcd * unhastedDurationInSeconds / 1.5;
-                hastedDurationInSteps = (1.0 + this.Haste) * unhastedDurationInSteps;
+                hastedDurationInSteps = (1.0 + this.MeleeHaste) * unhastedDurationInSteps;
             }
             int rounded = roundingFunction(hastedDurationInSteps);
             if (hastedDurationInSteps != rounded)
@@ -207,6 +230,42 @@ namespace Matlabadin
                 );
             }
             return (int)rounded;
+        }
+        // function specifically for HoT/DoT effects
+        private int CalculateHoTDurationInSteps(double unhastedDurationInSeconds, double unhastedTickInSeconds, Func<double, int> roundingFunction)
+        {
+            double hastedDurationInSteps;
+            double hastedDurationInSeconds;
+            double hastedTickInSeconds;
+            double numTicks;
+                
+                hastedTickInSeconds=unhastedTickInSeconds / (1.0+this.SpellHaste); 
+                numTicks=(int)Math.Round(unhastedDurationInSeconds / hastedTickInSeconds);
+                hastedDurationInSeconds = hastedTickInSeconds * numTicks;
+                hastedDurationInSteps = this.StepsPerHastedGcd * hastedDurationInSeconds / 1.5;
+            
+            int rounded = roundingFunction(hastedDurationInSteps);
+            if (hastedDurationInSteps != rounded)
+            {
+                this.Warnings += String.Format("{0}s duration approximated to {1}s ({2} steps);",
+                    System.Math.Round(hastedDurationInSeconds, 3),
+                    System.Math.Round(rounded * this.stepDuration, 4),
+                    rounded
+                );
+            }
+            return (int)rounded;
+        }
+        public int CalculateHoTTickInSteps(Buff buff)
+        {
+            double hastedTickInSteps;
+            double hastedTickInSeconds;
+            double rounded;
+
+            hastedTickInSeconds = DefaultUnhastedBuffTickDuration[(int)buff] / (1.0 + this.SpellHaste); 
+            hastedTickInSteps = this.StepsPerHastedGcd * hastedTickInSeconds / 1.5;
+            rounded = Math.Floor(hastedTickInSteps);
+            return (int)rounded;
+
         }
 
         // these are mostly self-explanatory
@@ -261,7 +320,8 @@ namespace Matlabadin
                 this.Spec,
                 this.Talents.ToLongString(),
                 this.StepsPerHastedGcd,
-                this.Haste,
+                this.MeleeHaste,
+                this.SpellHaste,
                 this.MeleeHit,
                 this.JudgeHit);
         }
@@ -300,7 +360,8 @@ namespace Matlabadin
                 && this.Talents == gp.Talents
                 && this.Glyphs == gp.Glyphs
                 && this.StepsPerHastedGcd == gp.StepsPerHastedGcd
-                && this.Haste == gp.Haste
+                && this.MeleeHaste == gp.MeleeHaste
+                && this.SpellHaste == gp.SpellHaste
                 && hitGeneratesSameShape(this.MeleeHit, gp.MeleeHit)
                 && hitGeneratesSameShape(this.JudgeHit, gp.JudgeHit)
                 && this.PermanentBuffs.SequenceEqual(gp.PermanentBuffs);
@@ -324,7 +385,8 @@ namespace Matlabadin
         public PaladinGlyphs Glyphs { get; private set; }
         public PaladinSpec Spec { get; private set; }
         public int StepsPerHastedGcd { get; private set; }
-        public double Haste { get; private set; }
+        public double MeleeHaste { get; private set; }
+        public double SpellHaste { get; private set; }
         public double MeleeHit { get; private set; }
         public double JudgeHit { get; private set; }
         public Buff[] PermanentBuffs { get; private set; }

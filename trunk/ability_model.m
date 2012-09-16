@@ -250,7 +250,7 @@ splash.WordofGlory=	0;
 label.WordofGlory=  'WoG';
 
 %Eternal Flame direct heal
-raw.EternalFlame=   (5538+0.49.*player.sp).*player.hopo; %Base Heal
+raw.EternalFlame=   (5538+0.49.*player.sp).*player.hopo.*(1+mdf.SoI); %Base Heal
 dmg.EternalFlame=   0;
 heal.EternalFlame=  raw.EternalFlame.*(1-exec.overh).*mdf.spcrit;
 threat.EternalFlame=1.*mdf.RFury./exec.npccount; %PH
@@ -259,7 +259,7 @@ splash.EternalFlame=0;
 label.EternalFlame= 'EF';
 
 %Eternal Flame HoT
-raw.EternalFlameHoT=   (508+0.0585.*player.sp).*player.hopo; % 1 tick
+raw.EternalFlameHoT=   (508+0.0585.*player.sp).*player.hopo.*(1+mdf.SoI); %heal for 1 tick
 dmg.EternalFlameHoT=   0;
 heal.EternalFlameHoT=  raw.EternalFlameHoT.*(1-exec.overh).*mdf.spcrit;
 threat.EternalFlameHoT=1.*mdf.RFury./exec.npccount;
@@ -268,7 +268,7 @@ splash.EternalFlameHoT=0;
 label.EternalFlameHoT= 'EF(HoT)';
 
 %Sacred Shield
-raw.SacredShield=   (5879 + 0.78.*player.sp);  %total absorption per tick
+raw.SacredShield=   (5879 + 0.78.*player.sp);  %absorption per 1 tick
 dmg.SacredShield=   0;
 heal.SacredShield=  raw.SacredShield; 
 threat.SacredShield=1.*mdf.RFury./exec.npccount; %PH

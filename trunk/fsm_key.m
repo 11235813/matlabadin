@@ -1,4 +1,4 @@
-function [ rotationKey spectalKey optionsKey ] = fsm_key( rotation, spec, talentString, glyphString, decimalHaste, mehit, sphit, pBuffs)
+function [ rotationKey spectalKey optionsKey ] = fsm_key( rotation, spec, talentString, glyphString, mehaste, sphaste, mehit, sphit, pBuffs)
 %FSM_KEY Generates keys from the simulation inputs
 %   Replaces identical sections in memoized_fsm and fsm_gen
 
@@ -23,7 +23,7 @@ function [ rotationKey spectalKey optionsKey ] = fsm_key( rotation, spec, talent
         spectalKey=spectalKey(1:(length(spectalKey)-1));
     end
     
-    optionsKey = sprintf('T%g_%0.5f_%0.5f_%0.5f', fsm_steps_per_gcd(), decimalHaste, mehit, sphit);
+    optionsKey = sprintf('T%g_%0.5f_%0.5f_%0.5f_%0.5f', fsm_steps_per_gcd(), mehaste, sphaste, mehit, sphit);
     optionsKey = [optionsKey '_' pBuffs];
     optionsKey = strrep(optionsKey,'_1.00000','_1_');
     optionsKey = strrep(optionsKey,'_0.','_');

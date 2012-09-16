@@ -47,7 +47,8 @@ namespace Matlabadin
             PaladinTalents talents,
             PaladinGlyphs glyphs,
             int stepsPerHastedGcd,
-            double haste,
+            double mehaste,
+            double sphaste,
             double mehit,
             double sphit,
             Buff[] permanentBuffs = null)
@@ -57,7 +58,8 @@ namespace Matlabadin
                 talents,
                 glyphs,
                 stepsPerHastedGcd,
-                haste,
+                mehaste,
+                sphaste,
                 mehit,
                 sphit,
                 permanentBuffs)
