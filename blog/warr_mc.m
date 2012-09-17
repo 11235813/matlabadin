@@ -49,8 +49,8 @@ expRating=1777;
 hasteRating=0;
 
 %toggle off hit/exp
-hitRating=0;
-expRating=0;
+% hitRating=0;
+% expRating=0;
 
 %other
 meta=1; %toggle for block meta, 1 is on, 0 is off
@@ -62,9 +62,9 @@ wbMit=0.9;
 %% Define constants/variables
 bossSwingTimer=1.5;
 bossRawSwingDamage=250000;
-Cd=91.42;
-Cp=237.1;
-Cb=149.1;
+Cd=91.0;
+Cp=237.2;
+Cb=150.4;
 k=0.956;
 SnBProcRate=0.3;
 SnBBuffDuration=5;
@@ -146,17 +146,16 @@ SBrAmount=0;
 
 %tracking
 avoids=0;
-fullAbsorbs=0;
 blocks=0;
 critblocks=0;
 hits=0;
-fullHits=0;
-fullCBAbsorbs=0;
-partialCBAbsorbs=0;
-fullBAbsorbs=0;
-partialBAbsorbs=0;
-partialAbsorbs=0;
-fullHitAbsorbs=0;
+
+cbFullAbsorbs=0;
+cbPartialAbsorbs=0;
+bFullAbsorbs=0;
+bPartialAbsorbs=0;
+hFullAbsorbs=0;
+hPartialAbsorbs=0;
 
 %%for loop to do event handling
 tic
@@ -230,18 +229,16 @@ for k=1:N
                     %figure out damage value.  If SB is up or we block,
                     %set to 0.7 or 0.4.  Otherwise, set to 1.
                     if tob(idSB)>0 || rand < block
-                        blocks=blocks+1;
                         %check for crit block
                         if rand < critBlock
                             critblocks=critblocks+1;
                             if SBrAmount>=critBlockDmg
                                 damage(k)=0;
                                 SBrAmount=SBrAmount-critBlockDmg;
-                                fullAbsorbs=fullAbsorbs+1;
-                                fullCBAbsorbs=fullCBAbsorbs+1;
+                                cbFullAbsorbs=cbFullAbsorbs+1;
                             else
                                 if SBrAmount>0
-                                    partialCBAbsorbs=partialCBAbsorbs+1;
+                                    cbPartialAbsorbs=cbPartialAbsorbs+1;
                                 end
                                 damage(k)=critBlockDmg-SBrAmount;
                                 SBrAmount=0;
@@ -254,31 +251,31 @@ for k=1:N
                             end
                         %otherwise, normal block
                         else
+                            blocks=blocks+1;
                             if SBrAmount>=blockDmg
                                 damage(k)=0;
                                 SBrAmount-SBrAmount-blockDmg;
-                                fullAbsorbs=fullAbsorbs+1;
-                                fullBAbsorbs=fullBAbsorbs+1;
+                                bFullAbsorbs=bFullAbsorbs+1;
                             else
                                 damage(k)=blockDmg-SBrAmount;
                                 if SBrAmount>0
-                                    partialBAbsorbs=partialBAbsorbs+1;
+                                    bPartialAbsorbs=bPartialAbsorbs+1;
                                 end
                                 SBrAmount=0;
                             end
                         end
                     else
                         hits=hits+1;
-                        damage(k)=1-SBrAmount;
                         if SBrAmount>1
-                            fullAbsorbs=fullAbsorbs+1;
-                            fullHitAbsorbs=fullHitAbsorbs+1;
-                        end
-                        if SBrAmount>0
-                            partialAbsorbs=partialAbsorbs+1;
+                            damage(k)=0;
+                            SBrAmount=SBrAmount-1;
+                            hFullAbsorbs=hFullAbsorbs+1;
+                        elseif SBrAmount>0
+                            damage(k)=1-SBrAmount;
                             SBrAmount=0;
+                            hPartialAbsorbs=hPartialAbsorbs+1;
                         else
-                            fullHits=fullHits+1;                            
+                            damage(k)=1;                         
                         end
                     end
                     %enforce rage bounds
@@ -319,27 +316,35 @@ end
 %% compile for plots
 dmg=damage(damage>=0);
 
+%sanity check
+if hits+blocks+critblocks+avoids~=length(dmg)
+    error('reporting error, length(dmg) doesn''t match number of events')
+else
+    numEvents=length(dmg);
+end
+
 S=sum(SBUptime>0)./length(SBUptime);
 % avoids=sum(dmg==0);
-avoidspct=avoids./length(dmg);
+avoidsPct=avoids./numEvents;
 % b1=sum(dmg==0.7);
-b1=blocks-critblocks;
-b2=critblocks;
-% b2=sum(dmg==0.4);
-% blocks=b1+b2;
-b1pct=b1./length(dmg);
-b2pct=b2./length(dmg);
-blockspct=blocks./length(dmg);
+blocksPct=blocks./numEvents;
+critblocksPct=critblocks./numEvents;
 % hits=sum(dmg==1);
-hitspct=hits./length(dmg);
-fullAbsorbspct=fullAbsorbs./length(dmg);
-fullCBAbsorbspct=fullCBAbsorbs./length(dmg);
-fullBAbsorbspct=fullBAbsorbs./length(dmg);
-partialBAbsorbspct=partialBAbsorbs./length(dmg);
-partialAbsorbspct=partialAbsorbs./length(dmg);
-fullHitspct=fullHits./length(dmg);
-fullHitAbsorbspct=fullHitAbsorbs./length(dmg);
-partialCBAbsorbspct=partialCBAbsorbs./length(dmg);
+hitsPct=hits./numEvents;
+
+hFullAbsorbsPct=hFullAbsorbs./numEvents;
+hPartialAbsorbsPct=hPartialAbsorbs./numEvents;
+cbFullAbsorbsPct=cbFullAbsorbs./numEvents;
+cbPartialAbsorbsPct=cbPartialAbsorbs./numEvents;
+bFullAbsorbsPct=bFullAbsorbs./numEvents;
+bPartialAbsorbsPct=bPartialAbsorbs./numEvents;
+
+allFullAbsorbs=hFullAbsorbs+cbFullAbsorbs+bFullAbsorbs;
+allFullAbsorbsPct=allFullAbsorbs./numEvents;
+% partialAbsorbsPct=partialAbsorbs./numEvents;
+% fullHitsPct=fullHits./numEvents;
+% fullHitAbsorbsPct=fullHitAbsorbs./numEvents;
+% cbPartialAbsorbsPct=cbPartialAbsorbs./numEvents;
 
 
 Tsb = max(t)./SBCasts;
@@ -361,35 +366,43 @@ if ~strcmp(plotFlag,'noplot')
         sf=1;
         ylstr='Number of events';
     end
-    bar(xout,yout./sf);
+    youtn=yout./sf;
+    bar(xout,youtn);
     xlim([-10 110])
-    ylim([0 1.25.*max(yout)./sf])
+    ylim([0 1.25.*max(youtn)])
     xlabel('Hit size (in % of full hit)')
-    ylabel(ylstr)
-    offset=diff(get(gca,'YLim'))./20;
-    text(-7,(avoids+fullAbsorbs)./sf+offset,[num2str(avoidspct.*100,'%2.1f') '% avoids'])
-    text(-7,(avoids+fullAbsorbs)./sf,[num2str(fullAbsorbspct.*100,'%2.2f') '% full Absorbs'])
-  
-    text(100.*critBlockDmg-10,(b2+partialBAbsorbs+partialAbsorbs)./sf+2*offset,[num2str(b2pct.*100,'%2.1f') '% crit blocks'])
-    text(100.*critBlockDmg-10,(b2+partialBAbsorbs+partialAbsorbs)./sf+offset,[num2str(partialCBAbsorbspct.*100,'%2.2f') '% partially absorbed'])
-    text(100.*critBlockDmg-10,(b2+partialBAbsorbs+partialAbsorbs)./sf,[num2str(fullCBAbsorbspct.*100,'%2.2f') '% fuly absorbed'])
-   
-    text(100.*blockDmg-15,(b1+partialAbsorbs)./sf+2*offset,[num2str(b1pct.*100,'%2.1f') '% blocked'])
-    text(100.*blockDmg-15,(b1+partialAbsorbs)./sf+offset,[num2str(partialBAbsorbspct.*100,'%2.2f') '% partially absorbed'])
-    text(100.*blockDmg-15,(b1+partialAbsorbs)./sf,[num2str(fullBAbsorbspct.*100,'%2.2f') '% fully absorbed'])
-
-    text(100-20,(fullHits+partialAbsorbs)./sf+2*offset,[num2str(hitspct.*100,'%2.1f') '% full hits'])
-    text(100-20,(fullHits+partialAbsorbs)./sf+offset,[num2str(partialAbsorbspct.*100,'%2.2f') '% partially absorbed'])
-    text(100-20,(fullHits+partialAbsorbs)./sf,[num2str(fullHitAbsorbspct.*100,'%2.2f') '% fully absorbed'])
+    ylabel(ylstr)   
     title(['T=' int2str(simTime./60) ' min, S=' num2str(S.*100,'%2.1f') '%, Tsb=' num2str(Tsb,'%2.1f') 's, R_{rage}=' num2str(Rrage,'%2.3f') '/s, DTPS=' num2str(DTPS.*bossSwingTimer.*100,'%2.2f') '%'])
+ 
+    
+    %labeling
+    offset=diff(get(gca,'YLim'))./40;
+    
+    text(-7,youtn(xout==0)+3.*offset,[num2str(avoidsPct.*100,'%2.1f') '% avoids'])
+    text(-7,youtn(xout==0)+offset,[num2str(allFullAbsorbsPct.*100,'%2.2f') '% full Absorbs'])
+  
+    text(100.*critBlockDmg-10,youtn(xout==40)+5*offset,[num2str(critblocksPct.*100,'%2.1f') '% crit blocks'])
+    text(100.*critBlockDmg-10,youtn(xout==40)+3.*offset,[num2str(cbPartialAbsorbsPct.*100,'%2.2f') '% partially absorbed'])
+    text(100.*critBlockDmg-10,youtn(xout==40)+offset,[num2str(cbFullAbsorbsPct.*100,'%2.2f') '% fuly absorbed'])
+   
+    text(100.*blockDmg-15,youtn(xout==70)+5*offset,[num2str(blocksPct.*100,'%2.1f') '% blocked'])
+    text(100.*blockDmg-15,youtn(xout==70)+3.*offset,[num2str(bPartialAbsorbsPct.*100,'%2.2f') '% partially absorbed'])
+    text(100.*blockDmg-15,youtn(xout==70)+offset,[num2str(bFullAbsorbsPct.*100,'%2.2f') '% fully absorbed'])
+
+    text(100-20,youtn(xout==100)+5*offset,[num2str(hitsPct.*100,'%2.1f') '% full hits'])
+    text(100-20,youtn(xout==100)+3.*offset,[num2str(hPartialAbsorbsPct.*100,'%2.2f') '% partially absorbed'])
+    text(100-20,youtn(xout==100)+offset,[num2str(hFullAbsorbsPct.*100,'%2.2f') '% fully absorbed'])
     
     figure(2)
     [yout2 xout2]=hist(maDTPS,50);
-    bar(xout2,yout2./sf);
+    yout2n=yout2.*100./length(maDTPS);
+    bar(xout2,yout2n);
+    xlabel('5-attack moving average DTPS')
+    ylabel('Percentage of events')
     title(['T=' int2str(simTime./60) ' min, S=' num2str(S.*100,'%2.1f') '%, Tsb=' num2str(Tsb,'%2.1f') 's, R_{rage}=' num2str(Rrage,'%2.3f') '/s, DTPS=' num2str(DTPS.*bossSwingTimer.*100,'%2.2f') '%'])
     temp=get(gca,'YLim');mval=temp(2);
     text(0.1,0.8*mval,['mean = ' num2str(mean_ma,'%1.4f')]);
-    text(0.1,0.73*mval,['std  = ' num2str(std_ma,'%1.4f')]);
+    text(0.123,0.73*mval,['std  = ' num2str(std_ma,'%1.4f')]);
 end
 
 statblock.S=S;
@@ -399,9 +412,9 @@ statblock.block=block;
 statblock.avoidance=avoidance;
 statblock.rageGain=rageGain;
 statblock.xsRage=xsRage;
-statblock.blocked=blockspct;
-statblock.avoided=avoidspct;
-statblock.unmit=hitspct;
+statblock.blocked=blocksPct;
+statblock.avoided=avoidsPct;
+statblock.unmit=hitsPct;
 statblock.meanma=mean_ma;
 statblock.stdma=std_ma;
 statblock.SBCasts=SBCasts;
@@ -452,15 +465,16 @@ statblock.SBrCasts=SBrCasts;
 
     function finisherCast(finisher)
         
-        if strcmp(finisher,'SBonly')
+        if strcmpi(finisher,'SBonly')
             shieldBlockCast()
-        elseif strcmp(finisher,'SBronly')
+        elseif strcmpi(finisher,'SBronly')
             shieldBarrierCast()
         else %use SBarr to bleed rage >100
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we still have excess rage, pop barrier
             if rage>=100
                 shieldBarrierCast()
-            else
-                shieldBlockCast()
             end
         end
         
@@ -528,7 +542,7 @@ statblock.SBrCasts=SBrCasts;
                     rage=min([rage 120]);
                 end
             
-        else %default priority, SS>Rev>BS>BR>TC>Dev
+        else %default priority, SS>Rev>BR>TC>Dev
             
                 %SS is first priority
                 if tob(idSScd)<=0
