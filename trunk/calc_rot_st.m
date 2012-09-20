@@ -10,16 +10,16 @@ def_db;
 
 %% Configurations
 %create the first configuation
-%low hit, SotR/SoT build
-%set melee hit to 2%, expertise to 5%
-%do this by altering shirt stats
-cfg(1)=build_config('hit',2,'exp',5); 
+%we set hit/exp to desired values by altering shirt stats
 
 %hit-cap and exp soft-cap
-cfg(2)=build_config('hit',7.5,'exp',7.5);
-% 
-%low hit, WoG/SoI build
-cfg(3)=build_config('hit',7.5,'exp',7.5,'seal','SoI');
+cfg(1)=build_config('hit',7.5,'exp',7.5);
+ 
+%hit-cap and exp soft-cap, SoI
+cfg(2)=build_config('hit',7.5,'exp',7.5,'seal','SoI');
+
+%low hit, SotR/SoT build
+cfg(3)=build_config('hit',2,'exp',5); 
 
 
 %% Generate DPS for each config
@@ -113,7 +113,9 @@ for g=1:length(cfg)
     % li.setColumnTextAlignment(3:6,'center')
     li.setColumnFormat(3:6,'%6.0f')
     li.setColumnFormat(7:8,'%2.1f')
+    disp('[code]')
     li.toText()
+    disp('[/code]')
     
     lidb{g}=li;
 end
@@ -123,7 +125,13 @@ end
 %% pretty-print output array, this is only for the first set.
 queue.stsubset={ ...
     'CS>J>AS>Cons>HW>SotR'; ...
-    };
+    'CS>J>AS+>Cons>AS>HW>SotR';...
+    'CS>J>AS+>Cons>AS>ES>HW>SotR';...
+    'CS>J>Cons>ES>AS>HW>SotR';...
+    '^WB>CS>J>AS>Cons>SS[buffSS<5]>HW>SotR';...
+    'HoW>CS>J>AS>Cons>HW>SotR';...
+    'HoW>CS>J>AS>Cons>ES>HW>SotR';...
+     };
     
 li=lidb{1};
 disp([num2str(cfg(1).player.mehit,'%1.2f') '% hit, ' num2str(cfg(1).player.exp,'%1.2f') '% exp'])    
@@ -140,4 +148,6 @@ for q=size(queue.st,1):-1:1
     end
         
 end
-li.toText()
+    disp('[code]')
+    li.toText()
+    disp('[/code]')

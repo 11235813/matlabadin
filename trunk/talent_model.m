@@ -17,7 +17,7 @@ function [talent] =  talent_model(shortform)
 
 %% input handling
 if nargin<1 || (nargin==1 && isempty(shortform))
-    shortform=[0 0 3 0 0 0];
+    shortform=[0 0 0 0 0 0];
 else
     if sum(size(shortform)==[1 6])~=2
         error('talent_model input is not 1x6')

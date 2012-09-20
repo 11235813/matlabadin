@@ -1,5 +1,6 @@
 function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentString, glyphString, mehaste, sphaste, mehit, sphit, pBuffs)
     global fsm_cache_actionPr;
+    global fsm_cache_efUptime;
     global fsm_cache_ef0Uptime;
     global fsm_cache_ef1Uptime;
     global fsm_cache_ef2Uptime;
@@ -26,6 +27,7 @@ function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentStri
 		fsm_cache_actionPr = {};
         fsm_cache_metadata = {};
 		fsm_cache_ssUptime = {};
+		fsm_cache_efUptime = {};
 		fsm_cache_ef0Uptime = {};
         fsm_cache_ef1Uptime = {};
         fsm_cache_ef2Uptime = {};
@@ -48,12 +50,13 @@ function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentStri
         actionPr = fsm_cache_actionPr.(rotationKey).(spectalKey).(optionsKey);
         metadata = fsm_cache_metadata.(rotationKey).(spectalKey).(optionsKey);
         uptime.ss = fsm_cache_ssUptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.ef = fsm_cache_efUptime.(rotationKey).(spectalKey).(optionsKey);
         uptime.ef0 = fsm_cache_ef0Uptime.(rotationKey).(spectalKey).(optionsKey);
-        uptime.ef1 = fsm_cache_ef0Uptime.(rotationKey).(spectalKey).(optionsKey);
-        uptime.ef2 = fsm_cache_ef0Uptime.(rotationKey).(spectalKey).(optionsKey);
-        uptime.ef3 = fsm_cache_ef0Uptime.(rotationKey).(spectalKey).(optionsKey);
-        uptime.ef4 = fsm_cache_ef0Uptime.(rotationKey).(spectalKey).(optionsKey);
-        uptime.ef5 = fsm_cache_ef0Uptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.ef1 = fsm_cache_ef1Uptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.ef2 = fsm_cache_ef2Uptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.ef3 = fsm_cache_ef3Uptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.ef4 = fsm_cache_ef4Uptime.(rotationKey).(spectalKey).(optionsKey);
+        uptime.ef5 = fsm_cache_ef5Uptime.(rotationKey).(spectalKey).(optionsKey);
         uptime.wb = fsm_cache_wbUptime.(rotationKey).(spectalKey).(optionsKey);
 %         uptime.sb = fsm_cache_sbUptime.(rotationKey).(spectalKey).(optionsKey);
         uptime.aw = fsm_cache_awUptime.(rotationKey).(spectalKey).(optionsKey);
@@ -71,12 +74,13 @@ function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentStri
     fsm_cache_actionPr.(rotationKey).(spectalKey).(optionsKey) = actionPr;
     fsm_cache_metadata.(rotationKey).(spectalKey).(optionsKey) = metadata;
     fsm_cache_ssUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ss;
-    fsm_cache_ef0Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef;
-    fsm_cache_ef1Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef;
-    fsm_cache_ef2Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef;
-    fsm_cache_ef3Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef;
-    fsm_cache_ef4Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef;
-    fsm_cache_ef5Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef;
+    fsm_cache_efUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef;
+    fsm_cache_ef0Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef0;
+    fsm_cache_ef1Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef1;
+    fsm_cache_ef2Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef2;
+    fsm_cache_ef3Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef3;
+    fsm_cache_ef4Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef4;
+    fsm_cache_ef5Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.ef5;
     fsm_cache_wbUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.wb;
 %     fsm_cache_sbUptime.(rotationKey).(spectalKey).(optionsKey) = uptime.sb;
     fsm_cache_gowog1Uptime.(rotationKey).(spectalKey).(optionsKey) = uptime.gowog1;
@@ -99,6 +103,8 @@ function [actionPr, metadata, uptime] = load_fsm_csv(filename)
 		linePr = str2double(lineTxtPr);
 		if strcmp(lineAction, 'Uptime_SacredShield')
             uptime.ss = linePr;
+        elseif strcmp(lineAction, 'Uptime_EternalFlame')
+            uptime.ef = linePr;
         elseif strcmp(lineAction, 'Uptime_EternalFlame_Bog0')
             uptime.ef0 = linePr;
         elseif strcmp(lineAction, 'Uptime_EternalFlame_Bog1')

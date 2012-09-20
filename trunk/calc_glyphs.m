@@ -13,16 +13,16 @@ def_db;
 %low hit, SotR/SoT build
 %set melee hit to 2%, expertise to 5%
 %do this by altering shirt stats
-cfg(1)=build_config('hit',2,'exp',5,'glyph',[0 0 0]); 
+cfg(1)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0]); 
 
 %low hit, WoG/SoI build
-cfg(2)=build_config('hit',2,'exp',5,'glyph',[0 0 0],'queue','^WB>CS>J>AS>^SS>Cons>HW>WoG');
-
-%hit-cap and exp soft-cap
-cfg(3)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0]);
+cfg(2)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'queue','^WB>CS>J>AS>Cons>HW>WoG');
+% 
+% %hit-cap and exp soft-cap
+% cfg(3)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0]);
 
 %multiple targets
-cfg(4)=build_config('hit',2,'exp',5,'glyph',[0 0 0],'npccount',3); 
+cfg(3)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'npccount',3,'seal','SoR','queue','HotR>J>AS>Cons>HW>SotR'); 
 
 %% Vengeance levels
 for v=[ddb.v1,ddb.v2]
@@ -40,7 +40,7 @@ for g=1:length(cfg)
     c=stat_model(c);
     c=ability_model(c);
     c=rotation_model(c);
-    dps0(1:qmax,g)=c.rot.dps;
+    dps0(1:qmax,g)=c.rot.dps+c.rot.aoe;
     hps0(1:qmax,g)=c.rot.hps;
     
     wb=waitbar(0,['Calculating CFG # ' int2str(g) ' / ' int2str(length(cfg))]);
@@ -54,14 +54,14 @@ for g=1:length(cfg)
         c=rotation_model(c);
                     
         %store DPS & HPS
-        dps(q,g)=c.rot.dps;
+        dps(q,g)=c.rot.dps+c.rot.aoe;
         hps(q,g)=c.rot.hps;
                 
         waitbar(q/qmax,wb)
         
     end
     close(wb)
-    toc
+%     toc
 end
 
 
@@ -91,8 +91,9 @@ end
 % li.setColumnFormat(3:4,'%6.0f')
 % li.setColumnFormat(5:6,'%2.1f')
 disp(' ');disp(' ');
-disp(['---' int2str(round(c.player.VengAP./1000)) 'k Vengeance ---'])
+disp(['---' int2str(round(c.player.VengAP./1000)) 'k Vengeance ---[code]'])
 li.toText()
+disp('[/code]')
 
 %% plots
 % 

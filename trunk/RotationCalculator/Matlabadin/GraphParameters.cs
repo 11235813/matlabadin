@@ -153,8 +153,8 @@ namespace Matlabadin
                     if (!this.Rotation.AbilitiesUsed.Contains(Ability.SS)) return 0;
                     break;
                 case Buff.EF:
-                    if (!this.Talents.Includes(PaladinTalents.EternalFlame)) return 0;
-                    if (!(this.Rotation.AbilitiesUsed.Contains(Ability.EF) || this.Rotation.AbilitiesUsed.Contains(Ability.WoG))) return 0;
+                   // if (!this.Talents.Includes(PaladinTalents.EternalFlame)) return 0;
+                    if (!this.Rotation.AbilitiesUsed.Contains(Ability.EF)) return 0;
                     break;
                 case Buff.AW:
                     if (!this.Rotation.AbilitiesUsed.Contains(Ability.AW)) return 0;

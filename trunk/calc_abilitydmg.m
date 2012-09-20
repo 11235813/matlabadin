@@ -7,9 +7,9 @@ def_db;
 
 %% Configurations
 %just use default for most
-cfg(1)=build_config;
+cfg(1)=build_config('glyph',[0 0 0]);
 %second one for multi-target
-cfg(2)=build_config('npccount',4);
+cfg(2)=build_config('glyph',[0 0 0],'npccount',4);
 
 %% Veng loop
 for v=[50,100]
@@ -45,8 +45,9 @@ for v=[50,100]
     % % li.setColumnTextAlignment(3:6,'center')
     % li.setColumnFormat(3:4,'%6.0f')
     % li.setColumnFormat(5:6,'%2.1f')
-    disp(['---' int2str(round(c.player.VengAP./1000)) 'k Vengeance ---'])
+    disp(['[code]---' int2str(round(c.player.VengAP./1000)) 'k Vengeance ---'])
     li.toText()
+    disp('[/code]')
     
     %% close Veng loop
 end
@@ -89,7 +90,7 @@ bar13=bar(round(c.abil.val.raw(set3)./1e3),'BarWidth',0.5);
 xlim(0.5+[0 length(set3)])
 set(gca,'XTick',1:length(set3),'XTickLabel',{c.abil.val.label{set3}})
 xlabel('Ability')
-ylabel('Raw Damage (thousands)')
+ylabel('Raw Damage or Healing (thousands)')
 title([int2str(round(c.player.VengAP./1000)) 'k Vengeance'])
 
 %% Plot 4 - Raw healing 
