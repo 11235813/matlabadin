@@ -72,7 +72,8 @@ namespace Matlabadin
             // sanity checks inputs
             if (spec == PaladinSpec.Holy) throw new NotImplementedException("No plans to implement Holy");
             if (spec == PaladinSpec.Ret) throw new NotImplementedException("Ret NYI. See http://code.google.com/p/matlabadin/issues/list for status and priority");
-            if (mehaste > 0.5) throw new NotImplementedException("GCD clipping from >50% haste not yet implemented");
+            if (mehaste > 0.5) throw new NotImplementedException("GCD clipping from >50% melee haste not yet implemented");
+            if (sphaste > 0.5) throw new NotImplementedException("GCD clipping from >50% spell haste not yet implemented");
             
             this.Warnings = "";
 
@@ -125,6 +126,11 @@ namespace Matlabadin
             this.BuffTrackingArraySize = Enumerable.Range(0, (int)Buff.UptimeTrackedBuffs)
                 .Select(i => MaxBuffStacks((Buff)i))
                 .Sum();
+
+            // TOOD: use parameters instead of hard-coding SS/EF
+            this.maxBuffSteps = this.buffStacks.ToArray();
+            if (this.maxBuffSteps[(int)Buff.EF] != 0) this.maxBuffSteps[(int)Buff.EF] += CalculateHoTTickInSteps(Buff.EF);
+            if (this.maxBuffSteps[(int)Buff.SS] != 0) this.maxBuffSteps[(int)Buff.SS] += CalculateHoTTickInSteps(Buff.SS);
         }
 
         // This function calculates the ability cooldowns (in steps) after Sanctity of Battle
@@ -329,6 +335,10 @@ namespace Matlabadin
         {
             return buffSteps[(int)buff];
         }
+        public int MaximumBuffDurationInSteps(Buff buff)
+        {
+            return maxBuffSteps[(int)buff];
+        }
         //public int BuffAppendInSteps(Buff buff)
         //{
         //    if (buff == Buff.SotRSB)
@@ -394,6 +404,7 @@ namespace Matlabadin
         private readonly int[] abilitySteps;
         private readonly int[] buffSteps;
         private readonly int[] buffStacks;
+        private readonly int[] maxBuffSteps;
         private readonly bool[] isOnGcd;
         private readonly double stepDuration;
         /// <summary>
