@@ -10,16 +10,16 @@ def_db;
 
 %% Configurations
 %create the first configuation
-%low hit, SotR/SoT build
-%set melee hit to 2%, expertise to 5%
-%do this by altering shirt stats
-cfg(1)=build_config('hit',2,'exp',5,'glyph',[0 0 0],'talents',[0 0 0 0 0 0]); 
+%set melee hit and expertise by altering shirt stats
 
 %hit-cap and exp soft-cap
-cfg(2)=build_config('hit',7.5,'exp',15,'glyph',[0 0 0],'talents',[0 0 0 0 0 0]);
-% 
+cfg(1)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0]);
+
+%hit-cap and exp soft-cap, SoI
+cfg(2)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'seal','SoI');
+
 %multiple targets
-cfg(3)=build_config('hit',2,'exp',5,'glyph',[0 0 0],'npccount',5); 
+cfg(3)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'npccount',5,'seal','SoR'); 
 
 %% Vengeance levels
 for v=[ddb.v1,ddb.v2]
@@ -32,7 +32,7 @@ for g=1:length(cfg)
     
     %set configuration variables    
     c=cfg(g);
-    c.exec.queue='^WB>SotR>CS>J>AS>Cons>HW';
+    c.exec.queue='^WB>CS>J>AS>Cons>HW>SotR';
     c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
@@ -40,6 +40,7 @@ for g=1:length(cfg)
     
     %store baseline DPS
     dps0(g)=c.rot.dps;
+    aoe0(g)=c.rot.aoe;
     hps0(g)=c.rot.hps;
     hpg0(g)=c.rot.hpg;
     sbu0(g)=c.rot.sbuptime;
@@ -50,7 +51,7 @@ for g=1:length(cfg)
     %Eternal Flame
     c=cfg(g);
     c.talent=talent_model([0 0 2 0 0 0]);
-    c.exec.queue='^WB>^EF>SotR>CS>J>AS>Cons>HW';
+    c.exec.queue='^WB>EF[buffEF<2.5]>CS>J>AS>Cons>HW>SotR5';
     c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
@@ -60,12 +61,13 @@ for g=1:length(cfg)
     EF_dps(g)=c.rot.dps-dps0(g);
     EF_hps(g)=c.rot.hps-hps0(g);
     EF_hpg(g)=c.rot.hpg-hpg0(g);
-%     EF_sbu(g)=c.rot.sbuptime(g)-sbu0(g);
+    EF_sbu(g)=c.rot.sbuptime-sbu0(g);
+    EF_avgsbu(g)=c.rot.sbuptime-sbu0(g);
     
     %Sacred Shield
     c=cfg(g);
     c.talent=talent_model([0 0 3 0 0 0]);
-    c.exec.queue='^WB>SotR>CS>J>AS>^SS>Cons>HW';
+    c.exec.queue='^WB>CS>J>AS>Cons>SS[buffSS<5]>HW>SotR';
     c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
@@ -75,13 +77,14 @@ for g=1:length(cfg)
     SS_dps(g)=c.rot.dps-dps0(g);
     SS_hps(g)=c.rot.hps-hps0(g);
     SS_hpg(g)=c.rot.hpg-hpg0(g);
-%     SS_sbu(g)=c.rot.sbuptime(g)-sbu0(g);
+    SS_sbu(g)=c.rot.sbuptime-sbu0(g);
+    SS_avgsbu(g)=c.rot.sbuptime-sbu0(g);
     
     %% L75 Talents
     %Holy Avenger
     c=cfg(g);
     c.talent=talent_model([0 0 0 0 1 0]);
-    c.exec.queue='^WB>SotR>CS>J>AS>Cons>HW';
+    c.exec.queue='^WB>CS>J>AS>Cons>HW>SotR';
     c.exec.veng=v;
     c.buff.HA=1;
     c=stat_model(c);
@@ -98,7 +101,7 @@ for g=1:length(cfg)
     %Sanctified Wrath
     c=cfg(g);
     c.talent=talent_model([0 0 0 0 2 0]);
-    c.exec.queue='^WB>SotR>J>CS>AS>Cons>HW';
+    c.exec.queue='^WB>J>CS>AS>Cons>HW>SotR';
     c.exec.veng=v;
     c.buff.AW=1;
     c=stat_model(c);
@@ -107,6 +110,7 @@ for g=1:length(cfg)
     
     %AW w/o SW
     d=c;
+    d.exec.queue='^WB>CS>J>AS>Cons>HW>SotR';
     d.talent=talent_model([0 0 0 0 0 0]);
     d=rotation_model(d);
     
@@ -139,33 +143,33 @@ for g=1:length(cfg)
     %% L90 Talents
     %Holy Prism
     c=cfg(g);
-    c.exec.queue='^WB>SotR>CS>J>AS>HPr>Cons>HW';
+    c.exec.queue='^WB>SotR>CS>J>AS>Cons>HPr>HW';
     c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
     c=rotation_model(c);
     
     %store DPS & HPS
-    HPr_dps(g)=c.rot.dps-dps0(g);
+    HPr_dps(g)=c.rot.dps-dps0(g)+c.rot.aoe-aoe0(g);
     HPr_hps(g)=c.rot.hps-hps0(g);
     HPr_hpg(g)=c.rot.hpg-hpg0(g);
     
     %Light's Hammer
     c=cfg(g);
-    c.exec.queue='^WB>SotR>CS>J>AS>LH>Cons>HW';
+    c.exec.queue='^WB>SotR>CS>J>AS>Cons>LH>HW';
     c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
     c=rotation_model(c);
     
     %store DPS & HPS
-    LH_dps(g)=c.rot.dps-dps0(g);
+    LH_dps(g)=c.rot.dps-dps0(g)+c.rot.aoe-aoe0(g);
     LH_hps(g)=c.rot.hps-hps0(g);
     LH_hpg(g)=c.rot.hpg-hpg0(g);
     
     %Execution Sentence
     c=cfg(g);
-    c.exec.queue='^WB>SotR>CS>J>AS>ES>Cons>HW';
+    c.exec.queue='^WB>SotR>CS>J>AS>Cons>ES>HW';
     c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
@@ -180,14 +184,14 @@ for g=1:length(cfg)
         
 end
 %     close(wb)
-toc
+% toc
 % end
 
 tal_dps=[EF_dps;SS_dps;HA_dps;SW_dps;DP_dps;HPr_dps;LH_dps;ES_dps];
 tal_hps=[EF_hps;SS_hps;HA_hps;SW_hps;DP_hps;HPr_hps;LH_hps;ES_hps];
 tal_hpg=roundn([EF_hpg;SS_hpg;HA_hpg;SW_hpg;DP_hpg;HPr_hpg;LH_hpg;ES_hpg],-3);
-tal_sbu=[HA_sbu;SW_sbu;DP_sbu];
-tal_asbu=[HA_avgsbu;SW_avgsbu;DP_avgsbu];
+tal_sbu=[EF_sbu;SS_sbu;HA_sbu;SW_sbu;DP_sbu];
+tal_asbu=[EF_avgsbu;SS_avgsbu;HA_avgsbu;SW_avgsbu;DP_avgsbu];
 tal_labels={'Eternal Flame';'Sacred Shield';'Holy Avenger';'Sanctified Wrath';...
             'Divine Purpose';'Holy Prism';'Light''s Hammer';'Execution Sentence'};
 
@@ -214,15 +218,15 @@ end
 
 li2=DataTable();
 li2{1:3,1}={' ';'Talent';'Base'};
-li2{4:6,1}=[tal_labels(3:5)];%li2{5,1}=tal_labels{4};li2{6,1}=tal_labels{5};
+li2{4:8,1}=[tal_labels(1:5)];%li2{5,1}=tal_labels{4};li2{6,1}=tal_labels{5};
 for g=1:length(cfg)
     
     li2{1:3,2*g}={['cfg' int2str(g)];'SBU%';num2str(roundn(sbu0(g).*100,-2),'%2.2f')};
-    li2{4:6,2*g}=tal_sbu(:,g).*100;
+    li2{4:8,2*g}=tal_sbu(:,g).*100;
     li2.setColumnFormat(2*g,'%2.2f')
     
     li2{1:3,2*g+1}={['cfg' int2str(g)];'AvgU%';num2str(roundn(sbu0(g).*100,-2),'%2.2f')};
-    li2{4:6,2*g+1}=tal_asbu(:,g).*100;
+    li2{4:8,2*g+1}=tal_asbu(:,g).*100;
     li2.setColumnFormat(2*g+1,'%2.2f')
 end
 
@@ -232,9 +236,11 @@ end
 % li.setColumnFormat(5:6,'%2.1f')
 
 disp(' ');disp(' ');
-disp(['---' int2str(round(c.player.VengAP./1000)) 'k Vengeance ---'])
+disp(['---' int2str(round(c.player.VengAP./1000)) 'k Vengeance ---[code]'])
 li.toText()
+disp('[/code][code]')
 li2.toText()
+disp('[/code]')
 
 %% plots
 

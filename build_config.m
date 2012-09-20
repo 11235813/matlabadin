@@ -116,9 +116,9 @@ c.glyph=glyph_model(g.shortform);
 
 %load gear set - if none is specified, default to pre-raid
 if isempty(gr.gset)==1 
-    gr.gset=1;  %1=pre-raid , 2=T14, 3=T14H, 4=T15, 5=T15H
+    gr.gset=4;  %1=450, 2=463, 3=483, 4=496 (T14N), 5=509
 end 
-c.egs=ddb.gearset{gr.gset}; %1=pre-raid , 2=T14, 3=T14H, 4=T15, 5=T15H
+c.egs=ddb.gearset{gr.gset}; 
 
 %calculate relevant stats
 %TODO: this could be built into stat_model

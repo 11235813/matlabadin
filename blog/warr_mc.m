@@ -49,8 +49,8 @@ expRating=1777;
 hasteRating=0;
 
 %toggle off hit/exp
-% hitRating=0;
-% expRating=0;
+hitRating=0;
+expRating=0;
 
 %other
 meta=1; %toggle for block meta, 1 is on, 0 is off

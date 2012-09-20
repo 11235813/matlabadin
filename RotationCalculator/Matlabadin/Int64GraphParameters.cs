@@ -101,7 +101,7 @@ namespace Matlabadin
             for (int i = 0; i < (int)Buff.Count; i++)
             {
                 BuffDurationStartBit[i] = buffBitsUsed;
-                int cd = BuffDurationInSteps((Buff)i);
+                int cd = BuffDurationInSteps((Buff)i)+10;
                 if (base.minBuffDuration[(int)i] > 0) cd = 0; // remove permanent buffs from state
                 while (1 << BuffDurationBits[i] <= cd) BuffDurationBits[i]++;
                 buffBitsUsed += BuffDurationBits[i];
@@ -154,7 +154,7 @@ namespace Matlabadin
             if (base.minBuffDuration[(int)buff] > 0) return state; // bypass for permanent buffs
             int numBits = BuffDurationBits[(int)buff];
 #if !NOSANITYCHECKS
-            if (value >= 1 << numBits) throw new ArgumentException(String.Format("Duration of {0} steps does not fit into {1} bits assigned to buff {2}", value, numBits, buff));
+            if (value >= 1 << numBits) throw new ArgumentException(String.Format("Duration of {0} steps does not fit into {1} bits assigned to buff {2}", value, numBits, buff)); // halp
 #endif
             state.buff = Pack(state.buff, BuffDurationStartBit[(int)buff], numBits, value);
             if (value == 0)

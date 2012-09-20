@@ -370,7 +370,8 @@ namespace Matlabadin
                         nextState = sm.SetTimeRemaining(nextState, Buff.GoWoG, gp.BuffDurationInSteps(Buff.GoWoG));
                         nextState = sm.SetStacks(nextState, Buff.GoWoG, availableHp);
                     }
-                    if (gp.Talents.Includes(PaladinTalents.EternalFlame))
+                    //if (gp.Talents.Includes(PaladinTalents.EternalFlame))
+                    if (ability==Ability.EF)
                     {
                         int efBogStacks = sm.Stacks(nextState, Buff.BoG);
                         nextState = sm.SetTimeRemaining(nextState, Buff.EF, gp.BuffDurationInSteps(Buff.EF) + sm.TimeRemaining(nextState, Buff.EF) % gp.CalculateHoTTickInSteps(Buff.EF));

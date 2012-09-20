@@ -1,5 +1,10 @@
-function [DTPS statblock]=pally_mc(stat,val,simMins,plotFlag,tocFlag)
+function [DTPS statblock]=pally_mc(stat,val,simMins,plotFlag,tocFlag,statSetup)
 dhit=0;dexp=0;dhaste=0;dmastery=0;ddodge=0;dparry=0;
+if nargin<6
+    plotNum=1;
+else
+    plotNum=statSetup.plotNum;
+end
 if nargin<5
     tocFlag='toc';
 end
@@ -36,13 +41,27 @@ RandStream.setDefaultStream ...
      (RandStream('mt19937ar','seed',sum(100*clock)));
  
 %% Player stats
-buffedStr=9208;
-parryRating=4834;
-dodgeRating=4892;
-masteryRating=6758;
-hitRating=900;
-expRating=1777;
-hasteRating=621;
+if nargin<6
+    buffedStr=9208;
+    parryRating=4834;
+    dodgeRating=4892;
+    masteryRating=6758;
+    hitRating=900;
+    expRating=1777;
+    hasteRating=621;
+else
+    buffedStr=statSetup.buffedStr;
+    parryRating=statSetup.parryRating;
+    dodgeRating=statSetup.dodgeRating;
+    masteryRating=statSetup.masteryRating;
+    hitRating=statSetup.hitRating;
+    expRating=statSetup.expRating;
+    hasteRating=statSetup.hasteRating;
+end
+
+%artificially set hit/exp to zero
+% hitRating=0;
+% expRating=0;
 
 %% Define constants/variables
 bossSwingTimer=1.5;
@@ -112,6 +131,14 @@ t=zeros(N,1);
 damage=-1.*ones(N,1);
 SotRUptime=t;debugG=t;debugHP=t;SotRUptimeotR=t;debugHPG=t;
 
+%tracking
+avoids=0;
+blocks=0;
+hits=0;
+mits=0;
+bMits=0;
+hMits=0;
+
 %%for loop to do event handling
 tic
 for k=1:N
@@ -122,90 +149,97 @@ for k=1:N
     %figure out if any of the event timers is 0 or less
     ids=find(tbe<=0);
     
-    %if so something should happen in this time step
-%     if find(tbe<=0)  %
-        %something should happen in this time step
+    %event handling
+    for j=1:length(ids)
         
-        
-        
-        %event handling
-        for j=1:length(ids)
+        switch ids(j)
             
-            switch ids(j)
-                    
-                %if the GCD timer is up, see if there's something to cast                        
-                case idGCD
-                                        
-                    %CS is first priority
-                    if tob(idCScd)<=0
-                        %put CS on cooldown, start GCD
-                        tob(idCScd)=4.5./(1+haste);
-                        tbe(idGCD)=1.5./(1+haste);
-                        %Check for hit
-                        if rand<(1-miss-dodge-parry)
-                            %success! grant HP, enforce bounds
-                            hp=hp+1;hp=min([hp 5]);hp=max([hp 0]);
-                            debugHPG(k)=1; %debug flag
-                            %Check for Grand Crusader proc
-                            if rand<gcProcRate
-                                %set GC buff duration
-                                tob(idGCbuff)=gcBuffDuration;
-                            end
+            %if the GCD timer is up, see if there's something to cast
+            case idGCD
+                
+                %if SotR can be cast, do so
+                castSotRIfAble();
+                
+                %CS is first priority
+                if tob(idCScd)<=0
+                    %put CS on cooldown, start GCD
+                    tob(idCScd)=4.5./(1+haste);
+                    tbe(idGCD)=1.5./(1+haste);
+                    %Check for hit
+                    if rand<(1-miss-dodge-parry)
+                        %success! grant HP, enforce bounds
+                        hp=hp+1;hp=min([hp 5]);hp=max([hp 0]);
+                        debugHPG(k)=1; %debug flag
+                        %Check for Grand Crusader proc
+                        if rand<gcProcRate
+                            %set GC buff duration
+                            tob(idGCbuff)=gcBuffDuration;
                         end
+                    end
                     %J is second priority, check for cooldown and don't use
                     %if CS cd is almost up
-                    elseif tob(idJcd)<=0 && tob(idCScd)>=0.2
-                        %set J cooldown, start GCD
-                        tob(idJcd)=6./(1+haste);
-                        tbe(idGCD)=1.5./(1+haste);
-                        %check for hit
-                        if rand<(1-miss)
-                            %success! grant HP, enforce bounds
-                            hp=hp+1;hp=min([hp 5]);hp=max([hp 0]);
-                            debugHPG(k)=2; %debug flag
-                        end
-                    %Grand Crusader
-                    elseif tob(idGCbuff)>0 && tob(idCScd)>=0.2
-                        %Consume GC buff, set GCD
-                        tob(idGCbuff)=0;
-                        tbe(idGCD)=1.5./(1+haste);
-                        %grant HP, enforce bounds
+                elseif tob(idJcd)<=0 && tob(idCScd)>=0.2
+                    %set J cooldown, start GCD
+                    tob(idJcd)=6./(1+haste);
+                    tbe(idGCD)=1.5./(1+haste);
+                    %check for hit
+                    if rand<(1-miss)
+                        %success! grant HP, enforce bounds
                         hp=hp+1;hp=min([hp 5]);hp=max([hp 0]);
-                        debugHPG(k)=3; %debug flag
+                        debugHPG(k)=2; %debug flag
                     end
+                    %Grand Crusader
+                elseif tob(idGCbuff)>0 && tob(idCScd)>=0.2
+                    %Consume GC buff, set GCD
+                    tob(idGCbuff)=0;
+                    tbe(idGCD)=1.5./(1+haste);
+                    %grant HP, enforce bounds
+                    hp=hp+1;hp=min([hp 5]);hp=max([hp 0]);
+                    debugHPG(k)=3; %debug flag
+                end
                 
                 %boss swing
-                case idBossSwing
-                                        
-                    %reset boss swing timer
-                    tbe(idBossSwing)=bossSwingTimer;
+            case idBossSwing
+                
+                %if SotR can be cast, do so
+                castSotRIfAble();
+                
+                %reset boss swing timer
+                tbe(idBossSwing)=bossSwingTimer;
+                
+                %check for avoid
+                if rand < avoidance
+                    damage(k)=0;
+                    avoids=avoids+1;
                     
-                    %check for avoid
-                    if rand < avoidance
-                        damage(k)=0;
+                %now check for block
+                elseif rand < block
+                    blocks=blocks+1;
+                    if tob(idSotR)>0
+                        mits=mits+1;
+                        bMits=bMits+1;
+                        damage(k)=0.7.*DRmod;
                     else
-                        %figure out damage value.  First, check for SotR
-                        if tob(idSotR)>0
-                            drmult=DRmod;
-                        else
-                            drmult=1;
-                        end
-                        %now check for block
-                        if rand < block
-                            damage(k)=0.7.*drmult;
-                        else
-                            damage(k)=1.*drmult;
-                        end
+                        damage(k)=0.7;
                     end
-                    
-            end %close switch
-                                             
-            %if SotR can be cast, do so
-            castSotRIfAble();
-            
-        end %close event for
-
-%     end %close event if
+                %and finally, normal hits
+                else
+                    hits=hits+1;
+                    if tob(idSotR)>0
+                        mits=mits+1;
+                        hMits=hMits+1;
+                        damage(k)=DRmod;
+                    else
+                        damage(k)=1;
+                    end
+                end
+                
+        end %close switch
+        
+        
+    end %close event for
+    
+    %     end %close event if
         
     
     %% Debugging
@@ -227,22 +261,23 @@ end
 %% compile for plots
 dmg=damage(damage>=0);
 
-S=sum(SotRUptime>0)./length(SotRUptime);
-avoids=sum(dmg==0);
-avoidspct=avoids./length(dmg);
-b1=sum(dmg==0.7);
-b2=sum(dmg==0.7.*DRmod);
-blocks=b1+b2;
-b1pct=b1./length(dmg);
-b2pct=b2./length(dmg);
-blockspct=blocks./length(dmg);
-dr1=sum(dmg==DRmod);
-dr1pct=dr1./length(dmg);
-dr2=sum(dmg==DRmod*0.7);
-dr2pct=dr2./length(dmg);
-hits=sum(dmg==1);
-hitspct=hits./length(dmg);
+%sanity check
+if hits+blocks+avoids~=length(dmg)
+    error('reporting error, length(dmg) doesn''t match number of events')
+else
+    numEvents=length(dmg);
+end
 
+S=sum(SotRUptime>0)./length(SotRUptime);
+% avoids=sum(dmg==0);
+
+avoidsPct=avoids./numEvents;
+blocksPct=blocks./numEvents;
+hitsPct=hits./numEvents;
+mitsPct=mits./numEvents;
+unmitsPct=(hits-hMits)./numEvents;
+bMitsPct=bMits./numEvents;
+hMitsPct=hMits./numEvents;
 
 Tsotr = max(t)./sum(SotRUptime==3);
 Rsotr = 1/Tsotr;
@@ -254,22 +289,52 @@ mean_ma=mean(maDTPS);
 std_ma=std(maDTPS);
 
 if ~strcmp(plotFlag,'noplot')
-figure(1)
-hist(dmg,[0:0.05:1])
-xlim([-0.1 1.1])
-text(-0.05,avoids.*1.05,[num2str(avoidspct.*100,'%2.1f') '%'])
-text(0.7-0.05,b1.*1.1,[num2str(b1pct.*100,'%2.1f') '%'])
-text(DRmod-0.05,dr1.*1.05,[num2str(dr1pct.*100,'%2.1f') '%'])
-text(0.7.*DRmod-0.05,dr2.*1.1,[num2str(dr2pct.*100,'%2.1f') '%'])
-text(1-0.05,hits.*1.05,[num2str(hitspct.*100,'%2.1f') '%'])
-title(['T=' int2str(simTime./60) ' min, S=' num2str(S.*100,'%2.1f') '%, Tsotr=' num2str(Tsotr,'%2.1f') ', DR_{SotR}=' num2str(100.*(1-DRmod),'%2.1f') '%, DTPS=' num2str(DTPS.*100,'%2.2f')])
+    figure(1+2.*(plotNum-1))
+    [yout xout]=hist(100.*dmg,100.*[0:0.05:1]);
+    if max(yout)>1e3
+        sf=1e3;
+        ylstr='Number of events (in thousands)';
+    else
+        sf=1;
+        ylstr='Number of events';
+    end
+    youtn=yout./sf;
+    bar(xout,youtn);
+    xlim([-10 110])
+    ylim([0 1.25.*max(youtn)])
+    xlabel('Hit size (in % of full hit)')
+    ylabel(ylstr)   
+    title(['T=' int2str(simTime./60) ' min, S=' num2str(S.*100,'%2.1f') '%, Tsotr=' num2str(Tsotr,'%2.1f') ', DR_{SotR}=' num2str(100.*(1-DRmod),'%2.1f') '%, DTPS=' num2str(DTPS.*100,'%2.2f')])
 
-figure(2)
-hist(maDTPS,50);
-title(['T=' int2str(simTime./60) ' min, S=' num2str(S.*100,'%2.1f') '%, Tsotr=' num2str(Tsotr,'%2.1f') ', DR_{SotR}=' num2str(100.*(1-DRmod),'%2.1f') '%, DTPS=' num2str(DTPS.*100,'%2.2f')])
-temp=get(gca,'YLim');mval=temp(2);
-text(0.1,0.8*mval,['mean = ' num2str(mean_ma,'%1.4f')]);
-text(0.1,0.73*mval,['std  = ' num2str(std_ma,'%1.4f')]);
+    %labeling
+    offset=diff(get(gca,'YLim'))./20;
+        
+    text(-7,youtn(xout==0)+offset,[num2str(avoidsPct.*100,'%2.1f') '% avoids'])
+    
+    text(100*0.7*DRmod-5,youtn(xout==70*round(DRmod*20)/20)+2.*offset,[num2str(bMitsPct.*100,'%2.1f') '%'])
+    text(100*0.7*DRmod-15,youtn(xout==70*round(DRmod*20)/20)+offset,'mitigated blocks')
+    
+    text(100.*DRmod-7,youtn(xout==100*round(20*DRmod)/20)+2.*offset,[num2str(hMitsPct.*100,'%2.1f') '%'])
+    text(100.*DRmod-12,youtn(xout==100*round(20*DRmod)/20)+offset,'mitigated hits')
+    
+    text(70-5,youtn(xout==70)+2.*offset,[num2str((blocksPct-bMitsPct).*100,'%2.1f') '%'])
+    text(70-15,youtn(xout==70)+offset,'unmitigated blocks')
+    
+    text(100-5,youtn(xout==100)+2.*offset,[num2str(unmitsPct.*100,'%2.1f') '%'])
+    text(100-18,youtn(xout==100)+offset,'unmitigated hits')
+    
+    figure(2+2.*(plotNum-1))
+    [yout2 xout2]=hist(maDTPS,50);
+    yout2n=yout2.*100./length(maDTPS);
+    bar(xout2,yout2n);
+    xlabel('5-attack moving average DTPS')
+    ylabel('Percentage of events')
+    title(['T=' int2str(simTime./60) ' min, S=' num2str(S.*100,'%2.1f') '%, Tsotr=' num2str(Tsotr,'%2.1f') ', DR_{SotR}=' num2str(100.*(1-DRmod),'%2.1f') '%, DTPS=' num2str(DTPS.*100,'%2.2f')])
+    temp=get(gca,'YLim');mval=temp(2);
+    text(0.1,0.8*mval,['mean = ' num2str(mean_ma,'%1.4f')]);
+    text(0.1,0.73*mval,['std  = ' num2str(std_ma,'%1.4f')]);
+    
+    pause(1)
 end
 
 statblock.S=S;
@@ -277,12 +342,23 @@ statblock.Tsotr=Tsotr;
 statblock.Rhpg=Rhpg;
 statblock.block=block;
 statblock.avoidance=avoidance;
-statblock.sotraffected=(dr1pct+dr2pct)./(1-avoidance);
-statblock.blocked=blockspct;
-statblock.avoided=avoidspct;
-statblock.unmit=hitspct;
+statblock.avoids=avoids;
+statblock.blocks=blocks;
+statblock.hits=hits;
+statblock.mits=mits;
+statblock.hMits=hMits;
+statblock.bMits=bMits;
+statblock.avoidsPct=avoidsPct;
+statblock.blocksPct=blocksPct;
+statblock.hitsPct=hitsPct;
+statblock.mitsPct=mitsPct;
+statblock.unmitsPct=unmitsPct;
+statblock.hMitsPct=hMitsPct;
+statblock.bMitsPct=bMitsPct;
 statblock.meanma=mean_ma;
 statblock.stdma=std_ma;
+statblock.dmg=dmg;
+statblock.maDTPS=maDTPS;
 
 
     function castSotRIfAble()

@@ -18,14 +18,14 @@ useParallel=1;
 %define relevant queues if not done already
 %TODO: maybe this makes more sense in c.rot?
 if isfield(c.exec,'queue')==0 || isempty(c.exec.queue)
-    c.exec.queue='^WB>CS>J>AS>^SS>Cons>HW>SotR';
+    c.exec.queue='^WB>CS>J>AS>Cons>HW>SotR';
 end
 
 %repackage arguments for memoized_fsm and fsm_gen:
 talentString=strrep(int2str(c.talent.short),' ','');
 glyphString=c.glyph.string;
 meleeHaste=c.player.phhaste./100;
-spellHaste=c.player.sphaste./100;
+spellHaste=c.player.sphaste./100+2.*c.mdf.SoI;
 pBuffs=',';
 if c.buff.AW
     pBuffs=[pBuffs 'AW,'];
@@ -228,12 +228,14 @@ end
 
 %% unpack uptimes
 c.rot.ssuptime=[c.rot.uptime.ss];
+c.rot.efuptime=[c.rot.uptime.ef];
 c.rot.ef0uptime=[c.rot.uptime.ef0];
 c.rot.ef1uptime=[c.rot.uptime.ef1];
 c.rot.ef2uptime=[c.rot.uptime.ef2];
 c.rot.ef3uptime=[c.rot.uptime.ef3];
 c.rot.ef4uptime=[c.rot.uptime.ef4];
 c.rot.ef5uptime=[c.rot.uptime.ef5];
+c.rot.efuptime=c.rot.ef0uptime+c.rot.ef1uptime+c.rot.ef2uptime+c.rot.ef3uptime+c.rot.ef4uptime+c.rot.ef5uptime;
 c.rot.wbuptime=[c.rot.uptime.wb];
 % c.rot.sbuptime=[c.rot.uptime.sb];
 c.rot.awuptime=[c.rot.uptime.aw];
@@ -264,6 +266,7 @@ c=dynamic_model(c);
 c.rot.dps=sum(c.rot.ecpsd.*c.abil.val.dmg.*c.dyn.multdps)+c.dyn.flatdps;
 c.rot.hps=sum(c.rot.ecpsh.*c.abil.val.heal);
 c.rot.mps=c.player.mps-sum(c.rot.cps.*c.abil.val.mcost); 
+c.rot.aoe=sum(c.rot.ecpsd.*c.abil.val.aoe);
 
 %order fields alphabetically
 c=orderfields(c);

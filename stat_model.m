@@ -51,6 +51,24 @@ mdf.rseal=mdf.tseal||strcmpi('Righteousness',exec.seal)||strcmpi('SoR',exec.seal
 %% Rating/Stat conversions 
 stat_conversions
 
+%% Meta Gems, Enchants, Plate Spec, Tier Bonus
+%%%%%%%%%%% META
+mdf.meta_armor=1+0.02.*(gear.meta==1);
+mdf.meta_block=1+0.01.*(gear.meta==2);
+mdf.meta_crit=1+0.03.*(gear.meta==3);
+mdf.meta_spell=1+0.02.*(gear.meta==4);
+mdf.meta_stun=1+0.10.*(gear.meta==5);
+
+mdf.plate=1+0.05.*gear.isplate;
+mdf.pvphands=0.05.*gear.pvphands; %CS output
+mdf.t14x4P=1+0.1.*gear.tierbonusP(1); %WoG output
+mdf.t14x4R=85.*gear.tierbonusP(2); %AW cooldown
+% mdf.t15x2P=1+0.2.*gear.tierbonusP(3); %Righteous Flames
+% mdf.t15x4P=12.*gear.tierbonusP(4); %Fiery Aegis
+% mdf.t15x2R=1+0.15.*gear.tierbonusR(3); %Flames of the Faithful
+% mdf.t15x2P=gear.tierbonusP(5); %Judgement bubbles
+% mdf.t13x2R=gear.tierbonusR(5); %Judgement Hopo
+
 %% Spec
 % mdf.VengAP=0.05.*spec.Vengeance;
 mdf.GbtL=0.05.*spec.GuardedbytheLight; %everything
@@ -58,7 +76,7 @@ mdf.GbtL=0.05.*spec.GuardedbytheLight; %everything
 mdf.GrCr=0.2.*spec.GrandCrusader;
 mdf.Sanct=0.10.*spec.Sanctuary; %both effects
 mdf.AW=0.2.*spec.AvengingWrath; %AW damage
-mdf.AWuptime=(20/180).*spec.AvengingWrath; %AW uptime
+mdf.AWuptime=(20/(180-mdf.t14x4R)).*spec.AvengingWrath; %AW uptime
 
 %% Abilities
 mdf.SoI = 0.05.*(strcmpi('Insight',exec.seal)||strcmpi('SoI',exec.seal)); %healing increase
@@ -74,7 +92,6 @@ mdf.DivinePurpose=1.*talent.DivinePurpose; %PH
 
 %% Glyphs
 mdf.glyphAS=0.2.*glyph.AlabasterShield;         %placeholder, updated in dynamic_model
-mdf.glyphAC=1-0.3*glyph.AsceticCrusader;        %mcost redux
 mdf.glyphBH=0;                                  %NYI
 mdf.glyphDS=0.1.*glyph.DivineStorm;             %passive healing
 mdf.glyphDJ=0.1.*glyph.DoubleJeopardy.*(exec.npccount>1); %assume alternating J if possible
@@ -86,24 +103,6 @@ mdf.glyphHaWo=glyph.HarshWords;                 %Binary for WoG
 mdf.glyphIT=glyph.ImmediateTruth;               %both effects
 mdf.glyphInq=0.9.*glyph.Inquisition;            %both effects
 mdf.glyphWoG=0.03.*glyph.WordofGlory;          %WoG DPS boost for 1 HP
-
-%% Meta Gems, Enchants, Plate Spec, Tier Bonus
-%%%%%%%%%%% META
-mdf.meta_armor=1+0.02.*(gear.meta==1);
-mdf.meta_block=1+0.01.*(gear.meta==2);
-mdf.meta_crit=1+0.03.*(gear.meta==3);
-mdf.meta_spell=1+0.02.*(gear.meta==4);
-mdf.meta_stun=1+0.10.*(gear.meta==5);
-
-mdf.plate=1+0.05.*gear.isplate;
-mdf.pvphands=0.05.*gear.pvphands; %CS output
-mdf.t11x2P=0.1.*gear.tierbonusP(1); %CS output
-mdf.t11x4P=1+0.5.*gear.tierbonusP(2); %GoAK duration
-mdf.t12x2P=1+0.2.*gear.tierbonusP(3); %Righteous Flames
-mdf.t12x4P=12.*gear.tierbonusP(4); %Fiery Aegis
-mdf.t12x2R=1+0.15.*gear.tierbonusR(3); %Flames of the Faithful
-mdf.t13x2P=gear.tierbonusP(5); %Judgement bubbles
-mdf.t13x2R=gear.tierbonusR(5); %Judgement Hopo
 
 %% Professions
 %(passive bonuses, independent of gearing choices)

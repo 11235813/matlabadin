@@ -112,7 +112,7 @@ raw.CrusaderStrike=     (1.25.*player.ndamage+791).*mdf.phdmg.*(1+mdf.pvphands);
 dmg.CrusaderStrike=     raw.CrusaderStrike.*mdf.memodel.*mdf.phcrit;
 heal.CrusaderStrike=    0;
 threat.CrusaderStrike=  max(dmg.CrusaderStrike,heal.CrusaderStrike).*mdf.RFury;
-mcost.CrusaderStrike=   0.03.*mdf.glyphAC.*base.mana;
+mcost.CrusaderStrike=   0.03.*base.mana;
 splash.CrusaderStrike=  0;
 label.CrusaderStrike=   'CS';
 
@@ -203,7 +203,7 @@ dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.HolyWrath=     0;
 threat.HolyWrath=   max(dmg.HolyWrath,heal.HolyWrath).*mdf.RFury;
 mcost.HolyWrath =   0.094.*base.mana;
-splash.HolyWrath=   mdf.glyphFW.*(exec.npccount-1)./exec.npccount;
+splash.HolyWrath=   mdf.glyphFW.*(exec.npccount-1);
 label.HolyWrath=    'HW';
 
 %Holy Prism (cast on enemy, healing is up to 5 nearby targets)
@@ -241,7 +241,7 @@ label.LightsHammer= 'LH';
 %% Heals / Absorbs
 
 %Word of Glory
-raw.WordofGlory=    (5538+0.49.*player.sp).*player.hopo.*(1+mdf.SoI);
+raw.WordofGlory=    (5538+0.49.*player.sp).*player.hopo.*(1+mdf.SoI).*mdf.t14x4P;
 dmg.WordofGlory=    0.7691.*raw.WordofGlory.*mdf.glyphHaWo.*mdf.sphit.*mdf.spcrit./(1+mdf.SoI); %Harsh Words glyph, TODO: test SoI interaction
 heal.WordofGlory=   raw.WordofGlory.*(1-mdf.glyphHaWo).*(1-exec.overh).*mdf.spcrit; 
 threat.WordofGlory= 11.*(exec.overh>0).*mdf.RFury./exec.npccount;
@@ -327,6 +327,7 @@ c.abil.dmg=dmg;
 c.abil.heal=heal;
 c.abil.threat=threat;
 c.abil.mcost=mcost;
+c.abil.splash=splash;
 c.abil.val=val;
 
 %order fields alphabetically

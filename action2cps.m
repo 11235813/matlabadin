@@ -116,7 +116,7 @@ for m=1:size(c.rot.actionPr,2)
                 bogval=str2double(match{q}(length(match{q})));
                 emodh=emodh.*(1+h.*c.mdf.BoG.*bogval); 
             case 'AW'
-                emodd=emodd.*d.*(1+c.mdf.AW);
+                emodd=emodd.*d.*c.mdf.AW;
             case 'HA'
                 hpmod=3;
                 switch abil
@@ -147,6 +147,9 @@ for m=1:size(c.rot.actionPr,2)
     censFlag=(strcmpi(c.exec.seal,'SoT') || strcmpi(c.exec.seal,'Truth'));
     
     switch abil
+        %note that hit has to be factored into ecps* for seals to account
+        %for the base miss chance of their respective abilities.  Can't do
+        %this in abil_model since CS and J have different chances to miss
         case 'CS'
             %seals, hpg
             cps(sealidx)=cps(sealidx)+cpsval;
@@ -212,8 +215,7 @@ b3=1+3.*c.mdf.BoG;
 b4=1+4.*c.mdf.BoG;
 b5=1+5.*c.mdf.BoG;
 cps(strcmpi('EF(HoT)',c.abil.val.label))= ...
-    (a.ef0+a.ef1+a.ef2+a.ef3+a.ef4+a.ef5)...
-    ./c.player.EFTick(jha); %divide by tick spacing
+    (a.ef)./c.player.EFTick(jha); %divide by tick spacing
 ecpsh(strcmpi('EF(HoT)',c.abil.val.label))= ...
     (a.ef0+a.ef1.*b1+a.ef2.*b2+a.ef3.*b3+a.ef4.*b4+a.ef5.*b5)...
     ./c.player.EFTick(jha)... %tick spacing

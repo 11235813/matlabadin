@@ -22,26 +22,25 @@ function [glyph] =  glyph_model(shortform)
 %
 % Major
 % 1 - Alabaster Shield
-% 2 - Ascetic Crusader
-% 3 - Avenging Wrath
-% 4 - Battle Healer
-% 5 - Blessed Life
-% 6 - Divine Storm
-% 7 - Double Jeapordy
-% 8 - Final Wrath
-% 9 - Flash of Light
-% 10- Focused Shield
-% 11- Focused Wrath
-% 12- Hammer of the Righteous
-% 13- Harsh Words
-% 14- Immediate Truth
-% 15- Inquisition
-% 16- Word of Glory
+% 2 - Avenging Wrath
+% 3 - Battle Healer
+% 4 - Blessed Life
+% 5 - Divine Storm
+% 6 - Double Jeapordy
+% 7 - Final Wrath
+% 8 - Flash of Light
+% 9- Focused Shield
+% 10- Focused Wrath
+% 11- Hammer of the Righteous
+% 12- Harsh Words
+% 13- Immediate Truth
+% 14- Inquisition
+% 15- Word of Glory
 
 %% Input Handling
 
 if nargin<1 || (nargin==1 && isempty(shortform))
-    shortform=[2 10 16];
+    shortform=[1 9 0];
 else
     if size(shortform,1)~=1 || size(shortform,2)~=3
         error('glyph_model input is not 1x3')
@@ -59,7 +58,6 @@ glyph.short=shortform;
 % Major
 q=1;
 glyph.AlabasterShield=sum(glyph.short==q);q=q+1;
-glyph.AsceticCrusader=sum(glyph.short==q);q=q+1;
 glyph.AvengingWrath=sum(glyph.short==q);q=q+1;
 glyph.BattleHealer=sum(glyph.short==q);q=q+1;
 glyph.BlessedLife=sum(glyph.short==q);q=q+1;
@@ -75,8 +73,7 @@ glyph.ImmediateTruth=sum(glyph.short==q);q=q+1;
 glyph.Inquisition=sum(glyph.short==q);q=q+1;
 glyph.WordofGlory=sum(glyph.short==q);
 
-glyph.labels={  'AlabasterShield';...
-                'Ascetic Crusader';...
+glyph.labels={  'Alabaster Shield';...
                 'Avenging Wrath';...
                 'Battle Healer'; ...
                 'Blessed Life';...
