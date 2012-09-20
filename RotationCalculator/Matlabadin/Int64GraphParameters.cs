@@ -101,7 +101,7 @@ namespace Matlabadin
             for (int i = 0; i < (int)Buff.Count; i++)
             {
                 BuffDurationStartBit[i] = buffBitsUsed;
-                int cd = BuffDurationInSteps((Buff)i)+10;
+                int cd = MaximumBuffDurationInSteps((Buff)i);
                 if (base.minBuffDuration[(int)i] > 0) cd = 0; // remove permanent buffs from state
                 while (1 << BuffDurationBits[i] <= cd) BuffDurationBits[i]++;
                 buffBitsUsed += BuffDurationBits[i];
