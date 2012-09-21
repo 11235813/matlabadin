@@ -1,3 +1,41 @@
+%% Special Items
+
+idb.iid(2).name='Kilrak, Jaws of Terror (Raid Finder)';
+idb.iid(2).wtype='swo';
+idb.iid(2).ilvl=483;
+idb.iid(2).tooldps=2935.8;
+idb.iid(2).swing=2.6;
+idb.iid(2).avgdmg=7633.5;
+idb.iid(2).str=964;
+idb.iid(2).sta=697;
+idb.iid(2).hit=314;
+idb.iid(2).mast=302;
+idb.iid(2).isreforged=0;
+
+idb.iid(3).name='Kilrak, Jaws of Terror (+Gem)';
+idb.iid(3).wtype='swo';
+idb.iid(3).ilvl=496;
+idb.iid(3).tooldps=3313.9;
+idb.iid(3).swing=2.6;
+idb.iid(3).avgdmg=8616;
+idb.iid(3).str=524+500;
+idb.iid(3).sta=786;
+idb.iid(3).hit=355;
+idb.iid(3).mast=341;
+idb.iid(3).isreforged=0;
+
+idb.iid(4).name='Kilrak, Jaws of Terror (Heroic+Gem)';
+idb.iid(4).wtype='swo';
+idb.iid(4).ilvl=509;
+idb.iid(4).tooldps=3740.6;
+idb.iid(4).swing=2.6;
+idb.iid(4).avgdmg=9725.5;
+idb.iid(4).str=592+500;
+idb.iid(4).sta=887;
+idb.iid(4).hit=400;
+idb.iid(4).mast=385;
+idb.iid(4).isreforged=0;
+
 %% Enchant section  
 %Enchants work exactly the same way that items do.  There is an idb
 %structure that contains all of the relevant enchants, according to the

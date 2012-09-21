@@ -128,7 +128,7 @@ namespace Matlabadin
                 .Sum();
 
             // TOOD: use parameters instead of hard-coding SS/EF
-            this.maxBuffSteps = this.buffStacks.ToArray();
+            this.maxBuffSteps = this.buffSteps.ToArray();
             if (this.maxBuffSteps[(int)Buff.EF] != 0) this.maxBuffSteps[(int)Buff.EF] += CalculateHoTTickInSteps(Buff.EF);
             if (this.maxBuffSteps[(int)Buff.SS] != 0) this.maxBuffSteps[(int)Buff.SS] += CalculateHoTTickInSteps(Buff.SS);
         }

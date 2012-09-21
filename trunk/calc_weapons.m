@@ -12,10 +12,10 @@ def_db;
 %low hit, SotR/SoT build
 %set melee hit to 2%, expertise to 5%
 %do this by altering shirt stats
-cfg(1)=build_config('hit',2,'exp',5,'glyph',[0 0 0]); 
+cfg(1)=build_config('hit',2,'exp',5); 
 
 %hit-cap and exp soft-cap
-cfg(2)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0]);
+cfg(2)=build_config('hit',7.5,'exp',7.5);
 
 
 %% List of weapons
@@ -23,6 +23,7 @@ cfg(2)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0]);
 weaplist=[  
             81061 1;    %Ook's Hozen Slicer (Heroic)
             81063 2;    %Dubious Handaxe (Heroic)
+            81089 3;    %Crescent of Ichor
             82971 3;    %Masterwork Ghost-Forged Blade
             82972 2;    %Masterwork Phantasmal Hammer
             89396 2;    %Amber Espada of Klaxxi'vess
@@ -30,7 +31,7 @@ weaplist=[
             81062 3;    %Gao's Keg Tapper (Heroic)
             81273 3;    %Siege-Captain's Scimitar (Heroic)
             84968 2;    %Malevolent Gladiator's Slicer
-            87570 1;    %The Horseman's Sinister Slicer
+            87570 3;    %The Horseman's Sinister Slicer
             87545 1;    %Inelava, Spirit of Inebriation
             86789 1;    %Elegion, the Fanged Crescent (LFR)
             88150 1;    %Krol Scimitar
@@ -41,7 +42,11 @@ weaplist=[
             86219 1;    %Scimitar of Seven Stars
             86387 1;    %Kilrak, Jaws of Terror
             87062 1;    %Elegion, the Fanged Crescent (Heroic)
-            86987 1;    %Kilrak, Jaws of Terror (Heroic)
+            86987 1;    %Scimitar of Seven Stars
+            87173 1;    %Kilrak, Jaws of Terror (Heroic)
+            2 1;    %Kilrak, Jaws of Terror (LFR+Gem)
+            3 1;    %Kilrak, Jaws of Terror (Norm+Gem)
+            4 1;    %Kilrak, Jaws of Terror (Heroic+Gem)
           ];
       
 wids=weaplist(:,1);
@@ -143,8 +148,9 @@ for type=1:3
 end
 li.setColumnTextAlignment(1,'left')
 % li.setColumnFormat(3:4,'%6.0f')
+disp('[code]')
 li.toText()
-    
+disp('[/code]')
 
 %% Weapon plots, by section
 

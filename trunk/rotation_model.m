@@ -84,7 +84,7 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(meleeHaste)==1
 elseif length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(meleeHaste)>1 
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.spec.name, talentString, glyphString, meleeHaste, c.mdf.mehit, c.mdf.jdhit, pBuffs);
+        fsm_gen(c.exec.queue, c.spec.name, talentString, glyphString, meleeHaste, spellHaste, c.mdf.mehit, c.mdf.jdhit, pBuffs);
         for j=1:length(meleeHaste)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
@@ -132,7 +132,7 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(meleeHaste)>1
 elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)>1
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.spec.name, talentString, glyphString, meleeHaste, c.mdf.mehit, c.mdf.jdhit, pBuffs);
+        fsm_gen(c.exec.queue, c.spec.name, talentString, glyphString, meleeHaste, spellHaste, c.mdf.mehit, c.mdf.jdhit, pBuffs);
         for j=1:length(c.mdf.mehit)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
@@ -179,7 +179,7 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)>1
 elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)==1
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.spec.name, talentString, glyphString, meleeHaste, c.mdf.mehit, c.mdf.jdhit, pBuffs);
+        fsm_gen(c.exec.queue, c.spec.name, talentString, glyphString, meleeHaste, spellHaste, c.mdf.mehit, c.mdf.jdhit, pBuffs);
         for j=1:length(c.mdf.mehit)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this

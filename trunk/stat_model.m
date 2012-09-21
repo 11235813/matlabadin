@@ -368,12 +368,7 @@ player.rating.hit=(gear.hit+extra.hit+consum.hit);
 player.mehit=player.rating.hit./cnv.hit_hit ...
     +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
 
-player.sphit=player.rating.hit./cnv.hit_hit ...
-    +player.exp ... %TODO: check if this is min(player.exp,7.5) or whether exp over the 7.5% dodge cap still contributes
-    +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
-% 
-% player.rahit=player.rating.hit./cnv.hit_hit ...
-%     +(strcmpi('Draenei',base.race)||strcmpi('Drae',base.race));
+player.sphit=player.mehit+player.exp;
 
 %% Avoidance and Blocking
 player.rating.dodge=gear.dodge+consum.dodge;
