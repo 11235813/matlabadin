@@ -250,7 +250,7 @@ splash.WordofGlory=	0;
 label.WordofGlory=  'WoG';
 
 %Eternal Flame direct heal
-raw.EternalFlame=   (5538+0.49.*player.sp).*player.hopo.*(1+mdf.SoI); %Base Heal
+raw.EternalFlame=   (5538+0.49.*player.sp).*player.hopo.*(1+mdf.SoI).*mdf.t14x4P; %Base Heal
 dmg.EternalFlame=   0;
 heal.EternalFlame=  raw.EternalFlame.*(1-exec.overh).*mdf.spcrit;
 threat.EternalFlame=1.*mdf.RFury./exec.npccount; %PH

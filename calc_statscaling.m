@@ -16,7 +16,7 @@ def_db;
 cfg(1)=build_config('hit',5,'exp',5);
 
 %low hit, WoG/SoI build
-% cfg(2)=build_config('hit',2,'exp',5,'seal','SoI');
+cfg(2)=build_config('hit',5,'exp',5,'veng',50);
 
 %% Stat components
 stat={'hit';'exp';'haste';'str';'ap';'crit';'agi';'int'};
@@ -59,6 +59,7 @@ for g=1:length(cfg)
     %store baseline
     str_dps0(1:M,:,g)=repmat(c.rot.dps,[M 1 1]);
     str_hps0(1:M,:,g)=repmat(c.rot.hps,[M 1 1]);
+    str_sbu0(1:M,:,g)=repmat(c.rot.sbuptime,[M 1 1]);
     
     %waitbar
     csswb=waitbar(0,'Calculating STR Scaling');
@@ -79,6 +80,7 @@ for g=1:length(cfg)
         
         str_dps(m,:,g)=c.rot.dps;
         str_hps(m,:,g)=c.rot.hps;
+        str_sbu(m,:,g)=c.rot.sbuptime;
         
         %set each stat back to 0 extra
         eval(char(['c.extra.itm.' stat{m} '=0;']))
@@ -87,13 +89,14 @@ for g=1:length(cfg)
     close(csswb)
     
     %store variables for plots
-    xStr(:,g)=c.player.armorystr';
+    xStr(:,g)=c.player.armorystr'./1e3;
 end
 disp('Str calc finished')
 toc
 %% Strength Graphs / Table
 yStr=(str_dps-str_dps0).*10./dstatstr; % parenthetical is for dstatstr increase, 10/dstatstr scales bonus for 10 ipoints
 zStr=(str_hps-str_hps0).*10./dstatstr;
+uStr=(str_sbu-str_sbu0).*10./dstatstr.*100;
 
 for g=1:length(cfg)
 figure(50+g-1)
@@ -102,7 +105,7 @@ set(gcf,'DefaultAxesLineStyleOrder','-|--|:')
 plot(xStr(:,g),yStr(:,:,g))
 xlim([min(xStr(:,g)) max(xStr(:,g))])
 legend(stat,'Location','EastOutside')
-xlabel('Armory Strength')
+xlabel('Armory Strength (thousands)')
 ylabel(['DPS per 10 itemization points'])
 title([ strrep(cfg(g).exec.queue,'^','\^') ', ' cfg(g).exec.seal ', '  ...
         num2str(cfg(g).exec.veng,'%3.1f') 'k Veng, ' ...
@@ -110,24 +113,25 @@ title([ strrep(cfg(g).exec.queue,'^','\^') ', ' cfg(g).exec.seal ', '  ...
         num2str(cfg(g).player.exp,'%2.1f') '% expertise'])
 
 
-disp(['DPS and SHPS stat weights for ' cfg(g).exec.queue ', ' cfg(g).exec.seal])
+disp(['[code]DPS and SBU% stat weights for ' cfg(g).exec.queue ', ' cfg(g).exec.seal ', ' int2str(cfg(g).exec.veng) 'k Veng'])
 ldat=2+(1:M);
 li=DataTable();
 li{ldat,1}=stat;
 li{1:2,2}={'DPS';'ppt'};
 li{ldat,2}=yStr(:,idx,g)./dstatstr./icv;
-li{1:2,3}={'SHPS';'ppt'};
-li{ldat,3}=zStr(:,idx,g)./dstatstr./icv;
+li{1:2,3}={'SBU%';'p1kpt'};
+li{ldat,3}=uStr(:,idx,g).*1000./dstatstr./icv;
 li{1:2,4}={'DPS';'pipt'};
 li{ldat,4}=yStr(:,idx,g)./dstatstr;
-li{1:2,5}={'SHPS';'pipt'};
-li{ldat,5}=zStr(:,idx,g)./dstatstr;
+% li{1:2,5}={'SBU%';'p1kipt'};
+% li{ldat,5}=uStr(:,idx,g).*1000./dstatstr;
 
 % li.setColumnTextAlignment(2,'left')
 % li.setColumnTextAlignment(3:6,'center')
 % li.setColumnFormat(2:4,'%6.0f')
-li.setColumnFormat(2:5,'%1.3f')
+li.setColumnFormat(2:4,'%1.3f')
 li.toText()
+disp('[/code]')
 
 end
 
@@ -292,7 +296,7 @@ haste_dps=zeros(M,length(haste_range),length(cfg));haste_hps=haste_dps;
 haste_dps0=zeros(size(haste_dps));haste_hps0=haste_dps0;
 xHas=zeros(length(haste_range),length(cfg));
 
-dstathas=10;
+dstathas=100;
 
 tic
 for g=1:length(cfg)
