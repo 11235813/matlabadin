@@ -21,8 +21,12 @@ cfg(2)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'queue','^WB>CS>J>AS>Con
 % %hit-cap and exp soft-cap
 % cfg(3)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0]);
 
+%special queue to emphasize HW during execute
+cfg(3)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'queue','HoW>HW>CS>J>AS>Cons>SotR');
+
 %multiple targets
-cfg(3)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'npccount',3,'seal','SoR','queue','HotR>J>AS>Cons>HW>SotR'); 
+cfg(4)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'npccount',3,'seal','SoR','queue','HotR>J>AS>Cons>HW>SotR'); 
+
 
 %% Vengeance levels
 for v=[ddb.v1,ddb.v2]
@@ -70,19 +74,21 @@ glyphhps=hps-hps0;
 
 
 %% construct output arrays
-ldat=3+[1:qmax]; %offset by header rows
+%logical array to eliminate zero rows
+outputIDs=sum(abs(glyphdps)+abs(glyphhps),2)~=0;
+ldat=3+[1:sum(outputIDs)]; %offset by header rows
 
 li=DataTable();
 li{1:3,1}={' ';'Glyph';'Base DPS (k)'};      
-li{ldat,1}=c.glyph.labels;
+li{ldat,1}=c.glyph.labels(outputIDs);
 
 for g=1:length(cfg)
     
 li{1:3,2*g}={['cfg' int2str(g)];'DPS';num2str(roundn(dps0(1,g)./1e3,-1),'%2.1f')};
-li{ldat,2*g}=round(glyphdps(:,g));
+li{ldat,2*g}=round(glyphdps(outputIDs,g));
 
 li{1:3,2*g+1}={['cfg' int2str(g)];'HPS';num2str(roundn(hps0(1,g)./1e3,-1),'%2.1f')};
-li{ldat,2*g+1}=round(glyphhps(:,g));
+li{ldat,2*g+1}=round(glyphhps(outputIDs,g));
 
 end
 
