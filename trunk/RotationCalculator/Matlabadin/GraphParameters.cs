@@ -9,31 +9,31 @@ namespace Matlabadin
     {
         private static readonly bool[] DefaultIsOnGcd = new bool[] {
                 false, false, false, // Nothing, SotR, WoG,
-                false, true, true, // EF, SS, FoL,
+                false, true, // EF, FoL,
                 true, true, // HotR, CooldownIndicator, 
                 true, true, true, true, // CS, J, HoW, AS, 
                 true, true, false, // Cons, HW, AW,
                 true, true, true, // HPr, LH, ES,
-                false, // HA
+                false, true, // HA, SS
                 true, // Count
             };
         private static readonly double[] DefaultUnhastedAbilityDuration = new double[] {
                 4.5, 6, 6, 15, // CS, J, HoW, AS,
                 9, 9, 180, // Cons, HW, AW,
                 20, 60, 60, // HPr, LH, ES,
-                120, // HA
+                120, 6, // HA, SS
             };
         private static readonly bool[] AbilityCooldownReducedByHaste = new bool[] {
                 true, true, true, true, // CS, J, HoW, AS,
                 true, true, false, // Cons, HW, AW,
                 false, false, false, // HPr, LH, ES
-                false, // HA
+                false, false, // HA, SS
             };
         private static readonly double[] DefaultUnhastedBuffDuration = new double[] {
                 1.5, 30, 30, // GCD, EF, SS,
                 20, 30, 6, // AW, WB, GoWoG
                 6.3, 15, 20, 8, // GC, SH, BoG, DP
-                18, // HA 
+                18, // HA
             };
         private static readonly double[] DefaultUnhastedBuffTickDuration = new double[] {
                 1.5, 3, 6, 

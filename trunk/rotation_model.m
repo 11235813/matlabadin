@@ -18,7 +18,7 @@ useParallel=1;
 %define relevant queues if not done already
 %TODO: maybe this makes more sense in c.rot?
 if isfield(c.exec,'queue')==0 || isempty(c.exec.queue)
-    c.exec.queue='^WB>CS>J>AS>Cons>HW>SotR';
+    c.exec.queue='^WB>CS>J>AS>HW>Cons>SotR';
 end
 
 %repackage arguments for memoized_fsm and fsm_gen:
@@ -264,7 +264,7 @@ c=dynamic_model(c);
 %% calculate total DPS and HPS
 %note that a2cps includes all active and passive sources
 c.rot.dps=sum(c.rot.ecpsd.*c.abil.val.dmg.*c.dyn.multdps)+c.dyn.flatdps;
-c.rot.hps=sum(c.rot.ecpsh.*c.abil.val.heal);
+c.rot.hps=sum(c.rot.ecpsh.*c.abil.val.heal)+c.dyn.flathps;
 c.rot.mps=c.player.mps-sum(c.rot.cps.*c.abil.val.mcost); 
 c.rot.aoe=sum(c.rot.ecpsd.*c.abil.val.aoe);
 

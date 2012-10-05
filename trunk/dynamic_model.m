@@ -21,22 +21,27 @@ else
         3.*c.rot.cps(strcmp('SotR',c.abil.val.label),:).*c.abil.val.ones]...
     )./c.rot.cps(strcmp('SotR',c.abil.val.label),:);
 end
+%re-run AM for dps boost to alabaster shield
+c=ability_model(c);
 
-%Glyph of Word of Glory
-% c.dyn.glyphWoGUptime=min([6.*c.rot.cps(strcmp('WoG',c.abil.val.label),:);c.abil.val.ones]);
-%TODO: move this to FSM, fix
+%Glyph of the Battle Healer
+c.rot.dmgbreak=c.rot.ecpsd.*c.abil.val.dmg; %damage breakdown
+procs=logical(strcmp('CS',c.abil.val.label) + ...
+    strcmp('HotR',c.abil.val.label) + ...
+    strcmp('HaNova',c.abil.val.label) + ...
+    strcmp('SotR',c.abil.val.label));
+glyphBHhps=c.mdf.glyphBH.*sum(c.rot.dmgbreak(procs)).*(strcmpi('Insight',c.exec.seal)||strcmpi('SoI',c.exec.seal));
 
 %% Enchants
 
 
 
 %% Clean-up
-%re-run AM for dps boost to alabaster shield
-c=ability_model(c);
 
 %define multiplicative and flat dps modifiers
 % c.dyn.multdps=repmat(1+c.mdf.glyphWoG.*c.dyn.glyphWoGUptime,size(c.rot.cps,1),1);
 c.dyn.multdps=1;
 c.dyn.flatdps=0; %enchants would be added here
+c.dyn.flathps=glyphBHhps;
 end
 

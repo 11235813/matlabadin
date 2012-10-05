@@ -17,7 +17,6 @@ namespace Matlabadin
         SotR,
         WoG,
         EF,
-        SS,
         FoL,
         HotR, // treated as a special case since it is linked with CS
         CooldownIndicator, // Abilities MUST be separated into those without cooldowns (above) and those with cooldowns (below)
@@ -32,6 +31,7 @@ namespace Matlabadin
         LH, // Light's Hammer, L90 talent
         ES, // Execution Sentence, L90 talent
         HA, // Holy Avenger, L75 talent
+        SS,
         Count,
     }
 }

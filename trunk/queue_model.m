@@ -5,61 +5,84 @@ queue.st={...
     'CS>J>AS>SotR';
     'CS>J>AS>Cons>SotR';
     'CS>J>AS>Cons>HW>SotR';
-    'J>CS>AS>Cons>HW>SotR';
-    'CS>AS>J>Cons>HW>SotR';
-    'J>AS>CS>Cons>HW>SotR';
-    'HotR>J>AS>Cons>HW>SotR';
-    'CS>AS+>J>AS>Cons>HW>SotR';
     'CS>J>AS>HW>Cons>SotR';
-    'CS>J>AS+>Cons>AS>HW>SotR';
-    'CS>J>Cons>AS>HW>SotR';
-    'CS>Cons>J>AS>HW>SotR';
-    'Cons>CS>J>AS>HW>SotR';
+    'J>CS>AS>HW>Cons>SotR';
+    'CS>AS>J>HW>Cons>SotR';
+    'J>AS>CS>HW>Cons>SotR';
+    'AS>CS>J>HW>Cons>SotR';
+    'AS>J>CS>HW>Cons>SotR';
+    'HotR>J>AS>HW>Cons>SotR';
+    'CS>AS+>J>AS>HW>Cons>SotR';
+    'CS>J>AS+>HW>AS>Cons>SotR';
+    'CS>J>AS+>HW>Cons>AS>SotR';
+    
     
     %talents
-    'CS>J>AS>ES>Cons>HW>SotR';
-    'CS>J>AS>Cons>ES>HW>SotR';
-    'CS>J>AS+>Cons>AS>ES>HW>SotR';
-    'CS>J>AS+>Cons>ES>AS>HW>SotR';
-    'CS>J>Cons>AS+>ES>AS>HW>SotR';
-    'CS>J>Cons>ES>AS>HW>SotR';
-    'CS>J>AS>HPr>Cons>HW>SotR';
-    'CS>J>AS>Cons>HPr>HW>SotR';
-    'CS>J>AS+>Cons>HPr>AS>HW>SotR';
-    'CS>J>AS+>Cons>AS>HPr>HW>SotR';
-    'CS>J>AS>LH>Cons>HW>SotR';
-    'CS>J>AS>Cons>LH>HW>SotR';
-    'CS>J>AS+>Cons>LH>AS>HW>SotR';
-    'CS>J>AS+>Cons>AS>LH>HW>SotR';
+    'CS>J>ES>AS>HW>Cons>SotR';
+    'CS>J>AS+>ES>AS>HW>Cons>SotR';
+    'CS>J>AS>ES>HW>Cons>SotR';
+    'CS>J>AS>HW>ES>Cons>SotR';
+    'CS>J>AS>HW>Cons>ES>SotR';
+    'CS>AS+>J>AS>HW>Cons>ES>SotR';
+    'AS>CS>J>HW>Cons>ES>SotR';
+    'CS>J>HPr>AS>HW>Cons>SotR';
+    'CS>J>AS+>HPr>AS>HW>Cons>SotR';
+    'CS>J>AS>HPr>HW>Cons>SotR';
+    'CS>J>AS>HW>HPr>Cons>SotR';
+    'CS>J>AS>HW>Cons>HPr>SotR';
+    'CS>AS+>J>AS>HW>Cons>HPr>SotR';
+    'AS>CS>J>HW>Cons>HPr>SotR';
+    'CS>J>LH>AS>HW>Cons>SotR';
+    'CS>J>AS+>LH>AS>HW>Cons>SotR';
+    'CS>J>AS>LH>HW>Cons>SotR';
+    'CS>J>AS>HW>LH>Cons>SotR';
+    'CS>J>AS>HW>Cons>LH>SotR';
+    'CS>AS+>J>AS>HW>Cons>LH>SotR';
+    'AS>CS>J>HW>Cons>LH>SotR';
+    
             
     %Defensive queues
-    '^WB>CS>J>AS>Cons>HW>SotR';
-    '^WB>CS>J>AS>Cons>HW>SotR5';
-    '^WB>^SS>CS>J>AS>Cons>HW>SotR';
-    '^WB>CS>^SS>J>AS>Cons>HW>SotR';
-    '^WB>CS>J>^SS>AS>Cons>HW>SotR';
-    '^WB>CS>J>AS+>^SS>AS>Cons>HW>SotR';
-    '^WB>CS>J>AS>^SS>Cons>HW>SotR';
-    '^WB>CS>J>AS>Cons>^SS>HW>SotR';
-    '^WB>CS>J>AS>Cons>HW>^SS>SotR';
-    '^WB>CS>J>AS>Cons>SS[buffSS<5]>HW>SotR';
+    '^WB>CS>J>AS>HW>Cons>SotR';
+    '^WB>CS>J>AS>HW>Cons>SotR5';
+    '^WB>^SS>CS>J>AS>HW>Cons>SotR';
+    '^WB>CS>^SS>J>AS>HW>Cons>SotR';
+    '^WB>CS>J>^SS>AS>HW>Cons>SotR';
+    '^WB>CS>J>AS+>^SS>AS>HW>Cons>SotR';
+    '^WB>CS>J>AS>^SS>HW>Cons>SotR';
+    '^WB>CS>J>AS>HW>^SS>Cons>SotR';
+    '^WB>CS>J>AS>HW>SS[buffSS<5]>Cons>SotR';
+    '^WB>CS>J>AS>HW>Cons>^SS>SotR';
+    '^WB>CS>J>AS>HW>Cons>SS>SotR';
+    '^WB>CS>J>AS>HW>Cons>SS[buffSS<5]>SotR';
+    '^WB>CS>J>AS>HW>SS[buffSS<5]>Cons>SS>SotR';
+    '^WB>CS>J>AS>SS[buffSS<5]>HW>Cons>SS>SotR';
+    '^WB>CS>J>AS>HW>Cons>ES>SS>SotR';
+    '^WB>CS>J>AS>HW>Cons>^SS>ES>SotR';
+    '^WB>CS>J>AS>HW>Cons>HPr>SS>SotR';
+    '^WB>CS>J>AS>HW>Cons>^SS>HPr>SotR';
     
     %Execute range
-    'CS>J>AS>Cons>HoW>SotR';
-    'CS>J>AS>HoW>Cons>HW>SotR';
-    'CS>J>AS+>HoW>AS>Cons>HW>SotR';
-    'CS>J>HoW>AS>Cons>HW>SotR';
-    'CS>HoW>J>AS>Cons>HW>SotR';
-    'HoW>CS>J>AS>Cons>HW>SotR';
-    'HoW>CS>J>AS>Cons>ES>HW>SotR';
-    'HoW>CS>J>AS>Cons>HPr>HW>SotR';
-    'HoW>CS>J>AS>Cons>LH>HW>SotR';
+    'CS>J>AS>HW>HoW>Cons>SotR';
+    'CS>J>AS>HoW>HW>Cons>SotR';
+    'CS>J>AS+>HoW>AS>HW>Cons>SotR';
+    'CS>J>HoW>AS>HW>Cons>SotR';
+    'CS>HoW>J>AS>HW>Cons>SotR';
+    'HoW>CS>J>AS>HW>Cons>SotR';
+    'HoW>CS>AS+>J>AS>HW>Cons>SotR';
+    'HoW>CS>AS>J>HW>Cons>SotR';
+    'HoW>AS>CS>J>HW>Cons>SotR';
+    'HoW>CS>J>AS>HW>ES>Cons>SotR';
+    'HoW>CS>J>AS>HW>HPr>Cons>SotR';
+    'HoW>CS>J>AS>HW>LH>Cons>SotR';
+    'HoW>AS>CS>J>HW>ES>Cons>SotR';
+    'HoW>AS>CS>J>HW>HPr>Cons>SotR';
+    'HoW>AS>CS>J>HW>LH>Cons>SotR';
 
     %WoG
-    '^WB>CS>J>AS>Cons>HW>WoG';
-    '^WB>CS>J>AS>Cons>HW>EF';
-    '^WB>CS>J>AS>Cons>HW>^EF>SotR5';
-    '^WB>CS>J>AS>^SS>Cons>HW>WoG';
+    '^WB>CS>J>AS>HW>Cons>WoG';
+    '^WB>CS>J>AS>HW>Cons>EF';
+    '^WB>CS>J>AS>HW>Cons>^EF>SotR5';
+    '^WB>CS>J>AS>HW>Cons>SS>WoG';
     };
 
 
