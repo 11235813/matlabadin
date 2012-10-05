@@ -1,24 +1,38 @@
-function [DTPS statblock]=pally_mc(stat,val,simMins,plotFlag,tocFlag,statSetup)
+function [statblock]=pally_mc(config,statSetup)
 dhit=0;dexp=0;dhaste=0;dmastery=0;ddodge=0;dparry=0;
-if nargin<6
-    plotNum=1;
-else
-    plotNum=statSetup.plotNum;
-end
-if nargin<5
+
+%% Input handling - config - stat,val,simMins,plotFlag,tocFlag
+
+if ~isfield(config,'tocFlag')
     tocFlag='toc';
+else
+    tocFlag=config.tocFlag;
 end
-if nargin<4
+if ~isfield(config,'plotFlag')
     plotFlag='plot';
+else
+    plotFlag=config.plotFlag;
 end
-if nargin<3
+if ~isfield(config,'simMins')
     simMins=500;
+    warning(['simMins defaulting to ' int2str(simMins)])
+else
+    simMins=config.simMins;
 end
-if nargin<2
+if ~isfield(config,'val')
     val=600;
+    warning(['stat value defaulting to ' int2str(val)])
+else
+    val=config.val;
+end
+if ~isfield(config,'sF')
+    sF=5;
+    warning(['smoothing factor defaulting to ' int2str(sF)])
+else
+    sF=config.sF;
 end
 if nargin>=1
-    switch stat
+    switch config.stat
         case 'hit'
             dhit=val;
         case 'exp'
@@ -31,9 +45,7 @@ if nargin>=1
             ddodge=val;
         case 'parry'
             dparry=val;
-    end
-    
-    
+    end    
 end
 
 %% Initialize different random streams
@@ -41,7 +53,7 @@ RandStream.setDefaultStream ...
      (RandStream('mt19937ar','seed',sum(100*clock)));
  
 %% Player stats
-if nargin<6
+if nargin<2
     buffedStr=9208;
     parryRating=4834;
     dodgeRating=4892;
@@ -268,78 +280,27 @@ else
     numEvents=length(dmg);
 end
 
-S=sum(SotRUptime>0)./length(SotRUptime);
+statblock.S=sum(SotRUptime>0)./length(SotRUptime);
 % avoids=sum(dmg==0);
 
-avoidsPct=avoids./numEvents;
-blocksPct=blocks./numEvents;
-hitsPct=hits./numEvents;
-mitsPct=mits./numEvents;
-unmitsPct=(hits-hMits)./numEvents;
-bMitsPct=bMits./numEvents;
-hMitsPct=hMits./numEvents;
+statblock.avoidsPct=avoids./numEvents;
+statblock.blocksPct=blocks./numEvents;
+statblock.hitsPct=hits./numEvents;
+statblock.mitsPct=mits./numEvents;
+statblock.unmitsPct=(hits-hMits)./numEvents;
+statblock.bMitsPct=bMits./numEvents;
+statblock.hMitsPct=hMits./numEvents;
 
-Tsotr = max(t)./sum(SotRUptime==3);
-Rsotr = 1/Tsotr;
-Rhpg=sum(debugHPG>0)/max(t);
+statblock.Tsotr = max(t)./sum(SotRUptime==3);
+statblock.Rsotr = 1/statblock.Tsotr;
+statblock.Rhpg=sum(debugHPG>0)/max(t);
+statblock.DRmod=DRmod;
 
-DTPS=sum(dmg)./max(t);
-maDTPS=filter(ones(1,5)./5,1,dmg);
-mean_ma=mean(maDTPS);
-std_ma=std(maDTPS);
+statblock.DTPS=sum(dmg)./max(t);
+statblock.maDTPS=filter(ones(1,5)./5,1,dmg);
+statblock.mean_ma=mean(statblock.maDTPS);
+statblock.std_ma=std(statblock.maDTPS);
 
-if ~strcmp(plotFlag,'noplot')
-    figure(1+2.*(plotNum-1))
-    [yout xout]=hist(100.*dmg,100.*[0:0.05:1]);
-    if max(yout)>1e3
-        sf=1e3;
-        ylstr='Number of events (in thousands)';
-    else
-        sf=1;
-        ylstr='Number of events';
-    end
-    youtn=yout./sf;
-    bar(xout,youtn);
-    xlim([-10 110])
-    ylim([0 1.25.*max(youtn)])
-    xlabel('Hit size (in % of full hit)')
-    ylabel(ylstr)   
-    title(['T=' int2str(simTime./60) ' min, S=' num2str(S.*100,'%2.1f') '%, Tsotr=' num2str(Tsotr,'%2.1f') ', DR_{SotR}=' num2str(100.*(1-DRmod),'%2.1f') '%, DTPS=' num2str(DTPS.*100,'%2.2f')])
-
-    %labeling
-    offset=diff(get(gca,'YLim'))./20;
-        
-    text(-7,youtn(xout==0)+offset,[num2str(avoidsPct.*100,'%2.1f') '% avoids'])
-    
-    text(100*0.7*DRmod-5,youtn(xout==70*round(DRmod*20)/20)+2.*offset,[num2str(bMitsPct.*100,'%2.1f') '%'])
-    text(100*0.7*DRmod-15,youtn(xout==70*round(DRmod*20)/20)+offset,'mitigated blocks')
-    
-    text(100.*DRmod-7,youtn(xout==100*round(20*DRmod)/20)+2.*offset,[num2str(hMitsPct.*100,'%2.1f') '%'])
-    text(100.*DRmod-12,youtn(xout==100*round(20*DRmod)/20)+offset,'mitigated hits')
-    
-    text(70-5,youtn(xout==70)+2.*offset,[num2str((blocksPct-bMitsPct).*100,'%2.1f') '%'])
-    text(70-15,youtn(xout==70)+offset,'unmitigated blocks')
-    
-    text(100-5,youtn(xout==100)+2.*offset,[num2str(unmitsPct.*100,'%2.1f') '%'])
-    text(100-18,youtn(xout==100)+offset,'unmitigated hits')
-    
-    figure(2+2.*(plotNum-1))
-    [yout2 xout2]=hist(maDTPS,50);
-    yout2n=yout2.*100./length(maDTPS);
-    bar(xout2,yout2n);
-    xlabel('5-attack moving average DTPS')
-    ylabel('Percentage of events')
-    title(['T=' int2str(simTime./60) ' min, S=' num2str(S.*100,'%2.1f') '%, Tsotr=' num2str(Tsotr,'%2.1f') ', DR_{SotR}=' num2str(100.*(1-DRmod),'%2.1f') '%, DTPS=' num2str(DTPS.*100,'%2.2f')])
-    temp=get(gca,'YLim');mval=temp(2);
-    text(0.1,0.8*mval,['mean = ' num2str(mean_ma,'%1.4f')]);
-    text(0.1,0.73*mval,['std  = ' num2str(std_ma,'%1.4f')]);
-    
-    pause(1)
-end
-
-statblock.S=S;
-statblock.Tsotr=Tsotr;
-statblock.Rhpg=Rhpg;
 statblock.block=block;
 statblock.avoidance=avoidance;
 statblock.avoids=avoids;
@@ -347,20 +308,31 @@ statblock.blocks=blocks;
 statblock.hits=hits;
 statblock.mits=mits;
 statblock.hMits=hMits;
-statblock.bMits=bMits;
-statblock.avoidsPct=avoidsPct;
-statblock.blocksPct=blocksPct;
-statblock.hitsPct=hitsPct;
-statblock.mitsPct=mitsPct;
-statblock.unmitsPct=unmitsPct;
-statblock.hMitsPct=hMitsPct;
-statblock.bMitsPct=bMitsPct;
-statblock.meanma=mean_ma;
-statblock.stdma=std_ma;
+% statblock.bMits=bMits;
+% statblock.avoidsPct=avoidsPct;
+% statblock.blocksPct=blocksPct;
+% statblock.hitsPct=hitsPct;
+% statblock.mitsPct=mitsPct;
+% statblock.unmitsPct=unmitsPct;
+% statblock.hMitsPct=hMitsPct;
+% statblock.bMitsPct=bMitsPct;
+% statblock.meanma=mean_ma;
+% statblock.stdma=std_ma;
+% statblock.maDTPS=maDTPS;
+
 statblock.dmg=dmg;
-statblock.maDTPS=maDTPS;
+
+statblock.simMins=simMins;
+statblock.simTime=simTime;
+statblock.stepsPerSec=steps_per_sec;
 
 
+%% plot
+if ~strcmp(plotFlag,'noplot')
+    pally_mc_plot(config,statblock,sF)
+end
+
+%% helper functions
     function castSotRIfAble()
         
         %check for 3+ HP and no SotR buff, if so cast SotR

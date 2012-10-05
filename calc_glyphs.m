@@ -11,21 +11,21 @@ def_db;
 %% Configurations
 %create the first configuation
 %low hit, SotR/SoT build
-%set melee hit to 2%, expertise to 5%
+%set melee hit to 7.5%, expertise to 7.5%
 %do this by altering shirt stats
-cfg(1)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0]); 
+cfg(1)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'seal','SoI'); 
 
 %low hit, WoG/SoI build
-cfg(2)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'queue','^WB>CS>J>AS>Cons>HW>WoG');
+cfg(2)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'queue','^WB>CS>J>AS>HW>Cons>WoG','seal','SoI');
 % 
 % %hit-cap and exp soft-cap
 % cfg(3)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0]);
 
 %special queue to emphasize HW during execute
-cfg(3)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'queue','HoW>HW>CS>J>AS>Cons>SotR');
+cfg(3)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'queue','HW>HoW>CS>J>AS>Cons>SotR','seal','SoI');
 
 %multiple targets
-cfg(4)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'npccount',3,'seal','SoR','queue','HotR>J>AS>Cons>HW>SotR'); 
+cfg(4)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'npccount',3,'seal','SoR','queue','HotR>J>AS>HW>Cons>SotR','seal','SoI'); 
 
 
 %% Vengeance levels

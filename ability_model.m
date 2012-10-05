@@ -35,7 +35,7 @@ player.hopo=3;  %TODO: probably no reason to consider 1- or 2-HP SotR/WoG anymor
 %TODO: Retest all hit conditions for seals
 
 %Seal of Truth (fully stacked)
-raw.SealofTruth=    0.12.*player.wdamage.*(1+0.3.*mdf.glyphIT).*mdf.spdmg;  
+raw.SealofTruth=    0.025.*player.wdamage.*(1+0.3.*mdf.glyphIT).*mdf.spdmg;  
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
 heal.SealofTruth=   0;
 threat.SealofTruth= 0; %wowdb flag - generates no threat
@@ -47,7 +47,7 @@ label.SealofTruth=  'SoT';
 %As we do not model interruptions, Cens is assumed to be perpetually
 %refreshed (full uptime).
 %TODO: possibly nullify if SoT not active
-raw.Censure=        (107 + 0.094.*player.sp).*5 ...
+raw.Censure=        (107 + 0.094.*player.sp) ... 
                     ./(1+mdf.glyphIT).*mdf.spdmg; %per tick (for 5 stacks)
 dmg.Censure=        raw.Censure.*mdf.phcrit.*target.resrdx; %automatical connect, phys crit/CM
 dps.Censure=        dmg.Censure./player.censTick;
@@ -180,7 +180,7 @@ label.HammerofWrath='HoW';
 %% Spell abilities
 
 %Avenger's Shield (cannot be blocked)
-raw.AvengersShield= (4488+0.21.*player.sp+0.545.*player.ap).*mdf.spdmg.*mdf.glyphFS;
+raw.AvengersShield= (6732+0.315.*player.sp+0.8175.*player.ap).*mdf.spdmg.*mdf.glyphFS;
 dmg.AvengersShield= raw.AvengersShield.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.AvengersShield=0;
 threat.AvengersShield=max(dmg.AvengersShield,heal.AvengersShield).*mdf.RFury;
@@ -198,7 +198,7 @@ splash.Consecration=min([exec.npccount-1; 9]);
 label.Consecration= 'Cons';
 
 %Holy Wrath
-raw.HolyWrath=      (4300+0.91.*player.sp)./(1+(exec.npccount-1).*mdf.glyphFW).*mdf.spdmg.*(1+mdf.glyphFiWr);
+raw.HolyWrath=      (4300+0.91.*player.ap)./(1+(exec.npccount-1).*mdf.glyphFW).*mdf.spdmg.*(1+mdf.glyphFiWr);
 dmg.HolyWrath=      raw.HolyWrath.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.HolyWrath=     0;
 threat.HolyWrath=   max(dmg.HolyWrath,heal.HolyWrath).*mdf.RFury;

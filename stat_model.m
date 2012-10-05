@@ -92,7 +92,7 @@ mdf.DivinePurpose=1.*talent.DivinePurpose; %PH
 
 %% Glyphs
 mdf.glyphAS=0.2.*glyph.AlabasterShield;         %placeholder, updated in dynamic_model
-mdf.glyphBH=0;                                  %NYI
+mdf.glyphBH=0.3.*glyph.BattleHealer;            %passive healing
 mdf.glyphDS=0.1.*glyph.DivineStorm;             %passive healing
 mdf.glyphDJ=0.1.*glyph.DoubleJeopardy.*(exec.npccount>1); %assume alternating J if possible
 mdf.glyphFoL=0;                                 %NYI
@@ -260,7 +260,7 @@ player.rating.haste=gear.haste+extra.haste+consum.haste;
 player.phhaste=player.rating.haste./cnv.haste_phhaste;
 player.sphaste=100.*(...
     (1+player.rating.haste./cnv.haste_sphaste./100).* ...
-    mdf.shaste ...
+    mdf.shaste.*(1+2.*mdf.SoI) ...
     -1);
 player.spgcd=max([1.5./(1+player.sphaste./100);ones(size(player.sphaste))]);
 
@@ -278,12 +278,9 @@ mdf.blsphaste=(1+bl.sphaste./100);
 %haste scaling for DoT effects
 %refer to http://elitistjerks.com/f73/t110354-resto_cataclysm_release_updated_4_0_6_a/p42/#post1896784
 %further testing has shown the use of Gaussian rounding (IEEE 754)
-%TODO: The only value used in ability_model is cens.NetTick.  For now I've
-%commented out all the unused code.
 cens.BaseTick=3;
 ef.BaseTick=3;
 ss.BaseTick=6;
-% cens.BaseDur=15;
 player.censTick=round(cens.BaseTick./mdf.sphaste.*1e3)./1e3; %spell haste
 player.EFTick=round(ef.BaseTick./mdf.sphaste.*1e3)./1e3;
 player.SSTick=round(ss.BaseTick./mdf.sphaste.*1e3)./1e3;
