@@ -233,8 +233,8 @@ extra.parry=extra.itm.parry.*ipconv.parry   + extra.val.parry;
 
 %% Primary stats
 player.str=floor(base.stats.str.*mdf.stats)+floor((gear.str+extra.str+consum.str).*mdf.stats);
-player.sta=floor((base.stats.sta+mdf.mining).*(1+5.*mdf.GbtL).*mdf.stats.*mdf.plate.*mdf.STA)+ ...
-    floor((gear.sta+extra.sta+consum.sta).*(1+5.*mdf.GbtL).*mdf.stats.*mdf.plate.*mdf.STA);
+player.sta=floor((base.stats.sta+mdf.mining).*(1+5.*mdf.GbtL).*mdf.plate.*mdf.STA)+ ...
+    floor((gear.sta+extra.sta+consum.sta).*(1+5.*mdf.GbtL).*mdf.plate.*mdf.STA);
 player.agi=floor(base.stats.agi.*mdf.stats)+floor((gear.agi+extra.agi+consum.agi).*mdf.stats);
 player.int=floor(base.stats.int.*mdf.stats)+floor((gear.int+extra.int+consum.int).*mdf.stats);
 % player.spi=floor(base.stats.spi.*mdf.stats)+floor((gear.spi+extra.spi).*mdf.stats);
