@@ -118,11 +118,11 @@ ldat=2+(1:M);
 li=DataTable();
 li{ldat,1}=stat;
 li{1:2,2}={'DPS';'ppt'};
-li{ldat,2}=yStr(:,idx,g)./dstatstr./icv;
+li{ldat,2}=yStr(:,idx,g)./10./icv;
 li{1:2,3}={'SBU%';'p1kpt'};
-li{ldat,3}=uStr(:,idx,g).*1000./dstatstr./icv;
+li{ldat,3}=uStr(:,idx,g).*1000./10./icv;
 li{1:2,4}={'DPS';'pipt'};
-li{ldat,4}=yStr(:,idx,g)./dstatstr;
+li{ldat,4}=yStr(:,idx,g)./10;
 % li{1:2,5}={'SBU%';'p1kipt'};
 % li{ldat,5}=uStr(:,idx,g).*1000./dstatstr;
 

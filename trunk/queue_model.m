@@ -12,6 +12,7 @@ queue.st={...
     'AS>CS>J>HW>Cons>SotR';
     'AS>J>CS>HW>Cons>SotR';
     'HotR>J>AS>HW>Cons>SotR';
+    'AS+>CS>J>AS>HW>Cons>SotR';
     'CS>AS+>J>AS>HW>Cons>SotR';
     'CS>J>AS+>HW>AS>Cons>SotR';
     'CS>J>AS+>HW>Cons>AS>SotR';
@@ -71,6 +72,8 @@ queue.st={...
     'HoW>CS>AS+>J>AS>HW>Cons>SotR';
     'HoW>CS>AS>J>HW>Cons>SotR';
     'HoW>AS>CS>J>HW>Cons>SotR';
+    'HoW>J>AS>CS>HW>Cons>SotR';
+    'HoW>J>CS>AS>HW>Cons>SotR';
     'HoW>CS>J>AS>HW>ES>Cons>SotR';
     'HoW>CS>J>AS>HW>HPr>Cons>SotR';
     'HoW>CS>J>AS>HW>LH>Cons>SotR';
