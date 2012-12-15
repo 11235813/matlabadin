@@ -1,25 +1,43 @@
-function [DTPS statblock]=warr_mc(stat,val,simMins,plotFlag,tocFlag,startCond)
+function [statblock]=warr_mc(config,statSetup,startCond)
 dhit=0;dexp=0;dhaste=0;dmastery=0;ddodge=0;dparry=0;
-if nargin<6
-    startCond.rage=0;
-    startCond.prio='steadystate';
-    startCond.stepspersecond=2;
-    startCond.finisher='SBrBleed';
-end
-if nargin<5
+
+%% Input handling
+
+if ~isfield(config,'tocFlag')
     tocFlag='toc';
+else
+    tocFlag=config.tocFlag;
 end
-if nargin<4
+if ~isfield(config,'plotFlag')
     plotFlag='plot';
+else 
+    plotFlag=config.plotFlag;
 end
-if nargin<3
+if ~isfield(config,'simMins')
     simMins=1000;
+    warning(['simMins defaulting to ' int2str(simMins)])
+else
+    simMins=config.simMins;
 end
-if nargin<2
+if ~isfield(config,'val')
     val=1000;
+    warning(['stat value defaulting to ' int2str(val)])
+else
+    val=config.val;
 end
+if ~isfield(config,'sF')
+    sF=5;
+    warning(['smoothing factor defaulting to ' int2str(sF)])
+else
+    sF=config.sF;
+end
+if ~isfield(config,'finisher')
+    config.finisher='SBrBleed';
+end
+finisher=config.finisher;
+
 if nargin>=1
-    switch stat
+    switch config.stat
         case 'hit'
             dhit=val;
         case 'exp'
@@ -35,22 +53,40 @@ if nargin>=1
     end
 end
 
+if nargin<3
+    startCond.rage=0;
+    startCond.prio='steadystate';
+    startCond.stepspersecond=2;
+end
+
 %% Initialize different random streams
 RandStream.setDefaultStream ...
      (RandStream('mt19937ar','seed',sum(100*clock)));
  
 %% Player stats
-buffedStr=9208;
-parryRating=4834;
-dodgeRating=4892;
-masteryRating=6758;
-hitRating=1521;
-expRating=1777;
-hasteRating=0;
+if nargin<2 || isempty(statSetup)
+    buffedStr=9208;
+    parryRating=4834;
+    dodgeRating=4892;
+    masteryRating=6758;
+%     hitRating=1521;
+%     expRating=1777;
+    hitRating=2550;
+    expRating=2550;
+    hasteRating=0;
+else
+    buffedStr=statSetup.buffedStr;
+    parryRating=statSetup.parryRating;
+    dodgeRating=statSetup.dodgeRating;
+    masteryRating=statSetup.masteryRating;
+    hitRating=statSetup.hitRating;
+    expRating=statSetup.expRating;
+    hasteRating=statSetup.hasteRating;
+end
 
 %toggle off hit/exp
-hitRating=0;
-expRating=0;
+% hitRating=0;
+% expRating=0;
 
 %other
 meta=1; %toggle for block meta, 1 is on, 0 is off
@@ -84,8 +120,6 @@ parryCS=3.21+1./(1./Cp+k./((buffedStr-203)./951.16+(parryRating+dparry)./885));
 
 avoidance=(dodgeCS+parryCS-9)./100;
 block=(blockCS-4.5)./100;
-
-% DRmod=1-0.3-mastery./100;
 
 haste=(hasteRating+dhaste)./425./100;
 
@@ -194,7 +228,7 @@ for k=1:N
                 end
                 
                 %check for 60+ rage; if so cast SB
-                finisherCast(startCond.finisher);
+                finisherCast(finisher);
                 
                 gcdPriority(startCond.prio)
                                 
@@ -214,7 +248,7 @@ for k=1:N
                 end
                 
                 %check for 60+ rage; if so cast SB
-                finisherCast(startCond.finisher);
+                finisherCast(finisher);
                 
                 %reset boss swing timer
                 tbe(idBossSwing)=bossSwingTimer;
@@ -315,6 +349,7 @@ end
 
 %% compile for plots
 dmg=damage(damage>=0);
+statblock.dmg=dmg;
 
 %sanity check
 if hits+blocks+critblocks+avoids~=length(dmg)
@@ -323,103 +358,59 @@ else
     numEvents=length(dmg);
 end
 
-S=sum(SBUptime>0)./length(SBUptime);
-% avoids=sum(dmg==0);
-avoidsPct=avoids./numEvents;
-% b1=sum(dmg==0.7);
-blocksPct=blocks./numEvents;
-critblocksPct=critblocks./numEvents;
-% hits=sum(dmg==1);
-hitsPct=hits./numEvents;
+statblock.S=sum(SBUptime>0)./length(SBUptime);
+statblock.avoidsPct=avoids./numEvents;
+statblock.blocksPct=blocks./numEvents;
+statblock.critblocksPct=critblocks./numEvents;
+statblock.hitsPct=hits./numEvents;
 
-hFullAbsorbsPct=hFullAbsorbs./numEvents;
-hPartialAbsorbsPct=hPartialAbsorbs./numEvents;
-cbFullAbsorbsPct=cbFullAbsorbs./numEvents;
-cbPartialAbsorbsPct=cbPartialAbsorbs./numEvents;
-bFullAbsorbsPct=bFullAbsorbs./numEvents;
-bPartialAbsorbsPct=bPartialAbsorbs./numEvents;
+statblock.hFullAbsorbsPct=hFullAbsorbs./numEvents;
+statblock.hPartialAbsorbsPct=hPartialAbsorbs./numEvents;
+statblock.cbFullAbsorbsPct=cbFullAbsorbs./numEvents;
+statblock.cbPartialAbsorbsPct=cbPartialAbsorbs./numEvents;
+statblock.bFullAbsorbsPct=bFullAbsorbs./numEvents;
+statblock.bPartialAbsorbsPct=bPartialAbsorbs./numEvents;
 
-allFullAbsorbs=hFullAbsorbs+cbFullAbsorbs+bFullAbsorbs;
-allFullAbsorbsPct=allFullAbsorbs./numEvents;
+statblock.allFullAbsorbs=hFullAbsorbs+cbFullAbsorbs+bFullAbsorbs;
+statblock.allFullAbsorbsPct=statblock.allFullAbsorbs./numEvents;
 % partialAbsorbsPct=partialAbsorbs./numEvents;
 % fullHitsPct=fullHits./numEvents;
 % fullHitAbsorbsPct=fullHitAbsorbs./numEvents;
 % cbPartialAbsorbsPct=cbPartialAbsorbs./numEvents;
 
 
-Tsb = max(t)./SBCasts;
-Rsb = 1/Tsb;
-Rrage=rageGain./max(t);
+statblock.Tsb = max(t)./SBCasts;
+statblock.Rsb = 1/statblock.Tsb;
+statblock.Rrage=rageGain./max(t);
 
-DTPS=sum(dmg)./max(t);
-maDTPS=filter(ones(1,5)./5,1,dmg);
-mean_ma=mean(maDTPS);
-std_ma=std(maDTPS);
-
-if ~strcmp(plotFlag,'noplot')
-    figure(1)
-    [yout xout]=hist(100.*dmg,100.*[0:0.05:1]);
-    if max(yout)>1e3
-        sf=1e3;
-        ylstr='Number of events (in thousands)';
-    else
-        sf=1;
-        ylstr='Number of events';
-    end
-    youtn=yout./sf;
-    bar(xout,youtn);
-    xlim([-10 110])
-    ylim([0 1.25.*max(youtn)])
-    xlabel('Hit size (in % of full hit)')
-    ylabel(ylstr)   
-    title(['T=' int2str(simTime./60) ' min, S=' num2str(S.*100,'%2.1f') '%, Tsb=' num2str(Tsb,'%2.1f') 's, R_{rage}=' num2str(Rrage,'%2.3f') '/s, DTPS=' num2str(DTPS.*bossSwingTimer.*100,'%2.2f') '%'])
- 
-    
-    %labeling
-    offset=diff(get(gca,'YLim'))./40;
-    
-    text(-7,youtn(xout==0)+3.*offset,[num2str(avoidsPct.*100,'%2.1f') '% avoids'])
-    text(-7,youtn(xout==0)+offset,[num2str(allFullAbsorbsPct.*100,'%2.2f') '% full Absorbs'])
-  
-    text(100.*critBlockDmg-10,youtn(xout==40)+5*offset,[num2str(critblocksPct.*100,'%2.1f') '% crit blocks'])
-    text(100.*critBlockDmg-10,youtn(xout==40)+3.*offset,[num2str(cbPartialAbsorbsPct.*100,'%2.2f') '% partially absorbed'])
-    text(100.*critBlockDmg-10,youtn(xout==40)+offset,[num2str(cbFullAbsorbsPct.*100,'%2.2f') '% fuly absorbed'])
-   
-    text(100.*blockDmg-15,youtn(xout==70)+5*offset,[num2str(blocksPct.*100,'%2.1f') '% blocked'])
-    text(100.*blockDmg-15,youtn(xout==70)+3.*offset,[num2str(bPartialAbsorbsPct.*100,'%2.2f') '% partially absorbed'])
-    text(100.*blockDmg-15,youtn(xout==70)+offset,[num2str(bFullAbsorbsPct.*100,'%2.2f') '% fully absorbed'])
-
-    text(100-20,youtn(xout==100)+5*offset,[num2str(hitsPct.*100,'%2.1f') '% full hits'])
-    text(100-20,youtn(xout==100)+3.*offset,[num2str(hPartialAbsorbsPct.*100,'%2.2f') '% partially absorbed'])
-    text(100-20,youtn(xout==100)+offset,[num2str(hFullAbsorbsPct.*100,'%2.2f') '% fully absorbed'])
-    
-    figure(2)
-    [yout2 xout2]=hist(maDTPS,50);
-    yout2n=yout2.*100./length(maDTPS);
-    bar(xout2,yout2n);
-    xlabel('5-attack moving average DTPS')
-    ylabel('Percentage of events')
-    title(['T=' int2str(simTime./60) ' min, S=' num2str(S.*100,'%2.1f') '%, Tsb=' num2str(Tsb,'%2.1f') 's, R_{rage}=' num2str(Rrage,'%2.3f') '/s, DTPS=' num2str(DTPS.*bossSwingTimer.*100,'%2.2f') '%'])
-    temp=get(gca,'YLim');mval=temp(2);
-    text(0.1,0.8*mval,['mean = ' num2str(mean_ma,'%1.4f')]);
-    text(0.123,0.73*mval,['std  = ' num2str(std_ma,'%1.4f')]);
-end
-
-statblock.S=S;
-statblock.Tsb=Tsb;
-statblock.Rrage=Rrage;
 statblock.block=block;
 statblock.avoidance=avoidance;
 statblock.rageGain=rageGain;
 statblock.xsRage=xsRage;
-statblock.blocked=blocksPct;
-statblock.avoided=avoidsPct;
-statblock.unmit=hitsPct;
-statblock.meanma=mean_ma;
-statblock.stdma=std_ma;
 statblock.SBCasts=SBCasts;
 statblock.SBrCasts=SBrCasts;
 
+statblock.DTPS=sum(dmg)./max(t);
+statblock.maDTPS=filter(ones(1,5)./5,1,dmg);
+statblock.mean_ma=mean(statblock.maDTPS);
+statblock.std_ma=std(statblock.maDTPS);
+
+
+statblock.simMins=simMins;
+statblock.simTime=simTime;
+statblock.stepsPerSec=steps_per_sec;
+statblock.bossSwingTimer=bossSwingTimer;
+
+statblock.critBlockDmg=critBlockDmg;
+statblock.blockDmg=blockDmg;
+
+%% plot
+
+if ~strcmp(plotFlag,'noplot')
+    warr_mc_plot(config,statblock,sF)
+end
+
+%% helper functions
 
     function shieldBlockCast()
         
@@ -451,13 +442,15 @@ statblock.SBrCasts=SBrCasts;
     end
 
     function shieldBarrierCast()
-        if (rage>=60) && tob(idSBrcd)<=0
+        if (rage>=20) && tob(idSBrcd)<=0
             %give 6 seconds of SBr
             tob(idSBr)=6;
+            %determine amount of rage to use
+            stacks=min(floor(rage./20),3);
             %set absorb value
-            SBrAmount=shieldBarrierAbsorb;
+            SBrAmount=shieldBarrierAbsorb.*stacks./3;
             %consume rage
-            rage=rage-60;
+            rage=rage-stacks.*20;
             %track for cast rate
             SBrCasts=SBrCasts+1;
         end
@@ -469,6 +462,21 @@ statblock.SBrCasts=SBrCasts;
             shieldBlockCast()
         elseif strcmpi(finisher,'SBronly')
             shieldBarrierCast()
+        elseif strcmpi(finisher,'SBr20')
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we have excess rage, pop barrier
+            if rage>=20
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'SBrBleed20')
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we have excess rage AND SB isn't available soon, pop barrier
+            if (rage>=20 && tob(idSBcd1)>6 && tob(idSBcd2)>6) || (rage>=100)
+                shieldBarrierCast()
+            end
+            
         else %use SBarr to bleed rage >100
             %first, try and use Shield Block
             shieldBlockCast();
