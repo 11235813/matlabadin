@@ -31,6 +31,12 @@ if ~isfield(config,'sF')
 else
     sF=config.sF;
 end
+if ~isfield(config,'bossSwing')
+    bossSwingTimer=1.5;
+    warning(['boss swing timer factor defaulting to ' int2str(bossSwingTimer)])
+else
+    bossSwingTimer=config.bossSwing;
+end
 if nargin>=1
     switch config.stat
         case 'hit'
@@ -76,7 +82,6 @@ end
 % expRating=0;
 
 %% Define constants/variables
-bossSwingTimer=1.5;
 Cd=65.631440;
 Cp=236.1;
 Cb=149.1;
