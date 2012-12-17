@@ -82,10 +82,10 @@ end
 % expRating=0;
 
 %% Define constants/variables
-Cd=65.631440;
-Cp=236.1;
-Cb=149.1;
-k=0.885;
+Cd=66.56745;
+Cp=237.186;
+Cb=150.3759;
+k=0.886;
 gcProcRate=0.2;
 gcBuffDuration=6.3;
 % dpProcRate=0.25;
@@ -98,7 +98,7 @@ mastery=8+(masteryRating+dmastery)./600;
 blockCS=3+10+1./(1./Cb+k./mastery);
 miss=0;
 dodgeCS=5.01+1./(1./Cd+k./((dodgeRating+ddodge)./885));
-parryCS=3.19+1./(1./Cp+k./((buffedStr-178)./951.16+(parryRating+dparry)./885));
+parryCS=3.19+1./(1./Cp+k./((buffedStr-178)./951.158596+(parryRating+dparry)./885));
 
 avoidance=(dodgeCS+parryCS-9)./100;
 block=(blockCS-4.5)./100;
