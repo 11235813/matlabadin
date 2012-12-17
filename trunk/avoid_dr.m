@@ -24,11 +24,11 @@ end
 
 %% Constants
 %DR coefficients (k)
-avoiddr.k=0.885;
+avoiddr.k=0.886;
 %Caps (c)
-avoiddr.c_dodge=65.631440;  %plate
-avoiddr.c_parry=236.1;  %plate, approximate
-avoiddr.c_block=149.1;  %plate, approximate
+avoiddr.c_dodge=66.56744;  %plate
+avoiddr.c_parry=237.1860;  %plate, approximate
+avoiddr.c_block=150.3759;  %plate, approximate
 
 
 %% Calculate avoidance values

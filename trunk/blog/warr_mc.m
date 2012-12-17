@@ -34,6 +34,13 @@ end
 if ~isfield(config,'finisher')
     config.finisher='SBrBleed';
 end
+if ~isfield(config,'bossSwing')
+    bossSwingTimer=1.5;
+    warning(['boss swing timer factor defaulting to ' int2str(bossSwingTimer)])
+else
+    bossSwingTimer=config.bossSwing;
+end
+
 finisher=config.finisher;
 
 if nargin>=1
@@ -69,8 +76,6 @@ if nargin<2 || isempty(statSetup)
     parryRating=4834;
     dodgeRating=4892;
     masteryRating=6758;
-%     hitRating=1521;
-%     expRating=1777;
     hitRating=2550;
     expRating=2550;
     hasteRating=0;
@@ -98,9 +103,9 @@ wbMit=0.9;
 %% Define constants/variables
 bossSwingTimer=1.5;
 bossRawSwingDamage=250000;
-Cd=91.0;
-Cp=237.2;
-Cb=150.4;
+Cd=90.6425;
+Cp=237.1860;
+Cb=150.3759;
 k=0.956;
 SnBProcRate=0.3;
 SnBBuffDuration=5;
