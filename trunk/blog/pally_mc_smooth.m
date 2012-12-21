@@ -9,7 +9,9 @@ config.val=0;
 config.plotnum=1;
 config.sF=5;
 config.bossSwing=0.25;
-
+jMin=15;
+jMax=30;
+jStep=5;
 
 %% set up stat configs
 i=1;
@@ -131,40 +133,67 @@ ma=[statblock.maDTPS];
 
 n=length(statSetup);
 
+% %Mean & std spike damage intake
+% %events above 80 and 90%
+% for j=jMin:jStep:jMax
+%    disp([int2str(j) ' Attack Moving Average'])
+%    li=DataTable(); 
+%    li{1:6,1}={'Set:';'S%';'mean';'std';'80%';'90%'};
+%    li{1,1+(1:n)}={statSetup.name};
+%    li{2,1+(1:n)}=S;
+%    matemp=filter(ones(1,j)./j,1,dmg);
+% %    li{3,1+(1:n)}=eval(char(['mean(ma' int2str(j) ');']));
+%    li{3,1+(1:n)}=mean(matemp);
+% %    li{4,1+(1:n)}=eval(char(['std(ma' int2str(j) ');']));
+%    li{4,1+(1:n)}=std(matemp);
+% %    li{5,1+(1:n)}=eval(char(['sum(ma' int2str(j) '>0.8)./length(ma5).*100;']));
+%    li{5,1+(1:n)}=sum(matemp>0.8)./size(matemp,1).*100;
+% %    li{6,1+(1:n)}=eval(char(['sum(ma' int2str(j) '>0.9)./length(ma5).*100;']));
+%    li{6,1+(1:n)}=sum(matemp>0.9)./size(matemp,1).*100;
+%    li.setColumnFormat(1+(1:n),'%1.4f')
+%    li.toText()
+% end
+%% Table
+
 %Mean & std spike damage intake
 %events above 80 and 90%
-for j=15:5:30
-   disp([int2str(j) ' Attack Moving Average'])
-   li=DataTable(); 
-   li{1:6,1}={'Set:';'S%';'mean';'std';'80%';'90%'};
-   li{1,1+(1:n)}={statSetup.name};
-   li{2,1+(1:n)}=S;
-   matemp=filter(ones(1,j)./j,1,dmg);
-%    li{3,1+(1:n)}=eval(char(['mean(ma' int2str(j) ');']));
-   li{3,1+(1:n)}=mean(matemp);
-%    li{4,1+(1:n)}=eval(char(['std(ma' int2str(j) ');']));
-   li{4,1+(1:n)}=std(matemp);
-%    li{5,1+(1:n)}=eval(char(['sum(ma' int2str(j) '>0.8)./length(ma5).*100;']));
-   li{5,1+(1:n)}=sum(matemp>0.8)./size(matemp,1).*100;
-%    li{6,1+(1:n)}=eval(char(['sum(ma' int2str(j) '>0.9)./length(ma5).*100;']));
-   li{6,1+(1:n)}=sum(matemp>0.9)./size(matemp,1).*100;
-   li.setColumnFormat(1+(1:n),'%1.4f')
-   li.toText()
+li=DataTable();
+li{1:4,1}={'Set:';'S%';'mean';'std'};
+li{1,1+(1:n)}={statSetup.name};
+li{2,1+(1:n)}=S;
+matemp=filter(ones(1,5)./5,1,dmg);
+li{3,1+(1:n)}=mean(matemp);
+li{4,1+(1:n)}=std(matemp);
+linePH=0;
+for j=jMin:jStep:jMax
+    matemp=filter(ones(1,j)./j,1,dmg);
+    li{5+linePH,1:9}={'------','------',['--- ' int2str(j)],'Attack','Moving','Average','------','------','------'};
+    linePH=linePH+1;
+    li{5+linePH,1}='80%';
+    li{5+linePH,1+(1:n)}=sum(matemp>0.8)./size(matemp,1).*100;
+    linePH=linePH+1;
+    li{5+linePH,1}='90%';
+    li{5+linePH,1+(1:n)}=sum(matemp>0.9)./size(matemp,1).*100;
+    linePH=linePH+1;
 end
-% 
-% 
-% disp('3')
-% [mean(ma3);std(ma3); [sum(ma3>0.8);sum(ma3>0.9)]./length(ma3).*100]
-% 
-% %again for 4
-% disp('4')
-% [mean(ma4);std(ma4); [sum(ma4>0.8);sum(ma4>0.9)]./length(ma4).*100]
-% 
-% disp('5')
-% [mean(ma5);std(ma5); [sum(ma5>0.8);sum(ma5>0.9)]./length(ma5).*100]
-% 
-% disp('6')
-% [mean(ma6);std(ma6); [sum(ma6>0.8);sum(ma6>0.9)]./length(ma6).*100]
-% 
-% disp('7')
-% [mean(ma7);std(ma7); [sum(ma7>0.8);sum(ma7>0.9)]./length(ma7).*100]
+li.setColumnFormat(1+(1:n),'%1.4f')
+disp('<pre>')
+li.toText()
+disp('</pre>')
+
+gl=DataTable();
+gl{1,1+(1:n)}={statSetup.name};
+gl{1:8,1}={'Set:';'Str';'Parry';'Dodge';'Mastery';'Hit';'Exp';'Haste'};
+%% Gear sets
+for i=1:length(statSetup)
+    gl{2:8,1+i}={statSetup(i).buffedStr;...
+        statSetup(i).parryRating;...
+        statSetup(i).dodgeRating;...
+        statSetup(i).masteryRating;...
+        statSetup(i).hitRating;...
+        statSetup(i).expRating;...
+        statSetup(i).hasteRating};
+end
+disp('<pre>')
+gl.toText()
+disp('</pre>')

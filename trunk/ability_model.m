@@ -71,7 +71,7 @@ label.SealofRighteousness=  'SoR';
 %Seal of Insight (15 PPM, not haste-normalized) 
 raw.SealofInsight=          0.15.*(player.sp+player.ap);
 dmg.SealofInsight=          0;
-heal.SealofInsight=         raw.SealofInsight.*(1+mdf.SoI).*(15.*gear.swing./60); %Check if this has changed to 15% proc or if it's still 15 PPM
+heal.SealofInsight=         raw.SealofInsight.*(1+mdf.SoI).*(15.*gear.swing./60); 
 threat.SealofInsight=       max(dmg.SealofInsight,heal.SealofInsight).*mdf.hthreat.*mdf.RFury./exec.npccount; %this is also flagged as generating no threat
 mcost.SealofInsight=        0;
 splash.SealofInsight=       0;
