@@ -22,7 +22,7 @@ std_ma=std(maDTPS);
 
 %% plot
 %plot #1, hit size distribution
-if config.plotFlag~='2only'
+if ~strcmp(config.plotFlag,'2only')
     figure(1+2.*(plotNum-1))
     [yout xout]=hist(100.*dmg,100.*[0:0.05:1]);
     xout=round(xout);
@@ -60,7 +60,7 @@ if config.plotFlag~='2only'
 end
 
 %plot #2, histogram of DTPS distribution
-if config.plotFlag~='1only'
+if ~strcmp(config.plotFlag,'1only')
     figure(2+2.*(plotNum-1))
     [yout2 xout2]=hist(maDTPS,50);
     yout2n=yout2.*100./length(maDTPS);
@@ -73,6 +73,6 @@ if config.plotFlag~='1only'
     text(0.1,0.8*mval,['mean = ' num2str(mean_ma,'%1.4f')]);
     text(0.1,0.73*mval,['std  = ' num2str(std_ma,'%1.4f')]);
     ylim([0 12])
-    pause(0.1)
 end
+pause(0.1)
 end

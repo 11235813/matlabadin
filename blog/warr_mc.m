@@ -2,7 +2,9 @@ function [statblock]=warr_mc(config,statSetup,startCond)
 dhit=0;dexp=0;dhaste=0;dmastery=0;ddodge=0;dparry=0;
 
 %% Input handling
-
+if ~exist('config')
+    config=[];
+end
 if ~isfield(config,'tocFlag')
     tocFlag='toc';
 else
@@ -72,12 +74,12 @@ RandStream.setDefaultStream ...
  
 %% Player stats
 if nargin<2 || isempty(statSetup)
-    buffedStr=9208;
-    parryRating=4834;
-    dodgeRating=4892;
-    masteryRating=6758;
+    buffedStr=11000;
+    parryRating=3000;
+    dodgeRating=3000;
+    masteryRating=3500;
     hitRating=2550;
-    expRating=2550;
+    expRating=5100;
     hasteRating=0;
 else
     buffedStr=statSetup.buffedStr;
@@ -101,8 +103,8 @@ armorMit=1-0.45;
 specMit=1-0.25;
 wbMit=0.9;
 %% Define constants/variables
-bossSwingTimer=1.5;
-bossRawSwingDamage=250000;
+bossRawDPS=280000;
+bossRawSwingDamage=bossRawDPS.*bossSwingTimer;
 Cd=90.6425;
 Cp=237.1860;
 Cb=150.3759;
@@ -112,21 +114,21 @@ SnBBuffDuration=5;
 
 %Vengeance info
 bossSwingDamage=bossRawSwingDamage.*armorMit.*specMit.*wbMit;
-avgVengAP=0.4*(bossRawSwingDamage./bossSwingTimer);
+avgVengAP=0.4*bossRawDPS;
 shieldBarrierAbsorb=2*(1.1.*avgVengAP+0.2.*buffedStr)./bossSwingDamage;
 
 %% calculate stats
 mastery=17.6+(masteryRating+dmastery).*2.2./600;
 blockCS=3+10+meta+1./(1./Cb+k./(mastery.*0.5./2.2));
-critBlock=(meta+mastery)./100;
-miss=0;
+critBlock=double((meta+mastery)./100);
+% miss=0;
 dodgeCS=5.01+1./(1./Cd+k./((dodgeRating+ddodge)./885));
 parryCS=3.21+1./(1./Cp+k./((buffedStr-203)./951.16+(parryRating+dparry)./885));
 
-avoidance=(dodgeCS+parryCS-9)./100;
-block=(blockCS-4.5)./100;
+avoidance=double((dodgeCS+parryCS-9)./100);
+block=double((blockCS-4.5)./100);
 
-haste=(hasteRating+dhaste)./425./100;
+% haste=(hasteRating+dhaste)./425./100;
 
 hit=(hitRating+dhit)./340./100;
 exp=(expRating+dexp)./340./100;
@@ -182,6 +184,9 @@ rageGain=0;
 dsRage=0;
 xsRage=0;
 SBrAmount=0;
+% SBrTrack(1)=0;
+SBTrack=zeros(N,1);
+SBrTrack=SBTrack;
 
 %tracking
 avoids=0;
@@ -384,18 +389,22 @@ statblock.allFullAbsorbsPct=statblock.allFullAbsorbs./numEvents;
 % cbPartialAbsorbsPct=cbPartialAbsorbs./numEvents;
 
 
-statblock.Tsb = max(t)./SBCasts;
-statblock.Rsb = 1/statblock.Tsb;
-statblock.Rrage=rageGain./max(t);
-
 statblock.block=block;
 statblock.avoidance=avoidance;
+
 statblock.rageGain=rageGain;
 statblock.xsRage=xsRage;
+statblock.Rrage=rageGain./simTime;
 statblock.SBCasts=SBCasts;
 statblock.SBrCasts=SBrCasts;
+statblock.Tsb = simTime./SBCasts;
+statblock.Rsb = 1/statblock.Tsb;
+statblock.Tsbr= simTime./SBrCasts;
+statblock.Rsbr= 1/statblock.Tsbr;
+statblock.SBrTrack=SBrTrack;
+statblock.SBTrack=SBTrack;
 
-statblock.DTPS=sum(dmg)./max(t);
+statblock.DTPS=sum(dmg)./simTime;
 statblock.maDTPS=filter(ones(1,5)./5,1,dmg);
 statblock.mean_ma=mean(statblock.maDTPS);
 statblock.std_ma=std(statblock.maDTPS);
@@ -443,6 +452,7 @@ end
             rage=max([rage;0]);
             %track for cast rate
             SBCasts=SBCasts+1;
+            SBTrack(k)=1;
         end
     end
 
@@ -458,6 +468,7 @@ end
             rage=rage-stacks.*20;
             %track for cast rate
             SBrCasts=SBrCasts+1;
+            SBrTrack(k)=stacks.*20;
         end
     end
 
@@ -467,28 +478,43 @@ end
             shieldBlockCast()
         elseif strcmpi(finisher,'SBronly')
             shieldBarrierCast()
-        elseif strcmpi(finisher,'SBr20')
-            %first, try and use Shield Block
-            shieldBlockCast();
+        elseif strcmpi(finisher,'SBronly60')
             %if we have excess rage, pop barrier
-            if rage>=20
+            if rage>=60
                 shieldBarrierCast()
             end
         elseif strcmpi(finisher,'SBrBleed20')
             %first, try and use Shield Block
             shieldBlockCast();
             %if we have excess rage AND SB isn't available soon, pop barrier
-            if (rage>=20 && tob(idSBcd1)>6 && tob(idSBcd2)>6) || (rage>=100)
+            if (rage>=20 && tob(idSBcd1)>4 && tob(idSBcd2)>4) || (rage>=110)
                 shieldBarrierCast()
             end
-            
-        else %use SBarr to bleed rage >100
+        elseif strcmpi(finisher,'SBrWeave')            
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we have excess rage AND SB isn't available soon and SB
+            %isn't up
+            if (rage>=20 && tob(idSBcd1)>2 && tob(idSBcd2)>2 && tob(idSB)<0) || (rage>=110)
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'SBrWeave2')            
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we have excess rage AND SB isn't available soon and SB
+            %isn't up
+            if (rage>=20 && tob(idSBcd1)>1 && tob(idSBcd2)>1 && tob(idSB)<0) || (rage>=110)
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'SBrBleed') %use SBarr to bleed rage >100
             %first, try and use Shield Block
             shieldBlockCast();
             %if we still have excess rage, pop barrier
             if rage>=100
                 shieldBarrierCast()
             end
+        else
+            error('invalid finisher specification')
         end
         
     end
