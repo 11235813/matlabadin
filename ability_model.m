@@ -71,7 +71,7 @@ label.SealofRighteousness=  'SoR';
 %Seal of Insight (15 PPM, not haste-normalized) 
 raw.SealofInsight=          0.15.*(player.sp+player.ap);
 dmg.SealofInsight=          0;
-heal.SealofInsight=         raw.SealofInsight.*(1+mdf.SoI).*(15.*gear.swing./60); 
+heal.SealofInsight=         raw.SealofInsight.*(1+mdf.SoI).*(20.*gear.swing./60); 
 threat.SealofInsight=       max(dmg.SealofInsight,heal.SealofInsight).*mdf.hthreat.*mdf.RFury./exec.npccount; %this is also flagged as generating no threat
 mcost.SealofInsight=        0;
 splash.SealofInsight=       0;
@@ -189,7 +189,7 @@ splash.AvengersShield=min([exec.npccount-1; 0+2.*(mdf.glyphFS==1)]);
 label.AvengersShield='AS';
 
 %Consecration (all 9 ticks)
-raw.Consecration =  (102.7+0.18.*player.sp)*9.*mdf.spdmg; 
+raw.Consecration =  (102.7+0.18.*player.sp)*9.*mdf.spdmg; %789% buff to base, 11% nerf to AP in 5.2
 dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 heal.Consecration=  0;
 threat.Consecration=(max(dmg.Consecration,heal.Consecration)+12).*mdf.RFury;  %TODO: wowdb flags as generating no threat
