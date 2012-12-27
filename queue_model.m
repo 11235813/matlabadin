@@ -91,7 +91,23 @@ queue.st={...
 
 
 queue.aoe={...
-    'SotR>CS>AS>J>Cons';
-    'SotR>HotR>AS>J>Cons';
-    'SotR>HotR>Cons>AS>J';
+    'CS>J>AS>HW>Cons>SotR';
+    'HotR>J>AS>HW>Cons>SotR';
+    'HotR>J>AS>Cons>HW>SotR';
+    'HotR>AS>J>Cons>HW>SotR';
+    'HotR>AS>Cons>J>HW>SotR';
+    'HotR>Cons>AS>J>HW>SotR';
+    'HotR>Cons>AS>HW>J>SotR';
+    'Cons>HotR>AS>HW>J>SotR';
+    'HotR>Cons>AS>HW>J>LH>SotR';
+    'HotR>Cons>AS>HW>LH>J>SotR';
+    'HotR>Cons>AS>LH>HW>J>SotR';
+    'HotR>Cons>LH>AS>HW>J>SotR';
+    'HotR>LH>Cons>AS>HW>J>SotR';
+    'HotR>Cons>AS>HW>J>HPrAlt>SotR';
+    'HotR>Cons>AS>HW>HPr>J>SotR';
+    'HotR>Cons>AS>HPr>HW>J>SotR';
+    'HotR>Cons>HPr>AS>HW>J>SotR';
+    'HotR>HPr>Cons>AS>HW>J>SotR';
     };
+
