@@ -80,7 +80,7 @@ if nargin<2 || isempty(statSetup)
     masteryRating=3500;
     hitRating=2550;
     expRating=5100;
-    hasteRating=0;
+    armor=63500;
 else
     buffedStr=statSetup.buffedStr;
     parryRating=statSetup.parryRating;
@@ -88,7 +88,7 @@ else
     masteryRating=statSetup.masteryRating;
     hitRating=statSetup.hitRating;
     expRating=statSetup.expRating;
-    hasteRating=statSetup.hasteRating;
+    armor=statSetup.armor;
 end
 
 %toggle off hit/exp
@@ -99,11 +99,12 @@ end
 meta=1; %toggle for block meta, 1 is on, 0 is off
 blockDmg=1-(0.3+meta./100);
 critBlockDmg=1-2.*(0.3+meta./100);
-armorMit=1-0.45;
+armorMit=1-armor./(armor+58370);
+% armorMit=1-0.57;
 specMit=1-0.25;
 wbMit=0.9;
 %% Define constants/variables
-bossRawDPS=280000;
+bossRawDPS=310000;
 bossRawSwingDamage=bossRawDPS.*bossSwingTimer;
 Cd=90.6425;
 Cp=237.1860;
@@ -187,6 +188,7 @@ SBrAmount=0;
 % SBrTrack(1)=0;
 SBTrack=zeros(N,1);
 SBrTrack=SBTrack;
+SBrRage=SBTrack;
 
 %tracking
 avoids=0;
@@ -218,7 +220,7 @@ for k=1:N
                 
         %Berserker Rage - use if available
         if tob(idBRcd)<=0 && rage<110
-            %set BR cooldown, start GCD
+            %set BR cooldown
             tob(idBRcd)=30;
             %add rage
             rage=rage+10;
@@ -403,6 +405,7 @@ statblock.Tsbr= simTime./SBrCasts;
 statblock.Rsbr= 1/statblock.Tsbr;
 statblock.SBrTrack=SBrTrack;
 statblock.SBTrack=SBTrack;
+statblock.SBrRage=SBrRage;
 
 statblock.DTPS=sum(dmg)./simTime;
 statblock.maDTPS=filter(ones(1,5)./5,1,dmg);
@@ -460,11 +463,14 @@ end
         if (rage>=20) && tob(idSBrcd)<=0
             %give 6 seconds of SBr
             tob(idSBr)=6;
+            %set cooldown
+            tob(idSBrcd)=1.5;
             %determine amount of rage to use
             stacks=min(floor(rage./20),3);
             %set absorb value
             SBrAmount=shieldBarrierAbsorb.*stacks./3;
             %consume rage
+            SBrRage(k)=rage;
             rage=rage-stacks.*20;
             %track for cast rate
             SBrCasts=SBrCasts+1;
@@ -472,45 +478,158 @@ end
         end
     end
 
-    function finisherCast(finisher)
+    function finisherCast(finisher)                
         
-        if strcmpi(finisher,'SBonly')
+        if strcmpi(finisher,'SB')
             shieldBlockCast()
-        elseif strcmpi(finisher,'SBronly')
+        elseif strcmpi(finisher,'SBr')
             shieldBarrierCast()
-        elseif strcmpi(finisher,'SBronly60')
-            %if we have excess rage, pop barrier
+        elseif strcmpi(finisher,'SBr*')
+            if tob(idSBr)<=0
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'SBr60')
+            %if we have 6 rage, pop barrier
             if rage>=60
                 shieldBarrierCast()
             end
-        elseif strcmpi(finisher,'SBrBleed20')
-            %first, try and use Shield Block
-            shieldBlockCast();
-            %if we have excess rage AND SB isn't available soon, pop barrier
-            if (rage>=20 && tob(idSBcd1)>4 && tob(idSBcd2)>4) || (rage>=110)
+        elseif strcmpi(finisher,'SBr60*')
+            %if we have 6 rage, pop barrier
+            if rage>=60 && tob(idSBr)<=0
                 shieldBarrierCast()
             end
-        elseif strcmpi(finisher,'SBrWeave')            
-            %first, try and use Shield Block
-            shieldBlockCast();
-            %if we have excess rage AND SB isn't available soon and SB
-            %isn't up
-            if (rage>=20 && tob(idSBcd1)>2 && tob(idSBcd2)>2 && tob(idSB)<0) || (rage>=110)
-                shieldBarrierCast()
-            end
-        elseif strcmpi(finisher,'SBrWeave2')            
-            %first, try and use Shield Block
-            shieldBlockCast();
-            %if we have excess rage AND SB isn't available soon and SB
-            %isn't up
-            if (rage>=20 && tob(idSBcd1)>1 && tob(idSBcd2)>1 && tob(idSB)<0) || (rage>=110)
-                shieldBarrierCast()
-            end
-        elseif strcmpi(finisher,'SBrBleed') %use SBarr to bleed rage >100
+        elseif strcmpi(finisher,'B-100') %use SBarr to bleed rage >100
             %first, try and use Shield Block
             shieldBlockCast();
             %if we still have excess rage, pop barrier
             if rage>=100
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'B-105') %use SBarr to bleed rage >100
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we still have excess rage, pop barrier
+            if rage>=105
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'B-110') %use SBarr to bleed rage >100
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we still have excess rage, pop barrier
+            if rage>=110
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'B-115') %use SBarr to bleed rage >100
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we still have excess rage, pop barrier
+            if rage>=115
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'B-120') %use SBarr to bleed rage >100
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we still have excess rage, pop barrier
+            if rage>=120
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'W3-105')
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we have excess rage AND SB isn't available soon, pop barrier
+            if (rage>=20 && tob(idSBcd1)>3 && tob(idSBcd2)>3 && tob(idSB)<=0 && tob(idSBr)<=0) || (rage>=105)
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'W3-110')
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we have excess rage AND SB isn't available soon, pop barrier
+            if (rage>=20 && tob(idSBcd1)>3 && tob(idSBcd2)>3 && tob(idSB)<=0 && tob(idSBr)<=0) || (rage>=110)
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'W3-115')            
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we have excess rage AND SB isn't available soon and SB
+            %isn't up
+            if (rage>=20 && tob(idSBcd1)>3 && tob(idSBcd2)>3 && tob(idSB)<=0 && tob(idSBr)<=0) || (rage>=115)
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'W3-120')            
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we have excess rage AND SB isn't available soon and SB
+            %isn't up
+            if (rage>=20 && tob(idSBcd1)>3 && tob(idSBcd2)>3 && tob(idSB)<=0 && tob(idSBr)<=0) || (rage>=120)
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'W4')            
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we have excess rage AND SB isn't available soon and SB
+            %isn't up
+            if (rage>=20 && tob(idSBcd1)>=4 && tob(idSBcd2)>=4 && tob(idSB)<=0 && tob(idSBr)<=0) 
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'W3')            
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we have excess rage AND SB isn't available soon and SB
+            %isn't up
+            if (rage>=20 && tob(idSBcd1)>=3 && tob(idSBcd2)>=3 && tob(idSB)<=0 && tob(idSBr)<=0)
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'W3.5')            
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we have excess rage AND SB isn't available soon and SB
+            %isn't up
+            if (rage>=20 && tob(idSBcd1)>=3.5 && tob(idSBcd2)>=3.5 && tob(idSB)<=0 && tob(idSBr)<=0)
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'W2')            
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we have excess rage AND SB isn't available soon and SB
+            %isn't up
+            if (rage>=20 && tob(idSBcd1)>=2 && tob(idSBcd2)>=2 && tob(idSB)<=0 && tob(idSBr)<=0)
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'W2.5')            
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we have excess rage AND SB isn't available soon and SB
+            %isn't up
+            if (rage>=20 && tob(idSBcd1)>=2.5 && tob(idSBcd2)>=2.5 && tob(idSB)<=0 && tob(idSBr)<=0)
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'W1')            
+            %first, try and use Shield Block
+            shieldBlockCast();
+            %if we have excess rage AND SB isn't available soon and SB
+            %isn't up
+            if (rage>=20 && tob(idSBcd1)>=1 && tob(idSBcd2)>=1 && tob(idSB)<=0 && tob(idSBr)<=0)
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'F0-120')            
+            %first, try and use Shield Block - only if neither SBr or SB
+            %are up
+            if tob(idSB)<=0 && tob(idSBr)<=0
+                shieldBlockCast();
+            end
+            %if we have rage and SB/SBr not up OR bleed
+            %isn't up
+            if (rage>=20 && tob(idSB)<=0 && tob(idSBr)<=0) || (rage>=120)
+                shieldBarrierCast()
+            end
+        elseif strcmpi(finisher,'F1-120')            
+            %first, try and use Shield Block - only if neither SBr or SB
+            %are up
+            if tob(idSB)<=0 && tob(idSBr)<=0
+                shieldBlockCast();
+            end
+            %if we have excess rage AND SB/SBr isn't up
+            if (rage>=20 && tob(idSBcd1)>1 && tob(idSBcd2)>1 && tob(idSB)<=0 && tob(idSBr)<=0) || (rage>=120)
                 shieldBarrierCast()
             end
         else
@@ -520,7 +639,7 @@ end
     end
 
     function gcdPriority(prio)
-        if strcmp(prio,'short') %30-second priority
+        if strcmp(prio,'short') %30-second priority, SS>Rev>BS>Dev
             
              %SS is first priority
                 if tob(idSScd)<=0
@@ -580,8 +699,8 @@ end
                     xsRage=xsRage+(rage-120);
                     rage=min([rage 120]);
                 end
-            
-        else %default priority, SS>Rev>BR>TC>Dev
+    
+        else %default priority, SS>Rev>BS>TC>Dev
             
                 %SS is first priority
                 if tob(idSScd)<=0
@@ -613,7 +732,7 @@ end
                         rageGain=rageGain+15;
                     end
                 %Battle Shout - use on cooldown if it won't cap rage
-                elseif tob(idBScd)<=0 && rage<=100;
+                elseif tob(idBScd)<=0 && rage<=100 && tob(idSScd)>=0.2;
                     %set BS cooldown, start GCD
                     tob(idBScd)=60;
                     tbe(idGCD)=1.5;
@@ -621,7 +740,7 @@ end
                     rage=rage+20;
                     rageGain=rageGain+20;            
                 %Thunder Clap - use if WB isn't up
-                elseif tob(idWB)<=0 && tob(idTCcd)<=0
+                elseif tob(idWB)<=0 && tob(idTCcd)<=0 && tob(idSScd)>=0.2
                     %set TC cooldown, start GCD
                     tob(idTCcd)=6;
                     tbe(idGCD)=1.5;
