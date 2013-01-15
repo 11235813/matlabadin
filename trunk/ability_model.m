@@ -189,7 +189,7 @@ splash.AvengersShield=min([exec.npccount-1; 0+2.*(mdf.glyphFS==1)]);
 label.AvengersShield='AS';
 
 %Consecration (all 9 ticks)
-raw.Consecration =  (102.7+0.18.*player.sp)*9.*mdf.spdmg; %789% buff to base, 11% nerf to AP in 5.2
+raw.Consecration =  (102.7+0.18.*player.sp)*9.*mdf.spdmg; %(914+0.16*SP)*9 in 5.2
 dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 heal.Consecration=  0;
 threat.Consecration=(max(dmg.Consecration,heal.Consecration)+12).*mdf.RFury;  %TODO: wowdb flags as generating no threat
@@ -259,7 +259,7 @@ splash.EternalFlame=0;
 label.EternalFlame= 'EF';
 
 %Eternal Flame HoT
-raw.EternalFlameHoT=   (508+0.0585.*player.sp).*player.hopo.*(1+mdf.SoI); %heal for 1 tick
+raw.EternalFlameHoT=   (508+0.0585.*player.sp).*player.hopo.*(1+mdf.SoI); %heal for 1 tick, (1016+0.0585*AP) in 5.2
 dmg.EternalFlameHoT=   0;
 heal.EternalFlameHoT=  raw.EternalFlameHoT.*(1-exec.overh).*mdf.spcrit;
 threat.EternalFlameHoT=1.*mdf.RFury./exec.npccount;
