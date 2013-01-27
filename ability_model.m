@@ -208,19 +208,19 @@ label.HolyWrath=    'HW';
 
 %Holy Prism (cast on enemy, healing is up to 5 nearby targets)
 raw.HolyPrism=      (16136 + 1.428.*player.sp).*mdf.spdmg;
-dmg.HolyPrism=      raw.HolyPrism.*mdf.sphit.*mdf.spcrit.*target.resrdx;
+dmg.HolyPrism=      raw.HolyPrism.*mdf.spcrit.*target.resrdx;
 heal.HolyPrism=     (10882 + 0.962.*player.sp).*mdf.spcrit.*1; %1 out of 5 targets (i.e. self)
 mcost.HolyPrism =   0;
 splash.HolyPrism=   0;
 label.HolyPrism=    'HPr';
 
 %Holy Prism (cast on ally/self, damage is up to 5 nearby targets)
-raw.HolyPrismAlt=      (10882 + 0.962.*player.sp).*mdf.spdmg;
-dmg.HolyPrismAlt=      raw.HolyPrism.*mdf.sphit.*mdf.spcrit.*target.resrdx;
-heal.HolyPrismAlt=     (16136 + 1.428.*player.sp).*mdf.spcrit; %1 out of 5 targets
-mcost.HolyPrismAlt =   0;
-splash.HolyPrism=      min([exec.npccount-1; 4]);
-label.HolyPrismAlt= 'HPrAlt'; %placeholder
+raw.HolyPrismSC=      (10882 + 0.962.*player.sp).*mdf.spdmg;
+dmg.HolyPrismSC=      raw.HolyPrismSC.*mdf.spcrit.*target.resrdx; %1 out of 5 targets
+heal.HolyPrismSC=     (16136 + 1.428.*player.sp).*mdf.spcrit; %Self
+mcost.HolyPrismSC =   0;
+splash.HolyPrismSC=      min([exec.npccount-1; 4]);
+label.HolyPrismSC= 'HPrSC'; %placeholder
 
 %Execution Sentence
 raw.ExecutionSentence = (12989 + 5.936.*player.sp).*mdf.spdmg;
@@ -295,7 +295,7 @@ val.ones=ones(1,val.length);
 val.name={'CrusaderStrike';'HammeroftheRighteous';'HammerNova'; ... %HP gen
           'Judgment';'AvengersShield';'Consecration';'HolyWrath';'HammerofWrath';... %Rotational
           'ShieldoftheRighteous';'WordofGlory';'EternalFlame';'EternalFlameHoT';... %HP sinks
-          'SacredShield'; 'HolyPrism';'LightsHammer';'ExecutionSentence'; ... %Talents (except EF)
+          'SacredShield'; 'HolyPrism';'HolyPrismSC';'LightsHammer';'ExecutionSentence'; ... %Talents (except EF)
           'SealofTruth';'SealofRighteousness';'SealofInsight';... %Seals
           'Censure';'Melee'}; %passive 
     

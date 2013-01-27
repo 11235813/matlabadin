@@ -12,14 +12,14 @@ def_db;
 %create the first configuation
 %we set hit/exp to desired values by altering shirt stats
 
-%hit-cap and exp soft-cap
-cfg(1)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0]);
+%hit-cap and exp cap
+cfg(1)=build_config('hit',7.5,'exp',15,'glyph',[0 0 0]);
  
-%hit-cap and exp soft-cap, SoI
-cfg(2)=build_config('hit',7.5,'exp',7.5,'seal','SoI','glyph',[0 0 0]);
+%hit-cap and exp cap, SoI
+cfg(2)=build_config('hit',7.5,'exp',15,'seal','SoT','glyph',[0 0 0]);
 
-%hit-cap, exp soft-cap, SoR
-cfg(3)=build_config('hit',7.5,'exp',7.5,'seal','SoR','glyph',[0 0 0]); 
+%hit-cap, exp cap, SoR
+cfg(3)=build_config('hit',7.5,'exp',15,'seal','SoR','glyph',[0 0 0]); 
 
 
 %% Generate DPS for each config

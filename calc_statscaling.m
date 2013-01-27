@@ -10,13 +10,12 @@ def_db;
 
 %% Configurations
 %create the first configuation
-%low hit, SotR/SoT build
-%set melee hit to 2%, expertise to 5%
-%do this by altering shirt stats
-cfg(1)=build_config('hit',5,'exp',5);
 
-%low hit, WoG/SoI build
-cfg(2)=build_config('hit',5,'exp',5,'veng',50);
+%basic 7.5%/15% SoI build @ high veng
+cfg(1)=build_config('hit',7.5,'exp',15);
+
+%low-vengeance version
+cfg(2)=build_config('hit',7.5,'exp',15,'veng',ddb.v(1));
 
 %% Stat components
 stat={'hit';'exp';'haste';'str';'ap';'crit';'agi';'int'};

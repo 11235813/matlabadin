@@ -12,10 +12,10 @@ def_db;
 %low hit, SotR/SoT build
 %set melee hit to 2%, expertise to 5%
 %do this by altering shirt stats
-cfg(1)=build_config('hit',2,'exp',5); 
+cfg(1)=build_config('hit',2.5,'exp',7.5); 
 
-%hit-cap and exp soft-cap
-cfg(2)=build_config('hit',7.5,'exp',7.5);
+%hit-cap and exp cap
+cfg(2)=build_config('hit',7.5,'exp',15);
 
 
 %% List of weapons
@@ -45,8 +45,11 @@ weaplist=[
             86987 1;    %Scimitar of Seven Stars
             87173 1;    %Kilrak, Jaws of Terror (Heroic)
             2 1;    %Kilrak, Jaws of Terror (LFR+Gem)
+            5 1;    %Kilrak, Jaws of Terror (LFR+Gem+Haste)
             3 1;    %Kilrak, Jaws of Terror (Norm+Gem)
+            6 1;    %Kilrak, Jaws of Terror (Norm+Gem+Haste)
             4 1;    %Kilrak, Jaws of Terror (Heroic+Gem)
+            7 1;    %Kilrak, Jaws of Terror (Heroic+Gem+Haste)
           ];
       
 wids=weaplist(:,1);
@@ -172,7 +175,7 @@ for type=1:3
     set(gca,'YTick',1:N(type),'YTickLabel',plotaxislabels, ...
             'OuterPosition',[0.01 0 0.99 1])
     xlabel('DPS (thousands)')
-    title([char(wtype(type)) ' weapons, sorted by DPS'])
+    title([char(wtype(type)) ' weapons, sorted by ilvl, then DPS'])
     legend([num2str(cfg(1).player.mehit,'%g') '% hit, ' num2str(cfg(1).player.exp,'%g') '% exp'], ...
        [num2str(cfg(2).player.mehit,'%g') '% hit, ' num2str(cfg(2).player.exp,'%g') '% exp'], ...
         'Location','Best')
@@ -180,18 +183,39 @@ for type=1:3
 end
 
 
-%% All weapons, sorted by DPS
+%% All weapons, sorted by type and ilvl
 spacer=repmat(' ',M,1);
-allplotdps=[wdps(ind,1) diff(wdps(ind,:),1,2)]./1e3;
+allplotilvl=[wdps(ind,1) diff(wdps(ind,:),1,2)]./1e3;
 allplotaxislabels=strcat([spacer],winfo.name(ind),[spacer spacer int2str(winfo.ilvl(ind))]);
 y74=[0 cumsum(diff(ilvlsorted(:,1)))']+(1:M);
 
 figure(74)
-bar74=barh(y74,allplotdps,'BarWidth',0.5,'BarLayout','stacked');
+bar74=barh(y74,allplotilvl,'BarWidth',0.5,'BarLayout','stacked');
 set(bar74(2),'FaceColor',[0.749 0.749 0]);
-xlim([0.99.*min(allplotdps(:,1)) 1.01.*max(sum(allplotdps,2))])
+xlim([0.99.*min(allplotilvl(:,1)) 1.01.*max(sum(allplotilvl,2))])
 ylim(0.5+[0 max(y74)])
 set(gca,'YTick',y74,'YTickLabel',allplotaxislabels, ...
+    'OuterPosition',[0.01 0 0.99 1])
+xlabel('DPS (thousands)')
+title(['All weapons, sorted by type and DPS'])
+legend([num2str(cfg(1).player.mehit,'%g') '% hit, ' num2str(cfg(1).player.exp,'%g') '% exp'], ...
+       [num2str(cfg(2).player.mehit,'%g') '% hit, ' num2str(cfg(2).player.exp,'%g') '% exp'], ...
+        'Location','Best')
+    
+%% All weapons, sorted by DPS
+spacer=repmat(' ',M,1);
+[dpssorted inddps]=sortrows(wdps,1);
+%arrange array for plottin
+allplotdps=[wdps(inddps,1) diff(wdps(inddps,:),1,2)]./1e3;
+allplotdpsaxislabels=strcat([spacer],winfo.name(inddps),[spacer spacer int2str(winfo.ilvl(inddps))]);
+y75=[1:M];
+
+figure(75)
+bar75=barh(y75,allplotdps,'BarWidth',0.5,'BarLayout','stacked');
+set(bar75(2),'FaceColor',[0.749 0.749 0]);
+xlim([0.99.*min(allplotdps(:,1)) 1.01.*max(sum(allplotdps,2))])
+ylim(0.5+[0 max(y75)])
+set(gca,'YTick',y75,'YTickLabel',allplotdpsaxislabels, ...
     'OuterPosition',[0.01 0 0.99 1])
 xlabel('DPS (thousands)')
 title(['All weapons, sorted by type and DPS'])

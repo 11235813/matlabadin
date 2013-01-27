@@ -12,7 +12,7 @@ cfg(1)=build_config('glyph',[0 0 0]);
 cfg(2)=build_config('glyph',[0 0 0],'npccount',4);
 
 %% Veng loop
-for v=[50,100]
+for v=ddb.v
     
     
     %% Calculate stats and ability damages

@@ -6,42 +6,42 @@ if ~exist('config')
     config=[];
 end
 if ~isfield(config,'tocFlag')
-    tocFlag='toc';
-else
-    tocFlag=config.tocFlag;
+    config.tocFlag='toc';
 end
+tocFlag=config.tocFlag;
+
 if ~isfield(config,'plotFlag')
-    plotFlag='plot';
-else 
-    plotFlag=config.plotFlag;
+    config.plotFlag='plot';
 end
+plotFlag=config.plotFlag;
+
 if ~isfield(config,'simMins')
-    simMins=1000;
-    warning(['simMins defaulting to ' int2str(simMins)])
-else
-    simMins=config.simMins;
+    config.simMins=1000;
+    warning(['simMins defaulting to ' int2str(config.simMins)])
 end
+simMins=config.simMins;
+
 if ~isfield(config,'val')
-    val=1000;
-    warning(['stat value defaulting to ' int2str(val)])
-else
-    val=config.val;
+    config.val=1000;
+    warning(['stat value defaulting to ' int2str(config.val)])
 end
+val=config.val;
+
 if ~isfield(config,'sF')
-    sF=5;
-    warning(['smoothing factor defaulting to ' int2str(sF)])
-else
-    sF=config.sF;
+    config.sF=5;
+    warning(['smoothing factor defaulting to ' int2str(config.sF)])
 end
+sF=config.sF;
+
 if ~isfield(config,'finisher')
     config.finisher='SBrBleed';
 end
 if ~isfield(config,'bossSwing')
-    bossSwingTimer=1.5;
-    warning(['boss swing timer factor defaulting to ' int2str(bossSwingTimer)])
-else
-    bossSwingTimer=config.bossSwing;
+    config.bossSwingTimer=1.5;
+    warning(['boss swing timer factor defaulting to ' int2str(config.bossSwingTimer)])
 end
+bossSwingTimer=config.bossSwingTimer;
+
 
 %% Finisher priority Queue handling
 finisher=config.finisher;
@@ -111,8 +111,6 @@ armorMit=1-armor./(armor+58370);
 specMit=1-0.25;
 wbMit=0.9;
 %% Define constants/variables
-bossRawDPS=310000;
-bossRawSwingDamage=bossRawDPS.*bossSwingTimer;
 Cd=90.6425;
 Cp=237.1860;
 Cb=150.3759;
@@ -121,8 +119,10 @@ SnBProcRate=0.3;
 SnBBuffDuration=5;
 
 %Vengeance info
+bossRawDPS=310000;
+bossRawSwingDamage=bossRawDPS.*bossSwingTimer;
 bossSwingDamage=bossRawSwingDamage.*armorMit.*specMit.*wbMit;
-avgVengAP=0.4*bossRawDPS;
+avgVengAP=0.36*bossRawDPS;
 shieldBarrierAbsorb=2*(1.1.*avgVengAP+0.2.*buffedStr)./bossSwingDamage;
 
 %% calculate stats
@@ -264,6 +264,9 @@ for k=1:N
                 %update SBr
                 if tob(idSBr)<=0
                     SBrAmount=0;
+                end
+                if SBrAmount<=0
+                    tob(idSBr)=0;
                 end
                 
                 %check for 60+ rage; if so cast SB
@@ -528,19 +531,6 @@ end
             if (rage>=20 && tob(idSBcd1)>=lock && tob(idSBcd2)>=lock && tob(idSB)<=0 && tob(idSBr)<=0) || (~isnan(bleed) && rage>=bleed)
                 shieldBarrierCast()
             end
-%         %Weave-Bleed Queues    
-%         elseif strcmpi(n.ftype,'W') && ~isnan(bleed)    
-%             %sanity check
-%             if isnan(lock)
-%                 error(['Lock value not specified for Weave Queue "' finisher '"'])
-%             end       
-%             %first, try and use Shield Block
-%             shieldBlockCast();
-%             %if we have excess rage AND SB isn't available soon and SB
-%             %isn't up
-%             if (rage>=20 && tob(idSBcd1)>lock && tob(idSBcd2)>lock && tob(idSB)<=0 && tob(idSBr)<=0) || (rage>=bleed)
-%                 shieldBarrierCast()
-%             end
         %FCFS Queues
         elseif strcmpi(ftype,'F')  
             %first, try and use Shield Block - only if SBr/SB not up
@@ -552,171 +542,6 @@ end
             if (rage>=20 && (isnan(lock) || (tob(idSBcd1)>=lock && tob(idSBcd2)>=lock)) && tob(idSB)<=0 && tob(idSBr)<=0) || (~isnan(bleed) && (rage>=bleed))
                 shieldBarrierCast()
             end
-%         %FCFS Queues w/o lockout
-%         elseif strcmpi(ftype,'FX')      
-%             %first, try and use Shield Block - only if SBr/SB not up
-%             if tob(idSB)<=0 && tob(idSBr)<=0
-%                 shieldBlockCast();
-%             end
-%             %if we have rage and SB/SBr not up 
-%             %OR if bleed condition met (if provided)
-%             if (rage>=20 && tob(idSB)<=0 && tob(idSBr)<=0) || (~isnan(bleed) && (rage>=bleed))
-%                 shieldBarrierCast()
-%             end
-%         end
-%         
-%         if strcmpi(finisher,'SB')
-%             shieldBlockCast()
-%         elseif strcmpi(finisher,'SBr')
-%             shieldBarrierCast()
-%         elseif strcmpi(finisher,'SBr*')
-%             if tob(idSBr)<=0
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'SBr60')
-%             %if we have 6 rage, pop barrier
-%             if rage>=60
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'SBr60*')
-%             %if we have 6 rage, pop barrier
-%             if rage>=60 && tob(idSBr)<=0
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'B-100') %use SBarr to bleed rage >100
-%             %first, try and use Shield Block
-%             shieldBlockCast();
-%             %if we still have excess rage, pop barrier
-%             if rage>=100
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'B-105') %use SBarr to bleed rage >100
-%             %first, try and use Shield Block
-%             shieldBlockCast();
-%             %if we still have excess rage, pop barrier
-%             if rage>=105
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'B-110') %use SBarr to bleed rage >100
-%             %first, try and use Shield Block
-%             shieldBlockCast();
-%             %if we still have excess rage, pop barrier
-%             if rage>=110
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'B-115') %use SBarr to bleed rage >100
-%             %first, try and use Shield Block
-%             shieldBlockCast();
-%             %if we still have excess rage, pop barrier
-%             if rage>=115
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'B-120') %use SBarr to bleed rage >100
-%             %first, try and use Shield Block
-%             shieldBlockCast();
-%             %if we still have excess rage, pop barrier
-%             if rage>=120
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'W3-105')
-%             %first, try and use Shield Block
-%             shieldBlockCast();
-%             %if we have excess rage AND SB isn't available soon, pop barrier
-%             if (rage>=20 && tob(idSBcd1)>3 && tob(idSBcd2)>3 && tob(idSB)<=0 && tob(idSBr)<=0) || (rage>=105)
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'W3-110')
-%             %first, try and use Shield Block
-%             shieldBlockCast();
-%             %if we have excess rage AND SB isn't available soon, pop barrier
-%             if (rage>=20 && tob(idSBcd1)>3 && tob(idSBcd2)>3 && tob(idSB)<=0 && tob(idSBr)<=0) || (rage>=110)
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'W3-115')            
-%             %first, try and use Shield Block
-%             shieldBlockCast();
-%             %if we have excess rage AND SB isn't available soon and SB
-%             %isn't up
-%             if (rage>=20 && tob(idSBcd1)>3 && tob(idSBcd2)>3 && tob(idSB)<=0 && tob(idSBr)<=0) || (rage>=115)
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'W3-120')            
-%             %first, try and use Shield Block
-%             shieldBlockCast();
-%             %if we have excess rage AND SB isn't available soon and SB
-%             %isn't up
-%             if (rage>=20 && tob(idSBcd1)>3 && tob(idSBcd2)>3 && tob(idSB)<=0 && tob(idSBr)<=0) || (rage>=120)
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'W4')            
-%             %first, try and use Shield Block
-%             shieldBlockCast();
-%             %if we have excess rage AND SB isn't available soon and SB
-%             %isn't up
-%             if (rage>=20 && tob(idSBcd1)>=4 && tob(idSBcd2)>=4 && tob(idSB)<=0 && tob(idSBr)<=0) 
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'W3')            
-%             %first, try and use Shield Block
-%             shieldBlockCast();
-%             %if we have excess rage AND SB isn't available soon and SB
-%             %isn't up
-%             if (rage>=20 && tob(idSBcd1)>=3 && tob(idSBcd2)>=3 && tob(idSB)<=0 && tob(idSBr)<=0)
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'W3.5')            
-%             %first, try and use Shield Block
-%             shieldBlockCast();
-%             %if we have excess rage AND SB isn't available soon and SB
-%             %isn't up
-%             if (rage>=20 && tob(idSBcd1)>=3.5 && tob(idSBcd2)>=3.5 && tob(idSB)<=0 && tob(idSBr)<=0)
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'W2')            
-%             %first, try and use Shield Block
-%             shieldBlockCast();
-%             %if we have excess rage AND SB isn't available soon and SB
-%             %isn't up
-%             if (rage>=20 && tob(idSBcd1)>=2 && tob(idSBcd2)>=2 && tob(idSB)<=0 && tob(idSBr)<=0)
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'W2.5')            
-%             %first, try and use Shield Block
-%             shieldBlockCast();
-%             %if we have excess rage AND SB isn't available soon and SB
-%             %isn't up
-%             if (rage>=20 && tob(idSBcd1)>=2.5 && tob(idSBcd2)>=2.5 && tob(idSB)<=0 && tob(idSBr)<=0)
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'W1')            
-%             %first, try and use Shield Block
-%             shieldBlockCast();
-%             %if we have excess rage AND SB isn't available soon and SB
-%             %isn't up
-%             if (rage>=20 && tob(idSBcd1)>=1 && tob(idSBcd2)>=1 && tob(idSB)<=0 && tob(idSBr)<=0)
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'F0-120')            
-%             %first, try and use Shield Block - only if neither SBr or SB
-%             %are up
-%             if tob(idSB)<=0 && tob(idSBr)<=0
-%                 shieldBlockCast();
-%             end
-%             %if we have rage and SB/SBr not up OR bleed
-%             %isn't up
-%             if (rage>=20 && tob(idSB)<=0 && tob(idSBr)<=0) || (rage>=120)
-%                 shieldBarrierCast()
-%             end
-%         elseif strcmpi(finisher,'F1-120')            
-%             %first, try and use Shield Block - only if neither SBr or SB
-%             %are up
-%             if tob(idSB)<=0 && tob(idSBr)<=0
-%                 shieldBlockCast();
-%             end
-%             %if we have excess rage AND SB/SBr isn't up
-%             if (rage>=20 && tob(idSBcd1)>1 && tob(idSBcd2)>1 && tob(idSB)<=0 && tob(idSBr)<=0) || (rage>=120)
-%                 shieldBarrierCast()
-%             end
         else
             error('invalid finisher specification')
         end

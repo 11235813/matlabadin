@@ -8,7 +8,7 @@ config.stat=' ';
 config.val=0;
 config.plotnum=1;
 config.sF=5;
-config.bossSwing=1.5;
+config.bossSwingTimer=1.5;
 
 finishers={'SB','SBr*','F-110'};
 

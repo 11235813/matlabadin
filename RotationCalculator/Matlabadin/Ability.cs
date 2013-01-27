@@ -28,6 +28,7 @@ namespace Matlabadin
         HW,
         AW,
         HPr, // Holy Prism, L90 talent
+        HPrSC, //Holy Prism, self-cast
         LH, // Light's Hammer, L90 talent
         ES, // Execution Sentence, L90 talent
         HA, // Holy Avenger, L75 talent

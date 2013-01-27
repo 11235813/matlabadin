@@ -104,10 +104,15 @@ queue.aoe={...
     'HotR>Cons>AS>LH>HW>J>SotR';
     'HotR>Cons>LH>AS>HW>J>SotR';
     'HotR>LH>Cons>AS>HW>J>SotR';
-    'HotR>Cons>AS>HW>J>HPrAlt>SotR';
-    'HotR>Cons>AS>HW>HPr>J>SotR';
-    'HotR>Cons>AS>HPr>HW>J>SotR';
-    'HotR>Cons>HPr>AS>HW>J>SotR';
-    'HotR>HPr>Cons>AS>HW>J>SotR';
+%     'HotR>Cons>AS>HW>J>HPr>SotR';
+%     'HotR>Cons>AS>HW>HPr>J>SotR';
+%     'HotR>Cons>AS>HPr>HW>J>SotR';
+%     'HotR>Cons>HPr>AS>HW>J>SotR';
+%     'HotR>HPr>Cons>AS>HW>J>SotR';
+    'HotR>Cons>AS>HW>J>HPrSC>SotR';
+    'HotR>Cons>AS>HW>HPrSC>J>SotR';
+    'HotR>Cons>AS>HPrSC>HW>J>SotR';
+    'HotR>Cons>HPrSC>AS>HW>J>SotR';
+    'HotR>HPrSC>Cons>AS>HW>J>SotR';
     };
 

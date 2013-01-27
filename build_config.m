@@ -114,9 +114,9 @@ c.spec=spec_model(s.spec,p.lvl);
 c.talent=talent_model(t.shortform);
 c.glyph=glyph_model(g.shortform);
 
-%load gear set - if none is specified, default to pre-raid
+%load gear set - if none is specified, set default
 if isempty(gr.gset)==1 
-    gr.gset=4;  %1=450, 2=463, 3=483, 4=496 (T14N), 5=509
+    gr.gset=5;  %1=450, 2=463, 3=483, 4=496 (T14N), 5=509
 end 
 c.egs=ddb.gearset{gr.gset}; 
 
