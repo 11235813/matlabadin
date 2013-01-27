@@ -19,7 +19,7 @@ function [exec] = execution_model(varargin)
 %'Righteousness','SoR'
 %'Truth','SoT'
 %All seal arguments are case-insenstive.
-
+global ddb
 
 %% Input handling
 %populate all entries with empty arrays
@@ -54,7 +54,7 @@ if isempty(exec.npccount)==1 exec.npccount=1; end;
 if isempty(exec.timein)==1 exec.timein=1; end;
 if isempty(exec.timeout)==1 exec.timeout=1; end;
 if isempty(exec.behind)==1 exec.behind=0; end;
-if isnumeric(exec.seal)==1 exec.seal='SoT'; end; %workaround for seal==''
-if isempty(exec.veng)==1 exec.veng=100; end;
+if isnumeric(exec.seal)==1 exec.seal='SoI'; end; %workaround for seal==''
+if isempty(exec.veng)==1 exec.veng=ddb.v(2); end;
 if isempty(exec.overh)==1 exec.overh=0; end;
 end

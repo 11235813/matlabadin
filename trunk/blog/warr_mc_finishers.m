@@ -19,7 +19,7 @@ config.stat=' ';
 config.val=0;
 config.plotnum=1;
 config.sF=5;
-config.bossSwing=1.5;
+config.bossSwingTimer=1.5;
 jMin=2;
 jMax=7;
 jStep=1;
@@ -53,7 +53,7 @@ S=[statblock.S];
 ma=[statblock.maDTPS];
 
 %% Save data
-fbase=['warr_finish_data_' int2str(config.simMins)];
+fbase=['.\wdata\warr_finish_data_' int2str(config.simMins)];
 i=0;
 while exist([fbase '_' int2str(i) '.mat'])==2
     i=i+1;

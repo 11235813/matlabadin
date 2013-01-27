@@ -2,8 +2,7 @@
 %etc.  This is for easy swapping between setups.
 
 global ddb
-%% Gear Sets
-
+%% Gem templates
 %default gems
 tempgems.blu=76639; %solid    (stam)
 tempgems.red=76690; %defender (parry/stam)
@@ -12,19 +11,24 @@ tempgems.pris=76639; %solid
 tempgems.meta=76895; %austere (armor)
 ddb.gemset{1}=tempgems;
 
+%haste/exp-favoring gems
+tempgems.blu=76639; %solid (stam)
+tempgems.red=76688; %Guardian (exp/stam)
+tempgems.yel=76654; %Forceful (haste/stam)
+tempgems.pris=76639; %solid
+tempgems.meta=76895; %austere (armor)
+ddb.gemset{2}=tempgems;
+
+%% Pre-raid gear sets
 
 %%Starter pre-5-mans, ilvl 450
 gem=ddb.gemset{1}; %define gem template
-%TODO: update all gear
 tempegs(1)=equip(82919);  %Masterwork Spiritguard Helm
-% tempegs(1)=socket(tempegs(1),gem.meta,gem.red);
 tempegs(2)=equip(87356); %Badge of the Amber Siege
 tempegs(3)=equip(82920); %Masterwork Spiritguard Shoulders
 tempegs(4)=equip(87427); %Blade-Dulling Greatcloak
 tempegs(5)=equip(82921); %Masterwork Spiritguard Breastplate
 tempegs(6)=equip(82924); %Masterwork Spiritguard Bracers
-% tempegs(6)=reforge(tempegs(6),'dodge','mast');
-% tempegs(6)=socket(tempegs(6),gem.yel);
 tempegs(7)=equip(82922); %Masterwork Spiritguard Gauntlets
 tempegs(8)=equip(82923); %Masterwork Spiritguard Belt
 tempegs(8)=enhance(tempegs(8),equip(90046,'s')); %Belt Buckle
@@ -72,6 +76,8 @@ tempegs(14)=equip(81181); %Heart of Fire
 tempegs(15)=equip(81061); %Ook's Hozen Slicer
 tempegs(16)=equip(81096); %Shield of Blind Hate
 ddb.gearset(2)={tempegs};
+
+%% T14 gear sets
 
 %%T14 LFR, ilvl 483
 tempegs(1)=equip(86661); %White Tiger Faceguard (LFR)
@@ -127,32 +133,61 @@ tempegs(15)=socket(tempegs(15),gem.blu);
 tempegs(16)=equip(86075); %Steelskin, Quiang's Impervious Shield
 ddb.gearset(4)={tempegs};
 
+%all subsequent sets use the haste gem template
+gem=ddb.gemset{2}; %define gem template
+
 %%T14 Heroic, ilvl 509
 tempegs(1)=equip(87111); %White Tiger Faceguard (Heroic)
+tempegs(1)=reforge(tempegs(1),'parry','haste');
 tempegs(1)=socket(tempegs(1),gem.meta,gem.blu);
-tempegs(2)=equip(90509); %Kaolan's Withering Necklace (Heroic)
+tempegs(2)=equip(87147); %Shackle of Eversparks (Heroic)
+% tempegs(2)=reforge(tempegs(2),'hit','haste');
 tempegs(3)=equip(87113); %White Tiger Shoulderguards (Heroic)
+tempegs(3)=reforge(tempegs(3),'mast','haste');
 tempegs(3)=socket(tempegs(3),gem.blu);
-tempegs(4)=equip(87159); %Daybreak Drape (Heroic)
+tempegs(4)=equip(86980); %Cloak of Raining Blades (Heroic)
+tempegs(4)=reforge(tempegs(4),'dodge','exp');
 tempegs(5)=equip(87109); %White Tiger Chestguard (Heroic)
+tempegs(5)=reforge(tempegs(5),'parry','exp');
 tempegs(5)=socket(tempegs(5),gem.yel,gem.yel);
 tempegs(6)=equip(87001); %Serrated Wasp Bracers (Heroic)
+tempegs(6)=reforge(tempegs(6),'dodge','haste');
 tempegs(7)=equip(87110); %White Tiger Handguards (Heroic)
+tempegs(7)=reforge(tempegs(7),'dodge','haste');
 tempegs(8)=equip(87185); %Protector's Girlde of Endless Spring (Heroic)
+tempegs(8)=reforge(tempegs(8),'dodge','haste');
 tempegs(8)=enhance(tempegs(8),equip(90046,'s')); %Belt Buckle
 tempegs(8)=socket(tempegs(8),gem.blu,gem.blu);
 tempegs(9)=equip(87112); %White Tiger's Legguards (Heroic)
+tempegs(9)=reforge(tempegs(9),'dodge','exp');
 tempegs(9)=socket(tempegs(9),gem.red);
 tempegs(10)=equip(90507); %Deepwater Greatboots (Heroic)
+tempegs(10)=reforge(tempegs(10),'parry','exp');
 tempegs(10)=socket(tempegs(10),gem.yel);
 tempegs(11)=equip(86968); %Ring of the Shattered Shell (Heroic)
+tempegs(11)=reforge(tempegs(11),'dodge','exp');
 tempegs(12)=equip(86946); %Vizier's Ruby Signet (Heroic)
+tempegs(12)=reforge(tempegs(12),'parry','haste');
 tempegs(13)=equip(87083); %Jade Warlord Figurine 
 tempegs(14)=equip(89079); %Lao-Chin's Liquid Courage
 tempegs(15)=equip(86987); %Scimitar of Seven Stars (Heroic)
+tempegs(15)=reforge(tempegs(15),'mast','exp');
 tempegs(15)=socket(tempegs(15),gem.blu);
 tempegs(16)=equip(87050); %Steelskin, Quiang's Impervious Shield (Heroic)
+tempegs(16)=reforge(tempegs(16),'parry','exp');
 ddb.gearset(5)={tempegs};
+
+%% T15 gear sets
+gem=ddb.gemset{2}; %define gem template
+
+%%T15 RaidFinder, ilvl ??
+
+
+%%T15 Normal, ilvl ??
+
+
+%%T15 Heroic, ilvl ??
+
 
 %% Glyphs
 %TODO: convert this to new 3x3 structure, if needed
@@ -162,7 +197,9 @@ ddb.glyphset{1}=tempglyphs;
 
 
 %% Vengeance
-ddb.v1=50;
-ddb.v2=100;
+ddb.v1=75;
+ddb.v2=150;
+
+ddb.v=[75 150];
 
 clear tempegs tempgems tempglyphs temptree

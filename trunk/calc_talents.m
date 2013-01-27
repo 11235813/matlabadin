@@ -12,14 +12,14 @@ def_db;
 %create the first configuation
 %set melee hit and expertise by altering shirt stats
 
-%hit-cap and exp soft-cap
-cfg(1)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0]);
+%hit-cap and exp cap
+cfg(1)=build_config('hit',7.5,'exp',15,'glyph',[0 0 0]);
 
-%hit-cap and exp soft-cap, SoI
-cfg(2)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'seal','SoI');
+%hit-cap and exp cap, SoT
+cfg(2)=build_config('hit',7.5,'exp',15,'glyph',[0 0 0],'seal','SoT');
 
-%multiple targets
-cfg(3)=build_config('hit',7.5,'exp',7.5,'glyph',[0 0 0],'npccount',5,'seal','SoR'); 
+%multiple targets SoR
+cfg(3)=build_config('hit',7.5,'exp',15,'glyph',[0 0 0],'npccount',5,'seal','SoR'); 
 
 %% Vengeance levels
 for v=[ddb.v1,ddb.v2]

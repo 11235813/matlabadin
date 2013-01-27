@@ -35,6 +35,11 @@ for i=1:stopat
     lig{2+i,1+[1:q]}=round([gstats.(char(fnames(i)))]);
 
 end
+
+%fix for avg dmg and swing
+lig{1+i,1+[1:q]}=cellstr(num2str([gstats.(char(fnames(i-1)))]','%6.1f'))';
+lig{2+i,1+[1:q]}=cellstr(num2str([gstats.(char(fnames(i)))]','%6.2f'))';
+
 lig.toText()
 
 

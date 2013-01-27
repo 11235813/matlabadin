@@ -271,6 +271,7 @@ namespace Matlabadin
                 case Ability.FoL:
                 case Ability.AW:
                 case Ability.HPr:
+                case Ability.HPrSC:
                 case Ability.LH:
                 case Ability.ES:
                 case Ability.HA:

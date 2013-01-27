@@ -1,12 +1,12 @@
 %% Special Items
 
-idb.iid(2).name='Kilrak, Jaws of Terror (Raid Finder)';
+idb.iid(2).name='Kilrak, Jaws of Terror (LFR+Gem)';
 idb.iid(2).wtype='swo';
 idb.iid(2).ilvl=483;
 idb.iid(2).tooldps=2935.8;
 idb.iid(2).swing=2.6;
 idb.iid(2).avgdmg=7633.5;
-idb.iid(2).str=964;
+idb.iid(2).str=464+500;
 idb.iid(2).sta=697;
 idb.iid(2).hit=314;
 idb.iid(2).mast=302;
@@ -35,6 +35,46 @@ idb.iid(4).sta=887;
 idb.iid(4).hit=400;
 idb.iid(4).mast=385;
 idb.iid(4).isreforged=0;
+
+idb.iid(5).name='Kilrak, Jaws of Terror (LFR+Gem+Haste)';
+idb.iid(5).wtype='swo';
+idb.iid(5).ilvl=483;
+idb.iid(5).tooldps=2935.8;
+idb.iid(5).swing=2.6;
+idb.iid(5).avgdmg=7633.5;
+idb.iid(5).str=464+500;
+idb.iid(5).sta=697;
+idb.iid(5).hit=314;
+idb.iid(5).mast=302;
+idb.iid(5).haste=320;
+idb.iid(5).isreforged=0;
+
+idb.iid(6).name='Kilrak, Jaws of Terror (+Gem+Haste)';
+idb.iid(6).wtype='swo';
+idb.iid(6).ilvl=496;
+idb.iid(6).tooldps=3313.9;
+idb.iid(6).swing=2.6;
+idb.iid(6).avgdmg=8616;
+idb.iid(6).str=524+500;
+idb.iid(6).sta=786;
+idb.iid(6).hit=355;
+idb.iid(6).mast=341;
+idb.iid(6).haste=320;
+idb.iid(6).isreforged=0;
+
+idb.iid(7).name='Kilrak, Jaws of Terror (Heroic+Gem+Haste)';
+idb.iid(7).wtype='swo';
+idb.iid(7).ilvl=509;
+idb.iid(7).tooldps=3740.6;
+idb.iid(7).swing=2.6;
+idb.iid(7).avgdmg=9725.5;
+idb.iid(7).str=592+500;
+idb.iid(7).sta=887;
+idb.iid(7).hit=400;
+idb.iid(7).mast=385;
+idb.iid(7).haste=320;
+idb.iid(7).isreforged=0;
+
 
 %% Enchant section  
 %Enchants work exactly the same way that items do.  There is an idb
@@ -441,6 +481,10 @@ idb.iid(76698).name='Subtle Sun''s Radiance';
 idb.iid(76698).dodge=320;
 idb.iid(76698).socket='Y';
 
+idb.iid(76699).name='Quick Sun''s Radiance';
+idb.iid(76699).haste=320;
+idb.iid(76699).socket='Y';
+
 idb.iid(83145).name='Subtle Serpent''s Eye';
 idb.iid(83145).dodge=480;
 idb.iid(83145).socket='Y';
@@ -469,6 +513,11 @@ idb.iid(76643).name='Sensei''s Wild Jade';
 idb.iid(76643).mast=160;
 idb.iid(76643).hit=160;
 idb.iid(76643).socket='YB';
+
+idb.iid(76654).name='Forceful Wild Jade';
+idb.iid(76654).sta=120;
+idb.iid(76654).haste=160;
+idb.iid(76654).socket='YB';
 
 idb.iid(88920).name='Puissant Adventurine';
 idb.iid(88920).mast=200;
