@@ -22,6 +22,11 @@ cfg(3)=build_config('hit',7.5,'exp',15,'glyph',[0 0 0],'queue','HW>HoW>AS>CS>J>C
 %multiple targets SoR
 cfg(4)=build_config('hit',7.5,'exp',15,'glyph',[0 0 0],'npccount',3,'seal','SoR','queue','HotR>J>AS>HW>Cons>SotR'); 
 
+%multiple targets SoI
+cfg(5)=build_config('hit',7.5,'exp',15,'glyph',[0 0 0],'npccount',3,'seal','SoI','queue','HotR>J>AS>HW>Cons>SotR'); 
+
+%SoT for Immediate Truth
+cfg(6)=build_config('hit',7.5,'exp',15,'glyph',[0 0 0],'seal','SoT'); 
 
 %% Vengeance levels
 for v=[ddb.v1,ddb.v2]

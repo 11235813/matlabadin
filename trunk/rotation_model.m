@@ -25,7 +25,7 @@ end
 talentString=strrep(int2str(c.talent.short),' ','');
 glyphString=c.glyph.string;
 meleeHaste=c.player.phhaste./100;
-spellHaste=c.player.sphaste./100+2.*c.mdf.SoI;
+spellHaste=c.player.sphaste./100;
 pBuffs=',';
 if c.buff.AW
     pBuffs=[pBuffs 'AW,'];

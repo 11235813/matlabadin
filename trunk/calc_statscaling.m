@@ -12,10 +12,10 @@ def_db;
 %create the first configuation
 
 %basic 7.5%/15% SoI build @ high veng
-cfg(1)=build_config('hit',7.5,'exp',15);
+cfg(1)=build_config('hit',5,'exp',5);
 
 %low-vengeance version
-cfg(2)=build_config('hit',7.5,'exp',15,'veng',ddb.v(1));
+cfg(2)=build_config('hit',5,'exp',5,'veng',ddb.v(1));
 
 %% Stat components
 stat={'hit';'exp';'haste';'str';'ap';'crit';'agi';'int'};
@@ -289,7 +289,7 @@ title([ strrep(cfg(g).exec.queue,'^','\^') ', ' cfg(g).exec.seal ', '  ...
 
 end
 %% Haste Calcs
-haste_range=linspace(0,15,30).*cnv.haste_phhaste;
+haste_range=linspace(0,15,25).*cnv.haste_phhaste;
 % [temp idx]=min(abs(exp_range));
 haste_dps=zeros(M,length(haste_range),length(cfg));haste_hps=haste_dps;
 haste_dps0=zeros(size(haste_dps));haste_hps0=haste_dps0;

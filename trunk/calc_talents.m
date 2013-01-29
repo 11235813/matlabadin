@@ -154,6 +154,19 @@ for g=1:length(cfg)
     HPr_hps(g)=c.rot.hps-hps0(g);
     HPr_hpg(g)=c.rot.hpg-hpg0(g);
     
+    %Holy Prism
+    c=cfg(g);
+    c.exec.queue='^WB>SotR>CS>J>AS>HW>Cons>HPrSC';
+    c.exec.veng=v;
+    c=stat_model(c);
+    c=ability_model(c);
+    c=rotation_model(c);
+    
+    %store DPS & HPS
+    HPrSC_dps(g)=c.rot.dps-dps0(g)+c.rot.aoe-aoe0(g);
+    HPrSC_hps(g)=c.rot.hps-hps0(g);
+    HPrSC_hpg(g)=c.rot.hpg-hpg0(g);
+    
     %Light's Hammer
     c=cfg(g);
     c.exec.queue='^WB>SotR>CS>J>AS>HW>Cons>LH';
@@ -194,6 +207,10 @@ tal_sbu=[EF_sbu;SS_sbu;HA_sbu;SW_sbu;DP_sbu];
 tal_asbu=[EF_avgsbu;SS_avgsbu;HA_avgsbu;SW_avgsbu;DP_avgsbu];
 tal_labels={'Eternal Flame';'Sacred Shield';'Holy Avenger';'Sanctified Wrath';...
             'Divine Purpose';'Holy Prism';'Light''s Hammer';'Execution Sentence'};
+        
+%fix for HPr self-cast in config #3
+tal_dps(6,3)=HPrSC_dps(3);
+tal_hps(6,3)=HPrSC_hps(3);
 
 %% construct output arrays
 ldat=3+[1:length(tal_labels)]; %offset by header rows
