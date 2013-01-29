@@ -351,10 +351,10 @@ mdf.BoG=0.1+player.mast/100;
 %TODO: check percentages when stats are available
 if ((strcmpi('Human',base.race)||strcmpi('Hum',base.race)) ...
         &&(strcmp(egs(15).wtype,'swo')||strcmp(egs(15).wtype,'mac')))
-        base.exp=0.75;
+        base.exp=1;
 elseif ((strcmpi('Dwarf',base.race)||strcmpi('Dwa',base.race)) ...
         &&strcmp(egs(15).wtype,'mac'))
-        base.exp=0.75;
+        base.exp=1;
 end
 
 %player expertise in percent
@@ -500,6 +500,7 @@ player.mps=0.06.*base.mana/2;
 % mps.Repl=0.01.*player.manapoints./10;
 
 %% Repack
+% c.base=base;
 c.player=player;
 c.target=target;
 c.mdf=mdf;

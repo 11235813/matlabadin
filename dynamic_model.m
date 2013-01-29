@@ -26,12 +26,13 @@ c=ability_model(c);
 
 %Glyph of the Battle Healer
 c.rot.dmgbreak=c.rot.ecpsd.*c.abil.val.dmg; %damage breakdown
-procs=logical(strcmp('CS',c.abil.val.label) + ...
+c.rot.aoebreak=c.rot.ecpsd.*c.abil.val.aoe;
+procs=(strcmp('CS',c.abil.val.label) + ...
     strcmp('HotR',c.abil.val.label) + ...
     strcmp('HaNova',c.abil.val.label) + ...
     strcmp('SotR',c.abil.val.label));
-glyphBHhps=c.mdf.glyphBH.*sum(c.rot.dmgbreak(procs)).*(strcmpi('Insight',c.exec.seal)||strcmpi('SoI',c.exec.seal));
-
+glyphBHhps=c.mdf.glyphBH.*sum((c.rot.aoebreak+c.rot.dmgbreak).*repmat(procs,1,size(c.rot.dmgbreak,2))).*(strcmpi('Insight',c.exec.seal)||strcmpi('SoI',c.exec.seal));
+% glyphBHhps=0;
 %% Enchants
 
 

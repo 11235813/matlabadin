@@ -9,13 +9,17 @@ def_db;
 
 %% Configurations
 %create the first configuation
-%low hit, SotR/SoT build
 %set melee hit to 2%, expertise to 5%
 %do this by altering shirt stats
-cfg(1)=build_config('hit',2.5,'exp',7.5); 
+cfg(1)=build_config('hit',2.5,'exp',7.5,'race','Belf'); 
+
+%human setup, for racial expertise bonus
+cfg(2)=cfg(1);
+cfg(2).base=player_model('race','Human');
+cfg(2)=stat_model(cfg(2));
 
 %hit-cap and exp cap
-cfg(2)=build_config('hit',7.5,'exp',15);
+cfg(3)=build_config('hit',7.5,'exp',15,'race','Belf');
 
 
 %% List of weapons
@@ -161,7 +165,7 @@ wtype={'Tank';'DPS';'Spell power'};
 for type=1:3
     
     subind=ind(n(type)+[1:N(type)]);
-    plotdps=[wdps(subind,1) diff(wdps(subind,:),1,2)]./1e3;
+    plotdps=[wdps(subind,1) diff(wdps(subind,1:2),1,2) diff(wdps(subind,2:3),1,2)]./1e3;
     spacer=repmat(' ',N(type),1);
     plotaxislabels=strcat([spacer],winfo.name(subind), ...
                     [spacer spacer int2str(winfo.ilvl(subind))]);
@@ -169,7 +173,8 @@ for type=1:3
     figure(70+type)
     % set(gcf,'Position',[2240 88 724 579])
     bar7x=barh(plotdps,'BarWidth',0.5,'BarLayout','stacked');
-    set(bar7x(2),'FaceColor',[0.749 0.749 0]);
+    set(bar7x(2),'FaceColor',[0 0.5 0]);
+    set(bar7x(3),'FaceColor',[0.749 0.749 0]);
     xlim([0.99.*min(plotdps(:,1)) 1.01.*max(sum(plotdps,2))])
     ylim(0.5+[0 N(type)])
     set(gca,'YTick',1:N(type),'YTickLabel',plotaxislabels, ...
@@ -178,47 +183,52 @@ for type=1:3
     title([char(wtype(type)) ' weapons, sorted by ilvl, then DPS'])
     legend([num2str(cfg(1).player.mehit,'%g') '% hit, ' num2str(cfg(1).player.exp,'%g') '% exp'], ...
        [num2str(cfg(2).player.mehit,'%g') '% hit, ' num2str(cfg(2).player.exp,'%g') '% exp'], ...
+       [num2str(cfg(3).player.mehit,'%g') '% hit, ' num2str(cfg(3).player.exp,'%g') '% exp'], ...
         'Location','Best')
 
 end
 
 
 %% All weapons, sorted by type and ilvl
-spacer=repmat(' ',M,1);
-allplotilvl=[wdps(ind,1) diff(wdps(ind,:),1,2)]./1e3;
-allplotaxislabels=strcat([spacer],winfo.name(ind),[spacer spacer int2str(winfo.ilvl(ind))]);
-y74=[0 cumsum(diff(ilvlsorted(:,1)))']+(1:M);
-
-figure(74)
-bar74=barh(y74,allplotilvl,'BarWidth',0.5,'BarLayout','stacked');
-set(bar74(2),'FaceColor',[0.749 0.749 0]);
-xlim([0.99.*min(allplotilvl(:,1)) 1.01.*max(sum(allplotilvl,2))])
-ylim(0.5+[0 max(y74)])
-set(gca,'YTick',y74,'YTickLabel',allplotaxislabels, ...
-    'OuterPosition',[0.01 0 0.99 1])
-xlabel('DPS (thousands)')
-title(['All weapons, sorted by type and DPS'])
-legend([num2str(cfg(1).player.mehit,'%g') '% hit, ' num2str(cfg(1).player.exp,'%g') '% exp'], ...
-       [num2str(cfg(2).player.mehit,'%g') '% hit, ' num2str(cfg(2).player.exp,'%g') '% exp'], ...
-        'Location','Best')
+% spacer=repmat(' ',M,1);
+% allplotilvl=[wdps(ind,1) diff(wdps(ind,1:2),1,2) diff(wdps(ind,2:3),1,2)]./1e3;
+% allplotaxislabels=strcat([spacer],winfo.name(ind),[spacer spacer int2str(winfo.ilvl(ind))]);
+% y74=[0 cumsum(diff(ilvlsorted(:,1)))']+(1:M);
+% 
+% figure(74)
+% bar74=barh(y74,allplotilvl,'BarWidth',0.5,'BarLayout','stacked');
+% set(bar74(2),'FaceColor',[0.0 0.5 0]);
+% set(bar74(3),'FaceColor',[0.749 0.749 0]);
+% xlim([0.99.*min(allplotilvl(:,1)) 1.01.*max(sum(allplotilvl,2))])
+% ylim(0.5+[0 max(y74)])
+% set(gca,'YTick',y74,'YTickLabel',allplotaxislabels, ...
+%     'OuterPosition',[0.01 0 0.99 1])
+% xlabel('DPS (thousands)')
+% title(['All weapons, sorted by type and DPS'])
+% legend([num2str(cfg(1).player.mehit,'%g') '% hit, ' num2str(cfg(1).player.exp,'%g') '% exp'], ...
+%        [num2str(cfg(2).player.mehit,'%g') '% hit, ' num2str(cfg(2).player.exp,'%g') '% exp'], ...
+%        [num2str(cfg(3).player.mehit,'%g') '% hit, ' num2str(cfg(3).player.exp,'%g') '% exp'], ...
+%         'Location','Best')
     
 %% All weapons, sorted by DPS
 spacer=repmat(' ',M,1);
 [dpssorted inddps]=sortrows(wdps,1);
 %arrange array for plottin
-allplotdps=[wdps(inddps,1) diff(wdps(inddps,:),1,2)]./1e3;
+allplotdps=[wdps(inddps,1) diff(wdps(inddps,1:2),1,2) diff(wdps(inddps,2:3),1,2)]./1e3;
 allplotdpsaxislabels=strcat([spacer],winfo.name(inddps),[spacer spacer int2str(winfo.ilvl(inddps))]);
 y75=[1:M];
 
 figure(75)
 bar75=barh(y75,allplotdps,'BarWidth',0.5,'BarLayout','stacked');
-set(bar75(2),'FaceColor',[0.749 0.749 0]);
+set(bar75(2),'FaceColor',[0.0 0.5 0]);
+set(bar75(3),'FaceColor',[0.749 0.749 0]);
 xlim([0.99.*min(allplotdps(:,1)) 1.01.*max(sum(allplotdps,2))])
 ylim(0.5+[0 max(y75)])
 set(gca,'YTick',y75,'YTickLabel',allplotdpsaxislabels, ...
     'OuterPosition',[0.01 0 0.99 1])
 xlabel('DPS (thousands)')
-title(['All weapons, sorted by type and DPS'])
+title(['All weapons, sorted by DPS'])
 legend([num2str(cfg(1).player.mehit,'%g') '% hit, ' num2str(cfg(1).player.exp,'%g') '% exp'], ...
        [num2str(cfg(2).player.mehit,'%g') '% hit, ' num2str(cfg(2).player.exp,'%g') '% exp'], ...
+       [num2str(cfg(3).player.mehit,'%g') '% hit, ' num2str(cfg(3).player.exp,'%g') '% exp'], ...
         'Location','Best')

@@ -166,6 +166,7 @@ for m=1:size(c.rot.actionPr,2)
             idx=find(strcmpi('HaNova',c.abil.val.label));
             cps(idx)=cpsval;
             ecpsd(idx)=cpsval.*emodd;
+            ecpsh(idx)=cpsval.*emodh;
 %             if sealidx==find(strcmpi('SoI',c.abil.val.label)) %HaNova can proc SoI for each target
 %                 cps(sealidx)=cps(sealidx)+cpsval;
 %                 ecpsh(sealidx)=ecpsh(sealidx)+cpsval.*emodh.*c.mdf.mehit(jme).*c.exec.npccount;
