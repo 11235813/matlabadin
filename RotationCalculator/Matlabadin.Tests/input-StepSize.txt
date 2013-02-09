@@ -1,0 +1,8 @@
+﻿CS>J>AS>HW>Cons>ES>SS Prot 003003 "" 1 0.05 0.05 0.95 0.95 "" data\\step1.csv:data\\step1-dump.csv
+CS>J>AS>HW>Cons>ES>SS Prot 003003 "" 3 0.05 0.05 0.95 0.95 "" data\step3.csv
+CS>J>AS>HW>Cons>ES>SS Prot 003003 "" 5 0.05 0.05 0.95 0.95 "" data\step5.csv
+CS>J>AS>HW>Cons>ES>SS Prot 003003 "" 15 0.05 0.05 0.95 0.95 "" data\step15.csv
+CS>J>AS>HW>Cons>ES>SS Prot 003003 "" 30 0.05 0.05 0.95 0.95 "" data\step30.csv
+CS>J>AS>HW>Cons>ES>SS Prot 003003 "" 45 0.05 0.05 0.95 0.95 "" data\step45.csv
+CS>J>AS>HW>Cons>ES>SS Prot 003003 "" 90 0.05 0.05 0.95 0.95 "" data\step90.csv
+CS>J>AS>HW>Cons>ES>SS Prot 003003 "" 150 0.05 0.05 0.95 0.95 "" data\step150.csv

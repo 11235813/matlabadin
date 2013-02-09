@@ -72,6 +72,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="input-StepSize.txt" />
+    <Content Include="inputEF.txt" />
     <Content Include="input3.txt" />
     <Content Include="input2.txt" />
     <Content Include="input.txt" />
