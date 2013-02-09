@@ -74,13 +74,13 @@ namespace Matlabadin
         // process input parameters
         private static void ProcessParams(string[] args)
         {
-            if (args.Length != 11)
+            if (args.Length != 12)
             {
                 Console.Error.Write("Warning: fsm.exe expected 11 inputs, got {0}:", args.Length);
                 Console.Error.Write(args.Select((s, i) => String.Format("#{0}:\"{1}\";", i, s)).Aggregate("", (s, a) => s + a));
                 Console.Error.WriteLine();
             }
-            if (args.Length < 11) 
+            if (args.Length < 12) 
             {
                 Usage();                
             }
@@ -90,10 +90,10 @@ namespace Matlabadin
             PaladinTalents talents;
             PaladinGlyphs glyphs;
             int stepsPerHastedGcd;
-            double mehaste, sphaste, mehit, rahit;
+            double mehaste, sphaste, mehit, rahit, gcProcPerSecond;
             Buff[] permanentBuffs;
             rotation = args[0];
-            // "Matlabadin.exe <rotation> <spec> <talents> <glyphs> <stepsPerGcd> <mehaste> <sphaste> <mehit> <rahit> <permanentBuffs> [<outputfile>]" + Environment.NewLine
+            // "Matlabadin.exe <rotation> <spec> <talents> <glyphs> <stepsPerHastedGcd> <mehaste> <sphaste> <mehit> <rahit> <permanentBuffs> <gcProcPerSecond> [<outputfile>]" + Environment.NewLine
             //                      0       1        2        3           4           5         6        7       8            9
             if (!PaladinSpecHelper.TryParse(args[1], out spec)) { Console.Error.WriteLine("Warning: spec '{0}' failed to parse", args[1]); Usage(); }
             if (!PaladinTalentsHelper.TryParse(args[2], out talents)) { Console.Error.WriteLine("Warning: talents '{0}' failed to parse", args[2]); Usage(); }
@@ -104,8 +104,9 @@ namespace Matlabadin
             if (!Double.TryParse(args[7], out mehit)) { Console.Error.WriteLine("Warning: mehit '{0}' failed to parse", args[7]); Usage(); }
             if (!Double.TryParse(args[8], out rahit)) { Console.Error.WriteLine("Warning: rahit '{0}' failed to parse", args[8]); Usage(); }
             permanentBuffs = ParseBuffs(args[9]);
-            string file = args[10];
-            ProcessGraph(file, rotation, spec, talents, glyphs, stepsPerHastedGcd, mehaste, sphaste, mehit, rahit, permanentBuffs);
+            if (!Double.TryParse(args[10], out gcProcPerSecond)) { Console.Error.WriteLine("Warning: gcProcPerSecond '{0}' failed to parse", args[10]); Usage(); }
+            string file = args[11];
+            ProcessGraph(file, rotation, spec, talents, glyphs, stepsPerHastedGcd, mehaste, sphaste, mehit, rahit, permanentBuffs, gcProcPerSecond);
         }
         private static Buff[] ParseBuffs(string commaSeparatedBuffList)
         {
@@ -137,11 +138,12 @@ namespace Matlabadin
             double sphaste,
             double mehit,
             double rahit,
-            Buff[] permanentBuffs)
+            Buff[] permanentBuffs,
+            double gcProcPerSecond)
         {
             if (file == null)
             {
-                ProcessGraph(Console.Out, null, rotation, spec, talents, glyphs, stepsPerHastedGcd, mehaste, sphaste, mehit, rahit, permanentBuffs);
+                ProcessGraph(Console.Out, null, rotation, spec, talents, glyphs, stepsPerHastedGcd, mehaste, sphaste, mehit, rahit, permanentBuffs, gcProcPerSecond);
             }
             else
             {
@@ -174,7 +176,7 @@ namespace Matlabadin
                 }
                 using (StringWriter sw = new StringWriter())
                 {
-                    ProcessGraph(sw, debugFile, rotation, spec, talents, glyphs, stepsPerHastedGcd, mehaste, sphaste, mehit, rahit, permanentBuffs);
+                    ProcessGraph(sw, debugFile, rotation, spec, talents, glyphs, stepsPerHastedGcd, mehaste, sphaste, mehit, rahit, permanentBuffs, gcProcPerSecond);
                     File.WriteAllText(file, sw.ToString());
                 }
             }
@@ -193,7 +195,8 @@ namespace Matlabadin
             double sphaste,
             double mehit,
             double rahit,
-            Buff[] permanentBuffs)
+            Buff[] permanentBuffs,
+            double gcProcPerSecond)
         {
             // sanity checks on inputs
             if (mehit < BaseMeleeHit) Console.Error.WriteLine("Warning: {0} melee hit would require negative hit rating", mehit);
@@ -205,7 +208,7 @@ namespace Matlabadin
             RotationPriorityQueue<BitVectorState> queue = new RotationPriorityQueue<BitVectorState>(rotation);
 
             // create new GraphParameters object - contains basic graph parameter info, calculates ability/buff cooldowns/durations, shape comparisons, etc.
-            Int64GraphParameters gp = new Int64GraphParameters(queue, spec, talents, glyphs, stepsPerHastedGcd, mehaste, sphaste, mehit, rahit, permanentBuffs);
+            Int64GraphParameters gp = new Int64GraphParameters(queue, spec, talents, glyphs, stepsPerHastedGcd, mehaste, sphaste, mehit, rahit, permanentBuffs, gcProcPerSecond);
 
             // report any approximation errors
             if (!String.IsNullOrEmpty(gp.Warnings)) Console.Error.WriteLine("Model Warnings: {0}", gp.Warnings);
@@ -294,6 +297,7 @@ namespace Matlabadin
             stream.WriteLine("Param_Hit_Melee,{0}", gp.MeleeHit);
             stream.WriteLine("Param_Hit_Spell,{0}", gp.JudgeHit);
             stream.WriteLine("Param_Buffs_Permanent,{0}", gp.PermanentBuffs.Aggregate("", (s, b) => s + ";" + b.ToString()).Trim(';'));
+            stream.WriteLine("Param_GrandCrusaderPerSecondProcRate,{0}", gp.GrandCrusaderPerSecondProcRate);
 
             // write approximation errors to file (stream)
             if (!String.IsNullOrWhiteSpace(gp.Warnings))
