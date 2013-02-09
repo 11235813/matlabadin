@@ -72,6 +72,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="input-GC-proc-test.txt" />
     <Content Include="input-StepSize.txt" />
     <Content Include="inputEF.txt" />
     <Content Include="input3.txt" />

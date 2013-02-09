@@ -132,18 +132,21 @@ namespace Matlabadin
         {
             // check if we have to wait
             int waitSteps = sm.CooldownRemaining(StateInitial, ability);
+            int abilitySteps = gp.AbilityCastTimeInSteps(ability);
             if (gp.AbilityOnGcd(ability)) waitSteps = Math.Max(waitSteps, sm.TimeRemaining(StateInitial, Buff.GCD));
             // Advance time to before ability usage
             StatePreAbility = waitSteps == 0 ? StateInitial : sm.AdvanceTime(StateInitial, waitSteps);
 
             // Use ability
             double[] pr = CalculatesStatePostAbility(gp, sm, ability);
-
+            if (waitSteps + abilitySteps != 0)
+            {
+                if (StatePostAbility.Length != 1) throw new NotImplementedException("FSM model does not yet support non-zero transition times for abilities. Current modelling uses 0 time transitions for ability use the increments time with Ability.Nothing");
+                pr = CalculateTimebasedProcs(gp, sm, ability, pr);
+            }
             // Cull transitions with zero probability
             pr = CullStatePostAbilityZeroProbabilityTransitions(pr);
-
             // Advance time after ability usage
-            int abilitySteps = gp.AbilityCastTimeInSteps(ability);
             NextStates = new TState[StatePostAbility.Length];
             for (int i = 0; i < StatePostAbility.Length; i++)
             {
@@ -193,7 +196,18 @@ namespace Matlabadin
                 buffSteps,
                 sm.TimeRemaining(StatePreAbility, Buff.GCD) == 0);
         }
-
+        private double[] CalculateTimebasedProcs(GraphParameters<TState> gp, IStateManager<TState> sm, Ability ability, double[] pr)
+        {
+            if (gp.GrandCrusaderPerStepProcRate == 0) return pr;
+            StatePostAbility = new TState[]
+            {
+                this.StateInitial,
+                sm.SetTimeRemaining(this.StateInitial, Buff.GC, gp.BuffDurationInSteps(Buff.GC)),
+            };
+            double gcProcPr = gp.MeleeHit * gp.GrandCrusaderAbilityProcRate;
+            pr = new double[] { 1 - gp.GrandCrusaderPerStepProcRate, gp.GrandCrusaderPerStepProcRate, };
+            return pr;
+        }
         /// <summary>
         /// Calculates the set of possible states as a result of using the given ability, called from CalculateStateTransition
         /// </summary>
@@ -214,7 +228,7 @@ namespace Matlabadin
                         UseAbility(gp, sm, StatePreAbility, ability, true), // hit
                         UseAbility(gp, sm, StatePreAbility, ability, true, gcProc: true), // hit & gc
                     };
-                    double gcProcPr = gp.MeleeHit * gp.GrandCrusaderProcRate;
+                    double gcProcPr = gp.MeleeHit * gp.GrandCrusaderAbilityProcRate;
                     pr = new double[]
                     {
                         1 - gp.MeleeHit,

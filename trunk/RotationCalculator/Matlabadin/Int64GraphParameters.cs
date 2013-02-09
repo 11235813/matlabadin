@@ -51,7 +51,9 @@ namespace Matlabadin
             double sphaste,
             double mehit,
             double sphit,
-            Buff[] permanentBuffs = null)
+            Buff[] permanentBuffs = null,
+            double gcPerSecondProcRate = 0
+            )
             : base(
                 rotation,
                 spec,
@@ -62,7 +64,8 @@ namespace Matlabadin
                 sphaste,
                 mehit,
                 sphit,
-                permanentBuffs)
+                permanentBuffs,
+                gcPerSecondProcRate)
         {
             CalculateBitOffsets();
         }

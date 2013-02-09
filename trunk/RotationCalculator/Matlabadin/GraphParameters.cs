@@ -66,7 +66,8 @@ namespace Matlabadin
             double sphaste = 0.0,
             double mehit = 1.0,
             double jdhit = 1.0,
-            Buff[] permanentBuffs = null
+            Buff[] permanentBuffs = null,
+            double gcPerSecondProcRate = 0
             )
         {
             // sanity checks inputs
@@ -101,6 +102,7 @@ namespace Matlabadin
             this.Spec = spec;
             this.Talents = talents;
             this.Glyphs = glyphs;
+            this.GrandCrusaderPerSecondProcRate = gcPerSecondProcRate;
             this.StepsPerHastedGcd = stepsPerHastedGcd;
             this.MeleeHaste = mehaste;
             this.SpellHaste = sphaste;
@@ -375,14 +377,21 @@ namespace Matlabadin
                 && this.SpellHaste == gp.SpellHaste
                 && hitGeneratesSameShape(this.MeleeHit, gp.MeleeHit)
                 && hitGeneratesSameShape(this.JudgeHit, gp.JudgeHit)
+                && BothZeroOrNonZero(this.GrandCrusaderPerSecondProcRate, gp.GrandCrusaderPerSecondProcRate)
                 && this.PermanentBuffs.SequenceEqual(gp.PermanentBuffs);
+        }
+        private bool BothZeroOrNonZero(double a, double b)
+        {
+            return (a == 0 && b == 0) || (a != 0 && b != 0);
         }
         private bool hitGeneratesSameShape(double hit1, double hit2)
         {
             // match if they are both 1.0 (or 0.0) or if they are both between 0.0 and 1.0 exclusive
             return !(hit1 == 1.0 ^ hit2 == 1.0) && !(hit1 == 0.0 ^ hit2 == 0.0);
         }
-        public double GrandCrusaderProcRate { get { return this.Spec == PaladinSpec.Prot ? 0.2 : 0.0; } }
+        // Change here to revert proposed GC proc from dodge/parry
+        public double GrandCrusaderAbilityProcRate { get { return 0; } } // this.Spec == PaladinSpec.Prot ? 0.2 : 0.0; } }
+        public double GrandCrusaderPerStepProcRate { get { return this.GrandCrusaderPerSecondProcRate * 1.5 / this.StepsPerHastedGcd; } }
         public double DivinePurposeProcRate { get { return this.Talents.Includes(PaladinTalents.DivinePurpose) ? 0.25 : 0.0; } }
         public double StepDuration { get { return stepDuration; } }
         public int BuffTrackingArraySize { get; private set; }
@@ -396,6 +405,7 @@ namespace Matlabadin
         public PaladinGlyphs Glyphs { get; private set; }
         public PaladinSpec Spec { get; private set; }
         public int StepsPerHastedGcd { get; private set; }
+        public double GrandCrusaderPerSecondProcRate { get; private set; }
         public double MeleeHaste { get; private set; }
         public double SpellHaste { get; private set; }
         public double MeleeHit { get; private set; }
