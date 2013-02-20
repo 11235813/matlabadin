@@ -1,4 +1,4 @@
-function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentString, glyphString, mehaste, sphaste, mehit, sphit, pBuffs)
+function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentString, glyphString, mehaste, sphaste, mehit, sphit, pBuffs, gcProcsPerSecond)
     global fsm_cache_actionPr;
     global fsm_cache_efUptime;
     global fsm_cache_ef0Uptime;
@@ -43,7 +43,7 @@ function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentStri
         fsm_cache_gcdUptime= {};
     end
 	
-    [rotationKey spectalKey optionsKey]=fsm_key(rotation, spec, talentString, glyphString, mehaste, sphaste, mehit, sphit, pBuffs);
+    [rotationKey spectalKey optionsKey]=fsm_key(rotation, spec, talentString, glyphString, mehaste, sphaste, mehit, sphit, pBuffs, gcProcsPerSecond);
     % check memory cache
     if isfield(fsm_cache_actionPr, rotationKey) && isfield(fsm_cache_actionPr.(rotationKey), spectalKey) && isfield(fsm_cache_actionPr.(rotationKey).(spectalKey), optionsKey)
         % warning('using cached result');
@@ -66,7 +66,7 @@ function  [actionPr, metadata, uptime] = memoized_fsm(rotation, spec, talentStri
         uptime.gcd = fsm_cache_gcdUptime.(rotationKey).(spectalKey).(optionsKey);
         return;
     end
-    fileCell = fsm_gen(rotation, spec, talentString, glyphString, mehaste, sphaste, mehit, sphit, pBuffs);
+    fileCell = fsm_gen(rotation, spec, talentString, glyphString, mehaste, sphaste, mehit, sphit, pBuffs, gcProcsPerSecond);
     filename = fileCell{1};
     % read from the data file
     [actionPr, metadata, uptime] = load_fsm_csv(filename);

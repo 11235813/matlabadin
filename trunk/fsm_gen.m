@@ -1,4 +1,4 @@
-function [generatedFile] = fsm_gen(rotation, spec, talentString, glyphString, mehasteArray, sphasteArray, mehitArray, sphitArray, pBuffs)
+function [generatedFile] = fsm_gen(rotation, spec, talentString, glyphString, mehasteArray, sphasteArray, mehitArray, sphitArray, pBuffs, gcProcsPerSecond)
 %fsm_gen calculates fsm for each mehit, sphit, and mehaste
 % call memoized_fsm to return the actual fsm data
 
@@ -26,7 +26,7 @@ end
 if exist('data') ~= 7
     mkdir('data');
 end
-arrLength=max([length(mehitArray) length(mehasteArray)]);
+arrLength=max([length(mehitArray) length(mehasteArray) length(gcProcsPerSecond)]);
 generatedFile = cell(arrLength,1);
 argfile = strcat('data\\fsm_gen_input_', num2str(ceil(rand.*1000000)), '.tmp');
 argfid = fopen(argfile, 'w');
@@ -52,7 +52,12 @@ for i=1:arrLength
     else
         sphaste = sphasteArray;
     end
-    [rotationKey spectalKey optionsKey]=fsm_key(rotation, spec, talentString, glyphString, mehaste, sphaste, mehit, sphit, pBuffs);
+    if length(gcProcsPerSecond) > 1
+        gcPPS= gcProcsPerSecond(i);
+    else
+        gcPPS = gcProcsPerSecond;
+    end
+    [rotationKey spectalKey optionsKey]=fsm_key(rotation, spec, talentString, glyphString, mehaste, sphaste, mehit, sphit, pBuffs, gcPPS);
     dirname = strcat('data\\', rotationKey,'\\',spectalKey);
     filename = strcat(dirname, '\\', optionsKey, '.csv');
     % skip generation if the file already exists
@@ -60,8 +65,8 @@ for i=1:arrLength
         if exist(dirname) ~= 7
             mkdir(dirname);
         end
-        fprintf(argfid, '%s %s %s %s %g %f %f %f %f "%s" %s\n', ...
-            rotation, spec, talentString, glyphString, fsm_steps_per_gcd(), mehaste, sphaste, mehit, sphit, pBuffs, filename);
+        fprintf(argfid, '%s %s %s %s %g %f %f %f %f "%s" %f %s\n', ...
+            rotation, spec, talentString, glyphString, fsm_steps_per_gcd(), mehaste, sphaste, mehit, sphit, pBuffs, gcPPS, filename);
         generationRequired = 1;
     end
     generatedFile{i} = filename;

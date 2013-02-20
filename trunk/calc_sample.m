@@ -19,6 +19,8 @@ c.npc=npc_model(c.base);
 
 %invoke execution_model
 c.exec=execution_model;
+c.exec.queue='^WB>CS>J>AS>HW>Cons'
+c.exec.seal='SoI';
 
 %activate buffs and consumables
 c.buff=buff_model;
@@ -29,7 +31,7 @@ c.talent=talent_model();
 c.glyph=glyph_model();
 
 %load gear set
-c.egs=ddb.gearset{3}; %1=i450 , 2=i463, 3=T14LFR (483), 4=T14N (496), 5=T14H (509)
+c.egs=ddb.gearset{5}; %1=i450 , 2=i463, 3=T14LFR (483), 4=T14N (496), 5=T14H (509)
 
 %calculate relevant stats
 %TODO: this could be built into stat_model

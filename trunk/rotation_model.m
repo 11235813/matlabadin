@@ -18,7 +18,7 @@ useParallel=1;
 %define relevant queues if not done already
 %TODO: maybe this makes more sense in c.rot?
 if isfield(c.exec,'queue')==0 || isempty(c.exec.queue)
-    c.exec.queue='^WB>CS>J>AS>HW>Cons>SotR';
+    c.exec.queue='CS>J>AS>HW>Cons>SotR';
 end
 
 %repackage arguments for memoized_fsm and fsm_gen:
@@ -36,12 +36,12 @@ end
 % if c.buff.BLust
 %     pBuffs=[pBuffs 'BL,'];
 % end
-
+gcProcsPerSecond=c.mdf.GrCr.*c.exec.npccount.*c.player.avoidpct./c.npc.swing;
 
 %% Crank
 
 %generate FSM results
-if length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(c.player.wswing)==1
+if length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(c.player.wswing)==1 && length(gcProcsPerSecond)==1
        [c.rot.actionPr, ...
         c.rot.metadata, ...
         c.rot.uptime] = memoized_fsm(c.exec.queue, ...
@@ -52,39 +52,69 @@ if length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(c.player.wswing)==
                                         spellHaste,...
                                         c.mdf.mehit, ...
                                         c.mdf.jdhit,...
-                                        pBuffs); 
+                                        pBuffs,...
+                                        gcProcsPerSecond); 
     %convert actionPr to CPS array
     [c.rot.cps c.rot.ecpsd c.rot.ecpsh c.rot.hpg]=action2cps(c);
     
 %otherwise, we need some array handling, and may want to take advantage
 %of parallelization
 
-%mdf.mehit, mdf.sphit, and meleeHaste have one element, but player.wswing is 1xN -
-%str scaling (via parry->parryhaste)
-elseif length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(meleeHaste)==1 && length(c.player.wswing)>1
-    %only need one fsm generation
-       [c.rot.actionPr, ...
-        c.rot.metadata, ...
-        c.rot.uptime] = memoized_fsm(c.exec.queue, ...
-                                        c.spec.name, ...
-                                        talentString, ...
-                                        glyphString, ...
-                                        meleeHaste,...
-                                        spellHaste,...
-                                        c.mdf.mehit, ...
-                                        c.mdf.jdhit,...
-                                        pBuffs); 
-    %the conversion to a CPS array needs to be handled appropriately though
-    for j=1:length(c.player.wswing)
-        [c.rot.cps(:,j) c.rot.ecpsd(:,j) c.rot.ecpsh(:,j) c.rot.hpg(j)]=action2cps(c,j);
-    end
-
-%mdf.mehit & mdf.sphit have one element, but meleeHaste is 1xN
-%haste scaling
-elseif length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(meleeHaste)>1 
+%mdf.mehit, mdf.sphit, and meleeHaste have one element, but player.wswing or gcProcsPerSecond is 1xN -
+%str scaling (via parry->parryhaste) or avoidance scaling
+elseif length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(meleeHaste)==1 && (length(c.player.wswing)>1 || length(gcProcsPerSecond)>1) %todo: check that these are always matched
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.spec.name, talentString, glyphString, meleeHaste, spellHaste, c.mdf.mehit, c.mdf.jdhit, pBuffs);
+        fsm_gen(c.exec.queue, c.spec.name, talentString, glyphString, meleeHaste, spellHaste, c.mdf.mehit, c.mdf.jdhit, pBuffs, gcProcsPerSecond);
+        for j=1:length(gcProcsPerSecond)
+            %note that actionPr and metadata are overwritten on every
+            %iteration.  This data is automatically stored in cps, and this
+            %prevents us from having to do awkward multiple-indexed cell
+            %operations within c.rot.actionPr.
+            [c.rot.actionPr, ...
+                c.rot.metadata, ...
+                c.rot.uptime] = memoized_fsm(c.exec.queue, ...
+                                                c.spec.name, ...
+                                                talentString, ...
+                                                glyphString, ...
+                                                meleeHaste,...
+                                                spellHaste,...
+                                                c.mdf.mehit, ...
+                                                c.mdf.jdhit,...
+                                                pBuffs,...
+                                                gcProcsPerSecond(j));
+            [c.rot.cps(:,j) c.rot.ecpsd(:,j) c.rot.ecpsh(:,j) c.rot.hpg(j)]=action2cps(c,j);
+        end
+    else
+        wb=waitbar(0,'Generating/Loading FSM data');
+        for j=1:length(meleeHaste)
+            waitbar(j/c.abil.val.length,wb,['FSM gen/load for ' c.exec.queue])
+            %note that actionPr and metadata are overwritten on every
+            %iteration.  This data is automatically stored in cps, and this
+            %prevents us from having to do awkward multiple-indexed cell
+            %operations within c.rot.actionPr.
+            [c.rot.actionPr, ...
+             c.rot.metadataa, ...
+             c.rot.uptime(j)] = memoized_fsm(c.exec.queue, ...
+                                                c.spec.name, ...
+                                                talentString, ...
+                                                glyphString, ...
+                                                meleeHaste,...
+                                                spellHaste,...
+                                                c.mdf.mehit, ...
+                                                c.mdf.jdhit,...
+                                                pBuffs,...
+                                                gcProcsPerSecond(j));
+            [c.rot.cps(:,j) c.rot.ecpsd(:,j) c.rot.ecpsh(:,j) c.rot.hpg(j)]=action2cps(c,j);
+        end
+        close(wb)
+    end  
+%mdf.mehit & mdf.sphit & gcProcsPerSecond have one element, but meleeHaste is 1xN
+%haste scaling
+elseif length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(gcProcsPerSecond)==1 && length(meleeHaste)>1 
+    %use parallelization
+    if useParallel
+        fsm_gen(c.exec.queue, c.spec.name, talentString, glyphString, meleeHaste, spellHaste, c.mdf.mehit, c.mdf.jdhit, pBuffs, gcProcsPerSecond);
         for j=1:length(meleeHaste)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
@@ -100,13 +130,14 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(meleeHaste)>1
                                                 spellHaste(j),...
                                                 c.mdf.mehit, ...
                                                 c.mdf.jdhit,...
-                                                pBuffs);
+                                                pBuffs,...
+                                                gcProcsPerSecond);
             [c.rot.cps(:,j) c.rot.ecpsd(:,j) c.rot.ecpsh(:,j) c.rot.hpg(j)]=action2cps(c,j);
         end
     else
         wb=waitbar(0,'Generating/Loading FSM data');
         for j=1:length(meleeHaste)
-            waitbar(j/val.length,wb,['FSM gen/load for ' c.exec.queue])
+            waitbar(j/c.abil.val.length,wb,['FSM gen/load for ' c.exec.queue])
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
             %prevents us from having to do awkward multiple-indexed cell
@@ -121,7 +152,8 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(meleeHaste)>1
                                                 spellHaste(j),...
                                                 c.mdf.mehit, ...
                                                 c.mdf.jdhit,...
-                                                pBuffs);
+                                                pBuffs,...
+                                                gcProcsPerSecond);
             [c.rot.cps(:,j) c.rot.ecpsd(:,j) c.rot.ecpsh(:,j) c.rot.hpg(j)]=action2cps(c,j);
         end
         close(wb)
@@ -129,10 +161,10 @@ elseif length(c.mdf.mehit)==1 && length(c.mdf.jdhit)==1 && length(meleeHaste)>1
     
 %both mdf.mehit and mdf.sphit have more than one element - assumed to
 %be the same size
-elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)>1
+elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)>1 && length(meleeHaste)==1 && length(gcProcsPerSecond)==1
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.spec.name, talentString, glyphString, meleeHaste, spellHaste, c.mdf.mehit, c.mdf.jdhit, pBuffs);
+        fsm_gen(c.exec.queue, c.spec.name, talentString, glyphString, meleeHaste, spellHaste, c.mdf.mehit, c.mdf.jdhit, pBuffs, gcProcsPerSecond);
         for j=1:length(c.mdf.mehit)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
@@ -148,13 +180,14 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)>1
                                                 spellHaste,...
                                                 c.mdf.mehit(j), ...
                                                 c.mdf.jdhit(j),...
-                                                pBuffs);
+                                                pBuffs,...
+                                                gcProcsPerSecond);
             [c.rot.cps(:,j) c.rot.ecpsd(:,j) c.rot.ecpsh(:,j) c.rot.hpg(j)]=action2cps(c,j);
         end
     else
         wb=waitbar(0,'Generating/Loading FSM data');
         for j=1:length(c.mdf.mehit)
-            waitbar(j/val.length,wb,['FSM gen/load for ' c.exec.queue])
+            waitbar(j/c.abil.val.length,wb,['FSM gen/load for ' c.exec.queue])
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
             %prevents us from having to do awkward multiple-indexed cell
@@ -169,17 +202,18 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)>1
                                                 spellHaste,...
                                                 c.mdf.mehit(j), ...
                                                 c.mdf.jdhit(j),...
-                                                pBuffs);
+                                                pBuffs,...
+                                                gcProcsPerSecond);
             [c.rot.cps(:,j) c.rot.ecpsd(:,j) c.rot.ecpsh(:,j) c.rot.hpg(j)]=action2cps(c,j);
         end
         close(wb)
     end
     
 %only mdf.mehit has more than one element (can this even happen anymore?)
-elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)==1
+elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)==1 && length(meleeHaste)==1 && length(gcProcsPerSecond)==1
     %use parallelization
     if useParallel
-        fsm_gen(c.exec.queue, c.spec.name, talentString, glyphString, meleeHaste, spellHaste, c.mdf.mehit, c.mdf.jdhit, pBuffs);
+        fsm_gen(c.exec.queue, c.spec.name, talentString, glyphString, meleeHaste, spellHaste, c.mdf.mehit, c.mdf.jdhit, pBuffs, gcProcsPerSecond);
         for j=1:length(c.mdf.mehit)
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
@@ -195,14 +229,15 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)==1
                                                 spellHaste,...
                                                 c.mdf.mehit(j), ...
                                                 c.mdf.jdhit,...
-                                                pBuffs);
+                                                pBuffs,...
+                                                gcProcsPerSecond);
             [c.rot.cps(:,j) c.rot.ecpsd(:,j) c.rot.ecpsh(:,j) c.rot.hpg(j)]=action2cps(c,j);
             
         end
     else
         wb=waitbar(0,'Generating/Loading FSM data');
         for j=1:length(c.mdf.mehit)
-            waitbar(j/val.length,wb,['FSM gen/load for ' c.exec.queue])
+            waitbar(j/c.abil.val.length,wb,['FSM gen/load for ' c.exec.queue])
             %note that actionPr and metadata are overwritten on every
             %iteration.  This data is automatically stored in cps, and this
             %prevents us from having to do awkward multiple-indexed cell
@@ -217,7 +252,8 @@ elseif length(c.mdf.mehit)>1 && length(c.mdf.jdhit)==1
                                                 spellHaste,...
                                                 c.mdf.mehit(j), ...
                                                 c.mdf.jdhit,...
-                                                pBuffs);
+                                                pBuffs,...
+                                                gcProcsPerSecond);
             [c.rot.cps(:,j) c.rot.ecpsd(:,j) c.rot.ecpsh(:,j) c.rot.hpg(j)]=action2cps(c,j);
         end
         close(wb)
@@ -247,11 +283,13 @@ c.rot.gcduptime=[c.rot.uptime.gcd];
 c.rot.epct=1-[c.rot.uptime.gcd];
 
 %SB uptime based on SotR cast rate
-c.rot.sbuptime=min([3.*c.rot.cps(strcmpi('SotR',c.abil.val.label),:);c.abil.val.ones]);
+c.rot.sbuptime=min([3.*c.rot.cps(strcmpi('SotR',c.abil.val.label),:).*c.abil.val.ones;c.abil.val.ones]);
 
 %% correct for cases where cps is Nx1 but val.* is NxM
 if size(c.rot.cps,2)==1 && size(c.abil.val.dmg,2)>1
     c.rot.cps=repmat(c.rot.cps,1,size(c.abil.val.dmg,2));
+    c.rot.ecpsd=repmat(c.rot.ecpsd,1,size(c.abil.val.dmg,2));
+    c.rot.ecpsh=repmat(c.rot.ecpsh,1,size(c.abil.val.dmg,2));
     c.rot.efuptime=repmat(c.rot.efuptime,1,size(c.abil.val.dmg,2));
     c.rot.ssuptime=repmat(c.rot.ssuptime,1,size(c.abil.val.dmg,2));
 end

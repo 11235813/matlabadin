@@ -73,7 +73,7 @@ mdf.t14x4R=85.*gear.tierbonusP(2); %AW cooldown
 % mdf.VengAP=0.05.*spec.Vengeance;
 mdf.GbtL=0.05.*spec.GuardedbytheLight; %everything
 %TODO: RFury here instead of in buffs?
-mdf.GrCr=0.2.*spec.GrandCrusader;
+mdf.GrCr=0.12.*spec.GrandCrusader;
 mdf.Sanct=0.10.*spec.Sanctuary; %both effects
 mdf.AW=0.2.*spec.AvengingWrath; %AW damage
 mdf.AWuptime=(20/(180-mdf.t14x4R)).*spec.AvengingWrath; %AW uptime
@@ -368,8 +368,8 @@ player.mehit=player.rating.hit./cnv.hit_hit ...
 player.sphit=player.mehit+player.exp;
 
 %% Avoidance and Blocking
-player.rating.dodge=gear.dodge+consum.dodge;
-player.rating.parry=gear.parry+consum.parry;
+player.rating.dodge=gear.dodge+consum.dodge+extra.dodge;
+player.rating.parry=gear.parry+consum.parry+extra.parry;
 
 %pre-DR avoidance
 player.predr.block=player.mast./cnv.mast_block;
