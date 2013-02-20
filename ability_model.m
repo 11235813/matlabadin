@@ -60,7 +60,7 @@ splash.Censure=     0;
 label.Censure=      'Censure';
 
 %Seal of Righteousness - now seal of cleave 
-raw.SealofRighteousness=    0.06.*player.ndamage.*mdf.spdmg;
+raw.SealofRighteousness=    0.09.*player.ndamage.*mdf.spdmg;
 dmg.SealofRighteousness=    raw.SealofRighteousness.*mdf.phcrit.*target.resrdx; %automatical connect
 heal.SealofRighteousness=   0;
 threat.SealofRighteousness= 0; %wowdb flag - generates no threat
@@ -68,7 +68,7 @@ mcost.SealofRighteousness=  0;
 splash.SealofRighteousness= exec.npccount-1;
 label.SealofRighteousness=  'SoR';
 
-%Seal of Insight (15 PPM, not haste-normalized) 
+%Seal of Insight (20 PPM, not haste-normalized) 
 raw.SealofInsight=          0.15.*(player.sp+player.ap);
 dmg.SealofInsight=          0;
 heal.SealofInsight=         raw.SealofInsight.*(1+mdf.SoI).*(20.*gear.swing./60); 

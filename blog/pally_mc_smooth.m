@@ -8,84 +8,85 @@ config.stat=' ';
 config.val=0;
 config.plotnum=1;
 config.sF=5;
-config.bossSwing=0.25;
-jMin=15;
-jMax=30;
-jStep=5;
+config.bossSwingTimer=1.5;
+config.WoGfakeBubbleDuration=0;
+config.WoGoverheal=1;
+config.t152pcEquipped=0;
+jMin=2;
+jMax=7;
+jStep=1;
 
 %% set up stat configs
 i=1;
 statSetup(i).name='C/Ha';
-statSetup(i).buffedStr=11000;
-statSetup(i).parryRating=2000;
-statSetup(i).dodgeRating=2000;
+statSetup(i).buffedStr=15000;
+statSetup(i).parryRating=1500;
+statSetup(i).dodgeRating=1500;
 statSetup(i).masteryRating=1500;
 statSetup(i).hitRating=2550;
 statSetup(i).expRating=5100;
-statSetup(i).hasteRating=4000;
+statSetup(i).hasteRating=12000;
+statSetup(i).armor=65000;
 i=i+1;
 statSetup(i).name='C/Ma';
-statSetup(i).buffedStr=11000;
-statSetup(i).parryRating=2000;
-statSetup(i).dodgeRating=2000;
-statSetup(i).masteryRating=5500;
+statSetup(i).buffedStr=15000;
+statSetup(i).parryRating=1500;
+statSetup(i).dodgeRating=1500;
+statSetup(i).masteryRating=13500;
 statSetup(i).hitRating=2550;
 statSetup(i).expRating=5100;
 statSetup(i).hasteRating=0;
+statSetup(i).armor=65000;
 i=i+1;
 statSetup(i).name='C/Av';
-statSetup(i).buffedStr=11000;
-statSetup(i).parryRating=4000;
-statSetup(i).dodgeRating=4000;
+statSetup(i).buffedStr=15000;
+statSetup(i).parryRating=7500;
+statSetup(i).dodgeRating=7500;
 statSetup(i).masteryRating=1500;
 statSetup(i).hitRating=2550;
 statSetup(i).expRating=5100;
 statSetup(i).hasteRating=0;
+statSetup(i).armor=65000;
 i=i+1;
 statSetup(i).name='C/Bal';
-statSetup(i).buffedStr=11000;
-statSetup(i).parryRating=2375;
-statSetup(i).dodgeRating=2375;
-statSetup(i).masteryRating=2375;
+statSetup(i).buffedStr=15000;
+statSetup(i).parryRating=4125;
+statSetup(i).dodgeRating=4125;
+statSetup(i).masteryRating=4125;
 statSetup(i).hitRating=2550;
 statSetup(i).expRating=5100;
-statSetup(i).hasteRating=2375;
-i=i+1;
-statSetup(i).name='C/Bal-NC';
-statSetup(i).buffedStr=11000;
-statSetup(i).parryRating=2375;
-statSetup(i).dodgeRating=2375;
-statSetup(i).masteryRating=2575;
-statSetup(i).hitRating=2450;
-statSetup(i).expRating=5000;
-statSetup(i).hasteRating=2375;
+statSetup(i).hasteRating=4125;
+statSetup(i).armor=65000;
 i=i+1;
 statSetup(i).name='Avoid';
-statSetup(i).buffedStr=11000;
-statSetup(i).parryRating=7325;
-statSetup(i).dodgeRating=7325;
+statSetup(i).buffedStr=15000;
+statSetup(i).parryRating=10825;
+statSetup(i).dodgeRating=10825;
 statSetup(i).masteryRating=1500;
 statSetup(i).hitRating=500;
 statSetup(i).expRating=500;
 statSetup(i).hasteRating=0;
+statSetup(i).armor=65000;
 i=i+1;
 statSetup(i).name='Av/Mas';
-statSetup(i).buffedStr=11000;
-statSetup(i).parryRating=6000;
-statSetup(i).dodgeRating=6000;
-statSetup(i).masteryRating=4150;
+statSetup(i).buffedStr=15000;
+statSetup(i).parryRating=7717;
+statSetup(i).dodgeRating=7717;
+statSetup(i).masteryRating=7716;
 statSetup(i).hitRating=500;
 statSetup(i).expRating=500;
 statSetup(i).hasteRating=0;
+statSetup(i).armor=65000;
 i=i+1;
 statSetup(i).name='Mas/Av';
-statSetup(i).buffedStr=11000;
+statSetup(i).buffedStr=15000;
 statSetup(i).parryRating=4000;
 statSetup(i).dodgeRating=4000;
-statSetup(i).masteryRating=8150;
+statSetup(i).masteryRating=15150;
 statSetup(i).hitRating=500;
 statSetup(i).expRating=500;
 statSetup(i).hasteRating=0;
+statSetup(i).armor=65000;
 
 
 %% crank
@@ -104,7 +105,9 @@ end
 
     
 % matlabpool close
-fbase=['pally_smooth_data_' int2str(config.simMins)];
+
+%% save data
+fbase=['.\pdata\pally_smooth_data_' int2str(config.simMins)];
 i=0;
 while exist([fbase '_' int2str(i) '.mat'])==2
     i=i+1;
@@ -133,26 +136,7 @@ ma=[statblock.maDTPS];
 
 n=length(statSetup);
 
-% %Mean & std spike damage intake
-% %events above 80 and 90%
-% for j=jMin:jStep:jMax
-%    disp([int2str(j) ' Attack Moving Average'])
-%    li=DataTable(); 
-%    li{1:6,1}={'Set:';'S%';'mean';'std';'80%';'90%'};
-%    li{1,1+(1:n)}={statSetup.name};
-%    li{2,1+(1:n)}=S;
-%    matemp=filter(ones(1,j)./j,1,dmg);
-% %    li{3,1+(1:n)}=eval(char(['mean(ma' int2str(j) ');']));
-%    li{3,1+(1:n)}=mean(matemp);
-% %    li{4,1+(1:n)}=eval(char(['std(ma' int2str(j) ');']));
-%    li{4,1+(1:n)}=std(matemp);
-% %    li{5,1+(1:n)}=eval(char(['sum(ma' int2str(j) '>0.8)./length(ma5).*100;']));
-%    li{5,1+(1:n)}=sum(matemp>0.8)./size(matemp,1).*100;
-% %    li{6,1+(1:n)}=eval(char(['sum(ma' int2str(j) '>0.9)./length(ma5).*100;']));
-%    li{6,1+(1:n)}=sum(matemp>0.9)./size(matemp,1).*100;
-%    li.setColumnFormat(1+(1:n),'%1.4f')
-%    li.toText()
-% end
+
 %% Table
 
 %Mean & std spike damage intake
@@ -167,7 +151,13 @@ li{4,1+(1:n)}=std(matemp);
 linePH=0;
 for j=jMin:jStep:jMax
     matemp=filter(ones(1,j)./j,1,dmg);
-    li{5+linePH,1:9}={'------','------',['--- ' int2str(j)],'Attack','Moving','Average','------','------','------'};
+    li{5+linePH,1:8}={'------',['--- ' int2str(j)],'Attack','Moving','Average','------','------','------'};
+    linePH=linePH+1;
+    li{5+linePH,1}='60%';
+    li{5+linePH,1+(1:n)}=sum(matemp>0.6)./size(matemp,1).*100;
+    linePH=linePH+1;
+    li{5+linePH,1}='70%';
+    li{5+linePH,1+(1:n)}=sum(matemp>0.7)./size(matemp,1).*100;
     linePH=linePH+1;
     li{5+linePH,1}='80%';
     li{5+linePH,1+(1:n)}=sum(matemp>0.8)./size(matemp,1).*100;

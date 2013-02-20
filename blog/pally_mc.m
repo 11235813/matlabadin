@@ -2,7 +2,7 @@ function [statblock]=pally_mc(config,statSetup)
 dhit=0;dexp=0;dhaste=0;dmastery=0;ddodge=0;dparry=0;
 
 %% Input handling - config - stat,val,simMins,plotFlag,tocFlag
-if ~exist('config')
+if ~exist('config','var')
     config=[];
 end
 if ~isfield(config,'tocFlag')
@@ -17,13 +17,13 @@ plotFlag=config.plotFlag;
 
 if ~isfield(config,'simMins')
     config.simMins=500;
-    warning(['simMins defaulting to ' int2str(config.simMins)])
+    warning('simMins defaulting to %d', config.simMins) %#ok<*WNTAG>
 end
 simMins=config.simMins;
 
 if ~isfield(config,'val')
     config.val=600;
-    warning(['stat value defaulting to ' int2str(config.val)])
+    warning('stat value defaulting to %d',config.val)
 end
 val=config.val;
 
@@ -57,7 +57,7 @@ WoGfakeBubbleDuration=config.WoGfakeBubbleDuration;
 
 if ~isfield(config,'t152pcEquipped')
     config.t152pcEquipped=0;
-    warning(['T15 2-piece bonus defaulting to off'])
+    warning('T15 2-piece bonus defaulting to off')
 end
 t152pcEquipped=config.t152pcEquipped;
 
@@ -98,7 +98,7 @@ if nargin<2
     masteryRating=6758;
     hitRating=900;
     expRating=1777;
-    hasteRating=621;
+    hasteRating=0;
     armor=60000;
 else
     buffedStr=statSetup.buffedStr;
@@ -124,7 +124,8 @@ Cd=66.56745;
 Cp=237.186;
 Cb=150.3759;
 k=0.886;
-gcProcRate=0.2;
+gcAvoidProcRate=0.12;
+gcCSProcRate=0.12;
 gcBuffDuration=6.3;
 % dpProcRate=0.25;
 dpProcRate=0;
@@ -140,17 +141,19 @@ WoGHealBase=(5538+0.49.*AP./2).*1.05./bossSwingDamage.*(1-WoGoverheal);
 
 
 %% calculate stats
+%defensive stats
 mastery=8+(masteryRating+dmastery)./600;
 blockCS=3+10+1./(1./Cb+k./mastery);
-miss=0;
+% miss=0;
 dodgeCS=5.01+1./(1./Cd+k./((dodgeRating+ddodge)./885));
 parryCS=3.19+1./(1./Cp+k./((buffedStr-178)./951.158596+(parryRating+dparry)./885));
 
 avoidance=(dodgeCS+parryCS-9)./100;
 block=(blockCS-4.5)./100;
 
-DRmod=1-0.3-mastery./100;
+DRmod=max([1-0.3-mastery./100 0.2]);
 
+%offensive stats
 haste=(hasteRating+dhaste)./425./100;
 
 hit=(hitRating+dhit)./340./100;
@@ -162,7 +165,7 @@ parry=max(0,(0.075-max((exp-0.075),0)));
 
 
 %initialize Holy Power
-hp=0;
+hp=int8(0);
 
 %% Define events, cooldowns and buffs to track
 events={'Boss Swing Timer','GCD'};
@@ -174,18 +177,19 @@ idGCD=2;
 %around significantly, but just to be safe...
 tbe(1)=0.5;
 
-buffs={'SotR duration','BoG Duration','CS cooldown','J cooldown','SotR cooldown','Grand Crusader duration','Div Pupr duration','T152pc','WoG cd','WoG absorb'};
+buffs={'SotR duration','BoG Duration','CS cooldown','J cooldown','AS cooldown','SotR cooldown','Grand Crusader duration','Div Pupr duration','T152pc','WoG cd','WoG absorb'};
 tob = zeros(size(buffs));
 idSotR=1;
 idBoG=2;
 idCScd=3;
 idJcd=4;
-idSotRcd=5;
-idGCbuff=6;
-idDPBuff=7;
-idT152pc=8;
-idWoGcd=9;
-idWoGfakebubble=10;
+idAScd=5;
+idSotRcd=6;
+idGCbuff=7;
+idDPBuff=8;
+idT152pc=9;
+idWoGcd=10;
+idWoGfakebubble=11;
 
 BoGstacks=0;
 
@@ -197,7 +201,10 @@ N=floor(simTime.*steps_per_sec);
 dt=1./steps_per_sec;
 t=zeros(N,1);
 damage=-1.*ones(N,1);
-SotRUptime=t;debugG=t;debugHP=t;SotRUptimeotR=t;debugHPG=t;debugBoG=t;
+SotRUptime=t;
+debugHP=t;
+debugHPG=t;
+debugBoG=t;
 
 %tracking
 avoids=0;
@@ -208,6 +215,11 @@ bMits=0;
 hMits=0;
 partialAbsorbs=0;
 fullAbsorbs=0;
+gcCSProcs=0;
+gcAProcs=0;
+
+% %make t array
+% t=((1:N)-1).*dt;
 
 %%for loop to do event handling
 tic
@@ -222,6 +234,17 @@ for k=1:N
     %event handling
     for j=1:length(ids)
         
+        %% upkeep stuff we'll want to do before every event
+        
+        %clear BoG stacks if the buff has expired
+        if tob(idBoG)<=0
+            BoGstacks=0;
+        end
+        
+        %fix SotR at 0
+        tob(idSotR)=max(tob(idSotR),0);
+        
+        %% now see which ID we have and handle the event
         switch ids(j)
             
             %if the GCD timer is up, see if there's something to cast
@@ -238,16 +261,20 @@ for k=1:N
                     %Check for hit
                     if rand<(1-miss-dodge-parry)
                         %success! grant HP, enforce bounds
-                        hp=hp+1;hp=min([hp 5]);hp=max([hp 0]);
+                        grantHP;
                         debugHPG(k)=1; %debug flag
+                    
                         %Check for Grand Crusader proc
-                        if rand<gcProcRate
+                        if rand<gcCSProcRate
                             %set GC buff duration
                             tob(idGCbuff)=gcBuffDuration;
+                            %reset AS cooldown
+                            tob(idAScd)=0;
+                            gcCSProcs=gcCSProcs+1;
                         end
                     end
-                    %J is second priority, check for cooldown and don't use
-                    %if CS cd is almost up
+                %J is second priority, check for cooldown and don't use
+                %if CS cd is almost up
                 elseif tob(idJcd)<=0 && tob(idCScd)>=0.2
                     %set J cooldown, start GCD
                     tob(idJcd)=6./(1+haste);
@@ -255,17 +282,25 @@ for k=1:N
                     %check for hit
                     if rand<(1-miss)
                         %success! grant HP, enforce bounds
-                        hp=hp+1;hp=min([hp 5]);hp=max([hp 0]);
+                        grantHP;
                         debugHPG(k)=2; %debug flag
                     end
-                    %Grand Crusader
-                elseif tob(idGCbuff)>0 && tob(idCScd)>=0.2
-                    %Consume GC buff, set GCD
-                    tob(idGCbuff)=0;
+                %Avenger's Shield
+                elseif tob(idAScd)<=0 && tob(idCScd)>=0.2
+                    %set AS cooldown, Start GCD
+                    tob(idAScd)=15./(1+haste);
                     tbe(idGCD)=1.5./(1+haste);
-                    %grant HP, enforce bounds
-                    hp=hp+1;hp=min([hp 5]);hp=max([hp 0]);
-                    debugHPG(k)=3; %debug flag
+                    %if Grand Crusader was active, 
+                    if tob(idGCbuff)>0
+                        %Consume GC buff, set GCD
+                        tob(idGCbuff)=0;
+                        %grant HP, enforce bounds
+                        grantHP;
+                        debugHPG(k)=3; %debug flag
+                    end
+                %for completeness, fill the GCD with a blank filler                     
+                else
+                    tbe(idGCD)=1.5./(1+haste);                    
                 end
                 
                 %boss swing
@@ -280,33 +315,42 @@ for k=1:N
                 end
                 
                 
-                %check for finisher cast, do so
+                %check for finisher cast
                 finisherCast(ftype,lock,bleed,ovrw);
                 
                 %reset boss swing timer
                 tbe(idBossSwing)=bossSwingTimer;
                 
                 %check for avoid
-                if rand < avoidance
+                if rand < avoidance %#ok<*BDSCI>
                     damage(k)=0;
                     avoids=avoids+1;
                     
+                    %Check for Grand Crusader proc
+                    if rand<gcAvoidProcRate
+                        %set GC buff duration
+                        tob(idGCbuff)=gcBuffDuration;
+                        %reset AS cooldown
+                        tob(idAScd)=0;
+                        gcAProcs=gcAProcs+1;
+                    end
+                    
                 %now check for block
-                elseif rand < block+0.4.*(tob(idT152pc)>0)
+                elseif rand < block+0.4*(tob(idT152pc)>0)
                     blocks=blocks+1;
                     if tob(idSotR)>0
                         mits=mits+1;
                         bMits=bMits+1;
-                        if WoGAmount>=0.7.*DRmod
+                        if WoGAmount>=0.7*DRmod
                             damage(k)=0;
-                            WoGAmount=WoGAmount-0.7.*DRmod;
+                            WoGAmount=WoGAmount-0.7*DRmod;
                             fullAbsorbs=fullAbsorbs+1;
                         elseif WoGAmount>0
-                            damage(k)=0.7.*DRmod-WoGAmount;
+                            damage(k)=0.7*DRmod-WoGAmount;
                             WoGAmount=0;
                             partialAbsorbs=partialAbsorbs+1;
                         else
-                            damage(k)=0.7.*DRmod;
+                            damage(k)=0.7*DRmod;
                         end
                     else
                         if WoGAmount>=0.7
@@ -357,27 +401,23 @@ for k=1:N
         
         
     end %close event for
-    
-    %     end %close event if
-        
+            
     
     %% Debugging
-    SotRUptime(k,1)=tob(idSotR);
+    SotRUptime(k)=tob(idSotR);
 %     SotRUptimeotR(k,1)=tob(idSotRcd);
-    debugHP(k,1)=hp;
-    debugBoG(k,1)=BoGstacks;
-    
+%     debugHP(k)=hp;
+%     debugBoG(k)=BoGstacks;
+
+
     %increment time by decreasing tob and tbe
-    tbe=tbe-dt;
-    tob=tob-dt;
-    
-    %fix SotR at 0
-    tob(idSotR)=max(tob(idSotR),0);
-    %clear BoG stacks
-    if tob(idBoG)<=0
-        BoGstacks=0;
-    end
-end
+    %rounding to prevent floating point inaccuracies
+    tbe=round((tbe-dt).*1000)./1000;
+    tob=round((tob-dt).*1000)./1000;
+       
+end %close timestep for loop
+
+%flash toc for timing/debugging if desired
 if ~strcmp(tocFlag,'notoc')
     toc
 end
@@ -402,6 +442,8 @@ statblock.mitsPct=mits./numEvents;
 statblock.unmitsPct=(hits-hMits)./numEvents;
 statblock.bMitsPct=bMits./numEvents;
 statblock.hMitsPct=hMits./numEvents;
+statblock.gcAProcs=gcAProcs;
+statb.ock.gcCSProcs=gcCSProcs;
 
 statblock.Tsotr = max(t)./sum(SotRUptime==3);
 statblock.Rsotr = 1/statblock.Tsotr;
@@ -437,7 +479,7 @@ if ~strcmp(plotFlag,'noplot')
 end
 
 %% helper functions
-    function finisherCast(ftype,lock,bleed,ovrw)
+    function finisherCast(ftype,lock,bleed,~)
         if strcmpi(ftype,'S') %SotR spam
             castSotRIfAble()
         elseif strcmpi(ftype,'T') %maintain T152pc, bleed w/WoG
@@ -470,8 +512,8 @@ end
     end
     function castSotRIfAble()
         
-        %check for 3+ HP and no SotR buff, if so cast SotR
-        if ( hp>=3 || tob(idDPBuff)>0 ) && tob(idSotRcd)<=0 && tob(idSotR)<=0
+        %check for 3+ HP, if so cast SotR
+        if ( hp>=3 || tob(idDPBuff)>0 ) && tob(idSotRcd)<=0 
             %set SotR CD, give 3 seconds of DR, 20s of BoG
             tob(idSotRcd)=1.5./(1+haste); %5.2
             tob(idSotR)=tob(idSotR)+3;
@@ -546,7 +588,7 @@ end
                 %set cooldown of WoG
                 tob(idWoGcd)=1.5; 
                 %add a 3-second absorb shield
-                tob(idWoGfakebubble)=3;
+                tob(idWoGfakebubble)=WoGfakeBubbleDuration;
                 %set the amount of the absorb shield based on HP spent, BoG
                 WoGAmount=WoGHealBase.*hpused.*(1+BoGstacks.*(0.1+mastery/100));
                 %consume BoG buff
@@ -556,6 +598,15 @@ end
             
             
         end
+    end
+
+    function grantHP(amt)
+        if nargin<1
+            amt=1;
+        end
+        hp=hp+amt;
+        hp=min([hp 5]);
+        hp=max([hp 0]);        
     end
             
 

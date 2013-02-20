@@ -67,7 +67,8 @@ namespace Matlabadin
             double mehit = 1.0,
             double jdhit = 1.0,
             Buff[] permanentBuffs = null,
-            double gcPerSecondProcRate = 0
+            double gcPerSecondProcRate = 0,
+            double gcPerAbilityProcRate = 0
             )
         {
             // sanity checks inputs
@@ -103,6 +104,7 @@ namespace Matlabadin
             this.Talents = talents;
             this.Glyphs = glyphs;
             this.GrandCrusaderPerSecondProcRate = gcPerSecondProcRate;
+            this.GrandCrusaderPerAbilityProcRate = gcPerAbilityProcRate;
             this.StepsPerHastedGcd = stepsPerHastedGcd;
             this.MeleeHaste = mehaste;
             this.SpellHaste = sphaste;
@@ -390,7 +392,7 @@ namespace Matlabadin
             return !(hit1 == 1.0 ^ hit2 == 1.0) && !(hit1 == 0.0 ^ hit2 == 0.0);
         }
         // Change here to revert proposed GC proc from dodge/parry
-        public double GrandCrusaderAbilityProcRate { get { return 0; } } // this.Spec == PaladinSpec.Prot ? 0.2 : 0.0; } }
+        public double GrandCrusaderAbilityProcRate { get { return this.Spec == PaladinSpec.Prot ? this.GrandCrusaderPerAbilityProcRate : 0.0; } }
         public double GrandCrusaderPerStepProcRate { get { return this.GrandCrusaderPerSecondProcRate * 1.5 / this.StepsPerHastedGcd; } }
         public double DivinePurposeProcRate { get { return this.Talents.Includes(PaladinTalents.DivinePurpose) ? 0.25 : 0.0; } }
         public double StepDuration { get { return stepDuration; } }
@@ -406,6 +408,7 @@ namespace Matlabadin
         public PaladinSpec Spec { get; private set; }
         public int StepsPerHastedGcd { get; private set; }
         public double GrandCrusaderPerSecondProcRate { get; private set; }
+        public double GrandCrusaderPerAbilityProcRate { get; private set; }
         public double MeleeHaste { get; private set; }
         public double SpellHaste { get; private set; }
         public double MeleeHit { get; private set; }

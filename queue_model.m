@@ -1,7 +1,8 @@
 %QUEUE_MODEL contains the rotation queues for CALC_ROT_ST
 
 queue.st={...
-    %barebones first
+    %Barebones queues
+    '#Barebones Queues';
     'CS>J>AS>SotR';
     'CS>J>AS>Cons>SotR';
     'CS>J>AS>Cons>HW>SotR';
@@ -19,6 +20,7 @@ queue.st={...
     
     
     %talents
+    '#Talents';
     'CS>J>ES>AS>HW>Cons>SotR';
     'CS>J>AS+>ES>AS>HW>Cons>SotR';
     'CS>J>AS>ES>HW>Cons>SotR';
@@ -43,6 +45,7 @@ queue.st={...
     
             
     %Defensive queues
+    '#Defensive queues';
     '^WB>CS>J>AS>HW>Cons>SotR';
     '^WB>CS>J>AS>HW>Cons>SotR5';
     '^WB>^SS>CS>J>AS>HW>Cons>SotR';
@@ -62,7 +65,8 @@ queue.st={...
     '^WB>CS>J>AS>HW>Cons>HPr>SS>SotR';
     '^WB>CS>J>AS>HW>Cons>^SS>HPr>SotR';
     
-    %Execute range
+    %Execute range - no L90
+    '#Execute range - no L90';
     'CS>J>AS>HW>HoW>Cons>SotR';
     'CS>J>AS>HoW>HW>Cons>SotR';
     'CS>J>AS+>HoW>AS>HW>Cons>SotR';
@@ -74,14 +78,65 @@ queue.st={...
     'HoW>AS>CS>J>HW>Cons>SotR';
     'HoW>J>AS>CS>HW>Cons>SotR';
     'HoW>J>CS>AS>HW>Cons>SotR';
+    
+    %Execute range - ES placement
+    '#Execute range - ES';
+    'CS>J>AS>HW>HoW>Cons>ES>SotR';
+    'CS>J>AS>HW>HoW>ES>Cons>SotR';
+    'CS>J>AS>HW>ES>HoW>Cons>SotR';
+    'CS>J>AS>ES>HW>HoW>Cons>SotR';
+    'CS>J>AS+>ES>AS>HW>HoW>Cons>SotR';
+    'CS>J>ES>AS>HW>HoW>Cons>SotR';
+    'CS>ES>J>AS>HW>HoW>Cons>SotR';
+    'ES>CS>J>AS>HW>HoW>Cons>SotR';
     'HoW>CS>J>AS>HW>ES>Cons>SotR';
-    'HoW>CS>J>AS>HW>HPr>Cons>SotR';
+    'HoW>CS>J>AS>ES>HW>Cons>SotR';
+    'HoW>CS>J>AS+>ES>AS>HW>Cons>SotR';
+    'HoW>CS>J>ES>AS>HW>Cons>SotR';
+    'HoW>CS>ES>J>AS>HW>Cons>SotR';
+    'HoW>ES>CS>J>AS>HW>Cons>SotR';
+    'ES>HoW>CS>J>AS>HW>Cons>SotR';
+    'ES>HoW>AS>CS>J>HW>Cons>SotR';
+    'ES>AS>HoW>CS>J>HW>Cons>SotR';
+    
+    %Execute range - other L90 talents
+    '#Execute range - LH';
+    'CS>J>AS>HW>HoW>Cons>LH>SotR';
+    'CS>J>AS>HW>HoW>LH>Cons>SotR';
+    'CS>J>AS>HW>LH>HoW>Cons>SotR';
+    'CS>J>AS>LH>HW>HoW>Cons>SotR';
+    'CS>J>AS+>LH>AS>HW>HoW>Cons>SotR';
+    'CS>J>LH>AS>HW>HoW>Cons>SotR';
+    'CS>LH>J>AS>HW>HoW>Cons>SotR';
+    'LH>CS>J>AS>HW>HoW>Cons>SotR';
     'HoW>CS>J>AS>HW>LH>Cons>SotR';
-    'HoW>AS>CS>J>HW>ES>Cons>SotR';
-    'HoW>AS>CS>J>HW>HPr>Cons>SotR';
-    'HoW>AS>CS>J>HW>LH>Cons>SotR';
+    'HoW>CS>J>AS>LH>HW>Cons>SotR';
+    'HoW>CS>J>AS+>LH>AS>HW>Cons>SotR';
+    'HoW>CS>J>LH>AS>HW>Cons>SotR';
+    'HoW>CS>LH>J>AS>HW>Cons>SotR';
+    'HoW>LH>CS>J>AS>HW>Cons>SotR';
+    'LH>HoW>CS>J>AS>HW>Cons>SotR';
+    
+    '#Execute range - HPr';
+    'CS>J>AS>HW>HoW>Cons>HPr>SotR';
+    'CS>J>AS>HW>HoW>HPr>Cons>SotR';
+    'CS>J>AS>HW>HPr>HoW>Cons>SotR';
+    'CS>J>AS>HPr>HW>HoW>Cons>SotR';
+    'CS>J>AS+>HPr>AS>HW>HoW>Cons>SotR';
+    'CS>J>HPr>AS>HW>HoW>Cons>SotR';
+    'CS>HPr>J>AS>HW>HoW>Cons>SotR';
+    'HPr>CS>J>AS>HW>HoW>Cons>SotR';
+    'HoW>CS>J>AS>HW>Cons>HPr>SotR';
+    'HoW>CS>J>AS>HW>HPr>Cons>SotR';
+    'HoW>CS>J>AS>HPr>HW>Cons>SotR';
+    'HoW>CS>J>AS+>HPr>AS>HW>Cons>SotR';
+    'HoW>CS>J>HPr>AS>HW>Cons>SotR';
+    'HoW>CS>HPr>J>AS>HW>Cons>SotR';
+    'HoW>HPr>CS>J>AS>HW>Cons>SotR';
+    'HPr>HoW>CS>J>AS>HW>Cons>SotR';
 
     %WoG
+    '#WoG/EF';
     '^WB>CS>J>AS>HW>Cons>WoG';
     '^WB>CS>J>AS>HW>Cons>EF';
     '^WB>CS>J>AS>HW>Cons>^EF>SotR5';

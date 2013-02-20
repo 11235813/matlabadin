@@ -386,6 +386,7 @@ namespace Matlabadin
                 + "\t<mehit>: Melee hit. 0.0 = 100% miss rate, 1.0 = 0% miss rate" + Environment.NewLine
                 + "\t<rahit>: Ranged hit. 0.0 = 100% miss rate, 1.0 = 0% miss rate" + Environment.NewLine
                 + "\t<buffs>: comma-separated list of buffs to consider permanent" + Environment.NewLine
+                + "\t<gcProcsPerSec>: GC proc rate from avoidance, in procs/sec" + Environment.NewLine
                 + "\t<outputfile>: file to write output to." + Environment.NewLine;
             Console.WriteLine(message);
             Console.Error.WriteLine(message);

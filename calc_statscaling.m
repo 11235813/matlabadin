@@ -12,13 +12,13 @@ def_db;
 %create the first configuation
 
 %basic 7.5%/15% SoI build @ high veng
-cfg(1)=build_config('hit',5,'exp',5);
+cfg(1)=build_config('hit',5,'exp',7.5,'glyph',[9 0 0]);
 
 %low-vengeance version
-cfg(2)=build_config('hit',5,'exp',5,'veng',ddb.v(1));
+cfg(2)=build_config('hit',5,'exp',7.5,'veng',ddb.v(1),'glyph',[9 0 0]);
 
 %% Stat components
-stat={'hit';'exp';'haste';'str';'ap';'crit';'agi';'int'};
+stat={'hit';'exp';'haste';'str';'ap';'crit';'agi';'int';'dodge';'parry'};
 M=length(stat);  %number of "extra" stats
 
 %load itemization factors (i.e. because 10 STR = 20 AP = 15 STA = 11.6 SP)
@@ -29,7 +29,7 @@ for m=1:M; icv(m,1)=eval(['ipconv.' stat{m}]); end;
 
 %% Strength calcs
 %reset extra structure
-str_range=-100+linspace(1,1500,100);
+str_range=-100+linspace(1,1500,50);
 [~, idx]=min(abs(str_range));
 str_dps=zeros(M,length(str_range),length(cfg));str_hps=str_dps;
 str_dps0=zeros(size(str_dps));str_hps0=str_dps0;
@@ -38,8 +38,9 @@ xStr=zeros(length(str_range),length(cfg));
 %This is the amount of itemization to add for each stat.  A higher value is
 %chosen for smoothing; later on we scale the calculation to represent the
 %contribution of 10 ipoints worth of the stat.
-dstatstr=50;
-
+dstatstr=100;
+% %convert hit/exp to negative values 
+% dstatstr(1:2)=-dstatstr(1:2);
 
 tic
 for g=1:length(cfg)
@@ -76,6 +77,7 @@ for g=1:length(cfg)
         c=stat_model(c);
         c=ability_model(c);
         c=rotation_model(c);
+        toc
         
         str_dps(m,:,g)=c.rot.dps;
         str_hps(m,:,g)=c.rot.hps;
@@ -141,7 +143,9 @@ hit_dps=zeros(M,length(hit_range),length(cfg));hit_hps=hit_dps;
 hit_dps0=zeros(size(hit_dps));hit_hps0=hit_dps0;
 xHit=zeros(length(hit_range),length(cfg));
 
-dstathit=30;
+dstathit=100;
+%convert hit/exp to negative values 
+% dstathit(1:2)=-dstathit(1:2);
 
 tic
 for g=1:length(cfg)
@@ -219,7 +223,9 @@ exp_dps=zeros(M,length(exp_range),length(cfg));exp_hps=exp_dps;
 exp_dps0=zeros(size(exp_dps));exp_hps0=exp_dps0;
 xExp=zeros(length(exp_range),length(cfg));
 
-dstatexp=30;
+dstatexp=100;%.*ones(size(stat));
+%convert hit/exp to negative values 
+% dstatexp(1:2)=-dstatexp(1:2);
 
 tic
 for g=1:length(cfg)
@@ -295,7 +301,9 @@ haste_dps=zeros(M,length(haste_range),length(cfg));haste_hps=haste_dps;
 haste_dps0=zeros(size(haste_dps));haste_hps0=haste_dps0;
 xHas=zeros(length(haste_range),length(cfg));
 
-dstathas=100;
+dstathas=100;%.*ones(size(stat));
+%convert hit/exp to negative values 
+% dstathas(1:2)=-dstathas(1:2);
 
 tic
 for g=1:length(cfg)

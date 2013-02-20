@@ -39,37 +39,47 @@ for g=1:length(cfg)
     c=ability_model(c);
     
     wb=waitbar(0,['Calculating CFG # ' int2str(g) ' / ' int2str(length(cfg))]);
+    qNoLabel=0;
     tic
     for q=1:length(queue.st)
         %update waitbar
         waitbar(q/length(queue.st),wb)
         
-        %set queue value
-        c.exec.queue=queue.st{q};
-        
-        %calculate DPS
-        c=rotation_model(c);
-        
-        %store stuff for debugging
-        crs_debug(q,g).meta=c.rot.metadata;
-        crs_debug(q,g).action=c.rot.actionPr;
-        crs_debug(q,g).cps=c.rot.cps;
-        
-        %store values for plot
-        dps(q,g)=c.rot.dps;
-        hps(q,g)=c.rot.hps;
-        efssUptime(q,g)=max([c.rot.efuptime;c.rot.ssuptime]);
-        empties(q,g)=c.rot.epct.*100; 
-        hpg(q,g)=c.rot.hpg;
-        
-        %if desired, repeate for lower vengeance
-        d=c;
-        d.exec.veng=[ddb.v1];
-        d=stat_model(d);
-        d=ability_model(d);
-        d=rotation_model(d);
-        dps2(q,g)=d.rot.dps;
-        hps2(q,g)=d.rot.hps;
+        if ~strcmp(queue.st{q}(1),'#')
+            %increment tracker
+            qNoLabel=qNoLabel+1;
+            %set queue value
+            c.exec.queue=queue.st{q};
+            qNo{q}=int2str(qNoLabel);
+            
+            %calculate DPS
+            c=rotation_model(c);
+            
+            %store stuff for debugging
+            crs_debug(q,g).meta=c.rot.metadata;
+            crs_debug(q,g).action=c.rot.actionPr;
+            crs_debug(q,g).cps=c.rot.cps;
+            
+            %store values for plot
+            dps(q,g)=c.rot.dps;
+            hps(q,g)=c.rot.hps;
+            efssUptime(q,g)=max([c.rot.efuptime;c.rot.ssuptime]);
+            empties(q,g)=c.rot.epct.*100;
+            hpg(q,g)=c.rot.hpg;
+            
+            %if desired, repeate for lower vengeance
+            d=c;
+            d.exec.veng=[ddb.v1];
+            d=stat_model(d);
+            d=ability_model(d);
+            d=rotation_model(d);
+            dps2(q,g)=d.rot.dps;
+            hps2(q,g)=d.rot.hps;
+            
+        else
+            qNo{q}=' ';
+            
+        end
         
         
     end
@@ -91,7 +101,7 @@ for g=1:length(cfg)
     
     li=DataTable();
     li{1:2,1}={' ';'Q#'};
-    li{ldat,1}=[1:L]';
+    li{ldat,1}=qNo';
     li{1:2,2}={' ';'Priority'};
     li{ldat,2}=queue.st;
     li{1:2,3}={'DPS';['V=' int2str(ddb.v2) 'k']};
@@ -131,7 +141,6 @@ queue.stsubset={ ...
     '^WB>CS>J>AS>HW>Cons>SS>SotR';...
     'CS>J>AS>HW>HoW>Cons>SotR';...
     'HoW>CS>J>AS>HW>Cons>SotR';...
-    'HoW>AS>CS>J>HW>ES>Cons>SotR';...
      };
     
 li=lidb{1};
