@@ -1,4 +1,4 @@
-function  [meanStacks theoreticalMeanStacks] = proc_model(p0,dp,D,maxStacks,simMins,dt)
+function  [meanStacks theoreticalMeanStacks theo2] = proc_model(p0,dp,D,maxStacks,simMins,dt)
 
 if nargin<1
     p0=0.1; %base probability of proc
@@ -19,7 +19,7 @@ if nargin<6
     dt=100; %time step size in ms
 end
 
-timeBetweenProcChances=1500; %time between proc chances, in seconds
+timeBetweenProcChances=500; %time between proc chances, in seconds
 
 numTimeSteps=simMins*60*1000/dt;
 
@@ -76,11 +76,16 @@ meanStacks=mean(s);
 
 %% compare to theory
 contribution=zeros(1,maxStacks);
+contribution2=zeros(1,maxStacks);
+
 for i=1:maxStacks;
-    contribution(i)=(1-exp(-(p0+(i-1)*dp)./timeBetweenProcChances.*D));
+%     contribution(i)=(1-exp(-(p0+(i-1)*dp)./timeBetweenProcChances.*D)); %poisson approximation
+    contribution(i)=(1-(1-(p0+(i-1)*dp)).^(D./timeBetweenProcChances)); %exact value (1-q^N)
+    contribution2(i)=(1-(1-(p0+(i)*dp)).^(D./timeBetweenProcChances)); %tweaking to find model improvements
 end
 
 theoreticalMeanStacks=sum(cumprod(contribution));
+theo2=sum(cumprod(contribution2));
 
 end
 
