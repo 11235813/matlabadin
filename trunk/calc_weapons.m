@@ -2,6 +2,7 @@
 
 %% Setup Tasks
 clear;
+disp('------------- CALC_WEAPONS -------------')
 %load gear database
 gear_db;
 %load defaults database
@@ -49,11 +50,29 @@ weaplist=[
             86987 1;    %Scimitar of Seven Stars
             87173 1;    %Kilrak, Jaws of Terror (Heroic)
             2 1;    %Kilrak, Jaws of Terror (LFR+Gem)
-            5 1;    %Kilrak, Jaws of Terror (LFR+Gem+Haste)
             3 1;    %Kilrak, Jaws of Terror (Norm+Gem)
-            6 1;    %Kilrak, Jaws of Terror (Norm+Gem+Haste)
             4 1;    %Kilrak, Jaws of Terror (Heroic+Gem)
-            7 1;    %Kilrak, Jaws of Terror (Heroic+Gem+Haste)
+            95504 3; %Zeeg's Ancient Kegsmasher
+            95502 1; %Do-tharak, the Swordbreaker
+            94964 1; %Qon's Flaming Scimitar
+            94954 3; %Hand of the Dark Animus
+            94937 1; %Acid-Spine Bonemace
+            94768 2; %Shellsplitter Greataxe
+            94759 3; %Kura-Kura, Kazra'jin's Skullcleaver
+            94722 1; %Worldbreaker's Stormscythe
+            96130 1; %Acid-Spine Bonemace (Thunderforged)
+            96058 2; %Shellsplitter Greataxe (Thunderforged)
+            96004 1; %Worldbreaker's Stormscythe (Thunderforged)
+            96620 1; %Do-tharak, the Swordbreaker (Heroic)
+            96605 3; %Zeeg's Ancient Kegsmasher (Heroic)
+            96534 1; %Qon's Flaming Scimitar (heroic)
+            96514 3; %Hand of the Dark Animus (Heroic)
+            96502 1; %Acid-Spine Bonemace (Heroic)
+            96430 2; %Shellsplitter Greataxe (Heroic)
+            96410 3; %Kura-Kura, Kazra'jin's Skullcleaver (Heroic)
+            96376 1; %Worldbreaker's Stormscythe (Heroic)
+            
+            
           ];
       
 wids=weaplist(:,1);

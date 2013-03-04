@@ -3,6 +3,7 @@
 
 %% Setup Tasks
 clear;
+disp('------------- CALC_STATSCALING -------------')
 %load gear database
 gear_db;
 %load defaults database
@@ -18,7 +19,7 @@ cfg(1)=build_config('hit',5,'exp',7.5,'glyph',[9 0 0]);
 cfg(2)=build_config('hit',5,'exp',7.5,'veng',ddb.v(1),'glyph',[9 0 0]);
 
 %% Stat components
-stat={'hit';'exp';'haste';'str';'ap';'crit';'agi';'int';'dodge';'parry'};
+stat={'hit';'exp';'haste';'str';'ap';'crit';'agi';'int';'parry';'dodge'};
 M=length(stat);  %number of "extra" stats
 
 %load itemization factors (i.e. because 10 STR = 20 AP = 15 STA = 11.6 SP)

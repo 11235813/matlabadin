@@ -3,6 +3,7 @@
 
 %% Setup Tasks
 clear;
+disp('------------- CALC_ROT_ST -------------')
 %load gear database
 gear_db;
 %load defaults database

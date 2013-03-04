@@ -1,4 +1,5 @@
 clear;
+disp('------------- CALC_ABILITYDMG -------------')
 %% Load Databases
 %load gear database
 gear_db;

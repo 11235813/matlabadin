@@ -75,6 +75,21 @@ idb.iid(7).mast=385;
 idb.iid(7).haste=320;
 idb.iid(7).isreforged=0;
 
+%% Items that failed to be recovered by updated make_gear_db.pl
+%copied from gear_db.old
+
+idb.iid(89525).name='Thunderstone Ring';
+idb.iid(89525).ilvl=450;
+idb.iid(89525).str=444;
+idb.iid(89525).sta=666;
+idb.iid(89525).hit=246;
+idb.iid(89525).parry=326;
+idb.iid(89525).isreforged=0;
+
+idb.iid(86775).name='Jade Warlord Figurine (Raid Finder)';
+idb.iid(86775).ilvl=476;
+idb.iid(86775).sta=1434;
+idb.iid(86775).isreforged=0;
 
 %% Enchant section  
 %Enchants work exactly the same way that items do.  There is an idb
@@ -280,6 +295,9 @@ idb.sid(104425).procid=0; %PH
 
 idb.sid(104430).name='Enchant Weapon - Elemental Force';
 idb.sid(104430).procid=0; %PH
+
+idb.sid(93403).name='Eye of the Black Prince';
+idb.sid(93403).socket='P';
 
 %% Shield
 %Cata
