@@ -1,3 +1,4 @@
+disp('------------- GEAR_DISPLAY -------------')
 gear_db;
 def_db;
 c=build_config;

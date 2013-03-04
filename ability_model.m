@@ -31,6 +31,9 @@ base=c.base;
 %% Holy Power
 player.hopo=3;  %TODO: probably no reason to consider 1- or 2-HP SotR/WoG anymore
 
+%% AoE target cap
+splashCap=19; %one less than the AoE cap
+
 %% Seals
 %TODO: Retest all hit conditions for seals
 
@@ -132,7 +135,7 @@ dmg.HammerNova=     raw.HammerNova.*mdf.mehit.*mdf.spcrit.*target.resrdx; %spell
 heal.HammerNova=    0;
 threat.HammerNova=  max(dmg.HammerNova,heal.HammerNova).*mdf.RFury;
 mcost.HammerNova=   0;
-splash.HammerNova=  min([exec.npccount-1; 9]); %damage factor for secondary targets (multiples of dmg.*)
+splash.HammerNova=  min([exec.npccount-1; splashCap]); %damage factor for secondary targets (multiples of dmg.*)
 label.HammerNova=   'HaNova';
 
 %Melee attacks
@@ -189,12 +192,12 @@ splash.AvengersShield=min([exec.npccount-1; 0+2.*(mdf.glyphFS==1)]);
 label.AvengersShield='AS';
 
 %Consecration (all 9 ticks)
-raw.Consecration =  (102.7+0.18.*player.sp)*9.*mdf.spdmg; %(914+0.16*SP)*9 in 5.2
+raw.Consecration =  (914+0.16.*player.sp)*9.*mdf.spdmg; 
 dmg.Consecration =  raw.Consecration.*mdf.sphit.*mdf.spcrit.*target.resrdx; %spell hit/crit
 heal.Consecration=  0;
 threat.Consecration=(max(dmg.Consecration,heal.Consecration)+12).*mdf.RFury;  %TODO: wowdb flags as generating no threat
 mcost.Consecration = 0.07.*base.mana;
-splash.Consecration=min([exec.npccount-1; 9]);
+splash.Consecration=min([exec.npccount-1; splashCap]);
 label.Consecration= 'Cons';
 
 %Holy Wrath
@@ -235,7 +238,7 @@ raw.LightsHammer=   (3630 + 0.321.*player.sp).*8.*mdf.spdmg;
 dmg.LightsHammer=   raw.LightsHammer.*mdf.sphit.*mdf.spcrit.*target.resrdx;
 heal.LightsHammer=  (2512 + 0.222*player.sp).*8.*mdf.spcrit;
 mcost.LightsHammer= 0;
-splash.LightsHammer=min([exec.npccount-1; 9]); %TODO: confirm target cap for LH
+splash.LightsHammer=min([exec.npccount-1; splashCap]); %TODO: confirm target cap for LH
 label.LightsHammer= 'LH';
 
 %% Heals / Absorbs
@@ -258,8 +261,8 @@ mcost.EternalFlame= 0;
 splash.EternalFlame=0;
 label.EternalFlame= 'EF';
 
-%Eternal Flame HoT
-raw.EternalFlameHoT=   (508+0.0585.*player.sp).*player.hopo.*(1+mdf.SoI); %heal for 1 tick, (1016+0.0585*AP) in 5.2
+%Eternal Flame HoT (assume self-cast)
+raw.EternalFlameHoT=   (1016+0.0585.*player.ap).*player.hopo.*(1+mdf.SoI); %heal for 1 tick
 dmg.EternalFlameHoT=   0;
 heal.EternalFlameHoT=  raw.EternalFlameHoT.*(1-exec.overh).*mdf.spcrit;
 threat.EternalFlameHoT=1.*mdf.RFury./exec.npccount;

@@ -57,7 +57,7 @@ my @items = qw(
 =head2 Relevant Item Levels
 
   my @ilvls = qw(
-    440 450 463 476 483 489 496 502 509 516
+    440 450 463 476 483 489 496 502 509 512 516 522 528 535 541
   );
 
 The C<@ilvls> array allows you to specify what item levels should be included 
@@ -67,7 +67,7 @@ it as new content is added and old content becomes irrelevant.
 =cut 
 
 my @ilvls = qw(
-  440 450 457 463 470 476 483 489 490 496 502 509 516
+  440 450 457 463 470 476 483 489 490 496 502 509 512 516 522 528 535 541
 );
 
 =head2 Item Filters
@@ -76,7 +76,6 @@ my @ilvls = qw(
     int       => [ eq => 0 ],
     agi       => [ eq => 0 ],
     crit      => [ eq => 0 ],
-    haste     => [ eq => 0 ],
     resil     => [ eq => 0 ],
   );
 
@@ -94,7 +93,6 @@ my %search = (
   int       => [ eq => 0 ],
   agi       => [ eq => 0 ],
   crit      => [ eq => 0 ],
-  haste     => [ eq => 0 ],
   resil     => [ eq => 0 ],
 );
 my %searchwep = (

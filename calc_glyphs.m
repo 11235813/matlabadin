@@ -3,6 +3,7 @@
 
 %% Setup Tasks
 clear;
+disp('------------- CALC_GLYPHS -------------')
 %load gear database
 gear_db;
 %load defaults database

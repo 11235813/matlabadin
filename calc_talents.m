@@ -3,6 +3,7 @@
 
 %% Setup Tasks
 clear;
+disp('------------- CALC_TALENTS -------------')
 %load gear database
 gear_db;
 %load defaults database

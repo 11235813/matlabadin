@@ -184,13 +184,97 @@ ddb.gearset(5)={tempegs};
 %% T15 gear sets
 gem=ddb.gemset{2}; %define gem template
 
-%%T15 RaidFinder, ilvl ??
+%%Skip T15 RaidFinder, ilvl 502 < 509
 
 
-%%T15 Normal, ilvl ??
+%%T15 Normal, ilvl 522
+tempegs(1)=equip(95292); %Lightning Emperor's Faceguard
+tempegs(1)=reforge(tempegs(1),'mast','haste');
+tempegs(1)=socket(tempegs(1),gem.meta,gem.yel);
+tempegs(2)=equip(95142); %Striker's Battletags
+% tempegs(2)=reforge(tempegs(2),'hit','haste');
+tempegs(3)=equip(95294); %Lightning Emperor's Shoulderguards
+tempegs(3)=reforge(tempegs(3),'mast','haste');
+tempegs(3)=socket(tempegs(3),gem.red,gem.yel);
+tempegs(4)=equip(95114); %Spikeshard Greatcloak
+% tempegs(4)=reforge(tempegs(4),'dodge','exp');
+tempegs(5)=equip(95280); %Lightning Emperor's Battleplate (RET)
+% tempegs(5)=reforge(tempegs(5),'parry','exp');
+tempegs(5)=socket(tempegs(5),gem.red,gem.yel,gem.blu);
+tempegs(6)=equip(94742); %Frozen Warlord's Bracers
+% tempegs(6)=reforge(tempegs(6),'dodge','haste');
+tempegs(7)=equip(95291); %Lightning Emperor's Handguards
+tempegs(7)=reforge(tempegs(7),'dodge','haste');
+tempegs(8)=equip(94726); %Cloudbreaker Greatbelt
+% tempegs(8)=reforge(tempegs(8),'mast','hit');
+tempegs(8)=enhance(tempegs(8),equip(90046,'s')); %Belt Buckle
+tempegs(8)=socket(tempegs(8),gem.blu,gem.blu,gem.blu);
+tempegs(9)=equip(95293); %Lightning Emperor's Legguards
+tempegs(9)=reforge(tempegs(9),'parry','exp');
+tempegs(9)=socket(tempegs(9),gem.yel,gem.blu);
+tempegs(10)=equip(94265); %Haunted Steel Treads
+% tempegs(10)=reforge(tempegs(10),'parry','exp');
+tempegs(10)=socket(tempegs(10),gem.red,gem.red);
+tempegs(11)=equip(95513); %Band of the Scaled Tyrant
+tempegs(11)=reforge(tempegs(11),'hit','exp');
+tempegs(11)=socket(tempegs(11),gem.red);
+tempegs(12)=equip(95511); %Durumu's Severed Tentacle
+tempegs(12)=reforge(tempegs(12),'dodge','haste');
+tempegs(13)=equip(94528); %Soul Barrier
+tempegs(14)=equip(94516); %Fortitude of the Zandalari
+tempegs(14)=reforge(tempegs(14),'mast','haste');
+tempegs(15)=equip(95502); %Do-tharak, the Swordbreaker
+tempegs(15)=reforge(tempegs(15),'mast','haste');
+tempegs(15)=enhance(tempegs(15),equip(93403,'s')); %Eye of the BP
+tempegs(15)=socket(tempegs(15),gem.yel,gem.blu);
+tempegs(16)=equip(95472); %Ultimate Protection of the Emperor
+tempegs(16)=reforge(tempegs(16),'parry','exp');
+tempegs(16)=socket(tempegs(16),gem.red);
+ddb.gearset(6)={tempegs};
 
+%%T15 Heroic, ilvl 535
+clear tempegs
+tempegs(1)=equip(96666); %Lightning Emperor's Faceguard (Heroic)
+tempegs(1)=reforge(tempegs(1),'mast','haste');
+tempegs(1)=socket(tempegs(1),gem.meta,gem.yel);
+tempegs(2)=equip(96721); %Necklace of the Terra-Cotta Vanquisher (Heroic)
+tempegs(2)=reforge(tempegs(2),'hit','haste');
+tempegs(3)=equip(96668); %Lightning Emperor's Shoulderguards (Heroic)
+tempegs(3)=reforge(tempegs(3),'hit','haste');
+tempegs(3)=socket(tempegs(3),gem.red,gem.yel);
+tempegs(4)=equip(96397); %Horn-Rimmed Doomcloak (Heroic)
+tempegs(4)=reforge(tempegs(4),'hit','haste');
+tempegs(5)=equip(96654); %Lightning Emperor's Battleplate (Heroic) (RET)
+tempegs(5)=socket(tempegs(5),gem.red,gem.yel,gem.blu);
+tempegs(6)=equip(96394); %Frozen Warlord's Bracers (Heroic)
+tempegs(7)=equip(96665); %Lightning Emperor's Handguards (Heroic)
+tempegs(7)=reforge(tempegs(7),'dodge','haste');
+tempegs(8)=equip(96373); %Cloudbreaker Greatbelt (Heroic)
+tempegs(8)=reforge(tempegs(8),'mast','exp');
+tempegs(8)=enhance(tempegs(8),equip(90046,'s')); %Belt Buckle
+tempegs(8)=socket(tempegs(8),gem.blu,gem.blu,gem.blu);
+tempegs(9)=equip(96667); %Lightning Emperor's Legguards (Heroic)
+tempegs(9)=reforge(tempegs(9),'hit','haste');
+tempegs(9)=socket(tempegs(9),gem.yel,gem.blu);
+tempegs(10)=equip(96722); %Locksmahser Greaves (Heroic)
+tempegs(10)=reforge(tempegs(10),'hit','exp');
+tempegs(11)=equip(96500); %Band of the Scaled Tyrant (Heroic)
+tempegs(11)=reforge(tempegs(11),'hit','exp');
+tempegs(11)=socket(tempegs(11),gem.red);
+tempegs(12)=equip(96481); %Durumu's Severed Tentacle (Heroic)
+tempegs(12)=reforge(tempegs(12),'hit','haste');
+tempegs(13)=equip(96555); %Soul Barrier (Heroic)
+tempegs(14)=equip(96421); %Fortitude of the Zandalari (Heroic)
+tempegs(14)=reforge(tempegs(14),'mast','haste');
+tempegs(15)=equip(96620); %Do-tharak, the Swordbreaker (Heroic)
+tempegs(15)=reforge(tempegs(15),'hit','haste');
+tempegs(15)=enhance(tempegs(15),equip(93403,'s')); %Eye of the BP
+tempegs(15)=socket(tempegs(15),gem.yel,gem.blu);
+tempegs(16)=equip(96554); %Ultimate Protection of the Emperor (Heroic)
+tempegs(16)=reforge(tempegs(16),'parry','exp');
+tempegs(16)=socket(tempegs(16),gem.red);
+ddb.gearset(7)={tempegs};
 
-%%T15 Heroic, ilvl ??
 
 
 %% Glyphs

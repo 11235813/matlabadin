@@ -170,6 +170,16 @@ idb.sid=struct('name','Empty Slot', ...
         
 %% Items
 
+idb.iid(90718).name='Torik-Ethis'' Bloodied Legguards';
+idb.iid(90718).ilvl=440;
+idb.iid(90718).str=726;
+idb.iid(90718).sta=1088;
+idb.iid(90718).dodge=484;
+idb.iid(90718).parry=484;
+idb.iid(90718).barmor=3950;
+idb.iid(90718).atype=1;
+idb.iid(90718).isreforged=0;
+
 idb.iid(87351).name='Carapace Inlaid Drape';
 idb.iid(87351).ilvl=440;
 idb.iid(87351).str=404;
@@ -178,6 +188,15 @@ idb.iid(87351).hit=237;
 idb.iid(87351).parry=289;
 idb.iid(87351).barmor=933;
 idb.iid(87351).isreforged=0;
+
+idb.iid(87352).name='Cloak of the Unending Swarm';
+idb.iid(87352).ilvl=440;
+idb.iid(87352).str=404;
+idb.iid(87352).sta=607;
+idb.iid(87352).haste=250;
+idb.iid(87352).mast=282;
+idb.iid(87352).barmor=933;
+idb.iid(87352).isreforged=0;
 
 idb.iid(87356).name='Badge of the Amber Siege';
 idb.iid(87356).ilvl=440;
@@ -217,6 +236,16 @@ idb.iid(87370).barmor=2539;
 idb.iid(87370).atype=1;
 idb.iid(87370).isreforged=0;
 
+idb.iid(87371).name='Scarlet Champion''s Belt';
+idb.iid(87371).ilvl=440;
+idb.iid(87371).str=539;
+idb.iid(87371).sta=808;
+idb.iid(87371).haste=307;
+idb.iid(87371).mast=391;
+idb.iid(87371).barmor=2539;
+idb.iid(87371).atype=1;
+idb.iid(87371).isreforged=0;
+
 idb.iid(87379).name='Runed Deathbone Chestplate';
 idb.iid(87379).ilvl=440;
 idb.iid(87379).str=726;
@@ -254,6 +283,23 @@ idb.iid(87636).parry=289;
 idb.iid(87636).barmor=933;
 idb.iid(87636).isreforged=0;
 
+idb.iid(87637).name='Jade Harbinger''s Cloak';
+idb.iid(87637).ilvl=440;
+idb.iid(87637).str=404;
+idb.iid(87637).sta=607;
+idb.iid(87637).haste=250;
+idb.iid(87637).mast=282;
+idb.iid(87637).barmor=933;
+idb.iid(87637).isreforged=0;
+
+idb.iid(90617).name='Ferocious Mark of the Golden Lotus';
+idb.iid(90617).ilvl=440;
+idb.iid(90617).str=404;
+idb.iid(90617).sta=607;
+idb.iid(90617).hit=224;
+idb.iid(90617).haste=297;
+idb.iid(90617).isreforged=0;
+
 idb.iid(90618).name='Durable Mark of the Golden Lotus';
 idb.iid(90618).ilvl=440;
 idb.iid(90618).str=404;
@@ -261,21 +307,6 @@ idb.iid(90618).sta=607;
 idb.iid(90618).dodge=224;
 idb.iid(90618).parry=297;
 idb.iid(90618).isreforged=0;
-
-idb.iid(90718).name='Torik-Ethis'' Bloodied Legguards';
-idb.iid(90718).ilvl=440;
-idb.iid(90718).str=726;
-idb.iid(90718).sta=1088;
-idb.iid(90718).dodge=484;
-idb.iid(90718).parry=484;
-idb.iid(90718).barmor=3950;
-idb.iid(90718).atype=1;
-idb.iid(90718).isreforged=0;
-
-idb.iid(75274).name='Zen Alchemist Stone';
-idb.iid(75274).ilvl=450;
-idb.iid(75274).mast=751;
-idb.iid(75274).isreforged=0;
 
 idb.iid(77530).name='Ghost Iron Dragonling';
 idb.iid(77530).ilvl=450;
@@ -457,6 +488,24 @@ idb.iid(84035).barmor=2640;
 idb.iid(84035).atype=1;
 idb.iid(84035).isreforged=0;
 
+idb.iid(84036).name='Coldbite Girdle';
+idb.iid(84036).ilvl=450;
+idb.iid(84036).str=592;
+idb.iid(84036).sta=888;
+idb.iid(84036).haste=337;
+idb.iid(84036).mast=429;
+idb.iid(84036).barmor=2640;
+idb.iid(84036).atype=1;
+idb.iid(84036).isreforged=0;
+
+idb.iid(85177).name='Whirling Dervish Choker';
+idb.iid(85177).ilvl=450;
+idb.iid(85177).str=444;
+idb.iid(85177).sta=666;
+idb.iid(85177).haste=300;
+idb.iid(85177).mast=288;
+idb.iid(85177).isreforged=0;
+
 idb.iid(85181).name='Iron Protector Talisman';
 idb.iid(85181).ilvl=450;
 idb.iid(85181).sta=1126;
@@ -514,59 +563,393 @@ idb.iid(87501).barmor=2640;
 idb.iid(87501).atype=1;
 idb.iid(87501).isreforged=0;
 
-idb.iid(88995).name='Shado-Pan Dragon Gun';
-idb.iid(88995).ilvl=450;
-idb.iid(88995).isreforged=0;
+idb.iid(92814).name='Bladesnap Vambraces';
+idb.iid(92814).ilvl=450;
+idb.iid(92814).barmor=2053;
+idb.iid(92814).atype=1;
+idb.iid(92814).isreforged=0;
 
-idb.iid(89232).name='Mogu Rune of Paralysis';
-idb.iid(89232).ilvl=450;
-idb.iid(89232).mast=751;
-idb.iid(89232).isreforged=0;
+idb.iid(92815).name='Bladesnap Sabatons';
+idb.iid(92815).ilvl=450;
+idb.iid(92815).barmor=3226;
+idb.iid(92815).atype=1;
+idb.iid(92815).isreforged=0;
 
-idb.iid(89525).name='Thunderstone Ring';
-idb.iid(89525).ilvl=450;
-idb.iid(89525).str=444;
-idb.iid(89525).sta=666;
-idb.iid(89525).hit=246;
-idb.iid(89525).parry=326;
-idb.iid(89525).isreforged=0;
+idb.iid(92816).name='Bladesnap Pauldrons';
+idb.iid(92816).ilvl=450;
+idb.iid(92816).barmor=3520;
+idb.iid(92816).atype=1;
+idb.iid(92816).isreforged=0;
 
-idb.iid(89531).name='Gorget of Usurped Kings';
-idb.iid(89531).ilvl=450;
-idb.iid(89531).str=444;
-idb.iid(89531).sta=666;
-idb.iid(89531).hit=267;
-idb.iid(89531).dodge=313;
-idb.iid(89531).isreforged=0;
+idb.iid(92817).name='Bladesnap Legplates';
+idb.iid(92817).ilvl=450;
+idb.iid(92817).barmor=4106;
+idb.iid(92817).atype=1;
+idb.iid(92817).isreforged=0;
 
-idb.iid(89537).name='Cloak of the Silent Mountain';
-idb.iid(89537).ilvl=450;
-idb.iid(89537).str=444;
-idb.iid(89537).sta=666;
-idb.iid(89537).exp=296;
-idb.iid(89537).parry=296;
-idb.iid(89537).barmor=970;
-idb.iid(89537).isreforged=0;
+idb.iid(92818).name='Bladesnap Helm';
+idb.iid(92818).ilvl=450;
+idb.iid(92818).barmor=3813;
+idb.iid(92818).atype=1;
+idb.iid(92818).isreforged=0;
 
-idb.iid(89649).name='Serrated Forearm Guards';
-idb.iid(89649).ilvl=450;
-idb.iid(89649).str=444;
-idb.iid(89649).sta=666;
-idb.iid(89649).exp=326;
-idb.iid(89649).mast=246;
-idb.iid(89649).barmor=2053;
-idb.iid(89649).atype=1;
-idb.iid(89649).isreforged=0;
+idb.iid(92819).name='Bladesnap Girdle';
+idb.iid(92819).ilvl=450;
+idb.iid(92819).barmor=2640;
+idb.iid(92819).atype=1;
+idb.iid(92819).isreforged=0;
 
-idb.iid(89671).name='Chestplate of the Stone Lion';
-idb.iid(89671).ilvl=450;
-idb.iid(89671).str=797;
-idb.iid(89671).sta=1195;
-idb.iid(89671).hit=428;
-idb.iid(89671).mast=592;
-idb.iid(89671).barmor=4693;
-idb.iid(89671).atype=1;
-idb.iid(89671).isreforged=0;
+idb.iid(92820).name='Bladesnap Gauntlets';
+idb.iid(92820).ilvl=450;
+idb.iid(92820).barmor=2933;
+idb.iid(92820).atype=1;
+idb.iid(92820).isreforged=0;
+
+idb.iid(92821).name='Bladesnap Breastplate';
+idb.iid(92821).ilvl=450;
+idb.iid(92821).barmor=4693;
+idb.iid(92821).atype=1;
+idb.iid(92821).isreforged=0;
+
+idb.iid(92822).name='Jinyu-Forged Breastplate';
+idb.iid(92822).ilvl=450;
+idb.iid(92822).barmor=4693;
+idb.iid(92822).atype=1;
+idb.iid(92822).isreforged=0;
+
+idb.iid(92823).name='Jinyu-Forged Gauntlets';
+idb.iid(92823).ilvl=450;
+idb.iid(92823).barmor=2933;
+idb.iid(92823).atype=1;
+idb.iid(92823).isreforged=0;
+
+idb.iid(92824).name='Jinyu-Forged Girdle';
+idb.iid(92824).ilvl=450;
+idb.iid(92824).barmor=2640;
+idb.iid(92824).atype=1;
+idb.iid(92824).isreforged=0;
+
+idb.iid(92825).name='Jinyu-Forged Helm';
+idb.iid(92825).ilvl=450;
+idb.iid(92825).barmor=3813;
+idb.iid(92825).atype=1;
+idb.iid(92825).isreforged=0;
+
+idb.iid(92826).name='Jinyu-Forged Legplates';
+idb.iid(92826).ilvl=450;
+idb.iid(92826).barmor=4106;
+idb.iid(92826).atype=1;
+idb.iid(92826).isreforged=0;
+
+idb.iid(92827).name='Jinyu-Forged Pauldrons';
+idb.iid(92827).ilvl=450;
+idb.iid(92827).barmor=3520;
+idb.iid(92827).atype=1;
+idb.iid(92827).isreforged=0;
+
+idb.iid(92828).name='Jinyu-Forged Sabatons';
+idb.iid(92828).ilvl=450;
+idb.iid(92828).barmor=3226;
+idb.iid(92828).atype=1;
+idb.iid(92828).isreforged=0;
+
+idb.iid(92829).name='Jinyu-Forged Vambraces';
+idb.iid(92829).ilvl=450;
+idb.iid(92829).barmor=2053;
+idb.iid(92829).atype=1;
+idb.iid(92829).isreforged=0;
+
+idb.iid(92830).name='Earthstriker Vest';
+idb.iid(92830).ilvl=450;
+idb.iid(92830).barmor=3436;
+idb.iid(92830).isreforged=0;
+
+idb.iid(92831).name='Earthstriker Spaulders';
+idb.iid(92831).ilvl=450;
+idb.iid(92831).barmor=2577;
+idb.iid(92831).isreforged=0;
+
+idb.iid(92832).name='Earthstriker Legguards';
+idb.iid(92832).ilvl=450;
+idb.iid(92832).barmor=3007;
+idb.iid(92832).isreforged=0;
+
+idb.iid(92833).name='Earthstriker Helm';
+idb.iid(92833).ilvl=450;
+idb.iid(92833).barmor=2792;
+idb.iid(92833).isreforged=0;
+
+idb.iid(92834).name='Earthstriker Greaves';
+idb.iid(92834).ilvl=450;
+idb.iid(92834).barmor=2363;
+idb.iid(92834).isreforged=0;
+
+idb.iid(92835).name='Earthstriker Gauntlets';
+idb.iid(92835).ilvl=450;
+idb.iid(92835).barmor=2148;
+idb.iid(92835).isreforged=0;
+
+idb.iid(92836).name='Earthstriker Bracers';
+idb.iid(92836).ilvl=450;
+idb.iid(92836).barmor=1503;
+idb.iid(92836).isreforged=0;
+
+idb.iid(92837).name='Earthstriker Belt';
+idb.iid(92837).ilvl=450;
+idb.iid(92837).barmor=1933;
+idb.iid(92837).isreforged=0;
+
+idb.iid(92838).name='Danio-Scale Belt';
+idb.iid(92838).ilvl=450;
+idb.iid(92838).barmor=1933;
+idb.iid(92838).isreforged=0;
+
+idb.iid(92839).name='Danio-Scale Bracers';
+idb.iid(92839).ilvl=450;
+idb.iid(92839).barmor=1503;
+idb.iid(92839).isreforged=0;
+
+idb.iid(92840).name='Danio-Scale Gauntlets';
+idb.iid(92840).ilvl=450;
+idb.iid(92840).barmor=2148;
+idb.iid(92840).isreforged=0;
+
+idb.iid(92841).name='Danio-Scale Greaves';
+idb.iid(92841).ilvl=450;
+idb.iid(92841).barmor=2363;
+idb.iid(92841).isreforged=0;
+
+idb.iid(92842).name='Danio-Scale Helm';
+idb.iid(92842).ilvl=450;
+idb.iid(92842).barmor=2792;
+idb.iid(92842).isreforged=0;
+
+idb.iid(92843).name='Danio-Scale Legguards';
+idb.iid(92843).ilvl=450;
+idb.iid(92843).barmor=3007;
+idb.iid(92843).isreforged=0;
+
+idb.iid(92844).name='Danio-Scale Spaulders';
+idb.iid(92844).ilvl=450;
+idb.iid(92844).barmor=2577;
+idb.iid(92844).isreforged=0;
+
+idb.iid(92845).name='Danio-Scale Vest';
+idb.iid(92845).ilvl=450;
+idb.iid(92845).barmor=3436;
+idb.iid(92845).isreforged=0;
+
+idb.iid(92846).name='Hozen-Speed Waistband';
+idb.iid(92846).ilvl=450;
+idb.iid(92846).barmor=1389;
+idb.iid(92846).isreforged=0;
+
+idb.iid(92847).name='Hozen-Speed Shoulders';
+idb.iid(92847).ilvl=450;
+idb.iid(92847).barmor=1852;
+idb.iid(92847).isreforged=0;
+
+idb.iid(92848).name='Hozen-Speed Jerkin';
+idb.iid(92848).ilvl=450;
+idb.iid(92848).barmor=2470;
+idb.iid(92848).isreforged=0;
+
+idb.iid(92849).name='Hozen-Speed Hood';
+idb.iid(92849).ilvl=450;
+idb.iid(92849).barmor=2007;
+idb.iid(92849).isreforged=0;
+
+idb.iid(92850).name='Hozen-Speed Gloves';
+idb.iid(92850).ilvl=450;
+idb.iid(92850).barmor=1544;
+idb.iid(92850).isreforged=0;
+
+idb.iid(92851).name='Hozen-Speed Britches';
+idb.iid(92851).ilvl=450;
+idb.iid(92851).barmor=2161;
+idb.iid(92851).isreforged=0;
+
+idb.iid(92852).name='Hozen-Speed Boots';
+idb.iid(92852).ilvl=450;
+idb.iid(92852).barmor=1698;
+idb.iid(92852).isreforged=0;
+
+idb.iid(92853).name='Hozen-Speed Bindings';
+idb.iid(92853).ilvl=450;
+idb.iid(92853).barmor=1081;
+idb.iid(92853).isreforged=0;
+
+idb.iid(92854).name='Jinyu-Polished Bindings';
+idb.iid(92854).ilvl=450;
+idb.iid(92854).barmor=1081;
+idb.iid(92854).isreforged=0;
+
+idb.iid(92855).name='Jinyu-Polished Boots';
+idb.iid(92855).ilvl=450;
+idb.iid(92855).barmor=1698;
+idb.iid(92855).isreforged=0;
+
+idb.iid(92856).name='Jinyu-Polished Britches';
+idb.iid(92856).ilvl=450;
+idb.iid(92856).barmor=2161;
+idb.iid(92856).isreforged=0;
+
+idb.iid(92857).name='Jinyu-Polished Gloves';
+idb.iid(92857).ilvl=450;
+idb.iid(92857).barmor=1544;
+idb.iid(92857).isreforged=0;
+
+idb.iid(92858).name='Jinyu-Polished Hood';
+idb.iid(92858).ilvl=450;
+idb.iid(92858).barmor=2007;
+idb.iid(92858).isreforged=0;
+
+idb.iid(92859).name='Jinyu-Polished Jerkin';
+idb.iid(92859).ilvl=450;
+idb.iid(92859).barmor=2470;
+idb.iid(92859).isreforged=0;
+
+idb.iid(92860).name='Jinyu-Polished Shoulders';
+idb.iid(92860).ilvl=450;
+idb.iid(92860).barmor=1852;
+idb.iid(92860).isreforged=0;
+
+idb.iid(92861).name='Jinyu-Polished Waistband';
+idb.iid(92861).ilvl=450;
+idb.iid(92861).barmor=1389;
+idb.iid(92861).isreforged=0;
+
+idb.iid(92862).name='Cordwoven Wristwraps';
+idb.iid(92862).ilvl=450;
+idb.iid(92862).barmor=849;
+idb.iid(92862).isreforged=0;
+
+idb.iid(92863).name='Cordwoven Shoulderpads';
+idb.iid(92863).ilvl=450;
+idb.iid(92863).barmor=1455;
+idb.iid(92863).isreforged=0;
+
+idb.iid(92864).name='Cordwoven Sandals';
+idb.iid(92864).ilvl=450;
+idb.iid(92864).barmor=1334;
+idb.iid(92864).isreforged=0;
+
+idb.iid(92865).name='Cordwoven Robe';
+idb.iid(92865).ilvl=450;
+idb.iid(92865).barmor=1940;
+idb.iid(92865).isreforged=0;
+
+idb.iid(92866).name='Cordwoven Leggings';
+idb.iid(92866).ilvl=450;
+idb.iid(92866).barmor=1698;
+idb.iid(92866).isreforged=0;
+
+idb.iid(92867).name='Cordwoven Handwraps';
+idb.iid(92867).ilvl=450;
+idb.iid(92867).barmor=1213;
+idb.iid(92867).isreforged=0;
+
+idb.iid(92868).name='Cordwoven Cowl';
+idb.iid(92868).ilvl=450;
+idb.iid(92868).barmor=1577;
+idb.iid(92868).isreforged=0;
+
+idb.iid(92869).name='Cordwoven Cord';
+idb.iid(92869).ilvl=450;
+idb.iid(92869).barmor=1091;
+idb.iid(92869).isreforged=0;
+
+idb.iid(92870).name='Bubblebrew Cord';
+idb.iid(92870).ilvl=450;
+idb.iid(92870).barmor=1091;
+idb.iid(92870).isreforged=0;
+
+idb.iid(92871).name='Bubblebrew Cowl';
+idb.iid(92871).ilvl=450;
+idb.iid(92871).barmor=1577;
+idb.iid(92871).isreforged=0;
+
+idb.iid(92872).name='Bubblebrew Handwraps';
+idb.iid(92872).ilvl=450;
+idb.iid(92872).barmor=1213;
+idb.iid(92872).isreforged=0;
+
+idb.iid(92873).name='Bubblebrew Leggings';
+idb.iid(92873).ilvl=450;
+idb.iid(92873).barmor=1698;
+idb.iid(92873).isreforged=0;
+
+idb.iid(92874).name='Bubblebrew Robe';
+idb.iid(92874).ilvl=450;
+idb.iid(92874).barmor=1940;
+idb.iid(92874).isreforged=0;
+
+idb.iid(92875).name='Bubblebrew Sandals';
+idb.iid(92875).ilvl=450;
+idb.iid(92875).barmor=1334;
+idb.iid(92875).isreforged=0;
+
+idb.iid(92876).name='Bubblebrew Shoulderpads';
+idb.iid(92876).ilvl=450;
+idb.iid(92876).barmor=1455;
+idb.iid(92876).isreforged=0;
+
+idb.iid(92877).name='Bubblebrew Wristwraps';
+idb.iid(92877).ilvl=450;
+idb.iid(92877).barmor=849;
+idb.iid(92877).isreforged=0;
+
+idb.iid(92878).name='Lavasoul Cloak';
+idb.iid(92878).ilvl=450;
+idb.iid(92878).barmor=970;
+idb.iid(92878).isreforged=0;
+
+idb.iid(92879).name='Bubblebrew Cloak';
+idb.iid(92879).ilvl=450;
+idb.iid(92879).barmor=970;
+idb.iid(92879).isreforged=0;
+
+idb.iid(92880).name='Stormcrier Cloak';
+idb.iid(92880).ilvl=450;
+idb.iid(92880).barmor=970;
+idb.iid(92880).isreforged=0;
+
+idb.iid(92881).name='Bladesnap Drape';
+idb.iid(92881).ilvl=450;
+idb.iid(92881).barmor=970;
+idb.iid(92881).isreforged=0;
+
+idb.iid(92882).name='Stormcrier Ring';
+idb.iid(92882).ilvl=450;
+idb.iid(92882).isreforged=0;
+
+idb.iid(92883).name='Bladesnap Seal';
+idb.iid(92883).ilvl=450;
+idb.iid(92883).isreforged=0;
+
+idb.iid(92884).name='Lavasoul Ring';
+idb.iid(92884).ilvl=450;
+idb.iid(92884).isreforged=0;
+
+idb.iid(92885).name='Bubblebrew Signet';
+idb.iid(92885).ilvl=450;
+idb.iid(92885).isreforged=0;
+
+idb.iid(92886).name='Lavasoul Collar';
+idb.iid(92886).ilvl=450;
+idb.iid(92886).isreforged=0;
+
+idb.iid(92887).name='Bubblebrew Necklace';
+idb.iid(92887).ilvl=450;
+idb.iid(92887).isreforged=0;
+
+idb.iid(92888).name='Stormcrier Choker';
+idb.iid(92888).ilvl=450;
+idb.iid(92888).isreforged=0;
+
+idb.iid(92889).name='Bladesnap Neck';
+idb.iid(92889).ilvl=450;
+idb.iid(92889).isreforged=0;
 
 idb.iid(85185).name='Ghostheart';
 idb.iid(85185).wtype='pol';
@@ -589,6 +972,18 @@ idb.iid(86518).avgdmg=5612.5;
 idb.iid(86518).str=512;
 idb.iid(86518).sta=341;
 idb.iid(86518).isreforged=0;
+
+idb.iid(86520).name='Malik''s Stalwart Spear';
+idb.iid(86520).wtype='pol';
+idb.iid(86520).ilvl=450;
+idb.iid(86520).tooldps=2910.6;
+idb.iid(86520).swing=3.6;
+idb.iid(86520).avgdmg=10478;
+idb.iid(86520).sta=1195;
+idb.iid(86520).agi=797;
+idb.iid(86520).haste=531;
+idb.iid(86520).mast=531;
+idb.iid(86520).isreforged=0;
 
 idb.iid(86522).name='Blade of the Prime';
 idb.iid(86522).wtype='swo';
@@ -662,115 +1057,115 @@ idb.iid(90466).exp=244;
 idb.iid(90466).mast=200;
 idb.iid(90466).isreforged=0;
 
-idb.iid(84700).name='Dreadful Gladiator''s Pummeler';
-idb.iid(84700).wtype='mac';
-idb.iid(84700).ilvl=457;
-idb.iid(84700).tooldps=2304.2;
-idb.iid(84700).swing=2.6;
-idb.iid(84700).avgdmg=5991;
-idb.iid(84700).sta=547;
-idb.iid(84700).agi=364;
-idb.iid(84700).crit=243;
-idb.iid(84700).isreforged=0;
+idb.iid(93413).name='Crafted Dreadful Gladiator''s Decapitator';
+idb.iid(93413).wtype='axe';
+idb.iid(93413).ilvl=457;
+idb.iid(93413).tooldps=3106.8;
+idb.iid(93413).swing=3.6;
+idb.iid(93413).avgdmg=11184.5;
+idb.iid(93413).str=850;
+idb.iid(93413).sta=1275;
+idb.iid(93413).crit=567;
+idb.iid(93413).isreforged=0;
 
-idb.iid(84701).name='Dreadful Gladiator''s Cleaver';
-idb.iid(84701).wtype='axe';
-idb.iid(84701).ilvl=457;
-idb.iid(84701).tooldps=2304.2;
-idb.iid(84701).swing=2.6;
-idb.iid(84701).avgdmg=5991;
-idb.iid(84701).sta=547;
-idb.iid(84701).agi=364;
-idb.iid(84701).crit=243;
-idb.iid(84701).isreforged=0;
+idb.iid(93414).name='Crafted Dreadful Gladiator''s Bonegrinder';
+idb.iid(93414).wtype='mac';
+idb.iid(93414).ilvl=457;
+idb.iid(93414).tooldps=3106.8;
+idb.iid(93414).swing=3.6;
+idb.iid(93414).avgdmg=11184.5;
+idb.iid(93414).str=850;
+idb.iid(93414).sta=1275;
+idb.iid(93414).crit=567;
+idb.iid(93414).isreforged=0;
 
-idb.iid(84702).name='Dreadful Gladiator''s Hacker';
-idb.iid(84702).wtype='axe';
-idb.iid(84702).ilvl=457;
-idb.iid(84702).tooldps=2304.2;
-idb.iid(84702).swing=2.6;
-idb.iid(84702).avgdmg=5991;
-idb.iid(84702).str=364;
-idb.iid(84702).sta=547;
-idb.iid(84702).crit=243;
-idb.iid(84702).isreforged=0;
+idb.iid(93415).name='Crafted Dreadful Gladiator''s Greatsword';
+idb.iid(93415).wtype='swo';
+idb.iid(93415).ilvl=457;
+idb.iid(93415).tooldps=3106.8;
+idb.iid(93415).swing=3.6;
+idb.iid(93415).avgdmg=11184.5;
+idb.iid(93415).str=850;
+idb.iid(93415).sta=1275;
+idb.iid(93415).crit=567;
+idb.iid(93415).isreforged=0;
 
-idb.iid(84707).name='Dreadful Gladiator''s Decapitator';
-idb.iid(84707).wtype='axe';
-idb.iid(84707).ilvl=457;
-idb.iid(84707).tooldps=3106.8;
-idb.iid(84707).swing=3.6;
-idb.iid(84707).avgdmg=11184.5;
-idb.iid(84707).str=850;
-idb.iid(84707).sta=1275;
-idb.iid(84707).crit=567;
-idb.iid(84707).isreforged=0;
+idb.iid(93416).name='Crafted Dreadful Gladiator''s Cleaver';
+idb.iid(93416).wtype='axe';
+idb.iid(93416).ilvl=457;
+idb.iid(93416).tooldps=2304.2;
+idb.iid(93416).swing=2.6;
+idb.iid(93416).avgdmg=5991;
+idb.iid(93416).sta=547;
+idb.iid(93416).agi=364;
+idb.iid(93416).crit=243;
+idb.iid(93416).isreforged=0;
 
-idb.iid(84710).name='Dreadful Gladiator''s Slicer';
-idb.iid(84710).wtype='swo';
-idb.iid(84710).ilvl=457;
-idb.iid(84710).tooldps=2304.2;
-idb.iid(84710).swing=2.6;
-idb.iid(84710).avgdmg=5991;
-idb.iid(84710).str=364;
-idb.iid(84710).sta=547;
-idb.iid(84710).crit=243;
-idb.iid(84710).isreforged=0;
+idb.iid(93417).name='Crafted Dreadful Gladiator''s Pummeler';
+idb.iid(93417).wtype='mac';
+idb.iid(93417).ilvl=457;
+idb.iid(93417).tooldps=2304.2;
+idb.iid(93417).swing=2.6;
+idb.iid(93417).avgdmg=5991;
+idb.iid(93417).sta=547;
+idb.iid(93417).agi=364;
+idb.iid(93417).crit=243;
+idb.iid(93417).isreforged=0;
 
-idb.iid(84716).name='Dreadful Gladiator''s Quickblade';
-idb.iid(84716).wtype='swo';
-idb.iid(84716).ilvl=457;
-idb.iid(84716).tooldps=2304.2;
-idb.iid(84716).swing=2.6;
-idb.iid(84716).avgdmg=5991;
-idb.iid(84716).sta=547;
-idb.iid(84716).agi=364;
-idb.iid(84716).crit=243;
-idb.iid(84716).isreforged=0;
+idb.iid(93418).name='Crafted Dreadful Gladiator''s Quickblade';
+idb.iid(93418).wtype='swo';
+idb.iid(93418).ilvl=457;
+idb.iid(93418).tooldps=2304.2;
+idb.iid(93418).swing=2.6;
+idb.iid(93418).avgdmg=5991;
+idb.iid(93418).sta=547;
+idb.iid(93418).agi=364;
+idb.iid(93418).crit=243;
+idb.iid(93418).isreforged=0;
 
-idb.iid(84717).name='Dreadful Gladiator''s Greatsword';
-idb.iid(84717).wtype='swo';
-idb.iid(84717).ilvl=457;
-idb.iid(84717).tooldps=3106.8;
-idb.iid(84717).swing=3.6;
-idb.iid(84717).avgdmg=11184.5;
-idb.iid(84717).str=850;
-idb.iid(84717).sta=1275;
-idb.iid(84717).crit=567;
-idb.iid(84717).isreforged=0;
+idb.iid(93549).name='Crafted Dreadful Gladiator''s Pike';
+idb.iid(93549).wtype='pol';
+idb.iid(93549).ilvl=457;
+idb.iid(93549).tooldps=3106.8;
+idb.iid(93549).swing=3.6;
+idb.iid(93549).avgdmg=11184.5;
+idb.iid(93549).sta=1275;
+idb.iid(93549).agi=850;
+idb.iid(93549).crit=567;
+idb.iid(93549).isreforged=0;
 
-idb.iid(84719).name='Dreadful Gladiator''s Bonecracker';
-idb.iid(84719).wtype='mac';
-idb.iid(84719).ilvl=457;
-idb.iid(84719).tooldps=2304.2;
-idb.iid(84719).swing=2.6;
-idb.iid(84719).avgdmg=5991;
-idb.iid(84719).str=364;
-idb.iid(84719).sta=547;
-idb.iid(84719).crit=243;
-idb.iid(84719).isreforged=0;
+idb.iid(93603).name='Crafted Dreadful Gladiator''s Hacker';
+idb.iid(93603).wtype='axe';
+idb.iid(93603).ilvl=457;
+idb.iid(93603).tooldps=2304.2;
+idb.iid(93603).swing=2.6;
+idb.iid(93603).avgdmg=5991;
+idb.iid(93603).str=364;
+idb.iid(93603).sta=547;
+idb.iid(93603).crit=243;
+idb.iid(93603).isreforged=0;
 
-idb.iid(84721).name='Dreadful Gladiator''s Bonegrinder';
-idb.iid(84721).wtype='mac';
-idb.iid(84721).ilvl=457;
-idb.iid(84721).tooldps=3106.8;
-idb.iid(84721).swing=3.6;
-idb.iid(84721).avgdmg=11184.5;
-idb.iid(84721).str=850;
-idb.iid(84721).sta=1275;
-idb.iid(84721).crit=567;
-idb.iid(84721).isreforged=0;
+idb.iid(93604).name='Crafted Dreadful Gladiator''s Bonecracker';
+idb.iid(93604).wtype='mac';
+idb.iid(93604).ilvl=457;
+idb.iid(93604).tooldps=2304.2;
+idb.iid(93604).swing=2.6;
+idb.iid(93604).avgdmg=5991;
+idb.iid(93604).str=364;
+idb.iid(93604).sta=547;
+idb.iid(93604).crit=243;
+idb.iid(93604).isreforged=0;
 
-idb.iid(84722).name='Dreadful Gladiator''s Pike';
-idb.iid(84722).wtype='pol';
-idb.iid(84722).ilvl=457;
-idb.iid(84722).tooldps=3106.8;
-idb.iid(84722).swing=3.6;
-idb.iid(84722).avgdmg=11184.5;
-idb.iid(84722).sta=1275;
-idb.iid(84722).agi=850;
-idb.iid(84722).crit=567;
-idb.iid(84722).isreforged=0;
+idb.iid(93605).name='Crafted Dreadful Gladiator''s Slicer';
+idb.iid(93605).wtype='swo';
+idb.iid(93605).ilvl=457;
+idb.iid(93605).tooldps=2304.2;
+idb.iid(93605).swing=2.6;
+idb.iid(93605).avgdmg=5991;
+idb.iid(93605).str=364;
+idb.iid(93605).sta=547;
+idb.iid(93605).crit=243;
+idb.iid(93605).isreforged=0;
 
 idb.iid(81065).name='Bubble-Breaker Bracers (Heroic)';
 idb.iid(81065).ilvl=463;
@@ -833,6 +1228,19 @@ idb.iid(81101).dodge=490;
 idb.iid(81101).barmor=3079;
 idb.iid(81101).atype=1;
 idb.iid(81101).isreforged=0;
+
+idb.iid(81113).name='Spike-Soled Stompers (Heroic)';
+idb.iid(81113).ilvl=463;
+idb.iid(81113).str=588;
+idb.iid(81113).sta=1002;
+idb.iid(81113).haste=418;
+idb.iid(81113).mast=383;
+idb.iid(81113).barmor=3386;
+idb.iid(81113).socket='Y';
+idb.iid(81113).sbstat='str';
+idb.iid(81113).sbval=60;
+idb.iid(81113).atype=1;
+idb.iid(81113).isreforged=0;
 
 idb.iid(81124).name='Crystallized Droplet (Heroic)';
 idb.iid(81124).ilvl=463;
@@ -897,6 +1305,23 @@ idb.iid(81233).parry=501;
 idb.iid(81233).barmor=15800;
 idb.iid(81233).isreforged=0;
 
+idb.iid(81234).name='Drape of the Screeching Swarm (Heroic)';
+idb.iid(81234).ilvl=463;
+idb.iid(81234).str=501;
+idb.iid(81234).sta=752;
+idb.iid(81234).hit=254;
+idb.iid(81234).haste=381;
+idb.iid(81234).barmor=1018;
+idb.iid(81234).isreforged=0;
+
+idb.iid(81239).name='Whirling Dervish Choker (Heroic)';
+idb.iid(81239).ilvl=463;
+idb.iid(81239).str=501;
+idb.iid(81239).sta=752;
+idb.iid(81239).haste=339;
+idb.iid(81239).mast=326;
+idb.iid(81239).isreforged=0;
+
 idb.iid(81243).name='Iron Protector Talisman (Heroic)';
 idb.iid(81243).ilvl=463;
 idb.iid(81243).sta=1270;
@@ -952,6 +1377,14 @@ idb.iid(81287).sbstat='parry';
 idb.iid(81287).sbval=60;
 idb.iid(81287).atype=1;
 idb.iid(81287).isreforged=0;
+
+idb.iid(81561).name='Firefinger Ring (Heroic)';
+idb.iid(81561).ilvl=463;
+idb.iid(81561).str=501;
+idb.iid(81561).sta=752;
+idb.iid(81561).haste=326;
+idb.iid(81561).mast=339;
+idb.iid(81561).isreforged=0;
 
 idb.iid(81567).name='Necklace of the Dark Blaze (Heroic)';
 idb.iid(81567).ilvl=463;
@@ -1022,7 +1455,7 @@ idb.iid(82821).exp=416;
 idb.iid(82821).parry=859;
 idb.iid(82821).barmor=4926;
 idb.iid(82821).socket='B';
-idb.iid(82821).sbstat='parry';
+idb.iid(82821).sbstat='str';
 idb.iid(82821).sbval=60;
 idb.iid(82821).atype=1;
 idb.iid(82821).isreforged=0;
@@ -1459,6 +1892,11 @@ idb.iid(89511).name='Greenstone Neck';
 idb.iid(89511).ilvl=463;
 idb.iid(89511).isreforged=0;
 
+idb.iid(89611).name='Quilen Statuette';
+idb.iid(89611).ilvl=463;
+idb.iid(89611).mast=847;
+idb.iid(89611).isreforged=0;
+
 idb.iid(90603).name='Durable Plate of the Golden Lotus (Heroic)';
 idb.iid(90603).ilvl=463;
 idb.iid(90603).str=899;
@@ -1709,6 +2147,174 @@ idb.iid(89685).crit=600;
 idb.iid(89685).mast=600;
 idb.iid(89685).isreforged=0;
 
+idb.iid(93125).name='Scavenged Pandaren Spear';
+idb.iid(93125).wtype='pol';
+idb.iid(93125).ilvl=463;
+idb.iid(93125).tooldps=3285.4;
+idb.iid(93125).swing=3.5;
+idb.iid(93125).avgdmg=11499;
+idb.iid(93125).isreforged=0;
+
+idb.iid(93127).name='Scavenged Pandaren Greatsword';
+idb.iid(93127).wtype='swo';
+idb.iid(93127).ilvl=463;
+idb.iid(93127).tooldps=3285.4;
+idb.iid(93127).swing=3.5;
+idb.iid(93127).avgdmg=11499;
+idb.iid(93127).isreforged=0;
+
+idb.iid(93128).name='Scavenged Pandaren Hammer';
+idb.iid(93128).wtype='mac';
+idb.iid(93128).ilvl=463;
+idb.iid(93128).tooldps=3285.4;
+idb.iid(93128).swing=3.5;
+idb.iid(93128).avgdmg=11499;
+idb.iid(93128).isreforged=0;
+
+idb.iid(93130).name='Scavenged Pandaren Broadaxe';
+idb.iid(93130).wtype='axe';
+idb.iid(93130).ilvl=463;
+idb.iid(93130).tooldps=3285.4;
+idb.iid(93130).swing=3.5;
+idb.iid(93130).avgdmg=11499;
+idb.iid(93130).isreforged=0;
+
+idb.iid(93132).name='Scavenged Pandaren Scepter';
+idb.iid(93132).wtype='mac';
+idb.iid(93132).ilvl=463;
+idb.iid(93132).tooldps=1218.3;
+idb.iid(93132).swing=1.7;
+idb.iid(93132).avgdmg=2071;
+idb.iid(93132).isreforged=0;
+
+idb.iid(93136).name='Scavenged Pandaren Sword';
+idb.iid(93136).wtype='swo';
+idb.iid(93136).ilvl=463;
+idb.iid(93136).tooldps=2436.7;
+idb.iid(93136).swing=2.6;
+idb.iid(93136).avgdmg=6335;
+idb.iid(93136).isreforged=0;
+
+idb.iid(93137).name='Scavenged Pandaren Mace';
+idb.iid(93137).wtype='mac';
+idb.iid(93137).ilvl=463;
+idb.iid(93137).tooldps=2436.7;
+idb.iid(93137).swing=2.6;
+idb.iid(93137).avgdmg=6335;
+idb.iid(93137).isreforged=0;
+
+idb.iid(93140).name='Scavenged Pandaren Axe';
+idb.iid(93140).wtype='axe';
+idb.iid(93140).ilvl=463;
+idb.iid(93140).tooldps=2436.7;
+idb.iid(93140).swing=2.6;
+idb.iid(93140).avgdmg=6335;
+idb.iid(93140).isreforged=0;
+
+idb.iid(93141).name='Scavenged Pandaren Spear';
+idb.iid(93141).wtype='pol';
+idb.iid(93141).ilvl=463;
+idb.iid(93141).tooldps=3285.4;
+idb.iid(93141).swing=3.5;
+idb.iid(93141).avgdmg=11499;
+idb.iid(93141).isreforged=0;
+
+idb.iid(93142).name='Scavenged Pandaren Axe';
+idb.iid(93142).wtype='axe';
+idb.iid(93142).ilvl=463;
+idb.iid(93142).tooldps=2436.7;
+idb.iid(93142).swing=2.6;
+idb.iid(93142).avgdmg=6335;
+idb.iid(93142).isreforged=0;
+
+idb.iid(93144).name='Scavenged Pandaren Mace';
+idb.iid(93144).wtype='mac';
+idb.iid(93144).ilvl=463;
+idb.iid(93144).tooldps=2436.7;
+idb.iid(93144).swing=2.6;
+idb.iid(93144).avgdmg=6335;
+idb.iid(93144).isreforged=0;
+
+idb.iid(93145).name='Scavenged Pandaren Sword';
+idb.iid(93145).wtype='swo';
+idb.iid(93145).ilvl=463;
+idb.iid(93145).tooldps=2436.7;
+idb.iid(93145).swing=2.6;
+idb.iid(93145).avgdmg=6335;
+idb.iid(93145).isreforged=0;
+
+idb.iid(94575).name='The Planar Edge, Reborn';
+idb.iid(94575).wtype='axe';
+idb.iid(94575).ilvl=463;
+idb.iid(94575).tooldps=2436.7;
+idb.iid(94575).swing=2.6;
+idb.iid(94575).avgdmg=6335;
+idb.iid(94575).str=385;
+idb.iid(94575).sta=578;
+idb.iid(94575).hit=257;
+idb.iid(94575).exp=257;
+idb.iid(94575).isreforged=0;
+
+idb.iid(94576).name='Lunar Crescent, Reborn';
+idb.iid(94576).wtype='axe';
+idb.iid(94576).ilvl=463;
+idb.iid(94576).tooldps=3285.4;
+idb.iid(94576).swing=3.6;
+idb.iid(94576).avgdmg=11828;
+idb.iid(94576).str=899;
+idb.iid(94576).sta=1349;
+idb.iid(94576).haste=600;
+idb.iid(94576).mast=600;
+idb.iid(94576).isreforged=0;
+
+idb.iid(94582).name='Thunder, Reborn';
+idb.iid(94582).wtype='mac';
+idb.iid(94582).ilvl=463;
+idb.iid(94582).tooldps=3285.4;
+idb.iid(94582).swing=3.6;
+idb.iid(94582).avgdmg=11828;
+idb.iid(94582).sta=1349;
+idb.iid(94582).agi=899;
+idb.iid(94582).hit=600;
+idb.iid(94582).exp=600;
+idb.iid(94582).isreforged=0;
+
+idb.iid(94587).name='Fireguard, Reborn';
+idb.iid(94587).wtype='swo';
+idb.iid(94587).ilvl=463;
+idb.iid(94587).tooldps=2436.7;
+idb.iid(94587).swing=2.6;
+idb.iid(94587).avgdmg=6335;
+idb.iid(94587).sta=578;
+idb.iid(94587).agi=385;
+idb.iid(94587).hit=257;
+idb.iid(94587).exp=257;
+idb.iid(94587).isreforged=0;
+
+idb.iid(94588).name='Lionheart Blade, Reborn';
+idb.iid(94588).wtype='swo';
+idb.iid(94588).ilvl=463;
+idb.iid(94588).tooldps=3285.4;
+idb.iid(94588).swing=3.6;
+idb.iid(94588).avgdmg=11828;
+idb.iid(94588).str=899;
+idb.iid(94588).sta=1349;
+idb.iid(94588).hit=600;
+idb.iid(94588).exp=600;
+idb.iid(94588).isreforged=0;
+
+idb.iid(95391).name='Mantid Sky Reaver';
+idb.iid(95391).wtype='swo';
+idb.iid(95391).ilvl=463;
+idb.iid(95391).tooldps=2436.7;
+idb.iid(95391).swing=2.6;
+idb.iid(95391).avgdmg=6335;
+idb.iid(95391).str=385;
+idb.iid(95391).sta=578;
+idb.iid(95391).haste=257;
+idb.iid(95391).mast=257;
+idb.iid(95391).isreforged=0;
+
 idb.iid(87571).name='Brawler''s Statue';
 idb.iid(87571).ilvl=470;
 idb.iid(87571).dodge=904;
@@ -1846,6 +2452,116 @@ idb.iid(87570).hit=274;
 idb.iid(87570).exp=274;
 idb.iid(87570).isreforged=0;
 
+idb.iid(91440).name='Malevolent Gladiator''s Decapitator';
+idb.iid(91440).wtype='axe';
+idb.iid(91440).ilvl=470;
+idb.iid(91440).tooldps=3506.9;
+idb.iid(91440).swing=3.6;
+idb.iid(91440).avgdmg=12624.5;
+idb.iid(91440).str=960;
+idb.iid(91440).sta=1440;
+idb.iid(91440).crit=640;
+idb.iid(91440).isreforged=0;
+
+idb.iid(91442).name='Malevolent Gladiator''s Bonegrinder';
+idb.iid(91442).wtype='mac';
+idb.iid(91442).ilvl=470;
+idb.iid(91442).tooldps=3506.9;
+idb.iid(91442).swing=3.6;
+idb.iid(91442).avgdmg=12624.5;
+idb.iid(91442).str=960;
+idb.iid(91442).sta=1440;
+idb.iid(91442).crit=640;
+idb.iid(91442).isreforged=0;
+
+idb.iid(91444).name='Malevolent Gladiator''s Greatsword';
+idb.iid(91444).wtype='swo';
+idb.iid(91444).ilvl=470;
+idb.iid(91444).tooldps=3506.9;
+idb.iid(91444).swing=3.6;
+idb.iid(91444).avgdmg=12624.5;
+idb.iid(91444).str=960;
+idb.iid(91444).sta=1440;
+idb.iid(91444).crit=640;
+idb.iid(91444).isreforged=0;
+
+idb.iid(91446).name='Malevolent Gladiator''s Cleaver';
+idb.iid(91446).wtype='axe';
+idb.iid(91446).ilvl=470;
+idb.iid(91446).tooldps=2600.9;
+idb.iid(91446).swing=2.6;
+idb.iid(91446).avgdmg=6762.5;
+idb.iid(91446).sta=617;
+idb.iid(91446).agi=411;
+idb.iid(91446).crit=274;
+idb.iid(91446).isreforged=0;
+
+idb.iid(91448).name='Malevolent Gladiator''s Pummeler';
+idb.iid(91448).wtype='mac';
+idb.iid(91448).ilvl=470;
+idb.iid(91448).tooldps=2600.9;
+idb.iid(91448).swing=2.6;
+idb.iid(91448).avgdmg=6762.5;
+idb.iid(91448).sta=617;
+idb.iid(91448).agi=411;
+idb.iid(91448).crit=274;
+idb.iid(91448).isreforged=0;
+
+idb.iid(91450).name='Malevolent Gladiator''s Quickblade';
+idb.iid(91450).wtype='swo';
+idb.iid(91450).ilvl=470;
+idb.iid(91450).tooldps=2600.9;
+idb.iid(91450).swing=2.6;
+idb.iid(91450).avgdmg=6762.5;
+idb.iid(91450).sta=617;
+idb.iid(91450).agi=411;
+idb.iid(91450).crit=274;
+idb.iid(91450).isreforged=0;
+
+idb.iid(91660).name='Malevolent Gladiator''s Pike';
+idb.iid(91660).wtype='pol';
+idb.iid(91660).ilvl=470;
+idb.iid(91660).tooldps=3506.9;
+idb.iid(91660).swing=3.6;
+idb.iid(91660).avgdmg=12624.5;
+idb.iid(91660).sta=1440;
+idb.iid(91660).agi=960;
+idb.iid(91660).crit=640;
+idb.iid(91660).isreforged=0;
+
+idb.iid(91757).name='Malevolent Gladiator''s Hacker';
+idb.iid(91757).wtype='axe';
+idb.iid(91757).ilvl=470;
+idb.iid(91757).tooldps=2600.9;
+idb.iid(91757).swing=2.6;
+idb.iid(91757).avgdmg=6762.5;
+idb.iid(91757).str=411;
+idb.iid(91757).sta=617;
+idb.iid(91757).crit=274;
+idb.iid(91757).isreforged=0;
+
+idb.iid(91759).name='Malevolent Gladiator''s Bonecracker';
+idb.iid(91759).wtype='mac';
+idb.iid(91759).ilvl=470;
+idb.iid(91759).tooldps=2600.9;
+idb.iid(91759).swing=2.6;
+idb.iid(91759).avgdmg=6762.5;
+idb.iid(91759).str=411;
+idb.iid(91759).sta=617;
+idb.iid(91759).crit=274;
+idb.iid(91759).isreforged=0;
+
+idb.iid(91761).name='Malevolent Gladiator''s Slicer';
+idb.iid(91761).wtype='swo';
+idb.iid(91761).ilvl=470;
+idb.iid(91761).tooldps=2600.9;
+idb.iid(91761).swing=2.6;
+idb.iid(91761).avgdmg=6762;
+idb.iid(91761).str=411;
+idb.iid(91761).sta=617;
+idb.iid(91761).crit=274;
+idb.iid(91761).isreforged=0;
+
 idb.iid(77539).name='Reinforced Retinal Armor';
 idb.iid(77539).ilvl=476;
 idb.iid(77539).str=855;
@@ -1864,12 +2580,8 @@ idb.iid(79327).isreforged=0;
 
 idb.iid(79329).name='Relic of Niuzao';
 idb.iid(79329).ilvl=476;
+idb.iid(79329).sta=1434;
 idb.iid(79329).isreforged=0;
-
-idb.iid(79330).name='Relic of Chi Ji';
-idb.iid(79330).ilvl=476;
-idb.iid(79330).spi=956;
-idb.iid(79330).isreforged=0;
 
 idb.iid(82979).name='Breastplate of Ancient Steel';
 idb.iid(82979).ilvl=476;
@@ -1915,6 +2627,14 @@ idb.iid(86751).barmor=2257;
 idb.iid(86751).atype=1;
 idb.iid(86751).isreforged=0;
 
+idb.iid(86759).name='Soulgrasp Choker (Raid Finder)';
+idb.iid(86759).ilvl=476;
+idb.iid(86759).str=566;
+idb.iid(86759).sta=849;
+idb.iid(86759).hit=359;
+idb.iid(86759).haste=388;
+idb.iid(86759).isreforged=0;
+
 idb.iid(86760).name='Sollerets of Spirit Splitting (Raid Finder)';
 idb.iid(86760).ilvl=476;
 idb.iid(86760).str=674;
@@ -1928,16 +2648,6 @@ idb.iid(86760).sbval=60;
 idb.iid(86760).atype=1;
 idb.iid(86760).isreforged=0;
 
-idb.iid(86771).name='Jade Charioteer Figurine (Raid Finder)';
-idb.iid(86771).ilvl=476;
-idb.iid(86771).str=956;
-idb.iid(86771).isreforged=0;
-
-idb.iid(86775).name='Jade Warlord Figurine (Raid Finder)';
-idb.iid(86775).ilvl=476;
-idb.iid(86775).sta=1434;
-idb.iid(86775).isreforged=0;
-
 idb.iid(86778).name='Steelskin, Qiang''s Impervious Shield (Raid Finder)';
 idb.iid(86778).ilvl=476;
 idb.iid(86778).str=566;
@@ -1946,6 +2656,19 @@ idb.iid(86778).dodge=368;
 idb.iid(86778).parry=383;
 idb.iid(86778).barmor=16546;
 idb.iid(86778).isreforged=0;
+
+idb.iid(86779).name='Breastplate of the Kings'' Guard (Raid Finder)';
+idb.iid(86779).ilvl=476;
+idb.iid(86779).str=855;
+idb.iid(86779).sta=1523;
+idb.iid(86779).haste=646;
+idb.iid(86779).mast=514;
+idb.iid(86779).barmor=5159;
+idb.iid(86779).socket='RY';
+idb.iid(86779).sbstat='str';
+idb.iid(86779).sbval=120;
+idb.iid(86779).atype=1;
+idb.iid(86779).isreforged=0;
 
 idb.iid(86780).name='Shoulderguards of the Unflanked (Raid Finder)';
 idb.iid(86780).ilvl=476;
@@ -1970,6 +2693,11 @@ idb.iid(86791).ilvl=476;
 idb.iid(86791).mast=956;
 idb.iid(86791).isreforged=0;
 
+idb.iid(86792).name='Light of the Cosmos (Raid Finder)';
+idb.iid(86792).ilvl=476;
+idb.iid(86792).haste=956;
+idb.iid(86792).isreforged=0;
+
 idb.iid(86793).name='Star-Stealer Waistguard (Raid Finder)';
 idb.iid(86793).ilvl=476;
 idb.iid(86793).str=594;
@@ -1983,10 +2711,59 @@ idb.iid(86793).sbval=120;
 idb.iid(86793).atype=1;
 idb.iid(86793).isreforged=0;
 
+idb.iid(86794).name='Starcrusher Gauntlets (Raid Finder)';
+idb.iid(86794).ilvl=476;
+idb.iid(86794).str=674;
+idb.iid(86794).sta=1131;
+idb.iid(86794).hit=425;
+idb.iid(86794).haste=485;
+idb.iid(86794).barmor=3224;
+idb.iid(86794).socket='B';
+idb.iid(86794).sbstat='haste';
+idb.iid(86794).sbval=60;
+idb.iid(86794).atype=1;
+idb.iid(86794).isreforged=0;
+
+idb.iid(86802).name='Lei Shen''s Final Orders (Raid Finder)';
+idb.iid(86802).ilvl=476;
+idb.iid(86802).haste=956;
+idb.iid(86802).isreforged=0;
+
+idb.iid(86803).name='Jang-xi''s Devastating Legplates (Raid Finder)';
+idb.iid(86803).ilvl=476;
+idb.iid(86803).str=855;
+idb.iid(86803).sta=1523;
+idb.iid(86803).hit=434;
+idb.iid(86803).haste=691;
+idb.iid(86803).barmor=4514;
+idb.iid(86803).socket='RB';
+idb.iid(86803).sbstat='str';
+idb.iid(86803).sbval=120;
+idb.iid(86803).atype=1;
+idb.iid(86803).isreforged=0;
+
 idb.iid(86805).name='Qin-xi''s Polarizing Seal (Raid Finder)';
 idb.iid(86805).ilvl=476;
 idb.iid(86805).spi=956;
 idb.iid(86805).isreforged=0;
+
+idb.iid(87551).name='Helios, Durand''s Soul of Purity';
+idb.iid(87551).ilvl=476;
+idb.iid(87551).str=566;
+idb.iid(87551).sta=849;
+idb.iid(87551).hit=359;
+idb.iid(87551).haste=388;
+idb.iid(87551).isreforged=0;
+
+idb.iid(89969).name='Bonded Soul Bracers (Raid Finder)';
+idb.iid(89969).ilvl=476;
+idb.iid(89969).str=566;
+idb.iid(89969).sta=849;
+idb.iid(89969).exp=340;
+idb.iid(89969).haste=399;
+idb.iid(89969).barmor=2257;
+idb.iid(89969).atype=1;
+idb.iid(89969).isreforged=0;
 
 idb.iid(89972).name='Band of Bursting Novas (Raid Finder)';
 idb.iid(89972).ilvl=476;
@@ -2047,6 +2824,32 @@ idb.iid(90578).dodge=566;
 idb.iid(90578).barmor=1066;
 idb.iid(90578).isreforged=0;
 
+idb.iid(90579).name='Legplates of Durable Dreams';
+idb.iid(90579).ilvl=476;
+idb.iid(90579).str=1015;
+idb.iid(90579).sta=1522;
+idb.iid(90579).hit=610;
+idb.iid(90579).haste=716;
+idb.iid(90579).barmor=4514;
+idb.iid(90579).atype=1;
+idb.iid(90579).isreforged=0;
+
+idb.iid(90581).name='Jan-Ho''s Unwavering Seal';
+idb.iid(90581).ilvl=476;
+idb.iid(90581).str=566;
+idb.iid(90581).sta=849;
+idb.iid(90581).haste=383;
+idb.iid(90581).mast=368;
+idb.iid(90581).isreforged=0;
+
+idb.iid(90582).name='Buc-Zakai Memento';
+idb.iid(90582).ilvl=476;
+idb.iid(90582).str=566;
+idb.iid(90582).sta=849;
+idb.iid(90582).haste=322;
+idb.iid(90582).mast=410;
+idb.iid(90582).isreforged=0;
+
 idb.iid(90910).name='Mindfire Sollerets';
 idb.iid(90910).ilvl=476;
 idb.iid(90910).str=754;
@@ -2056,6 +2859,566 @@ idb.iid(90910).parry=441;
 idb.iid(90910).barmor=3547;
 idb.iid(90910).atype=1;
 idb.iid(90910).isreforged=0;
+
+idb.iid(90912).name='Angerforged Stompers';
+idb.iid(90912).ilvl=476;
+idb.iid(90912).str=754;
+idb.iid(90912).sta=1131;
+idb.iid(90912).haste=573;
+idb.iid(90912).mast=382;
+idb.iid(90912).barmor=3547;
+idb.iid(90912).atype=1;
+idb.iid(90912).isreforged=0;
+
+idb.iid(91452).name='Malevolent Gladiator''s Badge of Conquest';
+idb.iid(91452).ilvl=476;
+idb.iid(91452).isreforged=0;
+
+idb.iid(91457).name='Malevolent Gladiator''s Insignia of Conquest';
+idb.iid(91457).ilvl=476;
+idb.iid(91457).isreforged=0;
+
+idb.iid(91563).name='Malevolent Gladiator''s Emblem of Tenacity';
+idb.iid(91563).ilvl=476;
+idb.iid(91563).mast=956;
+idb.iid(91563).isreforged=0;
+
+idb.iid(91564).name='Malevolent Gladiator''s Emblem of Meditation';
+idb.iid(91564).ilvl=476;
+idb.iid(91564).spi=956;
+idb.iid(91564).isreforged=0;
+
+idb.iid(91624).name='Malevolent Gladiator''s Scaled Helm';
+idb.iid(91624).ilvl=476;
+idb.iid(91624).str=775;
+idb.iid(91624).sta=1522;
+idb.iid(91624).exp=677;
+idb.iid(91624).mast=437;
+idb.iid(91624).barmor=4191;
+idb.iid(91624).socket='MR';
+idb.iid(91624).atype=1;
+idb.iid(91624).isreforged=0;
+
+idb.iid(91628).name='Malevolent Gladiator''s Scaled Shoulders';
+idb.iid(91628).ilvl=476;
+idb.iid(91628).str=674;
+idb.iid(91628).sta=1131;
+idb.iid(91628).exp=423;
+idb.iid(91628).haste=503;
+idb.iid(91628).barmor=3869;
+idb.iid(91628).socket='Y';
+idb.iid(91628).sbstat='str';
+idb.iid(91628).sbval=60;
+idb.iid(91628).atype=1;
+idb.iid(91628).isreforged=0;
+
+idb.iid(91650).name='Malevolent Gladiator''s Girdle of Accuracy';
+idb.iid(91650).ilvl=476;
+idb.iid(91650).str=674;
+idb.iid(91650).sta=1131;
+idb.iid(91650).hit=459;
+idb.iid(91650).haste=441;
+idb.iid(91650).barmor=2902;
+idb.iid(91650).socket='B';
+idb.iid(91650).sbstat='str';
+idb.iid(91650).sbval=60;
+idb.iid(91650).atype=1;
+idb.iid(91650).isreforged=0;
+
+idb.iid(91659).name='Malevolent Gladiator''s Armplates of Alacrity';
+idb.iid(91659).ilvl=476;
+idb.iid(91659).str=566;
+idb.iid(91659).sta=849;
+idb.iid(91659).haste=405;
+idb.iid(91659).mast=331;
+idb.iid(91659).barmor=2257;
+idb.iid(91659).atype=1;
+idb.iid(91659).isreforged=0;
+
+idb.iid(91684).name='Malevolent Gladiator''s Medallion of Tenacity';
+idb.iid(91684).ilvl=476;
+idb.iid(91684).mast=956;
+idb.iid(91684).isreforged=0;
+
+idb.iid(91685).name='Malevolent Gladiator''s Medallion of Tenacity';
+idb.iid(91685).ilvl=476;
+idb.iid(91685).mast=956;
+idb.iid(91685).isreforged=0;
+
+idb.iid(91686).name='Malevolent Gladiator''s Medallion of Meditation';
+idb.iid(91686).ilvl=476;
+idb.iid(91686).spi=956;
+idb.iid(91686).isreforged=0;
+
+idb.iid(91687).name='Malevolent Gladiator''s Medallion of Meditation';
+idb.iid(91687).ilvl=476;
+idb.iid(91687).spi=956;
+idb.iid(91687).isreforged=0;
+
+idb.iid(91753).name='Malevolent Gladiator''s Badge of Dominance';
+idb.iid(91753).ilvl=476;
+idb.iid(91753).isreforged=0;
+
+idb.iid(91754).name='Malevolent Gladiator''s Insignia of Dominance';
+idb.iid(91754).ilvl=476;
+idb.iid(91754).isreforged=0;
+
+idb.iid(91763).name='Malevolent Gladiator''s Badge of Victory';
+idb.iid(91763).ilvl=476;
+idb.iid(91763).isreforged=0;
+
+idb.iid(91765).name='Malevolent Gladiator''s Cloak of Prowess';
+idb.iid(91765).ilvl=476;
+idb.iid(91765).str=566;
+idb.iid(91765).sta=849;
+idb.iid(91765).hit=331;
+idb.iid(91765).mast=405;
+idb.iid(91765).barmor=1066;
+idb.iid(91765).isreforged=0;
+
+idb.iid(91767).name='Malevolent Gladiator''s Choker of Accuracy';
+idb.iid(91767).ilvl=476;
+idb.iid(91767).str=566;
+idb.iid(91767).sta=849;
+idb.iid(91767).hit=405;
+idb.iid(91767).haste=331;
+idb.iid(91767).isreforged=0;
+
+idb.iid(91768).name='Malevolent Gladiator''s Insignia of Victory';
+idb.iid(91768).ilvl=476;
+idb.iid(91768).isreforged=0;
+
+idb.iid(91770).name='Malevolent Gladiator''s Signet of Accuracy';
+idb.iid(91770).ilvl=476;
+idb.iid(91770).str=566;
+idb.iid(91770).sta=849;
+idb.iid(91770).hit=405;
+idb.iid(91770).mast=331;
+idb.iid(91770).isreforged=0;
+
+idb.iid(93048).name='Brewcarrier Cloak';
+idb.iid(93048).ilvl=476;
+idb.iid(93048).barmor=1066;
+idb.iid(93048).isreforged=0;
+
+idb.iid(93049).name='Mogubreaker Jerkin';
+idb.iid(93049).ilvl=476;
+idb.iid(93049).barmor=2715;
+idb.iid(93049).isreforged=0;
+
+idb.iid(93050).name='Mogubreaker Boots';
+idb.iid(93050).ilvl=476;
+idb.iid(93050).barmor=1866;
+idb.iid(93050).isreforged=0;
+
+idb.iid(93051).name='Mogubreaker Gloves';
+idb.iid(93051).ilvl=476;
+idb.iid(93051).barmor=1697;
+idb.iid(93051).isreforged=0;
+
+idb.iid(93052).name='Mogubreaker Hood';
+idb.iid(93052).ilvl=476;
+idb.iid(93052).barmor=2206;
+idb.iid(93052).isreforged=0;
+
+idb.iid(93053).name='Mogubreaker Britches';
+idb.iid(93053).ilvl=476;
+idb.iid(93053).barmor=2375;
+idb.iid(93053).isreforged=0;
+
+idb.iid(93054).name='Mogubreaker Shoulders';
+idb.iid(93054).ilvl=476;
+idb.iid(93054).barmor=2036;
+idb.iid(93054).isreforged=0;
+
+idb.iid(93055).name='Mogubreaker Waistband';
+idb.iid(93055).ilvl=476;
+idb.iid(93055).barmor=1527;
+idb.iid(93055).isreforged=0;
+
+idb.iid(93056).name='Mogubreaker Bindings';
+idb.iid(93056).ilvl=476;
+idb.iid(93056).barmor=1188;
+idb.iid(93056).isreforged=0;
+
+idb.iid(93057).name='Stormshaper Vest';
+idb.iid(93057).ilvl=476;
+idb.iid(93057).barmor=3777;
+idb.iid(93057).isreforged=0;
+
+idb.iid(93058).name='Stormshaper Greaves';
+idb.iid(93058).ilvl=476;
+idb.iid(93058).barmor=2597;
+idb.iid(93058).isreforged=0;
+
+idb.iid(93059).name='Stormshaper Gauntlets';
+idb.iid(93059).ilvl=476;
+idb.iid(93059).barmor=2361;
+idb.iid(93059).isreforged=0;
+
+idb.iid(93060).name='Stormshaper Helm';
+idb.iid(93060).ilvl=476;
+idb.iid(93060).barmor=3069;
+idb.iid(93060).isreforged=0;
+
+idb.iid(93061).name='Stormshaper Legguards';
+idb.iid(93061).ilvl=476;
+idb.iid(93061).barmor=3305;
+idb.iid(93061).isreforged=0;
+
+idb.iid(93062).name='Stormshaper Spaulders';
+idb.iid(93062).ilvl=476;
+idb.iid(93062).barmor=2833;
+idb.iid(93062).isreforged=0;
+
+idb.iid(93063).name='Stormshaper Belt';
+idb.iid(93063).ilvl=476;
+idb.iid(93063).barmor=2125;
+idb.iid(93063).isreforged=0;
+
+idb.iid(93064).name='Stormshaper Bracers';
+idb.iid(93064).ilvl=476;
+idb.iid(93064).barmor=1653;
+idb.iid(93064).isreforged=0;
+
+idb.iid(93065).name='Brewcarrier Choker';
+idb.iid(93065).ilvl=476;
+idb.iid(93065).isreforged=0;
+
+idb.iid(93066).name='Brewcarrier Ring';
+idb.iid(93066).ilvl=476;
+idb.iid(93066).isreforged=0;
+
+idb.iid(93067).name='Firebinder Cloak';
+idb.iid(93067).ilvl=476;
+idb.iid(93067).barmor=1066;
+idb.iid(93067).isreforged=0;
+
+idb.iid(93068).name='Yak Wool Robe';
+idb.iid(93068).ilvl=476;
+idb.iid(93068).barmor=2133;
+idb.iid(93068).isreforged=0;
+
+idb.iid(93069).name='Yak Wool Sandals';
+idb.iid(93069).ilvl=476;
+idb.iid(93069).barmor=1466;
+idb.iid(93069).isreforged=0;
+
+idb.iid(93070).name='Yak Wool Handwraps';
+idb.iid(93070).ilvl=476;
+idb.iid(93070).barmor=1333;
+idb.iid(93070).isreforged=0;
+
+idb.iid(93071).name='Yak Wool Cowl';
+idb.iid(93071).ilvl=476;
+idb.iid(93071).barmor=1733;
+idb.iid(93071).isreforged=0;
+
+idb.iid(93072).name='Yak Wool Leggings';
+idb.iid(93072).ilvl=476;
+idb.iid(93072).barmor=1866;
+idb.iid(93072).isreforged=0;
+
+idb.iid(93073).name='Yak Wool Shoulderpads';
+idb.iid(93073).ilvl=476;
+idb.iid(93073).barmor=1600;
+idb.iid(93073).isreforged=0;
+
+idb.iid(93074).name='Yak Wool Cord';
+idb.iid(93074).ilvl=476;
+idb.iid(93074).barmor=1200;
+idb.iid(93074).isreforged=0;
+
+idb.iid(93075).name='Yak Wool Wristwraps';
+idb.iid(93075).ilvl=476;
+idb.iid(93075).barmor=933;
+idb.iid(93075).isreforged=0;
+
+idb.iid(93076).name='Firebinder Collar';
+idb.iid(93076).ilvl=476;
+idb.iid(93076).isreforged=0;
+
+idb.iid(93077).name='Firebinder Ring';
+idb.iid(93077).ilvl=476;
+idb.iid(93077).isreforged=0;
+
+idb.iid(93078).name='Hozen-Stitched Jerkin';
+idb.iid(93078).ilvl=476;
+idb.iid(93078).barmor=2715;
+idb.iid(93078).isreforged=0;
+
+idb.iid(93079).name='Hozen-Stitched Boots';
+idb.iid(93079).ilvl=476;
+idb.iid(93079).barmor=1866;
+idb.iid(93079).isreforged=0;
+
+idb.iid(93080).name='Hozen-Stitched Gloves';
+idb.iid(93080).ilvl=476;
+idb.iid(93080).barmor=1697;
+idb.iid(93080).isreforged=0;
+
+idb.iid(93081).name='Hozen-Stitched Hood';
+idb.iid(93081).ilvl=476;
+idb.iid(93081).barmor=2206;
+idb.iid(93081).isreforged=0;
+
+idb.iid(93082).name='Hozen-Stitched Britches';
+idb.iid(93082).ilvl=476;
+idb.iid(93082).barmor=2375;
+idb.iid(93082).isreforged=0;
+
+idb.iid(93083).name='Hozen-Stitched Shoulders';
+idb.iid(93083).ilvl=476;
+idb.iid(93083).barmor=2036;
+idb.iid(93083).isreforged=0;
+
+idb.iid(93084).name='Hozen-Stitched Waistband';
+idb.iid(93084).ilvl=476;
+idb.iid(93084).barmor=1527;
+idb.iid(93084).isreforged=0;
+
+idb.iid(93085).name='Hozen-Stitched Bindings';
+idb.iid(93085).ilvl=476;
+idb.iid(93085).barmor=1188;
+idb.iid(93085).isreforged=0;
+
+idb.iid(93086).name='Swashbuckling Vest';
+idb.iid(93086).ilvl=476;
+idb.iid(93086).barmor=3777;
+idb.iid(93086).isreforged=0;
+
+idb.iid(93087).name='Swashbuckling Greaves';
+idb.iid(93087).ilvl=476;
+idb.iid(93087).barmor=2597;
+idb.iid(93087).isreforged=0;
+
+idb.iid(93088).name='Swashbuckling Gauntlets';
+idb.iid(93088).ilvl=476;
+idb.iid(93088).barmor=2361;
+idb.iid(93088).isreforged=0;
+
+idb.iid(93089).name='Swashbuckling Helm';
+idb.iid(93089).ilvl=476;
+idb.iid(93089).barmor=3069;
+idb.iid(93089).isreforged=0;
+
+idb.iid(93090).name='Swashbuckling Legguards';
+idb.iid(93090).ilvl=476;
+idb.iid(93090).barmor=3305;
+idb.iid(93090).isreforged=0;
+
+idb.iid(93091).name='Swashbuckling Spaulders';
+idb.iid(93091).ilvl=476;
+idb.iid(93091).barmor=2833;
+idb.iid(93091).isreforged=0;
+
+idb.iid(93092).name='Swashbuckling Belt';
+idb.iid(93092).ilvl=476;
+idb.iid(93092).barmor=2125;
+idb.iid(93092).isreforged=0;
+
+idb.iid(93093).name='Swashbuckling Bracers';
+idb.iid(93093).ilvl=476;
+idb.iid(93093).barmor=1653;
+idb.iid(93093).isreforged=0;
+
+idb.iid(93094).name='Yaungolian Breastplate';
+idb.iid(93094).ilvl=476;
+idb.iid(93094).barmor=5159;
+idb.iid(93094).atype=1;
+idb.iid(93094).isreforged=0;
+
+idb.iid(93095).name='Yaungolian Sabatons';
+idb.iid(93095).ilvl=476;
+idb.iid(93095).barmor=3547;
+idb.iid(93095).atype=1;
+idb.iid(93095).isreforged=0;
+
+idb.iid(93096).name='Yaungolian Gauntlets';
+idb.iid(93096).ilvl=476;
+idb.iid(93096).barmor=3224;
+idb.iid(93096).atype=1;
+idb.iid(93096).isreforged=0;
+
+idb.iid(93097).name='Yaungolian Helm';
+idb.iid(93097).ilvl=476;
+idb.iid(93097).barmor=4191;
+idb.iid(93097).atype=1;
+idb.iid(93097).isreforged=0;
+
+idb.iid(93098).name='Yaungolian Legplates';
+idb.iid(93098).ilvl=476;
+idb.iid(93098).barmor=4514;
+idb.iid(93098).atype=1;
+idb.iid(93098).isreforged=0;
+
+idb.iid(93099).name='Yaungolian Pauldrons';
+idb.iid(93099).ilvl=476;
+idb.iid(93099).barmor=3869;
+idb.iid(93099).atype=1;
+idb.iid(93099).isreforged=0;
+
+idb.iid(93100).name='Yaungolian Girdle';
+idb.iid(93100).ilvl=476;
+idb.iid(93100).barmor=2902;
+idb.iid(93100).atype=1;
+idb.iid(93100).isreforged=0;
+
+idb.iid(93101).name='Yaungolian Vambraces';
+idb.iid(93101).ilvl=476;
+idb.iid(93101).barmor=2257;
+idb.iid(93101).atype=1;
+idb.iid(93101).isreforged=0;
+
+idb.iid(93102).name='Brewfather Cloak';
+idb.iid(93102).ilvl=476;
+idb.iid(93102).barmor=1066;
+idb.iid(93102).isreforged=0;
+
+idb.iid(93103).name='Brewfather Robe';
+idb.iid(93103).ilvl=476;
+idb.iid(93103).barmor=2133;
+idb.iid(93103).isreforged=0;
+
+idb.iid(93104).name='Brewfather Sandals';
+idb.iid(93104).ilvl=476;
+idb.iid(93104).barmor=1466;
+idb.iid(93104).isreforged=0;
+
+idb.iid(93105).name='Brewfather Handwraps';
+idb.iid(93105).ilvl=476;
+idb.iid(93105).barmor=1333;
+idb.iid(93105).isreforged=0;
+
+idb.iid(93106).name='Brewfather Cowl';
+idb.iid(93106).ilvl=476;
+idb.iid(93106).barmor=1733;
+idb.iid(93106).isreforged=0;
+
+idb.iid(93107).name='Brewfather Leggings';
+idb.iid(93107).ilvl=476;
+idb.iid(93107).barmor=1866;
+idb.iid(93107).isreforged=0;
+
+idb.iid(93108).name='Brewfather Shoulderpads';
+idb.iid(93108).ilvl=476;
+idb.iid(93108).barmor=1600;
+idb.iid(93108).isreforged=0;
+
+idb.iid(93109).name='Brewfather Cord';
+idb.iid(93109).ilvl=476;
+idb.iid(93109).barmor=1200;
+idb.iid(93109).isreforged=0;
+
+idb.iid(93110).name='Brewfather Wristwraps';
+idb.iid(93110).ilvl=476;
+idb.iid(93110).barmor=933;
+idb.iid(93110).isreforged=0;
+
+idb.iid(93111).name='Brewfather Necklace';
+idb.iid(93111).ilvl=476;
+idb.iid(93111).isreforged=0;
+
+idb.iid(93112).name='Brewfather Signet';
+idb.iid(93112).ilvl=476;
+idb.iid(93112).isreforged=0;
+
+idb.iid(93113).name='Lightning Rod Drape';
+idb.iid(93113).ilvl=476;
+idb.iid(93113).barmor=1066;
+idb.iid(93113).isreforged=0;
+
+idb.iid(93114).name='Lightning Rod Neck';
+idb.iid(93114).ilvl=476;
+idb.iid(93114).isreforged=0;
+
+idb.iid(93115).name='Lightning Rod Breastplate';
+idb.iid(93115).ilvl=476;
+idb.iid(93115).barmor=5159;
+idb.iid(93115).atype=1;
+idb.iid(93115).isreforged=0;
+
+idb.iid(93116).name='Lightning Rod Sabatons';
+idb.iid(93116).ilvl=476;
+idb.iid(93116).barmor=3547;
+idb.iid(93116).atype=1;
+idb.iid(93116).isreforged=0;
+
+idb.iid(93117).name='Lightning Rod Gauntlets';
+idb.iid(93117).ilvl=476;
+idb.iid(93117).barmor=3224;
+idb.iid(93117).atype=1;
+idb.iid(93117).isreforged=0;
+
+idb.iid(93118).name='Lightning Rod Helm';
+idb.iid(93118).ilvl=476;
+idb.iid(93118).barmor=4191;
+idb.iid(93118).atype=1;
+idb.iid(93118).isreforged=0;
+
+idb.iid(93119).name='Lightning Rod Legplates';
+idb.iid(93119).ilvl=476;
+idb.iid(93119).barmor=4514;
+idb.iid(93119).atype=1;
+idb.iid(93119).isreforged=0;
+
+idb.iid(93120).name='Lightning Rod Pauldrons';
+idb.iid(93120).ilvl=476;
+idb.iid(93120).barmor=3869;
+idb.iid(93120).atype=1;
+idb.iid(93120).isreforged=0;
+
+idb.iid(93121).name='Lightning Rod Girdle';
+idb.iid(93121).ilvl=476;
+idb.iid(93121).barmor=2902;
+idb.iid(93121).atype=1;
+idb.iid(93121).isreforged=0;
+
+idb.iid(93122).name='Lightning Rod Vambraces';
+idb.iid(93122).ilvl=476;
+idb.iid(93122).barmor=2257;
+idb.iid(93122).atype=1;
+idb.iid(93122).isreforged=0;
+
+idb.iid(93123).name='Lightning Rod Seal';
+idb.iid(93123).ilvl=476;
+idb.iid(93123).isreforged=0;
+
+idb.iid(95050).name='The Brassiest Knuckle';
+idb.iid(95050).ilvl=476;
+idb.iid(95050).str=566;
+idb.iid(95050).sta=849;
+idb.iid(95050).exp=331;
+idb.iid(95050).mast=331;
+idb.iid(95050).isreforged=0;
+
+idb.iid(95051).name='The Brassiest Knuckle';
+idb.iid(95051).ilvl=476;
+idb.iid(95051).str=566;
+idb.iid(95051).sta=849;
+idb.iid(95051).exp=331;
+idb.iid(95051).mast=331;
+idb.iid(95051).isreforged=0;
+
+idb.iid(95524).name='Thunder Caressed Waistguard';
+idb.iid(95524).ilvl=476;
+idb.iid(95524).str=754;
+idb.iid(95524).sta=1131;
+idb.iid(95524).mast=490;
+idb.iid(95524).parry=510;
+idb.iid(95524).barmor=2902;
+idb.iid(95524).atype=1;
+idb.iid(95524).isreforged=0;
+
+idb.iid(95533).name='Thunder Caressed Waistguard';
+idb.iid(95533).ilvl=476;
+idb.iid(95533).str=754;
+idb.iid(95533).sta=1131;
+idb.iid(95533).mast=490;
+idb.iid(95533).parry=510;
+idb.iid(95533).barmor=2902;
+idb.iid(95533).atype=1;
+idb.iid(95533).isreforged=0;
 
 idb.iid(86777).name='Screaming Tiger, Qiang''s Unbreakable Polearm (Raid Finder)';
 idb.iid(86777).wtype='pol';
@@ -2129,13 +3492,65 @@ idb.iid(88150).hit=254;
 idb.iid(88150).haste=311;
 idb.iid(88150).isreforged=0;
 
-idb.iid(88506).name='Plasma Sword';
-idb.iid(88506).wtype='swo';
-idb.iid(88506).ilvl=476;
-idb.iid(88506).tooldps=2750.5;
-idb.iid(88506).swing=2.8;
-idb.iid(88506).avgdmg=7701;
-idb.iid(88506).isreforged=0;
+idb.iid(94590).name='Lionheart Champion, Reborn';
+idb.iid(94590).wtype='swo';
+idb.iid(94590).ilvl=476;
+idb.iid(94590).tooldps=3708.5;
+idb.iid(94590).swing=3.6;
+idb.iid(94590).avgdmg=13350.5;
+idb.iid(94590).str=1015;
+idb.iid(94590).sta=1522;
+idb.iid(94590).hit=677;
+idb.iid(94590).exp=677;
+idb.iid(94590).isreforged=0;
+
+idb.iid(94707).name='Teng''s Reach';
+idb.iid(94707).wtype='pol';
+idb.iid(94707).ilvl=476;
+idb.iid(94707).tooldps=3708.5;
+idb.iid(94707).swing=3.3;
+idb.iid(94707).avgdmg=12238;
+idb.iid(94707).sta=1523;
+idb.iid(94707).agi=1015;
+idb.iid(94707).crit=754;
+idb.iid(94707).haste=546;
+idb.iid(94707).isreforged=0;
+
+idb.iid(94709).name='Talonblade of Akil''amon';
+idb.iid(94709).wtype='swo';
+idb.iid(94709).ilvl=476;
+idb.iid(94709).tooldps=2750.5;
+idb.iid(94709).swing=1.8;
+idb.iid(94709).avgdmg=4951;
+idb.iid(94709).sta=652;
+idb.iid(94709).agi=435;
+idb.iid(94709).exp=261;
+idb.iid(94709).haste=307;
+idb.iid(94709).isreforged=0;
+
+idb.iid(94720).name='Vengeance of Kor''dok';
+idb.iid(94720).wtype='swo';
+idb.iid(94720).ilvl=476;
+idb.iid(94720).tooldps=2750.5;
+idb.iid(94720).swing=2.6;
+idb.iid(94720).avgdmg=7151;
+idb.iid(94720).str=435;
+idb.iid(94720).sta=652;
+idb.iid(94720).crit=247;
+idb.iid(94720).haste=315;
+idb.iid(94720).isreforged=0;
+
+idb.iid(94823).name='Drakkari Decapitator';
+idb.iid(94823).wtype='axe';
+idb.iid(94823).ilvl=476;
+idb.iid(94823).tooldps=3708.5;
+idb.iid(94823).swing=3.6;
+idb.iid(94823).avgdmg=13350.5;
+idb.iid(94823).str=1015;
+idb.iid(94823).sta=1522;
+idb.iid(94823).crit=697;
+idb.iid(94823).haste=643;
+idb.iid(94823).isreforged=0;
 
 idb.iid(84806).name='Malevolent Gladiator''s Cloak of Prowess';
 idb.iid(84806).ilvl=483;
@@ -2164,6 +3579,27 @@ idb.iid(84851).barmor=4293;
 idb.iid(84851).socket='MR';
 idb.iid(84851).atype=1;
 idb.iid(84851).isreforged=0;
+
+idb.iid(84892).name='Malevolent Gladiator''s Choker of Accuracy';
+idb.iid(84892).ilvl=483;
+idb.iid(84892).str=604;
+idb.iid(84892).sta=906;
+idb.iid(84892).hit=432;
+idb.iid(84892).haste=353;
+idb.iid(84892).isreforged=0;
+
+idb.iid(84915).name='Malevolent Gladiator''s Scaled Shoulders';
+idb.iid(84915).ilvl=483;
+idb.iid(84915).str=725;
+idb.iid(84915).sta=1208;
+idb.iid(84915).exp=457;
+idb.iid(84915).haste=537;
+idb.iid(84915).barmor=3963;
+idb.iid(84915).socket='Y';
+idb.iid(84915).sbstat='str';
+idb.iid(84915).sbval=60;
+idb.iid(84915).atype=1;
+idb.iid(84915).isreforged=0;
 
 idb.iid(84931).name='Malevolent Gladiator''s Medallion of Tenacity';
 idb.iid(84931).ilvl=483;
@@ -2219,6 +3655,29 @@ idb.iid(84945).ilvl=483;
 idb.iid(84945).mast=1021;
 idb.iid(84945).isreforged=0;
 
+idb.iid(84949).name='Malevolent Gladiator''s Girdle of Accuracy';
+idb.iid(84949).ilvl=483;
+idb.iid(84949).str=725;
+idb.iid(84949).sta=1208;
+idb.iid(84949).hit=496;
+idb.iid(84949).haste=471;
+idb.iid(84949).barmor=2972;
+idb.iid(84949).socket='B';
+idb.iid(84949).sbstat='str';
+idb.iid(84949).sbval=60;
+idb.iid(84949).atype=1;
+idb.iid(84949).isreforged=0;
+
+idb.iid(84986).name='Malevolent Gladiator''s Armplates of Alacrity';
+idb.iid(84986).ilvl=483;
+idb.iid(84986).str=604;
+idb.iid(84986).sta=906;
+idb.iid(84986).haste=432;
+idb.iid(84986).mast=353;
+idb.iid(84986).barmor=2312;
+idb.iid(84986).atype=1;
+idb.iid(84986).isreforged=0;
+
 idb.iid(85044).name='Malevolent Gladiator''s Scaled Helm';
 idb.iid(85044).ilvl=483;
 idb.iid(85044).str=844;
@@ -2229,6 +3688,32 @@ idb.iid(85044).barmor=4293;
 idb.iid(85044).socket='MR';
 idb.iid(85044).atype=1;
 idb.iid(85044).isreforged=0;
+
+idb.iid(85091).name='Malevolent Gladiator''s Scaled Shoulders';
+idb.iid(85091).ilvl=483;
+idb.iid(85091).str=725;
+idb.iid(85091).sta=1208;
+idb.iid(85091).exp=457;
+idb.iid(85091).haste=537;
+idb.iid(85091).barmor=3963;
+idb.iid(85091).socket='Y';
+idb.iid(85091).sbstat='str';
+idb.iid(85091).sbval=60;
+idb.iid(85091).atype=1;
+idb.iid(85091).isreforged=0;
+
+idb.iid(85102).name='Malevolent Gladiator''s Girdle of Accuracy';
+idb.iid(85102).ilvl=483;
+idb.iid(85102).str=725;
+idb.iid(85102).sta=1208;
+idb.iid(85102).hit=496;
+idb.iid(85102).haste=471;
+idb.iid(85102).barmor=2972;
+idb.iid(85102).socket='B';
+idb.iid(85102).sbstat='str';
+idb.iid(85102).sbval=60;
+idb.iid(85102).atype=1;
+idb.iid(85102).isreforged=0;
 
 idb.iid(86659).name='White Tiger Shoulderguards (Raid Finder)';
 idb.iid(86659).ilvl=483;
@@ -2242,7 +3727,6 @@ idb.iid(86659).sbstat='sta';
 idb.iid(86659).sbval=90;
 idb.iid(86659).atype=1;
 idb.iid(86659).isreforged=0;
-idb.iid(86659).istierP=[1 0 0];
 
 idb.iid(86660).name='White Tiger Legguards (Raid Finder)';
 idb.iid(86660).ilvl=483;
@@ -2256,7 +3740,6 @@ idb.iid(86660).sbstat='sta';
 idb.iid(86660).sbval=90;
 idb.iid(86660).atype=1;
 idb.iid(86660).isreforged=0;
-idb.iid(86660).istierP=[1 0 0];
 
 idb.iid(86661).name='White Tiger Faceguard (Raid Finder)';
 idb.iid(86661).ilvl=483;
@@ -2270,7 +3753,6 @@ idb.iid(86661).sbstat='sta';
 idb.iid(86661).sbval=270;
 idb.iid(86661).atype=1;
 idb.iid(86661).isreforged=0;
-idb.iid(86661).istierP=[1 0 0];
 
 idb.iid(86662).name='White Tiger Handguards (Raid Finder)';
 idb.iid(86662).ilvl=483;
@@ -2281,7 +3763,6 @@ idb.iid(86662).dodge=805;
 idb.iid(86662).barmor=3302;
 idb.iid(86662).atype=1;
 idb.iid(86662).isreforged=0;
-idb.iid(86662).istierP=[1 0 0];
 
 idb.iid(86663).name='White Tiger Chestguard (Raid Finder)';
 idb.iid(86663).ilvl=483;
@@ -2295,7 +3776,19 @@ idb.iid(86663).sbstat='parry';
 idb.iid(86663).sbval=120;
 idb.iid(86663).atype=1;
 idb.iid(86663).isreforged=0;
-idb.iid(86663).istierP=[1 0 0];
+
+idb.iid(86679).name='White Tiger Pauldrons (Raid Finder)';
+idb.iid(86679).ilvl=483;
+idb.iid(86679).str=725;
+idb.iid(86679).sta=1208;
+idb.iid(86679).hit=537;
+idb.iid(86679).haste=457;
+idb.iid(86679).barmor=3963;
+idb.iid(86679).socket='B';
+idb.iid(86679).sbstat='str';
+idb.iid(86679).sbval=60;
+idb.iid(86679).atype=1;
+idb.iid(86679).isreforged=0;
 
 idb.iid(86680).name='White Tiger Legplates (Raid Finder)';
 idb.iid(86680).ilvl=483;
@@ -2309,7 +3802,6 @@ idb.iid(86680).sbstat='str';
 idb.iid(86680).sbval=60;
 idb.iid(86680).atype=1;
 idb.iid(86680).isreforged=0;
-idb.iid(86680).istierR=[1 0 0];
 
 idb.iid(86681).name='White Tiger Helmet (Raid Finder)';
 idb.iid(86681).ilvl=483;
@@ -2323,7 +3815,15 @@ idb.iid(86681).sbstat='str';
 idb.iid(86681).sbval=180;
 idb.iid(86681).atype=1;
 idb.iid(86681).isreforged=0;
-idb.iid(86681).istierR=[1 0 0];
+
+idb.iid(86812).name='Hisek''s Chrysanthemum Cape (Raid Finder)';
+idb.iid(86812).ilvl=483;
+idb.iid(86812).str=604;
+idb.iid(86812).sta=906;
+idb.iid(86812).hit=373;
+idb.iid(86812).haste=420;
+idb.iid(86812).barmor=1092;
+idb.iid(86812).isreforged=0;
 
 idb.iid(86813).name='Vizier''s Ruby Signet (Raid Finder)';
 idb.iid(86813).ilvl=483;
@@ -2332,6 +3832,27 @@ idb.iid(86813).sta=906;
 idb.iid(86813).exp=306;
 idb.iid(86813).parry=604;
 idb.iid(86813).isreforged=0;
+
+idb.iid(86820).name='Ring of the Bladed Tempest (Raid Finder)';
+idb.iid(86820).ilvl=483;
+idb.iid(86820).str=604;
+idb.iid(86820).sta=906;
+idb.iid(86820).exp=315;
+idb.iid(86820).haste=454;
+idb.iid(86820).isreforged=0;
+
+idb.iid(86822).name='Waistplate of Overwhelming Assault (Raid Finder)';
+idb.iid(86822).ilvl=483;
+idb.iid(86822).str=645;
+idb.iid(86822).sta=1208;
+idb.iid(86822).haste=496;
+idb.iid(86822).mast=391;
+idb.iid(86822).barmor=2972;
+idb.iid(86822).socket='YB';
+idb.iid(86822).sbstat='haste';
+idb.iid(86822).sbval=120;
+idb.iid(86822).atype=1;
+idb.iid(86822).isreforged=0;
 
 idb.iid(86823).name='Windblade Talons (Raid Finder)';
 idb.iid(86823).ilvl=483;
@@ -2376,6 +3897,19 @@ idb.iid(86848).dodge=604;
 idb.iid(86848).barmor=2312;
 idb.iid(86848).atype=1;
 idb.iid(86848).isreforged=0;
+
+idb.iid(86852).name='Impaling Treads (Raid Finder)';
+idb.iid(86852).ilvl=483;
+idb.iid(86852).str=725;
+idb.iid(86852).sta=1208;
+idb.iid(86852).hit=439;
+idb.iid(86852).haste=528;
+idb.iid(86852).barmor=3633;
+idb.iid(86852).socket='Y';
+idb.iid(86852).sbstat='hit';
+idb.iid(86852).sbval=60;
+idb.iid(86852).atype=1;
+idb.iid(86852).isreforged=0;
 
 idb.iid(86853).name='Cloak of Raining Blades (Raid Finder)';
 idb.iid(86853).ilvl=483;
@@ -2483,6 +4017,81 @@ idb.iid(86903).sbval=60;
 idb.iid(86903).atype=1;
 idb.iid(86903).isreforged=0;
 
+idb.iid(89956).name='Pauldrons of the Broken Blade (Raid Finder)';
+idb.iid(89956).ilvl=483;
+idb.iid(89956).str=532;
+idb.iid(89956).sta=1208;
+idb.iid(89956).hit=368;
+idb.iid(89956).parry=765;
+idb.iid(89956).barmor=3963;
+idb.iid(89956).socket='Y';
+idb.iid(89956).sbstat='sta';
+idb.iid(89956).sbval=90;
+idb.iid(89956).atype=1;
+idb.iid(89956).isreforged=0;
+
+idb.iid(89963).name='Legplates of Regal Reinforcement (Raid Finder)';
+idb.iid(89963).ilvl=483;
+idb.iid(89963).str=924;
+idb.iid(89963).sta=1626;
+idb.iid(89963).dodge=654;
+idb.iid(89963).parry=624;
+idb.iid(89963).barmor=4623;
+idb.iid(89963).socket='RB';
+idb.iid(89963).sbstat='sta';
+idb.iid(89963).sbval=180;
+idb.iid(89963).atype=1;
+idb.iid(89963).isreforged=0;
+
+idb.iid(89981).name='Grasps of Serpentine Might (Raid Finder)';
+idb.iid(89981).ilvl=483;
+idb.iid(89981).str=532;
+idb.iid(89981).sta=1208;
+idb.iid(89981).exp=368;
+idb.iid(89981).parry=765;
+idb.iid(89981).barmor=3302;
+idb.iid(89981).socket='B';
+idb.iid(89981).sbstat='parry';
+idb.iid(89981).sbval=60;
+idb.iid(89981).atype=1;
+idb.iid(89981).isreforged=0;
+
+idb.iid(92782).name='Steadfast Footman''s Medallion';
+idb.iid(92782).ilvl=483;
+idb.iid(92782).isreforged=0;
+
+idb.iid(92783).name='Mark of the Hardened Grunt';
+idb.iid(92783).ilvl=483;
+idb.iid(92783).isreforged=0;
+
+idb.iid(92784).name='SI:7 Operative''s Manual';
+idb.iid(92784).ilvl=483;
+idb.iid(92784).isreforged=0;
+
+idb.iid(92785).name='Kor''kron Book of Hurting';
+idb.iid(92785).ilvl=483;
+idb.iid(92785).isreforged=0;
+
+idb.iid(92786).name='Alliance Insignia of Conquering';
+idb.iid(92786).ilvl=483;
+idb.iid(92786).isreforged=0;
+
+idb.iid(92787).name='Horde Insignia of Conquering';
+idb.iid(92787).ilvl=483;
+idb.iid(92787).isreforged=0;
+
+idb.iid(44924).name='Sun-Lute of the Phoenix King';
+idb.iid(44924).wtype='axe';
+idb.iid(44924).ilvl=483;
+idb.iid(44924).tooldps=3958.4;
+idb.iid(44924).swing=3.8;
+idb.iid(44924).avgdmg=15042;
+idb.iid(44924).str=1084;
+idb.iid(44924).sta=1626;
+idb.iid(44924).crit=651;
+idb.iid(44924).mast=765;
+idb.iid(44924).isreforged=0;
+
 idb.iid(86863).name='Scimitar of Seven Stars (Raid Finder)';
 idb.iid(86863).wtype='swo';
 idb.iid(86863).ilvl=483;
@@ -2540,6 +4149,14 @@ idb.iid(85983).barmor=2359;
 idb.iid(85983).atype=1;
 idb.iid(85983).isreforged=0;
 
+idb.iid(85991).name='Soulgrasp Choker';
+idb.iid(85991).ilvl=489;
+idb.iid(85991).str=638;
+idb.iid(85991).sta=958;
+idb.iid(85991).hit=405;
+idb.iid(85991).haste=438;
+idb.iid(85991).isreforged=0;
+
 idb.iid(85992).name='Sollerets of Spirit Splitting';
 idb.iid(85992).ilvl=489;
 idb.iid(85992).str=771;
@@ -2572,6 +4189,19 @@ idb.iid(86075).parry=432;
 idb.iid(86075).barmor=17293;
 idb.iid(86075).isreforged=0;
 
+idb.iid(86076).name='Breastplate of the Kings'' Guard';
+idb.iid(86076).ilvl=489;
+idb.iid(86076).str=986;
+idb.iid(86076).sta=1719;
+idb.iid(86076).haste=740;
+idb.iid(86076).mast=590;
+idb.iid(86076).barmor=5391;
+idb.iid(86076).socket='RY';
+idb.iid(86076).sbstat='str';
+idb.iid(86076).sbval=120;
+idb.iid(86076).atype=1;
+idb.iid(86076).isreforged=0;
+
 idb.iid(86080).name='Shoulderguards of the Unflanked';
 idb.iid(86080).ilvl=489;
 idb.iid(86080).str=567;
@@ -2595,6 +4225,11 @@ idb.iid(86132).ilvl=489;
 idb.iid(86132).mast=1079;
 idb.iid(86132).isreforged=0;
 
+idb.iid(86133).name='Light of the Cosmos';
+idb.iid(86133).ilvl=489;
+idb.iid(86133).haste=1079;
+idb.iid(86133).isreforged=0;
+
 idb.iid(86134).name='Star-Stealer Waistguard';
 idb.iid(86134).ilvl=489;
 idb.iid(86134).str=691;
@@ -2607,6 +4242,37 @@ idb.iid(86134).sbstat='dodge';
 idb.iid(86134).sbval=120;
 idb.iid(86134).atype=1;
 idb.iid(86134).isreforged=0;
+
+idb.iid(86135).name='Starcrusher Gauntlets';
+idb.iid(86135).ilvl=489;
+idb.iid(86135).str=771;
+idb.iid(86135).sta=1277;
+idb.iid(86135).hit=486;
+idb.iid(86135).haste=553;
+idb.iid(86135).barmor=3370;
+idb.iid(86135).socket='B';
+idb.iid(86135).sbstat='haste';
+idb.iid(86135).sbval=60;
+idb.iid(86135).atype=1;
+idb.iid(86135).isreforged=0;
+
+idb.iid(86144).name='Lei Shen''s Final Orders';
+idb.iid(86144).ilvl=489;
+idb.iid(86144).haste=1079;
+idb.iid(86144).isreforged=0;
+
+idb.iid(86145).name='Jang-xi''s Devastating Legplates';
+idb.iid(86145).ilvl=489;
+idb.iid(86145).str=986;
+idb.iid(86145).sta=1719;
+idb.iid(86145).hit=500;
+idb.iid(86145).haste=791;
+idb.iid(86145).barmor=4717;
+idb.iid(86145).socket='RB';
+idb.iid(86145).sbstat='str';
+idb.iid(86145).sbval=120;
+idb.iid(86145).atype=1;
+idb.iid(86145).isreforged=0;
 
 idb.iid(86147).name='Qin-xi''s Polarizing Seal';
 idb.iid(86147).ilvl=489;
@@ -2656,6 +4322,14 @@ idb.iid(89056).sbval=60;
 idb.iid(89056).atype=1;
 idb.iid(89056).isreforged=0;
 
+idb.iid(89064).name='Bloodseeker''s Solitaire';
+idb.iid(89064).ilvl=489;
+idb.iid(89064).str=638;
+idb.iid(89064).sta=958;
+idb.iid(89064).haste=451;
+idb.iid(89064).mast=384;
+idb.iid(89064).isreforged=0;
+
 idb.iid(89066).name='Paragon''s Pale Pendant';
 idb.iid(89066).ilvl=489;
 idb.iid(89066).str=485;
@@ -2703,6 +4377,19 @@ idb.iid(89093).sbstat='str';
 idb.iid(89093).sbval=60;
 idb.iid(89093).atype=1;
 idb.iid(89093).isreforged=0;
+
+idb.iid(89095).name='Legguards of the Unscathed';
+idb.iid(89095).ilvl=489;
+idb.iid(89095).str=1066;
+idb.iid(89095).sta=1719;
+idb.iid(89095).haste=811;
+idb.iid(89095).mast=576;
+idb.iid(89095).barmor=4717;
+idb.iid(89095).socket='R';
+idb.iid(89095).sbstat='str';
+idb.iid(89095).sbval=60;
+idb.iid(89095).atype=1;
+idb.iid(89095).isreforged=0;
 
 idb.iid(89216).name='Yi''s Least Favorite Helmet';
 idb.iid(89216).ilvl=489;
@@ -2756,6 +4443,16 @@ idb.iid(89421).sbval=120;
 idb.iid(89421).atype=1;
 idb.iid(89421).isreforged=0;
 
+idb.iid(89817).name='Bonded Soul Bracers';
+idb.iid(89817).ilvl=489;
+idb.iid(89817).str=638;
+idb.iid(89817).sta=958;
+idb.iid(89817).exp=384;
+idb.iid(89817).haste=451;
+idb.iid(89817).barmor=2359;
+idb.iid(89817).atype=1;
+idb.iid(89817).isreforged=0;
+
 idb.iid(89823).name='Chestguard of Eternal Vigilance';
 idb.iid(89823).ilvl=489;
 idb.iid(89823).str=711;
@@ -2792,6 +4489,14 @@ idb.iid(90860).sta=958;
 idb.iid(90860).mast=415;
 idb.iid(90860).dodge=432;
 idb.iid(90860).isreforged=0;
+
+idb.iid(90862).name='Seal of the Bloodseeker';
+idb.iid(90862).ilvl=489;
+idb.iid(90862).str=638;
+idb.iid(90862).sta=958;
+idb.iid(90862).exp=485;
+idb.iid(90862).haste=323;
+idb.iid(90862).isreforged=0;
 
 idb.iid(86071).name='Screaming Tiger, Qiang''s Unbreakable Polearm';
 idb.iid(86071).wtype='pol';
@@ -3006,6 +4711,20 @@ idb.iid(85323).atype=1;
 idb.iid(85323).isreforged=0;
 idb.iid(85323).istierP=[1 0 0];
 
+idb.iid(85339).name='White Tiger Pauldrons';
+idb.iid(85339).ilvl=496;
+idb.iid(85339).str=829;
+idb.iid(85339).sta=1363;
+idb.iid(85339).hit=606;
+idb.iid(85339).haste=526;
+idb.iid(85339).barmor=4137;
+idb.iid(85339).socket='B';
+idb.iid(85339).sbstat='str';
+idb.iid(85339).sbval=60;
+idb.iid(85339).atype=1;
+idb.iid(85339).isreforged=0;
+idb.iid(85339).istierR=[1 0 0];
+
 idb.iid(85340).name='White Tiger Legplates';
 idb.iid(85340).ilvl=496;
 idb.iid(85340).str=1143;
@@ -3034,6 +4753,15 @@ idb.iid(85341).atype=1;
 idb.iid(85341).isreforged=0;
 idb.iid(85341).istierR=[1 0 0];
 
+idb.iid(86154).name='Hisek''s Chrysanthemum Cape';
+idb.iid(86154).ilvl=496;
+idb.iid(86154).str=682;
+idb.iid(86154).sta=1022;
+idb.iid(86154).hit=421;
+idb.iid(86154).haste=474;
+idb.iid(86154).barmor=1140;
+idb.iid(86154).isreforged=0;
+
 idb.iid(86155).name='Vizier''s Ruby Signet';
 idb.iid(86155).ilvl=496;
 idb.iid(86155).str=518;
@@ -3041,6 +4769,27 @@ idb.iid(86155).sta=1022;
 idb.iid(86155).exp=345;
 idb.iid(86155).parry=682;
 idb.iid(86155).isreforged=0;
+
+idb.iid(86162).name='Ring of the Bladed Tempest';
+idb.iid(86162).ilvl=496;
+idb.iid(86162).str=682;
+idb.iid(86162).sta=1022;
+idb.iid(86162).exp=356;
+idb.iid(86162).haste=512;
+idb.iid(86162).isreforged=0;
+
+idb.iid(86164).name='Waistplate of Overwhelming Assault';
+idb.iid(86164).ilvl=496;
+idb.iid(86164).str=749;
+idb.iid(86164).sta=1363;
+idb.iid(86164).haste=570;
+idb.iid(86164).mast=452;
+idb.iid(86164).barmor=3103;
+idb.iid(86164).socket='YB';
+idb.iid(86164).sbstat='haste';
+idb.iid(86164).sbval=120;
+idb.iid(86164).atype=1;
+idb.iid(86164).isreforged=0;
 
 idb.iid(86165).name='Windblade Talons';
 idb.iid(86165).ilvl=496;
@@ -3085,6 +4834,19 @@ idb.iid(86190).dodge=682;
 idb.iid(86190).barmor=2414;
 idb.iid(86190).atype=1;
 idb.iid(86190).isreforged=0;
+
+idb.iid(86201).name='Impaling Treads';
+idb.iid(86201).ilvl=496;
+idb.iid(86201).str=829;
+idb.iid(86201).sta=1363;
+idb.iid(86201).hit=500;
+idb.iid(86201).haste=602;
+idb.iid(86201).barmor=3793;
+idb.iid(86201).socket='Y';
+idb.iid(86201).sbstat='hit';
+idb.iid(86201).sbval=60;
+idb.iid(86201).atype=1;
+idb.iid(86201).isreforged=0;
 
 idb.iid(86202).name='Cloak of Raining Blades';
 idb.iid(86202).ilvl=496;
@@ -3317,6 +5079,14 @@ idb.iid(90431).hit=345;
 idb.iid(90431).dodge=682;
 idb.iid(90431).isreforged=0;
 
+idb.iid(90433).name='Mushan Rider''s Collar';
+idb.iid(90433).ilvl=496;
+idb.iid(90433).str=682;
+idb.iid(90433).sta=1022;
+idb.iid(90433).haste=345;
+idb.iid(90433).mast=518;
+idb.iid(90433).isreforged=0;
+
 idb.iid(90436).name='Circle of Scaled Fury';
 idb.iid(90436).ilvl=496;
 idb.iid(90436).str=682;
@@ -3347,6 +5117,152 @@ idb.iid(90455).sbstat='parry';
 idb.iid(90455).sbval=60;
 idb.iid(90455).atype=1;
 idb.iid(90455).isreforged=0;
+
+idb.iid(91331).name='Tyrannical Gladiator''s Medallion of Tenacity';
+idb.iid(91331).ilvl=496;
+idb.iid(91331).mast=1152;
+idb.iid(91331).isreforged=0;
+
+idb.iid(91332).name='Tyrannical Gladiator''s Medallion of Tenacity';
+idb.iid(91332).ilvl=496;
+idb.iid(91332).mast=1152;
+idb.iid(91332).isreforged=0;
+
+idb.iid(91333).name='Tyrannical Gladiator''s Medallion of Meditation';
+idb.iid(91333).ilvl=496;
+idb.iid(91333).spi=1152;
+idb.iid(91333).isreforged=0;
+
+idb.iid(91334).name='Tyrannical Gladiator''s Medallion of Meditation';
+idb.iid(91334).ilvl=496;
+idb.iid(91334).spi=1152;
+idb.iid(91334).isreforged=0;
+
+idb.iid(93247).name='Seal of the Shieldwall';
+idb.iid(93247).ilvl=496;
+idb.iid(93247).str=682;
+idb.iid(93247).sta=1022;
+idb.iid(93247).exp=377;
+idb.iid(93247).dodge=500;
+idb.iid(93247).isreforged=0;
+
+idb.iid(93252).name='Dominator''s Seal';
+idb.iid(93252).ilvl=496;
+idb.iid(93252).str=682;
+idb.iid(93252).sta=1022;
+idb.iid(93252).exp=377;
+idb.iid(93252).dodge=500;
+idb.iid(93252).isreforged=0;
+
+idb.iid(93254).name='Static-Caster''s Medallion';
+idb.iid(93254).ilvl=496;
+idb.iid(93254).haste=1152;
+idb.iid(93254).isreforged=0;
+
+idb.iid(93256).name='Skullrender Medallion';
+idb.iid(93256).ilvl=496;
+idb.iid(93256).str=1152;
+idb.iid(93256).isreforged=0;
+
+idb.iid(93257).name='Medallion of Mystifying Vapors';
+idb.iid(93257).ilvl=496;
+idb.iid(93257).dodge=1152;
+idb.iid(93257).isreforged=0;
+
+idb.iid(93259).name='Shock-Charger Medallion';
+idb.iid(93259).ilvl=496;
+idb.iid(93259).haste=1152;
+idb.iid(93259).isreforged=0;
+
+idb.iid(93261).name='Helmbreaker Medallion';
+idb.iid(93261).ilvl=496;
+idb.iid(93261).str=1152;
+idb.iid(93261).isreforged=0;
+
+idb.iid(93262).name='Vaporshield Medallion';
+idb.iid(93262).ilvl=496;
+idb.iid(93262).dodge=1152;
+idb.iid(93262).isreforged=0;
+
+idb.iid(93263).name='Groundbreaker Sabatons';
+idb.iid(93263).ilvl=496;
+idb.iid(93263).str=909;
+idb.iid(93263).sta=1363;
+idb.iid(93263).dodge=460;
+idb.iid(93263).parry=691;
+idb.iid(93263).barmor=3793;
+idb.iid(93263).atype=1;
+idb.iid(93263).isreforged=0;
+
+idb.iid(93272).name='Sabatons of the Sullied Shore';
+idb.iid(93272).ilvl=496;
+idb.iid(93272).str=909;
+idb.iid(93272).sta=1363;
+idb.iid(93272).dodge=460;
+idb.iid(93272).parry=691;
+idb.iid(93272).barmor=3793;
+idb.iid(93272).atype=1;
+idb.iid(93272).isreforged=0;
+
+idb.iid(93324).name='Immovable Waistplate';
+idb.iid(93324).ilvl=496;
+idb.iid(93324).str=570;
+idb.iid(93324).sta=1363;
+idb.iid(93324).hit=492;
+idb.iid(93324).parry=869;
+idb.iid(93324).barmor=3103;
+idb.iid(93324).socket='Y';
+idb.iid(93324).sbstat='parry';
+idb.iid(93324).sbval=60;
+idb.iid(93324).atype=1;
+idb.iid(93324).isreforged=0;
+
+idb.iid(93333).name='Waistplate of Immobility';
+idb.iid(93333).ilvl=496;
+idb.iid(93333).str=570;
+idb.iid(93333).sta=1363;
+idb.iid(93333).hit=492;
+idb.iid(93333).parry=869;
+idb.iid(93333).barmor=3103;
+idb.iid(93333).socket='Y';
+idb.iid(93333).sbstat='parry';
+idb.iid(93333).sbval=60;
+idb.iid(93333).atype=1;
+idb.iid(93333).isreforged=0;
+
+idb.iid(97191).name='Ancient Overlord''s Onyx Band';
+idb.iid(97191).ilvl=496;
+idb.iid(97191).str=682;
+idb.iid(97191).sta=1022;
+idb.iid(97191).mast=421;
+idb.iid(97191).parry=474;
+idb.iid(97191).isreforged=0;
+
+idb.iid(97196).name='Ancient Overlord''s Onyx Band';
+idb.iid(97196).ilvl=496;
+idb.iid(97196).str=682;
+idb.iid(97196).sta=1022;
+idb.iid(97196).mast=421;
+idb.iid(97196).parry=474;
+idb.iid(97196).isreforged=0;
+
+idb.iid(97207).name='Cloak of the Immortal Guardian';
+idb.iid(97207).ilvl=496;
+idb.iid(97207).str=682;
+idb.iid(97207).sta=1022;
+idb.iid(97207).hit=421;
+idb.iid(97207).parry=474;
+idb.iid(97207).barmor=1140;
+idb.iid(97207).isreforged=0;
+
+idb.iid(97212).name='Cloak of the Immortal Guardian';
+idb.iid(97212).ilvl=496;
+idb.iid(97212).str=682;
+idb.iid(97212).sta=1022;
+idb.iid(97212).hit=421;
+idb.iid(97212).parry=474;
+idb.iid(97212).barmor=1140;
+idb.iid(97212).isreforged=0;
 
 idb.iid(86219).name='Scimitar of Seven Stars';
 idb.iid(86219).wtype='swo';
@@ -3418,6 +5334,27 @@ idb.iid(87035).sbval=60;
 idb.iid(87035).atype=1;
 idb.iid(87035).isreforged=0;
 
+idb.iid(87036).name='Soulgrasp Choker (Heroic)';
+idb.iid(87036).ilvl=502;
+idb.iid(87036).str=720;
+idb.iid(87036).sta=1081;
+idb.iid(87036).hit=456;
+idb.iid(87036).haste=495;
+idb.iid(87036).isreforged=0;
+
+idb.iid(87048).name='Breastplate of the Kings'' Guard (Heroic)';
+idb.iid(87048).ilvl=502;
+idb.iid(87048).str=1134;
+idb.iid(87048).sta=1941;
+idb.iid(87048).haste=845;
+idb.iid(87048).mast=677;
+idb.iid(87048).barmor=5624;
+idb.iid(87048).socket='RY';
+idb.iid(87048).sbstat='str';
+idb.iid(87048).sbval=120;
+idb.iid(87048).atype=1;
+idb.iid(87048).isreforged=0;
+
 idb.iid(87049).name='Shoulderguards of the Unflanked (Heroic)';
 idb.iid(87049).ilvl=502;
 idb.iid(87049).str=650;
@@ -3445,6 +5382,19 @@ idb.iid(87057).ilvl=502;
 idb.iid(87057).mast=1218;
 idb.iid(87057).isreforged=0;
 
+idb.iid(87059).name='Starcrusher Gauntlets (Heroic)';
+idb.iid(87059).ilvl=502;
+idb.iid(87059).str=881;
+idb.iid(87059).sta=1441;
+idb.iid(87059).hit=553;
+idb.iid(87059).haste=629;
+idb.iid(87059).barmor=3515;
+idb.iid(87059).socket='B';
+idb.iid(87059).sbstat='haste';
+idb.iid(87059).sbval=60;
+idb.iid(87059).atype=1;
+idb.iid(87059).isreforged=0;
+
 idb.iid(87060).name='Star-Stealer Waistguard (Heroic)';
 idb.iid(87060).ilvl=502;
 idb.iid(87060).str=801;
@@ -3463,20 +5413,43 @@ idb.iid(87063).ilvl=502;
 idb.iid(87063).mast=1218;
 idb.iid(87063).isreforged=0;
 
+idb.iid(87065).name='Light of the Cosmos (Heroic)';
+idb.iid(87065).ilvl=502;
+idb.iid(87065).haste=1218;
+idb.iid(87065).isreforged=0;
+
+idb.iid(87071).name='Jang-xi''s Devastating Legplates (Heroic)';
+idb.iid(87071).ilvl=502;
+idb.iid(87071).str=1134;
+idb.iid(87071).sta=1941;
+idb.iid(87071).hit=575;
+idb.iid(87071).haste=903;
+idb.iid(87071).barmor=4921;
+idb.iid(87071).socket='RB';
+idb.iid(87071).sbstat='str';
+idb.iid(87071).sbval=120;
+idb.iid(87071).atype=1;
+idb.iid(87071).isreforged=0;
+
+idb.iid(87072).name='Lei Shen''s Final Orders (Heroic)';
+idb.iid(87072).ilvl=502;
+idb.iid(87072).haste=1218;
+idb.iid(87072).isreforged=0;
+
 idb.iid(87075).name='Qin-xi''s Polarizing Seal (Heroic)';
 idb.iid(87075).ilvl=502;
 idb.iid(87075).spi=1218;
 idb.iid(87075).isreforged=0;
 
-idb.iid(87082).name='Jade Charioteer Figurine (Heroic)';
-idb.iid(87082).ilvl=502;
-idb.iid(87082).str=1218;
-idb.iid(87082).isreforged=0;
-
-idb.iid(87083).name='Jade Warlord Figurine (Heroic)';
-idb.iid(87083).ilvl=502;
-idb.iid(87083).sta=1827;
-idb.iid(87083).isreforged=0;
+idb.iid(89934).name='Bonded Soul Bracers (Heroic)';
+idb.iid(89934).ilvl=502;
+idb.iid(89934).str=720;
+idb.iid(89934).sta=1081;
+idb.iid(89934).exp=433;
+idb.iid(89934).haste=508;
+idb.iid(89934).barmor=2461;
+idb.iid(89934).atype=1;
+idb.iid(89934).isreforged=0;
 
 idb.iid(89937).name='Band of Bursting Novas (Heroic)';
 idb.iid(89937).ilvl=502;
@@ -3485,6 +5458,828 @@ idb.iid(89937).sta=1081;
 idb.iid(89937).exp=522;
 idb.iid(89937).dodge=410;
 idb.iid(89937).isreforged=0;
+
+idb.iid(89941).name='Chestguard of Eternal Vigilance (Heroic)';
+idb.iid(89941).ilvl=502;
+idb.iid(89941).str=823;
+idb.iid(89941).sta=1941;
+idb.iid(89941).exp=575;
+idb.iid(89941).parry=1214;
+idb.iid(89941).barmor=5624;
+idb.iid(89941).socket='RB';
+idb.iid(89941).sbstat='str';
+idb.iid(89941).sbval=120;
+idb.iid(89941).atype=1;
+idb.iid(89941).isreforged=0;
+
+idb.iid(95625).name='Renataki''s Soul Charm (Raid Finder)';
+idb.iid(95625).ilvl=502;
+idb.iid(95625).exp=1218;
+idb.iid(95625).isreforged=0;
+
+idb.iid(95629).name='Cloudbreaker Greatbelt (Raid Finder)';
+idb.iid(95629).ilvl=502;
+idb.iid(95629).str=801;
+idb.iid(95629).sta=1441;
+idb.iid(95629).haste=544;
+idb.iid(95629).mast=570;
+idb.iid(95629).barmor=3164;
+idb.iid(95629).socket='RY';
+idb.iid(95629).atype=1;
+idb.iid(95629).isreforged=0;
+
+idb.iid(95630).name='Chestplate of Violent Detonation (Raid Finder)';
+idb.iid(95630).ilvl=502;
+idb.iid(95630).str=1134;
+idb.iid(95630).sta=1941;
+idb.iid(95630).hit=808;
+idb.iid(95630).mast=740;
+idb.iid(95630).barmor=5624;
+idb.iid(95630).socket='RB';
+idb.iid(95630).sbstat='str';
+idb.iid(95630).sbval=120;
+idb.iid(95630).atype=1;
+idb.iid(95630).isreforged=0;
+
+idb.iid(95631).name='Bracers of Constant Implosion (Raid Finder)';
+idb.iid(95631).ilvl=502;
+idb.iid(95631).str=640;
+idb.iid(95631).sta=1081;
+idb.iid(95631).barmor=2461;
+idb.iid(95631).socket='Y';
+idb.iid(95631).sbstat='str';
+idb.iid(95631).sbval=60;
+idb.iid(95631).atype=1;
+idb.iid(95631).isreforged=0;
+
+idb.iid(95633).name='Jin''rokh''s Soulcrystal (Raid Finder)';
+idb.iid(95633).ilvl=502;
+idb.iid(95633).str=720;
+idb.iid(95633).sta=1081;
+idb.iid(95633).exp=433;
+idb.iid(95633).dodge=508;
+idb.iid(95633).isreforged=0;
+
+idb.iid(95650).name='Frozen Warlord''s Bracers (Raid Finder)';
+idb.iid(95650).ilvl=502;
+idb.iid(95650).str=720;
+idb.iid(95650).sta=1081;
+idb.iid(95650).exp=421;
+idb.iid(95650).haste=515;
+idb.iid(95650).barmor=2461;
+idb.iid(95650).atype=1;
+idb.iid(95650).isreforged=0;
+
+idb.iid(95651).name='Bloodlord''s Bloodsoaked Legplates (Raid Finder)';
+idb.iid(95651).ilvl=502;
+idb.iid(95651).str=1134;
+idb.iid(95651).sta=1941;
+idb.iid(95651).haste=656;
+idb.iid(95651).mast=857;
+idb.iid(95651).barmor=4921;
+idb.iid(95651).socket='RB';
+idb.iid(95651).sbstat='str';
+idb.iid(95651).sbval=120;
+idb.iid(95651).atype=1;
+idb.iid(95651).isreforged=0;
+
+idb.iid(95652).name='Puncture-Proof Greathelm (Raid Finder)';
+idb.iid(95652).ilvl=502;
+idb.iid(95652).str=1054;
+idb.iid(95652).sta=1941;
+idb.iid(95652).dodge=722;
+idb.iid(95652).parry=762;
+idb.iid(95652).barmor=4570;
+idb.iid(95652).socket='MB';
+idb.iid(95652).sbstat='sta';
+idb.iid(95652).sbval=270;
+idb.iid(95652).atype=1;
+idb.iid(95652).isreforged=0;
+
+idb.iid(95653).name='Horn-Rimmed Doomcloak (Raid Finder)';
+idb.iid(95653).ilvl=502;
+idb.iid(95653).str=720;
+idb.iid(95653).sta=1081;
+idb.iid(95653).hit=480;
+idb.iid(95653).mast=480;
+idb.iid(95653).barmor=1163;
+idb.iid(95653).isreforged=0;
+
+idb.iid(95654).name='Spark of Zandalar (Raid Finder)';
+idb.iid(95654).ilvl=502;
+idb.iid(95654).haste=1218;
+idb.iid(95654).isreforged=0;
+
+idb.iid(95665).name='Bad Juju (Raid Finder)';
+idb.iid(95665).ilvl=502;
+idb.iid(95665).mast=1218;
+idb.iid(95665).isreforged=0;
+
+idb.iid(95669).name='Wushoolay''s Final Choice (Raid Finder)';
+idb.iid(95669).ilvl=502;
+idb.iid(95669).hit=1218;
+idb.iid(95669).isreforged=0;
+
+idb.iid(95674).name='Overloaded Bladebreaker Cuirass (Raid Finder)';
+idb.iid(95674).ilvl=502;
+idb.iid(95674).str=1134;
+idb.iid(95674).sta=1941;
+idb.iid(95674).hit=575;
+idb.iid(95674).parry=903;
+idb.iid(95674).barmor=5624;
+idb.iid(95674).socket='RY';
+idb.iid(95674).sbstat='dodge';
+idb.iid(95674).sbval=120;
+idb.iid(95674).atype=1;
+idb.iid(95674).isreforged=0;
+
+idb.iid(95677).name='Fortitude of the Zandalari (Raid Finder)';
+idb.iid(95677).ilvl=502;
+idb.iid(95677).mast=1218;
+idb.iid(95677).isreforged=0;
+
+idb.iid(95684).name='Shell-Coated Wristplates (Raid Finder)';
+idb.iid(95684).ilvl=502;
+idb.iid(95684).str=720;
+idb.iid(95684).sta=1081;
+idb.iid(95684).dodge=535;
+idb.iid(95684).parry=387;
+idb.iid(95684).barmor=2461;
+idb.iid(95684).atype=1;
+idb.iid(95684).isreforged=0;
+
+idb.iid(95687).name='Beakbreaker Greatcloak (Raid Finder)';
+idb.iid(95687).ilvl=502;
+idb.iid(95687).str=720;
+idb.iid(95687).sta=1081;
+idb.iid(95687).mast=456;
+idb.iid(95687).dodge=495;
+idb.iid(95687).barmor=1163;
+idb.iid(95687).isreforged=0;
+
+idb.iid(95702).name='Plated Toothbreaker Girdle (Raid Finder)';
+idb.iid(95702).ilvl=502;
+idb.iid(95702).str=801;
+idb.iid(95702).sta=1441;
+idb.iid(95702).dodge=561;
+idb.iid(95702).parry=561;
+idb.iid(95702).barmor=3164;
+idb.iid(95702).socket='RY';
+idb.iid(95702).sbstat='dodge';
+idb.iid(95702).sbval=120;
+idb.iid(95702).atype=1;
+idb.iid(95702).isreforged=0;
+
+idb.iid(95703).name='Rot-Proof Greatplate (Raid Finder)';
+idb.iid(95703).ilvl=502;
+idb.iid(95703).str=1134;
+idb.iid(95703).sta=1941;
+idb.iid(95703).mast=782;
+idb.iid(95703).dodge=782;
+idb.iid(95703).barmor=5624;
+idb.iid(95703).socket='YB';
+idb.iid(95703).sbstat='dodge';
+idb.iid(95703).sbval=120;
+idb.iid(95703).atype=1;
+idb.iid(95703).isreforged=0;
+
+idb.iid(95705).name='Hydraskull Choker (Raid Finder)';
+idb.iid(95705).ilvl=502;
+idb.iid(95705).str=720;
+idb.iid(95705).sta=1081;
+idb.iid(95705).dodge=541;
+idb.iid(95705).parry=376;
+idb.iid(95705).isreforged=0;
+
+idb.iid(95711).name='Breath of the Hydra (Raid Finder)';
+idb.iid(95711).ilvl=502;
+idb.iid(95711).haste=1218;
+idb.iid(95711).isreforged=0;
+
+idb.iid(95712).name='Inscribed Bag of Hydra-Spawn (Raid Finder)';
+idb.iid(95712).ilvl=502;
+idb.iid(95712).spi=1218;
+idb.iid(95712).isreforged=0;
+
+idb.iid(95725).name='Egg-Shard Grips (Raid Finder)';
+idb.iid(95725).ilvl=502;
+idb.iid(95725).str=881;
+idb.iid(95725).sta=1441;
+idb.iid(95725).exp=447;
+idb.iid(95725).parry=690;
+idb.iid(95725).barmor=3515;
+idb.iid(95725).socket='Y';
+idb.iid(95725).sbstat='str';
+idb.iid(95725).sbval=60;
+idb.iid(95725).atype=1;
+idb.iid(95725).isreforged=0;
+
+idb.iid(95726).name='Fabled Feather of Ji-Kun (Raid Finder)';
+idb.iid(95726).ilvl=502;
+idb.iid(95726).hit=1218;
+idb.iid(95726).isreforged=0;
+
+idb.iid(95727).name='Ji-Kun''s Rising Winds (Raid Finder)';
+idb.iid(95727).ilvl=502;
+idb.iid(95727).exp=1218;
+idb.iid(95727).isreforged=0;
+
+idb.iid(95732).name='Caustic Spike Bracers (Raid Finder)';
+idb.iid(95732).ilvl=502;
+idb.iid(95732).str=640;
+idb.iid(95732).sta=1081;
+idb.iid(95732).barmor=2461;
+idb.iid(95732).socket='Y';
+idb.iid(95732).sbstat='str';
+idb.iid(95732).sbval=60;
+idb.iid(95732).atype=1;
+idb.iid(95732).isreforged=0;
+
+idb.iid(95733).name='Legplates of the Dark Parasite (Raid Finder)';
+idb.iid(95733).ilvl=502;
+idb.iid(95733).str=1134;
+idb.iid(95733).sta=1941;
+idb.iid(95733).exp=677;
+idb.iid(95733).haste=845;
+idb.iid(95733).barmor=4921;
+idb.iid(95733).socket='YB';
+idb.iid(95733).sbstat='str';
+idb.iid(95733).sbval=120;
+idb.iid(95733).atype=1;
+idb.iid(95733).isreforged=0;
+
+idb.iid(95734).name='Treads of the Blind Eye (Raid Finder)';
+idb.iid(95734).ilvl=502;
+idb.iid(95734).str=881;
+idb.iid(95734).sta=1441;
+idb.iid(95734).dodge=561;
+idb.iid(95734).parry=621;
+idb.iid(95734).barmor=3867;
+idb.iid(95734).socket='B';
+idb.iid(95734).sbstat='dodge';
+idb.iid(95734).sbval=60;
+idb.iid(95734).atype=1;
+idb.iid(95734).isreforged=0;
+
+idb.iid(95735).name='Artery Rippers (Raid Finder)';
+idb.iid(95735).ilvl=502;
+idb.iid(95735).str=801;
+idb.iid(95735).sta=1441;
+idb.iid(95735).dodge=528;
+idb.iid(95735).parry=586;
+idb.iid(95735).barmor=3515;
+idb.iid(95735).socket='RB';
+idb.iid(95735).sbstat='str';
+idb.iid(95735).sbval=120;
+idb.iid(95735).atype=1;
+idb.iid(95735).isreforged=0;
+
+idb.iid(95736).name='Reinforced Mirror-Sheen Cloak (Raid Finder)';
+idb.iid(95736).ilvl=502;
+idb.iid(95736).str=640;
+idb.iid(95736).sta=1081;
+idb.iid(95736).dodge=508;
+idb.iid(95736).parry=325;
+idb.iid(95736).barmor=1163;
+idb.iid(95736).socket='R';
+idb.iid(95736).sbstat='dodge';
+idb.iid(95736).sbval=60;
+idb.iid(95736).isreforged=0;
+
+idb.iid(95737).name='Durumu''s Severed Tentacle (Raid Finder)';
+idb.iid(95737).ilvl=502;
+idb.iid(95737).str=640;
+idb.iid(95737).sta=1081;
+idb.iid(95737).hit=431;
+idb.iid(95737).dodge=440;
+idb.iid(95737).socket='R';
+idb.iid(95737).sbstat='dodge';
+idb.iid(95737).sbval=60;
+idb.iid(95737).isreforged=0;
+
+idb.iid(95752).name='Pathogenic Gauntlets (Raid Finder)';
+idb.iid(95752).ilvl=502;
+idb.iid(95752).str=801;
+idb.iid(95752).sta=1441;
+idb.iid(95752).hit=451;
+idb.iid(95752).haste=632;
+idb.iid(95752).barmor=3515;
+idb.iid(95752).socket='RB';
+idb.iid(95752).sbstat='str';
+idb.iid(95752).sbval=120;
+idb.iid(95752).atype=1;
+idb.iid(95752).isreforged=0;
+
+idb.iid(95753).name='Black Blood Legplates (Raid Finder)';
+idb.iid(95753).ilvl=502;
+idb.iid(95753).str=1134;
+idb.iid(95753).sta=1941;
+idb.iid(95753).dodge=761;
+idb.iid(95753).parry=796;
+idb.iid(95753).barmor=4921;
+idb.iid(95753).socket='RB';
+idb.iid(95753).sbstat='sta';
+idb.iid(95753).sbval=180;
+idb.iid(95753).atype=1;
+idb.iid(95753).isreforged=0;
+
+idb.iid(95754).name='Metabolically Boosted Shoulderplates (Raid Finder)';
+idb.iid(95754).ilvl=502;
+idb.iid(95754).str=881;
+idb.iid(95754).sta=1441;
+idb.iid(95754).dodge=584;
+idb.iid(95754).parry=610;
+idb.iid(95754).barmor=4218;
+idb.iid(95754).socket='R';
+idb.iid(95754).sbstat='sta';
+idb.iid(95754).sbval=90;
+idb.iid(95754).atype=1;
+idb.iid(95754).isreforged=0;
+
+idb.iid(95756).name='Band of the Scaled Tyrant (Raid Finder)';
+idb.iid(95756).ilvl=502;
+idb.iid(95756).str=640;
+idb.iid(95756).sta=1081;
+idb.iid(95756).hit=394;
+idb.iid(95756).haste=458;
+idb.iid(95756).socket='R';
+idb.iid(95756).sbstat='haste';
+idb.iid(95756).sbval=60;
+idb.iid(95756).isreforged=0;
+
+idb.iid(95763).name='Stolen Relic of Zuldazar (Raid Finder)';
+idb.iid(95763).ilvl=502;
+idb.iid(95763).spi=1218;
+idb.iid(95763).isreforged=0;
+
+idb.iid(95768).name='Greatshield of the Gloaming (Raid Finder)';
+idb.iid(95768).ilvl=502;
+idb.iid(95768).str=640;
+idb.iid(95768).sta=1081;
+idb.iid(95768).mast=424;
+idb.iid(95768).dodge=452;
+idb.iid(95768).barmor=18040;
+idb.iid(95768).socket='R';
+idb.iid(95768).sbstat='str';
+idb.iid(95768).sbval=60;
+idb.iid(95768).isreforged=0;
+
+idb.iid(95779).name='Delicate Vial of the Sanguinaire (Raid Finder)';
+idb.iid(95779).ilvl=502;
+idb.iid(95779).dodge=1218;
+idb.iid(95779).isreforged=0;
+
+idb.iid(95799).name='Gaze of the Twins (Raid Finder)';
+idb.iid(95799).ilvl=502;
+idb.iid(95799).str=1218;
+idb.iid(95799).isreforged=0;
+
+idb.iid(95800).name='Moonjade Necklace (Raid Finder)';
+idb.iid(95800).ilvl=502;
+idb.iid(95800).str=640;
+idb.iid(95800).sta=1081;
+idb.iid(95800).exp=440;
+idb.iid(95800).dodge=440;
+idb.iid(95800).socket='R';
+idb.iid(95800).sbstat='sta';
+idb.iid(95800).sbval=90;
+idb.iid(95800).isreforged=0;
+
+idb.iid(95806).name='Doomed Crown of Lei-Shen (Raid Finder)';
+idb.iid(95806).ilvl=502;
+idb.iid(95806).str=1054;
+idb.iid(95806).sta=1941;
+idb.iid(95806).hit=555;
+idb.iid(95806).mast=843;
+idb.iid(95806).barmor=4570;
+idb.iid(95806).socket='MR';
+idb.iid(95806).sbstat='str';
+idb.iid(95806).sbval=180;
+idb.iid(95806).atype=1;
+idb.iid(95806).isreforged=0;
+
+idb.iid(95808).name='Legplates of Whipping Ionization (Raid Finder)';
+idb.iid(95808).ilvl=502;
+idb.iid(95808).str=1054;
+idb.iid(95808).sta=1941;
+idb.iid(95808).mast=629;
+idb.iid(95808).dodge=813;
+idb.iid(95808).barmor=4921;
+idb.iid(95808).socket='RRR';
+idb.iid(95808).sbstat='sta';
+idb.iid(95808).sbval=270;
+idb.iid(95808).atype=1;
+idb.iid(95808).isreforged=0;
+
+idb.iid(95810).name='Ultimate Protection of the Emperor (Raid Finder)';
+idb.iid(95810).ilvl=502;
+idb.iid(95810).str=640;
+idb.iid(95810).sta=1081;
+idb.iid(95810).mast=405;
+idb.iid(95810).parry=451;
+idb.iid(95810).barmor=18040;
+idb.iid(95810).socket='R';
+idb.iid(95810).sbstat='str';
+idb.iid(95810).sbval=60;
+idb.iid(95810).isreforged=0;
+
+idb.iid(95811).name='Soul Barrier (Raid Finder)';
+idb.iid(95811).ilvl=502;
+idb.iid(95811).sta=1827;
+idb.iid(95811).isreforged=0;
+
+idb.iid(95825).name='Breastplate of the All-Consuming Maw (Raid Finder)';
+idb.iid(95825).ilvl=502;
+idb.iid(95825).str=1054;
+idb.iid(95825).sta=1941;
+idb.iid(95825).exp=805;
+idb.iid(95825).haste=637;
+idb.iid(95825).barmor=5624;
+idb.iid(95825).socket='RYB';
+idb.iid(95825).sbstat='str';
+idb.iid(95825).sbval=180;
+idb.iid(95825).atype=1;
+idb.iid(95825).isreforged=0;
+
+idb.iid(95827).name='Helmet of the All-Consuming Maw (Raid Finder)';
+idb.iid(95827).ilvl=502;
+idb.iid(95827).str=1054;
+idb.iid(95827).sta=1941;
+idb.iid(95827).hit=796;
+idb.iid(95827).haste=681;
+idb.iid(95827).barmor=4570;
+idb.iid(95827).socket='MY';
+idb.iid(95827).atype=1;
+idb.iid(95827).isreforged=0;
+
+idb.iid(95829).name='Pauldrons of the All-Consuming Maw (Raid Finder)';
+idb.iid(95829).ilvl=502;
+idb.iid(95829).str=801;
+idb.iid(95829).sta=1441;
+idb.iid(95829).exp=482;
+idb.iid(95829).mast=607;
+idb.iid(95829).barmor=4218;
+idb.iid(95829).socket='RY';
+idb.iid(95829).atype=1;
+idb.iid(95829).isreforged=0;
+
+idb.iid(95830).name='Chestguard of the All-Consuming Maw (Raid Finder)';
+idb.iid(95830).ilvl=502;
+idb.iid(95830).str=1054;
+idb.iid(95830).sta=1941;
+idb.iid(95830).dodge=721;
+idb.iid(95830).parry=756;
+idb.iid(95830).barmor=5624;
+idb.iid(95830).socket='RYB';
+idb.iid(95830).sbstat='dodge';
+idb.iid(95830).sbval=180;
+idb.iid(95830).atype=1;
+idb.iid(95830).isreforged=0;
+
+idb.iid(95831).name='Handguards of the All-Consuming Maw (Raid Finder)';
+idb.iid(95831).ilvl=502;
+idb.iid(95831).str=881;
+idb.iid(95831).sta=1441;
+idb.iid(95831).exp=439;
+idb.iid(95831).dodge=698;
+idb.iid(95831).barmor=3515;
+idb.iid(95831).socket='R';
+idb.iid(95831).sbstat='dodge';
+idb.iid(95831).sbval=60;
+idb.iid(95831).atype=1;
+idb.iid(95831).isreforged=0;
+
+idb.iid(95832).name='Faceguard of the All-Consuming Maw (Raid Finder)';
+idb.iid(95832).ilvl=502;
+idb.iid(95832).str=1054;
+idb.iid(95832).sta=1941;
+idb.iid(95832).exp=495;
+idb.iid(95832).mast=903;
+idb.iid(95832).barmor=4570;
+idb.iid(95832).socket='MY';
+idb.iid(95832).sbstat='parry';
+idb.iid(95832).sbval=180;
+idb.iid(95832).atype=1;
+idb.iid(95832).isreforged=0;
+
+idb.iid(95833).name='Legguards of the All-Consuming Maw (Raid Finder)';
+idb.iid(95833).ilvl=502;
+idb.iid(95833).str=1134;
+idb.iid(95833).sta=1941;
+idb.iid(95833).hit=596;
+idb.iid(95833).parry=909;
+idb.iid(95833).barmor=4921;
+idb.iid(95833).socket='YB';
+idb.iid(95833).sbstat='sta';
+idb.iid(95833).sbval=180;
+idb.iid(95833).atype=1;
+idb.iid(95833).isreforged=0;
+
+idb.iid(95834).name='Shoulderguards of the All-Consuming Maw (Raid Finder)';
+idb.iid(95834).ilvl=502;
+idb.iid(95834).str=801;
+idb.iid(95834).sta=1441;
+idb.iid(95834).hit=561;
+idb.iid(95834).mast=561;
+idb.iid(95834).barmor=4218;
+idb.iid(95834).socket='RY';
+idb.iid(95834).sbstat='parry';
+idb.iid(95834).sbval=120;
+idb.iid(95834).atype=1;
+idb.iid(95834).isreforged=0;
+
+idb.iid(95873).name='Reconstructed Furious Shoulderplates (Raid Finder)';
+idb.iid(95873).ilvl=502;
+idb.iid(95873).str=881;
+idb.iid(95873).sta=1441;
+idb.iid(95873).haste=620;
+idb.iid(95873).mast=569;
+idb.iid(95873).barmor=4218;
+idb.iid(95873).socket='B';
+idb.iid(95873).sbstat='str';
+idb.iid(95873).sbval=60;
+idb.iid(95873).atype=1;
+idb.iid(95873).isreforged=0;
+
+idb.iid(95874).name='Reconstructed Bloody Shoulderplates (Raid Finder)';
+idb.iid(95874).ilvl=502;
+idb.iid(95874).str=881;
+idb.iid(95874).sta=1441;
+idb.iid(95874).exp=447;
+idb.iid(95874).parry=690;
+idb.iid(95874).barmor=4218;
+idb.iid(95874).socket='B';
+idb.iid(95874).sbstat='sta';
+idb.iid(95874).sbval=90;
+idb.iid(95874).atype=1;
+idb.iid(95874).isreforged=0;
+
+idb.iid(95878).name='Visage of the Doomed (Raid Finder)';
+idb.iid(95878).ilvl=502;
+idb.iid(95878).str=640;
+idb.iid(95878).sta=1081;
+idb.iid(95878).dodge=371;
+idb.iid(95878).parry=471;
+idb.iid(95878).barmor=18040;
+idb.iid(95878).socket='Y';
+idb.iid(95878).sbstat='str';
+idb.iid(95878).sbval=60;
+idb.iid(95878).isreforged=0;
+
+idb.iid(95910).name='Lightning Emperor''s Battleplate (Raid Finder)';
+idb.iid(95910).ilvl=502;
+idb.iid(95910).str=1054;
+idb.iid(95910).sta=1941;
+idb.iid(95910).exp=805;
+idb.iid(95910).haste=637;
+idb.iid(95910).barmor=5624;
+idb.iid(95910).socket='RYB';
+idb.iid(95910).sbstat='str';
+idb.iid(95910).sbval=180;
+idb.iid(95910).atype=1;
+idb.iid(95910).isreforged=0;
+
+idb.iid(95912).name='Lightning Emperor''s Helmet (Raid Finder)';
+idb.iid(95912).ilvl=502;
+idb.iid(95912).str=1054;
+idb.iid(95912).sta=1941;
+idb.iid(95912).hit=796;
+idb.iid(95912).haste=681;
+idb.iid(95912).barmor=4570;
+idb.iid(95912).socket='MY';
+idb.iid(95912).atype=1;
+idb.iid(95912).isreforged=0;
+
+idb.iid(95914).name='Lightning Emperor''s Pauldrons (Raid Finder)';
+idb.iid(95914).ilvl=502;
+idb.iid(95914).str=801;
+idb.iid(95914).sta=1441;
+idb.iid(95914).exp=482;
+idb.iid(95914).mast=607;
+idb.iid(95914).barmor=4218;
+idb.iid(95914).socket='RY';
+idb.iid(95914).atype=1;
+idb.iid(95914).isreforged=0;
+
+idb.iid(95920).name='Lightning Emperor''s Chestguard (Raid Finder)';
+idb.iid(95920).ilvl=502;
+idb.iid(95920).str=1054;
+idb.iid(95920).sta=1941;
+idb.iid(95920).dodge=721;
+idb.iid(95920).parry=756;
+idb.iid(95920).barmor=5624;
+idb.iid(95920).socket='RYB';
+idb.iid(95920).sbstat='dodge';
+idb.iid(95920).sbval=180;
+idb.iid(95920).atype=1;
+idb.iid(95920).isreforged=0;
+
+idb.iid(95921).name='Lightning Emperor''s Handguards (Raid Finder)';
+idb.iid(95921).ilvl=502;
+idb.iid(95921).str=881;
+idb.iid(95921).sta=1441;
+idb.iid(95921).exp=439;
+idb.iid(95921).dodge=698;
+idb.iid(95921).barmor=3515;
+idb.iid(95921).socket='R';
+idb.iid(95921).sbstat='dodge';
+idb.iid(95921).sbval=60;
+idb.iid(95921).atype=1;
+idb.iid(95921).isreforged=0;
+
+idb.iid(95922).name='Lightning Emperor''s Faceguard (Raid Finder)';
+idb.iid(95922).ilvl=502;
+idb.iid(95922).str=1054;
+idb.iid(95922).sta=1941;
+idb.iid(95922).exp=495;
+idb.iid(95922).mast=903;
+idb.iid(95922).barmor=4570;
+idb.iid(95922).socket='MY';
+idb.iid(95922).sbstat='parry';
+idb.iid(95922).sbval=180;
+idb.iid(95922).atype=1;
+idb.iid(95922).isreforged=0;
+
+idb.iid(95923).name='Lightning Emperor''s Legguards (Raid Finder)';
+idb.iid(95923).ilvl=502;
+idb.iid(95923).str=1134;
+idb.iid(95923).sta=1941;
+idb.iid(95923).hit=596;
+idb.iid(95923).parry=909;
+idb.iid(95923).barmor=4921;
+idb.iid(95923).socket='YB';
+idb.iid(95923).sbstat='sta';
+idb.iid(95923).sbval=180;
+idb.iid(95923).atype=1;
+idb.iid(95923).isreforged=0;
+
+idb.iid(95924).name='Lightning Emperor''s Shoulderguards (Raid Finder)';
+idb.iid(95924).ilvl=502;
+idb.iid(95924).str=801;
+idb.iid(95924).sta=1441;
+idb.iid(95924).hit=561;
+idb.iid(95924).mast=561;
+idb.iid(95924).barmor=4218;
+idb.iid(95924).socket='RY';
+idb.iid(95924).sbstat='parry';
+idb.iid(95924).sbval=120;
+idb.iid(95924).atype=1;
+idb.iid(95924).isreforged=0;
+
+idb.iid(95976).name='Abandoned Zandalari Bucklebreaker (Raid Finder)';
+idb.iid(95976).ilvl=502;
+idb.iid(95976).str=881;
+idb.iid(95976).sta=1441;
+idb.iid(95976).mast=656;
+idb.iid(95976).dodge=507;
+idb.iid(95976).barmor=3164;
+idb.iid(95976).socket='B';
+idb.iid(95976).sbstat='sta';
+idb.iid(95976).sbval=90;
+idb.iid(95976).atype=1;
+idb.iid(95976).isreforged=0;
+
+idb.iid(95977).name='Necklace of the Terra-Cotta Vanquisher (Raid Finder)';
+idb.iid(95977).ilvl=502;
+idb.iid(95977).str=640;
+idb.iid(95977).sta=1081;
+idb.iid(95977).hit=475;
+idb.iid(95977).mast=381;
+idb.iid(95977).socket='R';
+idb.iid(95977).sbstat='exp';
+idb.iid(95977).sbval=60;
+idb.iid(95977).isreforged=0;
+
+idb.iid(95978).name='Locksmasher Greaves (Raid Finder)';
+idb.iid(95978).ilvl=502;
+idb.iid(95978).str=961;
+idb.iid(95978).sta=1441;
+idb.iid(95978).hit=502;
+idb.iid(95978).haste=722;
+idb.iid(95978).barmor=3867;
+idb.iid(95978).atype=1;
+idb.iid(95978).isreforged=0;
+
+idb.iid(95979).name='Columnbreaker Stompers (Raid Finder)';
+idb.iid(95979).ilvl=502;
+idb.iid(95979).str=961;
+idb.iid(95979).sta=1441;
+idb.iid(95979).exp=624;
+idb.iid(95979).mast=650;
+idb.iid(95979).barmor=3867;
+idb.iid(95979).atype=1;
+idb.iid(95979).isreforged=0;
+
+idb.iid(95980).name='Necklace of the Terra-Cotta Protector (Raid Finder)';
+idb.iid(95980).ilvl=502;
+idb.iid(95980).str=640;
+idb.iid(95980).sta=1081;
+idb.iid(95980).exp=325;
+idb.iid(95980).parry=508;
+idb.iid(95980).socket='R';
+idb.iid(95980).sbstat='exp';
+idb.iid(95980).sbval=60;
+idb.iid(95980).isreforged=0;
+
+idb.iid(95986).name='Helmet of the Last Mogu (Raid Finder)';
+idb.iid(95986).ilvl=502;
+idb.iid(95986).str=1054;
+idb.iid(95986).sta=1941;
+idb.iid(95986).hit=796;
+idb.iid(95986).haste=681;
+idb.iid(95986).barmor=4570;
+idb.iid(95986).socket='MY';
+idb.iid(95986).atype=1;
+idb.iid(95986).isreforged=0;
+
+idb.iid(95987).name='Battleplate of the Last Mogu (Raid Finder)';
+idb.iid(95987).ilvl=502;
+idb.iid(95987).str=1054;
+idb.iid(95987).sta=1941;
+idb.iid(95987).exp=805;
+idb.iid(95987).haste=637;
+idb.iid(95987).barmor=5624;
+idb.iid(95987).socket='RYB';
+idb.iid(95987).sbstat='str';
+idb.iid(95987).sbval=180;
+idb.iid(95987).atype=1;
+idb.iid(95987).isreforged=0;
+
+idb.iid(95990).name='Pauldrons of the Last Mogu (Raid Finder)';
+idb.iid(95990).ilvl=502;
+idb.iid(95990).str=801;
+idb.iid(95990).sta=1441;
+idb.iid(95990).exp=482;
+idb.iid(95990).mast=607;
+idb.iid(95990).barmor=4218;
+idb.iid(95990).socket='RY';
+idb.iid(95990).atype=1;
+idb.iid(95990).isreforged=0;
+
+idb.iid(95991).name='Chestguard of the Last Mogu (Raid Finder)';
+idb.iid(95991).ilvl=502;
+idb.iid(95991).str=1054;
+idb.iid(95991).sta=1941;
+idb.iid(95991).dodge=721;
+idb.iid(95991).parry=756;
+idb.iid(95991).barmor=5624;
+idb.iid(95991).socket='RYB';
+idb.iid(95991).sbstat='dodge';
+idb.iid(95991).sbval=180;
+idb.iid(95991).atype=1;
+idb.iid(95991).isreforged=0;
+
+idb.iid(95992).name='Handguards of the Last Mogu (Raid Finder)';
+idb.iid(95992).ilvl=502;
+idb.iid(95992).str=881;
+idb.iid(95992).sta=1441;
+idb.iid(95992).exp=439;
+idb.iid(95992).dodge=698;
+idb.iid(95992).barmor=3515;
+idb.iid(95992).socket='R';
+idb.iid(95992).sbstat='mast';
+idb.iid(95992).sbval=60;
+idb.iid(95992).atype=1;
+idb.iid(95992).isreforged=0;
+
+idb.iid(95993).name='Faceguard of the Last Mogu (Raid Finder)';
+idb.iid(95993).ilvl=502;
+idb.iid(95993).str=1054;
+idb.iid(95993).sta=1941;
+idb.iid(95993).exp=495;
+idb.iid(95993).mast=903;
+idb.iid(95993).barmor=4570;
+idb.iid(95993).socket='MY';
+idb.iid(95993).sbstat='parry';
+idb.iid(95993).sbval=180;
+idb.iid(95993).atype=1;
+idb.iid(95993).isreforged=0;
+
+idb.iid(95994).name='Legguards of the Last Mogu (Raid Finder)';
+idb.iid(95994).ilvl=502;
+idb.iid(95994).str=1134;
+idb.iid(95994).sta=1941;
+idb.iid(95994).hit=596;
+idb.iid(95994).parry=909;
+idb.iid(95994).barmor=4921;
+idb.iid(95994).socket='YB';
+idb.iid(95994).sbstat='sta';
+idb.iid(95994).sbval=180;
+idb.iid(95994).atype=1;
+idb.iid(95994).isreforged=0;
+
+idb.iid(95995).name='Shoulderguards of the Last Mogu (Raid Finder)';
+idb.iid(95995).ilvl=502;
+idb.iid(95995).str=801;
+idb.iid(95995).sta=1441;
+idb.iid(95995).hit=561;
+idb.iid(95995).mast=561;
+idb.iid(95995).barmor=4218;
+idb.iid(95995).socket='RY';
+idb.iid(95995).sbstat='parry';
+idb.iid(95995).sbval=120;
+idb.iid(95995).atype=1;
+idb.iid(95995).isreforged=0;
 
 idb.iid(87046).name='Screaming Tiger, Qiang''s Unbreakable Polearm (Heroic)';
 idb.iid(87046).wtype='pol';
@@ -3522,6 +6317,201 @@ idb.iid(87062).hit=386;
 idb.iid(87062).exp=342;
 idb.iid(87062).isreforged=0;
 
+idb.iid(95632).name='Worldbreaker''s Stormscythe (Raid Finder)';
+idb.iid(95632).wtype='axe';
+idb.iid(95632).ilvl=502;
+idb.iid(95632).tooldps=3504.4;
+idb.iid(95632).swing=2.6;
+idb.iid(95632).avgdmg=9111.5;
+idb.iid(95632).str=474;
+idb.iid(95632).sta=832;
+idb.iid(95632).hit=376;
+idb.iid(95632).exp=249;
+idb.iid(95632).socket='B';
+idb.iid(95632).sbstat='str';
+idb.iid(95632).sbval=60;
+idb.iid(95632).isreforged=0;
+
+idb.iid(95666).name='Kura-Kura, Kazra''jin''s Skullcleaver (Raid Finder)';
+idb.iid(95666).wtype='axe';
+idb.iid(95666).ilvl=502;
+idb.iid(95666).tooldps=3504.4;
+idb.iid(95666).swing=2.6;
+idb.iid(95666).avgdmg=9111.5;
+idb.iid(95666).sta=832;
+idb.iid(95666).agi=474;
+idb.iid(95666).crit=330;
+idb.iid(95666).mast=330;
+idb.iid(95666).socket='B';
+idb.iid(95666).sbstat='agi';
+idb.iid(95666).sbval=60;
+idb.iid(95666).isreforged=0;
+
+idb.iid(95675).name='Zerat, Malakk''s Soulburning Greatsword (Raid Finder)';
+idb.iid(95675).wtype='swo';
+idb.iid(95675).ilvl=502;
+idb.iid(95675).tooldps=4725.1;
+idb.iid(95675).swing=3.6;
+idb.iid(95675).avgdmg=17010.5;
+idb.iid(95675).str=1214;
+idb.iid(95675).sta=1941;
+idb.iid(95675).hit=908;
+idb.iid(95675).crit=659;
+idb.iid(95675).socket='B';
+idb.iid(95675).sbstat='str';
+idb.iid(95675).sbval=60;
+idb.iid(95675).isreforged=0;
+
+idb.iid(95686).name='Shellsplitter Greataxe (Raid Finder)';
+idb.iid(95686).wtype='axe';
+idb.iid(95686).ilvl=502;
+idb.iid(95686).tooldps=3504.4;
+idb.iid(95686).swing=2.6;
+idb.iid(95686).avgdmg=9111.5;
+idb.iid(95686).str=474;
+idb.iid(95686).sta=832;
+idb.iid(95686).hit=356;
+idb.iid(95686).crit=284;
+idb.iid(95686).socket='B';
+idb.iid(95686).sbstat='str';
+idb.iid(95686).sbval=60;
+idb.iid(95686).isreforged=0;
+
+idb.iid(95758).name='Acid-Spine Bonemace (Raid Finder)';
+idb.iid(95758).wtype='mac';
+idb.iid(95758).ilvl=502;
+idb.iid(95758).tooldps=3504.4;
+idb.iid(95758).swing=2.4;
+idb.iid(95758).avgdmg=8410.5;
+idb.iid(95758).str=474;
+idb.iid(95758).sta=832;
+idb.iid(95758).dodge=362;
+idb.iid(95758).parry=275;
+idb.iid(95758).socket='R';
+idb.iid(95758).sbstat='str';
+idb.iid(95758).sbval=60;
+idb.iid(95758).isreforged=0;
+
+idb.iid(95770).name='Hand of the Dark Animus (Raid Finder)';
+idb.iid(95770).wtype='mac';
+idb.iid(95770).ilvl=502;
+idb.iid(95770).tooldps=3504.4;
+idb.iid(95770).swing=2.6;
+idb.iid(95770).avgdmg=9111.5;
+idb.iid(95770).sta=832;
+idb.iid(95770).agi=474;
+idb.iid(95770).exp=275;
+idb.iid(95770).haste=362;
+idb.iid(95770).socket='R';
+idb.iid(95770).sbstat='agi';
+idb.iid(95770).sbval=60;
+idb.iid(95770).isreforged=0;
+
+idb.iid(95790).name='Qon''s Flaming Scimitar (Raid Finder)';
+idb.iid(95790).wtype='swo';
+idb.iid(95790).ilvl=502;
+idb.iid(95790).tooldps=3504.4;
+idb.iid(95790).swing=2.6;
+idb.iid(95790).avgdmg=9111.5;
+idb.iid(95790).str=474;
+idb.iid(95790).sta=832;
+idb.iid(95790).exp=330;
+idb.iid(95790).mast=330;
+idb.iid(95790).socket='R';
+idb.iid(95790).sbstat='str';
+idb.iid(95790).sbval=60;
+idb.iid(95790).isreforged=0;
+
+idb.iid(95803).name='Shan-Dun, Breaker of Hope (Raid Finder)';
+idb.iid(95803).wtype='pol';
+idb.iid(95803).ilvl=502;
+idb.iid(95803).tooldps=4725.1;
+idb.iid(95803).swing=3.6;
+idb.iid(95803).avgdmg=17010.5;
+idb.iid(95803).sta=1941;
+idb.iid(95803).agi=1214;
+idb.iid(95803).exp=846;
+idb.iid(95803).haste=798;
+idb.iid(95803).socket='R';
+idb.iid(95803).sbstat='agi';
+idb.iid(95803).sbval=60;
+idb.iid(95803).isreforged=0;
+
+idb.iid(95809).name='Uroe, Harbinger of Terror (Raid Finder)';
+idb.iid(95809).wtype='axe';
+idb.iid(95809).ilvl=502;
+idb.iid(95809).tooldps=4725.1;
+idb.iid(95809).swing=3.6;
+idb.iid(95809).avgdmg=17010.5;
+idb.iid(95809).str=1214;
+idb.iid(95809).sta=1941;
+idb.iid(95809).crit=919;
+idb.iid(95809).mast=639;
+idb.iid(95809).socket='R';
+idb.iid(95809).sbstat='str';
+idb.iid(95809).sbval=60;
+idb.iid(95809).isreforged=0;
+
+idb.iid(95861).name='Zeeg''s Ancient Kegsmasher (Raid Finder)';
+idb.iid(95861).wtype='mac';
+idb.iid(95861).ilvl=502;
+idb.iid(95861).tooldps=3504.4;
+idb.iid(95861).swing=2.4;
+idb.iid(95861).avgdmg=8410.5;
+idb.iid(95861).sta=832;
+idb.iid(95861).agi=474;
+idb.iid(95861).exp=372;
+idb.iid(95861).mast=258;
+idb.iid(95861).socket='Y';
+idb.iid(95861).sbstat='agi';
+idb.iid(95861).sbval=60;
+idb.iid(95861).isreforged=0;
+
+idb.iid(95875).name='Greatsword of Frozen Hells (Raid Finder)';
+idb.iid(95875).wtype='swo';
+idb.iid(95875).ilvl=502;
+idb.iid(95875).tooldps=4725.1;
+idb.iid(95875).swing=3.6;
+idb.iid(95875).avgdmg=17010.5;
+idb.iid(95875).str=1214;
+idb.iid(95875).sta=1941;
+idb.iid(95875).crit=783;
+idb.iid(95875).haste=837;
+idb.iid(95875).socket='Y';
+idb.iid(95875).sbstat='str';
+idb.iid(95875).sbval=60;
+idb.iid(95875).isreforged=0;
+
+idb.iid(95876).name='Do-tharak, the Swordbreaker (Raid Finder)';
+idb.iid(95876).wtype='swo';
+idb.iid(95876).ilvl=502;
+idb.iid(95876).tooldps=3504.4;
+idb.iid(95876).swing=2.6;
+idb.iid(95876).avgdmg=9111.5;
+idb.iid(95876).str=474;
+idb.iid(95876).sta=832;
+idb.iid(95876).hit=258;
+idb.iid(95876).mast=372;
+idb.iid(95876).socket='Y';
+idb.iid(95876).sbstat='str';
+idb.iid(95876).sbval=60;
+idb.iid(95876).isreforged=0;
+
+idb.iid(95877).name='Bo-Ris, Horror in the Night (Raid Finder)';
+idb.iid(95877).wtype='pol';
+idb.iid(95877).ilvl=502;
+idb.iid(95877).tooldps=4725.1;
+idb.iid(95877).swing=3.6;
+idb.iid(95877).avgdmg=17010.5;
+idb.iid(95877).str=1214;
+idb.iid(95877).sta=1941;
+idb.iid(95877).exp=714;
+idb.iid(95877).mast=897;
+idb.iid(95877).socket='Y';
+idb.iid(95877).sbstat='str';
+idb.iid(95877).sbval=60;
+idb.iid(95877).isreforged=0;
+
 idb.iid(86944).name='Articulated Legplates (Heroic)';
 idb.iid(86944).ilvl=509;
 idb.iid(86944).str=889;
@@ -3535,6 +6525,15 @@ idb.iid(86944).sbval=120;
 idb.iid(86944).atype=1;
 idb.iid(86944).isreforged=0;
 
+idb.iid(86945).name='Hisek''s Chrysanthemum Cape (Heroic)';
+idb.iid(86945).ilvl=509;
+idb.iid(86945).str=769;
+idb.iid(86945).sta=1154;
+idb.iid(86945).hit=475;
+idb.iid(86945).haste=536;
+idb.iid(86945).barmor=1189;
+idb.iid(86945).isreforged=0;
+
 idb.iid(86946).name='Vizier''s Ruby Signet (Heroic)';
 idb.iid(86946).ilvl=509;
 idb.iid(86946).str=585;
@@ -3542,6 +6541,19 @@ idb.iid(86946).sta=1154;
 idb.iid(86946).exp=390;
 idb.iid(86946).parry=769;
 idb.iid(86946).isreforged=0;
+
+idb.iid(86955).name='Waistplate of Overwhelming Assault (Heroic)';
+idb.iid(86955).ilvl=509;
+idb.iid(86955).str=866;
+idb.iid(86955).sta=1538;
+idb.iid(86955).haste=653;
+idb.iid(86955).mast=520;
+idb.iid(86955).barmor=3234;
+idb.iid(86955).socket='YB';
+idb.iid(86955).sbstat='haste';
+idb.iid(86955).sbval=120;
+idb.iid(86955).atype=1;
+idb.iid(86955).isreforged=0;
 
 idb.iid(86956).name='Windblade Talons (Heroic)';
 idb.iid(86956).ilvl=509;
@@ -3555,6 +6567,14 @@ idb.iid(86956).sbstat='parry';
 idb.iid(86956).sbval=60;
 idb.iid(86956).atype=1;
 idb.iid(86956).isreforged=0;
+
+idb.iid(86957).name='Ring of the Bladed Tempest (Heroic)';
+idb.iid(86957).ilvl=509;
+idb.iid(86957).str=769;
+idb.iid(86957).sta=1154;
+idb.iid(86957).exp=402;
+idb.iid(86957).haste=578;
+idb.iid(86957).isreforged=0;
 
 idb.iid(86966).name='Garalon''s Hollow Skull (Heroic)';
 idb.iid(86966).ilvl=509;
@@ -3576,6 +6596,19 @@ idb.iid(86968).sta=1154;
 idb.iid(86968).mast=450;
 idb.iid(86968).dodge=550;
 idb.iid(86968).isreforged=0;
+
+idb.iid(86979).name='Impaling Treads (Heroic)';
+idb.iid(86979).ilvl=509;
+idb.iid(86979).str=946;
+idb.iid(86979).sta=1538;
+idb.iid(86979).hit=568;
+idb.iid(86979).haste=685;
+idb.iid(86979).barmor=3953;
+idb.iid(86979).socket='Y';
+idb.iid(86979).sbstat='hit';
+idb.iid(86979).sbval=60;
+idb.iid(86979).atype=1;
+idb.iid(86979).isreforged=0;
 
 idb.iid(86980).name='Cloak of Raining Blades (Heroic)';
 idb.iid(86980).ilvl=509;
@@ -3608,7 +6641,6 @@ idb.iid(87101).sbstat='str';
 idb.iid(87101).sbval=180;
 idb.iid(87101).atype=1;
 idb.iid(87101).isreforged=0;
-idb.iid(87101).istierR=[1 0 0];
 
 idb.iid(87102).name='White Tiger Legplates (Heroic)';
 idb.iid(87102).ilvl=509;
@@ -3622,7 +6654,19 @@ idb.iid(87102).sbstat='str';
 idb.iid(87102).sbval=60;
 idb.iid(87102).atype=1;
 idb.iid(87102).isreforged=0;
-idb.iid(87102).istierR=[1 0 0];
+
+idb.iid(87103).name='White Tiger Pauldrons (Heroic)';
+idb.iid(87103).ilvl=509;
+idb.iid(87103).str=946;
+idb.iid(87103).sta=1538;
+idb.iid(87103).hit=684;
+idb.iid(87103).haste=604;
+idb.iid(87103).barmor=4312;
+idb.iid(87103).socket='B';
+idb.iid(87103).sbstat='str';
+idb.iid(87103).sbval=60;
+idb.iid(87103).atype=1;
+idb.iid(87103).isreforged=0;
 
 idb.iid(87109).name='White Tiger Chestguard (Heroic)';
 idb.iid(87109).ilvl=509;
@@ -3636,7 +6680,6 @@ idb.iid(87109).sbstat='parry';
 idb.iid(87109).sbval=120;
 idb.iid(87109).atype=1;
 idb.iid(87109).isreforged=0;
-idb.iid(87109).istierP=[1 0 0];
 
 idb.iid(87110).name='White Tiger Handguards (Heroic)';
 idb.iid(87110).ilvl=509;
@@ -3647,7 +6690,6 @@ idb.iid(87110).dodge=1026;
 idb.iid(87110).barmor=3593;
 idb.iid(87110).atype=1;
 idb.iid(87110).isreforged=0;
-idb.iid(87110).istierP=[1 0 0];
 
 idb.iid(87111).name='White Tiger Faceguard (Heroic)';
 idb.iid(87111).ilvl=509;
@@ -3661,7 +6703,6 @@ idb.iid(87111).sbstat='sta';
 idb.iid(87111).sbval=270;
 idb.iid(87111).atype=1;
 idb.iid(87111).isreforged=0;
-idb.iid(87111).istierP=[1 0 0];
 
 idb.iid(87112).name='White Tiger Legguards (Heroic)';
 idb.iid(87112).ilvl=509;
@@ -3675,7 +6716,6 @@ idb.iid(87112).sbstat='sta';
 idb.iid(87112).sbval=90;
 idb.iid(87112).atype=1;
 idb.iid(87112).isreforged=0;
-idb.iid(87112).istierP=[1 0 0];
 
 idb.iid(87113).name='White Tiger Shoulderguards (Heroic)';
 idb.iid(87113).ilvl=509;
@@ -3689,7 +6729,6 @@ idb.iid(87113).sbstat='sta';
 idb.iid(87113).sbval=90;
 idb.iid(87113).atype=1;
 idb.iid(87113).isreforged=0;
-idb.iid(87113).istierP=[1 0 0];
 
 idb.iid(87145).name='Bracers of Defiled Earth (Heroic)';
 idb.iid(87145).ilvl=509;
@@ -3788,6 +6827,32 @@ idb.iid(89921).sbval=90;
 idb.iid(89921).atype=1;
 idb.iid(89921).isreforged=0;
 
+idb.iid(89928).name='Legplates of Regal Reinforcement (Heroic)';
+idb.iid(89928).ilvl=509;
+idb.iid(89928).str=1220;
+idb.iid(89928).sta=2071;
+idb.iid(89928).dodge=854;
+idb.iid(89928).parry=817;
+idb.iid(89928).barmor=5031;
+idb.iid(89928).socket='RB';
+idb.iid(89928).sbstat='sta';
+idb.iid(89928).sbval=180;
+idb.iid(89928).atype=1;
+idb.iid(89928).isreforged=0;
+
+idb.iid(89946).name='Grasps of Serpentine Might (Heroic)';
+idb.iid(89946).ilvl=509;
+idb.iid(89946).str=699;
+idb.iid(89946).sta=1538;
+idb.iid(89946).exp=479;
+idb.iid(89946).parry=986;
+idb.iid(89946).barmor=3593;
+idb.iid(89946).socket='B';
+idb.iid(89946).sbstat='parry';
+idb.iid(89946).sbval=60;
+idb.iid(89946).atype=1;
+idb.iid(89946).isreforged=0;
+
 idb.iid(86987).name='Scimitar of Seven Stars (Heroic)';
 idb.iid(86987).wtype='swo';
 idb.iid(86987).ilvl=509;
@@ -3827,6 +6892,153 @@ idb.iid(87176).crit=920;
 idb.iid(87176).mast=920;
 idb.iid(87176).isreforged=0;
 
+idb.iid(91272).name='Tyrannical Gladiator''s Scaled Helm';
+idb.iid(91272).ilvl=512;
+idb.iid(91272).str=1180;
+idb.iid(91272).sta=2130;
+idb.iid(91272).exp=947;
+idb.iid(91272).mast=707;
+idb.iid(91272).barmor=4715;
+idb.iid(91272).socket='MR';
+idb.iid(91272).atype=1;
+idb.iid(91272).isreforged=0;
+
+idb.iid(91276).name='Tyrannical Gladiator''s Scaled Shoulders';
+idb.iid(91276).ilvl=512;
+idb.iid(91276).str=975;
+idb.iid(91276).sta=1582;
+idb.iid(91276).exp=623;
+idb.iid(91276).haste=703;
+idb.iid(91276).barmor=4352;
+idb.iid(91276).socket='Y';
+idb.iid(91276).sbstat='str';
+idb.iid(91276).sbval=60;
+idb.iid(91276).atype=1;
+idb.iid(91276).isreforged=0;
+
+idb.iid(91298).name='Tyrannical Gladiator''s Girdle of Accuracy';
+idb.iid(91298).ilvl=512;
+idb.iid(91298).str=975;
+idb.iid(91298).sta=1583;
+idb.iid(91298).hit=674;
+idb.iid(91298).haste=617;
+idb.iid(91298).barmor=3264;
+idb.iid(91298).socket='B';
+idb.iid(91298).sbstat='str';
+idb.iid(91298).sbval=60;
+idb.iid(91298).atype=1;
+idb.iid(91298).isreforged=0;
+
+idb.iid(91088).name='Tyrannical Gladiator''s Decapitator';
+idb.iid(91088).wtype='axe';
+idb.iid(91088).ilvl=512;
+idb.iid(91088).tooldps=5186.5;
+idb.iid(91088).swing=3.6;
+idb.iid(91088).avgdmg=18671.5;
+idb.iid(91088).str=1420;
+idb.iid(91088).sta=2130;
+idb.iid(91088).crit=947;
+idb.iid(91088).isreforged=0;
+
+idb.iid(91090).name='Tyrannical Gladiator''s Bonegrinder';
+idb.iid(91090).wtype='mac';
+idb.iid(91090).ilvl=512;
+idb.iid(91090).tooldps=5186.5;
+idb.iid(91090).swing=3.6;
+idb.iid(91090).avgdmg=18671.5;
+idb.iid(91090).str=1420;
+idb.iid(91090).sta=2130;
+idb.iid(91090).crit=947;
+idb.iid(91090).isreforged=0;
+
+idb.iid(91092).name='Tyrannical Gladiator''s Greatsword';
+idb.iid(91092).wtype='swo';
+idb.iid(91092).ilvl=512;
+idb.iid(91092).tooldps=5186.5;
+idb.iid(91092).swing=3.6;
+idb.iid(91092).avgdmg=18671.5;
+idb.iid(91092).str=1420;
+idb.iid(91092).sta=2130;
+idb.iid(91092).crit=947;
+idb.iid(91092).isreforged=0;
+
+idb.iid(91094).name='Tyrannical Gladiator''s Cleaver';
+idb.iid(91094).wtype='axe';
+idb.iid(91094).ilvl=512;
+idb.iid(91094).tooldps=3846.6;
+idb.iid(91094).swing=2.6;
+idb.iid(91094).avgdmg=10001;
+idb.iid(91094).sta=913;
+idb.iid(91094).agi=608;
+idb.iid(91094).crit=406;
+idb.iid(91094).isreforged=0;
+
+idb.iid(91096).name='Tyrannical Gladiator''s Pummeler';
+idb.iid(91096).wtype='mac';
+idb.iid(91096).ilvl=512;
+idb.iid(91096).tooldps=3846.6;
+idb.iid(91096).swing=2.6;
+idb.iid(91096).avgdmg=10001;
+idb.iid(91096).sta=913;
+idb.iid(91096).agi=608;
+idb.iid(91096).crit=406;
+idb.iid(91096).isreforged=0;
+
+idb.iid(91098).name='Tyrannical Gladiator''s Quickblade';
+idb.iid(91098).wtype='swo';
+idb.iid(91098).ilvl=512;
+idb.iid(91098).tooldps=3846.6;
+idb.iid(91098).swing=2.6;
+idb.iid(91098).avgdmg=10001;
+idb.iid(91098).sta=913;
+idb.iid(91098).agi=608;
+idb.iid(91098).crit=406;
+idb.iid(91098).isreforged=0;
+
+idb.iid(91308).name='Tyrannical Gladiator''s Pike';
+idb.iid(91308).wtype='pol';
+idb.iid(91308).ilvl=512;
+idb.iid(91308).tooldps=5186.5;
+idb.iid(91308).swing=3.6;
+idb.iid(91308).avgdmg=18671.5;
+idb.iid(91308).sta=2130;
+idb.iid(91308).agi=1420;
+idb.iid(91308).crit=947;
+idb.iid(91308).isreforged=0;
+
+idb.iid(91405).name='Tyrannical Gladiator''s Hacker';
+idb.iid(91405).wtype='axe';
+idb.iid(91405).ilvl=512;
+idb.iid(91405).tooldps=3846.6;
+idb.iid(91405).swing=2.6;
+idb.iid(91405).avgdmg=10001;
+idb.iid(91405).str=608;
+idb.iid(91405).sta=913;
+idb.iid(91405).crit=406;
+idb.iid(91405).isreforged=0;
+
+idb.iid(91407).name='Tyrannical Gladiator''s Bonecracker';
+idb.iid(91407).wtype='mac';
+idb.iid(91407).ilvl=512;
+idb.iid(91407).tooldps=3846.6;
+idb.iid(91407).swing=2.6;
+idb.iid(91407).avgdmg=10001;
+idb.iid(91407).str=608;
+idb.iid(91407).sta=913;
+idb.iid(91407).crit=406;
+idb.iid(91407).isreforged=0;
+
+idb.iid(91409).name='Tyrannical Gladiator''s Slicer';
+idb.iid(91409).wtype='swo';
+idb.iid(91409).ilvl=512;
+idb.iid(91409).tooldps=3846.6;
+idb.iid(91409).swing=2.6;
+idb.iid(91409).avgdmg=10001;
+idb.iid(91409).str=608;
+idb.iid(91409).sta=913;
+idb.iid(91409).crit=406;
+idb.iid(91409).isreforged=0;
+
 idb.iid(90506).name='Bracers of Defiled Earth';
 idb.iid(90506).ilvl=516;
 idb.iid(90506).str=821;
@@ -3865,6 +7077,2584 @@ idb.iid(90509).sta=1231;
 idb.iid(90509).dodge=547;
 idb.iid(90509).parry=547;
 idb.iid(90509).isreforged=0;
+
+idb.iid(94265).name='Haunted Steel Treads';
+idb.iid(94265).ilvl=522;
+idb.iid(94265).str=998;
+idb.iid(94265).sta=1736;
+idb.iid(94265).haste=748;
+idb.iid(94265).mast=597;
+idb.iid(94265).barmor=4113;
+idb.iid(94265).socket='RR';
+idb.iid(94265).sbstat='mast';
+idb.iid(94265).sbval=120;
+idb.iid(94265).atype=1;
+idb.iid(94265).isreforged=0;
+
+idb.iid(94266).name='Haunted Steel Greathelm';
+idb.iid(94266).ilvl=522;
+idb.iid(94266).str=1318;
+idb.iid(94266).sta=2338;
+idb.iid(94266).haste=941;
+idb.iid(94266).mast=866;
+idb.iid(94266).barmor=4861;
+idb.iid(94266).socket='MR';
+idb.iid(94266).sbstat='mast';
+idb.iid(94266).sbval=180;
+idb.iid(94266).atype=1;
+idb.iid(94266).isreforged=0;
+
+idb.iid(94267).name='Haunted Steel Warboots';
+idb.iid(94267).ilvl=522;
+idb.iid(94267).str=998;
+idb.iid(94267).sta=1736;
+idb.iid(94267).hit=748;
+idb.iid(94267).mast=597;
+idb.iid(94267).barmor=4113;
+idb.iid(94267).socket='RR';
+idb.iid(94267).sbstat='mast';
+idb.iid(94267).sbval=120;
+idb.iid(94267).atype=1;
+idb.iid(94267).isreforged=0;
+
+idb.iid(94268).name='Haunted Steel Headguard';
+idb.iid(94268).ilvl=522;
+idb.iid(94268).str=1318;
+idb.iid(94268).sta=2338;
+idb.iid(94268).mast=791;
+idb.iid(94268).parry=985;
+idb.iid(94268).barmor=4861;
+idb.iid(94268).socket='MR';
+idb.iid(94268).sbstat='mast';
+idb.iid(94268).sbval=180;
+idb.iid(94268).atype=1;
+idb.iid(94268).isreforged=0;
+
+idb.iid(94507).name='Steadfast Talisman of the Shado-Pan Assault';
+idb.iid(94507).ilvl=522;
+idb.iid(94507).mast=1467;
+idb.iid(94507).isreforged=0;
+
+idb.iid(94508).name='Brutal Talisman of the Shado-Pan Assault';
+idb.iid(94508).ilvl=522;
+idb.iid(94508).exp=1467;
+idb.iid(94508).isreforged=0;
+
+idb.iid(94511).name='Vicious Talisman of the Shado-Pan Assault';
+idb.iid(94511).ilvl=522;
+idb.iid(94511).hit=1467;
+idb.iid(94511).isreforged=0;
+
+idb.iid(94512).name='Renataki''s Soul Charm';
+idb.iid(94512).ilvl=522;
+idb.iid(94512).exp=1467;
+idb.iid(94512).isreforged=0;
+
+idb.iid(94513).name='Wushoolay''s Final Choice';
+idb.iid(94513).ilvl=522;
+idb.iid(94513).hit=1467;
+idb.iid(94513).isreforged=0;
+
+idb.iid(94515).name='Fabled Feather of Ji-Kun';
+idb.iid(94515).ilvl=522;
+idb.iid(94515).hit=1467;
+idb.iid(94515).isreforged=0;
+
+idb.iid(94516).name='Fortitude of the Zandalari';
+idb.iid(94516).ilvl=522;
+idb.iid(94516).mast=1467;
+idb.iid(94516).isreforged=0;
+
+idb.iid(94518).name='Delicate Vial of the Sanguinaire';
+idb.iid(94518).ilvl=522;
+idb.iid(94518).dodge=1467;
+idb.iid(94518).isreforged=0;
+
+idb.iid(94520).name='Inscribed Bag of Hydra-Spawn';
+idb.iid(94520).ilvl=522;
+idb.iid(94520).spi=1467;
+idb.iid(94520).isreforged=0;
+
+idb.iid(94521).name='Breath of the Hydra';
+idb.iid(94521).ilvl=522;
+idb.iid(94521).haste=1467;
+idb.iid(94521).isreforged=0;
+
+idb.iid(94523).name='Bad Juju';
+idb.iid(94523).ilvl=522;
+idb.iid(94523).mast=1467;
+idb.iid(94523).isreforged=0;
+
+idb.iid(94525).name='Stolen Relic of Zuldazar';
+idb.iid(94525).ilvl=522;
+idb.iid(94525).spi=1467;
+idb.iid(94525).isreforged=0;
+
+idb.iid(94526).name='Spark of Zandalar';
+idb.iid(94526).ilvl=522;
+idb.iid(94526).haste=1467;
+idb.iid(94526).isreforged=0;
+
+idb.iid(94527).name='Ji-Kun''s Rising Winds';
+idb.iid(94527).ilvl=522;
+idb.iid(94527).exp=1467;
+idb.iid(94527).isreforged=0;
+
+idb.iid(94528).name='Soul Barrier';
+idb.iid(94528).ilvl=522;
+idb.iid(94528).sta=2201;
+idb.iid(94528).isreforged=0;
+
+idb.iid(94529).name='Gaze of the Twins';
+idb.iid(94529).ilvl=522;
+idb.iid(94529).str=1467;
+idb.iid(94529).isreforged=0;
+
+idb.iid(94723).name='Chestplate of Violent Detonation';
+idb.iid(94723).ilvl=522;
+idb.iid(94723).str=1398;
+idb.iid(94723).sta=2338;
+idb.iid(94723).hit=990;
+idb.iid(94723).mast=907;
+idb.iid(94723).barmor=5982;
+idb.iid(94723).socket='RB';
+idb.iid(94723).sbstat='str';
+idb.iid(94723).sbval=120;
+idb.iid(94723).atype=1;
+idb.iid(94723).isreforged=0;
+
+idb.iid(94726).name='Cloudbreaker Greatbelt';
+idb.iid(94726).ilvl=522;
+idb.iid(94726).str=998;
+idb.iid(94726).sta=1736;
+idb.iid(94726).haste=672;
+idb.iid(94726).mast=703;
+idb.iid(94726).barmor=3365;
+idb.iid(94726).socket='RY';
+idb.iid(94726).atype=1;
+idb.iid(94726).isreforged=0;
+
+idb.iid(94727).name='Bracers of Constant Implosion';
+idb.iid(94727).ilvl=522;
+idb.iid(94727).str=788;
+idb.iid(94727).sta=1302;
+idb.iid(94727).barmor=2617;
+idb.iid(94727).socket='Y';
+idb.iid(94727).sbstat='str';
+idb.iid(94727).sbval=60;
+idb.iid(94727).atype=1;
+idb.iid(94727).isreforged=0;
+
+idb.iid(94729).name='Jin''rokh''s Soulcrystal';
+idb.iid(94729).ilvl=522;
+idb.iid(94729).str=868;
+idb.iid(94729).sta=1302;
+idb.iid(94729).exp=522;
+idb.iid(94729).dodge=613;
+idb.iid(94729).isreforged=0;
+
+idb.iid(94742).name='Frozen Warlord''s Bracers';
+idb.iid(94742).ilvl=522;
+idb.iid(94742).str=868;
+idb.iid(94742).sta=1302;
+idb.iid(94742).exp=508;
+idb.iid(94742).haste=621;
+idb.iid(94742).barmor=2617;
+idb.iid(94742).atype=1;
+idb.iid(94742).isreforged=0;
+
+idb.iid(94744).name='Puncture-Proof Greathelm';
+idb.iid(94744).ilvl=522;
+idb.iid(94744).str=1318;
+idb.iid(94744).sta=2338;
+idb.iid(94744).dodge=899;
+idb.iid(94744).parry=939;
+idb.iid(94744).barmor=4861;
+idb.iid(94744).socket='MB';
+idb.iid(94744).sbstat='sta';
+idb.iid(94744).sbval=270;
+idb.iid(94744).atype=1;
+idb.iid(94744).isreforged=0;
+
+idb.iid(94745).name='Horn-Rimmed Doomcloak';
+idb.iid(94745).ilvl=522;
+idb.iid(94745).str=868;
+idb.iid(94745).sta=1302;
+idb.iid(94745).hit=579;
+idb.iid(94745).mast=579;
+idb.iid(94745).barmor=1237;
+idb.iid(94745).isreforged=0;
+
+idb.iid(94747).name='Bloodlord''s Bloodsoaked Legplates';
+idb.iid(94747).ilvl=522;
+idb.iid(94747).str=1398;
+idb.iid(94747).sta=2338;
+idb.iid(94747).haste=807;
+idb.iid(94747).mast=1049;
+idb.iid(94747).barmor=5234;
+idb.iid(94747).socket='RB';
+idb.iid(94747).sbstat='str';
+idb.iid(94747).sbval=120;
+idb.iid(94747).atype=1;
+idb.iid(94747).isreforged=0;
+
+idb.iid(94764).name='Overloaded Bladebreaker Cuirass';
+idb.iid(94764).ilvl=522;
+idb.iid(94764).str=1398;
+idb.iid(94764).sta=2338;
+idb.iid(94764).hit=709;
+idb.iid(94764).parry=1104;
+idb.iid(94764).barmor=5982;
+idb.iid(94764).socket='RY';
+idb.iid(94764).sbstat='dodge';
+idb.iid(94764).sbval=120;
+idb.iid(94764).atype=1;
+idb.iid(94764).isreforged=0;
+
+idb.iid(94771).name='Shell-Coated Wristplates';
+idb.iid(94771).ilvl=522;
+idb.iid(94771).str=868;
+idb.iid(94771).sta=1302;
+idb.iid(94771).dodge=645;
+idb.iid(94771).parry=467;
+idb.iid(94771).barmor=2617;
+idb.iid(94771).atype=1;
+idb.iid(94771).isreforged=0;
+
+idb.iid(94774).name='Beakbreaker Greatcloak';
+idb.iid(94774).ilvl=522;
+idb.iid(94774).str=868;
+idb.iid(94774).sta=1302;
+idb.iid(94774).mast=550;
+idb.iid(94774).dodge=596;
+idb.iid(94774).barmor=1237;
+idb.iid(94774).isreforged=0;
+
+idb.iid(94789).name='Rot-Proof Greatplate';
+idb.iid(94789).ilvl=522;
+idb.iid(94789).str=1398;
+idb.iid(94789).sta=2338;
+idb.iid(94789).mast=959;
+idb.iid(94789).dodge=959;
+idb.iid(94789).barmor=5982;
+idb.iid(94789).socket='YB';
+idb.iid(94789).sbstat='dodge';
+idb.iid(94789).sbval=120;
+idb.iid(94789).atype=1;
+idb.iid(94789).isreforged=0;
+
+idb.iid(94792).name='Plated Toothbreaker Girdle';
+idb.iid(94792).ilvl=522;
+idb.iid(94792).str=998;
+idb.iid(94792).sta=1736;
+idb.iid(94792).dodge=692;
+idb.iid(94792).parry=692;
+idb.iid(94792).barmor=3365;
+idb.iid(94792).socket='RY';
+idb.iid(94792).sbstat='dodge';
+idb.iid(94792).sbval=120;
+idb.iid(94792).atype=1;
+idb.iid(94792).isreforged=0;
+
+idb.iid(94793).name='Hydraskull Choker';
+idb.iid(94793).ilvl=522;
+idb.iid(94793).str=868;
+idb.iid(94793).sta=1302;
+idb.iid(94793).dodge=652;
+idb.iid(94793).parry=453;
+idb.iid(94793).isreforged=0;
+
+idb.iid(94807).name='Egg-Shard Grips';
+idb.iid(94807).ilvl=522;
+idb.iid(94807).str=1078;
+idb.iid(94807).sta=1736;
+idb.iid(94807).exp=546;
+idb.iid(94807).parry=840;
+idb.iid(94807).barmor=3739;
+idb.iid(94807).socket='Y';
+idb.iid(94807).sbstat='str';
+idb.iid(94807).sbval=60;
+idb.iid(94807).atype=1;
+idb.iid(94807).isreforged=0;
+
+idb.iid(94815).name='Legplates of the Dark Parasite';
+idb.iid(94815).ilvl=522;
+idb.iid(94815).str=1398;
+idb.iid(94815).sta=2338;
+idb.iid(94815).exp=831;
+idb.iid(94815).haste=1034;
+idb.iid(94815).barmor=5234;
+idb.iid(94815).socket='YB';
+idb.iid(94815).sbstat='str';
+idb.iid(94815).sbval=120;
+idb.iid(94815).atype=1;
+idb.iid(94815).isreforged=0;
+
+idb.iid(94817).name='Treads of the Blind Eye';
+idb.iid(94817).ilvl=522;
+idb.iid(94817).str=1078;
+idb.iid(94817).sta=1736;
+idb.iid(94817).dodge=682;
+idb.iid(94817).parry=758;
+idb.iid(94817).barmor=4113;
+idb.iid(94817).socket='B';
+idb.iid(94817).sbstat='dodge';
+idb.iid(94817).sbval=60;
+idb.iid(94817).atype=1;
+idb.iid(94817).isreforged=0;
+
+idb.iid(94820).name='Caustic Spike Bracers';
+idb.iid(94820).ilvl=522;
+idb.iid(94820).str=788;
+idb.iid(94820).sta=1302;
+idb.iid(94820).barmor=2617;
+idb.iid(94820).socket='Y';
+idb.iid(94820).sbstat='str';
+idb.iid(94820).sbval=60;
+idb.iid(94820).atype=1;
+idb.iid(94820).isreforged=0;
+
+idb.iid(94821).name='Artery Rippers';
+idb.iid(94821).ilvl=522;
+idb.iid(94821).str=998;
+idb.iid(94821).sta=1736;
+idb.iid(94821).dodge=656;
+idb.iid(94821).parry=719;
+idb.iid(94821).barmor=3739;
+idb.iid(94821).socket='RB';
+idb.iid(94821).sbstat='str';
+idb.iid(94821).sbval=120;
+idb.iid(94821).atype=1;
+idb.iid(94821).isreforged=0;
+
+idb.iid(94822).name='Reinforced Mirror-Sheen Cloak';
+idb.iid(94822).ilvl=522;
+idb.iid(94822).str=788;
+idb.iid(94822).sta=1302;
+idb.iid(94822).dodge=620;
+idb.iid(94822).parry=400;
+idb.iid(94822).barmor=1237;
+idb.iid(94822).socket='R';
+idb.iid(94822).sbstat='dodge';
+idb.iid(94822).sbval=60;
+idb.iid(94822).isreforged=0;
+
+idb.iid(94938).name='Pathogenic Gauntlets';
+idb.iid(94938).ilvl=522;
+idb.iid(94938).str=998;
+idb.iid(94938).sta=1736;
+idb.iid(94938).hit=563;
+idb.iid(94938).haste=775;
+idb.iid(94938).barmor=3739;
+idb.iid(94938).socket='RB';
+idb.iid(94938).sbstat='str';
+idb.iid(94938).sbval=120;
+idb.iid(94938).atype=1;
+idb.iid(94938).isreforged=0;
+
+idb.iid(94941).name='Metabolically Boosted Shoulderplates';
+idb.iid(94941).ilvl=522;
+idb.iid(94941).str=1078;
+idb.iid(94941).sta=1736;
+idb.iid(94941).dodge=712;
+idb.iid(94941).parry=743;
+idb.iid(94941).barmor=4487;
+idb.iid(94941).socket='R';
+idb.iid(94941).sbstat='sta';
+idb.iid(94941).sbval=90;
+idb.iid(94941).atype=1;
+idb.iid(94941).isreforged=0;
+
+idb.iid(94944).name='Black Blood Legplates';
+idb.iid(94944).ilvl=522;
+idb.iid(94944).str=1398;
+idb.iid(94944).sta=2338;
+idb.iid(94944).dodge=933;
+idb.iid(94944).parry=975;
+idb.iid(94944).barmor=5234;
+idb.iid(94944).socket='RB';
+idb.iid(94944).sbstat='sta';
+idb.iid(94944).sbval=180;
+idb.iid(94944).atype=1;
+idb.iid(94944).isreforged=0;
+
+idb.iid(94945).name='Greatshield of the Gloaming';
+idb.iid(94945).ilvl=522;
+idb.iid(94945).str=788;
+idb.iid(94945).sta=1302;
+idb.iid(94945).mast=524;
+idb.iid(94945).dodge=548;
+idb.iid(94945).barmor=19188;
+idb.iid(94945).socket='R';
+idb.iid(94945).sbstat='str';
+idb.iid(94945).sbval=60;
+idb.iid(94945).isreforged=0;
+
+idb.iid(94981).name='Moonjade Necklace';
+idb.iid(94981).ilvl=522;
+idb.iid(94981).str=788;
+idb.iid(94981).sta=1302;
+idb.iid(94981).exp=539;
+idb.iid(94981).dodge=539;
+idb.iid(94981).socket='R';
+idb.iid(94981).sbstat='sta';
+idb.iid(94981).sbval=90;
+idb.iid(94981).isreforged=0;
+
+idb.iid(94984).name='Doomed Crown of Lei-Shen';
+idb.iid(94984).ilvl=522;
+idb.iid(94984).str=1318;
+idb.iid(94984).sta=2338;
+idb.iid(94984).hit=689;
+idb.iid(94984).mast=1044;
+idb.iid(94984).barmor=4861;
+idb.iid(94984).socket='MR';
+idb.iid(94984).sbstat='str';
+idb.iid(94984).sbval=180;
+idb.iid(94984).atype=1;
+idb.iid(94984).isreforged=0;
+
+idb.iid(94985).name='Legplates of Whipping Ionization';
+idb.iid(94985).ilvl=522;
+idb.iid(94985).str=1318;
+idb.iid(94985).sta=2338;
+idb.iid(94985).mast=783;
+idb.iid(94985).dodge=1002;
+idb.iid(94985).barmor=5234;
+idb.iid(94985).socket='RRR';
+idb.iid(94985).sbstat='sta';
+idb.iid(94985).sbval=270;
+idb.iid(94985).atype=1;
+idb.iid(94985).isreforged=0;
+
+idb.iid(95063).name='Reconstructed Furious Shoulderplates';
+idb.iid(95063).ilvl=522;
+idb.iid(95063).str=1078;
+idb.iid(95063).sta=1736;
+idb.iid(95063).haste=755;
+idb.iid(95063).mast=693;
+idb.iid(95063).barmor=4487;
+idb.iid(95063).socket='B';
+idb.iid(95063).sbstat='str';
+idb.iid(95063).sbval=60;
+idb.iid(95063).atype=1;
+idb.iid(95063).isreforged=0;
+
+idb.iid(95068).name='Reconstructed Bloody Shoulderplates';
+idb.iid(95068).ilvl=522;
+idb.iid(95068).str=1078;
+idb.iid(95068).sta=1736;
+idb.iid(95068).exp=546;
+idb.iid(95068).parry=840;
+idb.iid(95068).barmor=4487;
+idb.iid(95068).socket='B';
+idb.iid(95068).sbstat='sta';
+idb.iid(95068).sbval=90;
+idb.iid(95068).atype=1;
+idb.iid(95068).isreforged=0;
+
+idb.iid(95075).name='Gianttooth Chestplate';
+idb.iid(95075).ilvl=522;
+idb.iid(95075).str=1398;
+idb.iid(95075).sta=2338;
+idb.iid(95075).hit=990;
+idb.iid(95075).exp=907;
+idb.iid(95075).barmor=5982;
+idb.iid(95075).socket='BB';
+idb.iid(95075).sbstat='str';
+idb.iid(95075).sbval=120;
+idb.iid(95075).atype=1;
+idb.iid(95075).isreforged=0;
+
+idb.iid(95076).name='Breastplate of Brutal Strikes';
+idb.iid(95076).ilvl=522;
+idb.iid(95076).str=954;
+idb.iid(95076).sta=2338;
+idb.iid(95076).hit=782;
+idb.iid(95076).dodge=1063;
+idb.iid(95076).barmor=5982;
+idb.iid(95076).socket='BB';
+idb.iid(95076).sbstat='str';
+idb.iid(95076).sbval=120;
+idb.iid(95076).atype=1;
+idb.iid(95076).isreforged=0;
+
+idb.iid(95084).name='Reinforced Spiritplate Girdle';
+idb.iid(95084).ilvl=522;
+idb.iid(95084).str=1078;
+idb.iid(95084).sta=1736;
+idb.iid(95084).hit=582;
+idb.iid(95084).dodge=819;
+idb.iid(95084).barmor=3365;
+idb.iid(95084).socket='Y';
+idb.iid(95084).sbstat='mast';
+idb.iid(95084).sbval=60;
+idb.iid(95084).atype=1;
+idb.iid(95084).isreforged=0;
+
+idb.iid(95103).name='Sparksmasher Pauldrons';
+idb.iid(95103).ilvl=522;
+idb.iid(95103).str=1158;
+idb.iid(95103).sta=1736;
+idb.iid(95103).hit=772;
+idb.iid(95103).dodge=772;
+idb.iid(95103).barmor=4487;
+idb.iid(95103).atype=1;
+idb.iid(95103).isreforged=0;
+
+idb.iid(95110).name='Stoneward Handguards';
+idb.iid(95110).ilvl=522;
+idb.iid(95110).str=1158;
+idb.iid(95110).sta=1736;
+idb.iid(95110).mast=733;
+idb.iid(95110).parry=795;
+idb.iid(95110).barmor=3739;
+idb.iid(95110).atype=1;
+idb.iid(95110).isreforged=0;
+
+idb.iid(95114).name='Spikeshard Greatcloak';
+idb.iid(95114).ilvl=522;
+idb.iid(95114).str=868;
+idb.iid(95114).sta=1302;
+idb.iid(95114).haste=621;
+idb.iid(95114).mast=508;
+idb.iid(95114).barmor=1237;
+idb.iid(95114).isreforged=0;
+
+idb.iid(95115).name='Many-Layered Scalecloak';
+idb.iid(95115).ilvl=522;
+idb.iid(95115).str=868;
+idb.iid(95115).sta=1302;
+idb.iid(95115).hit=588;
+idb.iid(95115).dodge=564;
+idb.iid(95115).barmor=1237;
+idb.iid(95115).isreforged=0;
+
+idb.iid(95119).name='Thunderbreaker Legplates';
+idb.iid(95119).ilvl=522;
+idb.iid(95119).str=1478;
+idb.iid(95119).sta=2338;
+idb.iid(95119).exp=822;
+idb.iid(95119).dodge=1103;
+idb.iid(95119).barmor=5234;
+idb.iid(95119).socket='B';
+idb.iid(95119).sbstat='sta';
+idb.iid(95119).sbval=90;
+idb.iid(95119).atype=1;
+idb.iid(95119).isreforged=0;
+
+idb.iid(95129).name='Axebinder Wristguards';
+idb.iid(95129).ilvl=522;
+idb.iid(95129).str=868;
+idb.iid(95129).sta=1302;
+idb.iid(95129).dodge=579;
+idb.iid(95129).parry=579;
+idb.iid(95129).barmor=2617;
+idb.iid(95129).atype=1;
+idb.iid(95129).isreforged=0;
+
+idb.iid(95141).name='Loop of the Shado-Pan Assault';
+idb.iid(95141).ilvl=522;
+idb.iid(95141).str=868;
+idb.iid(95141).sta=1302;
+idb.iid(95141).mast=613;
+idb.iid(95141).dodge=522;
+idb.iid(95141).isreforged=0;
+
+idb.iid(95142).name='Striker''s Battletags';
+idb.iid(95142).ilvl=522;
+idb.iid(95142).str=868;
+idb.iid(95142).sta=1302;
+idb.iid(95142).haste=613;
+idb.iid(95142).mast=522;
+idb.iid(95142).isreforged=0;
+
+idb.iid(95144).name='Vanguard''s Battletags';
+idb.iid(95144).ilvl=522;
+idb.iid(95144).str=868;
+idb.iid(95144).sta=1302;
+idb.iid(95144).hit=604;
+idb.iid(95144).parry=536;
+idb.iid(95144).isreforged=0;
+
+idb.iid(95152).name='Breastplate of the Iguanocolossus';
+idb.iid(95152).ilvl=522;
+idb.iid(95152).str=1024;
+idb.iid(95152).sta=2338;
+idb.iid(95152).exp=831;
+idb.iid(95152).dodge=1034;
+idb.iid(95152).barmor=5982;
+idb.iid(95152).socket='RB';
+idb.iid(95152).sbstat='dodge';
+idb.iid(95152).sbval=120;
+idb.iid(95152).atype=1;
+idb.iid(95152).isreforged=0;
+
+idb.iid(95153).name='Tyrant King Battleplate';
+idb.iid(95153).ilvl=522;
+idb.iid(95153).str=1398;
+idb.iid(95153).sta=2338;
+idb.iid(95153).hit=882;
+idb.iid(95153).exp=1005;
+idb.iid(95153).barmor=5982;
+idb.iid(95153).socket='RB';
+idb.iid(95153).sbstat='str';
+idb.iid(95153).sbval=120;
+idb.iid(95153).atype=1;
+idb.iid(95153).isreforged=0;
+
+idb.iid(95165).name='Achillobator Ring';
+idb.iid(95165).ilvl=522;
+idb.iid(95165).str=868;
+idb.iid(95165).sta=1302;
+idb.iid(95165).exp=480;
+idb.iid(95165).parry=637;
+idb.iid(95165).isreforged=0;
+
+idb.iid(95178).name='Lootraptor''s Amulet';
+idb.iid(95178).ilvl=522;
+idb.iid(95178).str=868;
+idb.iid(95178).sta=1302;
+idb.iid(95178).mast=621;
+idb.iid(95178).dodge=508;
+idb.iid(95178).isreforged=0;
+
+idb.iid(95191).name='Voolar''s Bloodied Belt';
+idb.iid(95191).ilvl=522;
+idb.iid(95191).str=1078;
+idb.iid(95191).sta=1736;
+idb.iid(95191).exp=564;
+idb.iid(95191).dodge=830;
+idb.iid(95191).barmor=3365;
+idb.iid(95191).socket='R';
+idb.iid(95191).sbstat='sta';
+idb.iid(95191).sbval=90;
+idb.iid(95191).atype=1;
+idb.iid(95191).isreforged=0;
+
+idb.iid(95198).name='Vulcanodon Gauntlets';
+idb.iid(95198).ilvl=522;
+idb.iid(95198).str=1158;
+idb.iid(95198).sta=1736;
+idb.iid(95198).hit=622;
+idb.iid(95198).mast=859;
+idb.iid(95198).barmor=3739;
+idb.iid(95198).atype=1;
+idb.iid(95198).isreforged=0;
+
+idb.iid(95199).name='Carnotaur Battlegloves';
+idb.iid(95199).ilvl=522;
+idb.iid(95199).str=1158;
+idb.iid(95199).sta=1736;
+idb.iid(95199).exp=806;
+idb.iid(95199).haste=714;
+idb.iid(95199).barmor=3739;
+idb.iid(95199).atype=1;
+idb.iid(95199).isreforged=0;
+
+idb.iid(95205).name='Necklace of the Terra-Cotta Vanquisher';
+idb.iid(95205).ilvl=522;
+idb.iid(95205).str=788;
+idb.iid(95205).sta=1302;
+idb.iid(95205).hit=581;
+idb.iid(95205).mast=468;
+idb.iid(95205).socket='R';
+idb.iid(95205).sbstat='exp';
+idb.iid(95205).sbval=60;
+idb.iid(95205).isreforged=0;
+
+idb.iid(95206).name='Necklace of the Terra-Cotta Protector';
+idb.iid(95206).ilvl=522;
+idb.iid(95206).str=788;
+idb.iid(95206).sta=1302;
+idb.iid(95206).exp=400;
+idb.iid(95206).parry=620;
+idb.iid(95206).socket='R';
+idb.iid(95206).sbstat='exp';
+idb.iid(95206).sbval=60;
+idb.iid(95206).isreforged=0;
+
+idb.iid(95215).name='Abandoned Zandalari Bucklebreaker';
+idb.iid(95215).ilvl=522;
+idb.iid(95215).str=1078;
+idb.iid(95215).sta=1736;
+idb.iid(95215).mast=799;
+idb.iid(95215).dodge=619;
+idb.iid(95215).barmor=3365;
+idb.iid(95215).socket='B';
+idb.iid(95215).sbstat='sta';
+idb.iid(95215).sbval=90;
+idb.iid(95215).atype=1;
+idb.iid(95215).isreforged=0;
+
+idb.iid(95217).name='Locksmasher Greaves';
+idb.iid(95217).ilvl=522;
+idb.iid(95217).str=1158;
+idb.iid(95217).sta=1736;
+idb.iid(95217).hit=604;
+idb.iid(95217).haste=870;
+idb.iid(95217).barmor=4113;
+idb.iid(95217).atype=1;
+idb.iid(95217).isreforged=0;
+
+idb.iid(95218).name='Columnbreaker Stompers';
+idb.iid(95218).ilvl=522;
+idb.iid(95218).str=1158;
+idb.iid(95218).sta=1736;
+idb.iid(95218).exp=752;
+idb.iid(95218).mast=783;
+idb.iid(95218).barmor=4113;
+idb.iid(95218).atype=1;
+idb.iid(95218).isreforged=0;
+
+idb.iid(95225).name='Breastplate of the All-Consuming Maw';
+idb.iid(95225).ilvl=522;
+idb.iid(95225).str=1318;
+idb.iid(95225).sta=2338;
+idb.iid(95225).exp=994;
+idb.iid(95225).haste=791;
+idb.iid(95225).barmor=5982;
+idb.iid(95225).socket='RYB';
+idb.iid(95225).sbstat='str';
+idb.iid(95225).sbval=180;
+idb.iid(95225).atype=1;
+idb.iid(95225).isreforged=0;
+
+idb.iid(95227).name='Helmet of the All-Consuming Maw';
+idb.iid(95227).ilvl=522;
+idb.iid(95227).str=1318;
+idb.iid(95227).sta=2338;
+idb.iid(95227).hit=975;
+idb.iid(95227).haste=853;
+idb.iid(95227).barmor=4861;
+idb.iid(95227).socket='MY';
+idb.iid(95227).atype=1;
+idb.iid(95227).isreforged=0;
+
+idb.iid(95229).name='Pauldrons of the All-Consuming Maw';
+idb.iid(95229).ilvl=522;
+idb.iid(95229).str=998;
+idb.iid(95229).sta=1736;
+idb.iid(95229).exp=597;
+idb.iid(95229).mast=748;
+idb.iid(95229).barmor=4487;
+idb.iid(95229).socket='RY';
+idb.iid(95229).atype=1;
+idb.iid(95229).isreforged=0;
+
+idb.iid(95230).name='Chestguard of the All-Consuming Maw';
+idb.iid(95230).ilvl=522;
+idb.iid(95230).str=1318;
+idb.iid(95230).sta=2338;
+idb.iid(95230).dodge=893;
+idb.iid(95230).parry=935;
+idb.iid(95230).barmor=5982;
+idb.iid(95230).socket='RYB';
+idb.iid(95230).sbstat='dodge';
+idb.iid(95230).sbval=180;
+idb.iid(95230).atype=1;
+idb.iid(95230).isreforged=0;
+
+idb.iid(95231).name='Handguards of the All-Consuming Maw';
+idb.iid(95231).ilvl=522;
+idb.iid(95231).str=1078;
+idb.iid(95231).sta=1736;
+idb.iid(95231).exp=538;
+idb.iid(95231).dodge=848;
+idb.iid(95231).barmor=3739;
+idb.iid(95231).socket='R';
+idb.iid(95231).sbstat='dodge';
+idb.iid(95231).sbval=60;
+idb.iid(95231).atype=1;
+idb.iid(95231).isreforged=0;
+
+idb.iid(95232).name='Faceguard of the All-Consuming Maw';
+idb.iid(95232).ilvl=522;
+idb.iid(95232).str=1318;
+idb.iid(95232).sta=2338;
+idb.iid(95232).exp=629;
+idb.iid(95232).mast=1104;
+idb.iid(95232).barmor=4861;
+idb.iid(95232).socket='MY';
+idb.iid(95232).sbstat='parry';
+idb.iid(95232).sbval=180;
+idb.iid(95232).atype=1;
+idb.iid(95232).isreforged=0;
+
+idb.iid(95233).name='Legguards of the All-Consuming Maw';
+idb.iid(95233).ilvl=522;
+idb.iid(95233).str=1398;
+idb.iid(95233).sta=2338;
+idb.iid(95233).hit=742;
+idb.iid(95233).parry=1103;
+idb.iid(95233).barmor=5234;
+idb.iid(95233).socket='YB';
+idb.iid(95233).sbstat='sta';
+idb.iid(95233).sbval=180;
+idb.iid(95233).atype=1;
+idb.iid(95233).isreforged=0;
+
+idb.iid(95234).name='Shoulderguards of the All-Consuming Maw';
+idb.iid(95234).ilvl=522;
+idb.iid(95234).str=998;
+idb.iid(95234).sta=1736;
+idb.iid(95234).hit=692;
+idb.iid(95234).mast=692;
+idb.iid(95234).barmor=4487;
+idb.iid(95234).socket='RY';
+idb.iid(95234).sbstat='parry';
+idb.iid(95234).sbval=120;
+idb.iid(95234).atype=1;
+idb.iid(95234).isreforged=0;
+
+idb.iid(95280).name='Lightning Emperor''s Battleplate';
+idb.iid(95280).ilvl=522;
+idb.iid(95280).str=1318;
+idb.iid(95280).sta=2338;
+idb.iid(95280).exp=994;
+idb.iid(95280).haste=791;
+idb.iid(95280).barmor=5982;
+idb.iid(95280).socket='RYB';
+idb.iid(95280).sbstat='str';
+idb.iid(95280).sbval=180;
+idb.iid(95280).atype=1;
+idb.iid(95280).isreforged=0;
+
+idb.iid(95282).name='Lightning Emperor''s Helmet';
+idb.iid(95282).ilvl=522;
+idb.iid(95282).str=1318;
+idb.iid(95282).sta=2338;
+idb.iid(95282).hit=975;
+idb.iid(95282).haste=853;
+idb.iid(95282).barmor=4861;
+idb.iid(95282).socket='MY';
+idb.iid(95282).atype=1;
+idb.iid(95282).isreforged=0;
+
+idb.iid(95284).name='Lightning Emperor''s Pauldrons';
+idb.iid(95284).ilvl=522;
+idb.iid(95284).str=998;
+idb.iid(95284).sta=1736;
+idb.iid(95284).exp=597;
+idb.iid(95284).mast=748;
+idb.iid(95284).barmor=4487;
+idb.iid(95284).socket='RY';
+idb.iid(95284).atype=1;
+idb.iid(95284).isreforged=0;
+
+idb.iid(95290).name='Lightning Emperor''s Chestguard';
+idb.iid(95290).ilvl=522;
+idb.iid(95290).str=1318;
+idb.iid(95290).sta=2338;
+idb.iid(95290).dodge=893;
+idb.iid(95290).parry=935;
+idb.iid(95290).barmor=5982;
+idb.iid(95290).socket='RYB';
+idb.iid(95290).sbstat='dodge';
+idb.iid(95290).sbval=180;
+idb.iid(95290).atype=1;
+idb.iid(95290).isreforged=0;
+
+idb.iid(95291).name='Lightning Emperor''s Handguards';
+idb.iid(95291).ilvl=522;
+idb.iid(95291).str=1078;
+idb.iid(95291).sta=1736;
+idb.iid(95291).exp=538;
+idb.iid(95291).dodge=848;
+idb.iid(95291).barmor=3739;
+idb.iid(95291).socket='R';
+idb.iid(95291).sbstat='dodge';
+idb.iid(95291).sbval=60;
+idb.iid(95291).atype=1;
+idb.iid(95291).isreforged=0;
+
+idb.iid(95292).name='Lightning Emperor''s Faceguard';
+idb.iid(95292).ilvl=522;
+idb.iid(95292).str=1318;
+idb.iid(95292).sta=2338;
+idb.iid(95292).exp=629;
+idb.iid(95292).mast=1104;
+idb.iid(95292).barmor=4861;
+idb.iid(95292).socket='MY';
+idb.iid(95292).sbstat='parry';
+idb.iid(95292).sbval=180;
+idb.iid(95292).atype=1;
+idb.iid(95292).isreforged=0;
+
+idb.iid(95293).name='Lightning Emperor''s Legguards';
+idb.iid(95293).ilvl=522;
+idb.iid(95293).str=1398;
+idb.iid(95293).sta=2338;
+idb.iid(95293).hit=742;
+idb.iid(95293).parry=1103;
+idb.iid(95293).barmor=5234;
+idb.iid(95293).socket='YB';
+idb.iid(95293).sbstat='sta';
+idb.iid(95293).sbval=180;
+idb.iid(95293).atype=1;
+idb.iid(95293).isreforged=0;
+
+idb.iid(95294).name='Lightning Emperor''s Shoulderguards';
+idb.iid(95294).ilvl=522;
+idb.iid(95294).str=998;
+idb.iid(95294).sta=1736;
+idb.iid(95294).hit=692;
+idb.iid(95294).mast=692;
+idb.iid(95294).barmor=4487;
+idb.iid(95294).socket='RY';
+idb.iid(95294).sbstat='parry';
+idb.iid(95294).sbval=120;
+idb.iid(95294).atype=1;
+idb.iid(95294).isreforged=0;
+
+idb.iid(95330).name='Helmet of the Last Mogu';
+idb.iid(95330).ilvl=522;
+idb.iid(95330).str=1318;
+idb.iid(95330).sta=2338;
+idb.iid(95330).hit=975;
+idb.iid(95330).haste=853;
+idb.iid(95330).barmor=4861;
+idb.iid(95330).socket='MY';
+idb.iid(95330).atype=1;
+idb.iid(95330).isreforged=0;
+
+idb.iid(95331).name='Battleplate of the Last Mogu';
+idb.iid(95331).ilvl=522;
+idb.iid(95331).str=1318;
+idb.iid(95331).sta=2338;
+idb.iid(95331).exp=994;
+idb.iid(95331).haste=791;
+idb.iid(95331).barmor=5982;
+idb.iid(95331).socket='RYB';
+idb.iid(95331).sbstat='str';
+idb.iid(95331).sbval=180;
+idb.iid(95331).atype=1;
+idb.iid(95331).isreforged=0;
+
+idb.iid(95334).name='Pauldrons of the Last Mogu';
+idb.iid(95334).ilvl=522;
+idb.iid(95334).str=998;
+idb.iid(95334).sta=1736;
+idb.iid(95334).exp=597;
+idb.iid(95334).mast=748;
+idb.iid(95334).barmor=4487;
+idb.iid(95334).socket='RY';
+idb.iid(95334).atype=1;
+idb.iid(95334).isreforged=0;
+
+idb.iid(95335).name='Chestguard of the Last Mogu';
+idb.iid(95335).ilvl=522;
+idb.iid(95335).str=1318;
+idb.iid(95335).sta=2338;
+idb.iid(95335).dodge=893;
+idb.iid(95335).parry=935;
+idb.iid(95335).barmor=5982;
+idb.iid(95335).socket='RYB';
+idb.iid(95335).sbstat='dodge';
+idb.iid(95335).sbval=180;
+idb.iid(95335).atype=1;
+idb.iid(95335).isreforged=0;
+
+idb.iid(95336).name='Handguards of the Last Mogu';
+idb.iid(95336).ilvl=522;
+idb.iid(95336).str=1078;
+idb.iid(95336).sta=1736;
+idb.iid(95336).exp=538;
+idb.iid(95336).dodge=848;
+idb.iid(95336).barmor=3739;
+idb.iid(95336).socket='R';
+idb.iid(95336).sbstat='mast';
+idb.iid(95336).sbval=60;
+idb.iid(95336).atype=1;
+idb.iid(95336).isreforged=0;
+
+idb.iid(95337).name='Faceguard of the Last Mogu';
+idb.iid(95337).ilvl=522;
+idb.iid(95337).str=1318;
+idb.iid(95337).sta=2338;
+idb.iid(95337).exp=629;
+idb.iid(95337).mast=1104;
+idb.iid(95337).barmor=4861;
+idb.iid(95337).socket='MY';
+idb.iid(95337).sbstat='parry';
+idb.iid(95337).sbval=180;
+idb.iid(95337).atype=1;
+idb.iid(95337).isreforged=0;
+
+idb.iid(95338).name='Legguards of the Last Mogu';
+idb.iid(95338).ilvl=522;
+idb.iid(95338).str=1398;
+idb.iid(95338).sta=2338;
+idb.iid(95338).hit=742;
+idb.iid(95338).parry=1103;
+idb.iid(95338).barmor=5234;
+idb.iid(95338).socket='YB';
+idb.iid(95338).sbstat='sta';
+idb.iid(95338).sbval=180;
+idb.iid(95338).atype=1;
+idb.iid(95338).isreforged=0;
+
+idb.iid(95339).name='Shoulderguards of the Last Mogu';
+idb.iid(95339).ilvl=522;
+idb.iid(95339).str=998;
+idb.iid(95339).sta=1736;
+idb.iid(95339).hit=692;
+idb.iid(95339).mast=692;
+idb.iid(95339).barmor=4487;
+idb.iid(95339).socket='RY';
+idb.iid(95339).sbstat='parry';
+idb.iid(95339).sbval=120;
+idb.iid(95339).atype=1;
+idb.iid(95339).isreforged=0;
+
+idb.iid(95472).name='Ultimate Protection of the Emperor';
+idb.iid(95472).ilvl=522;
+idb.iid(95472).str=788;
+idb.iid(95472).sta=1302;
+idb.iid(95472).mast=492;
+idb.iid(95472).parry=557;
+idb.iid(95472).barmor=19188;
+idb.iid(95472).socket='R';
+idb.iid(95472).sbstat='str';
+idb.iid(95472).sbval=60;
+idb.iid(95472).isreforged=0;
+
+idb.iid(95511).name='Durumu''s Severed Tentacle';
+idb.iid(95511).ilvl=522;
+idb.iid(95511).str=788;
+idb.iid(95511).sta=1302;
+idb.iid(95511).hit=532;
+idb.iid(95511).dodge=534;
+idb.iid(95511).socket='R';
+idb.iid(95511).sbstat='dodge';
+idb.iid(95511).sbval=60;
+idb.iid(95511).isreforged=0;
+
+idb.iid(95513).name='Band of the Scaled Tyrant';
+idb.iid(95513).ilvl=522;
+idb.iid(95513).str=788;
+idb.iid(95513).sta=1302;
+idb.iid(95513).hit=478;
+idb.iid(95513).haste=565;
+idb.iid(95513).socket='R';
+idb.iid(95513).sbstat='haste';
+idb.iid(95513).sbval=60;
+idb.iid(95513).isreforged=0;
+
+idb.iid(95516).name='Visage of the Doomed';
+idb.iid(95516).ilvl=522;
+idb.iid(95516).str=788;
+idb.iid(95516).sta=1302;
+idb.iid(95516).dodge=451;
+idb.iid(95516).parry=581;
+idb.iid(95516).barmor=19188;
+idb.iid(95516).socket='Y';
+idb.iid(95516).sbstat='str';
+idb.iid(95516).sbval=60;
+idb.iid(95516).isreforged=0;
+
+idb.iid(94722).name='Worldbreaker''s Stormscythe';
+idb.iid(94722).wtype='axe';
+idb.iid(94722).ilvl=522;
+idb.iid(94722).tooldps=4222.3;
+idb.iid(94722).swing=2.6;
+idb.iid(94722).avgdmg=10978;
+idb.iid(94722).str=588;
+idb.iid(94722).sta=1002;
+idb.iid(94722).hit=462;
+idb.iid(94722).exp=309;
+idb.iid(94722).socket='B';
+idb.iid(94722).sbstat='str';
+idb.iid(94722).sbval=60;
+idb.iid(94722).isreforged=0;
+
+idb.iid(94758).name='Zerat, Malakk''s Soulburning Greatsword';
+idb.iid(94758).wtype='swo';
+idb.iid(94758).ilvl=522;
+idb.iid(94758).tooldps=5693;
+idb.iid(94758).swing=3.6;
+idb.iid(94758).avgdmg=20494.5;
+idb.iid(94758).str=1478;
+idb.iid(94758).sta=2338;
+idb.iid(94758).hit=1107;
+idb.iid(94758).crit=797;
+idb.iid(94758).socket='B';
+idb.iid(94758).sbstat='str';
+idb.iid(94758).sbval=60;
+idb.iid(94758).isreforged=0;
+
+idb.iid(94759).name='Kura-Kura, Kazra''jin''s Skullcleaver';
+idb.iid(94759).wtype='axe';
+idb.iid(94759).ilvl=522;
+idb.iid(94759).tooldps=4222.3;
+idb.iid(94759).swing=2.6;
+idb.iid(94759).avgdmg=10978;
+idb.iid(94759).sta=1002;
+idb.iid(94759).agi=588;
+idb.iid(94759).crit=405;
+idb.iid(94759).mast=405;
+idb.iid(94759).socket='B';
+idb.iid(94759).sbstat='agi';
+idb.iid(94759).sbval=60;
+idb.iid(94759).isreforged=0;
+
+idb.iid(94768).name='Shellsplitter Greataxe';
+idb.iid(94768).wtype='axe';
+idb.iid(94768).ilvl=522;
+idb.iid(94768).tooldps=4222.3;
+idb.iid(94768).swing=2.6;
+idb.iid(94768).avgdmg=10978;
+idb.iid(94768).str=588;
+idb.iid(94768).sta=1002;
+idb.iid(94768).hit=438;
+idb.iid(94768).crit=351;
+idb.iid(94768).socket='B';
+idb.iid(94768).sbstat='str';
+idb.iid(94768).sbval=60;
+idb.iid(94768).isreforged=0;
+
+idb.iid(94937).name='Acid-Spine Bonemace';
+idb.iid(94937).wtype='mac';
+idb.iid(94937).ilvl=522;
+idb.iid(94937).tooldps=4222.3;
+idb.iid(94937).swing=2.4;
+idb.iid(94937).avgdmg=10133.5;
+idb.iid(94937).str=588;
+idb.iid(94937).sta=1002;
+idb.iid(94937).dodge=444;
+idb.iid(94937).parry=340;
+idb.iid(94937).socket='R';
+idb.iid(94937).sbstat='str';
+idb.iid(94937).sbval=60;
+idb.iid(94937).isreforged=0;
+
+idb.iid(94954).name='Hand of the Dark Animus';
+idb.iid(94954).wtype='mac';
+idb.iid(94954).ilvl=522;
+idb.iid(94954).tooldps=4222.3;
+idb.iid(94954).swing=2.6;
+idb.iid(94954).avgdmg=10978;
+idb.iid(94954).sta=1002;
+idb.iid(94954).agi=588;
+idb.iid(94954).exp=340;
+idb.iid(94954).haste=444;
+idb.iid(94954).socket='R';
+idb.iid(94954).sbstat='agi';
+idb.iid(94954).sbval=60;
+idb.iid(94954).isreforged=0;
+
+idb.iid(94964).name='Qon''s Flaming Scimitar';
+idb.iid(94964).wtype='swo';
+idb.iid(94964).ilvl=522;
+idb.iid(94964).tooldps=4222.3;
+idb.iid(94964).swing=2.6;
+idb.iid(94964).avgdmg=10978;
+idb.iid(94964).str=588;
+idb.iid(94964).sta=1002;
+idb.iid(94964).exp=405;
+idb.iid(94964).mast=405;
+idb.iid(94964).socket='R';
+idb.iid(94964).sbstat='str';
+idb.iid(94964).sbval=60;
+idb.iid(94964).isreforged=0;
+
+idb.iid(94982).name='Uroe, Harbinger of Terror';
+idb.iid(94982).wtype='axe';
+idb.iid(94982).ilvl=522;
+idb.iid(94982).tooldps=5693;
+idb.iid(94982).swing=3.6;
+idb.iid(94982).avgdmg=20494.5;
+idb.iid(94982).str=1478;
+idb.iid(94982).sta=2338;
+idb.iid(94982).crit=1120;
+idb.iid(94982).mast=773;
+idb.iid(94982).socket='R';
+idb.iid(94982).sbstat='str';
+idb.iid(94982).sbval=60;
+idb.iid(94982).isreforged=0;
+
+idb.iid(94983).name='Shan-Dun, Breaker of Hope';
+idb.iid(94983).wtype='pol';
+idb.iid(94983).ilvl=522;
+idb.iid(94983).tooldps=5693;
+idb.iid(94983).swing=3.6;
+idb.iid(94983).avgdmg=20494.5;
+idb.iid(94983).sta=2338;
+idb.iid(94983).agi=1478;
+idb.iid(94983).exp=1023;
+idb.iid(94983).haste=975;
+idb.iid(94983).socket='R';
+idb.iid(94983).sbstat='agi';
+idb.iid(94983).sbval=60;
+idb.iid(94983).isreforged=0;
+
+idb.iid(95498).name='Bo-Ris, Horror in the Night';
+idb.iid(95498).wtype='pol';
+idb.iid(95498).ilvl=522;
+idb.iid(95498).tooldps=5693;
+idb.iid(95498).swing=3.6;
+idb.iid(95498).avgdmg=20494.5;
+idb.iid(95498).str=1478;
+idb.iid(95498).sta=2338;
+idb.iid(95498).exp=873;
+idb.iid(95498).mast=1084;
+idb.iid(95498).socket='Y';
+idb.iid(95498).sbstat='str';
+idb.iid(95498).sbval=60;
+idb.iid(95498).isreforged=0;
+
+idb.iid(95502).name='Do-tharak, the Swordbreaker';
+idb.iid(95502).wtype='swo';
+idb.iid(95502).ilvl=522;
+idb.iid(95502).tooldps=4222.3;
+idb.iid(95502).swing=2.6;
+idb.iid(95502).avgdmg=10978;
+idb.iid(95502).str=588;
+idb.iid(95502).sta=1002;
+idb.iid(95502).hit=319;
+idb.iid(95502).mast=456;
+idb.iid(95502).socket='Y';
+idb.iid(95502).sbstat='str';
+idb.iid(95502).sbval=60;
+idb.iid(95502).isreforged=0;
+
+idb.iid(95504).name='Zeeg''s Ancient Kegsmasher';
+idb.iid(95504).wtype='mac';
+idb.iid(95504).ilvl=522;
+idb.iid(95504).tooldps=4222.3;
+idb.iid(95504).swing=2.4;
+idb.iid(95504).avgdmg=10133.5;
+idb.iid(95504).sta=1002;
+idb.iid(95504).agi=588;
+idb.iid(95504).exp=456;
+idb.iid(95504).mast=319;
+idb.iid(95504).socket='Y';
+idb.iid(95504).sbstat='agi';
+idb.iid(95504).sbval=60;
+idb.iid(95504).isreforged=0;
+
+idb.iid(95505).name='Greatsword of Frozen Hells';
+idb.iid(95505).wtype='swo';
+idb.iid(95505).ilvl=522;
+idb.iid(95505).tooldps=5693;
+idb.iid(95505).swing=3.6;
+idb.iid(95505).avgdmg=20494.5;
+idb.iid(95505).str=1478;
+idb.iid(95505).sta=2338;
+idb.iid(95505).crit=946;
+idb.iid(95505).haste=1021;
+idb.iid(95505).socket='Y';
+idb.iid(95505).sbstat='str';
+idb.iid(95505).sbval=60;
+idb.iid(95505).isreforged=0;
+
+idb.iid(95997).name='Renataki''s Soul Charm (Thunderforged)';
+idb.iid(95997).ilvl=528;
+idb.iid(95997).exp=1552;
+idb.iid(95997).isreforged=0;
+
+idb.iid(96022).name='Frozen Warlord''s Bracers (Thunderforged)';
+idb.iid(96022).ilvl=528;
+idb.iid(96022).str=918;
+idb.iid(96022).sta=1377;
+idb.iid(96022).exp=537;
+idb.iid(96022).haste=657;
+idb.iid(96022).barmor=2664;
+idb.iid(96022).atype=1;
+idb.iid(96022).isreforged=0;
+
+idb.iid(96023).name='Bloodlord''s Bloodsoaked Legplates (Thunderforged)';
+idb.iid(96023).ilvl=528;
+idb.iid(96023).str=1488;
+idb.iid(96023).sta=2472;
+idb.iid(96023).haste=858;
+idb.iid(96023).mast=1114;
+idb.iid(96023).barmor=5328;
+idb.iid(96023).socket='RB';
+idb.iid(96023).sbstat='str';
+idb.iid(96023).sbval=120;
+idb.iid(96023).atype=1;
+idb.iid(96023).isreforged=0;
+
+idb.iid(96025).name='Horn-Rimmed Doomcloak (Thunderforged)';
+idb.iid(96025).ilvl=528;
+idb.iid(96025).str=918;
+idb.iid(96025).sta=1377;
+idb.iid(96025).hit=612;
+idb.iid(96025).mast=612;
+idb.iid(96025).barmor=1259;
+idb.iid(96025).isreforged=0;
+
+idb.iid(96026).name='Spark of Zandalar (Thunderforged)';
+idb.iid(96026).ilvl=528;
+idb.iid(96026).haste=1552;
+idb.iid(96026).isreforged=0;
+
+idb.iid(96075).name='Rot-Proof Greatplate (Thunderforged)';
+idb.iid(96075).ilvl=528;
+idb.iid(96075).str=1488;
+idb.iid(96075).sta=2472;
+idb.iid(96075).mast=1019;
+idb.iid(96075).dodge=1019;
+idb.iid(96075).barmor=6090;
+idb.iid(96075).socket='YB';
+idb.iid(96075).sbstat='dodge';
+idb.iid(96075).sbval=120;
+idb.iid(96075).atype=1;
+idb.iid(96075).isreforged=0;
+
+idb.iid(96083).name='Breath of the Hydra (Thunderforged)';
+idb.iid(96083).ilvl=528;
+idb.iid(96083).haste=1552;
+idb.iid(96083).isreforged=0;
+
+idb.iid(96125).name='Black Blood Legplates (Thunderforged)';
+idb.iid(96125).ilvl=528;
+idb.iid(96125).str=1488;
+idb.iid(96125).sta=2472;
+idb.iid(96125).dodge=991;
+idb.iid(96125).parry=1035;
+idb.iid(96125).barmor=5328;
+idb.iid(96125).socket='RB';
+idb.iid(96125).sbstat='sta';
+idb.iid(96125).sbval=180;
+idb.iid(96125).atype=1;
+idb.iid(96125).isreforged=0;
+
+idb.iid(96126).name='Metabolically Boosted Shoulderplates (Thunderforged)';
+idb.iid(96126).ilvl=528;
+idb.iid(96126).str=1144;
+idb.iid(96126).sta=1837;
+idb.iid(96126).dodge=756;
+idb.iid(96126).parry=789;
+idb.iid(96126).barmor=4567;
+idb.iid(96126).socket='R';
+idb.iid(96126).sbstat='sta';
+idb.iid(96126).sbval=90;
+idb.iid(96126).atype=1;
+idb.iid(96126).isreforged=0;
+
+idb.iid(96128).name='Band of the Scaled Tyrant (Thunderforged)';
+idb.iid(96128).ilvl=528;
+idb.iid(96128).str=838;
+idb.iid(96128).sta=1377;
+idb.iid(96128).hit=506;
+idb.iid(96128).haste=601;
+idb.iid(96128).socket='R';
+idb.iid(96128).sbstat='haste';
+idb.iid(96128).sbval=60;
+idb.iid(96128).isreforged=0;
+
+idb.iid(96135).name='Stolen Relic of Zuldazar (Thunderforged)';
+idb.iid(96135).ilvl=528;
+idb.iid(96135).spi=1552;
+idb.iid(96135).isreforged=0;
+
+idb.iid(96140).name='Greatshield of the Gloaming (Thunderforged)';
+idb.iid(96140).ilvl=528;
+idb.iid(96140).str=838;
+idb.iid(96140).sta=1377;
+idb.iid(96140).mast=557;
+idb.iid(96140).dodge=581;
+idb.iid(96140).barmor=19533;
+idb.iid(96140).socket='R';
+idb.iid(96140).sbstat='str';
+idb.iid(96140).sbval=60;
+idb.iid(96140).isreforged=0;
+
+idb.iid(96004).name='Worldbreaker''s Stormscythe (Thunderforged)';
+idb.iid(96004).wtype='axe';
+idb.iid(96004).ilvl=528;
+idb.iid(96004).tooldps=4465;
+idb.iid(96004).swing=2.6;
+idb.iid(96004).avgdmg=11609;
+idb.iid(96004).str=626;
+idb.iid(96004).sta=1059;
+idb.iid(96004).hit=491;
+idb.iid(96004).exp=329;
+idb.iid(96004).socket='B';
+idb.iid(96004).sbstat='str';
+idb.iid(96004).sbval=60;
+idb.iid(96004).isreforged=0;
+
+idb.iid(96047).name='Zerat, Malakk''s Soulburning Greatsword (Thunderforged)';
+idb.iid(96047).wtype='swo';
+idb.iid(96047).ilvl=528;
+idb.iid(96047).tooldps=6020.3;
+idb.iid(96047).swing=3.6;
+idb.iid(96047).avgdmg=21673;
+idb.iid(96047).str=1568;
+idb.iid(96047).sta=2472;
+idb.iid(96047).hit=1174;
+idb.iid(96047).crit=844;
+idb.iid(96047).socket='B';
+idb.iid(96047).sbstat='str';
+idb.iid(96047).sbval=60;
+idb.iid(96047).isreforged=0;
+
+idb.iid(96058).name='Shellsplitter Greataxe (Thunderforged)';
+idb.iid(96058).wtype='axe';
+idb.iid(96058).ilvl=528;
+idb.iid(96058).tooldps=4465;
+idb.iid(96058).swing=2.6;
+idb.iid(96058).avgdmg=11609;
+idb.iid(96058).str=626;
+idb.iid(96058).sta=1059;
+idb.iid(96058).hit=465;
+idb.iid(96058).crit=373;
+idb.iid(96058).socket='B';
+idb.iid(96058).sbstat='str';
+idb.iid(96058).sbval=60;
+idb.iid(96058).isreforged=0;
+
+idb.iid(96130).name='Acid-Spine Bonemace (Thunderforged)';
+idb.iid(96130).wtype='mac';
+idb.iid(96130).ilvl=528;
+idb.iid(96130).tooldps=4465;
+idb.iid(96130).swing=2.4;
+idb.iid(96130).avgdmg=10716;
+idb.iid(96130).str=626;
+idb.iid(96130).sta=1059;
+idb.iid(96130).dodge=472;
+idb.iid(96130).parry=362;
+idb.iid(96130).socket='R';
+idb.iid(96130).sbstat='str';
+idb.iid(96130).sbval=60;
+idb.iid(96130).isreforged=0;
+
+idb.iid(96175).name='Shan-Dun, Breaker of Hope (Thunderforged)';
+idb.iid(96175).wtype='pol';
+idb.iid(96175).ilvl=528;
+idb.iid(96175).tooldps=6020.3;
+idb.iid(96175).swing=3.6;
+idb.iid(96175).avgdmg=21673;
+idb.iid(96175).sta=2472;
+idb.iid(96175).agi=1568;
+idb.iid(96175).exp=1083;
+idb.iid(96175).haste=1035;
+idb.iid(96175).socket='R';
+idb.iid(96175).sbstat='agi';
+idb.iid(96175).sbval=60;
+idb.iid(96175).isreforged=0;
+
+idb.iid(96249).name='Bo-Ris, Horror in the Night (Thunderforged)';
+idb.iid(96249).wtype='pol';
+idb.iid(96249).ilvl=528;
+idb.iid(96249).tooldps=6020.3;
+idb.iid(96249).swing=3.6;
+idb.iid(96249).avgdmg=21673;
+idb.iid(96249).str=1568;
+idb.iid(96249).sta=2472;
+idb.iid(96249).exp=927;
+idb.iid(96249).mast=1147;
+idb.iid(96249).socket='Y';
+idb.iid(96249).sbstat='str';
+idb.iid(96249).sbval=60;
+idb.iid(96249).isreforged=0;
+
+idb.iid(96369).name='Renataki''s Soul Charm (Heroic)';
+idb.iid(96369).ilvl=535;
+idb.iid(96369).exp=1657;
+idb.iid(96369).isreforged=0;
+
+idb.iid(96373).name='Cloudbreaker Greatbelt (Heroic)';
+idb.iid(96373).ilvl=535;
+idb.iid(96373).str=1147;
+idb.iid(96373).sta=1960;
+idb.iid(96373).haste=769;
+idb.iid(96373).mast=804;
+idb.iid(96373).barmor=3496;
+idb.iid(96373).socket='RY';
+idb.iid(96373).atype=1;
+idb.iid(96373).isreforged=0;
+
+idb.iid(96374).name='Chestplate of Violent Detonation (Heroic)';
+idb.iid(96374).ilvl=535;
+idb.iid(96374).str=1599;
+idb.iid(96374).sta=2639;
+idb.iid(96374).hit=1128;
+idb.iid(96374).mast=1035;
+idb.iid(96374).barmor=6215;
+idb.iid(96374).socket='RB';
+idb.iid(96374).sbstat='str';
+idb.iid(96374).sbval=120;
+idb.iid(96374).atype=1;
+idb.iid(96374).isreforged=0;
+
+idb.iid(96375).name='Bracers of Constant Implosion (Heroic)';
+idb.iid(96375).ilvl=535;
+idb.iid(96375).str=900;
+idb.iid(96375).sta=1471;
+idb.iid(96375).barmor=2719;
+idb.iid(96375).socket='Y';
+idb.iid(96375).sbstat='str';
+idb.iid(96375).sbval=60;
+idb.iid(96375).atype=1;
+idb.iid(96375).isreforged=0;
+
+idb.iid(96377).name='Jin''rokh''s Soulcrystal (Heroic)';
+idb.iid(96377).ilvl=535;
+idb.iid(96377).str=980;
+idb.iid(96377).sta=1471;
+idb.iid(96377).exp=589;
+idb.iid(96377).dodge=692;
+idb.iid(96377).isreforged=0;
+
+idb.iid(96394).name='Frozen Warlord''s Bracers (Heroic)';
+idb.iid(96394).ilvl=535;
+idb.iid(96394).str=980;
+idb.iid(96394).sta=1471;
+idb.iid(96394).exp=573;
+idb.iid(96394).haste=701;
+idb.iid(96394).barmor=2719;
+idb.iid(96394).atype=1;
+idb.iid(96394).isreforged=0;
+
+idb.iid(96395).name='Bloodlord''s Bloodsoaked Legplates (Heroic)';
+idb.iid(96395).ilvl=535;
+idb.iid(96395).str=1599;
+idb.iid(96395).sta=2639;
+idb.iid(96395).haste=921;
+idb.iid(96395).mast=1194;
+idb.iid(96395).barmor=5438;
+idb.iid(96395).socket='RB';
+idb.iid(96395).sbstat='str';
+idb.iid(96395).sbval=120;
+idb.iid(96395).atype=1;
+idb.iid(96395).isreforged=0;
+
+idb.iid(96396).name='Puncture-Proof Greathelm (Heroic)';
+idb.iid(96396).ilvl=535;
+idb.iid(96396).str=1519;
+idb.iid(96396).sta=2639;
+idb.iid(96396).dodge=1033;
+idb.iid(96396).parry=1073;
+idb.iid(96396).barmor=5050;
+idb.iid(96396).socket='MB';
+idb.iid(96396).sbstat='sta';
+idb.iid(96396).sbval=270;
+idb.iid(96396).atype=1;
+idb.iid(96396).isreforged=0;
+
+idb.iid(96397).name='Horn-Rimmed Doomcloak (Heroic)';
+idb.iid(96397).ilvl=535;
+idb.iid(96397).str=980;
+idb.iid(96397).sta=1471;
+idb.iid(96397).hit=654;
+idb.iid(96397).mast=654;
+idb.iid(96397).barmor=1285;
+idb.iid(96397).isreforged=0;
+
+idb.iid(96398).name='Spark of Zandalar (Heroic)';
+idb.iid(96398).ilvl=535;
+idb.iid(96398).haste=1657;
+idb.iid(96398).isreforged=0;
+
+idb.iid(96409).name='Bad Juju (Heroic)';
+idb.iid(96409).ilvl=535;
+idb.iid(96409).mast=1657;
+idb.iid(96409).isreforged=0;
+
+idb.iid(96413).name='Wushoolay''s Final Choice (Heroic)';
+idb.iid(96413).ilvl=535;
+idb.iid(96413).hit=1657;
+idb.iid(96413).isreforged=0;
+
+idb.iid(96418).name='Overloaded Bladebreaker Cuirass (Heroic)';
+idb.iid(96418).ilvl=535;
+idb.iid(96418).str=1599;
+idb.iid(96418).sta=2639;
+idb.iid(96418).hit=811;
+idb.iid(96418).parry=1257;
+idb.iid(96418).barmor=6215;
+idb.iid(96418).socket='RY';
+idb.iid(96418).sbstat='dodge';
+idb.iid(96418).sbval=120;
+idb.iid(96418).atype=1;
+idb.iid(96418).isreforged=0;
+
+idb.iid(96421).name='Fortitude of the Zandalari (Heroic)';
+idb.iid(96421).ilvl=535;
+idb.iid(96421).mast=1657;
+idb.iid(96421).isreforged=0;
+
+idb.iid(96428).name='Shell-Coated Wristplates (Heroic)';
+idb.iid(96428).ilvl=535;
+idb.iid(96428).str=980;
+idb.iid(96428).sta=1471;
+idb.iid(96428).dodge=728;
+idb.iid(96428).parry=527;
+idb.iid(96428).barmor=2719;
+idb.iid(96428).atype=1;
+idb.iid(96428).isreforged=0;
+
+idb.iid(96431).name='Beakbreaker Greatcloak (Heroic)';
+idb.iid(96431).ilvl=535;
+idb.iid(96431).str=980;
+idb.iid(96431).sta=1471;
+idb.iid(96431).mast=621;
+idb.iid(96431).dodge=673;
+idb.iid(96431).barmor=1285;
+idb.iid(96431).isreforged=0;
+
+idb.iid(96446).name='Plated Toothbreaker Girdle (Heroic)';
+idb.iid(96446).ilvl=535;
+idb.iid(96446).str=1147;
+idb.iid(96446).sta=1960;
+idb.iid(96446).dodge=791;
+idb.iid(96446).parry=791;
+idb.iid(96446).barmor=3496;
+idb.iid(96446).socket='RY';
+idb.iid(96446).sbstat='dodge';
+idb.iid(96446).sbval=120;
+idb.iid(96446).atype=1;
+idb.iid(96446).isreforged=0;
+
+idb.iid(96447).name='Rot-Proof Greatplate (Heroic)';
+idb.iid(96447).ilvl=535;
+idb.iid(96447).str=1599;
+idb.iid(96447).sta=2639;
+idb.iid(96447).mast=1093;
+idb.iid(96447).dodge=1093;
+idb.iid(96447).barmor=6215;
+idb.iid(96447).socket='YB';
+idb.iid(96447).sbstat='dodge';
+idb.iid(96447).sbval=120;
+idb.iid(96447).atype=1;
+idb.iid(96447).isreforged=0;
+
+idb.iid(96449).name='Hydraskull Choker (Heroic)';
+idb.iid(96449).ilvl=535;
+idb.iid(96449).str=980;
+idb.iid(96449).sta=1471;
+idb.iid(96449).dodge=736;
+idb.iid(96449).parry=512;
+idb.iid(96449).isreforged=0;
+
+idb.iid(96455).name='Breath of the Hydra (Heroic)';
+idb.iid(96455).ilvl=535;
+idb.iid(96455).haste=1657;
+idb.iid(96455).isreforged=0;
+
+idb.iid(96456).name='Inscribed Bag of Hydra-Spawn (Heroic)';
+idb.iid(96456).ilvl=535;
+idb.iid(96456).spi=1657;
+idb.iid(96456).isreforged=0;
+
+idb.iid(96469).name='Egg-Shard Grips (Heroic)';
+idb.iid(96469).ilvl=535;
+idb.iid(96469).str=1227;
+idb.iid(96469).sta=1960;
+idb.iid(96469).exp=622;
+idb.iid(96469).parry=953;
+idb.iid(96469).barmor=3884;
+idb.iid(96469).socket='Y';
+idb.iid(96469).sbstat='str';
+idb.iid(96469).sbval=60;
+idb.iid(96469).atype=1;
+idb.iid(96469).isreforged=0;
+
+idb.iid(96470).name='Fabled Feather of Ji-Kun (Heroic)';
+idb.iid(96470).ilvl=535;
+idb.iid(96470).hit=1657;
+idb.iid(96470).isreforged=0;
+
+idb.iid(96471).name='Ji-Kun''s Rising Winds (Heroic)';
+idb.iid(96471).ilvl=535;
+idb.iid(96471).exp=1657;
+idb.iid(96471).isreforged=0;
+
+idb.iid(96476).name='Caustic Spike Bracers (Heroic)';
+idb.iid(96476).ilvl=535;
+idb.iid(96476).str=900;
+idb.iid(96476).sta=1471;
+idb.iid(96476).barmor=2719;
+idb.iid(96476).socket='Y';
+idb.iid(96476).sbstat='str';
+idb.iid(96476).sbval=60;
+idb.iid(96476).atype=1;
+idb.iid(96476).isreforged=0;
+
+idb.iid(96477).name='Legplates of the Dark Parasite (Heroic)';
+idb.iid(96477).ilvl=535;
+idb.iid(96477).str=1599;
+idb.iid(96477).sta=2639;
+idb.iid(96477).exp=949;
+idb.iid(96477).haste=1178;
+idb.iid(96477).barmor=5438;
+idb.iid(96477).socket='YB';
+idb.iid(96477).sbstat='str';
+idb.iid(96477).sbval=120;
+idb.iid(96477).atype=1;
+idb.iid(96477).isreforged=0;
+
+idb.iid(96478).name='Treads of the Blind Eye (Heroic)';
+idb.iid(96478).ilvl=535;
+idb.iid(96478).str=1227;
+idb.iid(96478).sta=1960;
+idb.iid(96478).dodge=775;
+idb.iid(96478).parry=862;
+idb.iid(96478).barmor=4273;
+idb.iid(96478).socket='B';
+idb.iid(96478).sbstat='dodge';
+idb.iid(96478).sbval=60;
+idb.iid(96478).atype=1;
+idb.iid(96478).isreforged=0;
+
+idb.iid(96479).name='Artery Rippers (Heroic)';
+idb.iid(96479).ilvl=535;
+idb.iid(96479).str=1147;
+idb.iid(96479).sta=1960;
+idb.iid(96479).dodge=753;
+idb.iid(96479).parry=820;
+idb.iid(96479).barmor=3884;
+idb.iid(96479).socket='RB';
+idb.iid(96479).sbstat='str';
+idb.iid(96479).sbval=120;
+idb.iid(96479).atype=1;
+idb.iid(96479).isreforged=0;
+
+idb.iid(96480).name='Reinforced Mirror-Sheen Cloak (Heroic)';
+idb.iid(96480).ilvl=535;
+idb.iid(96480).str=900;
+idb.iid(96480).sta=1471;
+idb.iid(96480).dodge=705;
+idb.iid(96480).parry=457;
+idb.iid(96480).barmor=1285;
+idb.iid(96480).socket='R';
+idb.iid(96480).sbstat='dodge';
+idb.iid(96480).sbval=60;
+idb.iid(96480).isreforged=0;
+
+idb.iid(96481).name='Durumu''s Severed Tentacle (Heroic)';
+idb.iid(96481).ilvl=535;
+idb.iid(96481).str=900;
+idb.iid(96481).sta=1471;
+idb.iid(96481).hit=609;
+idb.iid(96481).dodge=605;
+idb.iid(96481).socket='R';
+idb.iid(96481).sbstat='dodge';
+idb.iid(96481).sbval=60;
+idb.iid(96481).isreforged=0;
+
+idb.iid(96496).name='Pathogenic Gauntlets (Heroic)';
+idb.iid(96496).ilvl=535;
+idb.iid(96496).str=1147;
+idb.iid(96496).sta=1960;
+idb.iid(96496).hit=648;
+idb.iid(96496).haste=883;
+idb.iid(96496).barmor=3884;
+idb.iid(96496).socket='RB';
+idb.iid(96496).sbstat='str';
+idb.iid(96496).sbval=120;
+idb.iid(96496).atype=1;
+idb.iid(96496).isreforged=0;
+
+idb.iid(96497).name='Black Blood Legplates (Heroic)';
+idb.iid(96497).ilvl=535;
+idb.iid(96497).str=1599;
+idb.iid(96497).sta=2639;
+idb.iid(96497).dodge=1063;
+idb.iid(96497).parry=1110;
+idb.iid(96497).barmor=5438;
+idb.iid(96497).socket='RB';
+idb.iid(96497).sbstat='sta';
+idb.iid(96497).sbval=180;
+idb.iid(96497).atype=1;
+idb.iid(96497).isreforged=0;
+
+idb.iid(96498).name='Metabolically Boosted Shoulderplates (Heroic)';
+idb.iid(96498).ilvl=535;
+idb.iid(96498).str=1227;
+idb.iid(96498).sta=1960;
+idb.iid(96498).dodge=809;
+idb.iid(96498).parry=844;
+idb.iid(96498).barmor=4661;
+idb.iid(96498).socket='R';
+idb.iid(96498).sbstat='sta';
+idb.iid(96498).sbval=90;
+idb.iid(96498).atype=1;
+idb.iid(96498).isreforged=0;
+
+idb.iid(96500).name='Band of the Scaled Tyrant (Heroic)';
+idb.iid(96500).ilvl=535;
+idb.iid(96500).str=900;
+idb.iid(96500).sta=1471;
+idb.iid(96500).hit=542;
+idb.iid(96500).haste=646;
+idb.iid(96500).socket='R';
+idb.iid(96500).sbstat='haste';
+idb.iid(96500).sbval=60;
+idb.iid(96500).isreforged=0;
+
+idb.iid(96507).name='Stolen Relic of Zuldazar (Heroic)';
+idb.iid(96507).ilvl=535;
+idb.iid(96507).spi=1657;
+idb.iid(96507).isreforged=0;
+
+idb.iid(96512).name='Greatshield of the Gloaming (Heroic)';
+idb.iid(96512).ilvl=535;
+idb.iid(96512).str=900;
+idb.iid(96512).sta=1471;
+idb.iid(96512).mast=599;
+idb.iid(96512).dodge=621;
+idb.iid(96512).barmor=19935;
+idb.iid(96512).socket='R';
+idb.iid(96512).sbstat='str';
+idb.iid(96512).sbval=60;
+idb.iid(96512).isreforged=0;
+
+idb.iid(96523).name='Delicate Vial of the Sanguinaire (Heroic)';
+idb.iid(96523).ilvl=535;
+idb.iid(96523).dodge=1657;
+idb.iid(96523).isreforged=0;
+
+idb.iid(96543).name='Gaze of the Twins (Heroic)';
+idb.iid(96543).ilvl=535;
+idb.iid(96543).str=1657;
+idb.iid(96543).isreforged=0;
+
+idb.iid(96544).name='Moonjade Necklace (Heroic)';
+idb.iid(96544).ilvl=535;
+idb.iid(96544).str=900;
+idb.iid(96544).sta=1471;
+idb.iid(96544).exp=614;
+idb.iid(96544).dodge=614;
+idb.iid(96544).socket='R';
+idb.iid(96544).sbstat='sta';
+idb.iid(96544).sbval=90;
+idb.iid(96544).isreforged=0;
+
+idb.iid(96550).name='Doomed Crown of Lei-Shen (Heroic)';
+idb.iid(96550).ilvl=535;
+idb.iid(96550).str=1519;
+idb.iid(96550).sta=2639;
+idb.iid(96550).hit=791;
+idb.iid(96550).mast=1197;
+idb.iid(96550).barmor=5050;
+idb.iid(96550).socket='MR';
+idb.iid(96550).sbstat='str';
+idb.iid(96550).sbval=180;
+idb.iid(96550).atype=1;
+idb.iid(96550).isreforged=0;
+
+idb.iid(96552).name='Legplates of Whipping Ionization (Heroic)';
+idb.iid(96552).ilvl=535;
+idb.iid(96552).str=1519;
+idb.iid(96552).sta=2639;
+idb.iid(96552).mast=901;
+idb.iid(96552).dodge=1146;
+idb.iid(96552).barmor=5438;
+idb.iid(96552).socket='RRR';
+idb.iid(96552).sbstat='sta';
+idb.iid(96552).sbval=270;
+idb.iid(96552).atype=1;
+idb.iid(96552).isreforged=0;
+
+idb.iid(96554).name='Ultimate Protection of the Emperor (Heroic)';
+idb.iid(96554).ilvl=535;
+idb.iid(96554).str=900;
+idb.iid(96554).sta=1471;
+idb.iid(96554).mast=557;
+idb.iid(96554).parry=637;
+idb.iid(96554).barmor=19935;
+idb.iid(96554).socket='R';
+idb.iid(96554).sbstat='str';
+idb.iid(96554).sbval=60;
+idb.iid(96554).isreforged=0;
+
+idb.iid(96555).name='Soul Barrier (Heroic)';
+idb.iid(96555).ilvl=535;
+idb.iid(96555).sta=2485;
+idb.iid(96555).isreforged=0;
+
+idb.iid(96569).name='Breastplate of the All-Consuming Maw (Heroic)';
+idb.iid(96569).ilvl=535;
+idb.iid(96569).str=1519;
+idb.iid(96569).sta=2639;
+idb.iid(96569).exp=1138;
+idb.iid(96569).haste=909;
+idb.iid(96569).barmor=6215;
+idb.iid(96569).socket='RYB';
+idb.iid(96569).sbstat='str';
+idb.iid(96569).sbval=180;
+idb.iid(96569).atype=1;
+idb.iid(96569).isreforged=0;
+
+idb.iid(96571).name='Helmet of the All-Consuming Maw (Heroic)';
+idb.iid(96571).ilvl=535;
+idb.iid(96571).str=1519;
+idb.iid(96571).sta=2639;
+idb.iid(96571).hit=1110;
+idb.iid(96571).haste=983;
+idb.iid(96571).barmor=5050;
+idb.iid(96571).socket='MY';
+idb.iid(96571).atype=1;
+idb.iid(96571).isreforged=0;
+
+idb.iid(96573).name='Pauldrons of the All-Consuming Maw (Heroic)';
+idb.iid(96573).ilvl=535;
+idb.iid(96573).str=1147;
+idb.iid(96573).sta=1960;
+idb.iid(96573).exp=684;
+idb.iid(96573).mast=855;
+idb.iid(96573).barmor=4661;
+idb.iid(96573).socket='RY';
+idb.iid(96573).atype=1;
+idb.iid(96573).isreforged=0;
+
+idb.iid(96574).name='Chestguard of the All-Consuming Maw (Heroic)';
+idb.iid(96574).ilvl=535;
+idb.iid(96574).str=1519;
+idb.iid(96574).sta=2639;
+idb.iid(96574).dodge=1023;
+idb.iid(96574).parry=1070;
+idb.iid(96574).barmor=6215;
+idb.iid(96574).socket='RYB';
+idb.iid(96574).sbstat='dodge';
+idb.iid(96574).sbval=180;
+idb.iid(96574).atype=1;
+idb.iid(96574).isreforged=0;
+
+idb.iid(96575).name='Handguards of the All-Consuming Maw (Heroic)';
+idb.iid(96575).ilvl=535;
+idb.iid(96575).str=1227;
+idb.iid(96575).sta=1960;
+idb.iid(96575).exp=614;
+idb.iid(96575).dodge=961;
+idb.iid(96575).barmor=3884;
+idb.iid(96575).socket='R';
+idb.iid(96575).sbstat='dodge';
+idb.iid(96575).sbval=60;
+idb.iid(96575).atype=1;
+idb.iid(96575).isreforged=0;
+
+idb.iid(96576).name='Faceguard of the All-Consuming Maw (Heroic)';
+idb.iid(96576).ilvl=535;
+idb.iid(96576).str=1519;
+idb.iid(96576).sta=2639;
+idb.iid(96576).exp=731;
+idb.iid(96576).mast=1257;
+idb.iid(96576).barmor=5050;
+idb.iid(96576).socket='MY';
+idb.iid(96576).sbstat='parry';
+idb.iid(96576).sbval=180;
+idb.iid(96576).atype=1;
+idb.iid(96576).isreforged=0;
+
+idb.iid(96577).name='Legguards of the All-Consuming Maw (Heroic)';
+idb.iid(96577).ilvl=535;
+idb.iid(96577).str=1599;
+idb.iid(96577).sta=2639;
+idb.iid(96577).hit=853;
+idb.iid(96577).parry=1251;
+idb.iid(96577).barmor=5438;
+idb.iid(96577).socket='YB';
+idb.iid(96577).sbstat='sta';
+idb.iid(96577).sbval=180;
+idb.iid(96577).atype=1;
+idb.iid(96577).isreforged=0;
+
+idb.iid(96578).name='Shoulderguards of the All-Consuming Maw (Heroic)';
+idb.iid(96578).ilvl=535;
+idb.iid(96578).str=1147;
+idb.iid(96578).sta=1960;
+idb.iid(96578).hit=791;
+idb.iid(96578).mast=791;
+idb.iid(96578).barmor=4661;
+idb.iid(96578).socket='RY';
+idb.iid(96578).sbstat='parry';
+idb.iid(96578).sbval=120;
+idb.iid(96578).atype=1;
+idb.iid(96578).isreforged=0;
+
+idb.iid(96617).name='Reconstructed Furious Shoulderplates (Heroic)';
+idb.iid(96617).ilvl=535;
+idb.iid(96617).str=1227;
+idb.iid(96617).sta=1960;
+idb.iid(96617).haste=857;
+idb.iid(96617).mast=788;
+idb.iid(96617).barmor=4661;
+idb.iid(96617).socket='B';
+idb.iid(96617).sbstat='str';
+idb.iid(96617).sbval=60;
+idb.iid(96617).atype=1;
+idb.iid(96617).isreforged=0;
+
+idb.iid(96618).name='Reconstructed Bloody Shoulderplates (Heroic)';
+idb.iid(96618).ilvl=535;
+idb.iid(96618).str=1227;
+idb.iid(96618).sta=1960;
+idb.iid(96618).exp=622;
+idb.iid(96618).parry=953;
+idb.iid(96618).barmor=4661;
+idb.iid(96618).socket='B';
+idb.iid(96618).sbstat='sta';
+idb.iid(96618).sbval=90;
+idb.iid(96618).atype=1;
+idb.iid(96618).isreforged=0;
+
+idb.iid(96622).name='Visage of the Doomed (Heroic)';
+idb.iid(96622).ilvl=535;
+idb.iid(96622).str=900;
+idb.iid(96622).sta=1471;
+idb.iid(96622).dodge=511;
+idb.iid(96622).parry=664;
+idb.iid(96622).barmor=19935;
+idb.iid(96622).socket='Y';
+idb.iid(96622).sbstat='str';
+idb.iid(96622).sbval=60;
+idb.iid(96622).isreforged=0;
+
+idb.iid(96654).name='Lightning Emperor''s Battleplate (Heroic)';
+idb.iid(96654).ilvl=535;
+idb.iid(96654).str=1519;
+idb.iid(96654).sta=2639;
+idb.iid(96654).exp=1138;
+idb.iid(96654).haste=909;
+idb.iid(96654).barmor=6215;
+idb.iid(96654).socket='RYB';
+idb.iid(96654).sbstat='str';
+idb.iid(96654).sbval=180;
+idb.iid(96654).atype=1;
+idb.iid(96654).isreforged=0;
+
+idb.iid(96656).name='Lightning Emperor''s Helmet (Heroic)';
+idb.iid(96656).ilvl=535;
+idb.iid(96656).str=1519;
+idb.iid(96656).sta=2639;
+idb.iid(96656).hit=1110;
+idb.iid(96656).haste=983;
+idb.iid(96656).barmor=5050;
+idb.iid(96656).socket='MY';
+idb.iid(96656).atype=1;
+idb.iid(96656).isreforged=0;
+
+idb.iid(96658).name='Lightning Emperor''s Pauldrons (Heroic)';
+idb.iid(96658).ilvl=535;
+idb.iid(96658).str=1147;
+idb.iid(96658).sta=1960;
+idb.iid(96658).exp=684;
+idb.iid(96658).mast=855;
+idb.iid(96658).barmor=4661;
+idb.iid(96658).socket='RY';
+idb.iid(96658).atype=1;
+idb.iid(96658).isreforged=0;
+
+idb.iid(96664).name='Lightning Emperor''s Chestguard (Heroic)';
+idb.iid(96664).ilvl=535;
+idb.iid(96664).str=1519;
+idb.iid(96664).sta=2639;
+idb.iid(96664).dodge=1023;
+idb.iid(96664).parry=1070;
+idb.iid(96664).barmor=6215;
+idb.iid(96664).socket='RYB';
+idb.iid(96664).sbstat='dodge';
+idb.iid(96664).sbval=180;
+idb.iid(96664).atype=1;
+idb.iid(96664).isreforged=0;
+
+idb.iid(96665).name='Lightning Emperor''s Handguards (Heroic)';
+idb.iid(96665).ilvl=535;
+idb.iid(96665).str=1227;
+idb.iid(96665).sta=1960;
+idb.iid(96665).exp=614;
+idb.iid(96665).dodge=961;
+idb.iid(96665).barmor=3884;
+idb.iid(96665).socket='R';
+idb.iid(96665).sbstat='dodge';
+idb.iid(96665).sbval=60;
+idb.iid(96665).atype=1;
+idb.iid(96665).isreforged=0;
+
+idb.iid(96666).name='Lightning Emperor''s Faceguard (Heroic)';
+idb.iid(96666).ilvl=535;
+idb.iid(96666).str=1519;
+idb.iid(96666).sta=2639;
+idb.iid(96666).exp=731;
+idb.iid(96666).mast=1257;
+idb.iid(96666).barmor=5050;
+idb.iid(96666).socket='MY';
+idb.iid(96666).sbstat='parry';
+idb.iid(96666).sbval=180;
+idb.iid(96666).atype=1;
+idb.iid(96666).isreforged=0;
+
+idb.iid(96667).name='Lightning Emperor''s Legguards (Heroic)';
+idb.iid(96667).ilvl=535;
+idb.iid(96667).str=1599;
+idb.iid(96667).sta=2639;
+idb.iid(96667).hit=853;
+idb.iid(96667).parry=1251;
+idb.iid(96667).barmor=5438;
+idb.iid(96667).socket='YB';
+idb.iid(96667).sbstat='sta';
+idb.iid(96667).sbval=180;
+idb.iid(96667).atype=1;
+idb.iid(96667).isreforged=0;
+
+idb.iid(96668).name='Lightning Emperor''s Shoulderguards (Heroic)';
+idb.iid(96668).ilvl=535;
+idb.iid(96668).str=1147;
+idb.iid(96668).sta=1960;
+idb.iid(96668).hit=791;
+idb.iid(96668).mast=791;
+idb.iid(96668).barmor=4661;
+idb.iid(96668).socket='RY';
+idb.iid(96668).sbstat='parry';
+idb.iid(96668).sbval=120;
+idb.iid(96668).atype=1;
+idb.iid(96668).isreforged=0;
+
+idb.iid(96720).name='Abandoned Zandalari Bucklebreaker (Heroic)';
+idb.iid(96720).ilvl=535;
+idb.iid(96720).str=1227;
+idb.iid(96720).sta=1960;
+idb.iid(96720).mast=907;
+idb.iid(96720).dodge=704;
+idb.iid(96720).barmor=3496;
+idb.iid(96720).socket='B';
+idb.iid(96720).sbstat='sta';
+idb.iid(96720).sbval=90;
+idb.iid(96720).atype=1;
+idb.iid(96720).isreforged=0;
+
+idb.iid(96721).name='Necklace of the Terra-Cotta Vanquisher (Heroic)';
+idb.iid(96721).ilvl=535;
+idb.iid(96721).str=900;
+idb.iid(96721).sta=1471;
+idb.iid(96721).hit=661;
+idb.iid(96721).mast=533;
+idb.iid(96721).socket='R';
+idb.iid(96721).sbstat='exp';
+idb.iid(96721).sbval=60;
+idb.iid(96721).isreforged=0;
+
+idb.iid(96722).name='Locksmasher Greaves (Heroic)';
+idb.iid(96722).ilvl=535;
+idb.iid(96722).str=1307;
+idb.iid(96722).sta=1960;
+idb.iid(96722).hit=682;
+idb.iid(96722).haste=982;
+idb.iid(96722).barmor=4273;
+idb.iid(96722).atype=1;
+idb.iid(96722).isreforged=0;
+
+idb.iid(96723).name='Columnbreaker Stompers (Heroic)';
+idb.iid(96723).ilvl=535;
+idb.iid(96723).str=1307;
+idb.iid(96723).sta=1960;
+idb.iid(96723).exp=849;
+idb.iid(96723).mast=884;
+idb.iid(96723).barmor=4273;
+idb.iid(96723).atype=1;
+idb.iid(96723).isreforged=0;
+
+idb.iid(96724).name='Necklace of the Terra-Cotta Protector (Heroic)';
+idb.iid(96724).ilvl=535;
+idb.iid(96724).str=900;
+idb.iid(96724).sta=1471;
+idb.iid(96724).exp=457;
+idb.iid(96724).parry=705;
+idb.iid(96724).socket='R';
+idb.iid(96724).sbstat='exp';
+idb.iid(96724).sbval=60;
+idb.iid(96724).isreforged=0;
+
+idb.iid(96730).name='Helmet of the Last Mogu (Heroic)';
+idb.iid(96730).ilvl=535;
+idb.iid(96730).str=1519;
+idb.iid(96730).sta=2639;
+idb.iid(96730).hit=1110;
+idb.iid(96730).haste=983;
+idb.iid(96730).barmor=5050;
+idb.iid(96730).socket='MY';
+idb.iid(96730).atype=1;
+idb.iid(96730).isreforged=0;
+
+idb.iid(96731).name='Battleplate of the Last Mogu (Heroic)';
+idb.iid(96731).ilvl=535;
+idb.iid(96731).str=1519;
+idb.iid(96731).sta=2639;
+idb.iid(96731).exp=1138;
+idb.iid(96731).haste=909;
+idb.iid(96731).barmor=6215;
+idb.iid(96731).socket='RYB';
+idb.iid(96731).sbstat='str';
+idb.iid(96731).sbval=180;
+idb.iid(96731).atype=1;
+idb.iid(96731).isreforged=0;
+
+idb.iid(96734).name='Pauldrons of the Last Mogu (Heroic)';
+idb.iid(96734).ilvl=535;
+idb.iid(96734).str=1147;
+idb.iid(96734).sta=1960;
+idb.iid(96734).exp=684;
+idb.iid(96734).mast=855;
+idb.iid(96734).barmor=4661;
+idb.iid(96734).socket='RY';
+idb.iid(96734).atype=1;
+idb.iid(96734).isreforged=0;
+
+idb.iid(96735).name='Chestguard of the Last Mogu (Heroic)';
+idb.iid(96735).ilvl=535;
+idb.iid(96735).str=1519;
+idb.iid(96735).sta=2639;
+idb.iid(96735).dodge=1023;
+idb.iid(96735).parry=1070;
+idb.iid(96735).barmor=6215;
+idb.iid(96735).socket='RYB';
+idb.iid(96735).sbstat='dodge';
+idb.iid(96735).sbval=180;
+idb.iid(96735).atype=1;
+idb.iid(96735).isreforged=0;
+
+idb.iid(96736).name='Handguards of the Last Mogu (Heroic)';
+idb.iid(96736).ilvl=535;
+idb.iid(96736).str=1227;
+idb.iid(96736).sta=1960;
+idb.iid(96736).exp=614;
+idb.iid(96736).dodge=961;
+idb.iid(96736).barmor=3884;
+idb.iid(96736).socket='R';
+idb.iid(96736).sbstat='mast';
+idb.iid(96736).sbval=60;
+idb.iid(96736).atype=1;
+idb.iid(96736).isreforged=0;
+
+idb.iid(96737).name='Faceguard of the Last Mogu (Heroic)';
+idb.iid(96737).ilvl=535;
+idb.iid(96737).str=1519;
+idb.iid(96737).sta=2639;
+idb.iid(96737).exp=731;
+idb.iid(96737).mast=1257;
+idb.iid(96737).barmor=5050;
+idb.iid(96737).socket='MY';
+idb.iid(96737).sbstat='parry';
+idb.iid(96737).sbval=180;
+idb.iid(96737).atype=1;
+idb.iid(96737).isreforged=0;
+
+idb.iid(96738).name='Legguards of the Last Mogu (Heroic)';
+idb.iid(96738).ilvl=535;
+idb.iid(96738).str=1599;
+idb.iid(96738).sta=2639;
+idb.iid(96738).hit=853;
+idb.iid(96738).parry=1251;
+idb.iid(96738).barmor=5438;
+idb.iid(96738).socket='YB';
+idb.iid(96738).sbstat='sta';
+idb.iid(96738).sbval=180;
+idb.iid(96738).atype=1;
+idb.iid(96738).isreforged=0;
+
+idb.iid(96739).name='Shoulderguards of the Last Mogu (Heroic)';
+idb.iid(96739).ilvl=535;
+idb.iid(96739).str=1147;
+idb.iid(96739).sta=1960;
+idb.iid(96739).hit=791;
+idb.iid(96739).mast=791;
+idb.iid(96739).barmor=4661;
+idb.iid(96739).socket='RY';
+idb.iid(96739).sbstat='parry';
+idb.iid(96739).sbval=120;
+idb.iid(96739).atype=1;
+idb.iid(96739).isreforged=0;
+
+idb.iid(96376).name='Worldbreaker''s Stormscythe (Heroic)';
+idb.iid(96376).wtype='axe';
+idb.iid(96376).ilvl=535;
+idb.iid(96376).tooldps=4765.9;
+idb.iid(96376).swing=2.6;
+idb.iid(96376).avgdmg=12391.5;
+idb.iid(96376).str=674;
+idb.iid(96376).sta=1131;
+idb.iid(96376).hit=527;
+idb.iid(96376).exp=354;
+idb.iid(96376).socket='B';
+idb.iid(96376).sbstat='str';
+idb.iid(96376).sbval=60;
+idb.iid(96376).isreforged=0;
+
+idb.iid(96410).name='Kura-Kura, Kazra''jin''s Skullcleaver (Heroic)';
+idb.iid(96410).wtype='axe';
+idb.iid(96410).ilvl=535;
+idb.iid(96410).tooldps=4765.9;
+idb.iid(96410).swing=2.6;
+idb.iid(96410).avgdmg=12391.5;
+idb.iid(96410).sta=1131;
+idb.iid(96410).agi=674;
+idb.iid(96410).crit=463;
+idb.iid(96410).mast=463;
+idb.iid(96410).socket='B';
+idb.iid(96410).sbstat='agi';
+idb.iid(96410).sbval=60;
+idb.iid(96410).isreforged=0;
+
+idb.iid(96419).name='Zerat, Malakk''s Soulburning Greatsword (Heroic)';
+idb.iid(96419).wtype='swo';
+idb.iid(96419).ilvl=535;
+idb.iid(96419).tooldps=6426;
+idb.iid(96419).swing=3.6;
+idb.iid(96419).avgdmg=23133.5;
+idb.iid(96419).str=1679;
+idb.iid(96419).sta=2639;
+idb.iid(96419).hit=1258;
+idb.iid(96419).crit=902;
+idb.iid(96419).socket='B';
+idb.iid(96419).sbstat='str';
+idb.iid(96419).sbval=60;
+idb.iid(96419).isreforged=0;
+
+idb.iid(96430).name='Shellsplitter Greataxe (Heroic)';
+idb.iid(96430).wtype='axe';
+idb.iid(96430).ilvl=535;
+idb.iid(96430).tooldps=4765.9;
+idb.iid(96430).swing=2.6;
+idb.iid(96430).avgdmg=12391.5;
+idb.iid(96430).str=674;
+idb.iid(96430).sta=1131;
+idb.iid(96430).hit=499;
+idb.iid(96430).crit=401;
+idb.iid(96430).socket='B';
+idb.iid(96430).sbstat='str';
+idb.iid(96430).sbval=60;
+idb.iid(96430).isreforged=0;
+
+idb.iid(96502).name='Acid-Spine Bonemace (Heroic)';
+idb.iid(96502).wtype='mac';
+idb.iid(96502).ilvl=535;
+idb.iid(96502).tooldps=4765.9;
+idb.iid(96502).swing=2.4;
+idb.iid(96502).avgdmg=11438;
+idb.iid(96502).str=674;
+idb.iid(96502).sta=1131;
+idb.iid(96502).dodge=506;
+idb.iid(96502).parry=389;
+idb.iid(96502).socket='R';
+idb.iid(96502).sbstat='str';
+idb.iid(96502).sbval=60;
+idb.iid(96502).isreforged=0;
+
+idb.iid(96514).name='Hand of the Dark Animus (Heroic)';
+idb.iid(96514).wtype='mac';
+idb.iid(96514).ilvl=535;
+idb.iid(96514).tooldps=4765.9;
+idb.iid(96514).swing=2.6;
+idb.iid(96514).avgdmg=12391.5;
+idb.iid(96514).sta=1131;
+idb.iid(96514).agi=674;
+idb.iid(96514).exp=389;
+idb.iid(96514).haste=506;
+idb.iid(96514).socket='R';
+idb.iid(96514).sbstat='agi';
+idb.iid(96514).sbval=60;
+idb.iid(96514).isreforged=0;
+
+idb.iid(96534).name='Qon''s Flaming Scimitar (Heroic)';
+idb.iid(96534).wtype='swo';
+idb.iid(96534).ilvl=535;
+idb.iid(96534).tooldps=4765.9;
+idb.iid(96534).swing=2.6;
+idb.iid(96534).avgdmg=12391.5;
+idb.iid(96534).str=674;
+idb.iid(96534).sta=1131;
+idb.iid(96534).exp=463;
+idb.iid(96534).mast=463;
+idb.iid(96534).socket='R';
+idb.iid(96534).sbstat='str';
+idb.iid(96534).sbval=60;
+idb.iid(96534).isreforged=0;
+
+idb.iid(96547).name='Shan-Dun, Breaker of Hope (Heroic)';
+idb.iid(96547).wtype='pol';
+idb.iid(96547).ilvl=535;
+idb.iid(96547).tooldps=6426;
+idb.iid(96547).swing=3.6;
+idb.iid(96547).avgdmg=23133.5;
+idb.iid(96547).sta=2639;
+idb.iid(96547).agi=1679;
+idb.iid(96547).exp=1157;
+idb.iid(96547).haste=1109;
+idb.iid(96547).socket='R';
+idb.iid(96547).sbstat='agi';
+idb.iid(96547).sbval=60;
+idb.iid(96547).isreforged=0;
+
+idb.iid(96553).name='Uroe, Harbinger of Terror (Heroic)';
+idb.iid(96553).wtype='axe';
+idb.iid(96553).ilvl=535;
+idb.iid(96553).tooldps=6426;
+idb.iid(96553).swing=3.6;
+idb.iid(96553).avgdmg=23133.5;
+idb.iid(96553).str=1679;
+idb.iid(96553).sta=2639;
+idb.iid(96553).crit=1273;
+idb.iid(96553).mast=875;
+idb.iid(96553).socket='R';
+idb.iid(96553).sbstat='str';
+idb.iid(96553).sbval=60;
+idb.iid(96553).isreforged=0;
+
+idb.iid(96605).name='Zeeg''s Ancient Kegsmasher (Heroic)';
+idb.iid(96605).wtype='mac';
+idb.iid(96605).ilvl=535;
+idb.iid(96605).tooldps=4765.9;
+idb.iid(96605).swing=2.4;
+idb.iid(96605).avgdmg=11438;
+idb.iid(96605).sta=1131;
+idb.iid(96605).agi=674;
+idb.iid(96605).exp=520;
+idb.iid(96605).mast=365;
+idb.iid(96605).socket='Y';
+idb.iid(96605).sbstat='agi';
+idb.iid(96605).sbval=60;
+idb.iid(96605).isreforged=0;
+
+idb.iid(96619).name='Greatsword of Frozen Hells (Heroic)';
+idb.iid(96619).wtype='swo';
+idb.iid(96619).ilvl=535;
+idb.iid(96619).tooldps=6426;
+idb.iid(96619).swing=3.6;
+idb.iid(96619).avgdmg=23133.5;
+idb.iid(96619).str=1679;
+idb.iid(96619).sta=2639;
+idb.iid(96619).crit=1070;
+idb.iid(96619).haste=1161;
+idb.iid(96619).socket='Y';
+idb.iid(96619).sbstat='str';
+idb.iid(96619).sbval=60;
+idb.iid(96619).isreforged=0;
+
+idb.iid(96620).name='Do-tharak, the Swordbreaker (Heroic)';
+idb.iid(96620).wtype='swo';
+idb.iid(96620).ilvl=535;
+idb.iid(96620).tooldps=4765.9;
+idb.iid(96620).swing=2.6;
+idb.iid(96620).avgdmg=12391.5;
+idb.iid(96620).str=674;
+idb.iid(96620).sta=1131;
+idb.iid(96620).hit=365;
+idb.iid(96620).mast=520;
+idb.iid(96620).socket='Y';
+idb.iid(96620).sbstat='str';
+idb.iid(96620).sbval=60;
+idb.iid(96620).isreforged=0;
+
+idb.iid(96621).name='Bo-Ris, Horror in the Night (Heroic)';
+idb.iid(96621).wtype='pol';
+idb.iid(96621).ilvl=535;
+idb.iid(96621).tooldps=6426;
+idb.iid(96621).swing=3.6;
+idb.iid(96621).avgdmg=23133.5;
+idb.iid(96621).str=1679;
+idb.iid(96621).sta=2639;
+idb.iid(96621).exp=993;
+idb.iid(96621).mast=1225;
+idb.iid(96621).socket='Y';
+idb.iid(96621).sbstat='str';
+idb.iid(96621).sbval=60;
+idb.iid(96621).isreforged=0;
+
+idb.iid(95002).name='Cracklesnap Clasp (Heroic Thunderforged)';
+idb.iid(95002).ilvl=541;
+idb.iid(95002).str=1222;
+idb.iid(95002).sta=2073;
+idb.iid(95002).hit=735;
+idb.iid(95002).parry=911;
+idb.iid(95002).barmor=3556;
+idb.iid(95002).socket='BB';
+idb.iid(95002).sbstat='sta';
+idb.iid(95002).sbval=180;
+idb.iid(95002).atype=1;
+idb.iid(95002).isreforged=0;
+
+idb.iid(95011).name='Lightning-Walker Clawfeet (Heroic Thunderforged)';
+idb.iid(95011).ilvl=541;
+idb.iid(95011).str=1222;
+idb.iid(95011).sta=2073;
+idb.iid(95011).mast=889;
+idb.iid(95011).dodge=738;
+idb.iid(95011).barmor=4347;
+idb.iid(95011).socket='YB';
+idb.iid(95011).sbstat='str';
+idb.iid(95011).sbval=120;
+idb.iid(95011).atype=1;
+idb.iid(95011).isreforged=0;
+
+idb.iid(95016).name='White Snow Skycloak (Heroic Thunderforged)';
+idb.iid(95016).ilvl=541;
+idb.iid(95016).str=957;
+idb.iid(95016).sta=1555;
+idb.iid(95016).exp=701;
+idb.iid(95016).parry=566;
+idb.iid(95016).barmor=1307;
+idb.iid(95016).socket='Y';
+idb.iid(95016).sbstat='dodge';
+idb.iid(95016).sbval=60;
+idb.iid(95016).isreforged=0;
+
+idb.iid(95020).name='Ra-den''s Contemplative Loop (Heroic Thunderforged)';
+idb.iid(95020).ilvl=541;
+idb.iid(95020).str=957;
+idb.iid(95020).sta=1555;
+idb.iid(95020).dodge=687;
+idb.iid(95020).parry=574;
+idb.iid(95020).socket='B';
+idb.iid(95020).sbstat='mast';
+idb.iid(95020).sbval=60;
+idb.iid(95020).isreforged=0;
+
+idb.iid(95022).name='Ra-den''s Ruinous Ring (Heroic Thunderforged)';
+idb.iid(95022).ilvl=541;
+idb.iid(95022).str=957;
+idb.iid(95022).sta=1555;
+idb.iid(95022).exp=493;
+idb.iid(95022).haste=754;
+idb.iid(95022).socket='B';
+idb.iid(95022).sbstat='str';
+idb.iid(95022).sbval=60;
+idb.iid(95022).isreforged=0;
+
+idb.iid(95023).name='Legplates of Lightning Blood (Heroic Thunderforged)';
+idb.iid(95023).ilvl=541;
+idb.iid(95023).str=1620;
+idb.iid(95023).sta=2790;
+idb.iid(95023).hit=851;
+idb.iid(95023).mast=1277;
+idb.iid(95023).barmor=5532;
+idb.iid(95023).socket='RYY';
+idb.iid(95023).sbstat='mast';
+idb.iid(95023).sbval=180;
+idb.iid(95023).atype=1;
+idb.iid(95023).isreforged=0;
+
+idb.iid(95025).name='Archaic Protector''s Legguards (Heroic Thunderforged)';
+idb.iid(95025).ilvl=541;
+idb.iid(95025).str=1620;
+idb.iid(95025).sta=2790;
+idb.iid(95025).mast=1089;
+idb.iid(95025).parry=1139;
+idb.iid(95025).barmor=5532;
+idb.iid(95025).socket='RYY';
+idb.iid(95025).sbstat='mast';
+idb.iid(95025).sbval=180;
+idb.iid(95025).atype=1;
+idb.iid(95025).isreforged=0;
+
+idb.iid(95037).name='Planet-Birthed Cuirass (Heroic Thunderforged)';
+idb.iid(95037).ilvl=541;
+idb.iid(95037).str=1620;
+idb.iid(95037).sta=2790;
+idb.iid(95037).exp=822;
+idb.iid(95037).parry=1294;
+idb.iid(95037).barmor=6322;
+idb.iid(95037).socket='RRR';
+idb.iid(95037).sbstat='dodge';
+idb.iid(95037).sbval=180;
+idb.iid(95037).atype=1;
+idb.iid(95037).isreforged=0;
+
 %% Special Items
 
 idb.iid(2).name='Kilrak, Jaws of Terror (LFR+Gem)';
@@ -3941,6 +9731,28 @@ idb.iid(7).hit=400;
 idb.iid(7).mast=385;
 idb.iid(7).haste=320;
 idb.iid(7).isreforged=0;
+
+%% Items that failed to be recovered by updated make_gear_db.pl
+%copied from gear_db.old
+
+idb.iid(89525).name='Thunderstone Ring';
+idb.iid(89525).ilvl=450;
+idb.iid(89525).str=444;
+idb.iid(89525).sta=666;
+idb.iid(89525).hit=246;
+idb.iid(89525).parry=326;
+idb.iid(89525).isreforged=0;
+
+idb.iid(86775).name='Jade Warlord Figurine (Raid Finder)';
+idb.iid(86775).ilvl=476;
+idb.iid(86775).sta=1434;
+idb.iid(86775).isreforged=0;
+
+idb.iid(87083).name='Jade Warlord Figurine (Heroic)';
+idb.iid(87083).ilvl=502;
+idb.iid(87083).sta=1827;
+idb.iid(87083).isreforged=0;
+
 %% Enchant section  
 %Enchants work exactly the same way that items do.  There is an idb
 %structure that contains all of the relevant enchants, according to the
@@ -4145,6 +9957,9 @@ idb.sid(104425).procid=0; %PH
 
 idb.sid(104430).name='Enchant Weapon - Elemental Force';
 idb.sid(104430).procid=0; %PH
+
+idb.sid(93403).name='Eye of the Black Prince';
+idb.sid(93403).socket='P';
 
 %% Shield
 %Cata

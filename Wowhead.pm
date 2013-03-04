@@ -30,19 +30,21 @@ my %parsers = (
   atype     => qr{>(Plate|Mail|Leather|Cloth)<},
   heroic    => qr{>(Heroic)<},
   lfr       => qr{>(Raid Finder)<},
+  tforged   => qr{>(Thunderforged)<},
+  htforged  => qr{>(Heroic Thunderforged)<},
   str       => qr{>\+(\d+) Strength<},
   sta       => qr{>\+(\d+) Stamina<},
   agi       => qr{>\+(\d+) Agility<},
   int       => qr{>\+(\d+) Intellect<},
   spi       => qr{>\+(\d+) Spirit<},
-  hit       => qr{>Equip: Increases your hit rating by <!--rtg\d+-->(\d+)},
-  crit      => qr{>Equip: Increases your critical strike rating by <!--rtg\d+-->(\d+)},
-  haste     => qr{>Equip: Increases your haste rating by <!--rtg\d+-->(\d+)},
-  exp       => qr{>Equip: Increases your expertise rating by <!--rtg\d+-->(\d+)},
-  mast      => qr{>Equip: Increases your mastery rating by <!--rtg\d+-->(\d+)},
-  dodge     => qr{>Equip: Increases your dodge rating by <!--rtg\d+-->(\d+)},
-  parry     => qr{>Equip: Increases your parry rating by <!--rtg\d+-->(\d+)},
-  sp        => qr{>Equip: Increases spell power by (\d+)},
+  hit       => qr{>\+<!--rtg\d+-->(\d+) Hit&nbsp;<},
+  crit      => qr{>\+<!--rtg\d+-->(\d+) Critical Strike&nbsp;<},
+  haste     => qr{>\+<!--rtg\d+-->(\d+) Haste&nbsp;<},
+  exp       => qr{>\+<!--rtg\d+-->(\d+) Expertise&nbsp;<},
+  mast      => qr{>\+<!--rtg\d+-->(\d+) Mastery&nbsp;<},
+  dodge     => qr{>\+<!--rtg\d+-->(\d+) Dodge&nbsp;<},
+  parry     => qr{>\+<!--rtg\d+-->(\d+) Parry&nbsp;<},
+  sp        => qr{>\+(\d+) Spell Power&nbsp;<},
   ap        => qr{>Equip: Increases attack power by (\d+)},
   armor     => qr{>(\d+) Armor},
   earmor    => qr{Armor \(\+(\d+)\)},
@@ -56,13 +58,13 @@ my %stat_names = (
   'agility' => 'agi',
   'intellect' => 'int',
   'spirit' => 'spi',
-  'hit rating' => 'hit',
-  'critical strike rating' => 'crit',
-  'haste rating' => 'haste',
-  'expertise rating' => 'exp',
-  'mastery rating' => 'mast',
-  'dodge rating' => 'dodge',
-  'parry rating' => 'parry',
+  'hit' => 'hit',
+  'critical Strike' => 'crit',
+  'haste' => 'haste',
+  'expertise' => 'exp',
+  'mastery' => 'mast',
+  'dodge' => 'dodge',
+  'parry' => 'parry',
   'block rating' => 'block',
   'spell power' => 'sp',
   'attack power' => 'ap',
@@ -72,14 +74,14 @@ sub get_item {
   my $id = shift;
   
   # get the item tooltip from wowhead
-  my $response = $ua->get("http://mop.wowhead.com/item=$id&power");
+  my $response = $ua->get("http://ptr.wowhead.com/item=$id&power");
   if ($response->is_error) {
     print STDERR "\rError getting item $id:", $response->status_line, "\n";
     return ();
   }
 
   # weed out the useless bits
-  my ($tooltip) = $response->content =~ m/tooltip_beta:\s+'(.*)'/;
+  my ($tooltip) = $response->content =~ m/tooltip_ptr:\s+'(.*)'/;
   unless ($tooltip) {
     print STDERR "\rError parsing item $id\n";
     print STDERR $response->content;
@@ -99,6 +101,8 @@ sub get_item {
   # rename heroic/lfr items to prevent name clashes
   $item{name} .= ' (Heroic)' if $item{heroic};
   $item{name} .= ' (Raid Finder)' if $item{lfr};
+  $item{name} .= ' (Thunderforged)' if $item{tforged};
+  $item{name} .= ' (Heroic Thunderforged)' if $item{htforged};
   
   # change weapon type to 3 lower case letters
   $item{wtype} = substr(lc $item{wtype}, 0, 3) if $item{wtype};
@@ -191,7 +195,7 @@ sub search_items {
 
   my $filter = uri_escape join ';', map "$_=$params{$_}", keys %params;
 
-  my $response = $ua->get("http://mop.wowhead.com/items=$path?filter=$filter");
+  my $response = $ua->get("http://ptr.wowhead.com/items=$path?filter=$filter");
   if ($response->is_error) {
     print STDERR "\rError searching for items: ", $response->status_line, "\n";
     return ();
