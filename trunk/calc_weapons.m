@@ -26,15 +26,15 @@ cfg(3)=build_config('hit',7.5,'exp',15,'race','Belf');
 %% List of weapons
 %ordered pairs of [itemid category], categories are 1=tank, 2=DPS, 3=Agi
 weaplist=[  
-            81061 1;    %Ook's Hozen Slicer (Heroic)
-            81063 2;    %Dubious Handaxe (Heroic)
-            81089 3;    %Crescent of Ichor
-            82971 3;    %Masterwork Ghost-Forged Blade
-            82972 2;    %Masterwork Phantasmal Hammer
-            89396 2;    %Amber Espada of Klaxxi'vess
-            89400 3;    %Amber Sledge of Klaxxi'vess
-            81062 3;    %Gao's Keg Tapper (Heroic)
-            81273 3;    %Siege-Captain's Scimitar (Heroic)
+%             81061 1;    %Ook's Hozen Slicer (Heroic)
+%             81063 2;    %Dubious Handaxe (Heroic)
+%             81089 3;    %Crescent of Ichor
+%             82971 3;    %Masterwork Ghost-Forged Blade
+%             82972 2;    %Masterwork Phantasmal Hammer
+%             89396 2;    %Amber Espada of Klaxxi'vess
+%             89400 3;    %Amber Sledge of Klaxxi'vess
+%             81062 3;    %Gao's Keg Tapper (Heroic)
+%             81273 3;    %Siege-Captain's Scimitar (Heroic)
             84968 2;    %Malevolent Gladiator's Slicer
             87570 3;    %The Horseman's Sinister Slicer
             87545 1;    %Inelava, Spirit of Inebriation
@@ -53,7 +53,16 @@ weaplist=[
             3 1;    %Kilrak, Jaws of Terror (Norm+Gem)
             4 1;    %Kilrak, Jaws of Terror (Heroic+Gem)
             95504 3; %Zeeg's Ancient Kegsmasher
+            95758 1; %Acid-Spine Bonemace (LFR)
+            95632 1; %Worldbreaker's Stormscythe (Heroic)
+            95666 3; %Kura-Kura, Kazra'jin's Skullcleaver (LFR)
+            95686 2; %Shellsplitter Greataxe (LFR)
+            95770 3; %Hand of the Dark Animus (LFR)
+            95790 1; %Qon's Flaming Scimitar (LFR)
+            95861 3; %Zeeg's Ancient Kegsmasher (LFR)
+            95876 1; %Do-tharak, the Swordbreaker (LFR)
             95502 1; %Do-tharak, the Swordbreaker
+            95504 3; %Zeeg's Ancient Kegsmasher
             94964 1; %Qon's Flaming Scimitar
             94954 3; %Hand of the Dark Animus
             94937 1; %Acid-Spine Bonemace
