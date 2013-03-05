@@ -98,6 +98,7 @@ queue.st={...
     'ES>HoW>CS>J>AS>HW>Cons>SotR';
     'ES>HoW>AS>CS>J>HW>Cons>SotR';
     'ES>AS>HoW>CS>J>HW>Cons>SotR';
+    'AS>ES>HoW>CS>J>HW>Cons>SotR';
     
     %Execute range - other L90 talents
     '#Execute range - LH';
@@ -116,6 +117,10 @@ queue.st={...
     'HoW>CS>LH>J>AS>HW>Cons>SotR';
     'HoW>LH>CS>J>AS>HW>Cons>SotR';
     'LH>HoW>CS>J>AS>HW>Cons>SotR';
+    'LH>HoW>CS>AS>J>HW>Cons>SotR';
+    'LH>HoW>AS>CS>J>HW>Cons>SotR';
+    'LH>AS>HoW>CS>J>HW>Cons>SotR';
+    'AS>LH>HoW>CS>J>HW>Cons>SotR';
     
     '#Execute range - HPr';
     'CS>J>AS>HW>HoW>Cons>HPr>SotR';
@@ -134,6 +139,10 @@ queue.st={...
     'HoW>CS>HPr>J>AS>HW>Cons>SotR';
     'HoW>HPr>CS>J>AS>HW>Cons>SotR';
     'HPr>HoW>CS>J>AS>HW>Cons>SotR';
+    'HPr>HoW>CS>AS>J>HW>Cons>SotR';
+    'HPr>HoW>AS>CS>J>HW>Cons>SotR';
+    'HPr>AS>HoW>CS>J>HW>Cons>SotR';
+    'AS>HPr>HoW>CS>J>HW>Cons>SotR';
 
     %WoG
     '#WoG/EF';
@@ -159,6 +168,7 @@ queue.aoe={...
     'HotR>Cons>AS>LH>HW>J>SotR';
     'HotR>Cons>LH>AS>HW>J>SotR';
     'HotR>LH>Cons>AS>HW>J>SotR';
+    'LH>HotR>Cons>AS>HW>J>SotR';
 %     'HotR>Cons>AS>HW>J>HPr>SotR';
 %     'HotR>Cons>AS>HW>HPr>J>SotR';
 %     'HotR>Cons>AS>HPr>HW>J>SotR';
@@ -169,5 +179,6 @@ queue.aoe={...
     'HotR>Cons>AS>HPrSC>HW>J>SotR';
     'HotR>Cons>HPrSC>AS>HW>J>SotR';
     'HotR>HPrSC>Cons>AS>HW>J>SotR';
+    'HPrSC>HotR>Cons>AS>HW>J>SotR';
     };
 

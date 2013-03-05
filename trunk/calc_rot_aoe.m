@@ -56,7 +56,7 @@ for k=1:length(cfg)
             c.exec.npccount=n;
             
             %calculate DPS for first Vengeance value
-            c.exec.veng=[ddb.v1];
+            c.exec.veng=[ddb.v(1)];
             c=stat_model(c);
             c=ability_model(c);
             c=rotation_model(c);
@@ -74,7 +74,7 @@ for k=1:length(cfg)
             
             %repeate for higher vengeance
             d=c;
-            d.exec.veng=[ddb.v2];
+            d.exec.veng=[ddb.v(2)];
             d=stat_model(d);
             d=ability_model(d);
             d=rotation_model(d);
@@ -104,9 +104,10 @@ ldat=2+[1:L];
 
 %for each vengeance value
 for v=1:2
-    eval(['dps=dps' int2str(v) ';aoe=aoe' int2str(v) ';veng=ddb.v' int2str(v) ';']);
+    eval(['dps=dps' int2str(v) ';aoe=aoe' int2str(v) ';veng=ddb.v(' int2str(v) ');']);
     
-    
+    disp(' ');disp(' ');
+    disp(['[u]' int2str(ddb.v(v)) 'k vengeance[/u]'])
     for g=1:length(cfg)
         
         disp(' ')
