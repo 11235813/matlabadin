@@ -1,4 +1,4 @@
-function  [meanStacks theoreticalMeanStacks theo2] = proc_model(p0,dp,D,maxStacks,interval,simMins,dt)
+function  [meanStacks meanTime theoreticalMeanStacks] = proc_model(p0,dp,D,maxStacks,interval,simMins,dt)
 
 if nargin<1
     p0=0.1; %base probability of proc (per event)
@@ -31,18 +31,12 @@ numTimeSteps=simMins*60*1000/dt;
 % t=zeros(size(numTimeSteps)); %time array
 s=zeros(1,numTimeSteps); %stack array, for tracking
 d=s;
+procTrack=s;
 
 %values for the old mechanics
 procChanceTimer=0;
 stacks=int32(0);
 stackDuration=0;
-
-%and again for the new mechanics
-stacks2=int32(0);
-stack2Duration=0;
-
-lastProcTime=-1000*1000;%1000 seconds ago, in ms
-meanProcTime=timeBetweenProcChances./p0;
 
 t=dt.*((1:numTimeSteps)-1);
 tic
@@ -70,6 +64,9 @@ for q=1:numTimeSteps
             stackDuration=D;
             stacks=min([stacks+1;maxStacks]);
             
+            %store proc for meanProcTime calculation
+            procTrack(q)=1;
+            
         end
         
         %set procChanceTimer
@@ -85,6 +82,7 @@ end
 toc
 
 meanStacks=mean(s);
+meanTime=simMins./sum(procTrack);
 
 %% compare to theory
 contribution=zeros(1,maxStacks);

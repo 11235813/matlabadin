@@ -1,4 +1,4 @@
-function  [meanStacks theoreticalMeanStacks theo2] = proc_model(p0,dp,D,maxStacks,interval,simMins,dt)
+function  [meanStacks meanTime theoreticalMeanStacks] = proc_model_new(p0,dp,D,maxStacks,interval,simMins,dt)
 
 if nargin<1
     p0=0.1; %base probability of proc (per event)
@@ -31,6 +31,7 @@ numTimeSteps=simMins*60*1000/dt;
 % t=zeros(size(numTimeSteps)); %time array
 s=zeros(1,numTimeSteps); %stack array, for tracking
 d=s;
+procTrack=s;
 
 %tracking values
 procChanceTimer=0;
@@ -71,6 +72,9 @@ for q=1:numTimeSteps
             %and set lastProcTime
             lastProcTime=t(q);
             
+            %store proc for meanProcTime calculation
+            procTrack(q)=1;
+            
         end
         
         %set procChanceTimer
@@ -86,6 +90,7 @@ end
 toc
 
 meanStacks=mean(s);
+meanTime=simMins./sum(procTrack);
 
 %% compare to theory
 contribution=zeros(1,maxStacks);
