@@ -32,15 +32,10 @@ numTimeSteps=simMins*60*1000/dt;
 s=zeros(1,numTimeSteps); %stack array, for tracking
 d=s;
 
-%values for the old mechanics
+%tracking values
 procChanceTimer=0;
 stacks=int32(0);
 stackDuration=0;
-
-%and again for the new mechanics
-stacks2=int32(0);
-stack2Duration=0;
-
 lastProcTime=-1000*1000;%1000 seconds ago, in ms
 meanProcTime=timeBetweenProcChances./p0;
 
@@ -63,12 +58,18 @@ for q=1:numTimeSteps
     %see if we should try for another proc
     if procChanceTimer<=0
         
+        %determine "boost" to proc chance
+        boost=max([1 1+3.*(min([(t(q)-lastProcTime) 1000*1000])./meanProcTime-1.5)]);
+        
         %roll for a proc
-        if rand<=(p0+stacks*dp)
+        if rand<=((p0+stacks*dp).*boost)
             
             %if successful, increment stack size and refresh duration
             stackDuration=D;
             stacks=min([stacks+1;maxStacks]);
+            
+            %and set lastProcTime
+            lastProcTime=t(q);
             
         end
         

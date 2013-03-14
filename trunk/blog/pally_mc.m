@@ -61,6 +61,18 @@ if ~isfield(config,'t152pcEquipped')
 end
 t152pcEquipped=config.t152pcEquipped;
 
+if ~isfield(config,'priority')
+    config.priority='default';
+    warning('Priority defaulted to basic CS>J>AS')
+end
+priority=config.priority;
+
+if ~isfield(config,'enableSS')
+    config.enableSS=0;
+    warning('enableSS defaulted to 0 (disabled)')
+end
+enableSS=config.enableSS;
+
 %% Finisher priority Queue handling
 finisher=config.finisher;
 n=regexp(finisher,'(?<ftype>[a-zA-Z]+)(?<lockstr>\d*\.?\d*)-?(?<bleedstr>\d*)(?<ovrw>\**)','names');
@@ -163,8 +175,15 @@ miss=max(0,0.075-hit);
 dodge=max(0,(0.075-exp));
 parry=max(0,(0.075-max((exp-0.075),0)));
 
+%% Sacred Shield ticks
+spellHaste=(1+haste).*1.05.*1.10-1;
+ssAbsorbValue=enableSS.*(5879 + 0.78.*AP./2)./bossSwingDamage;
+ssTickInterval=roundn(6./(1+spellHaste),-3);
+numSSTicks=round2even(30./ssTickInterval);
+% ssDuration=numTicks.*ssTickInterval;
+% ssAbsorbValue=0; %override for turning off SS
 
-%initialize Holy Power
+%% initialize Holy Power
 hp=int8(0);
 
 %% Define events, cooldowns and buffs to track
@@ -177,7 +196,7 @@ idGCD=2;
 %around significantly, but just to be safe...
 tbe(1)=0.5;
 
-buffs={'SotR duration','BoG Duration','CS cooldown','J cooldown','AS cooldown','SotR cooldown','Grand Crusader duration','Div Pupr duration','T152pc','WoG cd','WoG absorb'};
+buffs={'SotR duration','BoG Duration','CS cooldown','J cooldown','AS cooldown','SotR cooldown','Grand Crusader duration','Div Pupr duration','T152pc','WoG cd','WoG absorb','SS cd','SS absorb'};
 tob = zeros(size(buffs));
 idSotR=1;
 idBoG=2;
@@ -190,8 +209,12 @@ idDPBuff=8;
 idT152pc=9;
 idWoGcd=10;
 idWoGfakebubble=11;
+idSScd=12;
+idSSbubble=13;
+% idSSbuff=14;
 
 BoGstacks=0;
+ssStacks=0;
 
 simTime=simMins*60;
 steps_per_sec=100;
@@ -218,6 +241,10 @@ fullAbsorbs=0;
 gcCSProcs=0;
 gcAProcs=0;
 
+%variables for conditional cast logic
+bossSwingHistory=zeros(10,1); %store last 10 boss hits
+% lbSH=length(bossSwingHistory);
+
 % %make t array
 % t=((1:N)-1).*dt;
 
@@ -228,180 +255,123 @@ for k=1:N
     %record time
     t(k)=(k-1).*dt;
     
-    %figure out if any of the event timers is 0 or less
-    ids=find(tbe<=0);
+    %% event handling
     
-    %event handling
-    for j=1:length(ids)
+     %upkeep stuff we'll want to do before every event
+     
+     %clear BoG stacks if the buff has expired
+     if tob(idBoG)<=0
+         BoGstacks=0;
+     end
+     
+     %fix SotR at 0
+     tob(idSotR)=max(tob(idSotR),0);
         
-        %% upkeep stuff we'll want to do before every event
-        
-        %clear BoG stacks if the buff has expired
-        if tob(idBoG)<=0
-            BoGstacks=0;
-        end
-        
-        %fix SotR at 0
-        tob(idSotR)=max(tob(idSotR),0);
-        
-        %% now see which ID we have and handle the event
-        switch ids(j)
-            
-            %if the GCD timer is up, see if there's something to cast
-            case idGCD
-                
-                %check for finisher cast
-                finisherCast(ftype,lock,bleed,ovrw);
-                
-                %CS is first priority
-                if tob(idCScd)<=0
-                    %put CS on cooldown, start GCD
-                    tob(idCScd)=4.5./(1+haste);
-                    tbe(idGCD)=1.5./(1+haste);
-                    %Check for hit
-                    if rand<(1-miss-dodge-parry)
-                        %success! grant HP, enforce bounds
-                        grantHP;
-                        debugHPG(k)=1; %debug flag
-                    
-                        %Check for Grand Crusader proc
-                        if rand<gcCSProcRate
-                            %set GC buff duration
-                            tob(idGCbuff)=gcBuffDuration;
-                            %reset AS cooldown
-                            tob(idAScd)=0;
-                            gcCSProcs=gcCSProcs+1;
-                        end
-                    end
-                %J is second priority, check for cooldown and don't use
-                %if CS cd is almost up
-                elseif tob(idJcd)<=0 && tob(idCScd)>=0.2
-                    %set J cooldown, start GCD
-                    tob(idJcd)=6./(1+haste);
-                    tbe(idGCD)=1.5./(1+haste);
-                    %check for hit
-                    if rand<(1-miss)
-                        %success! grant HP, enforce bounds
-                        grantHP;
-                        debugHPG(k)=2; %debug flag
-                    end
-                %Avenger's Shield
-                elseif tob(idAScd)<=0 && tob(idCScd)>=0.2
-                    %set AS cooldown, Start GCD
-                    tob(idAScd)=15./(1+haste);
-                    tbe(idGCD)=1.5./(1+haste);
-                    %if Grand Crusader was active, 
-                    if tob(idGCbuff)>0
-                        %Consume GC buff, set GCD
-                        tob(idGCbuff)=0;
-                        %grant HP, enforce bounds
-                        grantHP;
-                        debugHPG(k)=3; %debug flag
-                    end
-                %for completeness, fill the GCD with a blank filler                     
-                else
-                    tbe(idGCD)=1.5./(1+haste);                    
-                end
-                
-                %boss swing
-            case idBossSwing
-                
-                %update WoG fake absorb
-                if tob(idWoGfakebubble)<=0
-                    WoGAmount=0;
-                end
-                if WoGAmount<=0
-                    tob(idWoGfakebubble)=0;
-                end
-                
-                
-                %check for finisher cast
-                finisherCast(ftype,lock,bleed,ovrw);
-                
-                %reset boss swing timer
-                tbe(idBossSwing)=bossSwingTimer;
-                
-                %check for avoid
-                if rand < avoidance %#ok<*BDSCI>
-                    damage(k)=0;
-                    avoids=avoids+1;
-                    
-                    %Check for Grand Crusader proc
-                    if rand<gcAvoidProcRate
-                        %set GC buff duration
-                        tob(idGCbuff)=gcBuffDuration;
-                        %reset AS cooldown
-                        tob(idAScd)=0;
-                        gcAProcs=gcAProcs+1;
-                    end
-                    
-                %now check for block
-                elseif rand < block+0.4*(tob(idT152pc)>0)
-                    blocks=blocks+1;
-                    if tob(idSotR)>0
-                        mits=mits+1;
-                        bMits=bMits+1;
-                        if WoGAmount>=0.7*DRmod
-                            damage(k)=0;
-                            WoGAmount=WoGAmount-0.7*DRmod;
-                            fullAbsorbs=fullAbsorbs+1;
-                        elseif WoGAmount>0
-                            damage(k)=0.7*DRmod-WoGAmount;
-                            WoGAmount=0;
-                            partialAbsorbs=partialAbsorbs+1;
-                        else
-                            damage(k)=0.7*DRmod;
-                        end
-                    else
-                        if WoGAmount>=0.7
-                            damage(k)=0;
-                            WoGAmount=WoGAmount-0.7;
-                            fullAbsorbs=fullAbsorbs+1;
-                        elseif WoGAmount>0
-                            damage(k)=0.7-WoGAmount;
-                            WoGAmount=0;
-                            partialAbsorbs=partialAbsorbs+1;
-                        else
-                            damage(k)=0.7;
-                        end
-                    end
-                %and finally, normal hits
-                else
-                    hits=hits+1;
-                    if tob(idSotR)>0
-                        mits=mits+1;
-                        hMits=hMits+1;
-                        if WoGAmount>=DRmod
-                            damage(k)=0;
-                            WoGAmount=WoGAmount-DRmod;
-                            fullAbsorbs=fullAbsorbs+1;
-                        elseif WoGAmount>0
-                            damage(k)=DRmod-WoGAmount;
-                            WoGAmount=0;
-                            partialAbsorbs=partialAbsorbs+1;
-                        else
-                            damage(k)=DRmod;
-                        end
-                    else
-                        if WoGAmount>=1
-                            damage(k)=0;
-                            WoGAmount=WoGAmount-1;
-                            fullAbsorbs=fullAbsorbs+1;
-                        elseif WoGAmount>0
-                            damage(k)=1-WoGAmount;
-                            WoGAmount=0;
-                            partialAbsorbs=partialAbsorbs+1;
-                        else
-                            damage(k)=1;
-                        end
-                    end
-                end
-                
-        end %close switch
-        
-        
-    end %close event for
-            
+     
+     %if the GCD timer is up, see if there's something to cast
+     if tbe(idGCD)<=0
+         
+         %check for finisher cast
+         finisherCast(ftype,lock,bleed,ovrw);
+         
+         %priority queue
+         abilityCast(priority);
+         
+     end
+     
+     %SS refreshing mechanics
+     if tob(idSSbubble)<=0 && ssStacks>0
+        ssStacks=ssStacks-1;
+        tob(idSSbubble)=ssTickInterval;
+        ssAmount=ssAbsorbValue;
+     end
+     
+     %boss swing
+     if tbe(idBossSwing)<=0
+         
+         %update absorbs
+         if tob(idWoGfakebubble)<=0
+             WoGAmount=0;
+         end
+         if WoGAmount<=0
+             tob(idWoGfakebubble)=0;
+         end
+         if tob(idSSbubble)<=0
+             ssAmount=0;
+         end
+         if ssAmount<=0
+             tob(idSSbubble)=0;
+         end
+         
+         absorbAmount=WoGAmount+ssAmount;
+         
+         %check for finisher cast
+         finisherCast(ftype,lock,bleed,ovrw);
+         
+         %reset boss swing timer
+         tbe(idBossSwing)=bossSwingTimer;
+         
+         %check for avoid
+         if rand < avoidance %#ok<*BDSCI>
+             damage(k)=0;
+             avoids=avoids+1;
+             
+             %Check for Grand Crusader proc
+             if rand<gcAvoidProcRate
+                 %set GC buff duration
+                 tob(idGCbuff)=gcBuffDuration;
+                 %reset AS cooldown
+                 tob(idAScd)=0;
+                 gcAProcs=gcAProcs+1;
+             end
+             
+             %now check for block
+         elseif rand < block+0.4*(tob(idT152pc)>0)
+             blocks=blocks+1;
+             if tob(idSotR)>0
+                 mits=mits+1;
+                 bMits=bMits+1;
+                 %apply absorbs if applicable
+                 if absorbAmount>0
+                     damage(k)=manyAbsorbsHandleIt(0.7*DRmod);
+                 else
+                     damage(k)=0.7*DRmod;
+                 end
+             else
+                 %absorbs
+                 if absorbAmount>0
+                     damage(k)=manyAbsorbsHandleIt(0.7);
+                 else
+                     damage(k)=0.7;
+                 end
+             end
+             %and finally, normal hits
+         else
+             hits=hits+1;
+             if tob(idSotR)>0
+                 mits=mits+1;
+                 hMits=hMits+1;
+                 %absorbs
+                 if absorbAmount>0
+                     damage(k)=manyAbsorbsHandleIt(DRmod);
+                 else
+                     damage(k)=DRmod;
+                 end
+             else
+                 %absorbs
+                 if absorbAmount>0
+                     damage(k)=manyAbsorbsHandleIt(1);
+                 else
+                     damage(k)=1;
+                 end
+             end
+         end
+         
+         %update bossSwingHistory
+         bossSwingHistory=shift(bossSwingHistory,[1 0]);
+         bossSwingHistory(1)=damage(k);
+         
+     end %close boss swing conditional
     
     %% Debugging
     SotRUptime(k)=tob(idSotR);
@@ -505,6 +475,20 @@ end
                 end
             end
                 
+        elseif strcmpi(ftype,'shift')
+            %format: shiftX-Y, X=lock, Y=bleed - use SotR if the mean
+            %damage of the last X attacks is > Y
+            
+            if ~isnan(lock); nHits=lock; else nHits=1; end %set lock if not defined
+            if ~isnan(bleed); dThresh=bleed; else dThresh=0.8; end %set bleed if not defined
+            %cast SotR if >= bleed holy power and a finisher is coming up
+            %within lock seconds
+            if hp>=5 && (tob(idCScd)<=1 || tob(idJcd)<=1 || (tob(idAScd)<=0 && tob(idGCbuff)>0))
+                castSotRIfAble()
+            %otherwise, cast SotR if we just took a full hit
+            elseif hp>=3 && mean(bossSwingHistory(1:nHits))>=dThresh
+                castSotRIfAble()
+            end
         else
             error('invalid finisher specification')
         end
@@ -609,5 +593,112 @@ end
         hp=max([hp 0]);        
     end
             
+    function abilityCast(priority)
+        
+        if priority=='special'
+            %placeholder for special generator priorities
+            
+        
+        %default, no time-shifting
+        else
+            
+            %CS is first priority
+            if tob(idCScd)<=0
+                %put CS on cooldown, start GCD
+                tob(idCScd)=4.5./(1+haste);
+                tbe(idGCD)=1.5./(1+haste);
+                %Check for hit
+                if rand<(1-miss-dodge-parry)
+                    %success! grant HP, enforce bounds
+                    grantHP;
+                    debugHPG(k)=1; %debug flag
+                    
+                    %Check for Grand Crusader proc
+                    if rand<gcCSProcRate
+                        %set GC buff duration
+                        tob(idGCbuff)=gcBuffDuration;
+                        %reset AS cooldown
+                        tob(idAScd)=0;
+                        gcCSProcs=gcCSProcs+1;
+                    end
+                end
+            %J is second priority, check for cooldown and don't use
+            %if CS cd is almost up
+            elseif tob(idJcd)<=0 && tob(idCScd)>=0.2
+                %set J cooldown, start GCD
+                tob(idJcd)=6./(1+haste);
+                tbe(idGCD)=1.5./(1+haste);
+                %check for hit
+                if rand<(1-miss)
+                    %success! grant HP, enforce bounds
+                    grantHP;
+                    debugHPG(k)=2; %debug flag
+                end
+            %Avenger's Shield
+            elseif tob(idAScd)<=0 && tob(idCScd)>=0.2
+                %set AS cooldown, Start GCD
+                tob(idAScd)=15./(1+haste);
+                tbe(idGCD)=1.5./(1+haste);
+                %if Grand Crusader was active,
+                if tob(idGCbuff)>0
+                    %Consume GC buff, set GCD
+                    tob(idGCbuff)=0;
+                    %grant HP, enforce bounds
+                    grantHP;
+                    debugHPG(k)=3; %debug flag
+                end
+            %Sacred Shield
+            elseif tob(idSScd)<=0
+                %start SS cd, start GcD
+                tob(idSScd)=6;
+                tbe(idGCD)=1.5./(1+haste);
+                %if SS isn't active, add stacks and create a 0-value bubble
+                if ssStacks<=0
+                    ssStacks=numSSTicks;
+                    tob(idSSbubble)=ssTickInterval;
+                    ssAmount=0;
+                %otherwise add stacks to SS
+                else
+                    ssStacks=numSSTicks+1; %keep current stack and add N
+                    %no need to add time to SSbubble, it's handled
+                    %externally for refreshes
+                end
+                
+                %for completeness, fill the GCD with a blank filler
+            else
+                tbe(idGCD)=1.5./(1+haste);
+            end
+        end
+    end
+
+    function dmgTaken=manyAbsorbsHandleIt(damage)
+        dmgTaken=damage;
+        %apply WoG first if applicable
+        if WoGAmount>0
+            if dmgTaken>WoGAmount
+                dmgTaken=dmgTaken-WoGAmount;
+                WoGAmount=0;
+            else
+                WoGAmount=WoGAmount-dmgTaken;
+                dmgTaken=0;
+            end
+        end
+        %then apply sacred shield
+        if ssAmount>0
+            if dmgTaken>ssAmount
+                dmgTaken=dmgTaken-ssAmount;
+                ssAmount=0;
+            else
+                ssAmount=ssAmount-dmgTaken;
+                dmgTaken=0;
+            end
+        end
+        %register full and partial absorbs
+        if dmgTaken==0
+            fullAbsorbs=fullAbsorbs+1;
+        elseif dmgTaken<damage
+            partialAbsorbs=partialAbsorbs+1;
+        end
+    end
 
 end

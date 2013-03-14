@@ -41,3 +41,4 @@ xlabel('stack-based proc per event chance "dp"')
 ylabel('mean stack size')
 legend('Simulation','Model','Model2','Location','SouthEast')
 ylim([0 1.04.*ceil(max(max([mu_dp;dp])))])
+
