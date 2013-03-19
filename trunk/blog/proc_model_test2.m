@@ -5,8 +5,8 @@ clear
 dp0=0;   %bonus probability per stack
 D0=15000; %duration of buff in ms
 maxStacks=1; %maximum # of stacks
-triggerInterval=500; %proc trigger event interval in ms
-simMins=10000; %minutes of simulation
+triggerInterval=1000; %proc trigger event interval in ms
+simMins=1000; %minutes of simulation
 dt=100; %time step in ms
 
 

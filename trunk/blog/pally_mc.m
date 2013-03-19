@@ -475,7 +475,7 @@ end
                 end
             end
                 
-        elseif strcmpi(ftype,'shift')
+        elseif strcmpi(ftype,'shift') || strcmpi(ftype,'SH')
             %format: shiftX-Y, X=lock, Y=bleed - use SotR if the mean
             %damage of the last X attacks is > Y
             
@@ -483,7 +483,7 @@ end
             if ~isnan(bleed); dThresh=bleed; else dThresh=0.8; end %set bleed if not defined
             %cast SotR if >= bleed holy power and a finisher is coming up
             %within lock seconds
-            if hp>=5 && (tob(idCScd)<=1 || tob(idJcd)<=1 || (tob(idAScd)<=0 && tob(idGCbuff)>0))
+            if hp>=5 && (tob(idCScd)<=1 || tob(idJcd)<=1 || (tob(idAScd)<=1 && tob(idGCbuff)>1))
                 castSotRIfAble()
             %otherwise, cast SotR if we just took a full hit
             elseif hp>=3 && mean(bossSwingHistory(1:nHits))>=dThresh
