@@ -150,7 +150,7 @@ bossSwingDamage=bossRawSwingDamage.*armorMit.*specMit.*wbMit;
 avgVengAP=0.36*bossRawDPS;
 AP=floor(1.1.*(avgVengAP+270+2.*(buffedStr-10)));
 WoGHealBase=(5538+0.49.*AP./2).*1.05./bossSwingDamage.*(1-WoGoverheal);
-
+WoGAmount=0; %initialize WoG absorb tracker
 
 %% calculate stats
 %defensive stats
@@ -574,7 +574,7 @@ end
                 %add a 3-second absorb shield
                 tob(idWoGfakebubble)=WoGfakeBubbleDuration;
                 %set the amount of the absorb shield based on HP spent, BoG
-                WoGAmount=WoGHealBase.*hpused.*(1+BoGstacks.*(0.1+mastery/100));
+                WoGAmount=WoGHealBase.*double(hpused).*(1+BoGstacks.*(0.1+mastery/100));
                 %consume BoG buff
                 BoGstacks=0;
                 tob(idBoG)=0;
