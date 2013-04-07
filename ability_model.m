@@ -271,7 +271,7 @@ splash.EternalFlameHoT=0;
 label.EternalFlameHoT= 'EF(HoT)';
 
 %Sacred Shield
-raw.SacredShield=   (5879 + 0.78.*player.sp);  %absorption per 1 tick
+raw.SacredShield=   round(342.5 + 0.585.*player.ap);  %absorption per 1 tick
 dmg.SacredShield=   0;
 heal.SacredShield=  raw.SacredShield; 
 threat.SacredShield=1.*mdf.RFury./exec.npccount; %PH

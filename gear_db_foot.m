@@ -317,78 +317,46 @@ idb.sid(130758).parry=170;
 
 %% Consumables (invoked by buff_model)
 % Flasks
-idb.sid(79469).name='Flask of Steelskin';
-idb.sid(79469).sta=450;
+idb.sid(76087).name='Flask of the Earth';
+idb.sid(76087).sta=1500;
 
-idb.sid(79472).name='Flask of Titanic Strength';
-idb.sid(79472).str=300;
-
-idb.sid(79471).name='Flask of the Winds';
-idb.sid(79471).agi=300;
-
-idb.sid(79470).name='Flask of the Draconic Mind';
-idb.sid(79470).int=300;
+idb.sid(76088).name='Flask of Winter''s Bite';
+idb.sid(76088).str=1000;
 
 % Battle Elixirs
-idb.sid(79477).name='Elixir of the Cobra';
-idb.sid(79477).crit=225;
+idb.sid(76076).name='Mad Hozen Elixir';
+idb.sid(76076).crit=750;
 
-idb.sid(79481).name='Elixir of Impossible Accuracy';
-idb.sid(79481).hit=225;
+idb.sid(76080).name='Elixir of Perfection';
+idb.sid(76080).hit=750;
 
-idb.sid(79635).name='Elixir of the Master';
-idb.sid(79635).mast=225;
+idb.sid(76083).name='Monk''s Elixir';
+idb.sid(76083).mast=750;
+
+idb.sid(76077).name='Elixir of Weaponry';
+idb.sid(76077).exp=750;
+
+idb.sid(76078).name='Elixir of the Rapids';
+idb.sid(76078).haste=750;
 
 % Guardian Elixirs
-idb.sid(79474).name='Elixir of the Naga';
-idb.sid(79474).exp=225;
 
-idb.sid(79480).name='Elixir of Deep Earth';
-idb.sid(79480).earmor=900;
+idb.sid(76075).name='Mantid Elixir';
+idb.sid(76075).earmor=2250;
 
 % Potions
-idb.sid(79475).name='Earthen Potion';
-idb.sid(79475).earmor=4800;
+idb.sid(76090).name='Potion of the Mountains';
+idb.sid(76090).earmor=12000;
 
-idb.sid(79634).name='Golemblood Potion';
-idb.sid(79634).str=1200;
+idb.sid(76095).name='Potion of Mogu Power';
+idb.sid(76095).str=4000;
 
 % Food
-idb.sid(87584).name='Beer-Basted Crocolisk';
-idb.sid(87584).sta=90;
-idb.sid(87584).str=90;
+idb.sid(74656).name='Chun Tian Spring Rolls';
+idb.sid(74656).sta=450;
 
-idb.sid(87594).name='Lavascale Minestrone';
-idb.sid(87594).sta=90;
-idb.sid(87594).mast=90;
-
-idb.sid(87595).name='Grilled Dragon';
-idb.sid(87595).sta=90;
-idb.sid(87595).hit=90;
-
-idb.sid(87597).name='Baked Rockfish';
-idb.sid(87597).sta=90;
-idb.sid(87597).crit=90;
-
-idb.sid(87601).name='Mushroom Sauce Mudfish';
-idb.sid(87601).sta=90;
-idb.sid(87601).dodge=90;
-
-idb.sid(87602).name='Blackbelly Sushi';
-idb.sid(87602).sta=90;
-idb.sid(87602).parry=90;
-
-idb.sid(87637).name='Crocolisk Au Gratin';
-idb.sid(87637).sta=90;
-idb.sid(87637).exp=90;
-
-idb.sid(62665).name='Basilisk Liverdog';
-idb.sid(62665).sta=90;
-idb.sid(62665).haste=90;
-
-idb.sid(62669).name='Skewered Eel';
-idb.sid(62669).sta=90;
-idb.sid(62669).agi=90;
+idb.sid(74655).name='Twin Fish Platter';
+idb.sid(74655).sta=415;
 
 %% Gems (nota bene : mixt gems are counted twice, so a green one will be YB)
 % Red

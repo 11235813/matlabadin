@@ -102,7 +102,7 @@ statSetup(i).armor=65000;
 
 
 %% Calculate each of these for 3 different valuesof WoG overheal
-for i=[0 0.5 1]
+for i=[1 0.5 0]
 
     config.WoGoverheal=i;
 %% Finisher testing w/ C/Ha gear set
