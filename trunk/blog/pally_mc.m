@@ -1,4 +1,7 @@
 function [statblock]=pally_mc(config,statSetup)
+%add path for "shift" function
+addpath 'C:\Users\George\Documents\MATLAB\mop\helper_func\'
+%set differential stat values to zero
 dhit=0;dexp=0;dhaste=0;dmastery=0;ddodge=0;dparry=0;
 
 %% Input handling - config - stat,val,simMins,plotFlag,tocFlag
@@ -68,10 +71,22 @@ end
 priority=config.priority;
 
 if ~isfield(config,'enableSS')
-    config.enableSS=0;
-    warning('enableSS defaulted to 0 (disabled)')
+    config.enableSS=1;
+    warning('enableSS defaulted to 1 (enabled)')
 end
 enableSS=config.enableSS;
+
+if ~isfield(config,'t154pcEquipped')
+    config.t154pcEquipped=0;
+    warning('T15 4-piece bonus defaulting to off')
+end
+t154pcEquipped=config.t154pcEquipped;
+
+if ~isfield(config,'bossSwingDamage')
+    config.bossSwingDamage=200000;
+    warning('bossSwingDamage defaulting to 200k')
+end
+bossSwingDamage=config.bossSwingDamage;
 
 %% Finisher priority Queue handling
 finisher=config.finisher;
@@ -104,31 +119,31 @@ RandStream.setDefaultStream ...
  
 %% Player stats
 if nargin<2
-    buffedStr=9208;
-    parryRating=4834;
-    dodgeRating=4892;
-    masteryRating=6758;
-    hitRating=900;
-    expRating=1777;
-    hasteRating=0;
-    armor=60000;
-else
-    buffedStr=statSetup.buffedStr;
-    parryRating=statSetup.parryRating;
-    dodgeRating=statSetup.dodgeRating;
-    masteryRating=statSetup.masteryRating;
-    hitRating=statSetup.hitRating;
-    expRating=statSetup.expRating;
-    hasteRating=statSetup.hasteRating;
-    armor=statSetup.armor;
+    statSetup.name='C/Bal';
+    statSetup.buffedStr=15000;
+    statSetup.stamina=28000;
+    statSetup.parryRating=4125;
+    statSetup.dodgeRating=4125;
+    statSetup.masteryRating=4125;
+    statSetup.hitRating=2550;
+    statSetup.expRating=5100;
+    statSetup.hasteRating=4125;
+    statSetup.armor=65000;
 end
+buffedStr=statSetup.buffedStr;
+stamina=statSetup.stamina;
+parryRating=statSetup.parryRating;
+dodgeRating=statSetup.dodgeRating;
+masteryRating=statSetup.masteryRating;
+hitRating=statSetup.hitRating;
+expRating=statSetup.expRating;
+hasteRating=statSetup.hasteRating;
+armor=statSetup.armor;
 
-%artificially set hit/exp to zero
-% hitRating=0;
-% expRating=0;
 armorMit=1-armor./(armor+58370);
 specMit=1-0.15;
 wbMit=0.9;
+dpMit=0.8;
 
 
 %% Define constants/variables
@@ -142,19 +157,26 @@ gcBuffDuration=6.3;
 % dpProcRate=0.25;
 dpProcRate=0;
 dpBuffDuration=8;
+masteryRaidBuff=3000;
 
-%Vengeance info
-bossRawDPS=310000;
-bossRawSwingDamage=bossRawDPS.*bossSwingTimer;
-bossSwingDamage=bossRawSwingDamage.*armorMit.*specMit.*wbMit;
+%% Vengeance info
+% bossRawDPS=310000;
+% bossRawSwingDamage=bossRawDPS.*bossSwingTimer;
+% bossSwingDamage=bossRawSwingDamage.*armorMit.*specMit.*wbMit;
+% bossDPS=bossSwingDamage./bossSwingTimer;
+
+%bossSwingDamage is set in config now
+% bossSwingDamage=168300;
+bossDPS=bossSwingDamage./bossSwingTimer; %#ok<NASGU>
+bossRawSwingDamage=bossSwingDamage./(armorMit.*specMit.*wbMit);
+bossRawDPS=bossRawSwingDamage./bossSwingTimer;
+
 avgVengAP=0.36*bossRawDPS;
 AP=floor(1.1.*(avgVengAP+270+2.*(buffedStr-10)));
-WoGHealBase=(5538+0.49.*AP./2).*1.05./bossSwingDamage.*(1-WoGoverheal);
-WoGAmount=0; %initialize WoG absorb tracker
 
 %% calculate stats
 %defensive stats
-mastery=8+(masteryRating+dmastery)./600;
+mastery=8+(masteryRating+dmastery+masteryRaidBuff)./600;
 blockCS=3+10+1./(1./Cb+k./mastery);
 % miss=0;
 dodgeCS=5.01+1./(1./Cd+k./((dodgeRating+ddodge)./885));
@@ -167,6 +189,7 @@ DRmod=max([1-0.3-mastery./100 0.2]);
 
 %offensive stats
 haste=(hasteRating+dhaste)./425./100;
+spellHaste=(1+haste).*1.05.*1.10-1;
 
 hit=(hitRating+dhit)./340./100;
 exp=(expRating+dexp)./340./100;
@@ -175,16 +198,28 @@ miss=max(0,0.075-hit);
 dodge=max(0,(0.075-exp));
 parry=max(0,(0.075-max((exp-0.075),0)));
 
+%% WoG
+
+WoGHealBase=(5538+0.49.*AP./2).*1.05./bossSwingDamage.*(1-WoGoverheal);
+WoGAmount=0; %initialize WoG absorb tracker
+
 %% Sacred Shield ticks
-spellHaste=(1+haste).*1.05.*1.10-1;
-ssAbsorbValue=enableSS.*(5879 + 0.78.*AP./2)./bossSwingDamage;
+ssAbsorbTickSize=(342 + 0.585.*AP)./bossSwingDamage;
+ssAbsorbValue=enableSS.*ssAbsorbTickSize;
 ssTickInterval=roundn(6./(1+spellHaste),-3);
 numSSTicks=round2even(30./ssTickInterval);
-% ssDuration=numTicks.*ssTickInterval;
-% ssAbsorbValue=0; %override for turning off SS
 
 %% initialize Holy Power
 hp=int8(0);
+
+%% Stamina
+baseStamina=169;
+baseHealth=146663;
+stamModifier=1.25.*1.05.*1.1; %GbtL, plate spec, PW:F
+buffedStamina=floor(baseStamina.*stamModifier)+floor((stamina+1950).*stamModifier);
+totalHitPoints=baseHealth+(14.*buffedStamina-260);
+health=totalHitPoints./bossSwingDamage; %normalized health
+dpThreshold=0.2.*health;
 
 %% Define events, cooldowns and buffs to track
 events={'Boss Swing Timer','GCD'};
@@ -196,7 +231,7 @@ idGCD=2;
 %around significantly, but just to be safe...
 tbe(1)=0.5;
 
-buffs={'SotR duration','BoG Duration','CS cooldown','J cooldown','AS cooldown','SotR cooldown','Grand Crusader duration','Div Pupr duration','T152pc','WoG cd','WoG absorb','SS cd','SS absorb'};
+buffs={'SotR duration','BoG Duration','CS cooldown','J cooldown','AS cooldown','SotR cooldown','Grand Crusader duration','Div Pupr duration','T152pc','WoG cd','WoG absorb','SS cd','SS absorb','DivProt','DivProt cd'};
 tob = zeros(size(buffs));
 idSotR=1;
 idBoG=2;
@@ -211,7 +246,8 @@ idWoGcd=10;
 idWoGfakebubble=11;
 idSScd=12;
 idSSbubble=13;
-% idSSbuff=14;
+idDivProt=14;
+idDivProtcd=15;
 
 BoGstacks=0;
 ssStacks=0;
@@ -236,24 +272,26 @@ hits=0;
 mits=0;
 bMits=0;
 hMits=0;
+dpMits=0;
 partialAbsorbs=0;
 fullAbsorbs=0;
 gcCSProcs=0;
 gcAProcs=0;
+t154pcHPGains=0;
 
 %variables for conditional cast logic
 bossSwingHistory=zeros(10,1); %store last 10 boss hits
 % lbSH=length(bossSwingHistory);
 
 % %make t array
-% t=((1:N)-1).*dt;
+t=(0:(N-1)).*dt;
 
 %%for loop to do event handling
 tic
 for k=1:N
         
     %record time
-    t(k)=(k-1).*dt;
+%     t(k)=(k-1).*dt;
     
     %% event handling
     
@@ -303,6 +341,13 @@ for k=1:N
              tob(idSSbubble)=0;
          end
          
+         %invoke Divine Protection 
+         if t154pcEquipped>0 && tob(idDivProtcd)<=0
+            %cast Divine Protection
+            tob(idDivProt)=10;
+            tob(idDivProtcd)=60;
+         end
+         
          absorbAmount=WoGAmount+ssAmount;
          
          %check for finisher cast
@@ -325,46 +370,89 @@ for k=1:N
                  gcAProcs=gcAProcs+1;
              end
              
-             %now check for block
+         %now check for block
          elseif rand < block+0.4*(tob(idT152pc)>0)
              blocks=blocks+1;
+             
+             %base block damage value
+             dmgVal=0.7;
+             
+             %sotr
              if tob(idSotR)>0
                  mits=mits+1;
                  bMits=bMits+1;
-                 %apply absorbs if applicable
-                 if absorbAmount>0
-                     damage(k)=manyAbsorbsHandleIt(0.7*DRmod);
-                 else
-                     damage(k)=0.7*DRmod;
-                 end
-             else
-                 %absorbs
-                 if absorbAmount>0
-                     damage(k)=manyAbsorbsHandleIt(0.7);
-                 else
-                     damage(k)=0.7;
-                 end
+                 %damage value
+                 dmgVal=dmgVal*DRmod;
              end
-             %and finally, normal hits
+             
+             %divine protection
+             if tob(idDivProt)>0
+                 dmgVal=dmgVal.*dpMit;
+                 dpMits=dpMits+1;
+             end
+             
+             %apply absorbs if applicable
+             if absorbAmount>0
+                 damage(k)=manyAbsorbsHandleIt(dmgVal);
+             else
+                 damage(k)=dmgVal;
+             end
+             
+             %handle T15 4-piece
+             if t154pcEquipped>0 && tob(idDivProt)>0
+                 t154pcIncrementHP(dmgVal);
+             end
+%              else
+%                  %absorbs
+%                  if absorbAmount>0
+%                      damage(k)=manyAbsorbsHandleIt(0.7);
+%                  else
+%                      damage(k)=0.7;
+%                  end
+%                 %handle T15 4-piece
+%                 if t154pcEquipped>0 && tob(idDivProt)>0
+%                     t154pcIncrementHP(0.7);
+%                 end
+%              end
+         
+         %and finally, normal hits
          else
              hits=hits+1;
+             dmgVal=1;
+             %sotr
              if tob(idSotR)>0
                  mits=mits+1;
                  hMits=hMits+1;
-                 %absorbs
-                 if absorbAmount>0
-                     damage(k)=manyAbsorbsHandleIt(DRmod);
-                 else
-                     damage(k)=DRmod;
-                 end
-             else
-                 %absorbs
-                 if absorbAmount>0
-                     damage(k)=manyAbsorbsHandleIt(1);
-                 else
-                     damage(k)=1;
-                 end
+                 %damage value
+                 dmgVal=dmgVal*DRmod;
+             end             
+             %divine protection
+             if tob(idDivProt)>0
+                 dmgVal=dmgVal.*dpMit;
+                 dpMits=dpMits+1;
              end
+             %absorbs
+             if absorbAmount>0
+                 damage(k)=manyAbsorbsHandleIt(dmgVal);
+             else
+                 damage(k)=dmgVal;
+             end
+             %handle T15 4-piece
+             if t154pcEquipped>0 && tob(idDivProt)>0
+                 t154pcIncrementHP(dmgVal);
+             end
+%              else
+%                  absorbs
+%                  if absorbAmount>0
+%                      damage(k)=manyAbsorbsHandleIt(1);
+%                  else
+%                      damage(k)=1;
+%                  end
+%                 handle T15 4-piece
+%                 if t154pcEquipped>0 && tob(idDivProt)>0
+%                     t154pcIncrementHP(1);
+%                 end
+%              end
          end
          
          %update bossSwingHistory
@@ -415,12 +503,12 @@ statblock.hMitsPct=hMits./numEvents;
 statblock.gcAProcs=gcAProcs;
 statb.ock.gcCSProcs=gcCSProcs;
 
-statblock.Tsotr = max(t)./sum(SotRUptime==3);
+statblock.Tsotr = simTime./sum(SotRUptime==3);
 statblock.Rsotr = 1/statblock.Tsotr;
-statblock.Rhpg=sum(debugHPG>0)/max(t);
+statblock.Rhpg=sum(debugHPG>0)/simTime;
 statblock.DRmod=DRmod;
 
-statblock.DTPS=sum(dmg)./max(t);
+statblock.DTPS=sum(dmg)./simTime;
 statblock.maDTPS=filter(ones(1,5)./5,1,dmg);
 statblock.mean_ma=mean(statblock.maDTPS);
 statblock.std_ma=std(statblock.maDTPS);
@@ -442,6 +530,13 @@ statblock.simMins=simMins;
 statblock.simTime=simTime;
 statblock.stepsPerSec=steps_per_sec;
 
+statblock.health=health;
+statblock.totalHitPoints=totalHitPoints;
+statblock.bossSwingDamage=bossSwingDamage;
+statblock.bossRawSwingDamage=bossRawSwingDamage;
+
+statblock.t154pcHPGains=t154pcHPGains;
+statblock.t154pcHPG=t154pcHPGains./simTime;
 
 %% plot
 if ~strcmp(plotFlag,'noplot')
@@ -699,6 +794,11 @@ end
         elseif dmgTaken<damage
             partialAbsorbs=partialAbsorbs+1;
         end
+    end
+
+    function t154pcIncrementHP(damage)
+    	grantHP(floor(damage./dpThreshold)); 
+        t154pcHPGains=t154pcHPGains+floor(damage./dpThreshold);
     end
 
 end

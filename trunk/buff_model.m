@@ -48,11 +48,11 @@ end
 %default values of the input arguments
 if isempty(mode)==1 mode=3; end;
 if isempty(item)==1 item=''; end;
-if isempty(flask)==1 flask=79469; end;
+if isempty(flask)==1 flask=76087; end;
 if isempty(belixir)==1 belixir=0; end;
 if isempty(gelixir)==1 gelixir=0; end;
-if isempty(potion)==1 potion=79475; end;
-if isempty(food)==1 food=87594; end;
+if isempty(potion)==1 potion=76090; end;
+if isempty(food)==1 food=74656; end;
 
 
 %% Player Buffs

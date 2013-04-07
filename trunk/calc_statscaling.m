@@ -13,10 +13,10 @@ def_db;
 %create the first configuation
 
 %basic 7.5%/15% SoI build @ high veng
-cfg(1)=build_config('hit',5,'exp',7.5,'glyph',[9 0 0]);
+cfg(1)=build_config('hit',5,'exp',5,'glyph',[9 0 0]);
 
 %low-vengeance version
-cfg(2)=build_config('hit',5,'exp',7.5,'veng',ddb.v(1),'glyph',[9 0 0]);
+cfg(2)=build_config('hit',5,'exp',5,'veng',ddb.v(1),'glyph',[9 0 0]);
 
 %% Stat components
 stat={'hit';'exp';'haste';'str';'ap';'crit';'agi';'int';'parry';'dodge'};
@@ -138,7 +138,7 @@ disp('[/code]')
 end
 
 %% Hit calcs
-hit_range=(-c.player.mehit+linspace(0,12,50)).*cnv.hit_hit;
+hit_range=round(round(-c.player.mehit+linspace(0,12,50)).*cnv.hit_hit);
 % [temp idx]=min(abs(hit_range));
 hit_dps=zeros(M,length(hit_range),length(cfg));hit_hps=hit_dps;
 hit_dps0=zeros(size(hit_dps));hit_hps0=hit_dps0;
@@ -218,7 +218,7 @@ end
 
     
 %% Exp Calcs
-exp_range=(-c.player.exp+linspace(0,16,50)).*cnv.exp_exp;
+exp_range=round(round(-c.player.exp+linspace(0,16,50)).*cnv.exp_exp);
 % [temp idx]=min(abs(exp_range));
 exp_dps=zeros(M,length(exp_range),length(cfg));exp_hps=exp_dps;
 exp_dps0=zeros(size(exp_dps));exp_hps0=exp_dps0;
@@ -296,7 +296,7 @@ title([ strrep(cfg(g).exec.queue,'^','\^') ', ' cfg(g).exec.seal ', '  ...
 
 end
 %% Haste Calcs
-haste_range=linspace(0,15,25).*cnv.haste_phhaste;
+haste_range=-c.gear.haste+round(linspace(0,29,25).*cnv.haste_phhaste);
 % [temp idx]=min(abs(exp_range));
 haste_dps=zeros(M,length(haste_range),length(cfg));haste_hps=haste_dps;
 haste_dps0=zeros(size(haste_dps));haste_hps0=haste_dps0;
