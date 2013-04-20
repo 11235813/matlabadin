@@ -111,7 +111,7 @@ for j=1:length(finishers)
     tic
     config.plotNum=j;
     config.finisher=finishers{j};
-    statblock(j)=pally_mc(config,statSetup(2));
+    statblock(j)=pally_mc(config,statSetup(1));
     toc
 end
    

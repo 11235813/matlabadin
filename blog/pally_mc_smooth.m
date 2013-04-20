@@ -15,7 +15,9 @@ config.t152pcEquipped=0;
 config.finisher='SH1';
 config.enableSS=1;
 config.t154pcEquipped=0;
+config.useDivineProtection=0;
 config.bossSwingDamage=150000;
+config.soimodel='fermi';
 disp(['-----------------Finisher is ' config.finisher '----------------------------'])
 jMin=2;
 jMax=7;

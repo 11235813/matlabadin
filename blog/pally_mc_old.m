@@ -82,12 +82,6 @@ if ~isfield(config,'t154pcEquipped')
 end
 t154pcEquipped=config.t154pcEquipped;
 
-if ~isfield(config,'useDivineProtection')
-    config.useDivineProtection=0;
-    warning('Divine Protection defaulting to off')
-end
-useDivineProtection=config.useDivineProtection;
-
 if ~isfield(config,'bossSwingDamage')
     config.bossSwingDamage=200000;
     warning('bossSwingDamage defaulting to 200k')
@@ -95,12 +89,10 @@ end
 bossSwingDamage=config.bossSwingDamage;
 
 if ~isfield(config,'soimodel')
-    config.soimodel='fermi-1.5-0.15';
+    config.soimodel='fermi';
     warning('soimodel defaulting to fermi')
 end
-soimodel=regexp(config.soimodel,'(?<base>\w+)\-?(?<x0>\d+\.*\d*)?\-?(?<sigma>\d+\.*\d*)?','names');
-if ~isnan(str2double(soimodel.x0)); soimodel.x0=str2double(soimodel.x0); else soimodel.x0=1.5; warning('soimodel x0 defaulting to 1.5'); end;
-if ~isnan(str2double(soimodel.sigma)); soimodel.sigma=str2double(soimodel.sigma); else soimodel.sigma=0.15; warning('soimodel sigma defaulting to 0.15'); end
+soimodel=config.soimodel;
 
 %% Finisher priority Queue handling
 finisher=config.finisher;
@@ -297,19 +289,13 @@ N=floor(simTime.*steps_per_sec);
 dt=1./steps_per_sec;
 t=zeros(N,1);
 damage=-1.*ones(N,1);
-soiTracker=damage;
 hpgTracker=t;
-hpgGained=t;
 % SotRUptime=t;
 % debugHP=t;
 % debugBoG=t;
-q=1;
-debugBSHstore=zeros(10,100);
 
 %tracking
 avoids=0;
-parries=0;
-dodges=0;
 blocks=0;
 hits=0;
 mits=0;
@@ -322,8 +308,8 @@ gcCSProcs=0;
 gcAProcs=0;
 t154pcHPGains=0;
 melees=0;
+parryhastes=0;
 SotRcasts=0;
-divProtCasts=0;
 
 %variables for conditional cast logic
 bossSwingHistory=zeros(10,1); %store last 10 boss hits
@@ -334,9 +320,14 @@ t=(0:(N-1)).*dt;
 
 %%for loop to do event handling
 tic
-k=1;
-while k<=N
-     %% event handling
+for k=1:N
+% k=1;
+% while k<=N
+        
+    %record time
+%     t(k)=(k-1).*dt;
+    
+    %% event handling
     
      %upkeep stuff we'll want to do before every event
      
@@ -411,11 +402,10 @@ while k<=N
          end
          
          %invoke Divine Protection 
-         if (t154pcEquipped>0 || useDivineProtection>0) && tob(idDivProtcd)<=ulp
+         if t154pcEquipped>0 && tob(idDivProtcd)<=ulp
             %cast Divine Protection
             tob(idDivProt)=tDivProt;
             tob(idDivProtcd)=tDivProtCD;
-            divProtCasts=divProtCasts+1;
          end
          
          absorbAmount=WoGAmount+ssAmount;
@@ -429,6 +419,7 @@ while k<=N
          %check for avoid
          if rand < avoidance %#ok<*BDSCI>
              damage(k)=0;
+             avoids=avoids+1;
              
              %Check for Grand Crusader proc
              if rand<gcAvoidProcRate
@@ -442,9 +433,7 @@ while k<=N
              %check for parry-hasting
              if rand<((parryCS-4.5)./100/avoidance)
                  tbe(idMelee)=max(tbe(idMelee)-0.4.*playerSwingTimer,0.2.*playerSwingTimer);
-                 parries=parries+1;
-             else
-                 dodges=dodges+1;
+                 parryhastes=parryhastes+1;
              end
                              
          %now check for block
@@ -479,7 +468,19 @@ while k<=N
              if t154pcEquipped>0 && tob(idDivProt)>ulp
                  t154pcIncrementHP(dmgVal);
              end
-             
+%              else
+%                  %absorbs
+%                  if absorbAmount>0
+%                      damage(k)=manyAbsorbsHandleIt(0.7);
+%                  else
+%                      damage(k)=0.7;
+%                  end
+%                 %handle T15 4-piece
+%                 if t154pcEquipped>0 && tob(idDivProt)>0
+%                     t154pcIncrementHP(0.7);
+%                 end
+%              end
+         
          %and finally, normal hits
          else
              hits=hits+1;
@@ -506,6 +507,18 @@ while k<=N
              if t154pcEquipped>0 && tob(idDivProt)>ulp
                  t154pcIncrementHP(dmgVal);
              end
+%              else
+%                  absorbs
+%                  if absorbAmount>0
+%                      damage(k)=manyAbsorbsHandleIt(1);
+%                  else
+%                      damage(k)=1;
+%                  end
+%                 handle T15 4-piece
+%                 if t154pcEquipped>0 && tob(idDivProt)>0
+%                     t154pcIncrementHP(1);
+%                 end
+%              end
          end
          
          %update bossSwingHistory
@@ -519,14 +532,20 @@ while k<=N
 %     SotRUptimeotR(k,1)=tob(idSotRcd);
 %     debugHP(k)=hp;
 %     debugBoG(k)=BoGstacks;
+
+
+    %increment time by decreasing tob and tbe
+    %rounding to prevent floating point inaccuracies
+%     tbe=round((tbe-dt).*1000)./1000;
+%     tob=round((tob-dt).*1000)./1000;
+
+%     k=k+floor(min(tbe)./dt);
+%     
+%     tbe=tbe-k.*dt;
+%     tob=tob-k.*dt;
     
-    dk=round(min(tbe)./dt);
-    dk=max(dk,1);
-    k=k+dk;
-    
-    tbe=tbe-dk.*dt;
-    tob=tob-dk.*dt;
-    
+    tbe=tbe-dt;
+    tob=tob-dt;
        
 end %close timestep for loop
 
@@ -539,31 +558,27 @@ end
 dmg=damage(damage>=0);
 
 %sanity check
-avoids=dodges+parries;
 if hits+blocks+avoids~=length(dmg)
     error('reporting error, length(dmg) doesn''t match number of events')
 else
-    bossAttacks=length(dmg);
+    numEvents=length(dmg);
 end
 
 
-statblock.bossAttacks=bossAttacks;
-statblock.avoidsPct=avoids./bossAttacks;
-statblock.parryPct=parries./bossAttacks;
-statblock.dodgePct=dodges./bossAttacks;
-statblock.blocksPct=blocks./bossAttacks;
-statblock.hitsPct=hits./bossAttacks;
-statblock.mitsPct=mits./bossAttacks;
-statblock.unmitsPct=(hits-hMits)./bossAttacks;
-statblock.bMitsPct=bMits./bossAttacks;
-statblock.hMitsPct=hMits./bossAttacks;
+statblock.avoidsPct=avoids./numEvents;
+statblock.blocksPct=blocks./numEvents;
+statblock.hitsPct=hits./numEvents;
+statblock.mitsPct=mits./numEvents;
+statblock.unmitsPct=(hits-hMits)./numEvents;
+statblock.bMitsPct=bMits./numEvents;
+statblock.hMitsPct=hMits./numEvents;
 statblock.gcAProcs=gcAProcs;
 statblock.gcCSProcs=gcCSProcs;
 
 statblock.Tsotr = simTime./SotRcasts;
 statblock.Rsotr = 1/statblock.Tsotr;
 statblock.S=statblock.Rsotr.*3;
-statblock.Rhpg=sum(hpgGained(hpgGained>0))/simTime;
+statblock.Rhpg=sum(hpgTracker>0)/simTime;
 statblock.DRmod=DRmod;
 
 statblock.DTPS=sum(dmg)./simTime;
@@ -582,8 +597,7 @@ statblock.bMits=bMits;
 statblock.partialAbsorbs=partialAbsorbs;
 statblock.fullAbsorbs=fullAbsorbs;
 statblock.melees=melees;
-statblock.parries=parries;
-statblock.dodges=dodges;
+statblock.parryhastes=parryhastes;
 
 statblock.dmg=dmg;
 
@@ -599,12 +613,6 @@ statblock.playerSwingTimer=playerSwingTimer;
 
 statblock.t154pcHPGains=t154pcHPGains;
 statblock.t154pcHPG=t154pcHPGains./simTime;
-statblock.divProtcasts=divProtCasts;
-
-statblock.bshstore=debugBSHstore;
-statblock.soiTracker=soiTracker;
-statblock.hpgTracker=hpgTracker;
-statblock.hpgGained=hpgGained;
 
 %% plot
 if ~strcmp(plotFlag,'noplot')
@@ -780,7 +788,6 @@ end
                     %success! grant HP, enforce bounds
                     grantHP;
                     hpgTracker(k)=1; %debug flag
-                    hpgGained(k)=1;
                     
                     %Check for Grand Crusader proc
                     if rand<gcCSProcRate
@@ -802,7 +809,6 @@ end
                     %success! grant HP, enforce bounds
                     grantHP;
                     hpgTracker(k)=2; %debug flag
-                    hpgGained(k)=1;
                 end
             %Avenger's Shield
             elseif tob(idAScd)<=ulp && tob(idCScd)>=0.2
@@ -816,7 +822,6 @@ end
                     %grant HP, enforce bounds
                     grantHP;
                     hpgTracker(k)=3; %debug flag
-                    hpgGained(k)=1;
                 end
             %Sacred Shield
             elseif tob(idSScd)<=ulp
@@ -884,30 +889,23 @@ end
 
     function t154pcIncrementHP(damage)
     	grantHP(floor(damage./dpThreshold)); 
-        hpgTracker(k)=4;
-        hpgGained(k)=floor(damage./dpThreshold);
+        hpgTracker=4;
         t154pcHPGains=t154pcHPGains+floor(damage./dpThreshold);
     end
 
     function soiAmount=soiAbsorbValue(bossSwingHistory,soimodel)
-       if strcmp(soimodel.base,'off') %equivalent to flat-0
+       if strcmp(soimodel,'off')
            soiAmount=0;
-           
-       elseif strcmp(soimodel.base,'nooverheal') %equiv. to flat-1
+       elseif strcmp(soimodel,'nooverheal')
            soiAmount=SoIHealSize;
-           
-       elseif strcmp(soimodel.base,'flat') %flat-X0 for X0% effectiveness
-           soiAmount=SoIHealSize.*soimodel.x0;
-           
-       elseif strcmp(soimodel.base,'fermi') %fermi-X0-SIGMA
-           debugBSHstore(:,q)=bossSwingHistory;q=q+1;
+       elseif strcmp(soimodel,'fermi')
            x=sum(bossSwingHistory(1:3)); 
-           soiAmount=SoIHealSize./(1+exp(-(x-soimodel.x0)/soimodel.sigma));
+           x0=1.25;
+           sigma=0.2;
+           soiAmount=SoIHealSize./(1+exp(-(x-x0)/sigma)); 
        else
            error('soi model not defined, this shouldn''t happen...')
        end
-       %track SoI for debugging/post-processing
-       soiTracker(k)=soiAmount;
         
     end
 
