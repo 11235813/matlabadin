@@ -95,7 +95,7 @@ end
 bossSwingDamage=config.bossSwingDamage;
 
 if ~isfield(config,'soimodel')
-    config.soimodel='fermi-1.5-0.15';
+    config.soimodel='fermi-1.55-0.15';
     warning('soimodel defaulting to fermi')
 end
 soimodel=regexp(config.soimodel,'(?<base>\w+)\-?(?<x0>\d+\.*\d*)?\-?(?<sigma>\d+\.*\d*)?','names');
@@ -225,7 +225,7 @@ numSSTicks=round2even(30./ssTickInterval);
 
 %% melee swings and SoI
 baseSwingTimer=2.6;
-playerSwingTimer=roundn(baseSwingTimer./(1+haste),-3);
+playerSwingTimer=roundn(baseSwingTimer./(1+haste)./1.1,-3); %1.1 for melee attack speed buff
 SoIProcChance=20.*baseSwingTimer./60;
 SoIbubbleDuration=bossSwingTimer;
 SoIHealSize=0.15*(AP+AP/2)./bossSwingDamage;
@@ -303,8 +303,8 @@ hpgGained=t;
 % SotRUptime=t;
 % debugHP=t;
 % debugBoG=t;
-q=1;
-debugBSHstore=zeros(10,100);
+% q=1;
+% debugBSHstore=zeros(10,100);
 
 %tracking
 avoids=0;
@@ -601,7 +601,7 @@ statblock.t154pcHPGains=t154pcHPGains;
 statblock.t154pcHPG=t154pcHPGains./simTime;
 statblock.divProtcasts=divProtCasts;
 
-statblock.bshstore=debugBSHstore;
+% statblock.bshstore=debugBSHstore;
 statblock.soiTracker=soiTracker;
 statblock.hpgTracker=hpgTracker;
 statblock.hpgGained=hpgGained;
@@ -763,7 +763,7 @@ end
             
     function abilityCast(priority)
         
-        if priority=='special'
+        if strcmp(priority,'special')
             %placeholder for special generator priorities
             
         
@@ -900,7 +900,7 @@ end
            soiAmount=SoIHealSize.*soimodel.x0;
            
        elseif strcmp(soimodel.base,'fermi') %fermi-X0-SIGMA
-           debugBSHstore(:,q)=bossSwingHistory;q=q+1;
+           %debugBSHstore(:,q)=bossSwingHistory;q=q+1;
            x=sum(bossSwingHistory(1:3)); 
            soiAmount=SoIHealSize./(1+exp(-(x-soimodel.x0)/soimodel.sigma));
        else

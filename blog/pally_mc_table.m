@@ -1,11 +1,21 @@
-function li = pally_mc_table(statSetup,statblock,config)
+function li = pally_mc_table(statSetup,statblock,config,gearsets)
 
 
 %unpack
 dmg=[statblock.dmg];
 S=[statblock.S];
 ma=[statblock.maDTPS];
-n=length(statSetup);
+if nargin<4
+    n=length(statSetup);
+    names={statSetup.name};
+    totalHP=[statblock.totalHitPoints];
+    health=[statblock.health];
+else
+    n=length(gearsets);
+    names={statSetup(gearsets).name};
+    totalHP=[statblock(gearsets).totalHitPoints];
+    health=[statblock(gearsets).health];    
+end
 jMin=config.jbounds(1);
 jStep=config.jbounds(2);
 jMax=config.jbounds(3);
@@ -13,13 +23,13 @@ jMax=config.jbounds(3);
 
 li=DataTable();
 li{1:6,1}={'Set:';'mean';'std';'S%';'HP';'nHP'};
-li{1,1+(1:n)}={statSetup.name};
+li{1,1+(1:n)}=names;
 matemp=filter(ones(1,5)./5,1,dmg);
 li{2,1+(1:n)}=mean(matemp);
 li{3,1+(1:n)}=std(matemp);
 li{4,1+(1:n)}=S;
-li{5,1+(1:n)}=cellstr([int2str(round([statblock.totalHitPoints]./1e3)') repmat('k',length(statblock),1)])';
-li{6,1+(1:n)}=[statblock.health];
+li{5,1+(1:n)}=cellstr([int2str(round(totalHP./1e3)') repmat('k',length(totalHP),1)])';
+li{6,1+(1:n)}=health;
 linePH=0;
 healthScaleFactor2=repmat([statblock.health],size(matemp,1),1);
 for j=jMin:jStep:jMax
