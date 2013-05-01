@@ -1,4 +1,4 @@
-config.simMins=500;
+config.simMins=1000;
 config.plotFlag='noplot';
 config.tocFlag='toc';
 config.stat=' ';
@@ -26,11 +26,8 @@ sigma=str2double(soimodel.sigma);
     sb=pally_mc(config);
 % end
 
-%store boss swing history
-BSH=sb.bshstore;
-
 %sum the last 3 boss attacks
-B=sum(sb.bshstore(1:3,:));
+B=filter(ones(1,3),1,sb.dmg);
 mB=mean(B);
 
 %absorbs?

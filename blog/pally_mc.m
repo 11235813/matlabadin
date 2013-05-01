@@ -19,7 +19,7 @@ end
 plotFlag=config.plotFlag;
 
 if ~isfield(config,'simMins')
-    config.simMins=1000;
+    config.simMins=10000;
     warning('simMins defaulting to %d', config.simMins) %#ok<*WNTAG>
 end
 simMins=config.simMins;
@@ -348,6 +348,8 @@ while k<=N
      %if the GCD timer is up, see if there's something to cast
      if tbe(idGCD)<=ulp
          
+%          updateAbsorbs;
+                  
          %check for finisher cast
          finisherCast(ftype,lock,bleed,ovrw);
          
@@ -361,9 +363,12 @@ while k<=N
          
          %melee attack, roll for miss/dodge/parry (block/glance irrelevant)
          if rand>(miss+dodge+parry)
-            
-             %check for SoI proc
+         
+            %check for SoI proc
              if rand<SoIProcChance
+            
+                 %update absorbs (necessary to prevent cheating w/ SoI)
+                 updateAbsorbs;
                  
                  %create SoI bubble
                  soiAmount=soiAbsorbValue(bossSwingHistory,soimodel);
@@ -388,28 +393,7 @@ while k<=N
      
      %boss swing
      if tbe(idBossSwing)<=ulp
-         
-         %update absorbs
-         if tob(idWoGfakebubble)<=ulp
-             WoGAmount=0;
-         end
-         if WoGAmount<=0
-             tob(idWoGfakebubble)=0;
-         end
-         if tob(idSSbubble)<=ulp
-             ssAmount=0;
-         end
-         if ssAmount<=0
-             ssAmount=0; %cap at 0 just in case
-         end
-         if tob(idSoIbubble)<=ulp
-             soiAmount=0;
-         end
-         if soiAmount<=0
-             tob(idSoIbubble)=0;
-             soiAmount=0;
-         end
-         
+                  
          %invoke Divine Protection 
          if (t154pcEquipped>0 || useDivineProtection>0) && tob(idDivProtcd)<=ulp
             %cast Divine Protection
@@ -417,9 +401,7 @@ while k<=N
             tob(idDivProtcd)=tDivProtCD;
             divProtCasts=divProtCasts+1;
          end
-         
-         absorbAmount=WoGAmount+ssAmount;
-         
+                  
          %check for finisher cast
          finisherCast(ftype,lock,bleed,ovrw);
          
@@ -469,6 +451,8 @@ while k<=N
              end
              
              %apply absorbs if applicable
+             updateAbsorbs;
+             absorbAmount=WoGAmount+ssAmount+soiAmount;
              if absorbAmount>0
                  damage(k)=manyAbsorbsHandleIt(dmgVal);
              else
@@ -497,6 +481,8 @@ while k<=N
                  dpMits=dpMits+1;
              end
              %absorbs
+             updateAbsorbs;
+             absorbAmount=WoGAmount+ssAmount+soiAmount;
              if absorbAmount>0
                  damage(k)=manyAbsorbsHandleIt(dmgVal);
              else
@@ -664,6 +650,21 @@ end
             %check for negative SotR duration - if so fix at zero
             tob(idSotR)=max(tob(idSotR),0);
             
+            %roll for hit
+            if rand<(1-miss-dodge-parry)  
+                
+                %check for SoI proc                
+                if rand<SoIProcChance
+                    
+                    %update absorbs (necessary to prevent cheating w/ SoI)
+                    updateAbsorbs;
+                    
+                    %create SoI bubble
+                    soiAmount=soiAbsorbValue(bossSwingHistory,soimodel);
+                    tob(idSoIbubble)=SoIbubbleDuration;
+                end
+            end
+            
             %set SotR CD, give 3 seconds of DR, 20s of BoG
             tob(idSotRcd)=tGCD; %5.2
             tob(idSotR)=tob(idSotR)+tSotR;
@@ -757,8 +758,10 @@ end
             amt=1;
         end
         hp=hp+amt;
-        hp=min([hp 5]);
-        hp=max([hp 0]);        
+%         hp=min([hp 5]);
+%         hp=max([hp 0]);        
+        if hp>5; hp=5; end
+        if hp<0; hp=0; end
     end
             
     function abilityCast(priority)
@@ -789,6 +792,15 @@ end
                         %reset AS cooldown
                         tob(idAScd)=0;
                         gcCSProcs=gcCSProcs+1;
+                    end
+                    
+                    %check for SoI proc
+                    if rand<SoIProcChance    
+                        %update absorbs (necessary to prevent cheating w/ SoI)
+                        updateAbsorbs;
+                        %create SoI bubble
+                        soiAmount=soiAbsorbValue(bossSwingHistory,soimodel);
+                        tob(idSoIbubble)=SoIbubbleDuration;                        
                     end
                 end
             %J is second priority, check for cooldown and don't use
@@ -844,23 +856,23 @@ end
 
     function dmgTaken=manyAbsorbsHandleIt(damage)
         dmgTaken=damage;
-        %apply WoG first if applicable
-        if WoGAmount>0
-            if dmgTaken>WoGAmount
-                dmgTaken=dmgTaken-WoGAmount;
-                WoGAmount=0;
-            else
-                WoGAmount=WoGAmount-dmgTaken;
-                dmgTaken=0;
-            end
-        end
-        %then apply sacred shield
+        % apply sacred shield first
         if ssAmount>0
             if dmgTaken>ssAmount
                 dmgTaken=dmgTaken-ssAmount;
                 ssAmount=0;
             else
                 ssAmount=ssAmount-dmgTaken;
+                dmgTaken=0;
+            end
+        end
+        %then apply WoG if applicable
+        if WoGAmount>0
+            if dmgTaken>WoGAmount
+                dmgTaken=dmgTaken-WoGAmount;
+                WoGAmount=0;
+            else
+                WoGAmount=WoGAmount-dmgTaken;
                 dmgTaken=0;
             end
         end
@@ -880,6 +892,30 @@ end
         elseif dmgTaken<damage
             partialAbsorbs=partialAbsorbs+1;
         end
+    end
+
+    function updateAbsorbs()       
+         
+         %update absorbs
+         if tob(idWoGfakebubble)<=ulp
+             WoGAmount=0;
+         end
+         if WoGAmount<=0
+             tob(idWoGfakebubble)=0;
+         end
+         if tob(idSSbubble)<=ulp
+             ssAmount=0;
+         end
+         if ssAmount<=0
+             ssAmount=0; %cap at 0 just in case
+         end
+         if tob(idSoIbubble)<=ulp
+             soiAmount=0;
+         end
+         if soiAmount<=0
+             tob(idSoIbubble)=0;
+             soiAmount=0;
+         end       
     end
 
     function t154pcIncrementHP(damage)
