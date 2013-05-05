@@ -19,7 +19,7 @@ end
 plotFlag=config.plotFlag;
 
 if ~isfield(config,'simMins')
-    config.simMins=1000;
+    config.simMins=10000;
     warning('simMins defaulting to %d', config.simMins) %#ok<*WNTAG>
 end
 simMins=config.simMins;
@@ -82,6 +82,12 @@ if ~isfield(config,'t154pcEquipped')
 end
 t154pcEquipped=config.t154pcEquipped;
 
+if ~isfield(config,'useDivineProtection')
+    config.useDivineProtection=0;
+    warning('Divine Protection defaulting to off')
+end
+useDivineProtection=config.useDivineProtection;
+
 if ~isfield(config,'bossSwingDamage')
     config.bossSwingDamage=200000;
     warning('bossSwingDamage defaulting to 200k')
@@ -89,10 +95,12 @@ end
 bossSwingDamage=config.bossSwingDamage;
 
 if ~isfield(config,'soimodel')
-    config.soimodel='fermi';
+    config.soimodel='fermi-1.55-0.15';
     warning('soimodel defaulting to fermi')
 end
-soimodel=config.soimodel;
+soimodel=regexp(config.soimodel,'(?<base>\w+)\-?(?<x0>\d+\.*\d*)?\-?(?<sigma>\d+\.*\d*)?','names');
+if ~isnan(str2double(soimodel.x0)); soimodel.x0=str2double(soimodel.x0); else soimodel.x0=1.5; warning('soimodel x0 defaulting to 1.5'); end;
+if ~isnan(str2double(soimodel.sigma)); soimodel.sigma=str2double(soimodel.sigma); else soimodel.sigma=0.15; warning('soimodel sigma defaulting to 0.15'); end
 
 %% Finisher priority Queue handling
 finisher=config.finisher;
@@ -217,7 +225,7 @@ numSSTicks=round2even(30./ssTickInterval);
 
 %% melee swings and SoI
 baseSwingTimer=2.6;
-playerSwingTimer=roundn(baseSwingTimer./(1+haste),-3);
+playerSwingTimer=roundn(baseSwingTimer./(1+haste)./1.1,-3); %1.1 for melee attack speed buff
 SoIProcChance=20.*baseSwingTimer./60;
 SoIbubbleDuration=bossSwingTimer;
 SoIHealSize=0.15*(AP+AP/2)./bossSwingDamage;
@@ -289,13 +297,19 @@ N=floor(simTime.*steps_per_sec);
 dt=1./steps_per_sec;
 t=zeros(N,1);
 damage=-1.*ones(N,1);
+soiTracker=damage;
 hpgTracker=t;
+hpgGained=t;
 % SotRUptime=t;
 % debugHP=t;
 % debugBoG=t;
+% q=1;
+% debugBSHstore=zeros(10,100);
 
 %tracking
 avoids=0;
+parries=0;
+dodges=0;
 blocks=0;
 hits=0;
 mits=0;
@@ -308,8 +322,8 @@ gcCSProcs=0;
 gcAProcs=0;
 t154pcHPGains=0;
 melees=0;
-parryhastes=0;
 SotRcasts=0;
+divProtCasts=0;
 
 %variables for conditional cast logic
 bossSwingHistory=zeros(10,1); %store last 10 boss hits
@@ -320,14 +334,9 @@ t=(0:(N-1)).*dt;
 
 %%for loop to do event handling
 tic
-for k=1:N
-% k=1;
-% while k<=N
-        
-    %record time
-%     t(k)=(k-1).*dt;
-    
-    %% event handling
+k=1;
+while k<=N
+     %% event handling
     
      %upkeep stuff we'll want to do before every event
      
@@ -339,6 +348,8 @@ for k=1:N
      %if the GCD timer is up, see if there's something to cast
      if tbe(idGCD)<=ulp
          
+%          updateAbsorbs;
+                  
          %check for finisher cast
          finisherCast(ftype,lock,bleed,ovrw);
          
@@ -352,12 +363,15 @@ for k=1:N
          
          %melee attack, roll for miss/dodge/parry (block/glance irrelevant)
          if rand>(miss+dodge+parry)
-            
-             %check for SoI proc
+         
+            %check for SoI proc
              if rand<SoIProcChance
+            
+                 %update absorbs (necessary to prevent cheating w/ SoI)
+                 updateAbsorbs;
                  
                  %create SoI bubble
-                 soiAmount=soiAbsorbValue(bossSwingHistory,soimodel);
+                 soiAmount=soiAmount+soiAbsorbValue(bossSwingHistory,soimodel);
                  tob(idSoIbubble)=SoIbubbleDuration;
                  
              end
@@ -379,37 +393,15 @@ for k=1:N
      
      %boss swing
      if tbe(idBossSwing)<=ulp
-         
-         %update absorbs
-         if tob(idWoGfakebubble)<=ulp
-             WoGAmount=0;
-         end
-         if WoGAmount<=0
-             tob(idWoGfakebubble)=0;
-         end
-         if tob(idSSbubble)<=ulp
-             ssAmount=0;
-         end
-         if ssAmount<=0
-             ssAmount=0; %cap at 0 just in case
-         end
-         if tob(idSoIbubble)<=ulp
-             soiAmount=0;
-         end
-         if soiAmount<=0
-             tob(idSoIbubble)=0;
-             soiAmount=0;
-         end
-         
+                  
          %invoke Divine Protection 
-         if t154pcEquipped>0 && tob(idDivProtcd)<=ulp
+         if (t154pcEquipped>0 || useDivineProtection>0) && tob(idDivProtcd)<=ulp
             %cast Divine Protection
             tob(idDivProt)=tDivProt;
             tob(idDivProtcd)=tDivProtCD;
+            divProtCasts=divProtCasts+1;
          end
-         
-         absorbAmount=WoGAmount+ssAmount;
-         
+                  
          %check for finisher cast
          finisherCast(ftype,lock,bleed,ovrw);
          
@@ -419,7 +411,6 @@ for k=1:N
          %check for avoid
          if rand < avoidance %#ok<*BDSCI>
              damage(k)=0;
-             avoids=avoids+1;
              
              %Check for Grand Crusader proc
              if rand<gcAvoidProcRate
@@ -433,7 +424,9 @@ for k=1:N
              %check for parry-hasting
              if rand<((parryCS-4.5)./100/avoidance)
                  tbe(idMelee)=max(tbe(idMelee)-0.4.*playerSwingTimer,0.2.*playerSwingTimer);
-                 parryhastes=parryhastes+1;
+                 parries=parries+1;
+             else
+                 dodges=dodges+1;
              end
                              
          %now check for block
@@ -458,6 +451,8 @@ for k=1:N
              end
              
              %apply absorbs if applicable
+             updateAbsorbs;
+             absorbAmount=WoGAmount+ssAmount+soiAmount;
              if absorbAmount>0
                  damage(k)=manyAbsorbsHandleIt(dmgVal);
              else
@@ -468,19 +463,7 @@ for k=1:N
              if t154pcEquipped>0 && tob(idDivProt)>ulp
                  t154pcIncrementHP(dmgVal);
              end
-%              else
-%                  %absorbs
-%                  if absorbAmount>0
-%                      damage(k)=manyAbsorbsHandleIt(0.7);
-%                  else
-%                      damage(k)=0.7;
-%                  end
-%                 %handle T15 4-piece
-%                 if t154pcEquipped>0 && tob(idDivProt)>0
-%                     t154pcIncrementHP(0.7);
-%                 end
-%              end
-         
+             
          %and finally, normal hits
          else
              hits=hits+1;
@@ -498,6 +481,8 @@ for k=1:N
                  dpMits=dpMits+1;
              end
              %absorbs
+             updateAbsorbs;
+             absorbAmount=WoGAmount+ssAmount+soiAmount;
              if absorbAmount>0
                  damage(k)=manyAbsorbsHandleIt(dmgVal);
              else
@@ -507,23 +492,14 @@ for k=1:N
              if t154pcEquipped>0 && tob(idDivProt)>ulp
                  t154pcIncrementHP(dmgVal);
              end
-%              else
-%                  absorbs
-%                  if absorbAmount>0
-%                      damage(k)=manyAbsorbsHandleIt(1);
-%                  else
-%                      damage(k)=1;
-%                  end
-%                 handle T15 4-piece
-%                 if t154pcEquipped>0 && tob(idDivProt)>0
-%                     t154pcIncrementHP(1);
-%                 end
-%              end
          end
          
          %update bossSwingHistory
          bossSwingHistory=shift(bossSwingHistory,[1 0]);
          bossSwingHistory(1)=damage(k);
+         
+         %clear any SoI procs - only applicable to next boss attack anyway
+         soiAmount=0;
          
      end %close boss swing conditional
     
@@ -532,20 +508,14 @@ for k=1:N
 %     SotRUptimeotR(k,1)=tob(idSotRcd);
 %     debugHP(k)=hp;
 %     debugBoG(k)=BoGstacks;
-
-
-    %increment time by decreasing tob and tbe
-    %rounding to prevent floating point inaccuracies
-%     tbe=round((tbe-dt).*1000)./1000;
-%     tob=round((tob-dt).*1000)./1000;
-
-%     k=k+floor(min(tbe)./dt);
-%     
-%     tbe=tbe-k.*dt;
-%     tob=tob-k.*dt;
     
-    tbe=tbe-dt;
-    tob=tob-dt;
+    dk=round(min(tbe)./dt);
+    dk=max(dk,1);
+    k=k+dk;
+    
+    tbe=tbe-dk.*dt;
+    tob=tob-dk.*dt;
+    
        
 end %close timestep for loop
 
@@ -558,27 +528,31 @@ end
 dmg=damage(damage>=0);
 
 %sanity check
+avoids=dodges+parries;
 if hits+blocks+avoids~=length(dmg)
     error('reporting error, length(dmg) doesn''t match number of events')
 else
-    numEvents=length(dmg);
+    bossAttacks=length(dmg);
 end
 
 
-statblock.avoidsPct=avoids./numEvents;
-statblock.blocksPct=blocks./numEvents;
-statblock.hitsPct=hits./numEvents;
-statblock.mitsPct=mits./numEvents;
-statblock.unmitsPct=(hits-hMits)./numEvents;
-statblock.bMitsPct=bMits./numEvents;
-statblock.hMitsPct=hMits./numEvents;
+statblock.bossAttacks=bossAttacks;
+statblock.avoidsPct=avoids./bossAttacks;
+statblock.parryPct=parries./bossAttacks;
+statblock.dodgePct=dodges./bossAttacks;
+statblock.blocksPct=blocks./bossAttacks;
+statblock.hitsPct=hits./bossAttacks;
+statblock.mitsPct=mits./bossAttacks;
+statblock.unmitsPct=(hits-hMits)./bossAttacks;
+statblock.bMitsPct=bMits./bossAttacks;
+statblock.hMitsPct=hMits./bossAttacks;
 statblock.gcAProcs=gcAProcs;
 statblock.gcCSProcs=gcCSProcs;
 
 statblock.Tsotr = simTime./SotRcasts;
 statblock.Rsotr = 1/statblock.Tsotr;
 statblock.S=statblock.Rsotr.*3;
-statblock.Rhpg=sum(hpgTracker>0)/simTime;
+statblock.Rhpg=sum(hpgGained(hpgGained>0))/simTime;
 statblock.DRmod=DRmod;
 
 statblock.DTPS=sum(dmg)./simTime;
@@ -597,7 +571,8 @@ statblock.bMits=bMits;
 statblock.partialAbsorbs=partialAbsorbs;
 statblock.fullAbsorbs=fullAbsorbs;
 statblock.melees=melees;
-statblock.parryhastes=parryhastes;
+statblock.parries=parries;
+statblock.dodges=dodges;
 
 statblock.dmg=dmg;
 
@@ -613,6 +588,13 @@ statblock.playerSwingTimer=playerSwingTimer;
 
 statblock.t154pcHPGains=t154pcHPGains;
 statblock.t154pcHPG=t154pcHPGains./simTime;
+statblock.divProtcasts=divProtCasts;
+
+% statblock.bshstore=debugBSHstore;
+statblock.damage=damage;
+statblock.soiTracker=soiTracker;
+statblock.hpgTracker=hpgTracker;
+statblock.hpgGained=hpgGained;
 
 %% plot
 if ~strcmp(plotFlag,'noplot')
@@ -671,6 +653,21 @@ end
         if ( hp>=3 || tob(idDPBuff)>0 ) && tob(idSotRcd)<=ulp 
             %check for negative SotR duration - if so fix at zero
             tob(idSotR)=max(tob(idSotR),0);
+            
+            %roll for hit
+            if rand<(1-miss-dodge-parry)  
+                
+                %check for SoI proc                
+                if rand<SoIProcChance
+                    
+                    %update absorbs (necessary to prevent cheating w/ SoI)
+                    updateAbsorbs;
+                    
+                    %create SoI bubble
+                    soiAmount=soiAmount+soiAbsorbValue(bossSwingHistory,soimodel);
+                    tob(idSoIbubble)=SoIbubbleDuration;
+                end
+            end
             
             %set SotR CD, give 3 seconds of DR, 20s of BoG
             tob(idSotRcd)=tGCD; %5.2
@@ -765,13 +762,15 @@ end
             amt=1;
         end
         hp=hp+amt;
-        hp=min([hp 5]);
-        hp=max([hp 0]);        
+%         hp=min([hp 5]);
+%         hp=max([hp 0]);        
+        if hp>5; hp=5; end
+        if hp<0; hp=0; end
     end
             
     function abilityCast(priority)
         
-        if priority=='special'
+        if strcmp(priority,'special')
             %placeholder for special generator priorities
             
         
@@ -788,6 +787,7 @@ end
                     %success! grant HP, enforce bounds
                     grantHP;
                     hpgTracker(k)=1; %debug flag
+                    hpgGained(k)=1;
                     
                     %Check for Grand Crusader proc
                     if rand<gcCSProcRate
@@ -796,6 +796,15 @@ end
                         %reset AS cooldown
                         tob(idAScd)=0;
                         gcCSProcs=gcCSProcs+1;
+                    end
+                    
+                    %check for SoI proc
+                    if rand<SoIProcChance    
+                        %update absorbs (necessary to prevent cheating w/ SoI)
+                        updateAbsorbs;
+                        %create SoI bubble
+                        soiAmount=soiAmount+soiAbsorbValue(bossSwingHistory,soimodel);
+                        tob(idSoIbubble)=SoIbubbleDuration;                        
                     end
                 end
             %J is second priority, check for cooldown and don't use
@@ -809,6 +818,7 @@ end
                     %success! grant HP, enforce bounds
                     grantHP;
                     hpgTracker(k)=2; %debug flag
+                    hpgGained(k)=1;
                 end
             %Avenger's Shield
             elseif tob(idAScd)<=ulp && tob(idCScd)>=0.2
@@ -822,6 +832,7 @@ end
                     %grant HP, enforce bounds
                     grantHP;
                     hpgTracker(k)=3; %debug flag
+                    hpgGained(k)=1;
                 end
             %Sacred Shield
             elseif tob(idSScd)<=ulp
@@ -849,23 +860,23 @@ end
 
     function dmgTaken=manyAbsorbsHandleIt(damage)
         dmgTaken=damage;
-        %apply WoG first if applicable
-        if WoGAmount>0
-            if dmgTaken>WoGAmount
-                dmgTaken=dmgTaken-WoGAmount;
-                WoGAmount=0;
-            else
-                WoGAmount=WoGAmount-dmgTaken;
-                dmgTaken=0;
-            end
-        end
-        %then apply sacred shield
+        % apply sacred shield first
         if ssAmount>0
             if dmgTaken>ssAmount
                 dmgTaken=dmgTaken-ssAmount;
                 ssAmount=0;
             else
                 ssAmount=ssAmount-dmgTaken;
+                dmgTaken=0;
+            end
+        end
+        %then apply WoG if applicable
+        if WoGAmount>0
+            if dmgTaken>WoGAmount
+                dmgTaken=dmgTaken-WoGAmount;
+                WoGAmount=0;
+            else
+                WoGAmount=WoGAmount-dmgTaken;
                 dmgTaken=0;
             end
         end
@@ -887,25 +898,56 @@ end
         end
     end
 
+    function updateAbsorbs()       
+         
+         %update absorbs
+         if tob(idWoGfakebubble)<=ulp
+             WoGAmount=0;
+         end
+         if WoGAmount<=0
+             tob(idWoGfakebubble)=0;
+         end
+         if tob(idSSbubble)<=ulp
+             ssAmount=0;
+         end
+         if ssAmount<=0
+             ssAmount=0; %cap at 0 just in case
+         end
+         if tob(idSoIbubble)<=ulp
+             soiAmount=0;
+         end
+         if soiAmount<=0
+             tob(idSoIbubble)=0;
+             soiAmount=0;
+         end       
+    end
+
     function t154pcIncrementHP(damage)
     	grantHP(floor(damage./dpThreshold)); 
-        hpgTracker=4;
+        hpgTracker(k)=4;
+        hpgGained(k)=floor(damage./dpThreshold);
         t154pcHPGains=t154pcHPGains+floor(damage./dpThreshold);
     end
 
     function soiAmount=soiAbsorbValue(bossSwingHistory,soimodel)
-       if strcmp(soimodel,'off')
+       if strcmp(soimodel.base,'off') %equivalent to flat-0
            soiAmount=0;
-       elseif strcmp(soimodel,'nooverheal')
+           
+       elseif strcmp(soimodel.base,'nooverheal') %equiv. to flat-1
            soiAmount=SoIHealSize;
-       elseif strcmp(soimodel,'fermi')
+           
+       elseif strcmp(soimodel.base,'flat') %flat-X0 for X0% effectiveness
+           soiAmount=SoIHealSize.*soimodel.x0;
+           
+       elseif strcmp(soimodel.base,'fermi') %fermi-X0-SIGMA
+           %debugBSHstore(:,q)=bossSwingHistory;q=q+1;
            x=sum(bossSwingHistory(1:3)); 
-           x0=1.25;
-           sigma=0.2;
-           soiAmount=SoIHealSize./(1+exp(-(x-x0)/sigma)); 
+           soiAmount=SoIHealSize./(1+exp(-(x-soimodel.x0)/soimodel.sigma));
        else
            error('soi model not defined, this shouldn''t happen...')
        end
+       %track SoI for debugging/post-processing
+       soiTracker(k)=soiAmount;
         
     end
 

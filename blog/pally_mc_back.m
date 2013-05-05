@@ -1,4 +1,4 @@
-function [statblock]=pally_mc(config,statSetup)
+function [statblock]=pally_mc_back(config,statSetup)
 %add path for "shift" function
 addpath 'C:\Users\George\Documents\MATLAB\mop\helper_func\'
 %set differential stat values to zero
@@ -100,12 +100,7 @@ if ~isfield(config,'soimodel')
 end
 soimodel=regexp(config.soimodel,'(?<base>\w+)\-?(?<x0>\d+\.*\d*)?\-?(?<sigma>\d+\.*\d*)?','names');
 if ~isnan(str2double(soimodel.x0)); soimodel.x0=str2double(soimodel.x0); else soimodel.x0=1.5; warning('soimodel x0 defaulting to 1.5'); end;
-if ~isnan(str2double(soimodel.sigma)); soimodel.sigma=str2double(soimodel.sigma); elseif strcmp(soimodel.base,'fermi'); soimodel.sigma=0.15; warning('soimodel sigma defaulting to 0.15'); end
-
-if ~isfield(config,'soiDirection')
-    config.soiDirection='forward';
-end
-soiDirection=config.soiDirection;
+if ~isnan(str2double(soimodel.sigma)); soimodel.sigma=str2double(soimodel.sigma); else soimodel.sigma=0.15; warning('soimodel sigma defaulting to 0.15'); end
 
 %% Finisher priority Queue handling
 finisher=config.finisher;
@@ -259,7 +254,7 @@ idMelee=3;
 tbe(idBossSwing)=0.5;
 tbe(idMelee)=playerSwingTimer;
 
-buffs={'SotR duration','BoG Duration','CS cooldown','J cooldown','AS cooldown','SotR cooldown','Grand Crusader duration','Div Pupr duration','T152pc','WoG cd','WoG absorb','SS cd','SS absorb','DivProt','DivProt cd'};
+buffs={'SotR duration','BoG Duration','CS cooldown','J cooldown','AS cooldown','SotR cooldown','Grand Crusader duration','Div Pupr duration','T152pc','WoG cd','WoG absorb','SS cd','SS absorb','DivProt','DivProt cd','SoI bubble'};
 tob = zeros(size(buffs));
 idSotR=1;
 idBoG=2;
@@ -276,7 +271,7 @@ idSScd=12;
 idSSbubble=13;
 idDivProt=14;
 idDivProtcd=15;
-% idSoIbubble=16;
+idSoIbubble=16;
 
 %dynamic constants
 BoGstacks=0;
@@ -329,12 +324,9 @@ t154pcHPGains=0;
 melees=0;
 SotRcasts=0;
 divProtCasts=0;
-soiHealed=0;
-soiOverHealed=0;
 
 %variables for conditional cast logic
 bossSwingHistory=zeros(10,1); %store last 10 boss hits
-soiAmount=0;
 % lbSH=length(bossSwingHistory);
 
 % %make t array
@@ -374,8 +366,14 @@ while k<=N
          
             %check for SoI proc
              if rand<SoIProcChance
-                 %handle SoI proc mechanics
-                 handleSoI;
+            
+                 %update absorbs (necessary to prevent cheating w/ SoI)
+%                  updateAbsorbs;
+                 
+                 %create SoI bubble
+                 soiAmount=soiAbsorbValue(bossSwingHistory,soimodel);
+%                  tob(idSoIbubble)=SoIbubbleDuration;
+                 backApplySoI(soiAmount);
                  
              end
          end
@@ -455,7 +453,7 @@ while k<=N
              
              %apply absorbs if applicable
              updateAbsorbs;
-             absorbAmount=WoGAmount+ssAmount+soiAmount;
+             absorbAmount=WoGAmount+ssAmount; %+soiAmount;
              if absorbAmount>0
                  damage(k)=manyAbsorbsHandleIt(dmgVal);
              else
@@ -485,13 +483,12 @@ while k<=N
              end
              %absorbs
              updateAbsorbs;
-             absorbAmount=WoGAmount+ssAmount+soiAmount;
+             absorbAmount=WoGAmount+ssAmount; %+soiAmount;
              if absorbAmount>0
                  damage(k)=manyAbsorbsHandleIt(dmgVal);
              else
                  damage(k)=dmgVal;
              end
-             
              %handle T15 4-piece
              if t154pcEquipped>0 && tob(idDivProt)>ulp
                  t154pcIncrementHP(dmgVal);
@@ -503,7 +500,6 @@ while k<=N
          bossSwingHistory(1)=damage(k);
          
          %clear any SoI procs - only applicable to next boss attack anyway
-         soiOverHealed=soiOverHealed+soiAmount;
          soiAmount=0;
          
      end %close boss swing conditional
@@ -598,8 +594,6 @@ statblock.divProtcasts=divProtCasts;
 % statblock.bshstore=debugBSHstore;
 statblock.damage=damage;
 statblock.soiTracker=soiTracker;
-statblock.soiHealed=soiHealed./(soiHealed+soiOverHealed);
-statblock.soiOverHealed=soiOverHealed./(soiHealed+soiOverHealed);
 statblock.hpgTracker=hpgTracker;
 statblock.hpgGained=hpgGained;
 
@@ -666,7 +660,14 @@ end
                 
                 %check for SoI proc                
                 if rand<SoIProcChance
-                    handleSoI;
+                    
+                    %update absorbs (necessary to prevent cheating w/ SoI)
+%                     updateAbsorbs;
+                    
+                    %create SoI bubble
+                    soiAmount=soiAbsorbValue(bossSwingHistory,soimodel);
+%                     tob(idSoIbubble)=SoIbubbleDuration;
+                    backApplySoI(soiAmount);
                 end
             end
             
@@ -801,7 +802,12 @@ end
                     
                     %check for SoI proc
                     if rand<SoIProcChance    
-                        handleSoI;                     
+                        %update absorbs (necessary to prevent cheating w/ SoI)
+%                         updateAbsorbs;
+                        %create SoI bubble
+                        soiAmount=soiAbsorbValue(bossSwingHistory,soimodel);
+%                         tob(idSoIbubble)=SoIbubbleDuration;
+                        backApplySoI(soiAmount);                        
                     end
                 end
             %J is second priority, check for cooldown and don't use
@@ -856,9 +862,7 @@ end
     end
 
     function dmgTaken=manyAbsorbsHandleIt(damage)
-        %initialize damage taken
         dmgTaken=damage;
-        
         % apply sacred shield first
         if ssAmount>0
             if dmgTaken>ssAmount
@@ -879,18 +883,16 @@ end
                 dmgTaken=0;
             end
         end
-        %then apply SoI
-        if soiAmount>0
-            if dmgTaken>soiAmount
-                dmgTaken=dmgTaken-soiAmount;
-                soiHealed=soiHealed+soiAmount;
-                soiAmount=0;
-            else
-                soiAmount=soiAmount-dmgTaken;
-                soiHealed=soiHealed+dmgTaken;
-                dmgTaken=0;
-            end
-        end
+%         %then apply SoI
+%         if soiAmount>0
+%            if dmgTaken>soiAmount
+%                dmgTaken=dmgTaken-soiAmount;
+%                soiAmount=0;
+%            else
+%                soiAmount=soiAmount-dmgTaken;
+%                dmgTaken=0;
+%            end
+%         end
         %register full and partial absorbs
         if dmgTaken==0
             fullAbsorbs=fullAbsorbs+1;
@@ -914,6 +916,13 @@ end
          if ssAmount<=0
              ssAmount=0; %cap at 0 just in case
          end
+%          if tob(idSoIbubble)<=ulp
+%              soiAmount=0;
+%          end
+%          if soiAmount<=0
+%              tob(idSoIbubble)=0;
+%              soiAmount=0;
+%          end       
     end
 
     function t154pcIncrementHP(damage)
@@ -924,41 +933,25 @@ end
     end
 
     function soiAmount=soiAbsorbValue(bossSwingHistory,soimodel)
+       if strcmp(soimodel.base,'off') %equivalent to flat-0
+           soiAmount=0;
+           
+       elseif strcmp(soimodel.base,'nooverheal') %equiv. to flat-1
+           soiAmount=SoIHealSize;
+           
+       elseif strcmp(soimodel.base,'flat') %flat-X0 for X0% effectiveness
+           soiAmount=SoIHealSize.*soimodel.x0;
+           
+       elseif strcmp(soimodel.base,'fermi') %fermi-X0-SIGMA
+           %debugBSHstore(:,q)=bossSwingHistory;q=q+1;
+           x=sum(bossSwingHistory(1:3)); 
+           soiAmount=SoIHealSize./(1+exp(-(x-soimodel.x0)/soimodel.sigma));
+       else
+           error('soi model not defined, this shouldn''t happen...')
+       end
+       %track SoI for debugging/post-processing
+       soiTracker(k)=soiAmount;
         
-        %create SoI bubble        
-        if strcmp(soimodel.base,'fermi') %fermi-X0-SIGMA
-            x=sum(bossSwingHistory(1:3));
-            soiAmount=SoIHealSize./(1+exp(-(x-soimodel.x0)/soimodel.sigma));            
-        elseif strcmp(soimodel.base,'flat') %flat-X0 for X0% effectiveness
-            soiAmount=SoIHealSize.*soimodel.x0;            
-        elseif strcmp(soimodel.base,'off') %equivalent to flat-0
-            soiAmount=0;
-            
-        elseif strcmp(soimodel.base,'nooverheal') %equiv. to flat-1
-            soiAmount=SoIHealSize;
-        else
-            error('soi model not defined, this shouldn''t happen...')
-        end
-        soiOverHealed=soiOverHealed+(SoIHealSize-soiAmount);
-    end
-
-    function handleSoI()
-               
-        %calculate size of SoI proc
-        soiTemp=soiAbsorbValue(bossSwingHistory,soimodel);
-        
-        %apply either forward or backward
-        if strcmp(soiDirection,'back')
-            %back-application algorithm
-            backApplySoI(soiTemp)
-        else
-            %add to current absorb bubble
-            soiAmount=soiAmount+soiTemp;
-        end
-        
-        %track SoI for debugging/post-processing
-        soiTracker(k)=soiTemp;
-                 
     end
 
     function backApplySoI(x)
@@ -969,12 +962,9 @@ end
             id=k-151+kk;
             %adjust by subtracting SoI
             if x>=damage(id)
-                soiHealed=soiHealed+damage(id);
-                soiOverHealed=soiOverHealed+(x-damage(id));
                 damage(id)=0;
             else
                 damage(id)=damage(id)-x;
-                soiHealed=soiHealed+x;
             end                           
         end
     end
