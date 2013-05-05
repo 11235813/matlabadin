@@ -16,7 +16,9 @@ config.enableSS=0;
 config.priority='default';
 config.bossSwingDamage=200000;
 config.t154pcEquipped=0;
-config.soimodel='fermi';
+config.soimodel='fermi-1.5-0.15';
+config.soimodel='nooverheal-1.5-0.15';
+config.soiDuration='back';
 
 tstart=tic;
 for i=1:10
@@ -35,9 +37,19 @@ for i=1:10
 end
 T2=toc(tstart2)
 
+
+tstart3=tic;
+config3=config;config3.soiDirection='back';
+for i=1:10
+    
+    sb3(i)=pally_mc_back(config3);
+    
+end
+T3=toc(tstart3)
+
 %% analyze
-Scomp=mean([[sb1.S];[sb2.S]],2)
-meanComp=mean([[sb1.mean_ma];[sb2.mean_ma]],2)
-meanAvoidPct=mean([[sb1.avoidsPct];[sb2.avoidsPct]],2)
-meanHits=mean([[sb1.hits];[sb2.hits]],2)
-meanHitsPct=mean([[sb1.hitsPct];[sb2.hitsPct]],2)
+Scomp=mean([[sb1.S];[sb2.S];[sb3.S]],2)
+meanComp=mean([[sb1.mean_ma];[sb2.mean_ma];[sb3.mean_ma]],2)
+meanAvoidPct=mean([[sb1.avoidsPct];[sb2.avoidsPct];[sb3.avoidsPct]],2)
+meanHits=mean([[sb1.hits];[sb2.hits];[sb3.hits]],2)
+meanHitsPct=mean([[sb1.hitsPct];[sb2.hitsPct];[sb3.hitsPct]],2)

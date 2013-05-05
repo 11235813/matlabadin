@@ -47,7 +47,7 @@ title([config.soimodel ',   ' int2str(config.bossSwingDamage/1000) 'k'])
 
 b=1./(1+exp(-(B-x0)./sigma));
 xx=linspace(0,3,1000);yy=1./(1+exp(-(xx-x0)./sigma));
-figure(3);plot(xx,yy,B,b,'r.');xlabel('mean of last 3 boss attacks')
+figure(3);plot(xx,yy,B,b,'r.');xlabel('sum of last 3 boss attacks')
 ylabel('SoI effectiveness (1-overheal)')
 title([config.soimodel ',   ' int2str(config.bossSwingDamage/1000) 'k'])
 text(0.2,0.5,['% overheal = ' num2str((1-mean(b)).*100,'%2.2f') '%'])
