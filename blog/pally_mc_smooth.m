@@ -219,7 +219,7 @@ ma2=filter(ones(1,2)./2,1,dmg);
 MAmean=mean(ma5);
 MAstd=std(ma5);
 S=[statblock.S];
-ma=[statblock.maDTPS];
+% ma=[statblock.maDTPS];
 
 n=length(statSetup);
 
