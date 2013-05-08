@@ -203,6 +203,7 @@ parryCS=3.19+1./(1./Cp+kv./((buffedStr-178)./951.158596+(parryRating+dparry)./88
 
 avoidance=(dodgeCS+parryCS-9)./100;
 block=(blockCS-4.5)./100;
+parryHasteChance=((parryCS-4.5)./100/avoidance);
 
 DRmod=max([1-0.3-mastery./100 0.2]);
 
@@ -232,7 +233,7 @@ numSSTicks=round2even(30./ssTickInterval);
 baseSwingTimer=2.6;
 playerSwingTimer=roundn(baseSwingTimer./(1+haste)./1.1,-3); %1.1 for melee attack speed buff
 SoIProcChance=20.*baseSwingTimer./60;
-SoIbubbleDuration=bossSwingTimer;
+% SoIbubbleDuration=bossSwingTimer;
 SoIHealSize=0.15*(AP+AP/2)./bossSwingDamage;
 
 %% initialize Holy Power
@@ -286,6 +287,7 @@ ssStacks=0;
 simTime=simMins*60;
 steps_per_sec=100;
 ulp=0.001; %unit of least precision (1ms) - for dealing with float errors
+backSteps=150; %number of timesteps to look back for healing
 
 %pre-calculate cooldowns and buff times
 tGCD=1.5./(1+haste);
@@ -425,7 +427,7 @@ while k<=N
              end
              
              %check for parry-hasting
-             if rand<((parryCS-4.5)./100/avoidance)
+             if rand<parryHasteChance
                  tbe(idMelee)=max(tbe(idMelee)-0.4.*playerSwingTimer,0.2.*playerSwingTimer);
                  parries=parries+1;
              else
@@ -503,8 +505,11 @@ while k<=N
          bossSwingHistory(1)=damage(k);
          
          %clear any SoI procs - only applicable to next boss attack anyway
-         soiOverHealed=soiOverHealed+soiAmount;
-         soiAmount=0;
+         %note that this only has an effect if we're using absorb version
+         if soiAmount>0
+             soiOverHealed=soiOverHealed+soiAmount;
+             soiAmount=0;
+         end
          
      end %close boss swing conditional
     
@@ -541,6 +546,10 @@ else
 end
 
 
+statblock.block=block;
+statblock.avoidance=avoidance;
+statblock.dmg=dmg;
+
 statblock.bossAttacks=bossAttacks;
 statblock.avoidsPct=avoids./bossAttacks;
 statblock.parryPct=parries./bossAttacks;
@@ -553,20 +562,6 @@ statblock.bMitsPct=bMits./bossAttacks;
 statblock.hMitsPct=hMits./bossAttacks;
 statblock.gcAProcs=gcAProcs;
 statblock.gcCSProcs=gcCSProcs;
-
-statblock.Tsotr = simTime./SotRcasts;
-statblock.Rsotr = 1/statblock.Tsotr;
-statblock.S=statblock.Rsotr.*3;
-statblock.Rhpg=sum(hpgGained(hpgGained>0))/simTime;
-statblock.DRmod=DRmod;
-
-statblock.DTPS=sum(dmg)./simTime;
-statblock.maDTPS=filter(ones(1,5)./5,1,dmg);
-statblock.mean_ma=mean(statblock.maDTPS);
-statblock.std_ma=std(statblock.maDTPS);
-
-statblock.block=block;
-statblock.avoidance=avoidance;
 statblock.avoids=avoids;
 statblock.blocks=blocks;
 statblock.hits=hits;
@@ -579,7 +574,18 @@ statblock.melees=melees;
 statblock.parries=parries;
 statblock.dodges=dodges;
 
-statblock.dmg=dmg;
+statblock.Tsotr = simTime./SotRcasts;
+statblock.Rsotr = 1/statblock.Tsotr;
+statblock.S=statblock.Rsotr.*3;
+statblock.Rhpg=sum(hpgGained(hpgGained>0))/simTime;
+statblock.DRmod=DRmod;
+
+statblock.DTPS=sum(dmg)./simTime;
+% statblock.maDTPS=filter(ones(1,5)./5,1,dmg);
+% statblock.mean_ma=mean(statblock.maDTPS);
+% statblock.std_ma=std(statblock.maDTPS);
+
+
 
 statblock.simMins=simMins;
 statblock.simTime=simTime;
@@ -888,6 +894,7 @@ end
             else
                 soiAmount=soiAmount-dmgTaken;
                 soiHealed=soiHealed+dmgTaken;
+                soiOverHealed=soiOverHealed+(soiAmount-dmgTaken);
                 dmgTaken=0;
             end
         end
@@ -965,17 +972,21 @@ end
         %if the previous boss swing is nonzero
         if bossSwingHistory(1)>0
             %find this entry in damage
-            kk=find(damage(max(k-150,0):k)==bossSwingHistory(1));
-            id=k-151+kk;
+            kk=find(damage(max(k-backSteps,0):k)==bossSwingHistory(1));
+            id=k-(backSteps+1)+kk;
             %adjust by subtracting SoI
             if x>=damage(id)
                 soiHealed=soiHealed+damage(id);
                 soiOverHealed=soiOverHealed+(x-damage(id));
                 damage(id)=0;
+                bossSwingHistory(1)=damage(id);
             else
                 damage(id)=damage(id)-x;
                 soiHealed=soiHealed+x;
-            end                           
+                bossSwingHistory(1)=damage(id);
+            end       
+        else
+            soiOverHealed=soiOverHealed+x;
         end
     end
 end

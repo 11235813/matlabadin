@@ -4,7 +4,6 @@ function li = pally_mc_table(statSetup,statblock,config,gearsets)
 %unpack
 dmg=[statblock.dmg];
 S=[statblock.S];
-ma=[statblock.maDTPS];
 if nargin<4
     n=length(statSetup);
     names={statSetup.name};
