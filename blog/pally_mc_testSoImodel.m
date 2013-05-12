@@ -15,7 +15,9 @@ config.enableSS=1;
 config.t154pcEquipped=0;
 config.useDivineProtection=0;
 config.bossSwingDamage=250000;
-config.soimodel='fermi-1.55-0.15';
+% config.soimodel='fermi-1.5-0.15';
+config.soimodel='nooverheal';
+config.soiDirection='forward';
 
 soimodel=regexp(config.soimodel,'(?<base>\w+)\-?(?<x0>\d+\.*\d*)?\-?(?<sigma>\d+\.*\d*)?','names');
 
@@ -35,30 +37,36 @@ mB=mean(B);
 %% calculate histogram stats
 [N x]=hist(B,40);
 
-figure(1);hist(B,40);
+figure(1);
+hist(B,40);
 xlabel('mean of last 3 boss attacks');
 ylabel('Number of occurrences');
 title([config.soimodel ',   ' int2str(config.bossSwingDamage/1000) 'k'])
 
-figure(2);plot(x,cumsum(N)./sum(N));
+figure(2);
+plot(x,cumsum(N)./sum(N));
 xlabel('cumulative probability: last 3 boss attacks');
 ylabel('Probability')
 title([config.soimodel ',   ' int2str(config.bossSwingDamage/1000) 'k'])
 
 b=1./(1+exp(-(B-x0)./sigma));
-xx=linspace(0,3,1000);yy=1./(1+exp(-(xx-x0)./sigma));
+c=sb.soiTracker(sb.soiTracker>=0)./sb.soiHealSize;
+xx=linspace(0,3,1000);
+yy=1./(1+exp(-(xx-x0)./sigma));
 figure(3);plot(xx,yy,B,b,'r.');xlabel('sum of last 3 boss attacks')
 ylabel('SoI effectiveness (1-overheal)')
 title([config.soimodel ',   ' int2str(config.bossSwingDamage/1000) 'k'])
 text(0.2,0.5,['% overheal = ' num2str((1-mean(b)).*100,'%2.2f') '%'])
 
 %histogram of healing values
-[N2 x2]=hist(b,40);
-figure(4);hist(b,40);
+[N2 x2]=hist(c,linspace(0,1,40));
+figure(4);
+hist(c,linspace(0,1,40));
 xlabel('SoI effectiveness (1-overheal)');
 ylabel('Number of occurrences')
 title([config.soimodel ',   ' int2str(config.bossSwingDamage/1000) 'k'])
-text(0.3,max(N2)./2,['% overheal = ' num2str((1-mean(b)).*100,'%2.2f') '%'])
+text(0.3,max(N2)./2,['% overheal = ' num2str(sb.soiOverHealed.*100,'%2.2f') '%'])
+xlim([0 1])
 
 figure(5);plot(x2,cumsum(N2)./sum(N2));
 title([config.soimodel ',   ' int2str(config.bossSwingDamage/1000) 'k'])
