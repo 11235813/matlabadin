@@ -17,9 +17,9 @@ config.priority='default';
 config.enableSS=1;
 config.t154pcEquipped=0;
 config.useDivineProtection=0;
-config.bossSwingDamage=350000;
+config.bossSwingDamage=250000;
 config.soimodel='fermi-1.55-0.15';
-config.soimodel='flat-0.5';
+config.soimodel='flat-1';
 config.soiDirection='back';
 disp(['-----------------Finisher is ' config.finisher '----------------------------'])
 jMin=2;

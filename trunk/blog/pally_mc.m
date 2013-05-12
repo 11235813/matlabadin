@@ -104,6 +104,7 @@ if ~isnan(str2double(soimodel.sigma)); soimodel.sigma=str2double(soimodel.sigma)
 
 if ~isfield(config,'soiDirection')
     config.soiDirection='forward';
+    warning('soiDirection defaulting to forward')
 end
 soiDirection=config.soiDirection;
 
@@ -205,7 +206,7 @@ avoidance=(dodgeCS+parryCS-9)./100;
 block=(blockCS-4.5)./100;
 parryHasteChance=((parryCS-4.5)./100/avoidance);
 
-DRmod=max([1-0.3-mastery./100 0.2]);
+DRmod=max([1-0.25-mastery./100 0.2]);
 
 %offensive stats
 haste=(hasteRating+dhaste)./425./100;
@@ -604,8 +605,11 @@ statblock.divProtcasts=divProtCasts;
 % statblock.bshstore=debugBSHstore;
 statblock.damage=damage;
 statblock.soiTracker=soiTracker;
+statblock.soiHealedRaw=soiHealed;
+statblock.soiOverHealedRaw=soiOverHealed;
 statblock.soiHealed=soiHealed./(soiHealed+soiOverHealed);
 statblock.soiOverHealed=soiOverHealed./(soiHealed+soiOverHealed);
+statblock.soiHealSize=SoIHealSize;
 statblock.hpgTracker=hpgTracker;
 statblock.hpgGained=hpgGained;
 
@@ -894,7 +898,6 @@ end
             else
                 soiAmount=soiAmount-dmgTaken;
                 soiHealed=soiHealed+dmgTaken;
-                soiOverHealed=soiOverHealed+(soiAmount-dmgTaken);
                 dmgTaken=0;
             end
         end
@@ -930,23 +933,23 @@ end
         t154pcHPGains=t154pcHPGains+floor(damage./dpThreshold);
     end
 
-    function soiAmount=soiAbsorbValue(bossSwingHistory,soimodel)
+    function SoiAmt=soiAbsorbValue(bossSwingHistory,soimodel)
         
         %create SoI bubble        
         if strcmp(soimodel.base,'fermi') %fermi-X0-SIGMA
             x=sum(bossSwingHistory(1:3));
-            soiAmount=SoIHealSize./(1+exp(-(x-soimodel.x0)/soimodel.sigma));            
+            SoiAmt=SoIHealSize./(1+exp(-(x-soimodel.x0)/soimodel.sigma));            
         elseif strcmp(soimodel.base,'flat') %flat-X0 for X0% effectiveness
-            soiAmount=SoIHealSize.*soimodel.x0;            
+            SoiAmt=SoIHealSize.*soimodel.x0;            
         elseif strcmp(soimodel.base,'off') %equivalent to flat-0
-            soiAmount=0;
+            SoiAmt=0;
             
         elseif strcmp(soimodel.base,'nooverheal') %equiv. to flat-1
-            soiAmount=SoIHealSize;
+            SoiAmt=SoIHealSize;
         else
             error('soi model not defined, this shouldn''t happen...')
         end
-        soiOverHealed=soiOverHealed+(SoIHealSize-soiAmount);
+        soiOverHealed=soiOverHealed+(SoIHealSize-SoiAmt);
     end
 
     function handleSoI()
