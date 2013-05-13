@@ -1,8 +1,6 @@
 function [statblock]=pally_mc(config,statSetup)
 %add path for "shift" function
 addpath 'C:\Users\George\Documents\MATLAB\mop\helper_func\'
-%set differential stat values to zero
-dhit=0;dexp=0;dhaste=0;dmastery=0;ddodge=0;dparry=0;
 
 %% Input handling - config - stat,val,simMins,plotFlag,tocFlag
 if ~exist('config','var')
@@ -108,6 +106,11 @@ if ~isfield(config,'soiDirection')
 end
 soiDirection=config.soiDirection;
 
+if ~isfield(config,'bossSpecial')
+    config.bossSpecial='none';
+end
+bossSpecial=regexp(config.bossSpecial,'(?<type>\w+)\-?(?<damage>\d+\.*\d*)?\-?(?<baseCD>\d+\.*\d*)?\-?(?<randCD>\d+\.*\d*)?','names');
+
 %% Finisher priority Queue handling
 finisher=config.finisher;
 n=regexp(finisher,'(?<ftype>[a-zA-Z]+)(?<lockstr>\d*\.?\d*)-?(?<bleedstr>\d*)(?<ovrw>\**)','names');
@@ -115,7 +118,8 @@ ftype=n.ftype;
 bleed=str2double(n.bleedstr);
 lock=str2double(n.lockstr);
 ovrw=~strcmpi(n.ovrw,'*');
-%%
+%% Modify differential stat values based on config
+dhit=0;dexp=0;dhaste=0;dmastery=0;ddodge=0;dparry=0;
 if nargin>=1
     switch config.stat
         case 'hit'
@@ -132,11 +136,9 @@ if nargin>=1
             dparry=val;
     end    
 end
-
 %% Initialize different random streams
 RandStream.setDefaultStream ...
      (RandStream('mt19937ar','seed',sum(100*clock)));
- 
 %% Player stats
 if nargin<2
     statSetup.name='C/Bal';
@@ -160,17 +162,13 @@ expRating=statSetup.expRating;
 hasteRating=statSetup.hasteRating;
 armor=statSetup.armor;
 
+%% Mitigation Factors
 armorMit=1-armor./(armor+58370);
 specMit=1-0.15;
 wbMit=0.9;
 dpMit=0.8;
 
-
-%% Define constants/variables
-Cd=66.56745;
-Cp=237.186;
-Cb=150.3759;
-kv=0.886;
+%% Assorted Constants
 gcAvoidProcRate=0.12;
 gcCSProcRate=0.12;
 gcBuffDuration=6.3;
@@ -179,36 +177,43 @@ dpProcRate=0;
 dpBuffDuration=8;
 masteryRaidBuff=3000;
 
-%% Vengeance info
-% bossRawDPS=310000;
-% bossRawSwingDamage=bossRawDPS.*bossSwingTimer;
-% bossSwingDamage=bossRawSwingDamage.*armorMit.*specMit.*wbMit;
-% bossDPS=bossSwingDamage./bossSwingTimer;
-
-%bossSwingDamage is set in config now
-% bossSwingDamage=168300;
+%% Boss Damage Info
+%bossSwingDamage is set in config 
 bossDPS=bossSwingDamage./bossSwingTimer; %#ok<NASGU>
 bossRawSwingDamage=bossSwingDamage./(armorMit.*specMit.*wbMit);
 bossRawDPS=bossRawSwingDamage./bossSwingTimer;
 
+%special attacks
+
+
+%% Vengeance Calculations
 avgVengAP=0.36*bossRawDPS;
 AP=floor(1.1.*(avgVengAP+270+2.*(buffedStr-10)));
 
-%% calculate stats
-%defensive stats
+%% Defensive Stats
+%diminishing returns coefficients
+Cd=66.56745;
+Cp=237.186;
+Cb=150.3759;
+kv=0.886;
+
+%defensive stats, miss excluded because =0 for bosses
 mastery=8+(masteryRating+dmastery+masteryRaidBuff)./600;
 blockCS=3+10+1./(1./Cb+kv./mastery);
-% miss=0;
 dodgeCS=5.01+1./(1./Cd+kv./((dodgeRating+ddodge)./885));
 parryCS=3.19+1./(1./Cp+kv./((buffedStr-178)./951.158596+(parryRating+dparry)./885));
 
-avoidance=(dodgeCS+parryCS-9)./100;
+%avoidance and block in decimal format
+avoidance=(max(dodgeCS-4.5,0)+max(parryCS-4.5,0))./100;
 block=(blockCS-4.5)./100;
+
+%chance for parry-hasting to occur on an avoid event
 parryHasteChance=((parryCS-4.5)./100/avoidance);
 
+%SotR DR modifier
 DRmod=max([1-0.25-mastery./100 0.2]);
 
-%offensive stats
+%% Offensive stats
 haste=(hasteRating+dhaste)./425./100;
 spellHaste=(1+haste).*1.05.*1.10-1;
 
@@ -219,12 +224,10 @@ miss=max(0,0.075-hit);
 dodge=max(0,(0.075-expt));
 parry=max(0,(0.075-max((expt-0.075),0)));
 
-%% WoG
-
+%% WoG Heal Size
 WoGHealBase=(5538+0.49.*AP./2).*1.05./bossSwingDamage.*(1-WoGoverheal);
-WoGAmount=0; %initialize WoG absorb tracker
 
-%% Sacred Shield ticks
+%% Sacred Shield Ticks
 ssAbsorbTickSize=(342 + 0.585.*AP)./bossSwingDamage;
 ssAbsorbValue=enableSS.*ssAbsorbTickSize;
 ssTickInterval=roundn(6./(1+spellHaste),-3);
@@ -234,13 +237,12 @@ numSSTicks=round2even(30./ssTickInterval);
 baseSwingTimer=2.6;
 playerSwingTimer=roundn(baseSwingTimer./(1+haste)./1.1,-3); %1.1 for melee attack speed buff
 SoIProcChance=20.*baseSwingTimer./60;
-% SoIbubbleDuration=bossSwingTimer;
 SoIHealSize=0.15*(AP+AP/2)./bossSwingDamage;
 
 %% initialize Holy Power
 hp=int8(0);
 
-%% Stamina
+%% Stamina and Health
 baseStamina=169;
 baseHealth=146663;
 stamModifier=1.25.*1.05.*1.1; %GbtL, plate spec, PW:F
@@ -249,18 +251,21 @@ totalHitPoints=baseHealth+(14.*buffedStamina-260);
 health=totalHitPoints./bossSwingDamage; %normalized health
 dpThreshold=0.2.*health;
 
-%% Define events, cooldowns and buffs to track
-events={'Boss Swing Timer','GCD','melee'};
+%% Define events to track
+events={'Boss Swing Timer','GCD','melee','Boss Special'};
 tbe = zeros(size(events));
 idBossSwing=1;
 idGCD=2;
 idMelee=3;
+idBSpec=4;
+
 %start boss swing timer at 0.5 seconds, just to de-synch from GCD
 %not strictly necessary, I think, as HP generation should shuffle SotR
 %around significantly, but just to be safe...
 tbe(idBossSwing)=0.5;
 tbe(idMelee)=playerSwingTimer;
 
+%% Define buffs to track
 buffs={'SotR duration','BoG Duration','CS cooldown','J cooldown','AS cooldown','SotR cooldown','Grand Crusader duration','Div Pupr duration','T152pc','WoG cd','WoG absorb','SS cd','SS absorb','DivProt','DivProt cd'};
 tob = zeros(size(buffs));
 idSotR=1;
@@ -278,19 +283,15 @@ idSScd=12;
 idSSbubble=13;
 idDivProt=14;
 idDivProtcd=15;
-% idSoIbubble=16;
 
-%dynamic constants
-BoGstacks=0;
-ssStacks=0;
-
-%constants
+%% Simulation parameters
 simTime=simMins*60;
 steps_per_sec=100;
+dt=1./steps_per_sec;
 ulp=0.001; %unit of least precision (1ms) - for dealing with float errors
-backSteps=150; %number of timesteps to look back for healing
+backSteps=floor(bossSwingTimer./dt); %number of timesteps to look back for healing
 
-%pre-calculate cooldowns and buff times
+%% pre-calculate cooldowns and buff times for speed
 tGCD=1.5./(1+haste);
 tCScd=4.5./(1+haste);
 tJcd=6./(1+haste);
@@ -300,22 +301,11 @@ tDivProtCD=60;
 tSotR=3;
 tBoG=20;
 
-%preallocate arrays
-N=floor(simTime.*steps_per_sec);
-dt=1./steps_per_sec;
-t=zeros(N,1);
-damage=-1.*ones(N,1);
-soiTracker=damage;
-hpgTracker=t;
-hpgGained=t;
-% SotRUptime=t;
-% debugHP=t;
-% debugBoG=t;
-% q=1;
-% debugBSHstore=zeros(10,100);
-
-%tracking
-avoids=0;
+%% Dynamic Scalar Trackers
+BoGstacks=0;
+ssStacks=0;
+WoGAmount=0; %initialize WoG absorb tracker
+soiAmount=0;
 parries=0;
 dodges=0;
 blocks=0;
@@ -333,21 +323,30 @@ melees=0;
 SotRcasts=0;
 divProtCasts=0;
 soiHealed=0;
-soiOverHealed=0;
+soiOHbase=0;
+soiOHexpire=0;
+soiOHbackExcess=0;
+soiOHbackFull=0;
 
 %variables for conditional cast logic
 bossSwingHistory=zeros(10,1); %store last 10 boss hits
-soiAmount=0;
-% lbSH=length(bossSwingHistory);
 
-% %make t array
+%% Preallocate Vector Trackers
+N=floor(simTime.*steps_per_sec);
+t=zeros(N,1);
+damage=-1.*ones(N,1);
+soiTracker=damage;
+hpgTracker=t;
+hpgGained=t;
+%make t array
 t=(0:(N-1)).*dt;
 
-%%for loop to do event handling
+%% For loop to do event handling
 tic
 k=1;
+
 while k<=N
-     %% event handling
+     %event handling
     
      %upkeep stuff we'll want to do before every event
      
@@ -355,12 +354,11 @@ while k<=N
      if tob(idBoG)<=ulp
          BoGstacks=0;
      end
-          
+     
+     %% GCD
      %if the GCD timer is up, see if there's something to cast
      if tbe(idGCD)<=ulp
          
-%          updateAbsorbs;
-                  
          %check for finisher cast
          finisherCast(ftype,lock,bleed,ovrw);
          
@@ -369,6 +367,7 @@ while k<=N
          
      end
      
+     %% Player Melee
      %if the swing timer is up, make a melee attack
      if tbe(idMelee)<=ulp
          
@@ -390,14 +389,14 @@ while k<=N
          melees=melees+1;
      end
      
-     %SS refreshing mechanics
+     %% SS refreshing mechanics
      if tob(idSSbubble)<=ulp && ssStacks>0
         ssStacks=ssStacks-1;
         tob(idSSbubble)=ssTickInterval;
         ssAmount=ssAbsorbValue;
      end
      
-     %boss swing
+     %% Boss Swing
      if tbe(idBossSwing)<=ulp
                   
          %invoke Divine Protection 
@@ -508,17 +507,26 @@ while k<=N
          %clear any SoI procs - only applicable to next boss attack anyway
          %note that this only has an effect if we're using absorb version
          if soiAmount>0
-             soiOverHealed=soiOverHealed+soiAmount;
+             soiOHexpire=soiOHexpire+soiAmount;
              soiAmount=0;
          end
          
      end %close boss swing conditional
     
-    %% Debugging
-%     SotRUptime(k)=tob(idSotR);
-%     SotRUptimeotR(k,1)=tob(idSotRcd);
-%     debugHP(k)=hp;
-%     debugBoG(k)=BoGstacks;
+     % Boss Special attacks
+     if tbe(idBSpec)<ulp
+         %placeholders
+         tbe(idBSpec)=10000*60; %10k minutes
+         
+         %determine type (physical or magical)
+         
+         %handle physical - need SotR mitigation, block, armor, etc.
+         
+         %else handle magical - need passive magical mitigation
+         
+     end
+
+    %% Skip to next event
     
     dk=round(min(tbe)./dt);
     dk=max(dk,1);
@@ -528,14 +536,14 @@ while k<=N
     tob=tob-dk.*dt;
     
        
-end %close timestep for loop
+end %close while loop
 
 %flash toc for timing/debugging if desired
 if ~strcmp(tocFlag,'notoc')
     toc
 end
 
-%% compile for plots
+%% Construct statblock for output
 dmg=damage(damage>=0);
 
 %sanity check
@@ -546,10 +554,10 @@ else
     bossAttacks=length(dmg);
 end
 
-
 statblock.block=block;
 statblock.avoidance=avoidance;
 statblock.dmg=dmg;
+statblock.damage=damage;
 
 statblock.bossAttacks=bossAttacks;
 statblock.avoidsPct=avoids./bossAttacks;
@@ -582,11 +590,6 @@ statblock.Rhpg=sum(hpgGained(hpgGained>0))/simTime;
 statblock.DRmod=DRmod;
 
 statblock.DTPS=sum(dmg)./simTime;
-% statblock.maDTPS=filter(ones(1,5)./5,1,dmg);
-% statblock.mean_ma=mean(statblock.maDTPS);
-% statblock.std_ma=std(statblock.maDTPS);
-
-
 
 statblock.simMins=simMins;
 statblock.simTime=simTime;
@@ -602,14 +605,18 @@ statblock.t154pcHPGains=t154pcHPGains;
 statblock.t154pcHPG=t154pcHPGains./simTime;
 statblock.divProtcasts=divProtCasts;
 
-% statblock.bshstore=debugBSHstore;
-statblock.damage=damage;
+soiOverHealed=soiOHbase+soiOHexpire+soiOHbackExcess+soiOHbackFull;
 statblock.soiTracker=soiTracker;
 statblock.soiHealedRaw=soiHealed;
 statblock.soiOverHealedRaw=soiOverHealed;
 statblock.soiHealed=soiHealed./(soiHealed+soiOverHealed);
 statblock.soiOverHealed=soiOverHealed./(soiHealed+soiOverHealed);
 statblock.soiHealSize=SoIHealSize;
+statblock.soiOHbase=soiOHbase;
+statblock.soiOHexpire=soiOHexpire;
+statblock.soiOHbackExcess=soiOHbackExcess;
+statblock.soiOHbackFull=soiOHbackFull;
+
 statblock.hpgTracker=hpgTracker;
 statblock.hpgGained=hpgGained;
 
@@ -659,11 +666,14 @@ end
             elseif hp>=3 && mean(bossSwingHistory(1:nHits))>=dThresh
                 castSotRIfAble()
             end
+        elseif strcmpi(ftype,'none')
+            %nothing goes here
         else
             error('invalid finisher specification')
         end
         
     end
+
     function castSotRIfAble()
         
         %check for 3+ HP, if so cast SotR
@@ -693,7 +703,7 @@ end
                 %otherwise, consume 3 HP
             elseif hp>=3
                 hp=hp-3;
-                %Just in case - debugging
+            %Just in case - debugging
             else
                 error('WTF')
             end
@@ -772,9 +782,7 @@ end
         if nargin<1
             amt=1;
         end
-        hp=hp+amt;
-%         hp=min([hp 5]);
-%         hp=max([hp 0]);        
+        hp=hp+amt;      
         if hp>5; hp=5; end
         if hp<0; hp=0; end
     end
@@ -782,9 +790,8 @@ end
     function abilityCast(priority)
         
         if strcmp(priority,'special')
-            %placeholder for special generator priorities
-            
-        
+        %placeholder for special generator priorities
+                    
         %default, no time-shifting
         else
             
@@ -889,9 +896,15 @@ end
                 dmgTaken=0;
             end
         end
+        %register full and partial absorbs
+        if dmgTaken==0
+            fullAbsorbs=fullAbsorbs+1;
+        elseif dmgTaken<damage
+            partialAbsorbs=partialAbsorbs+1;
+        end
         %then apply SoI
         if soiAmount>0
-            if dmgTaken>soiAmount
+            if dmgTaken>=soiAmount
                 dmgTaken=dmgTaken-soiAmount;
                 soiHealed=soiHealed+soiAmount;
                 soiAmount=0;
@@ -900,12 +913,6 @@ end
                 soiHealed=soiHealed+dmgTaken;
                 dmgTaken=0;
             end
-        end
-        %register full and partial absorbs
-        if dmgTaken==0
-            fullAbsorbs=fullAbsorbs+1;
-        elseif dmgTaken<damage
-            partialAbsorbs=partialAbsorbs+1;
         end
     end
 
@@ -949,7 +956,7 @@ end
         else
             error('soi model not defined, this shouldn''t happen...')
         end
-        soiOverHealed=soiOverHealed+(SoIHealSize-SoiAmt);
+        soiOHbase=soiOHbase+(SoIHealSize-SoiAmt);
     end
 
     function handleSoI()
@@ -980,7 +987,7 @@ end
             %adjust by subtracting SoI
             if x>=damage(id)
                 soiHealed=soiHealed+damage(id);
-                soiOverHealed=soiOverHealed+(x-damage(id));
+                soiOHbackExcess=soiOHbackExcess+(x-damage(id));
                 damage(id)=0;
                 bossSwingHistory(1)=damage(id);
             else
@@ -989,7 +996,7 @@ end
                 bossSwingHistory(1)=damage(id);
             end       
         else
-            soiOverHealed=soiOverHealed+x;
+            soiOHbackFull=soiOHbackFull+x;
         end
     end
 end
