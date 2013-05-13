@@ -24,7 +24,7 @@ config.WoGoverheal=1;
 config.t152pcEquipped=0;
 config.finisher='S';
 config.priority='default';
-config.enableSS=0;
+config.enableSS=1;
 config.t154pcEquipped=0;
 config.useDivineProtection=0;
 config.bossSwingDamage=250000;
@@ -75,7 +75,62 @@ i=i+1;
 li{i,1}='OverHeal%';
 li{i,2:3}=[c.soiOverHealed].*100;
 
+%avoids
+i=i+1;
+li{i,1}='Avoid%';
+li{i,2:3}=[c.avoidsPct].*100;
+
+%blockspct
+i=i+1;
+li{i,1}='block%';
+li{i,2:3}=[c.blocksPct].*100;
+
+%hitspct
+i=i+1;
+li{i,1}='Hits%';
+li{i,2:3}=[c.hitsPct].*100;
+
+%unmitspct
+i=i+1;
+li{i,1}='unmit%';
+li{i,2:3}=[c.unmitsPct].*100;
+
+%fullAbsorbs
+i=i+1;
+li{i,1}='FA%';
+li{i,2:3}=[c.fullAbsorbs]./[c.bossAttacks]*100;
+
+%fullAbsorbs
+i=i+1;
+li{i,1}='PA%';
+li{i,2:3}=[c.partialAbsorbs]./[c.bossAttacks]*100;
+
+%num SoI procs
+numSoIProcs=sum([c.soiTracker]>=0);
+i=i+1;
+li{i,1}='SoI#';
+li{i,2:3}=cellstr([ num2str(numSoIProcs'./1e3,'%5.2f') repmat('k',2,1)])';
+
+%SoI OH breakdowns
+i=i+1;
+li{i,1}='soiOHbase';
+li{i,2:3}=cellstr([num2str([c.soiOHbase]'./[c.soiHealSize]'./1e3,'%5.3f') repmat('k',2,1)])';
+i=i+1;
+li{i,1}='soiOHexpire';
+li{i,2:3}=cellstr([num2str([c.soiOHexpire]'./[c.soiHealSize]'./1e3,'%5.3f') repmat('k',2,1)])';
+i=i+1;
+li{i,1}='soiOHbackFull';
+li{i,2:3}=cellstr([num2str([c.soiOHbackFull]'./[c.soiHealSize]'./1e3,'%5.3f') repmat('k',2,1)])';
+i=i+1;
+li{i,1}='soiOHbackExcess';
+li{i,2:3}=cellstr([num2str([c.soiOHbackExcess]'./[c.soiHealSize]'./1e3,'%5.3f') repmat('k',2,1)])';
+
+%DTPS
+i=i+1;
+li{i,1}='DTPS';
+li{i,2:3}=[c.DTPS].*100;
+
 
 %show
-li.setColumnFormat(2:3,'%2.2f')
+li.setColumnFormat(2:3,'%2.2f');
 li.toText()
