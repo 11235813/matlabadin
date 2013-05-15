@@ -942,17 +942,16 @@ end
 
     function SoiAmt=soiAbsorbValue(bossSwingHistory,soimodel)
         
-        %create SoI bubble        
-        if strcmp(soimodel.base,'fermi') %fermi-X0-SIGMA
-            x=sum(bossSwingHistory(1:3));
-            SoiAmt=SoIHealSize./(1+exp(-(x-soimodel.x0)/soimodel.sigma));            
+        %create SoI bubble     
+        if strcmp(soimodel.base,'nooverheal') %equiv. to flat-1
+            SoiAmt=SoIHealSize;           
         elseif strcmp(soimodel.base,'flat') %flat-X0 for X0% effectiveness
-            SoiAmt=SoIHealSize.*soimodel.x0;            
+            SoiAmt=SoIHealSize.*soimodel.x0;   
+        elseif strcmp(soimodel.base,'fermi') %fermi-X0-SIGMA
+            x=sum(bossSwingHistory(1:3));
+            SoiAmt=SoIHealSize./(1+exp(-(x-soimodel.x0)/soimodel.sigma));             
         elseif strcmp(soimodel.base,'off') %equivalent to flat-0
             SoiAmt=0;
-            
-        elseif strcmp(soimodel.base,'nooverheal') %equiv. to flat-1
-            SoiAmt=SoIHealSize;
         else
             error('soi model not defined, this shouldn''t happen...')
         end

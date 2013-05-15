@@ -52,7 +52,7 @@ for j=jMin:jStep:jMax
 end
 li.setColumnFormat(1+(1:n),'%1.3f')
 disp('<pre>')
-disp(['Finisher = ' config.finisher ', Boss Attack = ' int2str(config.bossSwingDamage./1e3) 'k, data set ' config.filetype '-' int2str(config.simMins) '-' int2str(config.fileid)])
+disp(['Finisher = ' config.finisher ', Boss Attack = ' int2str(config.bossSwingDamage./1e3) 'k, SoI model=' config.soimodel ' data set ' config.filetype '-' int2str(config.simMins) '-' int2str(config.fileid)])
 li.toText()
 disp('</pre>')
 
