@@ -68,7 +68,7 @@ namespace Matlabadin
             double jdhit = 1.0,
             Buff[] permanentBuffs = null,
             double gcPerSecondProcRate = 0,
-            double gcPerAbilityProcRate = 0
+            double gcPerAbilityProcRate = 0.12
             )
         {
             // sanity checks inputs

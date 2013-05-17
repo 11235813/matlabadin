@@ -60,10 +60,10 @@ queue.st={...
     '^WB>CS>J>AS>HW>Cons>SS[buffSS<5]>SotR';
     '^WB>CS>J>AS>HW>SS[buffSS<5]>Cons>SS>SotR';
     '^WB>CS>J>AS>SS[buffSS<5]>HW>Cons>SS>SotR';
-    '^WB>CS>J>AS>HW>Cons>ES>SS>SotR';
-    '^WB>CS>J>AS>HW>Cons>^SS>ES>SotR';
-    '^WB>CS>J>AS>HW>Cons>HPr>SS>SotR';
-    '^WB>CS>J>AS>HW>Cons>^SS>HPr>SotR';
+%     '^WB>CS>J>AS>HW>Cons>ES>SS>SotR';
+%     '^WB>CS>J>AS>HW>Cons>^SS>ES>SotR';
+%     '^WB>CS>J>AS>HW>Cons>HPr>SS>SotR';
+%     '^WB>CS>J>AS>HW>Cons>^SS>HPr>SotR';
     
     %Execute range - no L90
     '#Execute range - no L90';
@@ -146,10 +146,10 @@ queue.st={...
 
     %WoG
     '#WoG/EF';
-    '^WB>CS>J>AS>HW>Cons>WoG';
-    '^WB>CS>J>AS>HW>Cons>EF';
-    '^WB>CS>J>AS>HW>Cons>^EF>SotR5';
-    '^WB>CS>J>AS>HW>Cons>SS>WoG';
+    'CS>J>AS>HW>Cons>WoG';
+    'CS>J>AS>HW>Cons>EF';
+    'CS>J>AS>HW>Cons>^EF>SotR5';
+    'CS>J>AS>HW>Cons>SS>WoG';
     };
 
 

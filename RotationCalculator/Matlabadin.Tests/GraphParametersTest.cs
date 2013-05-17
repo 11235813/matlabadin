@@ -264,7 +264,7 @@ namespace Matlabadin.Tests
         [Test]
         public void GCProcRateShouldMatchMoPTalentCalculator()
         {
-            Assert.AreEqual(0.2, GP.GrandCrusaderAbilityProcRate);
+            Assert.AreEqual(0.12, GP.GrandCrusaderAbilityProcRate);
         }
         [Test]
         public void BuffDurationInStepsShouldMatchMoPTalentCalculator()

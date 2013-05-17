@@ -17,7 +17,7 @@ config.priority='default';
 config.enableSS=1;
 config.t154pcEquipped=0;
 config.useDivineProtection=0;
-config.bossSwingDamage=150000;
+config.bossSwingDamage=350000;
 % config.soimodel='fermi-1.55-0.15';
 config.soimodel='nooverheal';
 config.soiDirection='back';
@@ -188,9 +188,9 @@ statSetup(i).armor=65000;
 %     matlabpool close
 % end
 gearsets=1:length(statSetup); %everything
-% gearsets=[1 14 13 9]; %C/Ha, Ha/he, Ha/h, Ha
+gearsets=[1 14 13 9]; %C/Ha, Ha/he, Ha/h, Ha
 % gearsets=[1 3 5 6 7 8 10 11 12]; %C/Ha C/Sg C/Ma C/Av C/Bal C/HM Av Av/M M/Av
-gearsets=[1 2 3 4 5]; %C/Ha C/St C/Sg C/Shm C/Ma
+% gearsets=[1 2 3 4 5]; %C/Ha C/St C/Sg C/Shm C/Ma
 
 % matlabpool(3)
 for j=gearsets
@@ -244,7 +244,7 @@ li=pally_mc_table(statSetup,statblock,config,gearsets);
 %% Gear sets
 
 gl=DataTable();
-gl{1,1+(1:n)}={statSetup.name};
+gl{1,1+(1:length(gearsets))}={statSetup(gearsets).name};
 gl{1:9,1}={'Set:';'Str';'Sta';'Parry';'Dodge';'Mastery';'Hit';'Exp';'Haste'};
 for j=1:length(gearsets)
     i=gearsets(j);
