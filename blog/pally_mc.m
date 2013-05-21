@@ -97,7 +97,7 @@ if ~isfield(config,'soimodel')
     warning('soimodel defaulting to fermi')
 end
 soimodel=regexp(config.soimodel,'(?<base>\w+)\-?(?<x0>\d+\.*\d*)?\-?(?<sigma>\d+\.*\d*)?','names');
-if ~isnan(str2double(soimodel.x0)); soimodel.x0=str2double(soimodel.x0); else soimodel.x0=1.5; warning('soimodel x0 defaulting to 1.5'); end;
+if ~isnan(str2double(soimodel.x0)); soimodel.x0=str2double(soimodel.x0); elseif ~strcmp(soimodel.base,'nooverheal') soimodel.x0=1.5; warning('soimodel x0 defaulting to 1.5'); end;
 if ~isnan(str2double(soimodel.sigma)); soimodel.sigma=str2double(soimodel.sigma); elseif strcmp(soimodel.base,'fermi'); soimodel.sigma=0.15; warning('soimodel sigma defaulting to 0.15'); end
 
 if ~isfield(config,'soiDirection')

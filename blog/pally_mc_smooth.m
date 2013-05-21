@@ -187,7 +187,7 @@ statSetup(i).armor=65000;
 % if matlabpool('size')>0
 %     matlabpool close
 % end
-gearsets=1:length(statSetup); %everything
+% gearsets=1:length(statSetup); %everything
 gearsets=[1 14 13 9]; %C/Ha, Ha/he, Ha/h, Ha
 % gearsets=[1 3 5 6 7 8 10 11 12]; %C/Ha C/Sg C/Ma C/Av C/Bal C/HM Av Av/M M/Av
 % gearsets=[1 2 3 4 5]; %C/Ha C/St C/Sg C/Shm C/Ma
@@ -205,7 +205,7 @@ end
 % matlabpool close
 
 %% calculate stats
-dmg=[statblock.dmg];
+dmg=[statblock(gearsets).dmg];
 
 %moving averages
 ma7=filter(ones(1,7)./7,1,dmg);

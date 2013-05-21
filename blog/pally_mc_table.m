@@ -2,8 +2,8 @@ function li = pally_mc_table(statSetup,statblock,config,gearsets)
 
 
 %unpack
-dmg=[statblock.dmg];
-S=[statblock.S];
+dmg=[statblock(gearsets).dmg];
+S=[statblock(gearsets).S];
 if nargin<4
     n=length(statSetup);
     names={statSetup.name};
@@ -30,7 +30,7 @@ li{4,1+(1:n)}=S;
 li{5,1+(1:n)}=cellstr([int2str(round(totalHP./1e3)') repmat('k',length(totalHP),1)])';
 li{6,1+(1:n)}=health;
 linePH=0;
-healthScaleFactor2=repmat([statblock.health],size(matemp,1),1);
+healthScaleFactor2=repmat(health,size(matemp,1),1);
 for j=jMin:jStep:jMax
     matemp=filter(ones(1,j),1,dmg);
     if n<=4
