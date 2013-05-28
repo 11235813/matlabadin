@@ -92,7 +92,7 @@ mdf.DivinePurpose=1.*talent.DivinePurpose; %PH
 
 %% Glyphs
 mdf.glyphAS=0.2.*glyph.AlabasterShield;         %placeholder, updated in dynamic_model
-mdf.glyphBH=0.3.*glyph.BattleHealer;            %passive healing
+mdf.glyphBH=0.2.*glyph.BattleHealer;            %passive healing
 mdf.glyphDS=0.1.*glyph.DivineStorm;             %passive healing
 mdf.glyphDJ=0.1.*glyph.DoubleJeopardy.*(exec.npccount>1); %assume alternating J if possible
 mdf.glyphFoL=0;                                 %NYI

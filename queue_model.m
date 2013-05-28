@@ -161,6 +161,7 @@ queue.aoe={...
     'HotR>AS>J>Cons>HW>SotR';
     'HotR>AS>Cons>J>HW>SotR';
     'HotR>Cons>AS>J>HW>SotR';
+    'HotR>AS>Cons>HW>J>SotR';
     'HotR>Cons>AS>HW>J>SotR';
     'Cons>HotR>AS>HW>J>SotR';
     'HotR>Cons>AS>HW>J>LH>SotR';

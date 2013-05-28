@@ -38,7 +38,7 @@ splashCap=19; %one less than the AoE cap
 %TODO: Retest all hit conditions for seals
 
 %Seal of Truth (fully stacked)
-raw.SealofTruth=    0.025.*player.wdamage.*(1+0.3.*mdf.glyphIT).*mdf.spdmg;  
+raw.SealofTruth=    0.024.*player.wdamage.*(1+0.3.*mdf.glyphIT).*mdf.spdmg;  
 dmg.SealofTruth=    raw.SealofTruth.*mdf.phcrit.*target.resrdx; %automatical connect
 heal.SealofTruth=   0;
 threat.SealofTruth= 0; %wowdb flag - generates no threat

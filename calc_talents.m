@@ -33,7 +33,7 @@ for g=1:length(cfg)
     
     %set configuration variables    
     c=cfg(g);
-    c.exec.queue='^WB>CS>J>AS>HW>Cons>SotR';
+    c.exec.queue='CS>J>AS>HW>Cons>SotR';
     c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
@@ -52,7 +52,7 @@ for g=1:length(cfg)
     %Eternal Flame
     c=cfg(g);
     c.talent=talent_model([0 0 2 0 0 0]);
-    c.exec.queue='^WB>EF[buffEF<2.5]>CS>J>AS>HW>Cons>SotR5';
+    c.exec.queue='EF[buffEF<2.5]>CS>J>AS>HW>Cons>SotR5';
     c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
@@ -62,13 +62,13 @@ for g=1:length(cfg)
     EF_dps(g)=c.rot.dps-dps0(g);
     EF_hps(g)=c.rot.hps-hps0(g);
     EF_hpg(g)=c.rot.hpg-hpg0(g);
-    EF_sbu(g)=c.rot.sbuptime-sbu0(g);
-    EF_avgsbu(g)=c.rot.sbuptime-sbu0(g);
+    EF_sbu(g)=c.rot.sbuptime;
+    EF_avgsbu(g)=c.rot.sbuptime;
     
     %Sacred Shield
     c=cfg(g);
     c.talent=talent_model([0 0 3 0 0 0]);
-    c.exec.queue='^WB>CS>J>AS>HW>Cons>SS>SotR';
+    c.exec.queue='CS>J>AS>HW>Cons>SS>SotR';
     c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
@@ -78,14 +78,14 @@ for g=1:length(cfg)
     SS_dps(g)=c.rot.dps-dps0(g);
     SS_hps(g)=c.rot.hps-hps0(g);
     SS_hpg(g)=c.rot.hpg-hpg0(g);
-    SS_sbu(g)=c.rot.sbuptime-sbu0(g);
-    SS_avgsbu(g)=c.rot.sbuptime-sbu0(g);
+    SS_sbu(g)=c.rot.sbuptime;
+    SS_avgsbu(g)=c.rot.sbuptime;
     
     %% L75 Talents
     %Holy Avenger
     c=cfg(g);
     c.talent=talent_model([0 0 0 0 1 0]);
-    c.exec.queue='^WB>CS>J>AS>HW>Cons>SotR';
+    c.exec.queue='CS>J>AS>HW>Cons>SotR';
     c.exec.veng=v;
     c.buff.HA=1;
     c=stat_model(c);
@@ -102,7 +102,7 @@ for g=1:length(cfg)
     %Sanctified Wrath
     c=cfg(g);
     c.talent=talent_model([0 0 0 0 2 0]);
-    c.exec.queue='^WB>J>CS>AS>HW>Cons>SotR';
+    c.exec.queue='J>CS>AS>HW>Cons>SotR';
     c.exec.veng=v;
     c.buff.AW=1;
     c=stat_model(c);
@@ -111,7 +111,7 @@ for g=1:length(cfg)
     
     %AW w/o SW
     d=c;
-    d.exec.queue='^WB>CS>J>AS>HW>Cons>SotR';
+    d.exec.queue='CS>J>AS>HW>Cons>SotR';
     d.talent=talent_model([0 0 0 0 0 0]);
     d=rotation_model(d);
     
@@ -127,7 +127,7 @@ for g=1:length(cfg)
     %Divine Purpose
     c=cfg(g);
     c.talent=talent_model([0 0 0 0 3 0]);
-    c.exec.queue='^WB>SotR>CS>J>AS>HW>Cons';
+    c.exec.queue='SotR>CS>J>AS>HW>Cons';
     c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
@@ -144,7 +144,7 @@ for g=1:length(cfg)
     %% L90 Talents
     %Holy Prism
     c=cfg(g);
-    c.exec.queue='^WB>SotR>CS>J>AS>HW>Cons>HPr';
+    c.exec.queue='SotR>CS>J>AS>HW>Cons>HPr';
     c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
@@ -157,7 +157,7 @@ for g=1:length(cfg)
     
     %Holy Prism
     c=cfg(g);
-    c.exec.queue='^WB>SotR>CS>J>AS>HW>Cons>HPrSC';
+    c.exec.queue='SotR>CS>J>AS>HW>Cons>HPrSC';
     c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
@@ -170,7 +170,7 @@ for g=1:length(cfg)
     
     %Light's Hammer
     c=cfg(g);
-    c.exec.queue='^WB>SotR>CS>J>AS>HW>Cons>LH';
+    c.exec.queue='SotR>CS>J>AS>HW>Cons>LH';
     c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);
@@ -183,7 +183,7 @@ for g=1:length(cfg)
     
     %Execution Sentence
     c=cfg(g);
-    c.exec.queue='^WB>SotR>CS>J>AS>HW>Cons>ES';
+    c.exec.queue='SotR>CS>J>AS>HW>Cons>ES';
     c.exec.veng=v;
     c=stat_model(c);
     c=ability_model(c);

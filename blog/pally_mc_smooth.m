@@ -182,6 +182,18 @@ statSetup(i).hitRating=2550;
 statSetup(i).expRating=2550;
 statSetup(i).hasteRating=14550;
 statSetup(i).armor=65000;
+i=i+1;
+statSetup(i).name='C/Str';
+statSetup(i).buffedStr=15000+12000*1.05;
+statSetup(i).stamina=28000;
+statSetup(i).parryRating=1500;
+statSetup(i).dodgeRating=1500;
+statSetup(i).masteryRating=1500;
+statSetup(i).hitRating=2550;
+statSetup(i).expRating=5100;
+statSetup(i).hasteRating=0;
+statSetup(i).armor=65000;
+
 
 %% crank
 % if matlabpool('size')>0
@@ -191,6 +203,7 @@ statSetup(i).armor=65000;
 gearsets=[1 14 13 9]; %C/Ha, Ha/he, Ha/h, Ha
 % gearsets=[1 3 5 6 7 8 10 11 12]; %C/Ha C/Sg C/Ma C/Av C/Bal C/HM Av Av/M M/Av
 % gearsets=[1 2 3 4 5]; %C/Ha C/St C/Sg C/Shm C/Ma
+gearsets=[1 3 5 6 15 10]; %C/Ha C/Sg C/Ma C/Av C/Str Av];
 
 % matlabpool(3)
 for j=gearsets
