@@ -141,7 +141,7 @@ namespace Matlabadin
             double[] pr = CalculatesStatePostAbility(gp, sm, ability);
             if (waitSteps + abilitySteps != 0)
             {
-                if (StatePostAbility.Length != 1) throw new NotImplementedException("FSM model does not yet support non-zero transition times for abilities. Current modelling uses 0 time transitions for ability use the increments time with Ability.Nothing");
+                if (StatePostAbility.Length != 1) throw new NotImplementedException("FSM model does not yet support non-zero transition times for abilities. Current modelling uses 0 time transitions for ability use then increments time with Ability.Nothing");
                 pr = CalculateTimebasedProcs(gp, sm, ability, pr);
             }
             // Cull transitions with zero probability
@@ -198,13 +198,13 @@ namespace Matlabadin
         }
         private double[] CalculateTimebasedProcs(GraphParameters<TState> gp, IStateManager<TState> sm, Ability ability, double[] pr)
         {
+            if (ability != Ability.Nothing) throw new NotImplementedException("Time-based procs combined with ability casts NYI");
             if (gp.GrandCrusaderPerStepProcRate == 0) return pr;
             StatePostAbility = new TState[]
             {
                 this.StateInitial,
-                sm.SetTimeRemaining(this.StateInitial, Buff.GC, gp.BuffDurationInSteps(Buff.GC)),
+                ProcGC(gp, sm, this.StateInitial),
             };
-            double gcProcPr = gp.MeleeHit * gp.GrandCrusaderAbilityProcRate;
             pr = new double[] { 1 - gp.GrandCrusaderPerStepProcRate, gp.GrandCrusaderPerStepProcRate, };
             return pr;
         }
@@ -462,8 +462,7 @@ namespace Matlabadin
             }
             if (gcProc)
             {
-                nextState = sm.SetCooldownRemaining(nextState, Ability.AS, 0);
-                nextState = sm.SetTimeRemaining(nextState, Buff.GC, gp.BuffDurationInSteps(Buff.GC));
+                nextState = ProcGC(gp, sm, nextState);
             }
             if (dpProc)
             {
@@ -477,6 +476,15 @@ namespace Matlabadin
             {
                 nextState = sm.SetTimeRemaining(nextState, Buff.GCD, gp.StepsPerHastedGcd);
             }
+            return nextState;
+        }
+        private static TState ProcGC(
+            GraphParameters<TState> gp,
+            IStateManager<TState> sm,
+            TState state)
+        {
+            TState nextState = sm.SetCooldownRemaining(state, Ability.AS, 0);
+            nextState = sm.SetTimeRemaining(nextState, Buff.GC, gp.BuffDurationInSteps(Buff.GC));
             return nextState;
         }
         private static TState IncHP(IStateManager<TState> sm, TState state, TState nextState)
