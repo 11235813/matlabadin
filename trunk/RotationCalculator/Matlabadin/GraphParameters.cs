@@ -377,23 +377,29 @@ namespace Matlabadin
                 && this.StepsPerHastedGcd == gp.StepsPerHastedGcd
                 && this.MeleeHaste == gp.MeleeHaste
                 && this.SpellHaste == gp.SpellHaste
-                && hitGeneratesSameShape(this.MeleeHit, gp.MeleeHit)
-                && hitGeneratesSameShape(this.JudgeHit, gp.JudgeHit)
-                && BothZeroOrNonZero(this.GrandCrusaderPerSecondProcRate, gp.GrandCrusaderPerSecondProcRate)
+                && BothBoundryOrNot(this.MeleeHit, gp.MeleeHit)
+                && BothBoundryOrNot(this.JudgeHit, gp.JudgeHit)
+                && BothBoundryOrNot(this.GrandCrusaderPerStepProcRate, gp.GrandCrusaderPerStepProcRate)
                 && this.PermanentBuffs.SequenceEqual(gp.PermanentBuffs);
         }
-        private bool BothZeroOrNonZero(double a, double b)
+        /// <summary>
+        /// Tests rate parameters that determine the ratio between two choices if two given rates
+        /// will generate a graph of the same shape.
+        /// </summary>
+        /// <remarks>Rate parameters must be in the interval [0, 1].</remarks>
+        /// <param name="a">Rate parameter of first graph</param>
+        /// <param name="b">Rate parameter of first graph</param>
+        /// <returns>true if the given rate</returns>
+        private bool BothBoundryOrNot(double a, double b)
         {
-            return (a == 0 && b == 0) || (a != 0 && b != 0);
-        }
-        private bool hitGeneratesSameShape(double hit1, double hit2)
-        {
+            if (a < 0 || a > 1) throw new ArgumentException(String.Format("Expected {0} to be between 0 and 1", a));
+            if (b < 0 || b > 1) throw new ArgumentException(String.Format("Expected {0} to be between 0 and 1", b));
             // match if they are both 1.0 (or 0.0) or if they are both between 0.0 and 1.0 exclusive
-            return !(hit1 == 1.0 ^ hit2 == 1.0) && !(hit1 == 0.0 ^ hit2 == 0.0);
+            return !(a == 1.0 ^ b == 1.0) && !(a == 0.0 ^ b == 0.0);
         }
         // Change here to revert proposed GC proc from dodge/parry
         public double GrandCrusaderAbilityProcRate { get { return this.Spec == PaladinSpec.Prot ? this.GrandCrusaderPerAbilityProcRate : 0.0; } }
-        public double GrandCrusaderPerStepProcRate { get { return this.GrandCrusaderPerSecondProcRate * 1.5 / this.StepsPerHastedGcd; } }
+        public double GrandCrusaderPerStepProcRate { get { return Math.Min(1.0, this.GrandCrusaderPerSecondProcRate * 1.5 / this.StepsPerHastedGcd); } }
         public double DivinePurposeProcRate { get { return this.Talents.Includes(PaladinTalents.DivinePurpose) ? 0.25 : 0.0; } }
         public double StepDuration { get { return stepDuration; } }
         public int BuffTrackingArraySize { get; private set; }
