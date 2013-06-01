@@ -1,8 +1,8 @@
 clear
 addpath 'C:\Users\George\Documents\MATLAB\mop\helper_func\'
 %% simulation conditions
-config.simMins=10000;
-config.plotFlag='2only';
+config.simMins=1000;
+config.plotFlag='noplot';
 config.tocFlag='toc';
 config.stat=' ';
 config.val=0;
@@ -12,17 +12,29 @@ config.bossSwingTimer=1.5;
 config.WoGfakeBubbleDuration=0;
 config.WoGoverheal=1;
 config.t152pcEquipped=0;
+config.finisher='SH1';
+config.priority='default';
+config.enableSS=1;
+config.t154pcEquipped=0;
+config.useDivineProtection=0;
+config.bossSwingDamage=350000;
+% config.soimodel='fermi-1.55-0.15';
+config.soimodel='nooverheal';
+config.soiDirection='back';
+disp(['-----------------Finisher is ' config.finisher '----------------------------'])
 jMin=2;
 jMax=7;
 jStep=1;
+config.jbounds=[jMin jStep jMax];
 
 %% set up stat configs
 i=1;
 statSetup(i).name='H12M1';
 statSetup(i).buffedStr=15000;
-statSetup(i).parryRating=1500;
-statSetup(i).dodgeRating=1500;
-statSetup(i).masteryRating=1500;
+statSetup(i).stamina=28000;
+statSetup(i).parryRating=1750;
+statSetup(i).dodgeRating=1750;
+statSetup(i).masteryRating=1000;
 statSetup(i).hitRating=2550;
 statSetup(i).expRating=5100;
 statSetup(i).hasteRating=12000;
@@ -34,7 +46,7 @@ for i=2:13
     statSetup(i).name=['H' int2str(13-i) 'M' int2str(i)];
 end
 
-
+gearsets=1:length(statSetup);
 
 %% crank
 % if matlabpool('size')>0
@@ -54,11 +66,13 @@ end
 % matlabpool close
 
 %% save data
-fbase=['.\pdata\pally_smooth_data_' int2str(config.simMins)];
+config.filetype='haste';
+fbase=['.\pdata\pally_' config.filetype '_data_' int2str(config.simMins)];
 i=0;
 while exist([fbase '_' int2str(i) '.mat'])==2
     i=i+1;
 end
+config.fileid=i;
 fname=[fbase '_' int2str(i) '.mat'];
 save(fname)
 disp(['data saved to ' fname])
@@ -79,51 +93,60 @@ ma2=filter(ones(1,2)./2,1,dmg);
 MAmean=mean(ma5);
 MAstd=std(ma5);
 S=[statblock.S];
-ma=[statblock.maDTPS];
+% ma=[statblock.maDTPS];
 
 n=length(statSetup);
 
 
 %% Table
 
-%Mean & std spike damage intake
-%events above 80 and 90%
-li=DataTable();
-li{1:4,1}={'Set:';'S%';'mean';'std'};
-li{1,1+(1:n)}={statSetup.name};
-li{2,1+(1:n)}=S;
-matemp=filter(ones(1,5)./5,1,dmg);
-li{3,1+(1:n)}=mean(matemp);
-li{4,1+(1:n)}=std(matemp);
-linePH=0;
-for j=jMin:jStep:jMax
-    matemp=filter(ones(1,j)./j,1,dmg);
-    li{5+linePH,1:9}={'----','------',['--- ' int2str(j)],'Attack','Moving','Average','------','------','------'};
-    linePH=linePH+1;
-    li{5+linePH,1}='60%';
-    li{5+linePH,1+(1:n)}=sum(matemp>0.6)./size(matemp,1).*100;
-    linePH=linePH+1;
-    li{5+linePH,1}='70%';
-    li{5+linePH,1+(1:n)}=sum(matemp>0.7)./size(matemp,1).*100;
-    linePH=linePH+1;
-    li{5+linePH,1}='80%';
-    li{5+linePH,1+(1:n)}=sum(matemp>0.8)./size(matemp,1).*100;
-    linePH=linePH+1;
-    li{5+linePH,1}='90%';
-    li{5+linePH,1+(1:n)}=sum(matemp>0.9)./size(matemp,1).*100;
-    linePH=linePH+1;
-end
-li.setColumnFormat(1+(1:n),'%1.4f')
-disp('<pre>')
-li.toText()
-disp('</pre>')
 
-gl=DataTable();
-gl{1,1+(1:n)}={statSetup.name};
-gl{1:8,1}={'Set:';'Str';'Parry';'Dodge';'Mastery';'Hit';'Exp';'Haste'};
+li=pally_mc_table(statSetup,statblock,config,gearsets);
+
+% 
+% %Mean & std spike damage intake
+% %events above 80 and 90%
+% li=DataTable();
+% li{1:4,1}={'Set:';'S%';'mean';'std'};
+% li{1,1+(1:n)}={statSetup.name};
+% li{2,1+(1:n)}=S;
+% matemp=filter(ones(1,5)./5,1,dmg);
+% li{3,1+(1:n)}=mean(matemp);
+% li{4,1+(1:n)}=std(matemp);
+% linePH=0;
+% for j=jMin:jStep:jMax
+%     matemp=filter(ones(1,j)./j,1,dmg);
+%     li{5+linePH,1:9}={'----','------',['--- ' int2str(j)],'Attack','Moving','Average','------','------','------'};
+%     linePH=linePH+1;
+%     li{5+linePH,1}='60%';
+%     li{5+linePH,1+(1:n)}=sum(matemp>0.6)./size(matemp,1).*100;
+%     linePH=linePH+1;
+%     li{5+linePH,1}='70%';
+%     li{5+linePH,1+(1:n)}=sum(matemp>0.7)./size(matemp,1).*100;
+%     linePH=linePH+1;
+%     li{5+linePH,1}='80%';
+%     li{5+linePH,1+(1:n)}=sum(matemp>0.8)./size(matemp,1).*100;
+%     linePH=linePH+1;
+%     li{5+linePH,1}='90%';
+%     li{5+linePH,1+(1:n)}=sum(matemp>0.9)./size(matemp,1).*100;
+%     linePH=linePH+1;
+% end
+% li.setColumnFormat(1+(1:n),'%1.4f')
+% disp('<pre>')
+% li.toText()
+% disp('</pre>')
+% 
+% gl=DataTable();
+% gl{1,1+(1:n)}={statSetup.name};
+% gl{1:8,1}={'Set:';'Str';'Parry';'Dodge';'Mastery';'Hit';'Exp';'Haste'};
 %% Gear sets
-for i=1:length(statSetup)
-    gl{2:8,1+i}={statSetup(i).buffedStr;...
+gl=DataTable();
+gl{1,1+(1:length(gearsets))}={statSetup(gearsets).name};
+gl{1:9,1}={'Set:';'Str';'Sta';'Parry';'Dodge';'Mastery';'Hit';'Exp';'Haste'};
+for j=1:length(gearsets)
+    i=gearsets(j);
+    gl{2:9,1+j}={statSetup(i).buffedStr;...
+        statSetup(i).stamina;...
         statSetup(i).parryRating;...
         statSetup(i).dodgeRating;...
         statSetup(i).masteryRating;...

@@ -237,13 +237,13 @@ S=[statblock.S];
 n=length(statSetup);
 
 %% save data
-fbase=['.\pdata\pally_smooth_data_' int2str(config.simMins)];
+config.filetype='smooth';
+fbase=['.\pdata\pally_' config.filetype '_data_' int2str(config.simMins)];
 i=0;
 while exist([fbase '_' int2str(i) '.mat'])==2
     i=i+1;
 end
 config.fileid=i;
-config.filetype='smooth';
 fname=[fbase '_' int2str(i) '.mat'];
 save(fname)
 disp(['data saved to ' fname])
