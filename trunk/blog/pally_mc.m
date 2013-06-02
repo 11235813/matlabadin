@@ -74,12 +74,6 @@ if ~isfield(config,'enableSS')
 end
 enableSS=config.enableSS;
 
-if ~isfield(config,'t154pcEquipped')
-    config.t154pcEquipped=0;
-    warning('T15 4-piece bonus defaulting to off')
-end
-t154pcEquipped=config.t154pcEquipped;
-
 if ~isfield(config,'useDivineProtection')
     config.useDivineProtection=0;
     warning('Divine Protection defaulting to off')
@@ -101,8 +95,8 @@ if ~isnan(str2double(soimodel.x0)); soimodel.x0=str2double(soimodel.x0); elseif 
 if ~isnan(str2double(soimodel.sigma)); soimodel.sigma=str2double(soimodel.sigma); elseif strcmp(soimodel.base,'fermi'); soimodel.sigma=0.15; warning('soimodel sigma defaulting to 0.15'); end
 
 if ~isfield(config,'soiDirection')
-    config.soiDirection='forward';
-    warning('soiDirection defaulting to forward')
+    config.soiDirection='back';
+    warning('soiDirection defaulting to back')
 end
 soiDirection=config.soiDirection;
 
@@ -110,6 +104,12 @@ if ~isfield(config,'bossSpecial')
     config.bossSpecial='none';
 end
 bossSpecial=regexp(config.bossSpecial,'(?<type>\w+)\-?(?<damage>\d+\.*\d*)?\-?(?<baseCD>\d+\.*\d*)?\-?(?<randCD>\d+\.*\d*)?','names');
+
+if ~isfield(config,'wogDirection')
+    config.wogDirection='back';
+    warning('wogDirection defaulting to back')
+end
+wogDirection=config.wogDirection;
 
 %% Finisher priority Queue handling
 finisher=config.finisher;
@@ -151,6 +151,7 @@ if nargin<2
     statSetup.expRating=5100;
     statSetup.hasteRating=4125;
     statSetup.armor=65000;
+    statSetup.t15_4pc=0;    
 end
 buffedStr=statSetup.buffedStr;
 stamina=statSetup.stamina;
@@ -161,6 +162,8 @@ hitRating=statSetup.hitRating;
 expRating=statSetup.expRating;
 hasteRating=statSetup.hasteRating;
 armor=statSetup.armor;
+
+t154pcEquipped=statSetup.t15_4pc;
 
 %% Mitigation Factors
 armorMit=1-armor./(armor+58370);
@@ -225,7 +228,9 @@ dodge=max(0,(0.075-expt));
 parry=max(0,(0.075-max((expt-0.075),0)));
 
 %% WoG Heal Size
-WoGHealBase=(5538+0.49.*AP./2).*1.05./bossSwingDamage.*(1-WoGoverheal);
+wogRaw=(5538+0.49.*AP./2).*1.05./bossSwingDamage;
+WoGHealBase=wogRaw.*(1-WoGoverheal);
+wogOHbase=wogRaw.*WoGoverheal;
 
 %% Sacred Shield Ticks
 ssAbsorbTickSize=(342 + 0.585.*AP)./bossSwingDamage;
@@ -327,6 +332,10 @@ soiOHbase=0;
 soiOHexpire=0;
 soiOHbackExcess=0;
 soiOHbackFull=0;
+wogHealed=0;
+wogOHexpire=0;
+wogOHbackExcess=0;
+wogOHbackFull=0;
 
 %variables for conditional cast logic
 bossSwingHistory=zeros(10,1); %store last 10 boss hits
@@ -616,6 +625,17 @@ statblock.soiOHbase=soiOHbase;
 statblock.soiOHexpire=soiOHexpire;
 statblock.soiOHbackExcess=soiOHbackExcess;
 statblock.soiOHbackFull=soiOHbackFull;
+wogOverHealed=wogOHbase+wogOHexpire+wogOHbackExcess+wogOHbackFull;
+statblock.wogHealedRaw=wogHealed;
+statblock.wogOverHealedRaw=wogOverHealed;
+statblock.wogOverHealedRaw=wogOverHealed;
+statblock.wogHealed=wogHealed./(wogHealed+wogOverHealed);
+statblock.wogOverHealed=wogOverHealed./(wogHealed+wogOverHealed);
+statblock.wogHealSize=WoGHealBase;
+statblock.wogOHbase=wogOHbase;
+statblock.wogOHexpire=wogOHexpire;
+statblock.wogOHbackExcess=wogOHbackExcess;
+statblock.wogOHbackFull=wogOHbackFull;
 
 statblock.hpgTracker=hpgTracker;
 statblock.hpgGained=hpgGained;
@@ -763,12 +783,7 @@ end
             if hpused>0            
                 %subtrat HP
                 hp=hp-hpused;
-                %set cooldown of WoG
-                tob(idWoGcd)=tGCD; 
-                %add a 3-second absorb shield
-                tob(idWoGfakebubble)=WoGfakeBubbleDuration;
-                %set the amount of the absorb shield based on HP spent, BoG
-                WoGAmount=WoGHealBase.*double(hpused).*(1+BoGstacks.*(0.1+mastery/100));
+                handleWoG(hpused);
                 %consume BoG buff
                 BoGstacks=0;
                 tob(idBoG)=0;
@@ -920,6 +935,7 @@ end
          
          %update absorbs
          if tob(idWoGfakebubble)<=ulp
+             wogOHexpire=wogOHexpire+WoGAmount;
              WoGAmount=0;
          end
          if WoGAmount<=0
@@ -977,6 +993,25 @@ end
                  
     end
 
+    function handleWoG(hpused)
+        
+        %amount of WoG is flat
+       
+        %apply either forward or backward
+        if strcmp(wogDirection,'back')
+            %back-application algorithm
+            backApplyWoG(WoGHealBase.*double(hpused));
+        else
+            %add to current absorb bubble
+            %set cooldown of WoG
+            tob(idWoGcd)=tGCD;
+            %add a 3-second absorb shield
+            tob(idWoGfakebubble)=WoGfakeBubbleDuration;
+            %set the amount of the absorb shield based on HP spent, BoG
+            WoGAmount=WoGHealBase.*double(hpused).*(1+BoGstacks.*(0.1+mastery/100));
+        end
+    end
+
     function backApplySoI(x)
         %if the previous boss swing is nonzero
         if bossSwingHistory(1)>0
@@ -996,6 +1031,28 @@ end
             end       
         else
             soiOHbackFull=soiOHbackFull+x;
+        end
+    end
+
+    function backApplyWoG(x)
+        %if the previous boss swing is nonzero
+        if bossSwingHistory(1)>0
+            %find this entry in damage
+            kk=find(damage(max(k-backSteps,1):k)==bossSwingHistory(1));
+            id=k-(backSteps+1)+kk;
+            %adjust by subtracting SoI
+            if x>damage(id)
+                wogHealed=wogHealed+damage(id);
+                wogOHbackExcess=wogOHbackExcess+(x-damage(id));
+                damage(id)=0;
+                bossSwingHistory(1)=damage(id);
+            else
+                damage(id)=damage(id)-x;
+                wogHealed=wogHealed+x;
+                bossSwingHistory(1)=damage(id);
+            end
+        else
+            wogOHbackFull=wogOHbackFull+x;
         end
     end
 end
