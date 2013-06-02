@@ -1,27 +1,36 @@
 clear
 addpath 'C:\Users\George\Documents\MATLAB\mop\helper_func\'
 %% simulation conditions
-config.simMins=10000;
-config.plotFlag='2only';
+config.simMins=10;
+config.plotFlag='noplot';
 config.tocFlag='toc';
 config.stat=' ';
 config.val=0;
 config.plotnum=1;
 config.sF=5;
 config.bossSwingTimer=1.5;
-config.WoGfakeBubbleDuration=3;
-config.WoGoverheal=0.5;
-config.t152pcEquipped=1;
-finishers={'S','SH1','SH2','T','TS','ST'};
-config.enableSS=0;
+config.WoGfakeBubbleDuration=0;
+config.WoGoverheal=1;
+config.t152pcEquipped=0;
+finishers={'S';'SH1';'SH2';'TS';'ST'};
+config.priority='default';
+config.enableSS=1;
+config.useDivineProtection=1;
+config.bossSwingDamage=350000;
+% config.soimodel='fermi-1.55-0.15';
+config.soimodel='nooverheal';
+config.soiDirection='back';
+config.wogDirection='back';
+% disp(['-----------------Finisher is ' config.finisher '----------------------------'])
 jMin=2;
 jMax=7;
 jStep=1;
-
+config.jbounds=[jMin jStep jMax];
 %% set up stat configs
 i=1;
 statSetup(i).name='C/Ha';
 statSetup(i).buffedStr=15000;
+statSetup(i).stamina=28000;
 statSetup(i).parryRating=1500;
 statSetup(i).dodgeRating=1500;
 statSetup(i).masteryRating=1500;
@@ -29,183 +38,92 @@ statSetup(i).hitRating=2550;
 statSetup(i).expRating=5100;
 statSetup(i).hasteRating=12000;
 statSetup(i).armor=65000;
+statSetup(i).t15_4pc=0;
 i=i+1;
-statSetup(i).name='C/Ma';
+statSetup(i).name='C/St';
 statSetup(i).buffedStr=15000;
-statSetup(i).parryRating=1500;
-statSetup(i).dodgeRating=1500;
-statSetup(i).masteryRating=13500;
-statSetup(i).hitRating=2550;
-statSetup(i).expRating=5100;
-statSetup(i).hasteRating=0;
-statSetup(i).armor=65000;
-i=i+1;
-statSetup(i).name='C/Av';
-statSetup(i).buffedStr=15000;
-statSetup(i).parryRating=7500;
-statSetup(i).dodgeRating=7500;
-statSetup(i).masteryRating=1500;
-statSetup(i).hitRating=2550;
-statSetup(i).expRating=5100;
-statSetup(i).hasteRating=0;
-statSetup(i).armor=65000;
-i=i+1;
-statSetup(i).name='C/Bal';
-statSetup(i).buffedStr=15000;
-statSetup(i).parryRating=4125;
-statSetup(i).dodgeRating=4125;
-statSetup(i).masteryRating=4125;
-statSetup(i).hitRating=2550;
-statSetup(i).expRating=5100;
-statSetup(i).hasteRating=4125;
-statSetup(i).armor=65000;
-i=i+1;
-statSetup(i).name='Ha';
-statSetup(i).buffedStr=15000;
+statSetup(i).stamina=34000;
 statSetup(i).parryRating=1500;
 statSetup(i).dodgeRating=1500;
 statSetup(i).masteryRating=1500;
-statSetup(i).hitRating=500;
-statSetup(i).expRating=500;
-statSetup(i).hasteRating=18650;
+statSetup(i).hitRating=2550;
+statSetup(i).expRating=5100;
+statSetup(i).hasteRating=8000;
 statSetup(i).armor=65000;
+statSetup(i).t15_4pc=0;
 i=i+1;
-statSetup(i).name='Avoid';
-statSetup(i).buffedStr=15000;
-statSetup(i).parryRating=10825;
-statSetup(i).dodgeRating=10825;
-statSetup(i).masteryRating=1500;
-statSetup(i).hitRating=500;
-statSetup(i).expRating=500;
-statSetup(i).hasteRating=0;
-statSetup(i).armor=65000;
-i=i+1;
-statSetup(i).name='Av/Mas';
-statSetup(i).buffedStr=15000;
-statSetup(i).parryRating=7717;
-statSetup(i).dodgeRating=7717;
-statSetup(i).masteryRating=7716;
-statSetup(i).hitRating=500;
-statSetup(i).expRating=500;
-statSetup(i).hasteRating=0;
-statSetup(i).armor=65000;
-i=i+1;
-statSetup(i).name='Mas/Av';
-statSetup(i).buffedStr=15000;
-statSetup(i).parryRating=4000;
-statSetup(i).dodgeRating=4000;
-statSetup(i).masteryRating=15150;
-statSetup(i).hitRating=500;
-statSetup(i).expRating=500;
-statSetup(i).hasteRating=0;
-statSetup(i).armor=65000;
+%based on http://www.sacredduty.net/2013/04/09/stamina-keeping-you-up-longer/#comment-2903
+statSetup(i).name='C/Set';
+statSetup(i).buffedStr=15000+686*1.05;
+statSetup(i).stamina=28000-579*1.25*1.05;
+statSetup(i).parryRating=1500+923;
+statSetup(i).dodgeRating=1500+114;
+statSetup(i).masteryRating=1500+637;
+statSetup(i).hitRating=2550+1115-1089;
+statSetup(i).expRating=5100-1089+1089;
+statSetup(i).hasteRating=12000-1212;
+statSetup(i).armor=65000-261;
+statSetup(i).t15_4pc=1;
 
-
-%% Calculate each of these for 3 different valuesof WoG overheal
-for i=[1 0.5 0]
-
-    config.WoGoverheal=i;
-%% Finisher testing w/ C/Ha gear set
-
-for j=1:length(finishers)
-    tic
-    config.plotNum=j;
-    config.finisher=finishers{j};
-    statblock(j)=pally_mc(config,statSetup(1));
-    toc
-end
-   
-% %parallel version
-% matlabpool close
-% matlabpool(3)
-% % for j=1:length(finishers)
-% tic
-% parfor j=1:length(finishers)
-%     config.plotFlag='noplot';
-%     config.finisher=finishers{j};
-%     statblock(j)=pally_mc(config,statSetup(1));
-%     toc
-% end
-% toc
-% matlabpool close
-
+%% crank
+for k=1:length(finishers)
+    
+    gearsets=1:length(statSetup);
+    
+    for j=gearsets
+        config.finisher=finishers{k};
+        statblock(k,j)=pally_mc(config,statSetup(j));
+    end
+    
+    
 %% calculate stats
 dmg=[statblock.dmg];
+% 
+% %moving averages
+% ma5=filter(ones(1,5)./5,1,dmg);
+% 
+% %what do we want to know?
+% MAmean=mean(ma5);
+% MAstd=std(ma5);
+% S=[statblock.S];
+% 
+% n=length(finishers);
 
-%moving averages
-ma5=filter(ones(1,5)./5,1,dmg);
 
-%what do we want to know?
-MAmean=mean(ma5);
-MAstd=std(ma5);
-S=[statblock.S];
-ma=[statblock.maDTPS];
-
-n=length(finishers);
+end
 
 
-%% Save data
-fbase=['.\pdata\pally_setbonus_data_' int2str(config.simMins)];
+%% save data
+config.filetype='setbonus';
+fbase=['.\pdata\pally_' config.filetype '_data_' int2str(config.simMins)];
 i=0;
 while exist([fbase '_' int2str(i) '.mat'])==2
     i=i+1;
 end
+config.fileid=i;
 fname=[fbase '_' int2str(i) '.mat'];
 save(fname)
 disp(['data saved to ' fname])
 
 %% Table
-%Mean & std spike damage intake
-%events above 80 and 90%
-li=DataTable();
-li{1:4,1}={'Queue:';'S%';'mean';'std'};
-li{1,1+(1:n)}=finishers;
-li{2,1+(1:n)}=S;
-matemp=filter(ones(1,5)./5,1,dmg);
-li{3,1+(1:n)}=mean(matemp);
-li{4,1+(1:n)}=std(matemp);
-linePH=0;
-for j=jMin:jStep:jMax
-    matemp=filter(ones(1,j)./j,1,dmg);
-    li{5+linePH,1:(n+1)}=cat(2,{'------',['--- ' int2str(j)],'Attack','Moving','Average'},repmat({'------'},1,n-4));
-    linePH=linePH+1;
-    li{5+linePH,1}='60%';
-    li{5+linePH,1+(1:n)}=sum(matemp>0.6)./size(matemp,1).*100;
-    linePH=linePH+1;
-    li{5+linePH,1}='70%';
-    li{5+linePH,1+(1:n)}=sum(matemp>0.7)./size(matemp,1).*100;
-    linePH=linePH+1;
-    li{5+linePH,1}='80%';
-    li{5+linePH,1+(1:n)}=sum(matemp>0.8)./size(matemp,1).*100;
-    linePH=linePH+1;
-    li{5+linePH,1}='90%';
-    li{5+linePH,1+(1:n)}=sum(matemp>0.9)./size(matemp,1).*100;
-    linePH=linePH+1;
-end
-li.setColumnFormat(1+(1:n),'%1.4f')
-disp('<pre>')
-disp(['WoG overheal factor: ' int2str(config.WoGoverheal.*100) '%'])
-li.toText()
-disp('</pre>')
 
+li=pally_mc_table(statSetup,statblock(k,:),config,gearsets);
 
-end
 %% Gear sets
-m=length(statSetup);
 
 gl=DataTable();
-gl{1,1+(1:m)}={statSetup.name};
-gl{1:9,1}={'Set:';'Str';'Parry';'Dodge';'Mastery';'Hit';'Exp';'Haste';'Armor'};
-
-for i=1:length(statSetup)
-    gl{2:9,1+i}={statSetup(i).buffedStr;...
+gl{1,1+(1:length(gearsets))}={statSetup(gearsets).name};
+gl{1:9,1}={'Set:';'Str';'Sta';'Parry';'Dodge';'Mastery';'Hit';'Exp';'Haste'};
+for j=1:length(gearsets)
+    i=gearsets(j);
+    gl{2:9,1+j}={statSetup(i).buffedStr;...
+        statSetup(i).stamina;...
         statSetup(i).parryRating;...
         statSetup(i).dodgeRating;...
         statSetup(i).masteryRating;...
         statSetup(i).hitRating;...
         statSetup(i).expRating;...
-        statSetup(i).hasteRating;...
-        statSetup(i).armor};
+        statSetup(i).hasteRating};
 end
 disp('<pre>')
 gl.toText()
