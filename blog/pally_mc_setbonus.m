@@ -1,7 +1,7 @@
 clear
 addpath 'C:\Users\George\Documents\MATLAB\mop\helper_func\'
 %% simulation conditions
-config.simMins=10;
+config.simMins=10000;
 config.plotFlag='noplot';
 config.tocFlag='toc';
 config.stat=' ';
@@ -11,12 +11,12 @@ config.sF=5;
 config.bossSwingTimer=1.5;
 config.WoGfakeBubbleDuration=0;
 config.WoGoverheal=1;
-config.t152pcEquipped=0;
-finishers={'S';'SH1';'SH2';'TS';'ST'};
+config.t152pcEquipped=1;
+config.finisher='SH1';
 config.priority='default';
 config.enableSS=1;
 config.useDivineProtection=1;
-config.bossSwingDamage=350000;
+config.bossSwingDamage=150000;
 % config.soimodel='fermi-1.55-0.15';
 config.soimodel='nooverheal';
 config.soiDirection='back';
@@ -52,10 +52,22 @@ statSetup(i).hasteRating=8000;
 statSetup(i).armor=65000;
 statSetup(i).t15_4pc=0;
 i=i+1;
+statSetup(i).name='C/Sg';
+statSetup(i).buffedStr=15000;
+statSetup(i).stamina=31000;
+statSetup(i).parryRating=1500;
+statSetup(i).dodgeRating=1500;
+statSetup(i).masteryRating=1500;
+statSetup(i).hitRating=2550;
+statSetup(i).expRating=5100;
+statSetup(i).hasteRating=8000;
+statSetup(i).armor=65000;
+statSetup(i).t15_4pc=0;
+i=i+1;
 %based on http://www.sacredduty.net/2013/04/09/stamina-keeping-you-up-longer/#comment-2903
 statSetup(i).name='C/Set';
-statSetup(i).buffedStr=15000+686*1.05;
-statSetup(i).stamina=28000-579*1.25*1.05;
+statSetup(i).buffedStr=15000+round(686*1.05);
+statSetup(i).stamina=28000-round(579*1.25*1.05);
 statSetup(i).parryRating=1500+923;
 statSetup(i).dodgeRating=1500+114;
 statSetup(i).masteryRating=1500+637;
@@ -65,34 +77,28 @@ statSetup(i).hasteRating=12000-1212;
 statSetup(i).armor=65000-261;
 statSetup(i).t15_4pc=1;
 
-%% crank
+%% set up finisher configs
+finishers={'S';'SH1';'SH2';'TS';'ST'};
 for k=1:length(finishers)
-    
-    gearsets=1:length(statSetup);
-    
-    for j=gearsets
-        config.finisher=finishers{k};
-        statblock(k,j)=pally_mc(config,statSetup(j));
-    end
-    
-    
-%% calculate stats
-dmg=[statblock.dmg];
-% 
-% %moving averages
-% ma5=filter(ones(1,5)./5,1,dmg);
-% 
-% %what do we want to know?
-% MAmean=mean(ma5);
-% MAstd=std(ma5);
-% S=[statblock.S];
-% 
-% n=length(finishers);
-
-
+    configs(k)=config;
+    configs(k).finisher=finishers{k};
 end
 
+%% crank
 
+%first, 2-piece bonuses
+for k=1:length(finishers)
+    statblock2(k)=pally_mc(configs(k),statSetup(1));
+end
+    
+
+%then 4-piece bonuses
+gearsets=1:length(statSetup);
+for j=gearsets
+    config.plotNum=j;
+    statblock4(j)=pally_mc(configs(1),statSetup(j));
+end
+    
 %% save data
 config.filetype='setbonus';
 fbase=['.\pdata\pally_' config.filetype '_data_' int2str(config.simMins)];
@@ -102,12 +108,19 @@ while exist([fbase '_' int2str(i) '.mat'])==2
 end
 config.fileid=i;
 fname=[fbase '_' int2str(i) '.mat'];
-save(fname)
+save(fname,'-v7.3')
 disp(['data saved to ' fname])
 
-%% Table
+for k=1:length(configs)
+    configs(k).filetype='setbonus';
+    configs(k).fileid=i;
+end
+%% Tables
+tempSetup=repmat(statSetup(1),1,5);
+for k=1:length(tempSetup); tempSetup(k).name=finishers{k}; end;
+li2=pally_mc_table(tempSetup,statblock2,configs(1),1:length(configs));
 
-li=pally_mc_table(statSetup,statblock(k,:),config,gearsets);
+li4=pally_mc_table(statSetup,statblock4,configs(1),gearsets);
 
 %% Gear sets
 

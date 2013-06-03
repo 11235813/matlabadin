@@ -162,8 +162,11 @@ hitRating=statSetup.hitRating;
 expRating=statSetup.expRating;
 hasteRating=statSetup.hasteRating;
 armor=statSetup.armor;
-
-t154pcEquipped=statSetup.t15_4pc;
+if ~isfield(statSetup,'t15_4pc') || isempty(statSetup.t15_4pc);
+    t154pcEquipped=0;
+else
+    t154pcEquipped=statSetup.t15_4pc;
+end
 
 %% Mitigation Factors
 armorMit=1-armor./(armor+58370);
@@ -615,7 +618,6 @@ statblock.t154pcHPG=t154pcHPGains./simTime;
 statblock.divProtcasts=divProtCasts;
 
 soiOverHealed=soiOHbase+soiOHexpire+soiOHbackExcess+soiOHbackFull;
-statblock.soiTracker=soiTracker;
 statblock.soiHealedRaw=soiHealed;
 statblock.soiOverHealedRaw=soiOverHealed;
 statblock.soiHealed=soiHealed./(soiHealed+soiOverHealed);
@@ -637,8 +639,10 @@ statblock.wogOHexpire=wogOHexpire;
 statblock.wogOHbackExcess=wogOHbackExcess;
 statblock.wogOHbackFull=wogOHbackFull;
 
-statblock.hpgTracker=hpgTracker;
-statblock.hpgGained=hpgGained;
+% %commented out for memory reasons, mostly useful as debugging anyhow
+% statblock.hpgTracker=hpgTracker;
+% statblock.hpgGained=hpgGained;
+% statblock.soiTracker=soiTracker;
 
 %% plot
 if ~strcmp(plotFlag,'noplot')
@@ -887,9 +891,9 @@ end
         end
     end
 
-    function dmgTaken=manyAbsorbsHandleIt(damage)
+    function dmgTaken=manyAbsorbsHandleIt(d)
         %initialize damage taken
-        dmgTaken=damage;
+        dmgTaken=d;
         
         % apply sacred shield first
         if ssAmount>0
@@ -914,7 +918,7 @@ end
         %register full and partial absorbs
         if dmgTaken==0
             fullAbsorbs=fullAbsorbs+1;
-        elseif dmgTaken<damage
+        elseif dmgTaken<d
             partialAbsorbs=partialAbsorbs+1;
         end
         %then apply SoI
@@ -949,11 +953,11 @@ end
          end
     end
 
-    function t154pcIncrementHP(damage)
-    	grantHP(floor(damage./dpThreshold)); 
+    function t154pcIncrementHP(d)
+    	grantHP(floor(d./dpThreshold)); 
         hpgTracker(k)=4;
-        hpgGained(k)=floor(damage./dpThreshold);
-        t154pcHPGains=t154pcHPGains+floor(damage./dpThreshold);
+        hpgGained(k)=floor(d./dpThreshold);
+        t154pcHPGains=t154pcHPGains+floor(d./dpThreshold);
     end
 
     function SoiAmt=soiAbsorbValue(bossSwingHistory,soimodel)
@@ -1017,7 +1021,7 @@ end
         if bossSwingHistory(1)>0
             %find this entry in damage
             kk=find(damage(max(k-backSteps,0):k)==bossSwingHistory(1));
-            id=k-(backSteps+1)+kk;
+            id=max(k-backSteps,1)-1+kk;
             %adjust by subtracting SoI
             if x>=damage(id)
                 soiHealed=soiHealed+damage(id);
@@ -1039,7 +1043,7 @@ end
         if bossSwingHistory(1)>0
             %find this entry in damage
             kk=find(damage(max(k-backSteps,1):k)==bossSwingHistory(1));
-            id=k-(backSteps+1)+kk;
+            id=max(k-backSteps,1)-1+kk;
             %adjust by subtracting SoI
             if x>damage(id)
                 wogHealed=wogHealed+damage(id);
