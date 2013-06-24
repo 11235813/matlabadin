@@ -10,7 +10,7 @@ config.plotnum=1;
 config.sF=5;
 config.bossSwingTimer=1.5;
 config.WoGfakeBubbleDuration=0;
-config.WoGoverheal=1;
+config.WoGoverheal=0;
 config.t152pcEquipped=1;
 config.finisher='SH1';
 config.priority='default';
@@ -86,17 +86,17 @@ end
 
 %% crank
 
-%first, 2-piece bonuses
-for k=1:length(finishers)
-    statblock2(k)=pally_mc(configs(k),statSetup(1));
-end
+% %first, 2-piece bonuses
+% for k=1:length(finishers)
+%     statblock2(k)=pally_mc(configs(k),statSetup(1));
+% end
     
 
 %then 4-piece bonuses
 gearsets=1:length(statSetup);
 for j=gearsets
     config.plotNum=j;
-    statblock4(j)=pally_mc(configs(1),statSetup(j));
+    statblock4(j)=pally_mc(configs(2),statSetup(j));
 end
     
 %% save data
@@ -116,9 +116,9 @@ for k=1:length(configs)
     configs(k).fileid=i;
 end
 %% Tables
-tempSetup=repmat(statSetup(1),1,5);
-for k=1:length(tempSetup); tempSetup(k).name=finishers{k}; end;
-li2=pally_mc_table(tempSetup,statblock2,configs(1),1:length(configs));
+% tempSetup=repmat(statSetup(1),1,5);
+% for k=1:length(tempSetup); tempSetup(k).name=finishers{k}; end;
+% li2=pally_mc_table(tempSetup,statblock2,configs(1),1:length(configs));
 
 li4=pally_mc_table(statSetup,statblock4,configs(1),gearsets);
 
