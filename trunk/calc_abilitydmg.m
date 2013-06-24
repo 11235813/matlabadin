@@ -18,7 +18,7 @@ for v=ddb.v
     
     %% Calculate stats and ability damages
     for i=1:length(cfg)
-        cfg(i).exec.veng=v;
+        cfg(i).exec.veng=0;
         cfg(i)=stat_model(cfg(i));
         cfg(i)=ability_model(cfg(i));
     end

@@ -59,7 +59,7 @@ set2.parryrat=data(2,:)';
 set2.parrypredr=data(3,:)';
 
 %sanity check - parry rating -> parry conversion factor, should be 885;
-% ratio = set2.parryrat./set2.parrypredr
+ratio = set2.parryrat./set2.parrypredr
 meanratio=mean(ratio(~isnan(ratio)));
 
 %fit variables

@@ -200,11 +200,11 @@ statSetup(i).armor=65000;
 % if matlabpool('size')>0
 %     matlabpool close
 % end
-% gearsets=1:length(statSetup); %everything
+gearsets=1:length(statSetup); %everything
 % gearsets=[1 14 13 9]; %C/Ha, Ha/he, Ha/h, Ha
-gearsets=[1 3 5 6 7 8 10 11 12]; %C/Ha C/Sg C/Ma C/Av C/Bal C/HM Av Av/M M/Av
+% gearsets=[1 3 5 6 7 8 10 11 12]; %C/Ha C/Sg C/Ma C/Av C/Bal C/HM Av Av/M M/Av
 % gearsets=[1 2 3 4 5]; %C/Ha C/St C/Sg C/Shm C/Ma
-gearsets=[1 3 5 6 15 10]; %C/Ha C/Sg C/Ma C/Av C/Str Av];
+% gearsets=[1 3 5 6 15 10]; %C/Ha C/Sg C/Ma C/Av C/Str Av];
 
 % matlabpool(3)
 for j=gearsets
@@ -246,7 +246,7 @@ while exist([fbase '_' int2str(i) '.mat'])==2
 end
 config.fileid=i;
 fname=[fbase '_' int2str(i) '.mat'];
-save(fname)
+save(fname,'-v7.3')
 disp(['data saved to ' fname])
 % save(['pally_sw_data_' int2str(simMins) '_' int2str(numSims) '_' int2str(statAmount) '.mat'])
 

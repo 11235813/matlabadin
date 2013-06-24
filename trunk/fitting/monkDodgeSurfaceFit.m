@@ -1,4 +1,4 @@
-function [fitresult, gof] = parrySurfaceFit(baseStr, bonusStr, preParry, postParry)
+function [fitresult, gof] = dodgeSurfaceFit(baseAgi, bonusAgi, preDodge, postDodge)
 %CREATESURFACEFIT1(BONUSSTR,PREPARRY,POSTPARRY)
 %  Fit surface to data.
 %
@@ -16,45 +16,46 @@ function [fitresult, gof] = parrySurfaceFit(baseStr, bonusStr, preParry, postPar
 
 
 %% Fit: 'untitled fit 1'.
-[xInput, yInput, zOutput] = prepareSurfaceData( bonusStr, preParry, postParry );
+[xInput, yInput, zOutput] = prepareSurfaceData( bonusAgi, preDodge, postDodge);
+fitType=['3+' int2str(baseAgi) '/951.158596+(x/951.158596+y)/((x/951.158596+y)/C+k)'];
 
 % Set up fittype and options.
-ft = fittype( '3+164/a+(x/a+y)/((x/a+y)/C+k)', 'indep', {'x', 'y'}, 'depend', 'z' );
+ft = fittype( fitType , 'indep', {'x', 'y'}, 'depend', 'z' );
 opts = fitoptions( ft );
 opts.DiffMinChange = 1e-012;
 opts.Display = 'Off';
-opts.Lower = [-Inf -Inf -Inf];
+opts.Lower = [480 1.3];
 opts.MaxFunEvals = 60000;
 opts.MaxIter = 40000;
 opts.Robust = 'Bisquare';
-opts.StartPoint = [951.158596 243 0.886];
+opts.StartPoint = [499.1 1.422];
 opts.TolFun = 1e-012;
 opts.TolX = 1e-012;
-opts.Upper = [Inf Inf Inf];
+opts.Upper = [520 1.5];
 
 % Fit model to data.
 [fitresult, gof] = fit( [xInput, yInput], zOutput, ft, opts );
 
 % Create a figure for the plots.
-figure( 3 );
+figure( 1 );
 
 % Plot fit with data.
 h = plot( fitresult, [xInput, yInput], zOutput );
 legend( h, 'untitled fit 1', 'postParry vs. bonusStr, preParry', 'Location', 'NorthEast' );
 % Label axes
-xlabel( 'bonusStr' );
-ylabel( 'preParry' );
-zlabel( 'postParry' );
+xlabel( 'bonusAgi' );
+ylabel( 'dodgeRating' );
+zlabel( 'postDodge' );
 grid on
 
 % Plot residuals.
-figure(4)
+figure(2)
 h = plot( fitresult, [xInput, yInput], zOutput, 'Style', 'Residual' );
 legend( h, 'untitled fit 1 - residuals', 'Location', 'NorthEast' );
 % Label axes
-xlabel( 'bonusStr' );
-ylabel( 'preParry' );
-zlabel( 'postParry' );
+xlabel( 'bonusAgi' );
+ylabel( 'dodgeRating' );
+zlabel( 'postDodge' );
 grid on
 view( -57.5, 56 );
 
