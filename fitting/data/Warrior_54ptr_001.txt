@@ -1,0 +1,791 @@
+﻿8/6 12:29:30.279  [5. warrreport] Warrdrtest: warrreport 9194 133 5.0132999420166 12.70557975769 0 0 0 0 3000 28.60000038147 19.505041122437 0 0 WARRIOR 90
+8/6 12:29:34.418  [5. warrreport] Warrdrtest: warrreport 8535 133 5.0132999420166 12.035715103149 0 0 0 0 2440 26.546667098999 19.054817199707 0 0 WARRIOR 90
+8/6 12:29:35.154  [2. Trade] Syllogism: we do better with ragnaros
+8/6 12:29:36.976  [5. warrreport] Warrdrtest: warrreport 8034 133 5.0132999420166 11.523813247681 0 0 0 0 2440 26.546667098999 19.054817199707 0 0 WARRIOR 90
+8/6 12:29:39.164  [2. Trade] Loryanna-Brill(EU): WW Monk lf 2v2 partner want healer.
+8/6 12:29:39.164  [5. warrreport] Warrdrtest: warrreport 7442 133 5.0132999420166 10.915963172913 0 0 0 0 2440 26.546667098999 19.054817199707 0 0 WARRIOR 90
+8/6 12:29:40.749  [2. Trade] Loryanna-Brill(EU): WW Monk lf 2v2 partner want healer.
+8/6 12:29:42.361  [5. warrreport] Warrdrtest: warrreport 6941 133 5.0132999420166 10.39902305603 0 0 0 0 2440 26.546667098999 19.054817199707 0 0 WARRIOR 90
+8/6 12:29:42.713  [2. Trade] Pandahealer-Brill(EU): ALGUIEN QUE SEPA HABLAR ESPAÑOL POR AQUI'
+8/6 12:29:42.713  [2. Trade] Smáshér-Brill(EU): LF Gm w/ me
+8/6 12:29:44.873  [5. warrreport] Warrdrtest: warrreport 6122 133 5.0132999420166 9.5489301681519 0 0 0 0 1828 24.302667617798 18.563882827759 0 0 WARRIOR 90
+8/6 12:29:47.242  [5. warrreport] Warrdrtest: warrreport 5621 133 5.0132999420166 9.0258054733276 0 0 0 0 1828 24.302667617798 18.563882827759 0 0 WARRIOR 90
+8/6 12:29:48.201  Klejnocik-Brill(EU) creates Reckless Vermilion Onyx.
+8/6 12:29:48.858  %s has earned the achievement Freedom of the Alliance!
+8/6 12:29:50.282  Klejnocik-Brill(EU) creates Reckless Vermilion Onyx.
+8/6 12:29:51.919  [5. warrreport] Warrdrtest: warrreport 4361 133 5.0132999420166 7.6996221542358 0 0 0 0 1405 22.751668930054 18.222043991089 0 0 WARRIOR 90
+8/6 12:29:52.264  Klejnocik-Brill(EU) creates Reckless Vermilion Onyx.
+8/6 12:29:54.313  Klejnocik-Brill(EU) creates Reckless Vermilion Onyx.
+8/6 12:29:54.773  [5. warrreport] Warrdrtest: warrreport 3542 133 5.0132999420166 6.829421043396 0 0 0 0 1405 22.751668930054 18.222043991089 0 0 WARRIOR 90
+8/6 12:29:56.496  Klejnocik-Brill(EU) creates Reckless Vermilion Onyx.
+8/6 12:29:57.191  [5. warrreport] Warrdrtest: warrreport 2954 133 5.0132999420166 6.2006368637085 0 0 0 0 1022 21.347332000732 17.909181594849 0 0 WARRIOR 90
+8/6 12:29:58.502  [2. Trade] Smáshér-Brill(EU): LF Game Master w/ me found a bug
+8/6 12:29:58.672  Klejnocik-Brill(EU) creates Reckless Vermilion Onyx.
+8/6 12:30:00.369  [5. warrreport] Warrdrtest: warrreport 2453 133 5.0132999420166 5.6622095108032 0 0 0 0 1022 21.347332000732 17.909181594849 0 0 WARRIOR 90
+8/6 12:30:00.541  Klejnocik-Brill(EU) creates Reckless Vermilion Onyx.
+8/6 12:30:02.568  Klejnocik-Brill(EU) creates Reckless Vermilion Onyx.
+8/6 12:30:04.498  Klejnocik-Brill(EU) creates Reckless Vermilion Onyx.
+8/6 12:30:06.227  [5. warrreport] Warrdrtest: warrreport 1105 133 5.0132999420166 4.2011384963989 0 0 0 0 683 20.104333877563 17.633359909058 0 0 WARRIOR 90
+8/6 12:30:08.231  [5. warrreport] Warrdrtest: warrreport 1105 133 5.0132999420166 4.2011384963989 0 0 0 0 683 20.104333877563 17.633359909058 0 0 WARRIOR 90
+8/6 12:30:08.602  Fraizonne-Brill(EU) prepares a Great Pandaren Banquet!
+8/6 12:30:10.623  [5. warrreport] Warrdrtest: warrreport 206 133 5.0132999420166 3.2165780067444 0 0 0 0 0 17.60000038147 17.070833206177 0 0 WARRIOR 90
+8/6 12:30:11.513  [2. Trade] Крапси-Brill(EU): TO ICC 25 NEED 4 DPS
+8/6 12:30:14.835  [2. Trade] Chickênsalad: there are non in ptr lawl
+8/6 12:30:15.489  Klejnocik-Brill(EU) creates Potent Vermilion Onyx.
+8/6 12:30:15.871  [2. Trade] Syllogism: then post it on the forums foo
+8/6 12:30:18.339  Klejnocik-Brill(EU) creates Potent Vermilion Onyx.
+8/6 12:30:19.881  [2. Trade] Bëbëp-Brill(EU): lfm for raid BWD cool transmorg gear drops!!! need 1 healer or 1 dps 
+8/6 12:30:20.191  [2. Trade] Shausinne: lol
+8/6 12:30:20.252  Klejnocik-Brill(EU) creates Potent Vermilion Onyx.
+8/6 12:30:21.418  [2. Trade] Lovelyloette: so bloody report the bug in the ptr report bug section on the forums smasher you idiot, god damn eu noobs
+8/6 12:30:22.267  [2. Trade] Nìghtrydêr: unholy dk lf 2s 
+8/6 12:30:22.267  [2. Trade] Smáshér-Brill(EU): I cant
+8/6 12:30:23.073  [2. Trade] Jeuns-Brill(EU): LF heal for 3s
+8/6 12:30:24.963  Kearmena-Brill(EU) yells: i love u all ima be ur @#$%buddy tins 86564281557
+8/6 12:30:26.524  Klejnocik-Brill(EU) creates Potent Vermilion Onyx.
+8/6 12:30:27.262  Dobidoo-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:30:29.445  Klejnocik-Brill(EU) creates Potent Vermilion Onyx.
+8/6 12:30:29.445  Dobidoo-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:30:31.320  Dobidoo-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:30:31.320  Klejnocik-Brill(EU) creates Potent Vermilion Onyx.
+8/6 12:30:33.136  [2. Trade] Dotforce-Brill(EU): see... people are rude here
+8/6 12:30:33.568  Dobidoo-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:30:35.176  [2. Trade] Smáshér-Brill(EU): OMFG
+8/6 12:30:35.959  Dobidoo-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:30:38.944  Dobidoo-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:30:39.779  [2. Trade] Dotforce-Brill(EU): so rude
+8/6 12:30:41.002  Dobidoo-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:30:42.337  [2. Trade] Dynaal: LFM Town RP, pst me.
+8/6 12:30:42.888  Dobidoo-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:30:43.300  Kimbetella creates Bold Primordial Ruby.
+8/6 12:30:43.495  [2. Trade] Lovelyloette: If you can't, then you really a stupid @.@
+8/6 12:30:45.012  Dobidoo-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:30:47.245  Dobidoo-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:30:48.616  [2. Trade] Bëbëp-Brill(EU): lfm for raid BWD last spot cool transmorg drops!
+8/6 12:30:49.334  Dobidoo-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:30:51.444  Dobidoo-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:30:53.847  Dobidoo-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:30:53.847  Anedivh-Brill(EU) creates Fierce Vermilion Onyx.
+8/6 12:30:55.610  Anedivh-Brill(EU) creates Fierce Vermilion Onyx.
+8/6 12:30:55.776  Dobidoo-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:30:57.506  Anedivh-Brill(EU) creates Fierce Vermilion Onyx.
+8/6 12:30:58.022  Dobidoo-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:30:59.793  Anedivh-Brill(EU) creates Fierce Vermilion Onyx.
+8/6 12:31:00.777  Kimbetella creates Delicate Primordial Ruby.
+8/6 12:31:01.067  [1. General] Smáshér-Brill(EU): I cant log on Forums it doesnt say why
+8/6 12:31:01.067  [5. warrreport] Warrdrtest: warrreport 206 133 5.0132999420166 3.2165780067444 0 0 0 0 0 17.60000038147 17.070833206177 0 0 WARRIOR 90
+8/6 12:31:02.044  Anedivh-Brill(EU) creates Fierce Vermilion Onyx.
+8/6 12:31:03.918  Artwas-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:31:04.774  [2. Trade] Nìght: {cross} Lfm Town Rp! Pst For Inv! {cross}
+8/6 12:31:06.261  Artwas-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:31:07.269  [2. Trade] Nìghtrydêr: unholy dk lf 2s
+8/6 12:31:07.910  [2. Trade] Vòlivar: *Hands  Lovelyloette a license* "Certified ^&*!@#$"
+8/6 12:31:08.343  Artwas-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:31:09.191  [5. warrreport] Warrdrtest: warrreport 2046 133 5.0132999420166 5.2229785919189 0 0 0 0 1328 22.469333648682 18.161102294922 0 0 WARRIOR 90
+8/6 12:31:10.510  Artwas-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:31:11.028  [5. warrreport] Warrdrtest: warrreport 3432 133 5.0132999420166 6.7120475769043 0 0 0 0 2253 25.861000061035 18.904113769531 0 0 WARRIOR 90
+8/6 12:31:11.028  [2. Trade] Syllogism: lack of iq
+8/6 12:31:11.540  %s has earned the achievement Got My Mind On My Money!
+8/6 12:31:11.540  %s has earned the achievement Got My Mind On My Money!
+8/6 12:31:12.133  Githa creates Agile Primal Diamond.
+8/6 12:31:12.291  [5. warrreport] Warrdrtest: warrreport 5272 133 5.0132999420166 8.6599903106689 0 0 0 0 3485 30.37833404541 19.892971038818 0 0 WARRIOR 90
+8/6 12:31:12.468  Artwas-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:31:13.480  [5. warrreport] Warrdrtest: warrreport 6658 133 5.0132999420166 10.105987548828 0 0 0 0 3485 30.37833404541 19.892971038818 0 0 WARRIOR 90
+8/6 12:31:14.704  Artwas-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:31:15.892  [5. warrreport] Warrdrtest: warrreport 8578 133 5.0132999420166 12.079544067383 0 0 0 0 3485 30.37833404541 19.892971038818 0 0 WARRIOR 90
+8/6 12:31:16.079  Casterr-Brill(EU) has defeated Nosoul-Brill(EU) in a duel
+8/6 12:31:17.072  Artwas-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:31:17.072  Dobidoo-Brill(EU) creates Deadly Vermilion Onyx.
+8/6 12:31:18.504  [5. warrreport] Warrdrtest: warrreport 9079 133 5.0132999420166 12.588966369629 0 0 0 0 3485 30.37833404541 19.892971038818 0 0 WARRIOR 90
+8/6 12:31:18.965  Artwas-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:31:19.256  Dobidoo-Brill(EU) creates Deadly Vermilion Onyx.
+8/6 12:31:19.400  [2. Trade] Lovelyloette: Ohh, feelings so hurt
+8/6 12:31:20.030  [5. warrreport] Warrdrtest: warrreport 9580 133 5.0132999420166 13.096120834351 0 0 0 0 3485 30.37833404541 19.892971038818 0 0 WARRIOR 90
+8/6 12:31:20.981  Dobidoo-Brill(EU) creates Deadly Vermilion Onyx.
+8/6 12:31:21.730  [5. warrreport] Warrdrtest: warrreport 10081 133 5.0132999420166 13.601022720337 0 0 0 0 3485 30.37833404541 19.892971038818 0 0 WARRIOR 90
+8/6 12:31:22.986  Dobidoo-Brill(EU) creates Deadly Vermilion Onyx.
+8/6 12:31:23.391  [5. warrreport] Warrdrtest: warrreport 10749 133 5.0132999420166 14.270746231079 0 0 0 0 3485 30.37833404541 19.892971038818 0 0 WARRIOR 90
+8/6 12:31:25.035  [5. warrreport] Warrdrtest: warrreport 11337 133 5.0132999420166 14.856997489929 0 0 0 0 3868 31.782667160034 20.197364807129 0 0 WARRIOR 90
+8/6 12:31:25.272  Dobidoo-Brill(EU) creates Deadly Vermilion Onyx.
+8/6 12:31:25.965  [5. warrreport] Warrdrtest: warrreport 11337 133 5.0132999420166 14.856997489929 0 0 0 0 3868 31.782667160034 20.197364807129 0 0 WARRIOR 90
+8/6 12:31:28.325  [5. warrreport] Warrdrtest: warrreport 12339 133 5.0132999420166 15.849046707153 0 0 0 0 4207 33.0256690979 20.463577270508 0 0 WARRIOR 90
+8/6 12:31:29.799  Dobidoo-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:31:31.464  [2. Trade] Nìght: {cross} Lfm Town Rp // Pst for Invite {cross}
+8/6 12:31:31.731  [5. warrreport] Warrdrtest: warrreport 14298 133 5.0132999420166 17.763595581055 0 0 0 0 4207 33.0256690979 20.463577270508 0 0 WARRIOR 90
+8/6 12:31:31.862  Dobidoo-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:31:33.201  [5. warrreport] Warrdrtest: warrreport 16257 133 5.0132999420166 19.645774841309 0 0 0 0 4207 33.0256690979 20.463577270508 0 0 WARRIOR 90
+8/6 12:31:33.829  Dobidoo-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:31:34.283  [2. Trade] Vòlivar: Ohh., sarcasm not the sarcasm!
+8/6 12:31:35.737  Dobidoo-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:31:36.544  [2. Trade] Крапси-Brill(EU): TO ICC25 need 3 dps
+8/6 12:31:37.748  Dobidoo-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:31:39.765  Dobidoo-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:31:41.780  Dobidoo-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:31:43.896  Dobidoo-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:31:43.978  [5. warrreport] Warrdrtest: warrreport 16577 133 5.0132999420166 19.950206756592 0 0 0 0 4207 33.0256690979 20.463577270508 0 0 WARRIOR 90
+8/6 12:31:45.848  [2. Trade] Jeuns-Brill(EU): LF heal for 3s
+8/6 12:31:45.869  Dobidoo-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:31:47.983  Dobidoo-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:31:49.629  [5. warrreport] Warrdrtest: warrreport 16897 133 5.0132999420166 20.253799438477 0 0 0 0 4207 33.0256690979 20.463577270508 0 0 WARRIOR 90
+8/6 12:31:49.975  Dobidoo-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:31:52.833  [5. warrreport] Warrdrtest: warrreport 16897 133 5.0132999420166 20.253799438477 0 0 0 0 4207 33.0256690979 20.463577270508 0 0 WARRIOR 90
+8/6 12:31:53.433  Githa creates Assassin's Imperial Amethyst.
+8/6 12:31:55.359  [2. Trade] Lovelyloette: ikr, feeling the pain, right there, in the heart, oh wait, what heart rofl
+8/6 12:31:55.458  Githa creates Assassin's Imperial Amethyst.
+8/6 12:32:07.732  Jessicajungx-Brill(EU) has defeated Rakuen-Brill(EU) in a duel
+8/6 12:32:11.354  [5. warrreport] Warrdrtest: warrreport 16897 133 5.0132999420166 20.253799438477 0 0 0 0 4207 33.0256690979 20.463577270508 0 0 WARRIOR 90
+8/6 12:32:13.451  [5. warrreport] Warrdrtest: warrreport 17057 133 5.0132999420166 20.405282974243 0 0 0 0 4207 33.0256690979 20.463577270508 0 0 WARRIOR 90
+8/6 12:32:16.891  [2. Trade] Tellaknight: Uhh
+8/6 12:32:17.150  [5. warrreport] Warrdrtest: warrreport 17217 133 5.0132999420166 20.55655670166 0 0 0 0 4207 33.0256690979 20.463577270508 0 0 WARRIOR 90
+8/6 12:32:19.071  [2. Trade] Tellaknight: Whats going on
+8/6 12:32:20.338  [5. warrreport] Warrdrtest: warrreport 17557 133 5.0132999420166 20.877328872681 0 0 0 0 4207 33.0256690979 20.463577270508 0 0 WARRIOR 90
+8/6 12:32:20.552  [2. Trade] Dynaal: LFM Town RP, pst me.
+8/6 12:32:25.432  [5. warrreport] Warrdrtest: warrreport 17717 133 5.0132999420166 21.027952194214 0 0 0 0 4207 33.0256690979 20.463577270508 0 0 WARRIOR 90
+8/6 12:32:26.511  [2. Trade] Darksa: I wonder how many ppl say rofl in one day
+8/6 12:32:28.822  [5. warrreport] Warrdrtest: warrreport 17997 133 5.0132999420166 21.291053771973 0 0 0 0 4207 33.0256690979 20.463577270508 0 0 WARRIOR 90
+8/6 12:32:32.210  [2. Trade] Lovelyloette: Not enough
+8/6 12:32:33.080  [2. Trade] Swagßlasts: I am getting really bad lag spikes
+8/6 12:32:37.419  [2. Trade] Vòlivar: 99999999999999
+8/6 12:32:38.251  %s has earned the achievement Epic!
+8/6 12:32:38.251  %s has earned the achievement Cataclysmically Epic!
+8/6 12:32:38.251  %s has earned the achievement Mystically Epic!
+8/6 12:32:39.311  Rakuen-Brill(EU) has defeated Jessicajungx-Brill(EU) in a duel
+8/6 12:32:40.210  [2. Trade] Snuft: anyone have sky golem ?? 
+8/6 12:32:41.527  [2. Trade] Nìght: {cross} Lfm Town Rp // Pst for Invite {cross}
+8/6 12:32:42.908  [5. warrreport] Warrdrtest: warrreport 18157 133 5.0132999420166 21.441114425659 0 0 0 0 4207 33.0256690979 20.463577270508 0 0 WARRIOR 90
+8/6 12:32:43.513  Artwas-Brill(EU) creates Agile Primal Diamond.
+8/6 12:32:46.738  [5. warrreport] Warrdrtest: warrreport 18317 133 5.0132999420166 21.590967178345 0 0 0 0 4207 33.0256690979 20.463577270508 0 0 WARRIOR 90
+8/6 12:32:47.778  [2. Trade] Lovelyloette: go do AV then you'll feel the lag spikes
+8/6 12:32:49.539  [5. warrreport] Warrdrtest: warrreport 18317 133 5.0132999420166 21.590967178345 0 0 0 0 4207 33.0256690979 20.463577270508 0 0 WARRIOR 90
+8/6 12:32:50.063  [2. Trade] Rhs: PriestDis. LF 3s  gooood comb. no nooobs !   (2100+) 
+8/6 12:32:50.063  [2. Trade] Rhs: PriestDis. LF 3s  gooood comb. no nooobs !   (2100+) 
+8/6 12:32:53.213  Illîlîlîlîlî yells: Over 9000!
+8/6 12:32:53.563  [5. warrreport] Warrdrtest: warrreport 18637 133 5.0132999420166 21.890062332153 0 0 0 0 4207 33.0256690979 20.463577270508 0 0 WARRIOR 90
+8/6 12:32:55.334  [5. warrreport] Warrdrtest: warrreport 19536 133 5.0132999420166 22.725971221924 0 0 0 0 4890 35.529998779297 21.000366210938 0 0 WARRIOR 90
+8/6 12:32:56.868  [2. Trade] Çrïtïcäl: inv to ICC
+8/6 12:33:00.111  [2. Trade] Lôdina: Enh LF 2s
+8/6 12:33:01.660  Illîlîlîlîlî has defeated Skyo-Brill(EU) in a duel
+8/6 12:33:07.241  [5. warrreport] Warrdrtest: warrreport 19536 133 5.0132999420166 22.725971221924 0 0 0 0 4890 35.529998779297 21.000366210938 0 0 WARRIOR 90
+8/6 12:33:09.233  [5. warrreport] Warrdrtest: warrreport 19716 133 5.0132999420166 22.892570495605 0 0 0 0 4890 35.529998779297 21.000366210938 0 0 WARRIOR 90
+8/6 12:33:11.658  [5. warrreport] Warrdrtest: warrreport 19886 133 5.0132999420166 23.049680709839 0 0 0 0 4890 35.529998779297 21.000366210938 0 0 WARRIOR 90
+8/6 12:33:14.646  [5. warrreport] Warrdrtest: warrreport 20046 133 5.0132999420166 23.197341918945 0 0 0 0 4890 35.529998779297 21.000366210938 0 0 WARRIOR 90
+8/6 12:33:17.249  [5. warrreport] Warrdrtest: warrreport 20206 133 5.0132999420166 23.344802856445 0 0 0 0 4890 35.529998779297 21.000366210938 0 0 WARRIOR 90
+8/6 12:33:17.485  Amarisaianna prepares a Great Pandaren Banquet!
+8/6 12:33:19.646  [2. Trade] Imarøgue: Need one player forBT
+8/6 12:33:20.885  [2. Trade] Darksa: go to shrine put your graphics on highest and you will freeze forever
+8/6 12:33:22.146  [2. Trade] Крапси-Brill(EU): Critical
+8/6 12:33:24.485  [2. Trade] Nìght: {cross} Lfm Town Rp // Pst for Invite {cross}
+8/6 12:33:29.689  [2. Trade] Pikkumi-Brill(EU): Disc lf 2v2 or 3v3
+8/6 12:33:33.552  [2. Trade] Крапси-Brill(EU): i cant inv you
+8/6 12:33:44.806  [2. Trade] Çrïtïcäl: it says you're not playing either, idk why
+8/6 12:33:44.806  [2. Trade] Rhs: PriestDis. LF 3s  gooood comb. no nooobs !   (2100+) 
+8/6 12:33:45.073  [2. Trade] Rhs: PriestDis. LF 3s  gooood comb. no nooobs !   (2100+) 
+8/6 12:33:45.214  Susuha-Brill(EU) creates Bold Primordial Ruby.
+8/6 12:33:48.207  Susuha-Brill(EU) creates Bold Primordial Ruby.
+8/6 12:33:51.059  [2. Trade] Nìght: {cross} Lfm Town Rp // Pst for Invite {cross}
+8/6 12:33:51.536  [5. warrreport] Warrdrtest: warrreport 17938 133 5.0132999420166 21.235668182373 0 0 0 0 5575 38.04167175293 21.533136367798 0 0 WARRIOR 90
+8/6 12:33:52.707  [2. Trade] Крапси-Brill(EU): to icc25 need 3 dps
+8/6 12:33:54.105  [2. Trade] Dynaal: LFM Town RP, pst me.
+8/6 12:33:55.712  [2. Trade] Lionheart-Brill(EU): how do i get to the proving ghrounds againg? 
+8/6 12:34:00.692  Susuha-Brill(EU) creates Solid River's Heart.
+8/6 12:34:01.315  [5. warrreport] Warrdrtest: warrreport 16288 133 5.0132999420166 19.675302505493 0 0 0 0 5575 38.04167175293 21.533136367798 0 0 WARRIOR 90
+8/6 12:34:02.393  Amarisaianna creates Burning Primal Diamond.
+8/6 12:34:03.940  Susuha-Brill(EU) creates Solid River's Heart.
+8/6 12:34:17.479  [2. Trade] Nìght: {cross} Lfm Town Rp // Pst for Inv {cross}
+8/6 12:34:18.841  Nikkì creates Brilliant Serpent's Eye.
+8/6 12:34:23.108  Rakuen-Brill(EU) has defeated Jessicajungx-Brill(EU) in a duel
+8/6 12:34:31.525  [2. Trade] Halley: 2k disc lf 2k+ partners for 2s/3s to push 2.2k Just the Two of Us: 2000
+8/6 12:34:32.399  [2. Trade] Ärthâs: une guilde level 25 svp?
+8/6 12:34:32.595  [2. Trade] Vòlivar: PTR Greeter: Welcome to PTR Get out.
+8/6 12:34:35.562  [2. Trade] Eviressabea-Brill(EU): Hello im Teena freeman,and i want to be you're %^&* buddy heres my number #{865}428-1557 please call me i'm soooo wet.I love you all i go with women or men /and you men out there i live in . Sevierville,Tennessee Area code 37861 call me loves i hope i see
+8/6 12:34:35.889  [2. Trade] Eviressabea-Brill(EU): Hello im Teena freeman,and i want to be you're !@#$ buddy heres my number #{865}428-1557 please call me i'm soooo wet.I love you all i go with women or men /and you men out there i live in . Sevierville,Tennessee Area code 37861 call me loves i hope i see
+8/6 12:34:41.123  Nikkì creates Artful Vermilion Onyx.
+8/6 12:34:42.053  [2. Trade] Nìght: {cross} Lfm Town Rp // Pst for Inv {cross}
+8/6 12:34:42.837  Nikkì creates Artful Vermilion Onyx.
+8/6 12:34:48.076  [2. Trade] Tellaknight: What the %^&*?
+8/6 12:34:52.722  Красноормеец-Brill(EU) creates Scroll of Wisdom.
+8/6 12:34:53.564  [2. Trade] Zèrxius: LFM ICC 25 PST
+8/6 12:34:54.108  [2. Trade] Celtonatt: nty
+8/6 12:34:55.393  [2. Trade] Variuisa-Brill(EU):  Bulwark of Azzinoth Warglaive of Azzinoth dropped on this warlock.
+8/6 12:34:59.727  [2. Trade] Nìght: {cross} Lfm Town Rp // Pst for Inv {cross}
+8/6 12:34:59.727  [2. Trade] Variuisa-Brill(EU): ...
+8/6 12:35:01.979  [2. Trade] Tellaknight: I really hope that was a joke lol...
+8/6 12:35:09.583  [2. Trade] Dynaal: LFM Town RP, pst me.
+8/6 12:35:09.583  [2. Trade] Catracey-Brill(EU):  up icc
+8/6 12:35:14.294  [2. Trade] Gothec: R druid lf 2's partner to push 2.2k in 2's current r 2117.
+8/6 12:35:16.221  Nikkì creates Purified Imperial Amethyst.
+8/6 12:35:20.503  [2. Trade] Dryann: Except it's always the off hand.
+8/6 12:35:21.978  Amarisaianna creates Potent Vermilion Onyx.
+8/6 12:35:24.275  Amarisaianna creates Potent Vermilion Onyx.
+8/6 12:35:25.077  [2. Trade] Zèrxius: LFM ICC 25M
+8/6 12:35:26.238  [5. warrreport] Warrdrtest: warrreport 28049 133 5.0132999420166 30.335594177246 0 0 0 0 5575 38.04167175293 21.533136367798 0 0 WARRIOR 90
+8/6 12:35:26.288  Amarisaianna creates Potent Vermilion Onyx.
+8/6 12:35:27.474  [2. Trade] Variuisa-Brill(EU): I am a warlock -,-
+8/6 12:35:28.870  Amarisaianna creates Potent Vermilion Onyx.
+8/6 12:35:30.987  Amarisaianna creates Potent Vermilion Onyx.
+8/6 12:35:31.709  [2. Trade] Pwnag-Brill(EU): who wants to know a good joke for gold meet me in pandaland next to inkeeper
+8/6 12:35:32.688  Amarisaianna creates Potent Vermilion Onyx.
+8/6 12:35:32.932  [2. Trade] Lôdina-Brill(EU): Enh LF 2s/3s
+8/6 12:35:33.153  [5. warrreport] Warrdrtest: warrreport 39810 133 5.0132999420166 40.01362991333 0 0 0 0 5575 38.04167175293 21.533136367798 0 0 WARRIOR 90
+8/6 12:35:33.153  [2. Trade] Variuisa-Brill(EU): Can't use either on this.
+8/6 12:35:34.973  [5. warrreport] Warrdrtest: warrreport 28049 133 5.0132999420166 30.335594177246 0 0 0 0 5575 38.04167175293 21.533136367798 0 0 WARRIOR 90
+8/6 12:35:35.530  Swacky-Brill(EU) creates Willful Vermilion Onyx.
+8/6 12:35:37.134  [2. Trade] Imarøgue-Brill(EU): Need a player for BT
+8/6 12:35:37.760  Swacky-Brill(EU) creates Willful Vermilion Onyx.
+8/6 12:35:40.026  Swacky-Brill(EU) creates Willful Vermilion Onyx.
+8/6 12:35:42.779  Swacky-Brill(EU) creates Willful Vermilion Onyx.
+8/6 12:35:44.698  [2. Trade] Darksa: solo it?
+8/6 12:35:45.252  [5. warrreport] Warrdrtest: warrreport 27729 133 5.0132999420166 31.230390548706 0 0 1267 1.4316383600235 5505 37.784999847412 21.474943161011 0 0 WARRIOR 90
+8/6 12:35:46.453  Swacky-Brill(EU) creates Willful Vermilion Onyx.
+8/6 12:35:46.987  [5. warrreport] Warrdrtest: warrreport 27409 133 5.0132999420166 30.9563331604 0 0 1267 1.4316383600235 5505 37.784999847412 21.474943161011 0 0 WARRIOR 90
+8/6 12:35:48.490  [2. Trade] Shikaote-Brill(EU): Conviction is recruiting Are you convicted to wow then join us pvp or pve doesn't matter /w ,me or rebelshealer for an invite
+8/6 12:35:49.298  [5. warrreport] Warrdrtest: warrreport 26749 133 5.0132999420166 30.388820648193 0 0 1267 1.4316383600235 5766 38.742000579834 21.678405761719 0 0 WARRIOR 90
+8/6 12:35:49.624  Swacky-Brill(EU) creates Willful Vermilion Onyx.
+8/6 12:35:50.773  Gulandron creates Willful Serpent's Eye.
+8/6 12:35:51.216  [5. warrreport] Warrdrtest: warrreport 26139 133 5.0132999420166 29.861562728882 0 0 1267 1.4316383600235 7033 43.387668609619 22.651247024536 0 0 WARRIOR 90
+8/6 12:35:51.913  Paó-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:35:52.993  Swacky-Brill(EU) creates Burning Primal Diamond.
+8/6 12:35:53.033  [5. warrreport] Warrdrtest: warrreport 14058 133 5.0132999420166 20.080018997192 0 0 2471 2.7920904159546 7033 43.387668609619 22.651247024536 0 0 WARRIOR 90
+8/6 12:35:53.033  [2. Trade] Onisionn: solo
+8/6 12:35:54.262  Paó-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:35:55.610  [5. warrreport] Warrdrtest: warrreport 14058 133 5.0132999420166 20.080018997192 0 0 2471 2.7920904159546 9266 51.575332641602 24.334184646606 0 0 WARRIOR 90
+8/6 12:35:56.680  Paó-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:35:58.687  Paó-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:36:00.628  Paó-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:36:01.463  [2. Trade] Variuisa-Brill(EU): Solo it 
+8/6 12:36:02.556  [5. warrreport] Warrdrtest: warrreport 14058 133 5.0132999420166 20.080018997192 0 0 2471 2.7920904159546 8975 50.508331298828 24.117263793945 0 0 WARRIOR 90
+8/6 12:36:03.079  Paó-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:36:07.003  [2. Trade] Nìght: {cross} Lfm Town Rp // Pst for Inv {cross}
+8/6 12:36:07.408  Amarisaianna creates Mysterious Imperial Amethyst.
+8/6 12:36:09.752  [5. warrreport] Warrdrtest: warrreport 13544 133 5.0132999420166 19.591194152832 0 0 2471 2.7920904159546 8511 48.80700302124 23.773002624512 0 0 WARRIOR 90
+8/6 12:36:11.370  [5. warrreport] Warrdrtest: warrreport 13925 133 5.0132999420166 20.46409034729 0 0 2972 3.3581922054291 8511 48.80700302124 23.773002624512 0 0 WARRIOR 90
+8/6 12:36:13.526  Amarisaianna creates Mysterious Imperial Amethyst.
+8/6 12:36:14.003  Paó-Brill(EU) creates Agile Primal Diamond.
+8/6 12:36:16.106  [2. Trade] Zèrxius: LFM ICC 25M
+8/6 12:36:16.106  Dièsél-Brill(EU) creates Energized Wild Jade.
+8/6 12:36:16.745  [2. Trade] Римтутитуки-Brill(EU): TBC the best expansion
+8/6 12:36:18.895  Dièsél-Brill(EU) creates Energized Wild Jade.
+8/6 12:36:18.895  Amarisaianna creates Mysterious Imperial Amethyst.
+8/6 12:36:20.914  [2. Trade] Crusify: What if he just doesnt want to solo it
+8/6 12:36:21.325  Dièsél-Brill(EU) creates Energized Wild Jade.
+8/6 12:36:22.338  Susuha-Brill(EU) creates Reverberating Primal Diamond.
+8/6 12:36:25.527  Gulandron creates Willful Vermilion Onyx.
+8/6 12:36:27.878  Gulandron creates Willful Vermilion Onyx.
+8/6 12:36:31.087  Gulandron creates Willful Vermilion Onyx.
+8/6 12:36:31.396  [2. Trade] Nìght: {cross} Lfm Town Rp // Pst for Inv {cross}
+8/6 12:36:32.976  Dryann creates Delicate Serpent's Eye.
+8/6 12:36:35.305  Gulandron creates Willful Vermilion Onyx.
+8/6 12:36:35.605  [5. warrreport] Warrdrtest: warrreport 13925 133 5.6074461936951 20.46409034729 506 0.57175141572952 2972 3.3581922054291 8005 46.951667785645 23.391635894775 0 0 WARRIOR 90
+8/6 12:36:35.660  Dryann creates Delicate Serpent's Eye.
+8/6 12:36:37.539  Gulandron creates Willful Vermilion Onyx.
+8/6 12:36:38.754  [5. warrreport] Warrdrtest: warrreport 13805 133 6.1880970001221 20.350559234619 1007 1.1378531455994 2972 3.3581922054291 8005 46.951667785645 23.391635894775 0 0 WARRIOR 90
+8/6 12:36:41.014  Gulandron creates Willful Vermilion Onyx.
+8/6 12:36:42.216  [5. warrreport] Warrdrtest: warrreport 13505 133 6.7613072395325 20.066213607788 1508 1.7039548158646 2972 3.3581922054291 8005 46.951667785645 23.391635894775 0 0 WARRIOR 90
+8/6 12:36:42.780  [2. Trade] Anolen-Brill(EU): hey can u obtain the  Tigerfang Wrap in ptr without doing the legandary questline ? O,o
+8/6 12:36:43.668  [5. warrreport] Warrdrtest: warrreport 13185 133 7.5142583847046 19.762104034424 2176 2.4587571620941 2972 3.3581922054291 8005 46.951667785645 23.391635894775 0 0 WARRIOR 90
+8/6 12:36:44.288  Dryann creates Delicate Primordial Ruby.
+8/6 12:36:45.544  [5. warrreport] Warrdrtest: warrreport 12859 133 8.2105827331543 19.451425552368 2804 3.1683616638184 2972 3.3581922054291 7622 45.547332763672 23.10068321228 0 0 WARRIOR 90
+8/6 12:36:46.777  Dryann creates Delicate Primordial Ruby.
+8/6 12:36:47.201  [5. warrreport] Warrdrtest: warrreport 12579 133 8.7582492828369 19.183885574341 3305 3.7344632148743 2972 3.3581922054291 7622 45.547332763672 23.10068321228 0 0 WARRIOR 90
+8/6 12:36:49.083  Dryann creates Delicate Primordial Ruby.
+8/6 12:36:49.430  [5. warrreport] Warrdrtest: warrreport 12610 133 8.5164194107056 19.213539123535 3083 3.4836158752441 2972 3.3581922054291 7890 46.529998779297 23.306602478027 0 0 WARRIOR 90
+8/6 12:36:49.430  [2. Trade] Variuisa-Brill(EU): No.l
+8/6 12:36:51.570  Gulandron creates Steady Wild Jade.
+8/6 12:36:51.570  Dryann creates Delicate Primordial Ruby.
+8/6 12:36:52.688  [2. Trade] Darksa: no..
+8/6 12:36:53.535  [2. Trade] Variuisa-Brill(EU): Ya gotta do it.
+8/6 12:36:54.256  Dryann creates Delicate Primordial Ruby.
+8/6 12:36:54.510  Gulandron creates Steady Wild Jade.
+8/6 12:36:56.918  Dryann creates Delicate Primordial Ruby.
+8/6 12:36:57.696  Gulandron creates Steady Wild Jade.
+8/6 12:37:01.300  Gulandron creates Steady Wild Jade.
+8/6 12:37:02.834  Dryann creates Deft Vermilion Onyx.
+8/6 12:37:03.623  Gulandron creates Steady Wild Jade.
+8/6 12:37:04.920  Dryann creates Deft Vermilion Onyx.
+8/6 12:37:07.015  [5. warrreport] Warrdrtest: warrreport 12490 133 9.0602741241455 19.098712921143 3584 4.0497174263 2972 3.3581922054291 7890 46.529998779297 23.306602478027 0 0 WARRIOR 90
+8/6 12:37:07.275  [2. Trade] Darksa: you can only get it on life
+8/6 12:37:07.514  Dryann creates Glinting Imperial Amethyst.
+8/6 12:37:07.622  Gulandron creates Solid River's Heart.
+8/6 12:37:08.497  Jessicajungx-Brill(EU) has defeated Rakuen-Brill(EU) in a duel
+8/6 12:37:15.109  Dièsél-Brill(EU) creates Revitalizing Primal Diamond.
+8/6 12:37:19.838  [2. Trade] Variuisa-Brill(EU): You can get it here to, you just gotta do the questline.
+8/6 12:37:22.663  Dryann creates Agile Primal Diamond.
+8/6 12:37:24.270  [2. Trade] Dotforce-Brill(EU): hope all of ya hunters are ready for yet another op season! :D
+8/6 12:37:24.668  [2. Trade] Nìght: {cross} Lfm Town Rp // Pst for Inv // LAST CALL!!! {cross}
+8/6 12:37:25.501  Arleus creates Bold Serpent's Eye.
+8/6 12:37:26.808  [2. Trade] Variuisa-Brill(EU): and Live*
+8/6 12:37:29.364  [2. Trade] Galifrey-Brill(EU): Une guilde fr?
+8/6 12:37:29.700  Arleus creates Bold Serpent's Eye.
+8/6 12:37:35.170  [2. Trade] Darksa: you cannot get it here ToT is closed and ik
+8/6 12:37:36.719  [2. Trade] Anolen-Brill(EU): Hello im Teena freeman,and i want to be you're !@#$ buddy heres my number #{865}428-1557 please call me i'm soooo wet.I love you all i go with women or men /and you men out there i live in . Sevierville,Tennessee Area code 37861 call me loves i hope i see
+8/6 12:37:37.579  [5. warrreport] Warrdrtest: warrreport 12490 133 9.8713865280151 19.410047531128 4343 4.9073448181152 3275 3.7005648612976 7890 46.529998779297 23.306602478027 0 0 WARRIOR 90
+8/6 12:37:39.430  Cathereile creates Deft Vermilion Onyx.
+8/6 12:37:41.890  Cathereile creates Deft Vermilion Onyx.
+8/6 12:37:42.239  [2. Trade] Anolen-Brill(EU): Hello im Teena freeman,and i want to be you're %^&* buddy heres my number #{865}428-1557 please call me i'm soooo wet.I love you all i go with women or men /and you men out there i live in . Sevierville,Tennessee Area code 37861 call me loves i hope i see
+8/6 12:37:44.620  Cathereile creates Deft Vermilion Onyx.
+8/6 12:37:46.424  Arleus creates Reverberating Primal Diamond.
+8/6 12:37:48.093  [5. warrreport] Warrdrtest: warrreport 12490 133 10.160478591919 19.410047531128 4617 5.2169489860535 3275 3.7005648612976 7890 46.529998779297 23.306602478027 0 0 WARRIOR 90
+8/6 12:37:52.362  Cathereile creates Quick Sun's Radiance.
+8/6 12:37:54.069  [2. Trade] Shinkìcker: done. omw
+8/6 12:37:54.069  [5. warrreport] Warrdrtest: warrreport 12490 133 10.160478591919 19.548480987549 4617 5.2169489860535 3410 3.8531074523926 7890 46.529998779297 23.306602478027 0 0 WARRIOR 90
+8/6 12:37:55.131  Cathereile creates Quick Sun's Radiance.
+8/6 12:37:55.615  [2. Trade] Ríptidez: Need dps for BT
+8/6 12:37:55.615  [2. Trade] Valorick: Wut ^
+8/6 12:37:56.523  Illîlîlîlîlî has defeated Skyo-Brill(EU) in a duel
+8/6 12:37:57.130  Arleus creates Bold Primordial Ruby.
+8/6 12:37:57.677  Cathereile creates Quick Sun's Radiance.
+8/6 12:38:00.248  [5. warrreport] Warrdrtest: warrreport 12490 133 10.731818199158 19.548480987549 5164 5.8350281715393 3410 3.8531074523926 7890 46.529998779297 23.306602478027 0 0 WARRIOR 90
+8/6 12:38:03.109  Cathereile creates Precise Primordial Ruby.
+8/6 12:38:03.967  Arleus creates Bold Primordial Ruby.
+8/6 12:38:06.636  [5. warrreport] Warrdrtest: warrreport 12490 133 10.731818199158 19.6744556427 5164 5.8350281715393 3533 3.9920904636383 7890 46.529998779297 23.306602478027 0 0 WARRIOR 90
+8/6 12:38:07.259  Cathereile creates Precise Primordial Ruby.
+8/6 12:38:07.259  Arleus creates Bold Primordial Ruby.
+8/6 12:38:07.466  Paó-Brill(EU) creates Delicate Serpent's Eye.
+8/6 12:38:10.551  Arleus creates Bold Primordial Ruby.
+8/6 12:38:10.996  Paó-Brill(EU) creates Delicate Serpent's Eye.
+8/6 12:38:12.306  [5. warrreport] Warrdrtest: warrreport 12490 133 10.731818199158 19.78392791748 5164 5.8350281715393 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:38:14.524  Cathereile creates Rigid River's Heart.
+8/6 12:38:15.094  [2. Trade] Evanzdun: Priest holy 10/13 HC 550 ilvl lfg SoO
+8/6 12:38:15.263  Arleus creates Bold Primordial Ruby.
+8/6 12:38:16.805  Cathereile creates Rigid River's Heart.
+8/6 12:38:17.047  Arleus creates Bold Primordial Ruby.
+8/6 12:38:19.368  [5. warrreport] Warrdrtest: warrreport 12490 133 10.86648273468 19.78392791748 5294 5.9819207191467 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:38:22.641  Arleus creates Bold Primordial Ruby.
+8/6 12:38:23.298  Cathereile creates Lightning Wild Jade.
+8/6 12:38:23.340  [2. Trade] Thynix: Frost mage LF 2v2 partner
+8/6 12:38:26.205  [5. warrreport] Warrdrtest: warrreport 12490 133 10.970810890198 19.78392791748 5395 6.0960450172424 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:38:32.004  [5. warrreport] Warrdrtest: warrreport 12490 133 11.085174560547 19.78392791748 5506 6.2214689254761 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:38:32.949  Cathereile creates Agile Primal Diamond.
+8/6 12:38:39.562  Gulandron creates Crafty Vermilion Onyx.
+8/6 12:38:39.562  Frostylol-Brill(EU) creates Brilliant Serpent's Eye.
+8/6 12:38:42.112  Frostylol-Brill(EU) creates Brilliant Serpent's Eye.
+8/6 12:38:44.292  Cousin Slowhands says: Shame to sit on something so pretty.
+8/6 12:38:44.496  Frostylol-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 12:38:45.786  Mystic Birdhat says: I think yak has started to move.
+8/6 12:38:46.617  Gulandron creates Crafty Vermilion Onyx.
+8/6 12:38:58.564  Susuha-Brill(EU) creates Champion's Vermilion Onyx.
+8/6 12:38:58.792  Paó-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:38:59.242  Gulandron creates Destructive Primal Diamond.
+8/6 12:39:01.664  Susuha-Brill(EU) creates Champion's Vermilion Onyx.
+8/6 12:39:01.795  Paó-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:39:03.906  Paó-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:39:04.105  Frostylol-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:39:06.020  [5. warrreport] Warrdrtest: warrreport 12490 133 11.748712539673 19.78392791748 6156 6.9559321403503 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:39:06.266  Frostylol-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:39:07.921  Arleus creates Fierce Vermilion Onyx.
+8/6 12:39:08.037  Dryann creates Deft Vermilion Onyx.
+8/6 12:39:08.734  Frostylol-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:39:09.628  [2. Trade] Ríptidez: Need dps for BT
+8/6 12:39:09.821  Rakuen-Brill(EU) has defeated Jessicajungx-Brill(EU) in a duel
+8/6 12:39:10.390  Arleus creates Fierce Vermilion Onyx.
+8/6 12:39:10.651  [5. warrreport] Warrdrtest: warrreport 12490 133 12.23206615448 19.78392791748 6636 7.4983053207397 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:39:13.649  [5. warrreport] Warrdrtest: warrreport 12490 133 12.551219940186 19.78392791748 6956 7.8598871231079 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:39:13.746  Susuha-Brill(EU) creates Mystic Sun's Radiance.
+8/6 12:39:16.178  Arleus creates Bold Primordial Ruby.
+8/6 12:39:18.222  [5. warrreport] Warrdrtest: warrreport 12490 133 12.86794090271 19.78392791748 7276 8.2214689254761 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:39:18.574  Frostylol-Brill(EU) creates Stormy River's Heart.
+8/6 12:39:21.085  [5. warrreport] Warrdrtest: warrreport 12490 133 13.182255744934 19.78392791748 7596 8.5830507278442 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:39:21.891  Frostylol-Brill(EU) creates Stormy River's Heart.
+8/6 12:39:23.758  [5. warrreport] Warrdrtest: warrreport 12490 133 13.182255744934 19.78392791748 7596 8.5830507278442 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:39:25.940  Frostylol-Brill(EU) creates Stormy River's Heart.
+8/6 12:39:28.992  [5. warrreport] Warrdrtest: warrreport 12490 133 13.494194030762 19.78392791748 7916 8.9446325302124 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:39:30.240  Trubelmaker-Brill(EU) creates Bold Primordial Ruby.
+8/6 12:39:32.491  Trubelmaker-Brill(EU) creates Bold Primordial Ruby.
+8/6 12:39:33.030  [5. warrreport] Warrdrtest: warrreport 12490 133 13.803781509399 19.78392791748 8236 9.3062143325806 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:39:35.403  Trubelmaker-Brill(EU) creates Bold Primordial Ruby.
+8/6 12:39:37.494  Trubelmaker-Brill(EU) creates Bold Primordial Ruby.
+8/6 12:39:38.653  [5. warrreport] Warrdrtest: warrreport 12490 133 14.111044883728 19.78392791748 8556 9.6677961349487 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:39:44.171  [5. warrreport] Warrdrtest: warrreport 12490 133 14.718702316284 19.78392791748 9196 10.390960693359 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:39:46.602  [2. Trade] Ahrimz: any raids happening?
+8/6 12:39:50.535  Paó-Brill(EU) creates Glinting Imperial Amethyst.
+8/6 12:39:51.393  Cathereile creates Precise Primordial Ruby.
+8/6 12:39:58.972  Dièsél-Brill(EU) creates Energized Wild Jade.
+8/6 12:39:59.457  [5. warrreport] Warrdrtest: warrreport 12490 133 14.718702316284 19.78392791748 9196 10.390960693359 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:40:00.216  Cathereile creates Deft Vermilion Onyx.
+8/6 12:40:00.216  Dryann creates Delicate Primordial Ruby.
+8/6 12:40:03.929  [5. warrreport] Warrdrtest: warrreport 12550 133 15.317371368408 19.84100151062 9836 11.114124298096 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:40:07.043  [2. Trade] Hâyley: bm hunter lf 2s
+8/6 12:40:12.565  [2. Trade] Анжсмерти: ДА ПОШЕЛ ТЫ НАХУЙ
+8/6 12:40:20.715  [5. warrreport] Warrdrtest: warrreport 12550 133 16.820726394653 19.84100151062 11486 12.978530883789 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:40:21.558  [2. Trade] Hoytan: LF DRUID RP
+8/6 12:40:25.167  [2. Trade] Alliria: Stupid Russians.
+8/6 12:40:28.397  [5. warrreport] Warrdrtest: warrreport 12550 133 15.317371368408 19.84100151062 9836 11.114124298096 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:40:33.579  [2. Trade] Shausinne: WTB port to vale
+8/6 12:40:35.459  Trubelmaker-Brill(EU) creates Bold Primordial Ruby.
+8/6 12:40:37.464  Trubelmaker-Brill(EU) creates Bold Primordial Ruby.
+8/6 12:40:40.051  Trubelmaker-Brill(EU) creates Bold Primordial Ruby.
+8/6 12:40:41.333  [2. Trade] Анжсмерти-Brill(EU): ЗА СЛОВА ОТВЕТИШЬ
+8/6 12:40:42.489  Trubelmaker-Brill(EU) creates Bold Primordial Ruby.
+8/6 12:40:44.597  Trubelmaker-Brill(EU) creates Bold Primordial Ruby.
+8/6 12:41:06.062  [5. warrreport] Warrdrtest: warrreport 12550 133 20.431167602539 19.84100151062 15718 17.760452270508 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:41:06.887  [2. Trade] Hâyley: bm hunter lf 2s
+8/6 12:41:10.133  [5. warrreport] Warrdrtest: warrreport 12550 133 26.52458190918 19.84100151062 23863 26.963842391968 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:41:11.174  [2. Trade] Ridback: La guilde Nécros recrute tout joueurs français guilde de lvl 18 =)
+8/6 12:41:11.597  Fraizonne-Brill(EU) prepares a Great Pandaren Banquet!
+8/6 12:41:20.082  [5. warrreport] Warrdrtest: warrreport 12550 133 26.52458190918 19.84100151062 23863 26.963842391968 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:41:22.699  [5. warrreport] Warrdrtest: warrreport 12550 133 26.52458190918 19.84100151062 23863 26.963842391968 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:41:23.482  Leylà prepares a Great Pandaren Banquet!
+8/6 12:41:23.913  Esfnydhg-Brill(EU) creates Bold Primordial Ruby.
+8/6 12:41:27.217  Esfnydhg-Brill(EU) creates Bold Primordial Ruby.
+8/6 12:41:27.801  [2. Trade] Taledril-Brill(EU): Wtb celestial quest ;<
+8/6 12:41:31.462  Esfnydhg-Brill(EU) creates Bold Serpent's Eye.
+8/6 12:41:34.649  Esfnydhg-Brill(EU) creates Bold Serpent's Eye.
+8/6 12:41:36.989  [5. warrreport] Warrdrtest: warrreport 12550 133 15.317371368408 19.84100151062 9836 11.114124298096 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:41:46.242  [5. warrreport] Warrdrtest: warrreport 12550 133 14.869204521179 20.330507278442 9356 10.571751594543 4120 4.6553673744202 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:41:49.709  [5. warrreport] Warrdrtest: warrreport 12550 133 14.41600894928 20.817842483521 8876 10.029378890991 4600 5.1977400779724 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:41:49.908  [2. Trade] Shausinne: Come on there has to be a mage somewhere > _ >
+8/6 12:41:50.772  Tryodagay creates Smooth Sun's Radiance.
+8/6 12:41:52.485  Tryodagay creates Smooth Sun's Radiance.
+8/6 12:41:53.544  Esfnydhg-Brill(EU) creates Inscribed Vermilion Onyx.
+8/6 12:41:55.750  [5. warrreport] Warrdrtest: warrreport 12550 133 14.41600894928 20.817842483521 8876 10.029378890991 4600 5.1977400779724 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:41:59.308  Tryodagay creates Smooth Sun's Radiance.
+8/6 12:41:59.308  Esfnydhg-Brill(EU) creates Inscribed Vermilion Onyx.
+8/6 12:42:00.945  Tryodagay creates Smooth Sun's Radiance.
+8/6 12:42:00.945  Esfnydhg-Brill(EU) creates Inscribed Vermilion Onyx.
+8/6 12:42:01.004  [2. Trade] Cytrin: {CIRCLE}{STAR} SELLING COMPANIONS PST FOR INFO{CIRCLE}{STAR}
+8/6 12:42:02.779  Tryodagay creates Smooth Sun's Radiance.
+8/6 12:42:03.629  [5. warrreport] Warrdrtest: warrreport 12670 133 13.803781509399 21.576663970947 8236 9.3062143325806 5240 5.9209041595459 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:42:04.509  Tryodagay creates Smooth Sun's Radiance.
+8/6 12:42:06.247  Tryodagay creates Smooth Sun's Radiance.
+8/6 12:42:06.628  [2. Trade] Hâyley: bm hunter lf 2s
+8/6 12:42:07.784  [5. warrreport] Warrdrtest: warrreport 12670 133 13.494194030762 21.898126602173 7916 8.9446325302124 5560 6.2824859619141 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:42:07.933  Tryodagay creates Smooth Sun's Radiance.
+8/6 12:42:09.803  Tryodagay creates Smooth Sun's Radiance.
+8/6 12:42:11.557  [5. warrreport] Warrdrtest: warrreport 12670 133 13.182255744934 22.218645095825 7596 8.5830507278442 5880 6.6440677642822 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:42:11.574  Tryodagay creates Smooth Sun's Radiance.
+8/6 12:42:17.206  Illîlîlîlîlî yells: Over 9000!
+8/6 12:42:17.311  Illîlîlîlîlî yells: Over 9000!
+8/6 12:42:18.130  [5. warrreport] Warrdrtest: warrreport 12670 133 12.86794090271 22.53822517395 7276 8.2214689254761 6200 7.0056495666504 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:42:19.096  Peay-Brill(EU) yells: Peow
+8/6 12:42:22.618  Peay-Brill(EU) yells: Peow
+8/6 12:42:22.862  [5. warrreport] Warrdrtest: warrreport 12790 133 12.551219940186 22.967832565308 6956 7.8598871231079 6520 7.3672318458557 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:42:22.862  Peay-Brill(EU) yells: Peow
+8/6 12:42:23.378  Illîlîlîlîlî has defeated Skyo-Brill(EU) in a duel
+8/6 12:42:23.536  [2. Trade] Hoytan: LF DRUID
+8/6 12:42:26.170  [2. Trade] Hoytan: rp
+8/6 12:42:28.519  [5. warrreport] Warrdrtest: warrreport 12790 133 12.23206615448 23.285223007202 6636 7.4983053207397 6840 7.7288136482239 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:42:29.199  Dakkr-Brill(EU) creates Bold Primordial Ruby.
+8/6 12:42:30.765  Esfnydhg-Brill(EU) creates Sovereign Imperial Amethyst.
+8/6 12:42:32.162  Dakkr-Brill(EU) creates Bold Primordial Ruby.
+8/6 12:42:32.613  Esfnydhg-Brill(EU) creates Sovereign Imperial Amethyst.
+8/6 12:42:33.681  [5. warrreport] Warrdrtest: warrreport 12790 133 11.910451889038 23.60168838501 6316 7.1367230415344 7160 8.0903959274292 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:42:34.424  Esfnydhg-Brill(EU) creates Sovereign Imperial Amethyst.
+8/6 12:42:38.586  [5. warrreport] Warrdrtest: warrreport 12790 133 11.586347579956 23.917234420776 5996 6.7751412391663 7480 8.4519777297974 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:42:40.539  Dakkr-Brill(EU) creates Fractured Sun's Radiance.
+8/6 12:42:47.535  [2. Trade] Everop-Brill(EU): Where do you get scopes or living steel weapon chain?
+8/6 12:42:48.237  [5. warrreport] Warrdrtest: warrreport 12730 133 11.259725570679 24.1770362854 5676 6.4135594367981 7800 8.8135595321655 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:42:53.734  Esfnydhg-Brill(EU) creates Reverberating Primal Diamond.
+8/6 12:43:03.724  [2. Trade] Hfs-Brill(EU): Warr LF Rshaman /rdruid for 2s /w me!
+8/6 12:43:04.769  Dakkr-Brill(EU) creates Skillful Vermilion Onyx.
+8/6 12:43:06.606  Dakkr-Brill(EU) creates Skillful Vermilion Onyx.
+8/6 12:43:08.150  [5. warrreport] Warrdrtest: warrreport 14689 133 11.259725570679 25.952768325806 5676 6.4135594367981 7800 8.8135595321655 4977 35.849002838135 21.066265106201 0 0 WARRIOR 90
+8/6 12:43:10.909  [5. warrreport] Warrdrtest: warrreport 14689 133 12.917211532593 25.952768325806 7326 8.2779664993286 7800 8.8135595321655 4977 35.849002838135 21.066265106201 0 0 WARRIOR 90
+8/6 12:43:11.735  Illîlîlîlîlî has defeated Skyo-Brill(EU) in a duel
+8/6 12:43:13.552  [5. warrreport] Warrdrtest: warrreport 14689 133 14.510843276978 25.952768325806 8976 10.142373085022 7800 8.8135595321655 4977 35.849002838135 21.066265106201 0 0 WARRIOR 90
+8/6 12:43:14.113  Dakkr-Brill(EU) creates Effulgent Wild Jade.
+8/6 12:43:16.172  Dakkr-Brill(EU) creates Effulgent Wild Jade.
+8/6 12:43:16.830  [2. Trade] Glïn-Brill(EU): 2100 exp dpriest lf 2s
+8/6 12:43:19.062  Dakkr-Brill(EU) creates Effulgent Wild Jade.
+8/6 12:43:19.279  [2. Trade] Hâyley: bm hunter lf 2s
+8/6 12:43:27.190  [2. Trade] Крапси-Brill(EU): TO ICC 25 need 4 dps
+8/6 12:43:37.299  [2. Trade] Cytrin: BUYING  Obsidian Hatchling Razormaw Hatchling PAYING 450k A PIECE
+8/6 12:43:37.915  Dakkr-Brill(EU) creates Reverberating Primal Diamond.
+8/6 12:43:41.963  [2. Trade] Zèrxius: LFM ICC 25 NEED TANK
+8/6 12:43:53.231  [5. warrreport] Warrdrtest: warrreport 26450 133 11.259725570679 36.02917098999 5676 6.4135594367981 7800 8.8135595321655 4977 35.849002838135 21.066265106201 0 0 WARRIOR 90
+8/6 12:43:55.218  Dakkr-Brill(EU) creates Bold Serpent's Eye.
+8/6 12:43:55.885  [2. Trade] Koshayam-Brill(EU): MAGE Frost LFG Siege of Orgrimmar (keep in mind gear doesn't matter it will be scaled)
+8/6 12:43:56.884  Dakkr-Brill(EU) creates Bold Serpent's Eye.
+8/6 12:43:58.720  [5. warrreport] Warrdrtest: warrreport 26450 133 11.259725570679 36.02917098999 5676 6.4135594367981 7800 8.8135595321655 4977 35.849002838135 21.066265106201 0 0 WARRIOR 90
+8/6 12:44:02.284  [2. Trade] Glïn-Brill(EU): 2100 exp dpriest lf 2s
+8/6 12:44:10.656  [5. warrreport] Warrdrtest: warrreport 14689 133 11.259725570679 25.487985610962 5676 6.4135594367981 7320 8.2711868286133 5457 37.609004974365 21.438552856445 0 0 WARRIOR 90
+8/6 12:44:15.452  [5. warrreport] Warrdrtest: warrreport 14569 133 11.259725570679 24.912305831909 5676 6.4135594367981 6840 7.7288136482239 5937 39.369003295898 21.808895111084 0 0 WARRIOR 90
+8/6 12:44:17.447  Proebz-Brill(EU) creates Burning Primal Diamond.
+8/6 12:44:19.501  [5. warrreport] Warrdrtest: warrreport 14569 133 11.259725570679 24.599657058716 5676 6.4135594367981 6520 7.3672318458557 6257 40.542335510254 22.054718017578 0 0 WARRIOR 90
+8/6 12:44:24.241  [2. Trade] Headcase: as a fury warrior do i want  Dragon Roar or  Bladestorm?
+8/6 12:44:27.486  [5. warrreport] Warrdrtest: warrreport 14569 133 11.259725570679 24.286100387573 5676 6.4135594367981 6200 7.0056495666504 6577 41.715667724609 22.306880950928 0 0 WARRIOR 90
+8/6 12:44:30.616  [2. Trade] Barkber: Fire Mage LF 2s/3s
+8/6 12:44:30.814  [5. warrreport] Warrdrtest: warrreport 14569 133 11.259725570679 23.971628189087 5676 6.4135594367981 5880 6.6440677642822 6897 42.888999938965 22.550983428955 0 0 WARRIOR 90
+8/6 12:44:32.481  [2. Trade] Nikkì:  Bladestorm
+8/6 12:44:33.867  [5. warrreport] Warrdrtest: warrreport 14569 133 11.259725570679 23.656244277954 5676 6.4135594367981 5560 6.2824859619141 7217 44.062335968018 22.794237136841 0 0 WARRIOR 90
+8/6 12:44:33.867  [2. Trade] Pwnag-Brill(EU): any1 wanna do a RP?
+8/6 12:44:34.857  Proebz-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 12:44:37.403  Proebz-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 12:44:40.015  Proebz-Brill(EU) creates Brilliant Serpent's Eye.
+8/6 12:44:43.830  [2. Trade] Ridback-Brill(EU): La guilde Nécros recrute tout français
+8/6 12:44:43.830  [5. warrreport] Warrdrtest: warrreport 14449 133 11.259725570679 22.911804199219 5676 6.4135594367981 4920 5.5593218803406 7857 46.409004211426 23.27823638916 0 0 WARRIOR 90
+8/6 12:44:44.055  Proebz-Brill(EU) creates Brilliant Serpent's Eye.
+8/6 12:44:54.676  Dryann prepares a Great Pandaren Banquet!
+8/6 12:44:58.340  [5. warrreport] Warrdrtest: warrreport 14449 133 11.259725570679 21.953542709351 5676 6.4135594367981 3960 4.4745764732361 8817 49.929000854492 23.998016357422 0 0 WARRIOR 90
+8/6 12:45:02.248  [2. Trade] Крапси-Brill(EU): TO ICC 25 NEED 4 DPS
+8/6 12:45:08.170  [2. Trade] Бумм-Brill(EU): when trinks and enchant procs u wil love  Bladestorm ;)
+8/6 12:45:11.811  Mewl-Brill(EU) creates Agile Primal Diamond.
+8/6 12:45:12.932  [2. Trade] Pwnag-Brill(EU): any1 wanna do a RP?
+8/6 12:45:14.962  [1. General] Valantine: Resto druid LFG SoO
+8/6 12:45:19.726  [1. General] Supercoming: 한국사람있나영
+8/6 12:45:21.402  [5. warrreport] Warrdrtest: warrreport 12550 133 11.259725570679 19.84100151062 5676 6.4135594367981 3640 4.1129941940308 11096 58.285335540771 25.690204620361 0 0 WARRIOR 90
+8/6 12:45:25.836  [5. warrreport] Warrdrtest: warrreport 12550 133 11.259725570679 19.84100151062 5676 6.4135594367981 3640 4.1129941940308 11943 61.391002655029 26.304042816162 0 0 WARRIOR 90
+8/6 12:45:27.144  Proebz-Brill(EU) creates Mysterious Imperial Amethyst.
+8/6 12:45:28.889  Proebz-Brill(EU) creates Mysterious Imperial Amethyst.
+8/6 12:45:30.223  [2. Trade] Sias: Resto LF pro 2's 
+8/6 12:45:30.772  Proebz-Brill(EU) creates Mysterious Imperial Amethyst.
+8/6 12:45:36.618  [2. Trade] Sias: restro*
+8/6 12:45:36.856  Свитти creates Delicate Primordial Ruby.
+8/6 12:45:38.474  [2. Trade] Stresses: Bm Hunter LF Skilled 2's Partner. Just the Two of Us: 2000
+8/6 12:45:38.881  Свитти creates Delicate Primordial Ruby.
+8/6 12:45:40.251  [2. Trade] Stresses: Bm Hunter LF Skilled 2's Partner. Just the Two of Us: 2000
+8/6 12:45:40.810  [2. Trade] Крапси-Brill(EU): TO ICC 25 NEED 4 DPS
+8/6 12:45:40.810  Свитти creates Delicate Primordial Ruby.
+8/6 12:45:42.667  Свитти creates Delicate Primordial Ruby.
+8/6 12:45:44.623  Свитти creates Delicate Primordial Ruby.
+8/6 12:45:46.634  Свитти creates Delicate Primordial Ruby.
+8/6 12:45:48.427  [2. Trade] Eksima: Inv
+8/6 12:45:48.681  Свитти creates Delicate Primordial Ruby.
+8/6 12:45:49.445  Mewl-Brill(EU) creates Delicate Serpent's Eye.
+8/6 12:45:50.046  [1. General] Yoloswagxqt: LF healer for 3s!
+8/6 12:45:50.609  Свитти creates Delicate Primordial Ruby.
+8/6 12:45:51.252  Mewl-Brill(EU) creates Delicate Serpent's Eye.
+8/6 12:45:52.618  Свитти creates Delicate Primordial Ruby.
+8/6 12:45:52.896  [5. warrreport] Warrdrtest: warrreport 12550 133 20.229555130005 19.84100151062 15471 17.481355667114 3640 4.1129941940308 11943 61.391002655029 26.304042816162 0 0 WARRIOR 90
+8/6 12:45:53.157  [2. Trade] Pwnag-Brill(EU): any1 wanna do a fun RP?
+8/6 12:45:54.457  Свитти creates Delicate Primordial Ruby.
+8/6 12:45:55.855  Proebz-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:45:55.976  Mewl-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:45:56.216  [5. warrreport] Warrdrtest: warrreport 12550 133 23.541072845459 19.84100151062 19703 22.263277053833 3640 4.1129941940308 11943 61.391002655029 26.304042816162 0 0 WARRIOR 90
+8/6 12:45:56.323  Свитти creates Delicate Primordial Ruby.
+8/6 12:45:57.912  Mewl-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:45:58.221  Свитти creates Delicate Primordial Ruby.
+8/6 12:45:59.477  [5. warrreport] Warrdrtest: warrreport 12550 133 24.754732131958 19.84100151062 21353 24.127683639526 3640 4.1129941940308 11943 61.391002655029 26.304042816162 0 0 WARRIOR 90
+8/6 12:46:02.603  [2. Trade] Rackey: any raids going on
+8/6 12:46:04.343  [1. General] Yoloswagxqt-Brill(EU): LF healer for 3s!
+8/6 12:46:05.332  Ewwalliance-Brill(EU) creates Delicate Serpent's Eye.
+8/6 12:46:07.207  Ewwalliance-Brill(EU) creates Delicate Serpent's Eye.
+8/6 12:46:10.301  [2. Trade] Eksima: Invite to ICC
+8/6 12:46:11.653  Proebz-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:46:11.980  Illîlîlîlîlî has defeated Skyo-Brill(EU) in a duel
+8/6 12:46:12.660  [5. warrreport] Warrdrtest: warrreport 12550 133 16.885046005249 19.84100151062 11558 13.059886932373 3640 4.1129941940308 11943 61.391002655029 26.304042816162 0 0 WARRIOR 90
+8/6 12:46:14.168  Ewwalliance-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:46:16.098  Ewwalliance-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:46:17.790  Mewl-Brill(EU) creates Shifting Imperial Amethyst.
+8/6 12:46:18.007  Ewwalliance-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:46:18.607  Proebz-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:46:19.620  Mewl-Brill(EU) creates Shifting Imperial Amethyst.
+8/6 12:46:19.990  Ewwalliance-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:46:20.998  [5. warrreport] Warrdrtest: warrreport 12550 453 11.288734436035 19.84100151062 5676 6.4135594367981 3640 4.1129941940308 11463 59.631000518799 25.956874847412 0 0 WARRIOR 90
+8/6 12:46:21.626  Mewl-Brill(EU) creates Shifting Imperial Amethyst.
+8/6 12:46:21.934  Ewwalliance-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:46:23.432  [2. Trade] Glïn-Brill(EU): 2100 exp dpriest lf 2s
+8/6 12:46:23.925  Ewwalliance-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:46:25.708  Ewwalliance-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:46:27.612  Ewwalliance-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:46:29.303  [5. warrreport] Warrdrtest: warrreport 12550 453 11.288734436035 19.84100151062 5676 6.4135594367981 3640 4.1129941940308 11463 59.631000518799 25.956874847412 0 0 WARRIOR 90
+8/6 12:46:29.950  [1. General] Yoloswagxqt-Brill(EU): LF healer for 3s!
+8/6 12:46:32.579  [5. warrreport] Warrdrtest: warrreport 12670 933 11.332210540771 19.955060958862 5676 6.4135594367981 3640 4.1129941940308 10663 56.69766998291 25.367450714111 0 0 WARRIOR 90
+8/6 12:46:33.104  Sleepyhollow creates Bold Primordial Ruby.
+8/6 12:46:34.458  Ewwalliance-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:46:35.856  Mewl-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:46:36.204  Ewwalliance-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:46:37.261  [5. warrreport] Warrdrtest: warrreport 12670 1093 11.346691131592 19.955060958862 5676 6.4135594367981 3640 4.1129941940308 10343 55.524333953857 25.133026123047 0 0 WARRIOR 90
+8/6 12:46:37.593  Mewl-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:46:38.152  Ewwalliance-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:46:38.787  [2. Trade] Pwnag-Brill(EU): hisa
+8/6 12:46:39.316  Mewl-Brill(EU) creates Deft Vermilion Onyx.
+8/6 12:46:40.201  Ewwalliance-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:46:41.181  [5. warrreport] Warrdrtest: warrreport 12670 1253 11.361167907715 19.955060958862 5676 6.4135594367981 3640 4.1129941940308 10023 54.351001739502 24.897804260254 0 0 WARRIOR 90
+8/6 12:46:42.621  Asdeqweygwer-Brill(EU) creates Piercing Wild Jade.
+8/6 12:46:44.306  Asdeqweygwer-Brill(EU) creates Piercing Wild Jade.
+8/6 12:46:45.231  [5. warrreport] Warrdrtest: warrreport 12670 1413 11.375640869141 19.955060958862 5676 6.4135594367981 3640 4.1129941940308 9703 53.177669525146 24.661781311035 0 0 WARRIOR 90
+8/6 12:46:46.090  Asdeqweygwer-Brill(EU) creates Piercing Wild Jade.
+8/6 12:46:46.737  Свитти creates Agile Primal Diamond.
+8/6 12:46:47.905  Asdeqweygwer-Brill(EU) creates Piercing Wild Jade.
+8/6 12:46:49.675  Asdeqweygwer-Brill(EU) creates Piercing Wild Jade.
+8/6 12:46:51.466  Asdeqweygwer-Brill(EU) creates Piercing Wild Jade.
+8/6 12:46:53.234  Asdeqweygwer-Brill(EU) creates Piercing Wild Jade.
+8/6 12:46:55.051  Asdeqweygwer-Brill(EU) creates Piercing Wild Jade.
+8/6 12:46:55.351  [1. General] Onisionn-Brill(EU): vah main pwnag?
+8/6 12:46:55.351  [5. warrreport] Warrdrtest: warrreport 12790 1733 11.40456867218 20.069000244141 5676 6.4135594367981 3640 4.1129941940308 9063 50.831001281738 24.187313079834 0 0 WARRIOR 90
+8/6 12:46:56.801  Asdeqweygwer-Brill(EU) creates Piercing Wild Jade.
+8/6 12:46:58.550  Asdeqweygwer-Brill(EU) creates Piercing Wild Jade.
+8/6 12:47:00.668  Красноормеец-Brill(EU) creates Ink of Dreams.
+8/6 12:47:01.905  [5. warrreport] Warrdrtest: warrreport 12790 1893 11.419025421143 20.069000244141 5676 6.4135594367981 3640 4.1129941940308 8743 49.657669067383 23.94885635376 0 0 WARRIOR 90
+8/6 12:47:04.060  Asdeqweygwer-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:47:06.732  Asdeqweygwer-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:47:06.952  Trubelmaker-Brill(EU) has defeated Jeuns-Brill(EU) in a duel
+8/6 12:47:07.202  [5. warrreport] Warrdrtest: warrreport 12790 2053 11.433477401733 20.069000244141 5676 6.4135594367981 3640 4.1129941940308 8423 48.484336853027 23.702533721924 0 0 WARRIOR 90
+8/6 12:47:08.521  Asdeqweygwer-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:47:09.294  [2. Trade] Sias: Restro Druid LF 2's
+8/6 12:47:10.244  Asdeqweygwer-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:47:10.284  [1. General] Yoloswagxqt-Brill(EU): LF healer for 3s!
+8/6 12:47:10.850  [2. Trade] Tylerial: LF mage
+8/6 12:47:11.017  [2. Trade] Pwnag-Brill(EU): ahh bim ta raw onisionn?
+8/6 12:47:12.012  Asdeqweygwer-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:47:12.052  [5. warrreport] Warrdrtest: warrreport 12790 2213 11.447925567627 20.069000244141 5676 6.4135594367981 3640 4.1129941940308 8103 47.311004638672 23.462413787842 0 0 WARRIOR 90
+8/6 12:47:13.770  Asdeqweygwer-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:47:14.584  Sleepyhollow creates Smooth Sun's Radiance.
+8/6 12:47:15.422  Asdeqweygwer-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:47:17.189  Asdeqweygwer-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:47:18.884  Asdeqweygwer-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:47:19.693  [5. warrreport] Warrdrtest: warrreport 12730 2373 11.4623670578 20.012044906616 5676 6.4135594367981 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:47:20.908  Asdeqweygwer-Brill(EU) creates Smooth Sun's Radiance.
+8/6 12:47:24.246  [1. General] Onisionn-Brill(EU): hann farting bum
+8/6 12:47:26.128  Asdeqweygwer-Brill(EU) creates Potent Vermilion Onyx.
+8/6 12:47:27.257  [2. Trade] Yoloswagxqt-Brill(EU): LF healer for 3s!
+8/6 12:47:27.927  Asdeqweygwer-Brill(EU) creates Potent Vermilion Onyx.
+8/6 12:47:29.195  [5. warrreport] Warrdrtest: warrreport 12730 2373 11.4623670578 20.012044906616 5676 6.4135594367981 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:47:29.696  Asdeqweygwer-Brill(EU) creates Potent Vermilion Onyx.
+8/6 12:47:31.403  Asdeqweygwer-Brill(EU) creates Potent Vermilion Onyx.
+8/6 12:47:33.297  Asdeqweygwer-Brill(EU) creates Potent Vermilion Onyx.
+8/6 12:47:33.617  [2. Trade] Pwnag-Brill(EU): ahh willy bam bam
+8/6 12:47:34.963  Asdeqweygwer-Brill(EU) creates Potent Vermilion Onyx.
+8/6 12:47:35.465  [5. warrreport] Warrdrtest: warrreport 12730 2373 13.111978530884 20.012044906616 7326 8.2779664993286 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:47:36.895  Asdeqweygwer-Brill(EU) creates Potent Vermilion Onyx.
+8/6 12:47:38.633  Asdeqweygwer-Brill(EU) creates Potent Vermilion Onyx.
+8/6 12:47:39.081  [2. Trade] Sorpoze-Brill(EU): VS Hunter lf 2s
+8/6 12:47:40.272  Ewwalliance-Brill(EU) creates Agile Primal Diamond.
+8/6 12:47:40.272  Asdeqweygwer-Brill(EU) creates Potent Vermilion Onyx.
+8/6 12:47:42.286  Asdeqweygwer-Brill(EU) creates Potent Vermilion Onyx.
+8/6 12:47:42.399  [1. General] Onisionn-Brill(EU): huhu!
+8/6 12:47:44.268  [2. Trade] Sias: yolo im a healer
+8/6 12:47:51.852  [2. Trade] Raelá-Brill(EU): yolo suck my dick
+8/6 12:47:54.937  Loltrololol yells: ITS GOING DOWN SWEET CHEEKS!
+8/6 12:47:56.068  [2. Trade] Loryanna-Brill(EU): WW Monk lf 2v2 partner want healer.
+8/6 12:47:59.700  Imaoctopus yells: 1k to whoever can kill me in a duel!
+8/6 12:48:00.339  [2. Trade] Glïn-Brill(EU): 2100 exp dpriest lf 2s
+8/6 12:48:00.630  [2. Trade] Slayez: LF more to FL need all
+8/6 12:48:01.681  Nerfmeblizz creates Burning Primal Diamond.
+8/6 12:48:04.443  [2. Trade] Pwnag-Brill(EU): PICKY NIONS
+8/6 12:48:08.479  [2. Trade] Slayez-Brill(EU): LF more to FL need all for transmog
+8/6 12:48:13.860  Vïce has defeated Jeuns-Brill(EU) in a duel
+8/6 12:48:16.943  [5. warrreport] Warrdrtest: warrreport 12730 2373 13.111978530884 20.012044906616 7326 8.2779664993286 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:48:17.548  Loltrololol has defeated Oneshótted in a duel
+8/6 12:48:17.651  Âldriana-Brill(EU) has defeated Trubelmaker-Brill(EU) in a duel
+8/6 12:48:17.817  [5. warrreport] Warrdrtest: warrreport 12730 2373 17.061603546143 20.012044906616 11558 13.059886932373 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:48:19.365  [5. warrreport] Warrdrtest: warrreport 12730 2373 24.897804260254 20.012044906616 21353 24.127683639526 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:48:22.965  [5. warrreport] Warrdrtest: warrreport 12730 2373 23.689083099365 20.012044906616 19703 22.263277053833 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:48:23.865  Légíõnâry creates Bold Primordial Ruby.
+8/6 12:48:25.665  Légíõnâry creates Bold Primordial Ruby.
+8/6 12:48:27.349  Légíõnâry creates Bold Primordial Ruby.
+8/6 12:48:27.679  [2. Trade] Sorpoze-Brill(EU): Hunter lf 2v2 partner
+8/6 12:48:29.062  Légíõnâry creates Bold Primordial Ruby.
+8/6 12:48:30.328  [5. warrreport] Warrdrtest: warrreport 12730 2373 24.897804260254 20.012044906616 21353 24.127683639526 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:48:30.633  Légíõnâry creates Bold Primordial Ruby.
+8/6 12:48:32.012  Padinced yells: anyone wanna do arenas with me
+8/6 12:48:32.903  Dwaerf-Brill(EU) creates Burning Primal Diamond.
+8/6 12:48:33.233  Légíõnâry creates Bold Serpent's Eye.
+8/6 12:48:34.076  [5. warrreport] Warrdrtest: warrreport 12730 2373 26.066595077515 20.012044906616 23003 25.99209022522 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:48:34.979  Légíõnâry creates Bold Serpent's Eye.
+8/6 12:48:36.695  [5. warrreport] Warrdrtest: warrreport 12730 2373 26.066595077515 20.012044906616 23003 25.99209022522 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:48:38.014  [5. warrreport] Warrdrtest: warrreport 12730 2373 22.987907409668 20.012044906616 18771 21.210168838501 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:48:39.294  [5. warrreport] Warrdrtest: warrreport 12730 2373 14.698190689087 20.012044906616 8976 10.142373085022 3640 4.1129941940308 7783 46.137668609619 23.221467971802 0 0 WARRIOR 90
+8/6 12:48:43.800  Dwaerf-Brill(EU) creates Brilliant Serpent's Eye.
+8/6 12:48:44.310  Nerfmeblizz creates Reckless Vermilion Onyx.
+8/6 12:48:45.587  Angena invites you to join Avenged shadows.
+8/6 12:48:45.641  Dwaerf-Brill(EU) creates Brilliant Serpent's Eye.
+8/6 12:48:46.051  Nerfmeblizz creates Reckless Vermilion Onyx.
+8/6 12:48:47.910  Nerfmeblizz creates Reckless Vermilion Onyx.
+8/6 12:48:49.763  Nerfmeblizz creates Reckless Vermilion Onyx.
+8/6 12:48:49.957  [2. Trade] Vanne: Whats the best rouge pvp spec?
+8/6 12:48:50.257  Pypp-Brill(EU) creates Agile Primal Diamond.
+8/6 12:48:52.107  Warriorsbe says: join to my team
+8/6 12:48:53.501  [2. Trade] Slayez-Brill(EU): LF more to FL need all for transmog
+8/6 12:48:55.131  Nerfmeblizz creates Artful Vermilion Onyx.
+8/6 12:48:55.507  Légíõnâry creates Quick Sun's Radiance.
+8/6 12:48:56.900  Nerfmeblizz creates Artful Vermilion Onyx.
+8/6 12:48:57.196  Légíõnâry creates Quick Sun's Radiance.
+8/6 12:48:57.513  [2. Trade] Toospookyme: assass
+8/6 12:48:58.483  [2. Trade] Themasters: all of them atm
+8/6 12:48:58.887  Légíõnâry creates Quick Sun's Radiance.
+8/6 12:49:02.408  [2. Trade] Legolaws: Combat is the most op
+8/6 12:49:03.315  [2. Trade] Legolaws: atm
+8/6 12:49:03.480  [2. Trade] Tyírian-Brill(EU): Wtb gaint Growth potion plz
+8/6 12:51:36.673  Joined Channel: |Hchannel:2924064|h[(null)]|h
+8/6 12:51:36.673  Joined Channel: |Hchannel:2924064|h[(null)]|h
+8/6 12:51:36.673  Joined Channel: |Hchannel:2924064|h[(null)]|h
+8/6 12:51:36.905  Joined Channel: |Hchannel:2924064|h[(null)]|h
+8/6 12:51:36.905  Joined Channel: |Hchannel:2924064|h[(null)]|h
+8/6 12:51:39.002  Fozkop-Brill(EU) creates Shattered Wild Jade.
+8/6 12:51:40.822  Fozkop-Brill(EU) creates Shattered Wild Jade.
+8/6 12:51:41.428  Фростерр-Brill(EU) creates Fractured Serpent's Eye.
+8/6 12:51:42.482  Fozkop-Brill(EU) creates Shattered Wild Jade.
+8/6 12:51:43.072  [2. Trade] Judgmenting: lf guild pref raiding
+8/6 12:51:43.277  Xrunz creates Bold Serpent's Eye.
+8/6 12:51:43.362  [2. Trade] Slayez: LF more to FL need 1 healer and dps for transmog
+8/6 12:51:44.213  Fozkop-Brill(EU) creates Shattered Wild Jade.
+8/6 12:51:47.938  [5. warrreport] Warrdrtest: warrreport 10890 2053 10.913948059082 16.929483413696 5170 5.8418078422546 2373 2.6813559532166 7022 43.347332000732 22.644090652466 0 0 WARRIOR 90
+8/6 12:51:51.262  [5. warrreport] Warrdrtest: warrreport 10509 2053 10.393197059631 16.450534820557 4669 5.2757062911987 2272 2.5672316551208 7022 43.347332000732 22.644090652466 0 0 WARRIOR 90
+8/6 12:51:52.141  [2. Trade] Recupëd: 2.3k rogue LF 2s or 3s. /w xp
+8/6 12:51:53.928  [5. warrreport] Warrdrtest: warrreport 9003 1573 9.9427213668823 14.964191436768 4283 4.8395481109619 2272 2.5672316551208 6097 39.955669403076 21.931915283203 0 0 WARRIOR 90
+8/6 12:51:54.766  Dwaerf-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 12:51:55.476  Vocale-Brill(EU) creates Willful Vermilion Onyx.
+8/6 12:51:55.476  Ewwalliance-Brill(EU) creates Glinting Imperial Amethyst.
+8/6 12:51:56.900  [5. warrreport] Warrdrtest: warrreport 8622 1573 9.409930229187 14.476773262024 3782 4.273446559906 2171 2.4531073570251 6097 39.955669403076 21.931915283203 0 0 WARRIOR 90
+8/6 12:51:57.265  Vocale-Brill(EU) creates Willful Vermilion Onyx.
+8/6 12:51:58.277  Fozkop-Brill(EU) creates Quick Sun's Radiance.
+8/6 12:51:58.686  Фростерр-Brill(EU) creates Fractured Sun's Radiance.
+8/6 12:51:59.084  Vocale-Brill(EU) creates Willful Vermilion Onyx.
+8/6 12:51:59.532  [5. warrreport] Warrdrtest: warrreport 6782 1093 8.9630327224731 12.625782012939 3409 3.8519773483276 2171 2.4531073570251 4636 34.598667144775 20.802297592163 0 0 WARRIOR 90
+8/6 12:52:00.015  Fozkop-Brill(EU) creates Quick Sun's Radiance.
+8/6 12:52:00.694  Фростерр-Brill(EU) creates Fractured Sun's Radiance.
+8/6 12:52:00.844  Vocale-Brill(EU) creates Willful Vermilion Onyx.
+8/6 12:52:01.825  Fozkop-Brill(EU) creates Quick Sun's Radiance.
+8/6 12:52:02.197  [5. warrreport] Warrdrtest: warrreport 6401 1093 8.2314338684082 12.12818813324 2738 3.0937852859497 2070 2.3389830589294 4636 34.598667144775 20.802297592163 0 0 WARRIOR 90
+8/6 12:52:03.537  Fozkop-Brill(EU) creates Quick Sun's Radiance.
+8/6 12:52:06.071  [1. General] Konutikawa: mage frost seek mat v2
+8/6 12:52:08.529  [5. warrreport] Warrdrtest: warrreport 4387 613 7.1354160308838 9.9074306488037 1796 2.0293784141541 1935 2.1864407062531 3525 30.525001525879 19.92272567749 0 0 WARRIOR 90
+8/6 12:52:10.752  [5. warrreport] Warrdrtest: warrreport 2467 293 6.4820981025696 6.5204200744629 1249 1.4112994670868 731 0.82598870992661 3525 30.525001525879 19.92272567749 0 0 WARRIOR 90
+8/6 12:52:12.697  [5. warrreport] Warrdrtest: warrreport 2045 133 5.7413945198059 5.9263062477112 621 0.7016949057579 608 0.68700563907623 3525 30.525001525879 19.92272567749 0 0 WARRIOR 90
+8/6 12:52:14.675  [5. warrreport] Warrdrtest: warrreport 1633 133 5.4157314300537 5.3585410118103 342 0.3864406645298 501 0.5661016702652 3364 29.93466758728 19.796184539795 0 0 WARRIOR 90
+8/6 12:52:16.652  Zukut creates Artful Vermilion Onyx.
+8/6 12:52:16.963  [5. warrreport] Warrdrtest: warrreport 972 133 5.2631826400757 4.6425094604492 212 0.23954802751541 501 0.5661016702652 3025 28.691665649414 19.527479171753 0 0 WARRIOR 90
+8/6 12:52:18.398  Zukut creates Artful Vermilion Onyx.
+8/6 12:52:18.744  Фростерр-Brill(EU) creates Fleet Primal Diamond.
+8/6 12:52:19.197  [5. warrreport] Warrdrtest: warrreport 972 133 5.2631826400757 4.6425094604492 212 0.23954802751541 501 0.5661016702652 1066 21.508666992188 17.947408676147 0 0 WARRIOR 90
+8/6 12:52:20.255  Zukut creates Artful Vermilion Onyx.
+8/6 12:52:21.532  Vocale-Brill(EU) creates Burning Primal Diamond.
+8/6 12:52:21.908  [2. Trade] Slayez-Brill(EU): LF more to FL need 2 healers ffor transmog
+8/6 12:52:21.908  [5. warrreport] Warrdrtest: warrreport 972 133 5.2631826400757 4.6425094604492 212 0.23954802751541 501 0.5661016702652 219 18.40299987793 17.24853515625 0 0 WARRIOR 90
+8/6 12:52:24.047  [1. General] Supercoming: 한국사람없나보네 ㅠ
+8/6 12:52:24.343  [5. warrreport] Warrdrtest: warrreport 591 133 5.1443066596985 3.6392226219177 111 0.12542372941971 0 0 219 18.40299987793 17.24853515625 0 0 WARRIOR 90
+8/6 12:52:27.063  [5. warrreport] Warrdrtest: warrreport 206 133 5.0132999420166 3.2165780067444 0 0 0 0 0 17.60000038147 17.070833206177 0 0 WARRIOR 90
+8/6 12:52:38.368  Zukut creates Brilliant Primordial Ruby.
+8/6 12:52:39.968  Zukut creates Brilliant Primordial Ruby.
+8/6 12:52:43.770  [2. Trade] Gali: Cherche membres de la guilde Necros
+8/6 12:52:44.054  Zukut creates Brilliant Serpent's Eye.
+8/6 12:52:46.396  Zukut creates Brilliant Serpent's Eye.
+8/6 12:52:49.086  Fozkop-Brill(EU) creates Reverberating Primal Diamond.
+8/6 12:52:49.376  [2. Trade] Judgmenting: LF guild
+8/6 12:53:00.137  Themasters has defeated Cutielol-Brill(EU) in a duel
+8/6 12:53:08.096  [2. Trade] Indikah: LF3M PREMADE RANDOM BG FARM
+8/6 12:53:10.714  [2. Trade] Slayez-Brill(EU): LF more to FL need 2 healers ffor transmog
+8/6 12:53:11.672  Zukut creates Mysterious Imperial Amethyst.
+8/6 12:53:13.102  Oneshótted has defeated Razmure in a duel
+8/6 12:53:13.407  Zukut creates Mysterious Imperial Amethyst.
+8/6 12:53:15.124  Zukut creates Mysterious Imperial Amethyst.
+8/6 12:53:27.128  [2. Trade] Bassadl-Brill(EU): Prot oder Fury Warrior lf soo raid (10/13 tot hc )
+8/6 12:53:30.220  [2. Trade] Cedwall: wtf Nénuphar démesuré
+8/6 12:53:33.282  Zukut creates Burning Primal Diamond.
+8/6 12:53:35.236  [2. Trade] Recupëd-Brill(EU): 2.3k rogue LF 2s or 3s. /w xp
+8/6 12:53:36.151  [2. Trade] Mæximus-Brill(EU): bonjour, je cherce une guilde française svp ?
+8/6 12:53:36.357  [2. Trade] Slayez-Brill(EU): LF more to FL need 2 healers ffor transmog
+8/6 12:53:38.546  Razmure has defeated Oneshótted in a duel
+8/6 12:53:42.917  [2. Trade] Taldaldor: lf 2's BM hunter
+8/6 12:53:52.481  [2. Trade] Indikah-Brill(EU): LF3M PREMADE RANDOM BG FARM
+8/6 12:53:55.782  Artowa-Brill(EU) creates Delicate Primordial Ruby.
+8/6 12:53:57.949  Âtenea-Brill(EU) creates Timeless Imperial Amethyst.
+8/6 12:53:58.549  [2. Trade] Slayez-Brill(EU): LF more to FL need 2 healers ffor transmog
+8/6 12:53:59.954  Âtenea-Brill(EU) creates Timeless Imperial Amethyst.
+8/6 12:54:00.114  Niggër-Brill(EU) creates Secret Crane Wing Inscription.
+8/6 12:54:01.861  Âtenea-Brill(EU) creates Timeless Imperial Amethyst.
+8/6 12:54:03.708  Âtenea-Brill(EU) creates Timeless Imperial Amethyst.
+8/6 12:54:26.818  [2. Trade] Pandamane: Brewmaster Tank LF A Raid
+8/6 12:54:32.025  Omar Gonzalez says: How'd you like that card?
+8/6 12:54:38.841  Affliloc-Brill(EU) creates Fractured Serpent's Eye.
+8/6 12:54:41.044  [2. Trade] Koshayam-Brill(EU): Mage LFG Soo which starts after half an hour
+8/6 12:54:41.375  Affliloc-Brill(EU) creates Fractured Serpent's Eye.
+8/6 12:54:46.389  Affliloc-Brill(EU) creates Fractured Sun's Radiance.
+8/6 12:54:48.407  Affliloc-Brill(EU) creates Fractured Sun's Radiance.
+8/6 12:54:50.298  Affliloc-Brill(EU) creates Fractured Sun's Radiance.
+8/6 12:54:51.766  [2. Trade] Yoloswagxqt-Brill(EU): LF healer for 3s!
+8/6 12:54:55.670  [2. Trade] Spokoladka: 2.1cr disc priest lf 2v2  Just the Two of Us: 2000
+8/6 12:54:58.295  Affliloc-Brill(EU) creates Artful Vermilion Onyx.
+8/6 12:55:00.383  Affliloc-Brill(EU) creates Artful Vermilion Onyx.
+8/6 12:55:02.181  Affliloc-Brill(EU) creates Artful Vermilion Onyx.

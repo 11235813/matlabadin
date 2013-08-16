@@ -1,0 +1,616 @@
+﻿8/6 11:39:02.331  [5. dkreport] Dkdrtest: dkreport 9212 131 5.0131001472473 12.723934173584 0 0 0 0 3956 91.208335876465 0 0 0 DEATHKNIGHT 90
+8/6 11:39:02.897  Beforeyoux yells: Beforeyoux FINISH YOU !!!!
+8/6 11:39:07.336  [2. Trade] Rawzz-Brill(EU): By The Bit where The king is
+8/6 11:39:08.472  Beforeyoux has defeated Fearmyheals-Brill(EU) in a duel
+8/6 11:39:11.331  [2. Trade] Swiiffttyy: lf 2k warrior or rogue for 2s pst me
+8/6 11:39:15.444  [2. Trade] Vòlt: nizuao temple for pve gear
+8/6 11:39:15.950  [2. Trade] Rawzz-Brill(EU): Outside the big statue
+8/6 11:39:18.171  Mercenders creates Destructive Primal Diamond.
+8/6 11:39:22.502  Gimpsuit-Brill(EU) has defeated Osteoporoza-Brill(EU) in a duel
+8/6 11:39:32.072  [2. Trade] Zeit-Brill(EU): i look  Himmelsgolem wisper me pay 250k
+8/6 11:39:37.811  [2. Trade] Purpletrees: resto druid lf 2s
+8/6 11:39:38.114  [5. dkreport] Dkdrtest: dkreport 9212 131 5.0131001472473 12.723934173584 0 0 0 0 3956 91.208335876465 0 0 0 DEATHKNIGHT 90
+8/6 11:39:41.416  [5. dkreport] Dkdrtest: dkreport 8553 131 5.0131001472473 12.054159164429 0 0 0 0 3396 85.375 0 0 0 DEATHKNIGHT 90
+8/6 11:39:44.241  [5. dkreport] Dkdrtest: dkreport 8052 131 5.0131001472473 11.542325019836 0 0 0 0 3070 81.979164123535 0 0 0 DEATHKNIGHT 90
+8/6 11:39:47.018  [5. dkreport] Dkdrtest: dkreport 7464 131 5.0131001472473 10.938675880432 0 0 0 0 2652 77.625 0 0 0 DEATHKNIGHT 90
+8/6 11:39:48.748  Ôæüê creates Quick Serpent's Eye.
+8/6 11:39:49.535  [5. dkreport] Dkdrtest: dkreport 6963 131 5.0131001472473 10.421823501587 0 0 0 0 2271 73.65625 0 0 0 DEATHKNIGHT 90
+8/6 11:39:50.727  Ôæüê creates Quick Serpent's Eye.
+8/6 11:39:51.475  [5. dkreport] Dkdrtest: dkreport 6144 131 5.0131001472473 9.5718765258789 0 0 0 0 2271 73.65625 0 0 0 DEATHKNIGHT 90
+8/6 11:39:54.386  [5. dkreport] Dkdrtest: dkreport 5643 131 5.0131001472473 9.0488414764404 0 0 0 0 2271 73.65625 0 0 0 DEATHKNIGHT 90
+8/6 11:39:57.233  [5. dkreport] Dkdrtest: dkreport 4975 131 5.0131001472473 8.3477630615234 0 0 0 0 1793 68.67707824707 0 0 0 DEATHKNIGHT 90
+8/6 11:39:58.624  [2. Trade] Walsh: Best Feral PTR lf 3v3!
+8/6 11:39:58.836  [2. Trade] Walsh: Best Feral PTR lf 3v3!
+8/6 11:39:59.145  [5. dkreport] Dkdrtest: dkreport 4307 131 5.0131001472473 7.6424226760864 0 0 0 0 1348 64.04167175293 0 0 0 DEATHKNIGHT 90
+8/6 11:40:00.819  Taliqt creates Reverberating Primal Diamond.
+8/6 11:40:01.447  [5. dkreport] Dkdrtest: dkreport 3488 131 5.0131001472473 6.7717695236206 0 0 0 0 1348 64.04167175293 0 0 0 DEATHKNIGHT 90
+8/6 11:40:03.895  [5. dkreport] Dkdrtest: dkreport 2900 131 5.0131001472473 6.1426568031311 0 0 0 0 965 60.052085876465 0 0 0 DEATHKNIGHT 90
+8/6 11:40:06.092  [2. Trade] Kidsaygoon: anyone doing raids?
+8/6 11:40:06.092  [5. dkreport] Dkdrtest: dkreport 2456 131 5.0131001472473 5.6653633117676 0 0 0 0 965 60.052085876465 0 0 0 DEATHKNIGHT 90
+8/6 11:40:08.937  [5. dkreport] Dkdrtest: dkreport 1955 131 5.0131001472473 5.124454498291 0 0 0 0 626 56.520832061768 0 0 0 DEATHKNIGHT 90
+8/6 11:40:09.373  Yhui-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:40:09.832  [2. Trade] Plagadinds-Brill(EU): ALGUIEN QUE HABLE ESPAÑOL??
+8/6 11:40:11.081  Yhui-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:40:12.481  Ôæüê creates Zen Wild Jade.
+8/6 11:40:12.888  Yhui-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:40:13.373  [2. Trade] Dextrochan: 2k disc lf 3s same xp req
+8/6 11:40:14.160  Ôæüê creates Zen Wild Jade.
+8/6 11:40:14.730  Yhui-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:40:15.149  [5. dkreport] Dkdrtest: dkreport 1955 131 5.0131001472473 5.124454498291 0 0 0 0 626 56.520832061768 0 0 0 DEATHKNIGHT 90
+8/6 11:40:15.844  Ôæüê creates Zen Wild Jade.
+8/6 11:40:16.531  Yhui-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:40:17.568  Ôæüê creates Zen Wild Jade.
+8/6 11:40:18.436  Yhui-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:40:19.182  [2. Trade] Ktj-Brill(EU): 2.3k rogue LF priest for 2's
+8/6 11:40:19.908  [5. dkreport] Dkdrtest: dkreport 1108 131 5.0131001472473 4.2042922973633 0 0 0 0 626 56.520832061768 0 0 0 DEATHKNIGHT 90
+8/6 11:40:20.240  Yhui-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:40:23.920  [5. dkreport] Dkdrtest: dkreport 209 131 5.0131001472473 3.2197318077087 0 0 0 0 0 50 0 0 0 DEATHKNIGHT 90
+8/6 11:40:26.162  [2. Trade] Rawzz-Brill(EU): Glad Arms Warr LF 2v2,3v3
+8/6 11:40:29.278  [2. Trade] Center: Rank 1 Monk LF 2s/3s PST 2.2k+ exp please . 
+8/6 11:40:29.393  Yhui-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:40:31.342  Yhui-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:40:31.820  Poncoke-Brill(EU) creates Delicate Serpent's Eye.
+8/6 11:40:33.085  Yhui-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:40:33.231  Ôæüê creates Purified Imperial Amethyst.
+8/6 11:40:33.463  Poncoke-Brill(EU) creates Delicate Serpent's Eye.
+8/6 11:40:34.855  Ôæüê creates Purified Imperial Amethyst.
+8/6 11:40:34.967  Yhui-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:40:37.881  Mercenders creates Bold Serpent's Eye.
+8/6 11:40:43.579  Ôæüê creates Revitalizing Primal Diamond.
+8/6 11:40:53.411  Yhui-Brill(EU) creates Puissant Wild Jade.
+8/6 11:40:55.148  Yhui-Brill(EU) creates Puissant Wild Jade.
+8/6 11:40:55.398  [2. Trade] Purpletrees: Resto druid lf 2s!
+8/6 11:40:57.012  Yhui-Brill(EU) creates Puissant Wild Jade.
+8/6 11:40:58.795  Yhui-Brill(EU) creates Puissant Wild Jade.
+8/6 11:41:05.979  [2. Trade] Buffmeharder-Brill(EU): where do I get the PvE stuff?
+8/6 11:41:08.537  [2. Trade] Edvalix-Brill(EU): after 10 years of wow alliance still gets destroyed in pvp its amazing 
+8/6 11:41:10.945  [2. Trade] Dextrochan-Brill(EU): 2,3k rogue and 2k disc lf mage or hunter 3s
+8/6 11:41:10.945  [2. Trade] Bàrbenøire: boomie 1k9 up 2s 3s
+8/6 11:41:13.702  Bourney-Brill(EU) has defeated Trezaau-Brill(EU) in a duel
+8/6 11:41:23.217  Osteoporoza-Brill(EU) has defeated Themagicloaf-Brill(EU) in a duel
+8/6 11:41:27.531  [2. Trade] Edvalix-Brill(EU): like alll the weak players play alliance 
+8/6 11:41:33.332  [2. Trade] Dextrochan-Brill(EU): 2,3k rogue and 2k disc lf mage,ele or hunt for 3s
+8/6 11:41:43.941  [2. Trade] Skarmory: Well you're on alliance
+8/6 11:41:45.198  [2. Trade] Uruan: Feral LF 2's
+8/6 11:41:45.559  [2. Trade] Skarmory: so yeah
+8/6 11:41:50.806  [2. Trade] Animorphh: Boomy LF 2's
+8/6 11:41:53.541  Topallyheals-Brill(EU) yells: ITS OVER 9000
+8/6 11:41:53.541  [2. Trade] Theßigspoon: Shaman LF 2s partner
+8/6 11:41:56.970  [2. Trade] Edvalix-Brill(EU): im on ptr
+8/6 11:41:57.165  [2. Trade] Theßigspoon: Enh
+8/6 11:41:57.705  Poncoke-Brill(EU) creates Delicate Primordial Ruby.
+8/6 11:42:11.835  [2. Trade] Dextrochan-Brill(EU): 2,3k rogue and 2k disc lf mege,ele or hunt for 3s
+8/6 11:42:12.418  [2. Trade] Qupåe-Brill(EU): LFW icc 10 player normal 1 healer 3 dps pst for inv 
+8/6 11:42:26.942  Koshayam yells: OSTAVKA! OSTAVKA! OSTAVKA
+8/6 11:42:27.405  [2. Trade] Buffmeharder-Brill(EU): rofl no glifhtpath?
+8/6 11:42:28.922  [2. Trade] Theßigspoon: Dont Do ICC 10 player 
+8/6 11:42:33.850  Lardana's spoderman is dismissed.
+8/6 11:42:33.914  [5. dkreport] Dkdrtest: dkreport 209 131 5.0131001472473 3.2197318077087 0 0 0 0 0 50 0 0 0 DEATHKNIGHT 90
+8/6 11:42:35.063  Cirrus-Brill(EU) yells: FREE GOBBIES!!!!!!!!
+8/6 11:42:35.559  [2. Trade] Qupåe-Brill(EU): yes
+8/6 11:42:38.546  Poncoke-Brill(EU) creates Deadly Vermilion Onyx.
+8/6 11:42:40.316  Poncoke-Brill(EU) creates Deadly Vermilion Onyx.
+8/6 11:42:40.822  [2. Trade] Koshayam-Brill(EU): OSTAVKA! OSTAVKA!
+8/6 11:42:42.085  Poncoke-Brill(EU) creates Deadly Vermilion Onyx.
+8/6 11:42:42.699  [2. Trade] Theßigspoon:  Qupåe ima starta 25m heroic in 20min
+8/6 11:42:43.145  Beforeyoux has defeated Fearmyheals-Brill(EU) in a duel
+8/6 11:42:43.431  [2. Trade] Edvalix-Brill(EU): on horde live i win 90% of the bgs 
+8/6 11:42:43.874  Poncoke-Brill(EU) creates Deadly Vermilion Onyx.
+8/6 11:42:44.455  [2. Trade] Buffmeharder-Brill(EU): DO THEY THINK WE GET THE FLIGHTPATHES OURSELFES?!?!?!?!
+8/6 11:42:44.913  Váily-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:42:45.605  Iridius yells: KURVA!!!
+8/6 11:42:45.922  [2. Trade] Dextrochan-Brill(EU): 2,3k rogue and 2k disc lf mage,ele or hunt for 3s
+8/6 11:42:46.751  Váily-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:42:48.585  Váily-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:42:49.251  [5. dkreport] Dkdrtest: dkreport 2049 131 5.0131001472473 5.2261323928833 0 0 0 0 1164 62.125003814697 0 0 0 DEATHKNIGHT 90
+8/6 11:42:49.251  [2. Trade] Plagadinds-Brill(EU): ALGUIEN QUE HABLE ESPAÑOL?
+8/6 11:42:50.364  Váily-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:42:51.541  [5. dkreport] Dkdrtest: dkreport 3435 131 5.0131001472473 6.715202331543 0 0 0 0 2089 71.760414123535 0 0 0 DEATHKNIGHT 90
+8/6 11:42:52.165  Váily-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:42:52.894  [5. dkreport] Dkdrtest: dkreport 5275 131 5.0131001472473 8.663143157959 0 0 0 0 3321 84.59375 0 0 0 DEATHKNIGHT 90
+8/6 11:42:54.050  Váily-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:42:54.214  [5. dkreport] Dkdrtest: dkreport 6661 131 5.0131001472473 10.109141349792 0 0 0 0 4418 96.02082824707 0 0 0 DEATHKNIGHT 90
+8/6 11:42:55.913  [5. dkreport] Dkdrtest: dkreport 8581 131 5.0131001472473 12.082697868347 0 0 0 0 4418 96.02082824707 0 0 0 DEATHKNIGHT 90
+8/6 11:42:55.913  [2. Trade] Ummlol: LF HEALER FOR 2'S PST
+8/6 11:42:57.500  Koshayam-Brill(EU) yells: OSTAVKA!
+8/6 11:42:59.623  Denarrac-Brill(EU) creates Deadly Vermilion Onyx.
+8/6 11:43:01.312  Denarrac-Brill(EU) creates Deadly Vermilion Onyx.
+8/6 11:43:01.642  [5. dkreport] Dkdrtest: dkreport 9082 131 5.0131001472473 12.592120170593 0 0 0 0 4744 99.416664123535 0 0 0 DEATHKNIGHT 90
+8/6 11:43:03.060  Denarrac-Brill(EU) creates Deadly Vermilion Onyx.
+8/6 11:43:04.026  [5. dkreport] Dkdrtest: dkreport 9583 131 5.0131001472473 13.099273681641 0 0 0 0 5125 103.38542175293 0 0 0 DEATHKNIGHT 90
+8/6 11:43:06.139  Ekorngdøk-Brill(EU) creates Delicate Primordial Ruby.
+8/6 11:43:07.956  Ekorngdøk-Brill(EU) creates Delicate Primordial Ruby.
+8/6 11:43:08.371  [5. dkreport] Dkdrtest: dkreport 10084 131 5.0131001472473 13.604175567627 0 0 0 0 5125 103.38542175293 0 0 0 DEATHKNIGHT 90
+8/6 11:43:09.493  [5. dkreport] Dkdrtest: dkreport 10752 131 5.0131001472473 14.273900032043 0 0 0 0 5570 108.02082824707 0 0 0 DEATHKNIGHT 90
+8/6 11:43:09.720  Ekorngdøk-Brill(EU) creates Delicate Primordial Ruby.
+8/6 11:43:10.922  [5. dkreport] Dkdrtest: dkreport 11340 131 5.0131001472473 14.860151290894 0 0 0 0 5953 112.01042175293 0 0 0 DEATHKNIGHT 90
+8/6 11:43:10.942  Denarrac-Brill(EU) creates Jagged Wild Jade.
+8/6 11:43:10.942  Mercenders creates Smooth Sun's Radiance.
+8/6 11:43:11.601  Ekorngdøk-Brill(EU) creates Delicate Primordial Ruby.
+8/6 11:43:12.378  [5. dkreport] Dkdrtest: dkreport 11784 131 5.0131001472473 15.300822257996 0 0 0 0 5953 112.01042175293 0 0 0 DEATHKNIGHT 90
+8/6 11:43:12.732  Denarrac-Brill(EU) creates Jagged Wild Jade.
+8/6 11:43:13.419  Ekorngdøk-Brill(EU) creates Delicate Primordial Ruby.
+8/6 11:43:13.879  [5. dkreport] Dkdrtest: dkreport 12285 131 5.0131001472473 15.796002388 0 0 0 0 6292 115.54167175293 0 0 0 DEATHKNIGHT 90
+8/6 11:43:13.879  [2. Trade] Aprina: LFM BWL
+8/6 11:43:14.157  Denarrac-Brill(EU) creates Jagged Wild Jade.
+8/6 11:43:15.272  Ekorngdøk-Brill(EU) creates Delicate Primordial Ruby.
+8/6 11:43:18.472  Ekorngdøk-Brill(EU) creates Delicate Primordial Ruby.
+8/6 11:43:20.409  Ekorngdøk-Brill(EU) creates Delicate Primordial Ruby.
+8/6 11:43:23.033  [5. dkreport] Dkdrtest: dkreport 14244 131 5.0131001472473 17.711502075195 0 0 0 0 6292 115.54167175293 0 0 0 DEATHKNIGHT 90
+8/6 11:43:24.361  [2. Trade] Taldaldor: lf arena BM hunter
+8/6 11:43:24.704  [5. dkreport] Dkdrtest: dkreport 16203 131 5.0131001472473 19.594612121582 0 0 0 0 6292 115.54167175293 0 0 0 DEATHKNIGHT 90
+8/6 11:43:24.745  Ftw-Brill(EU) creates Artful Vermilion Onyx.
+8/6 11:43:24.745  Váily-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:43:26.542  Ftw-Brill(EU) creates Artful Vermilion Onyx.
+8/6 11:43:26.664  Váily-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:43:27.187  [2. Trade] Dextrochan-Brill(EU): 2,3k rogue and 2k disc lf mage,ele or hunt for 3s
+8/6 11:43:27.624  Ekorngdøk-Brill(EU) creates Delicate Serpent's Eye.
+8/6 11:43:28.416  Váily-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:43:28.523  [5. dkreport] Dkdrtest: dkreport 17102 131 5.0131001472473 20.448165893555 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:43:29.566  Ekorngdøk-Brill(EU) creates Delicate Serpent's Eye.
+8/6 11:43:30.456  Váily-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:43:30.614  Denarrac-Brill(EU) creates Smooth Sun's Radiance.
+8/6 11:43:31.699  Kronenburg-Brill(EU) creates Bold Serpent's Eye.
+8/6 11:43:32.303  Váily-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:43:32.406  Denarrac-Brill(EU) creates Smooth Sun's Radiance.
+8/6 11:43:33.432  Kronenburg-Brill(EU) creates Bold Serpent's Eye.
+8/6 11:43:34.159  Váily-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:43:37.303  [5. dkreport] Dkdrtest: dkreport 17422 131 5.0131001472473 20.750400543213 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:43:40.338  [2. Trade] Falintal: rdruid lf someoen to do 2s with
+8/6 11:43:41.629  [5. dkreport] Dkdrtest: dkreport 17422 131 5.0131001472473 20.750400543213 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:43:42.341  Denarrac-Brill(EU) creates Agile Primal Diamond.
+8/6 11:43:42.501  [2. Trade] Qupåe-Brill(EU): lfm 25 player heroic 2 healer 1 tank 7 dps pst for inv
+8/6 11:43:43.503  [5. dkreport] Dkdrtest: dkreport 17742 131 5.0131001472473 21.051803588867 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:43:45.666  [2. Trade] Крий: а продавци шмотом ток в свтилище есть?
+8/6 11:43:46.582  Osteoporoza-Brill(EU) has defeated Trezaau-Brill(EU) in a duel
+8/6 11:43:46.787  [5. dkreport] Dkdrtest: dkreport 18022 131 5.0131001472473 21.314853668213 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:43:47.293  Gimpsuit-Brill(EU) has defeated Beforeyoux in a duel
+8/6 11:43:49.468  [2. Trade] Plagadinds-Brill(EU): ALGUIEN QUE HABLE ESPAÑOL??
+8/6 11:43:51.790  Ekorngdøk-Brill(EU) creates Deadly Vermilion Onyx.
+8/6 11:43:52.269  [5. dkreport] Dkdrtest: dkreport 18182 131 5.0131001472473 21.464883804321 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:43:52.827  Kronenburg-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:43:53.674  Ekorngdøk-Brill(EU) creates Deadly Vermilion Onyx.
+8/6 11:43:54.926  [5. dkreport] Dkdrtest: dkreport 18342 131 5.0131001472473 21.614709854126 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:43:55.344  Gladebarth-Brill(EU) has defeated Reflexe in a duel
+8/6 11:43:55.448  Ekorngdøk-Brill(EU) creates Deadly Vermilion Onyx.
+8/6 11:43:57.605  [5. dkreport] Dkdrtest: dkreport 18682 131 5.0131001472473 21.932411193848 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:44:01.804  Bépal creates Artful Vermilion Onyx.
+8/6 11:44:01.944  Ekorngdøk-Brill(EU) creates Agile Primal Diamond.
+8/6 11:44:04.489  [5. dkreport] Dkdrtest: dkreport 18842 131 5.0131001472473 22.08159828186 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:44:07.991  [5. dkreport] Dkdrtest: dkreport 19122 131 5.0131001472473 22.342184066772 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:44:12.242  [2. Trade] Shamalalg-Brill(EU): where can you buy the pve gear?
+8/6 11:44:13.583  Condaana-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:44:14.433  [5. dkreport] Dkdrtest: dkreport 19282 131 5.0131001472473 22.490814208984 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:44:15.229  Condaana-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:44:15.806  Mercenders creates Smooth Sun's Radiance.
+8/6 11:44:17.151  Condaana-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:44:17.441  Mercenders creates Smooth Sun's Radiance.
+8/6 11:44:18.763  [5. dkreport] Dkdrtest: dkreport 19442 131 5.0131001472473 22.639242172241 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:44:19.215  Mercenders creates Smooth Sun's Radiance.
+8/6 11:44:20.862  Mercenders creates Smooth Sun's Radiance.
+8/6 11:44:21.279  [5. dkreport] Dkdrtest: dkreport 19602 131 5.0131001472473 22.787464141846 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:44:21.639  [2. Trade] Loudheals: Yak temple
+8/6 11:44:22.458  Mercenders creates Smooth Sun's Radiance.
+8/6 11:44:24.113  Mercenders creates Smooth Sun's Radiance.
+8/6 11:44:24.637  [2. Trade] ßøßlépøngë-Brill(EU): Qui 2v2 ? /w
+8/6 11:44:25.744  Mercenders creates Smooth Sun's Radiance.
+8/6 11:44:26.057  [5. dkreport] Dkdrtest: dkreport 19762 131 5.0131001472473 22.935485839844 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:44:26.104  Kronenburg-Brill(EU) creates Smooth Sun's Radiance.
+8/6 11:44:28.122  Kronenburg-Brill(EU) creates Smooth Sun's Radiance.
+8/6 11:44:30.107  [2. Trade] Center: Maybe IF I Twist IT Is recruiting 2000+ Rated/EXp players , Must beable to proove dont suckm Getting the good people into one big guild :D X
+8/6 11:44:30.992  Holyholes-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:44:32.618  Holyholes-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:44:34.314  Holyholes-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:44:35.430  [2. Trade] Dextrochan-Brill(EU): 2,3k rogue and 2k disc lf mage,ele or hunt for 3s
+8/6 11:44:35.967  Holyholes-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:44:37.555  Holyholes-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:44:38.524  [5. dkreport] Dkdrtest: dkreport 19942 131 5.0131001472473 23.101770401001 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:44:38.759  Condaana-Brill(EU) creates Potent Vermilion Onyx.
+8/6 11:44:39.261  Holyholes-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:44:39.367  Kronenburg-Brill(EU) creates Smooth Serpent's Eye.
+8/6 11:44:39.768  Váily-Brill(EU) creates Shattered Wild Jade.
+8/6 11:44:40.577  Condaana-Brill(EU) creates Potent Vermilion Onyx.
+8/6 11:44:40.985  Holyholes-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:44:40.985  Poncoke-Brill(EU) creates Assassin's Imperial Amethyst.
+8/6 11:44:41.100  Kronenburg-Brill(EU) creates Smooth Serpent's Eye.
+8/6 11:44:41.636  Váily-Brill(EU) creates Shattered Wild Jade.
+8/6 11:44:42.390  [5. dkreport] Dkdrtest: dkreport 20112 131 5.0131001472473 23.258581161499 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:44:42.454  Condaana-Brill(EU) creates Potent Vermilion Onyx.
+8/6 11:44:42.678  Holyholes-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:44:42.794  Poncoke-Brill(EU) creates Assassin's Imperial Amethyst.
+8/6 11:44:43.539  Váily-Brill(EU) creates Shattered Wild Jade.
+8/6 11:44:44.332  Holyholes-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:44:44.696  Poncoke-Brill(EU) creates Assassin's Imperial Amethyst.
+8/6 11:44:45.284  Váily-Brill(EU) creates Shattered Wild Jade.
+8/6 11:44:45.876  [5. dkreport] Dkdrtest: dkreport 20272 131 5.0131001472473 23.405963897705 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:44:45.978  Holyholes-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:44:47.143  Váily-Brill(EU) creates Shattered Wild Jade.
+8/6 11:44:47.595  [2. Trade] Qupåe-Brill(EU): lfm 25 player heroic 2 healer 1 tank 7 dps pst for inv 
+8/6 11:44:47.619  Holyholes-Brill(EU) creates Fractured Sun's Radiance.
+8/6 11:44:49.064  [5. dkreport] Dkdrtest: dkreport 20432 131 5.0131001472473 23.553144454956 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:44:49.064  [2. Trade] Marouan-Brill(EU): RECHECHE GUILDE FR
+8/6 11:44:53.668  [5. dkreport] Dkdrtest: dkreport 20432 131 5.0131001472473 23.553144454956 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:44:55.581  Holyholes-Brill(EU) creates Fractured Serpent's Eye.
+8/6 11:44:56.002  [2. Trade] Plagadinds-Brill(EU): ALGUIEN QUE HABLE ESPAÑOL???
+8/6 11:44:57.162  Holyholes-Brill(EU) creates Fractured Serpent's Eye.
+8/6 11:44:58.002  Condaana-Brill(EU) creates Purified Imperial Amethyst.
+8/6 11:44:58.002  Kronenburg-Brill(EU) creates Solid River's Heart.
+8/6 11:44:59.761  Condaana-Brill(EU) creates Purified Imperial Amethyst.
+8/6 11:44:59.761  Kronenburg-Brill(EU) creates Solid River's Heart.
+8/6 11:44:59.802  [2. Trade] Threliá: How can I get up my ilvl? 
+8/6 11:45:01.437  Condaana-Brill(EU) creates Purified Imperial Amethyst.
+8/6 11:45:01.647  Kronenburg-Brill(EU) creates Solid River's Heart.
+8/6 11:45:03.287  Condaana-Brill(EU) creates Purified Imperial Amethyst.
+8/6 11:45:09.081  Poncoke-Brill(EU) creates Agile Primal Diamond.
+8/6 11:45:09.716  [2. Trade] Center: Maybe IF I Twist IT Is recruiting 2000+ Rated/EXp players , Must beable to proove dont suckm Getting the good people into one big guild :D X
+8/6 11:45:12.880  [2. Trade] Eragorn: LF 2 EXPERIENCED DPS FOR HEROIC DS10 ON ULTAX PST
+8/6 11:45:14.332  [5. dkreport] Dkdrtest: dkreport 22082 131 5.0131001472473 25.059398651123 0 0 0 0 6918 122.06249237061 0 0 0 DEATHKNIGHT 90
+8/6 11:45:15.991  Haluxa-Brill(EU) yells: is here ah?
+8/6 11:45:16.158  Mercenders creates Smooth Serpent's Eye.
+8/6 11:45:17.973  Condaana-Brill(EU) creates Burning Primal Diamond.
+8/6 11:45:28.000  [2. Trade] Marouan-Brill(EU): RECHCHE GUILDE FR
+8/6 11:45:29.541  Gimpsuit-Brill(EU) has defeated Beforeyoux in a duel
+8/6 11:45:31.506  Ärthâs yells: cherche guilde lvl 20 minimum!
+8/6 11:45:36.033  [2. Trade] Qupåe-Brill(EU): lfm 10 player heroic 2 healer 5 dps
+8/6 11:45:37.932  Kronenburg-Brill(EU) creates Reverberating Primal Diamond.
+8/6 11:45:39.180  [2. Trade] Dextrochan-Brill(EU): 2,3k rogue and 2k disc lf mage,ele or hunt 3s rating
+8/6 11:45:51.154  [2. Trade] Dotforce-Brill(EU): sp lf 2v2/3v3 partner(s).
+8/6 11:45:51.191  Váily-Brill(EU) creates Fleet Primal Diamond.
+8/6 11:46:00.183  Valorick yells: SODA FANBOY
+8/6 11:46:00.183  [2. Trade] Restormind-Brill(EU): HOW DO I RESET MY SPECILIZATION FOR DRUIDS
+8/6 11:46:01.539  [2. Trade] Bàrbenøire: boomie lf skiled dps go 2s  xp 1k9
+8/6 11:46:02.144  [5. dkreport] Dkdrtest: dkreport 18164 131 5.0131001472473 21.448017120361 0 0 0 0 7887 132.15625 0 0 0 DEATHKNIGHT 90
+8/6 11:46:04.207  Osteoporoza-Brill(EU) yells: duels anyone ?
+8/6 11:46:07.901  Scoorpyon-Brill(EU) creates Facets of Research.
+8/6 11:46:12.153  [2. Trade] Eragorn: LF 2 Dps for HDS10 On ultrax pst
+8/6 11:46:13.020  [2. Trade] Selonimes: go to rainer
+8/6 11:46:15.728  [2. Trade] Koshayam-Brill(EU): Здравствуйте ребята. Что Вы делаете. Я не говору по русски потомущо я Болгар, но я впечатлен Вы дорогие товарищи играете в уоркрафте
+8/6 11:46:16.636  [2. Trade] Carryingever-Brill(EU): SODEH!
+8/6 11:46:19.143  [2. Trade] Selonimes: trainer*
+8/6 11:46:21.247  [2. Trade] Nerfcasters:  Blazefury, Reborn x 2 in AH, 2 copper each.
+8/6 11:46:21.588  [2. Trade] Criana: Arms War LF Heals for 2s for fun /practice PST!
+8/6 11:46:22.224  Animorphh creates Smooth Sun's Radiance.
+8/6 11:46:23.114  [2. Trade] Criana: Arms War LF Heals for 2s for fun /practice PST!
+8/6 11:46:23.986  Animorphh creates Smooth Sun's Radiance.
+8/6 11:46:25.896  Animorphh creates Smooth Sun's Radiance.
+8/6 11:46:27.619  Animorphh creates Smooth Sun's Radiance.
+8/6 11:46:29.221  Beleneus-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:46:29.333  Animorphh creates Smooth Sun's Radiance.
+8/6 11:46:29.566  [5. dkreport] Dkdrtest: dkreport 29925 131 5.0131001472473 31.942132949829 0 0 0 0 7887 132.15625 0 0 0 DEATHKNIGHT 90
+8/6 11:46:30.097  Spëc-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:46:30.947  Beleneus-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:46:31.253  Animorphh creates Smooth Sun's Radiance.
+8/6 11:46:31.870  Spëc-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:46:32.737  Beleneus-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:46:33.139  Animorphh creates Smooth Sun's Radiance.
+8/6 11:46:34.870  Animorphh creates Smooth Sun's Radiance.
+8/6 11:46:36.778  Animorphh creates Smooth Sun's Radiance.
+8/6 11:46:37.252  Ilc creates Delicate Primordial Ruby.
+8/6 11:46:38.537  Animorphh creates Smooth Sun's Radiance.
+8/6 11:46:38.845  Ilc creates Delicate Primordial Ruby.
+8/6 11:46:40.431  Animorphh creates Smooth Sun's Radiance.
+8/6 11:46:40.545  Ilc creates Delicate Primordial Ruby.
+8/6 11:46:42.141  Animorphh creates Smooth Sun's Radiance.
+8/6 11:46:42.141  Ilc creates Delicate Primordial Ruby.
+8/6 11:46:43.955  Ilc creates Delicate Primordial Ruby.
+8/6 11:46:43.955  Animorphh creates Smooth Sun's Radiance.
+8/6 11:46:45.695  Ilc creates Delicate Primordial Ruby.
+8/6 11:46:45.695  Animorphh creates Smooth Sun's Radiance.
+8/6 11:46:47.312  Ilc creates Delicate Primordial Ruby.
+8/6 11:46:47.439  Animorphh creates Smooth Sun's Radiance.
+8/6 11:46:51.314  Bourney-Brill(EU) has defeated Themagicloaf-Brill(EU) in a duel
+8/6 11:46:53.026  Spëc-Brill(EU) creates Reckless Vermilion Onyx.
+8/6 11:46:54.024  [2. Trade] Haluxa-Brill(EU): is there AH in shrine?
+8/6 11:46:55.047  [5. dkreport] Dkdrtest: dkreport 16514 131 5.0131001472473 19.89063835144 0 0 0 0 8877 142.46875 0 0 0 DEATHKNIGHT 90
+8/6 11:46:56.906  [2. Trade] Eragorn: LF 1 DPS for HDS10 On ultrax
+8/6 11:46:57.884  [2. Trade] Lockong-Brill(EU): nope
+8/6 11:46:59.119  [5. dkreport] Dkdrtest: dkreport 16514 131 7.2708644866943 19.89063835144 1959 2.2135593891144 0 0 8877 142.46875 0 0 0 DEATHKNIGHT 90
+8/6 11:46:59.472  Gimpsuit-Brill(EU) has defeated Chickenmelon-Brill(EU) in a duel
+8/6 11:47:06.723  [2. Trade] Center: Maybe IF I Twist IT Is recruiting 2000+ Rated/EXp players , Must beable to proove dont suckm Getting the good people into one big guild :D X
+8/6 11:47:07.316  [2. Trade] Plagadinds-Brill(EU): ALGUIEN QUE HABLE ESPAÑOL'?
+8/6 11:47:08.415  [5. dkreport] Dkdrtest: dkreport 18164 131 7.2708644866943 21.448017120361 1959 2.2135593891144 0 0 8877 142.46875 0 0 0 DEATHKNIGHT 90
+8/6 11:47:15.539  Beleneus-Brill(EU) creates Reckless Vermilion Onyx.
+8/6 11:47:17.260  Beleneus-Brill(EU) creates Reckless Vermilion Onyx.
+8/6 11:47:19.339  Beleneus-Brill(EU) creates Reckless Vermilion Onyx.
+8/6 11:47:21.058  [5. dkreport] Dkdrtest: dkreport 16514 131 7.2708644866943 19.89063835144 1959 2.2135593891144 0 0 8877 142.46875 0 0 0 DEATHKNIGHT 90
+8/6 11:47:22.634  [5. dkreport] Dkdrtest: dkreport 16514 131 17.059412002563 19.89063835144 11754 13.281355857849 0 0 8877 142.46875 0 0 0 DEATHKNIGHT 90
+8/6 11:47:26.498  Hexertry creates Brilliant Primordial Ruby.
+8/6 11:47:27.853  [5. dkreport] Dkdrtest: dkreport 18164 131 17.059412002563 21.448017120361 11754 13.281355857849 0 0 8877 142.46875 0 0 0 DEATHKNIGHT 90
+8/6 11:47:28.256  Hexertry creates Brilliant Primordial Ruby.
+8/6 11:47:29.878  [2. Trade] Kronenburg-Brill(EU): where can i can prismatic gem? /w me plz
+8/6 11:47:30.024  Hexertry creates Brilliant Primordial Ruby.
+8/6 11:47:30.269  [2. Trade] Dotforce-Brill(EU): kiinnostaako jotaki arena?
+8/6 11:47:31.861  Hexertry creates Brilliant Primordial Ruby.
+8/6 11:47:33.564  Hexertry creates Brilliant Primordial Ruby.
+8/6 11:47:40.360  [2. Trade] Vampblood-Brill(EU): i know
+8/6 11:47:42.096  Beleneus-Brill(EU) creates Purified Imperial Amethyst.
+8/6 11:47:42.342  [2. Trade] Restormind-Brill(EU): ty
+8/6 11:47:43.797  Beleneus-Brill(EU) creates Purified Imperial Amethyst.
+8/6 11:47:45.495  Beleneus-Brill(EU) creates Purified Imperial Amethyst.
+8/6 11:47:51.054  [2. Trade] Criana: ARMS WAR LF 2s for fun/practice PST!
+8/6 11:47:51.811  [2. Trade] Criana: ARMS WAR LF 2s for fun/practice PST!
+8/6 11:47:53.707  [2. Trade] Elemfire-Brill(EU): nerfacster ?
+8/6 11:47:54.269  Beleneus-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:47:54.565  [2. Trade] Darknellika-Brill(EU): suche leute für ds 10ner normal fun run
+8/6 11:48:00.254  Kronenburg-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:48:08.647  Ilc creates Delicate Serpent's Eye.
+8/6 11:48:10.649  Ilc creates Delicate Serpent's Eye.
+8/6 11:48:15.087  Animorphh creates Burning Primal Diamond.
+8/6 11:48:15.383  [5. dkreport] Dkdrtest: dkreport 16194 131 5.0131001472473 20.876445770264 0 0 1267 1.4316383600235 9827 152.36459350586 0 0 0 DEATHKNIGHT 90
+8/6 11:48:17.894  [5. dkreport] Dkdrtest: dkreport 15594 131 5.0131001472473 20.309728622437 0 0 1267 1.4316383600235 9827 152.36459350586 0 0 0 DEATHKNIGHT 90
+8/6 11:48:18.102  Akantot seems a little tipsy from the Pandaren Plum Wine.
+8/6 11:48:19.278  Hexertry creates Artful Vermilion Onyx.
+8/6 11:48:20.484  [5. dkreport] Dkdrtest: dkreport 14934 131 5.0131001472473 19.682949066162 0 0 1267 1.4316383600235 10056 154.75 0 0 0 DEATHKNIGHT 90
+8/6 11:48:20.755  Ilc creates Adept Vermilion Onyx.
+8/6 11:48:22.285  Hexertry creates Artful Vermilion Onyx.
+8/6 11:48:22.570  [5. dkreport] Dkdrtest: dkreport 14324 131 5.0131001472473 19.100469589233 0 0 1267 1.4316383600235 10070 154.89582824707 0 0 0 DEATHKNIGHT 90
+8/6 11:48:22.587  Ilc creates Adept Vermilion Onyx.
+8/6 11:48:24.189  Ilc creates Adept Vermilion Onyx.
+8/6 11:48:24.189  Hexertry creates Artful Vermilion Onyx.
+8/6 11:48:24.443  Gimpsuit-Brill(EU) has defeated Chickenmelon-Brill(EU) in a duel
+8/6 11:48:24.897  [5. dkreport] Dkdrtest: dkreport 14004 131 6.6016688346863 18.793674468994 1368 1.5457626581192 1267 1.4316383600235 11274 167.4375 0 0 0 DEATHKNIGHT 90
+8/6 11:48:25.902  Ilc creates Adept Vermilion Onyx.
+8/6 11:48:25.902  Hexertry creates Artful Vermilion Onyx.
+8/6 11:48:26.910  [2. Trade] Johalor: lf rp
+8/6 11:48:27.215  [2. Trade] Cluckcluck:  Flippable Table
+8/6 11:48:27.704  Ilc creates Adept Vermilion Onyx.
+8/6 11:48:27.704  Hexertry creates Artful Vermilion Onyx.
+8/6 11:48:29.368  Ilc creates Adept Vermilion Onyx.
+8/6 11:48:31.487  [5. dkreport] Dkdrtest: dkreport 13844 131 6.6016688346863 19.034994125366 1368 1.5457626581192 1650 1.8644068241119 11309 167.80207824707 0 0 0 DEATHKNIGHT 90
+8/6 11:48:32.769  [2. Trade] Cluckcluck:  Gin-Ji Knife Set
+8/6 11:48:34.488  [5. dkreport] Dkdrtest: dkreport 13684 131 6.9856247901917 19.40412902832 1706 1.9276835918427 2158 2.4384181499481 10864 163.16667175293 0 0 0 DEATHKNIGHT 90
+8/6 11:48:36.522  [5. dkreport] Dkdrtest: dkreport 13684 131 7.3786177635193 19.720756530762 2055 2.3220338821411 2467 2.7875707149506 10483 159.19792175293 0 0 0 DEATHKNIGHT 90
+8/6 11:48:38.414  [5. dkreport] Dkdrtest: dkreport 13564 131 7.9367198944092 19.606452941895 2556 2.8881356716156 2467 2.7875707149506 10157 155.80207824707 0 0 0 DEATHKNIGHT 90
+8/6 11:48:40.862  Poncoke-Brill(EU) creates Mystic Sun's Radiance.
+8/6 11:48:45.084  [5. dkreport] Dkdrtest: dkreport 13372 131 8.2444705963135 19.423316955566 2835 3.2033898830414 2467 2.7875707149506 10425 158.59375 0 0 0 DEATHKNIGHT 90
+8/6 11:48:46.811  Hexertry creates Mysterious Imperial Amethyst.
+8/6 11:48:48.610  Hexertry creates Mysterious Imperial Amethyst.
+8/6 11:48:48.825  [5. dkreport] Dkdrtest: dkreport 13092 131 8.791711807251 19.155704498291 3336 3.7694914340973 2467 2.7875707149506 10086 155.0625 0 0 0 DEATHKNIGHT 90
+8/6 11:48:48.845  Ilc creates Agile Primal Diamond.
+8/6 11:48:50.388  Hexertry creates Mysterious Imperial Amethyst.
+8/6 11:48:50.809  [2. Trade] Taldaldor: lf 2's Bm hunter
+8/6 11:48:51.516  [2. Trade] Purpletrees: Resto druid LF dps for twos
+8/6 11:48:52.150  Hexertry creates Mysterious Imperial Amethyst.
+8/6 11:48:53.981  Hexertry creates Mysterious Imperial Amethyst.
+8/6 11:48:54.374  [2. Trade] Hellsglory: {star}Hells Glory{star}Level 25. Is now recruting. We accept everyone. We have been around since the Lich King patch and are still as active as ever! As said on PTR fourms in cata,"Hells Glory is #1 guild on PTR". We host many fun events! So come join us!
+8/6 11:49:06.932  [2. Trade] Falintal: rdruid lf dps for 2s
+8/6 11:49:12.581  [5. dkreport] Dkdrtest: dkreport 13092 131 9.3375024795532 19.155704498291 3842 4.3412427902222 2467 2.7875707149506 9580 149.79167175293 0 0 0 DEATHKNIGHT 90
+8/6 11:49:17.852  [2. Trade] Dextrochan-Brill(EU): 2,3k rogue and 2k disc lf mage,ele or hunt 3s rating
+8/6 11:49:18.481  [5. dkreport] Dkdrtest: dkreport 13092 131 9.3375024795532 19.259531021118 3842 4.3412427902222 2568 2.9016950130463 9580 149.79167175293 0 0 0 DEATHKNIGHT 90
+8/6 11:49:20.651  [2. Trade] Dotforce-Brill(EU): sp lf dps for 2s
+8/6 11:49:20.888  Gimpsuit-Brill(EU) has defeated Chickenmelon-Brill(EU) in a duel
+8/6 11:49:22.551  [2. Trade] Darknellika-Brill(EU): suche leute für ds 10ner normal fun run
+8/6 11:49:24.254  Hexertry creates Burning Primal Diamond.
+8/6 11:49:25.738  Kronenburg-Brill(EU) creates Smooth Sun's Radiance.
+8/6 11:49:27.444  [5. dkreport] Dkdrtest: dkreport 13092 131 9.749267578125 19.259531021118 4228 4.777400970459 2568 2.9016950130463 9580 149.79167175293 0 0 0 DEATHKNIGHT 90
+8/6 11:49:31.076  [2. Trade] Marley: WTB  Blazefury, Reborn 20k
+8/6 11:49:34.432  Hexertry creates Brilliant Serpent's Eye.
+8/6 11:49:43.948  [2. Trade] Purpletrees: Rdruid lf dps for 2s
+8/6 11:49:49.888  [2. Trade] Johalor: lf rp
+8/6 11:49:51.137  [5. dkreport] Dkdrtest: dkreport 13092 131 10.364834785461 19.259531021118 4812 5.4372882843018 2568 2.9016950130463 8996 143.70832824707 0 0 0 DEATHKNIGHT 90
+8/6 11:50:00.813  [5. dkreport] Dkdrtest: dkreport 13092 131 10.826963424683 19.259531021118 5256 5.938982963562 2568 2.9016950130463 8552 139.08334350586 0 0 0 DEATHKNIGHT 90
+8/6 11:50:07.199  Hexertry creates Brilliant Serpent's Eye.
+8/6 11:50:13.589  [5. dkreport] Dkdrtest: dkreport 13092 131 10.999487876892 19.752655029297 5423 6.1276836395264 3049 3.4451978206635 7904 132.33332824707 0 0 0 DEATHKNIGHT 90
+8/6 11:50:18.190  [1. General] Lïnä: LFM DS 10 man fresh
+8/6 11:50:18.825  Gimpsuit-Brill(EU) has defeated Chickenmelon-Brill(EU) in a duel
+8/6 11:50:20.845  [5. dkreport] Dkdrtest: dkreport 13092 131 10.999487876892 19.86205291748 5423 6.1276836395264 3156 3.5661017894745 7797 131.21875 0 0 0 DEATHKNIGHT 90
+8/6 11:50:26.029  [2. Trade] Criana: ARMS WAR LF 2s for fun/practice PST!
+8/6 11:50:26.510  [5. dkreport] Dkdrtest: dkreport 13092 131 10.999487876892 19.965213775635 5423 6.1276836395264 3257 3.6802260875702 7797 131.21875 0 0 0 DEATHKNIGHT 90
+8/6 11:50:26.726  Hexertry creates Brilliant Serpent's Eye.
+8/6 11:50:28.406  [2. Trade] Criana: ARMS WAR LF 2s for fun/practice PST!
+8/6 11:50:34.026  [5. dkreport] Dkdrtest: dkreport 13092 131 11.25645160675 19.965213775635 5673 6.4101696014404 3257 3.6802260875702 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:50:40.090  Osteoporoza-Brill(EU) yells: here
+8/6 11:50:41.388  [5. dkreport] Dkdrtest: dkreport 13092 131 11.745473861694 19.965213775635 6153 6.9525423049927 3257 3.6802260875702 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:50:49.683  [5. dkreport] Dkdrtest: dkreport 13092 131 12.228862762451 19.965213775635 6633 7.4949154853821 3257 3.6802260875702 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:50:53.474  [2. Trade] Крий: есть русские??7
+8/6 11:50:53.764  [1. General] Lïnä: LFM DS 10 man fresh
+8/6 11:50:57.004  [5. dkreport] Dkdrtest: dkreport 13092 131 12.548038482666 19.965213775635 6953 7.8564972877502 3257 3.6802260875702 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:50:59.001  Brandn-Brill(EU) yells: POWERHEAL
+8/6 11:51:02.682  [5. dkreport] Dkdrtest: dkreport 13092 131 12.864782333374 19.965213775635 7273 8.2180795669556 3257 3.6802260875702 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:51:04.884  Gimpsuit-Brill(EU) has defeated Chickenmelon-Brill(EU) in a duel
+8/6 11:51:05.615  [5. dkreport] Dkdrtest: dkreport 13092 131 13.17912197113 19.965213775635 7593 8.5796613693237 3257 3.6802260875702 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:51:07.111  [2. Trade] Росиянин-Brill(EU): да
+8/6 11:51:09.981  [5. dkreport] Dkdrtest: dkreport 13092 131 13.491080284119 19.965213775635 7913 8.9412431716919 3257 3.6802260875702 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:51:12.463  [5. dkreport] Dkdrtest: dkreport 13092 131 13.80069065094 19.965213775635 8233 9.3028249740601 3257 3.6802260875702 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:51:16.216  [5. dkreport] Dkdrtest: dkreport 13092 131 14.107975006104 19.965213775635 8553 9.6644067764282 3257 3.6802260875702 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:51:16.534  [2. Trade] Elgispriest: lfm ds10 fresh need 1 tank 4 dps
+8/6 11:51:17.506  [2. Trade] Leksplay-Brill(EU): RDRU LF 2x2!!
+8/6 11:51:17.870  [2. Trade] Buffmeharder-Brill(EU): OK I GOT MY T16 GEAR...WHERE DO I GET THE OTHER ITEMS ???
+8/6 11:51:17.870  [2. Trade] Leksplay-Brill(EU): RDRU LF 2x2!!
+8/6 11:51:19.977  Hilton creates Solid River's Heart.
+8/6 11:51:21.040  [5. dkreport] Dkdrtest: dkreport 13152 131 14.412961959839 20.02219581604 8873 10.025988578796 3257 3.6802260875702 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:51:21.816  Hilton creates Solid River's Heart.
+8/6 11:51:23.618  Hilton creates Solid River's Heart.
+8/6 11:51:25.725  Penio-Brill(EU) has defeated Osteoporoza-Brill(EU) in a duel
+8/6 11:51:31.368  Cousin Slowhands says: Maybe you could roll a barrel.
+8/6 11:51:31.849  [1. General] Earthlivíng-Brill(EU): LF HEALER TO DUEL
+8/6 11:51:33.689  [5. dkreport] Dkdrtest: dkreport 14802 131 14.412961959839 21.577722549438 8873 10.025988578796 3257 3.6802260875702 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:51:34.268  [2. Trade] Sarrowmon: why are we doing 85 raid and below when we can do 90 raids insted of lvl -85
+8/6 11:51:46.229  [2. Trade] Falintal: cause yolo swagg 420
+8/6 11:51:51.281  Cassaya's Rhino is dismissed.
+8/6 11:51:52.850  [2. Trade] Penio: warrior lf healer for 2s
+8/6 11:51:52.850  [2. Trade] Cluckcluck: why do "we" care
+8/6 11:51:55.512  [2. Trade] Taldaldor: Lf 2's 853 Bm hunter
+8/6 11:51:56.606  [2. Trade] Javuia: 2.2k hunt + disc LF 3v3 mate
+8/6 11:51:58.825  [2. Trade] Crakevin: windwalker monk looking for 2s
+8/6 11:52:00.311  [2. Trade] Happygilmore: guys I just peed and blood came out
+8/6 11:52:01.950  Gimpsuit-Brill(EU) has defeated Chickenmelon-Brill(EU) in a duel
+8/6 11:52:04.570  [2. Trade] Penio-Brill(EU): warrior lf healer for 2s
+8/6 11:52:04.927  [2. Trade] Happygilmore: wtf does that mean?
+8/6 11:52:07.073  Rhiannora invites you to join Korrupt.
+8/6 11:52:09.978  [2. Trade] Zeit-Brill(EU): wo bekomm ich  Himmelsgolem her? 
+8/6 11:52:11.055  [2. Trade] Vòlt: you finish your kit with pvp gear
+8/6 11:52:11.499  Hilton creates Keen Vermilion Onyx.
+8/6 11:52:11.666  [2. Trade] Elgispriest: lfm ds10 fresh need 1 tank 4 dps
+8/6 11:52:11.666  [2. Trade] Cluckcluck: nothing
+8/6 11:52:13.247  [2. Trade] Arthillian: where can buy gems to socket?
+8/6 11:52:13.421  Hilton creates Keen Vermilion Onyx.
+8/6 11:52:15.963  [2. Trade] Javuia-Brill(EU): 2.2k hunt + disc LF 3v3 mate
+8/6 11:52:21.795  Xiaoyun-Brill(EU) yells: horde in the shrine!!!!
+8/6 11:52:23.422  [2. Trade] Mógrainé: Lf mage 
+8/6 11:52:23.526  Hilton creates Austere Primal Diamond.
+8/6 11:52:24.519  [5. dkreport] Dkdrtest: dkreport 13152 131 18.24193572998 20.02219581604 13105 14.807909965515 3257 3.6802260875702 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:52:26.102  [5. dkreport] Dkdrtest: dkreport 13152 131 25.855899810791 20.02219581604 22900 25.875705718994 3257 3.6802260875702 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:52:26.467  [1. General] Lïnä: LFM DS 10 man fresh
+8/6 11:52:28.726  Penio-Brill(EU) has defeated Osteoporoza-Brill(EU) in a duel
+8/6 11:52:31.861  [5. dkreport] Dkdrtest: dkreport 14802 131 25.855899810791 21.577722549438 22900 25.875705718994 3257 3.6802260875702 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:52:34.387  [2. Trade] Xiaoyun-Brill(EU): Horde are in the shrine
+8/6 11:52:37.320  [2. Trade] Happygilmore: Rift > WoW
+8/6 11:52:40.148  [2. Trade] Mjauuw: arms warrior lf 2s or 3s, 2k+ exp
+8/6 11:52:45.748  [5. dkreport] Dkdrtest: dkreport 13152 131 16.23143196106 20.02219581604 10832 12.239547729492 3257 3.6802260875702 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:52:55.176  [2. Trade] Animorphh: Boomy LF Affliction Lock for 2's
+8/6 11:52:56.112  Forbeaten-Brill(EU) creates Reverberating Primal Diamond.
+8/6 11:52:56.772  [5. dkreport] Dkdrtest: dkreport 13152 131 15.793437004089 20.510911941528 10352 11.69717502594 3737 4.222599029541 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:52:57.841  [2. Trade] Ärthâs-Brill(EU): i seach guilde level 25 please!
+8/6 11:53:01.876  [5. dkreport] Dkdrtest: dkreport 13152 131 15.350583076477 20.997465133667 9872 11.154802322388 4217 4.7649717330933 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:53:06.010  [5. dkreport] Dkdrtest: dkreport 13152 131 15.052609443665 21.320640563965 9552 10.79322052002 4537 5.1265535354614 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:53:07.075  [2. Trade] Crakevin: windwalker monk LF 2s
+8/6 11:53:15.289  [5. dkreport] Dkdrtest: dkreport 13152 131 15.350583076477 21.320640563965 9872 11.154802322388 4537 5.1265535354614 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:53:16.520  Gimpsuit-Brill(EU) has defeated Chickenmelon-Brill(EU) in a duel
+8/6 11:53:18.490  [5. dkreport] Dkdrtest: dkreport 13152 131 15.646362304688 21.320640563965 10192 11.516384124756 4537 5.1265535354614 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:53:18.739  [2. Trade] Animorphh: Boomy LF Affliction Lock for 2's
+8/6 11:53:22.801  [2. Trade] Dbreathed: LF disc for 2v2
+8/6 11:53:25.242  [5. dkreport] Dkdrtest: dkreport 13152 131 15.939970016479 21.320640563965 10512 11.877965927124 4537 5.1265535354614 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:53:27.140  Ilna creates Ember Primal Diamond.
+8/6 11:53:32.059  [2. Trade] Truthslayer-Brill(EU): arms warrior lf healer for 2s
+8/6 11:53:33.035  [5. dkreport] Dkdrtest: dkreport 13152 131 15.646362304688 21.642864227295 10192 11.516384124756 4857 5.4881358146667 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:53:33.260  [2. Trade] Elgispriest: lfm ds10 1 dps
+8/6 11:53:33.829  [2. Trade] Trediir: LF port to shine
+8/6 11:53:37.003  [5. dkreport] Dkdrtest: dkreport 13152 131 15.350583076477 21.964136123657 9872 11.154802322388 5177 5.8497176170349 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:53:38.734  [2. Trade] Plizzikkar: wow addiction > rift addiction
+8/6 11:53:41.386  [5. dkreport] Dkdrtest: dkreport 13152 131 15.052609443665 22.284471511841 9552 10.79322052002 5497 6.2112994194031 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:53:43.476  [2. Trade] Marley: 2 Rogues LF Raid
+8/6 11:53:43.687  [2. Trade] Animorphh: Boomy LF Affliction Lock for 2's
+8/6 11:53:45.273  Spëc-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:53:45.764  [2. Trade] Darknellika-Brill(EU): suche leute für ds 10ner normal fun run
+8/6 11:53:48.045  [2. Trade] Brodown: Feral druid lf 2s for fun
+8/6 11:53:48.722  [5. dkreport] Dkdrtest: dkreport 13152 131 15.052609443665 22.284471511841 9552 10.79322052002 5497 6.2112994194031 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:53:50.213  Spëc-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:53:52.467  [1. General] Lïnä: LFM DS 10 man fresh
+8/6 11:53:52.772  [2. Trade] Truthslayer-Brill(EU): arms warrior lf healer for 2s
+8/6 11:53:53.976  Spëc-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:53:55.602  [5. dkreport] Dkdrtest: dkreport 13152 131 14.449975967407 22.922334671021 8912 10.070056915283 6137 6.9344635009766 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:53:56.571  Hilton creates Accurate Imperial Amethyst.
+8/6 11:53:56.723  [2. Trade] Zeit-Brill(EU):  Himmelsgolem 250 k i pay /w me pls
+8/6 11:53:59.596  [1. General] Earthlivíng-Brill(EU): LF HEALER TO DUEL
+8/6 11:54:01.459  Ilna creates Purified Imperial Amethyst.
+8/6 11:54:02.849  Forbeaten-Brill(EU) creates Tense Serpent's Eye.
+8/6 11:54:03.220  [5. dkreport] Dkdrtest: dkreport 13152 131 14.449975967407 22.922334671021 8912 10.070056915283 6137 6.9344635009766 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:54:04.315  Ilna creates Purified Imperial Amethyst.
+8/6 11:54:05.470  Forbeaten-Brill(EU) creates Tense Serpent's Eye.
+8/6 11:54:07.427  Ilna creates Purified Imperial Amethyst.
+8/6 11:54:08.634  [2. Trade] Brodown: Feral druid lf 2s for fun
+8/6 11:54:09.013  [5. dkreport] Dkdrtest: dkreport 13152 131 14.145267486572 23.239866256714 8592 9.7084741592407 6457 7.2960453033447 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:54:09.933  Cordialeone creates Forceful Wild Jade.
+8/6 11:54:14.960  [5. dkreport] Dkdrtest: dkreport 13152 131 13.528940200806 23.872158050537 7952 8.9853105545044 7097 8.0192089080811 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:54:16.822  [1. General] Lïnä: LFM need 1 dps DS 10man fresh
+8/6 11:54:21.288  [5. dkreport] Dkdrtest: dkreport 13092 131 13.217268943787 24.132076263428 7632 8.6237287521362 7417 8.3807907104492 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:54:30.892  [5. dkreport] Dkdrtest: dkreport 15051 131 11.25645160675 25.908597946167 5673 6.4101696014404 7417 8.3807907104492 5588 108.20833587646 0 0 0 DEATHKNIGHT 90
+8/6 11:54:33.917  Forbeaten-Brill(EU) creates Sovereign Imperial Amethyst.
+8/6 11:54:33.938  [5. dkreport] Dkdrtest: dkreport 17010 131 11.25645160675 27.656173706055 5673 6.4101696014404 7417 8.3807907104492 4741 99.385414123535 0 0 0 DEATHKNIGHT 90
+8/6 11:54:35.778  [2. Trade] Truthslayer-Brill(EU): arms warrior lf healer for 2s
+8/6 11:54:36.807  [2. Trade] Xiaoyun-Brill(EU): LF people to kill horde in shrine!!!
+8/6 11:54:37.440  %s has earned the achievement Epic!
+8/6 11:54:37.440  %s has earned the achievement Cataclysmically Epic!
+8/6 11:54:37.440  %s has earned the achievement Mystically Epic!
+8/6 11:54:41.510  Ilna creates Reckless Vermilion Onyx.
+8/6 11:54:41.748  [5. dkreport] Dkdrtest: dkreport 18660 131 11.25645160675 29.106155395508 5673 6.4101696014404 7417 8.3807907104492 4741 99.385414123535 0 0 0 DEATHKNIGHT 90
+8/6 11:54:43.634  Ilna creates Reckless Vermilion Onyx.
+8/6 11:54:45.893  Ilna creates Reckless Vermilion Onyx.
+8/6 11:54:47.333  [1. General] Swaggagirl-Brill(EU): lf t16 vendor w me
+8/6 11:54:48.153  Ilna creates Reckless Vermilion Onyx.
+8/6 11:54:50.482  Gimpsuit-Brill(EU) has defeated Chickenmelon-Brill(EU) in a duel
+8/6 11:54:50.482  Ilna creates Reckless Vermilion Onyx.
+8/6 11:55:01.849  Toftdal-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:55:05.814  Toftdal-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:55:09.005  Toftdal-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:55:09.005  Bonxie-Brill(EU) creates Burning Primal Diamond.
+8/6 11:55:10.023  [2. Trade] Crakevin: windwalker LF 2s
+8/6 11:55:11.637  Sandracexyz creates Brilliant Serpent's Eye.
+8/6 11:55:12.251  Toftdal-Brill(EU) creates Bold Primordial Ruby.
+8/6 11:55:12.495  Arcticsurge-Brill(EU) has defeated Жидкость-Brill(EU) in a duel
+8/6 11:55:15.872  Sandracexyz creates Brilliant Serpent's Eye.
+8/6 11:55:17.618  Hehehoho-Brill(EU) has defeated Rümslibümsli-Brill(EU) in a duel
+8/6 11:55:20.223  Toftdal-Brill(EU) creates Bold Serpent's Eye.
+8/6 11:55:21.595  Bonxie-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:55:23.635  Bonxie-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:55:25.791  Bonxie-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:55:27.115  Bomdead-Brill(EU) yells: WTF
+8/6 11:55:28.021  Bonxie-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:55:28.395  Toftdal-Brill(EU) creates Bold Serpent's Eye.
+8/6 11:55:29.833  Bonxie-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:55:30.653  Toftdal-Brill(EU) creates Bold Serpent's Eye.
+8/6 11:55:32.136  Bonxie-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:55:33.329  Toftdal-Brill(EU) creates Bold Serpent's Eye.
+8/6 11:55:34.650  Forbeaten-Brill(EU) creates Smooth Sun's Radiance.
+8/6 11:55:35.955  Bonxie-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:55:36.096  [5. dkreport] Dkdrtest: dkreport 13092 131 11.25645160675 24.132076263428 5673 6.4101696014404 7417 8.3807907104492 5405 106.30208587646 0 0 0 DEATHKNIGHT 90
+8/6 11:55:41.718  Bonxie-Brill(EU) creates Brilliant Serpent's Eye.
+8/6 11:55:43.707  Xiaoyun-Brill(EU) yells: OI!!!! there's 2 horde in our shrine!!!!
+8/6 11:55:44.393  Bonxie-Brill(EU) creates Brilliant Serpent's Eye.
+8/6 11:55:50.923  [2. Trade] Zòrròwmàkèr-Brill(EU): Marksmanship hunter lf 2's!!
+8/6 11:55:50.978  Ilna creates Sparkling River's Heart.
+8/6 11:55:52.329  Bonxie-Brill(EU) creates Quick Sun's Radiance.
+8/6 11:55:55.404  Bonxie-Brill(EU) creates Quick Sun's Radiance.
+8/6 11:55:57.136  [1. General] Péth-Brill(EU): LFM   Dragon Soul NEED 2 HEALS  REST DPS
+8/6 11:55:57.605  Forbeaten-Brill(EU) creates Solid River's Heart.
+8/6 11:56:00.527  Forbeaten-Brill(EU) creates Solid River's Heart.
+8/6 11:56:01.111  Ilna creates Fractured Sun's Radiance.
+8/6 11:56:02.571  Forbeaten-Brill(EU) creates Solid River's Heart.
+8/6 11:56:03.168  Restormind-Brill(EU) creates Shifting Imperial Amethyst.
+8/6 11:56:03.436  Ilna creates Fractured Sun's Radiance.
+8/6 11:56:06.286  Restormind-Brill(EU) creates Shifting Imperial Amethyst.
+8/6 11:56:09.427  Restormind-Brill(EU) creates Shifting Imperial Amethyst.
+8/6 11:56:12.138  Restormind-Brill(EU) creates Shifting Imperial Amethyst.
+8/6 11:56:12.349  Dêstrò yells: [Orcish] TAGO MOG REGA 
+8/6 11:56:14.890  Restormind-Brill(EU) creates Shifting Imperial Amethyst.
+8/6 11:56:16.190  [5. dkreport] Dkdrtest: dkreport 24853 131 11.25645160675 34.37650680542 5673 6.4101696014404 7417 8.3807907104492 5405 106.30208587646 0 0 0 DEATHKNIGHT 90
+8/6 11:56:17.173  Toftdal-Brill(EU) creates Champion's Vermilion Onyx.
+8/6 11:56:17.698  Forbeaten-Brill(EU) creates Sovereign Imperial Amethyst.
+8/6 11:56:18.171  Restormind-Brill(EU) creates Shifting Imperial Amethyst.
+8/6 11:56:20.123  Toftdal-Brill(EU) creates Champion's Vermilion Onyx.
+8/6 11:56:20.934  [5. dkreport] Dkdrtest: dkreport 24853 131 11.25645160675 34.37650680542 5673 6.4101696014404 7417 8.3807907104492 5405 106.30208587646 0 0 0 DEATHKNIGHT 90
+8/6 11:56:22.234  Toftdal-Brill(EU) creates Champion's Vermilion Onyx.
+8/6 11:56:22.982  [2. Trade] Dasnerd-Brill(EU): LF someone who is starting a siege of orgrimmar tonight, testing out two of the bosses.
+8/6 11:56:26.728  Ilna creates Forceful Wild Jade.
+8/6 11:56:29.010  [2. Trade] Brewar: cauterizing core hordie on varian...
+8/6 11:56:29.307  [1. General] Areyoubad: Lock LF 3s team Whisper me for more information
+8/6 11:56:33.713  [5. dkreport] Dkdrtest: dkreport 14742 131 11.25645160675 25.630321502686 5673 6.4101696014404 7417 8.3807907104492 5405 106.30208587646 0 0 0 DEATHKNIGHT 90
+8/6 11:56:34.532  Toftdal-Brill(EU) creates Champion's Vermilion Onyx.
+8/6 11:56:43.123  [2. Trade] Aggrohawk: lol really XD
+8/6 11:56:44.658  [5. dkreport] Dkdrtest: dkreport 13092 131 11.25645160675 24.132076263428 5673 6.4101696014404 7417 8.3807907104492 6700 119.79167175293 0 0 0 DEATHKNIGHT 90
+8/6 11:56:46.274  Tadoliioo-Brill(EU) creates Stormy River's Heart.
+8/6 11:56:52.487  [5. dkreport] Dkdrtest: dkreport 13092 131 11.25645160675 24.132076263428 5673 6.4101696014404 7417 8.3807907104492 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:56:54.621  Toftdal-Brill(EU) creates Resplendent Serpent's Eye.
+8/6 11:56:56.316  Tadoliioo-Brill(EU) creates Sparkling River's Heart.
+8/6 11:56:56.605  Toftdal-Brill(EU) creates Resplendent Serpent's Eye.
+8/6 11:56:57.306  [2. Trade] Indikah-Brill(EU): NEED ONE HEALER FOR PREMADE RANDOM BG AND GO :)
+8/6 11:56:58.509  [2. Trade] Indikah-Brill(EU): NEED ONE HEALER FOR PREMADE RANDOM BG AND GO :)
+8/6 11:56:59.111  Toftdal-Brill(EU) creates Resplendent Serpent's Eye.
+8/6 11:57:00.778  Sandracexyz creates Bold Primordial Ruby.
+8/6 11:57:01.939  [2. Trade] Pándora: Disci priest lfg 3s 
+8/6 11:57:02.423  Blèeds yells: I KNOW A SONG THAT GETS ON EVERYBODY'S NERVES
+8/6 11:57:02.644  Sandracexyz creates Bold Primordial Ruby.
+8/6 11:57:05.349  [2. Trade] Aggrohawk: 2 is enouph to kill him if they dont die at same time
+8/6 11:57:05.921  Omar Gonzalez says: How's about another round?
+8/6 11:57:10.470  [2. Trade] Truthslayer-Brill(EU): arms warrior lf healer for 2s
+8/6 11:57:15.063  [2. Trade] Brewar-Brill(EU): we are 10
+8/6 11:57:17.444  Tadoliioo-Brill(EU) creates Brilliant Primordial Ruby.
+8/6 11:57:20.283  Sandracexyz creates Artful Vermilion Onyx.
+8/6 11:57:23.253  [5. dkreport] Dkdrtest: dkreport 13092 131 15.381185531616 24.132076263428 9905 11.192090034485 7417 8.3807907104492 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:57:24.104  [5. dkreport] Dkdrtest: dkreport 13092 131 23.538631439209 24.132076263428 19700 22.259887695313 7417 8.3807907104492 7547 128.61457824707 0 0 0 DEATHKNIGHT 90
+8/6 11:57:24.736  Sandracexyz creates Artful Vermilion Onyx.
+8/6 11:57:25.100  [2. Trade] Threliá-Brill(EU): Where can I buy better gears? Just got my hc...
+8/6 11:57:25.647  [2. Trade] Starscatter: lf jc
+8/6 11:57:31.092  Toftdal-Brill(EU) creates Etched Imperial Amethyst.
+8/6 11:57:31.580  [2. Trade] Indikah-Brill(EU): NEED ONE HEALER FOR PREMADE RANDOM BG AND GO :)
+8/6 11:57:32.176  Sandracexyz creates Artful Vermilion Onyx.
+8/6 11:57:32.585  Götzed yells: I GOT MY TICKET FOR THE LONG WAY ROUND
+8/6 11:57:32.798  Toftdal-Brill(EU) creates Etched Imperial Amethyst.
+8/6 11:57:34.690  Toftdal-Brill(EU) creates Etched Imperial Amethyst.
+8/6 11:57:36.860  [1. General] Areyoubad-Brill(EU): Destro Lock LF 2s/3s team Whisper me for more information
+8/6 11:57:37.556  Restormind-Brill(EU) creates Regal Wild Jade.
+8/6 11:57:38.114  [2. Trade] Shikaote: Conviction is recruiting Are you convicted to wow then join us pvp or pve doesn't matter /w ,me or rebelshealer for an invite
+8/6 11:57:39.675  Restormind-Brill(EU) creates Regal Wild Jade.
+8/6 11:57:42.432  Restormind-Brill(EU) creates Regal Wild Jade.
+8/6 11:57:44.686  [2. Trade] Pándora-Brill(EU): Disci priest lfg 3s
