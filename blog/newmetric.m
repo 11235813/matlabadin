@@ -1,10 +1,10 @@
-% %+1000 stat data, from C/Ha
-load .\pdata\pally_metric_data_10000_3.mat;
-%modify names
-statSetup(2).name=' Stam';
-statSetup(6).name=' Mast';
+% % %+1000 stat data, from C/Ha
+% load .\pdata\pally_metric_data_10000_3.mat;
+% %modify names
+% statSetup(2).name=' Stam';
+% statSetup(6).name=' Mast';
 
-% +1000 stat data, from C/Bal
+% % +1000 stat data, from C/Bal
 % load .\pdata\pally_metric_data_10000_0.mat;
 % statSetup(2).name=' Stam';
 % statSetup(6).name=' Mast';
@@ -13,7 +13,7 @@ statSetup(6).name=' Mast';
 % load .\pdata\pally_metric_data_10000_1.mat;
 
 % +100 stat data, from Avoid set
-% load .\pdata\pally_metric_data_10000_2.mat
+load .\pdata\pally_metric_data_10000_2.mat
 
 % +2000 stat data, from C/Ha?
 
@@ -42,8 +42,7 @@ disp('<pre>')
 gl.toText()
 disp('</pre>')
 
-
-%% Test new metric
+%% Format data
 
 ma=zeros([size(dmg) 7]);
 hsf=repmat([statblock.health],[size(ma,1) 1]);
@@ -51,7 +50,9 @@ for i=1:7
     ma(:,:,i)=filter(ones(1,i),1,dmg)./hsf;
 end
 
-clear ma2 ma3 ma4 ma5 ma6 ma7 hsf dmg
+clear ma2 ma3 ma4 ma5 ma6 ma7 hsf dmg statblock
+%% Test new metric
+
 
 k=4;
 N=200;
@@ -68,7 +69,7 @@ baseline=histo(:,1);
 totalevents=sum(baseline);
 
 pct_param=0.05;
-hdf=4;
+hdf=3;
 
 %find 5% of data cutoff
 j=length(baseline);
