@@ -1,2 +1,0 @@
-^EF>SotR>CS>J>AS Prot 002000 "" 3 0 0.9 0.9 "" data\\KeepUpEF.csv
-EF[#BoG=5]>SotR>CS>J>AS Prot 002000 "" 3 0 0.9 0.9 "" data\\EF_at_BoG5.csv

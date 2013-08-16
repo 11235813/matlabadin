@@ -1,1 +1,0 @@
-CS>J>EF Prot 000000 "" 5 0.1 0.1 1 1 "" data\\example-EF.csv:data\\example-EF-dump.csv
