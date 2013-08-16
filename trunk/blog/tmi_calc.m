@@ -30,9 +30,9 @@ if cutoff<1
     cutoff=j;
 end
 
-%% if health decade factor isn't supplied, default to 2
+%% if health decade factor isn't supplied, default to 3
 if nargin<4
-    health_decade_factor = 2;
+    health_decade_factor = 3;
 end
 
 %weight function
@@ -44,8 +44,8 @@ for i=1:M
     tmiwhole(i)=sum(histo(:,i).*wf);    
     
     %normalized versions
-    tmi(i)=sum(histo(cutoff:N,i).*wf(cutoff:N));
-    tmiwhole(i)=sum(histo(:,i).*wf);    
+%     tmi(i)=sum(histo(cutoff:N,i).*wf(cutoff:N));
+%     tmiwhole(i)=sum(histo(:,i).*wf);    
 end
 
 

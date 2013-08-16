@@ -37,16 +37,13 @@ procTrack=s;
 procChanceTimer=0;
 stacks=int32(0);
 stackDuration=0;
-lastProcTime=-1000*1000;%1000 seconds ago, in ms
+lastProcTime=-90*1000;%1000 seconds ago, in ms
 meanProcTime=timeBetweenProcChances./p0;
 
 t=dt.*((1:numTimeSteps)-1);
 tic
 for q=1:numTimeSteps
-    
-    %store time
-%     t(q)=(q-1).*dt;
-    
+        
     %decrement timers
     procChanceTimer=procChanceTimer-dt;
     stackDuration=stackDuration-dt;
@@ -106,8 +103,3 @@ theoreticalMeanStacks=sum(cumprod(contribution));
 theo2=sum(cumprod(contribution2));
 
 end
-
-%  [meanStacks;theoreticalMeanStacks]
- 
-%  figure(1)
-%  plot(t,s)

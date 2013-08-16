@@ -32,44 +32,58 @@ config.jbounds=[jMin jStep jMax];
 dstat=2000;
 
 i=1;
-statSetup(i).name='C/Ha';
+% statSetup(i).name='C/Ha';
+% statSetup(i).buffedStr=15000;
+% statSetup(i).stamina=28000;
+% statSetup(i).parryRating=1500;
+% statSetup(i).dodgeRating=1500;
+% statSetup(i).masteryRating=1500;
+% statSetup(i).hitRating=2550;
+% statSetup(i).expRating=5100;
+% statSetup(i).hasteRating=12000;
+% statSetup(i).armor=65000;
+statSetup(i).name='Avoid';
 statSetup(i).buffedStr=15000;
 statSetup(i).stamina=28000;
-statSetup(i).parryRating=1500;
-statSetup(i).dodgeRating=1500;
+statSetup(i).parryRating=10825;
+statSetup(i).dodgeRating=10825;
 statSetup(i).masteryRating=1500;
-statSetup(i).hitRating=2550;
-statSetup(i).expRating=5100;
-statSetup(i).hasteRating=12000;
+statSetup(i).hitRating=500;
+statSetup(i).expRating=500;
+statSetup(i).hasteRating=0;
 statSetup(i).armor=65000;
-i=i+1;
-statSetup(i)=statSetup(1);
-statSetup(i).name=' Stam';
-statSetup(i).stamina = statSetup(i).stamina + dstat;
-i=i+1;
-statSetup(i)=statSetup(1);
-statSetup(i).name='Hit';
-statSetup(i).hitRating = statSetup(i).hitRating - dstat;
-i=i+1;
-statSetup(i)=statSetup(1);
-statSetup(i).name='Exp';
-statSetup(i).expRating = statSetup(i).expRating - dstat;
-i=i+1;
-statSetup(i)=statSetup(1);
-statSetup(i).name='Haste';
-statSetup(i).hasteRating = statSetup(i).hasteRating + dstat;
-i=i+1;
-statSetup(i)=statSetup(1);
-statSetup(i).name=' Mast';
-statSetup(i).masteryRating = statSetup(i).masteryRating + dstat;
-i=i+1;
-statSetup(i)=statSetup(1);
-statSetup(i).name='Dodge';
-statSetup(i).dodgeRating = statSetup(i).dodgeRating + dstat;
-i=i+1;
-statSetup(i)=statSetup(1);
-statSetup(i).name='Parry';
-statSetup(i).parryRating = statSetup(i).parryRating + dstat;
+% i=i+1;
+% statSetup(i)=statSetup(1);
+% statSetup(i).name=' Stam';
+% statSetup(i).stamina = statSetup(i).stamina + dstat;
+% i=i+1;
+% statSetup(i)=statSetup(1);
+% statSetup(i).name='Hit';
+% statSetup(i).hitRating = statSetup(i).hitRating - dstat;
+% i=i+1;
+% statSetup(i)=statSetup(1);
+% statSetup(i).name='Exp';
+% statSetup(i).expRating = statSetup(i).expRating - dstat;
+% i=i+1;
+% statSetup(i)=statSetup(1);
+% statSetup(i).name='Haste';
+% statSetup(i).hasteRating = statSetup(i).hasteRating + dstat;
+% i=i+1;
+% statSetup(i)=statSetup(1);
+% statSetup(i).name=' Mast';
+% statSetup(i).masteryRating = statSetup(i).masteryRating + dstat;
+% i=i+1;
+% statSetup(i)=statSetup(1);
+% statSetup(i).name='Dodge';
+% statSetup(i).dodgeRating = statSetup(i).dodgeRating + dstat;
+% i=i+1;
+% statSetup(i)=statSetup(1);
+% statSetup(i).name='Parry';
+% statSetup(i).parryRating = statSetup(i).parryRating + dstat;
+while i<20
+    i=i+1;
+    statSetup(i)=statSetup(1);
+end
 
 %% crank
 % if matlabpool('size')>0
@@ -80,12 +94,14 @@ gearsets=1:length(statSetup); %everything
 % gearsets=[1 3 5 6 7 8 10 11 12]; %C/Ha C/Sg C/Ma C/Av C/Bal C/HM Av Av/M M/Av
 % gearsets=[1 2 3 4 5]; %C/Ha C/St C/Sg C/Shm C/Ma
 % gearsets=[1 3 5 6 15 10]; %C/Ha C/Sg C/Ma C/Av C/Str Av];
+% gearsets=ones(1,20);
 
 % matlabpool(3)
-for j=gearsets
+% for j=gearsets
+for j=1:length(gearsets)
 % parfor j=1:i
     config.plotNum=j;
-    statblock(j)=pally_mc(config,statSetup(j));
+    statblock(j)=pally_mc(config,statSetup(gearsets(j)));
 %     toc
 end
 

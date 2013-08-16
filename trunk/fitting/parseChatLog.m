@@ -16,8 +16,8 @@ function [ set ] = parseChatLog( filename , tag )
                 for j=1:13
                     data(i,j)=str2num(char(m(j)));
                 end
+                i = i + 1;
             end
-			i = i + 1;
         end
     end
     fclose (fid);
