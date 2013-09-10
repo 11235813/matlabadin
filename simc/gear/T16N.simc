@@ -1,0 +1,18 @@
+#T16N Gear Set
+head=faceguard_of_winged_triumph,id=99128,gems=indomitable_primal_160exp_160haste_270sta,reforge=parry_hit
+neck=juggernauts_ignition_keys,id=103916,reforge=hit_haste
+shoulders=shoulderguards_of_winged_triumph,id=99130,gems=320haste_320haste,enchant=180sta_80dodge,reforge=exp_haste
+back=qianying_fortitude_of_niuzao,id=102250,upgrade=2,gems=160exp_160haste_90sta,enchant=200sta,reforge=parry_haste
+chest=chestguard_of_winged_triumph,id=99126,gems=160exp_160haste_160exp_160haste_160exp_160haste_270sta,enchant=300sta,reforge=exp_haste
+wrists=bubbleburst_bracers,id=103738,enchant=170mastery,reforge=hit_mastery
+hands=handguards_of_winged_triumph,id=99127,gems=320haste_320haste,enchant=170haste
+waist=demolishers_reinforced_belt,id=103788,gems=320haste_320haste_320haste
+legs=legplates_of_unthinking_strife,id=104311,gems=320haste_320haste_320haste,enchant=250sta_100dodge,reforge=mastery_hit
+feet=wolfrider_spurs,id=103880,gems=320haste_60crit,enchant=175haste,reforge=crit_hit
+finger1=asgorathian_blood_seal,id=103794,gems=160exp_160haste_60haste
+finger2=seal_of_the_forgotten_kings,id=103796,gems=160exp_160haste,reforge=crit_mastery
+trinket1=vial_of_living_corruption,id=102306
+trinket2=thoks_tail_tip,id=102305
+main_hand=siegecrafters_forge_hammer,id=103969,gems=320haste,enchant=windsong,reforge=mastery_hit
+off_hand=bulwark_of_the_fallen_general,id=103872,gems=320haste,enchant=170parry,reforge=exp_haste
+

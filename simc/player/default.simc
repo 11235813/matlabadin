@@ -1,0 +1,9 @@
+#!./simc 
+
+paladin="Paladin_Protection_T16H"
+level=90
+race=blood_elf
+role=tank
+position=front
+professions=Blacksmithing=600/Enchanting=600
+spec=protection

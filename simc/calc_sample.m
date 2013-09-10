@@ -1,8 +1,20 @@
 clear sim
-sim.exe='simc.exe';
-sim.path='D:\Simcraft\simc-530-6-win64\';
+%SimC path/exe
+sim.exe='simc64.exe';
+sim.path='G:\simcraft\';
+
+%sim parameters
 sim.iterations=10;
-sim.player='Paladin_Protection_T15H.simc';
-sim.html='Paladin_Protection_T15H.html';
+sim.ptr=0;
+
+%player parameters
+sim.player='default.simc';
+sim.glyphs='default.simc';
+sim.talents='default.simc';
+sim.gear='T16N.simc';
+sim.rotation='test_rotation.simc';
+
+%output paremeters
+sim.html='Test_Sim.html';
 
 run_sim(sim)
