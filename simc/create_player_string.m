@@ -21,6 +21,9 @@ player_str=strcat(player_str,[' ' sim.playerpath '\player\' sim.player]);
 player_str=strcat(player_str,[' ' sim.playerpath '\glyphs\' sim.glyphs]);
 player_str=strcat(player_str,[' ' sim.playerpath '\talents\' sim.talents]);
 player_str=strcat(player_str,[' ' sim.playerpath '\gear\' sim.gear]);
+if ~isempty(sim.precombat)
+    player_str=strcat(player_str,[' ' sim.playerpath '\rotation\' sim.precombat]);
+end
 player_str=strcat(player_str,[' ' sim.playerpath '\rotation\' sim.rotation]);
 
 player_str=strcat(player_str,' ');
