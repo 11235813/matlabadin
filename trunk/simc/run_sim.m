@@ -1,4 +1,4 @@
-function run_sim( sim )
+function [ sim ] = run_sim( sim )
 %RUN_SIM constructs the command-line simc.exe call using the information
 %passed in the "sim" structure
 
