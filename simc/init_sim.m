@@ -3,7 +3,7 @@ function [ sim ] = init_sim
 
 % SimC path/exe information
 sim.exe='simc64.exe';
-sim.path='G:\simcraft\';
+sim.exe_path='G:\simcraft\';
 
 % sim parameters
 sim.iterations=100;
@@ -11,7 +11,7 @@ sim.ptr=0;
 sim.argstr='';
 
 % player parameters
-sim.playerpath='';
+sim.pdb_path='';
 sim.playerstr='';
 sim.player='default.simc';
 sim.glyphs='default.simc';
@@ -21,10 +21,12 @@ sim.precombat='precombat.simc';
 sim.rotation='default.simc';
 
 %file parameters
-sim.input='';
+sim.in_path='';
+sim.simc='';
 
 % output parameters
 sim.outputstr='';
+sim.out_path='';
 sim.html='last_sim.html';
 sim.txt='last_sim.txt';
 sim.xml='';
