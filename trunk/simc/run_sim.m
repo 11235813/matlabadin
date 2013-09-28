@@ -4,13 +4,18 @@ function [ sim ] = run_sim( sim )
 
 %% Simulation setup
 % make sure path is appropriately terminated
-if sim.path(length(sim.path)) ~= '\'; sim.path = [ sim.path '\' ]; end
+if sim.exe_path(length(sim.exe_path)) ~= '\' 
+    sim.exe_path = [ sim.exe_path '\' ]; 
+end
 
-%find current path so that player simc files can be loaded
-if exist([sim.path 'rd\'],'dir') ~= 7
+% find current path so that player simc files can be loaded
+% \mdb\ is a potential matlab database path for the simc directory for
+% later use. For now, it probably won't exist, so we wan tto grab the
+% current directory, assuming that all of our files are in subfolders.
+if exist([sim.exe_path '\mdb\'],'dir') ~= 7
     %get current path
     s=what;
-    sim.playerpath=s.path;
+    sim.pdb_path=s.path;
 end
 
 %% arguments 
@@ -26,12 +31,12 @@ sim.outputstr = create_output_string( sim );
 
 
 % check that we're in the correct folder and that simc exists
-if exist(sim.path,'dir') ~= 7 || exist(strcat(sim.path,sim.exe),'file') ~= 2
+if exist(sim.exe_path,'dir') ~= 7 || exist(strcat(sim.exe_path,sim.exe),'file') ~= 2
     error('SimC directory or executable cannot be found');
 end
 
 %% execute
-system(strcat(sim.path,sim.exe,sim.argstr,sim.playerstr,sim.outputstr));
+system(strcat(sim.exe_path,sim.exe,sim.argstr,sim.playerstr,sim.outputstr));
 
 end
 
