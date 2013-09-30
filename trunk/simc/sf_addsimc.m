@@ -19,6 +19,9 @@ for i=1:length(varargin)
     
 end
 
+% terminate with newline
+fprintf(outfile,'\n');
+
 fclose(outfile);
 success=true;
 

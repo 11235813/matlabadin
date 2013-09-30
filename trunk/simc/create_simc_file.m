@@ -10,50 +10,148 @@ if ~isfield(sim,'simc') || isempty(sim.simc)
 end
 
 % make sure path is appropriately terminated
-sim.exe_path = path_terminate(sim.exe_path);
+sim.paths.exe = path_terminate(sim.paths.exe);
 
 %check to see if we've defined a custom player database path
-if ~isfield(sim,'pdb_path') || exist(sim.pdb_path,'dir')~=7
+if ~isfield(sim.paths,'pdb') || exist(sim.paths.pdb,'dir')~=7
     %if not, check to see if there's a folder in the simc exe path
-    if exist([sim.exe_path '\pdb\'],'dir') == 7
-        sim.pdb_path=[sim.exe_path '\pdb\'];
+    if exist([sim.paths.exe '\pdb\'],'dir') == 7
+        sim.paths.pdb=[sim.paths.exe '\pdb\'];
     else
         %otherwise get current path, assume we're in matlab \wow\simc\ 
         s=what;
-        sim.pdb_path=s.path;
+        sim.paths.pdb=s.path;
     end
 end
 
 % make sure path is appropriately terminated
-sim.pdb_path = path_terminate(sim.pdb_path);
+sim.paths.pdb = path_terminate(sim.paths.pdb);
 
 %if there's no simc path defined, use the pdb path
-if ~isfield(sim,'in_path') || isempty(sim.in_path) || exist(sim.in_path,'dir')~=7
-    sim.in_path=sim.pdb_path;
+if ~isfield(sim.paths,'input') || isempty(sim.paths.input) || exist(sim.paths.input,'dir')~=7
+    sim.paths.input=sim.paths.pdb;
 end
 
 %make sure path is appropriately terminated
-sim.in_path=path_terminate(sim.in_path);
+sim.paths.input=path_terminate(sim.paths.input);
 
-%combine in_path and simc file name to get full path
-fullpath=[sim.in_path sim.simc];
+%combine paths.input and simc file name to get full path
+fullpath=[sim.paths.input sim.simc];
 
 % open file, clearing existing contents
 fid=fopen(fullpath,'w');
+sf_addstr(fullpath,'#!./simc');
+sf_addstr(fullpath,sim.header);
 fclose(fid);
 
 %% general settings
-sf_addstr(fullpath,'#General Simulation Settings');
+sf_addstr(fullpath,'\n#General Simulation Settings');
+sf_addstr(fullpath,'iterations=',int2str(sim.iterations));
+sf_addstr(fullpath,'ptr=',int2str(sim.ptr));
 
 %% player definition
-sf_addstr(fullpath,'#Player Definition');
+sf_addstr(fullpath,'\n#Player Definition');
+% if the player field is a string
+if ischar(sim.player)
+    %figure out if it's a simc file definition 
+    if length(sim.player)>5 && strcmp(sim.player(length(sim.player)-[4:-1:0]),'.simc')
+        % if so, add the entire contents
+        sf_addsimc(fullpath,[sim.paths.pdb 'player\' sim.player]);
+    else
+       % otherwise, just add the string normally
+       sf_addstr(fullpath,sim.player);
+    end
+else
+   %otherwise we have a structure containing the information we want
+   %cycle through it and write each field as field=content
+   for i=fields(sim.player)'
+      sf_addstr(fullpath,i{1},'=',sim.player.(i{1}));
+   end
+end
+
+%glyphs
+if ischar(sim.glyphs)
+    %figure out if it's a simc file definition 
+    if length(sim.glyphs)>5 && strcmp(sim.glyphs(length(sim.glyphs)-[4:-1:0]),'.simc')
+        % if so, add the entire contents
+        sf_addsimc(fullpath,[sim.paths.pdb 'glyphs\' sim.glyphs]);
+    else
+       % otherwise, just add the string normally
+       sf_addstr(fullpath,'glyphs=',sim.glyphs);
+    end
+else
+   %otherwise we have a structure containing the information we want
+   %cycle through it and write each field as field=content
+   for i=fields(sim.glyphs)'
+      sf_addstr(fullpath,i{1},'=',sim.glyphs.(i{1}));
+   end
+end
+
+%talents
+if ischar(sim.talents)
+    %figure out if it's a simc file definition 
+    if length(sim.talents)>5 && strcmp(sim.talents(length(sim.talents)-[4:-1:0]),'.simc')
+        % if so, add the entire contents
+        sf_addsimc(fullpath,[sim.paths.pdb 'talents\' sim.talents]);
+    else
+       % otherwise, just add the string normally
+       sf_addstr(fullpath,'talents=',sim.talents);
+    end
+elseif isnumeric(sim.talents)
+    sf_addstr(fullpath,'talents=',in2str(sim.talents));
+else
+    error('Unknown talent format in create_simc_file')
+end
 
 %% action priority list
-sf_addstr(fullpath,'#Action Priority List');
+sf_addstr(fullpath,'\n#Action Priority List');
+% precombat field
+if ischar(sim.precombat)
+   if length(sim.precombat)>5 && strcmp(sim.precombat(length(sim.precombat)-[4:-1:0]),'.simc')
+       sf_addsimc(fullpath,[sim.paths.pdb 'rotation\' sim.precombat]);
+   else
+       sf_addstr(fullpath,sim.precombat);
+   end
+else
+    for i=fields(sim.precombat)'
+        sf_addstr(fullpath,i{1},'=',sim.precombat.(i{1}));
+    end
+end
+
+% APL field
+if ischar(sim.rotation)
+   if length(sim.rotation)>5 && strcmp(sim.rotation(length(sim.rotation)-[4:-1:0]),'.simc')
+       sf_addsimc(fullpath,[sim.paths.pdb 'rotation\' sim.rotation]);
+   else
+       sf_addstr(fullpath,sim.rotation);
+   end
+else
+    for i=fields(sim.rotation)'
+        sf_addstr(fullpath,i{1},'=',sim.rotation.(i{1}));
+    end
+end
 
 %% gear
-sf_addstr(fullpath,'#Gear');
+sf_addstr(fullpath,'\n#Gear');
+if ischar(sim.gear)
+   if length(sim.gear)>5 && strcmp(sim.gear(length(sim.gear)-[4:-1:0]),'.simc')
+       sf_addsimc(fullpath,[sim.paths.pdb 'gear\' sim.gear]);
+   else
+       sf_addstr(fullpath,sim.gear);
+   end
+else
+    for i=fields(sim.gear)'
+        sf_addstr(fullpath,i{1},'=',sim.gear.(i{1}));
+    end
+end
 
+%% output
+sf_addstr(fullpath,'\n#Outputs');
+for i=fields(sim.output)'
+    if ~isempty(sim.output.(i{1}))
+        sf_addstr(fullpath,i{1},'=',sim.paths.output,sim.output.(i{1}));
+    end
+end
 
 end
 
