@@ -13,19 +13,7 @@ end
 sim.paths.exe = path_terminate(sim.paths.exe);
 
 %check to see if we've defined a custom player database path
-if ~isfield(sim.paths,'pdb') || exist(sim.paths.pdb,'dir')~=7
-    %if not, check to see if there's a folder in the simc exe path
-    if exist([sim.paths.exe '\pdb\'],'dir') == 7
-        sim.paths.pdb=[sim.paths.exe '\pdb\'];
-    else
-        %otherwise get current path, assume we're in matlab \wow\simc\ 
-        s=what;
-        sim.paths.pdb=s.path;
-    end
-end
-
-% make sure path is appropriately terminated
-sim.paths.pdb = path_terminate(sim.paths.pdb);
+sim = util_check_pdb_path(sim);
 
 %if there's no simc path defined, use the pdb path
 if ~isfield(sim.paths,'input') || isempty(sim.paths.input) || exist(sim.paths.input,'dir')~=7
@@ -47,7 +35,9 @@ fclose(fid);
 %% general settings
 sf_addstr(fullpath,'\n#General Simulation Settings');
 sf_addstr(fullpath,'iterations=',int2str(sim.iterations));
-sf_addstr(fullpath,'ptr=',int2str(sim.ptr));
+if sim.ptr>0
+    sf_addstr(fullpath,'ptr=',int2str(sim.ptr));
+end
 
 %% player definition
 sf_addstr(fullpath,'\n#Player Definition');

@@ -4,5 +4,6 @@ clear sim
 % values.
 sim=init_sim;
 
+create_simc_file(sim);
 
 sim=run_sim(sim);
