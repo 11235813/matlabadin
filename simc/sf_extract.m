@@ -14,7 +14,7 @@ if infile>3
     dps_expr='DPS:\s+(?<dps>\d*\.\d*)\s+DPS-Error=(?<dps_error>\d*\.\d*)/(?<dps_pct_error>\d*\.\d*)\%';
     hps_expr='HPS:\s+(?<hps>\d*\.\d*)\s+HPS-Error=(?<hps_error>\d*\.\d*)/(?<hps_pct_error>\d*\.\d*)\%';
     dtps_expr='DTPS:\s+(?<dtps>\d*\.\d*)\s+DTPS-error=(?<dtps_error>\d*\.\d*)/(?<dtps_pct_error>\d*\.\d*)\%';
-    tmi_expr='TMI:\s+(?<tmi>\d*.\d*)\s+TMI-error=(?<tmi_error>\d*\.\d*\)/(?<tmi_pct_error>\d*\.\d*)\%  TMI-max=(?<tmi_max>\d*\.\d*)';
+    tmi_expr='TMI:\s+(?<tmi>\d*.\d*)\s+TMI-error=(?<tmi_error>\d*\.\d*)/(?<tmi_pct_error>\d*\.\d*)\%\s+TMI-min=(?<tmi_min>\d*\.\d*)\s+TMI-max=(?<tmi_max>\d*\.\d*)';
     sotr_expr='shield_of_the_righteous.*uptime=\s*(?<sotr_uptime>\d*)\%';
     ef_expr='eternal_flame.*uptime=\s*(?<ef_uptime>\d*)\%';
     ss_expr='sacred_shield.*uptime=\s*(?<ss_uptime>\d*)\%';
