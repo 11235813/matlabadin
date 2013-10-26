@@ -4,6 +4,7 @@ clear sim
 % values.
 sim=init_sim;
 sim.header='#Talent Simulation';
+sim.paths.exe='d:\simcraft\'
 %fix pdb path - in future may need to set this to "what" if we implement
 %\pdb\ in simc and still wish to use matlab path
 sim = util_check_pdb_path(sim);
@@ -29,6 +30,7 @@ for i=1:size(talent_combinations,1)
 end
 
 %% crank through them
+clear results
 W=waitbar(0,'Simulating');
 tic
 for i=1:size(talent_combinations,1); 
