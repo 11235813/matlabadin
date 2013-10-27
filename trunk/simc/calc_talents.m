@@ -57,3 +57,20 @@ toc
 %% Compile results into usefully-formatted table
 addpath ./helper_func/
 dt=DataTable();
+dt{1,1}='Talents';
+dt{1,2}='DPS';
+dt{1,3}='HPS';
+dt{1,4}='DTPS';
+dt{1,5}='TMI';
+dt{1,6}='SotR';
+for i=1:length(talent_combinations)
+   dt{1+i,1}=talent_combinations(i,:);
+   r=results(i);
+   dt{1+i,2}=num2str(r.dps,'%6.0f');
+   dt{1+i,3}=num2str(r.hps,'%6.0f');
+   dt{1+i,4}=num2str(r.dtps,'%6.0f');
+   dt{1+i,5}=num2str(r.tmi,'%6.1f');
+   dt{1+i,6}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
+end
+
+dt.toText()
