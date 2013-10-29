@@ -7,9 +7,18 @@ function [ results ] = sf_extract( txtfile )
 
 infile=fopen(txtfile);
 
+%initialize all possible fields, this also prevents weird field mismatch
+%errors due to having dissimilar result structures
 results.success=false;
+results.dps=-1;results.dps_error=-1;results.dps_pct_error=-1;
+results.hps=-1;results.hps_error=-1;results.hps_pct_error=-1;
+results.dtps=-1;results.dtps_error=-1;results.dtps_pct_error=-1;
+results.tmi=-1;results.tmi_error=-1;results.tmi_pct_error=-1;
+results.ef_uptime=0;
+results.ss_uptime=0;
+results.sotr_uptime=0;
 
-if infile>3
+if infile>2
     
     dps_expr='DPS:\s+(?<dps>\d*\.\d*)\s+DPS-Error=(?<dps_error>\d*\.\d*)/(?<dps_pct_error>\d*\.\d*)\%';
     hps_expr='HPS:\s+(?<hps>\d*\.\d*)\s+HPS-Error=(?<hps_error>\d*\.\d*)/(?<hps_pct_error>\d*\.\d*)\%';
@@ -23,7 +32,7 @@ if infile>3
    
     while ischar(current_line)
         %check for DPS
-        if ~isfield(results,'dps')
+        if results.dps<0
             clear names
             names=regexp(current_line,dps_expr,'names');
             if ~isempty(names)
@@ -33,7 +42,7 @@ if infile>3
             end            
         end
         %check for HPS
-        if ~isfield(results,'hps')
+        if results.hps<0
             clear names
             names=regexp(current_line,hps_expr,'names');
             if ~isempty(names)
@@ -43,7 +52,7 @@ if infile>3
             end
         end
         %check for DTPS
-        if ~isfield(results,'dtps')
+        if results.dtps<0
             clear names
             names=regexp(current_line,dtps_expr,'names');
             if ~isempty(names)
@@ -53,7 +62,7 @@ if infile>3
             end
         end
         %check for TMI
-        if ~isfield(results,'tmi')
+        if results.tmi<0
             clear names
             names=regexp(current_line,tmi_expr,'names');
             if ~isempty(names)
@@ -63,7 +72,7 @@ if infile>3
             end
         end
         %check for SotR uptime
-        if ~isfield(results,'sotr_uptime')
+        if results.sotr_uptime==0
             clear names
             names=regexp(current_line,sotr_expr,'names');
             if ~isempty(names)
@@ -71,7 +80,7 @@ if infile>3
             end
         end
         %check for EF/SS uptime
-        if ~isfield(results,'ef_uptime') && ~isfield(results,'ss_uptime')
+        if results.ef_uptime==0 && results.ss_uptime==0
             clear names
             names=regexp(current_line,ef_expr,'names');
             if ~isempty(names)

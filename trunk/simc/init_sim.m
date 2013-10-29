@@ -9,6 +9,7 @@ sim.paths.exe='G:\simcraft\';
 sim.iterations=100;
 sim.ptr=0; 
 sim.argstr='';
+sim.threads=4;
 
 % player parameters
 sim.paths.pdb='';

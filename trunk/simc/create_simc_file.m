@@ -35,6 +35,7 @@ fclose(fid);
 %% general settings
 sf_addstr(fullpath,'\n#General Simulation Settings');
 sf_addstr(fullpath,'iterations=',int2str(sim.iterations));
+sf_addstr(fullpath,'threads=',int2str(sim.threads));
 if sim.ptr>0
     sf_addstr(fullpath,'ptr=',int2str(sim.ptr));
 end

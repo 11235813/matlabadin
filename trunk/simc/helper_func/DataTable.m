@@ -426,6 +426,51 @@ classdef DataTable < handle
             printer.useColgroupStatement(usecolgroup);
             this.printTableBody(fid, tight, printer);
         end
+        function toForum(this, varargin)
+% table.toForum(options)
+% prints table in plain text format for forums, wraps toText with code tags
+% inputs identical to toText()
+            disp('[code]');
+            if numel(varargin)>0
+                this.toText(varargin)
+            else
+                this.toText()
+            end
+            disp('[/code]');
+            
+        end
+        function toBlog(this, varargin)
+% table.toBlog(options)
+% prints table in blog (EasyTable) format
+%
+% INPUT:
+% options may include:
+%   pid:        A valid file identifier (created with fopen) to write the 
+%               table to.
+%
+%               Default: 1 (standard out)
+            evaluated = false(1, numel(varargin));
+            
+            ind = find(cellfun(@isnumeric, varargin),1);
+            if ~isempty(ind)
+                try
+                    ftell(varargin{ind});
+                catch err
+                    error('toLatex:InvalidInput', 'Argument #%d is an invalid file identifier.', ind + 1)
+                end
+                fid = varargin{ind};
+                evaluated(ind) = true;
+            else
+                fid = 1;
+            end
+            
+            if ~all(evaluated)
+                ind = find(~evaluated, 1);
+                error('toText:InvalidInput', 'Unknown argument #%d.', ind)
+            end
+            
+            this.printTableBodyForBlog(fid, BlogTablePrinter())
+        end
         function printWithPrinter(this, printer, fid)
 % table.printWithPrinter(printer)
 %   or 
@@ -954,6 +999,50 @@ classdef DataTable < handle
                         else
                             reccolwidth = sum(colwidth(lastentrycol:y-1));
                         end
+                        
+                        printer.printEntry(fid, lastentry, reccolwidth, this.coltextalign(y-1), colspan, 1);
+                        if y <= this.numcols
+                            printer.printColumnCenterDelimiter(fid);
+                        end
+                    end
+                    
+                    if y > this.numcols
+                        printer.printColumnEndDelimiter(fid);
+                        break;
+                    end
+                    lastentry = strdata{x,y};
+                    lastentrycol = y;
+                    y = y + 1;
+                end
+            end
+            printer.printTableEnd(fid);
+        end
+        function printTableBodyForBlog(this, fid, printer)
+            if this.numrows == 0 || this.numcols == 0
+                printer.printEmptyTable(fid);
+                return
+            end
+            strdata = this.standardFormat(this.applyColumnFormat());
+            colwidth = max(cellfun(@length, strdata), [], 1);
+            
+            usecolspan = false; % no colspan at this moment
+            
+            printer.printTableHeader(fid);
+            for x = 1:this.numrows
+                lastentry = '';
+                lastentrycol = 1;
+                y = 1;
+                printer.printColumnStartDelimiter(fid);
+                while true
+                    if usecolspan
+                        while y <= this.numcols && isempty(strdata{x,y})
+                            y = y + 1;
+                        end
+                    end
+                    if y > 1
+                        colspan = y-lastentrycol;
+                        
+                        reccolwidth = 0;
                         
                         printer.printEntry(fid, lastentry, reccolwidth, this.coltextalign(y-1), colspan, 1);
                         if y <= this.numcols
