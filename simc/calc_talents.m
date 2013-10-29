@@ -62,6 +62,11 @@ for i=1:size(talent_combinations,1);
     
     %create simc file
     create_simc_file(sim);
+    
+    %TODO: version/date checking here to create automatic cache; check the
+    %creation date of the .txt output file against the creation date of the
+    %simc.exe file to see which is newer
+    
     %run sim    
     sim=run_sim(sim);
     
