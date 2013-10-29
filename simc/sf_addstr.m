@@ -5,6 +5,10 @@ function [ success ] = sf_addstr( outputfile, varargin )
 
 outfile = fopen(outputfile,'a');
 
+if outfile<3
+    error(['Error opening output file ' outputfile ' in sf_addstr'])
+end
+
 for i=1:length(varargin)
    
     current_line = varargin{i};
