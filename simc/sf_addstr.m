@@ -14,6 +14,10 @@ for i=1:length(varargin)
     current_line = varargin{i};
     % as long as the line contains characters, 
     if ischar(current_line) && ~isempty(current_line)
+        % check for backslashes - need to double up so that fprintf 
+        % properly turns them into real backslashes
+        current_line=sf_double_backslashes(current_line);
+        
         % append line to output file
         fprintf(outfile,current_line);
     end
