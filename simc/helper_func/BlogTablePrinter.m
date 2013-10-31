@@ -30,7 +30,7 @@ classdef BlogTablePrinter < TablePrinterInterface
             fprintf(fid,'\n', this.delimiter);
         end
         function printTableHeader(this, fid)
-            fprintf(fid,'[table caption="Caption" width="600" colalign="center|center"]\n');
+            fprintf(fid,'[table caption="Title" width="600" colalign="center|center"]\n');
         end
         function printTableEnd(this, fid)
             fprintf(fid,'[/table]\n');

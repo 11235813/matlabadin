@@ -1,24 +1,24 @@
 
 SimulationCraft 540-5 for World of Warcraft 5.4.0 Live (build level 17345)
 
-Simulating... ( iterations=2, max_time=450, vary_combat_length=0.20, optimal_raid=1, fight_style=Patchwerk )
+Simulating... ( iterations=25000, max_time=450, vary_combat_length=0.20, optimal_raid=1, fight_style=Patchwerk )
 
 Generating baseline... 
 
 DPS Ranking:
- 209500 100.0%  Raid
- 209500  100.0%  Paladin_Protection_T16H
+ 205539 100.0%  Raid
+ 205539  100.0%  Paladin_Protection_T16H
 
 HPS Ranking:
-  55693 100.0%  Raid
-  55693  100.0%  Paladin_Protection_T16H
+  55872 100.0%  Raid
+  55872  100.0%  Paladin_Protection_T16H
 
 Player: Paladin_Protection_T16H blood_elf paladin protection 90
-  DPS: 209499.7  DPS-Error=0.0/0.0%  DPS-Range=0/0.0%  DPS-Convergence=0.0%
-  HPS: 55693.2 HPS-Error=0.0/0.0%
-  DPR=61.8  RPS-Out=3388.0 RPS-In=3378.9  Resource=(mana) Waiting=6.6 ApM=78.8
-  DTPS: 55762.1  DTPS-error=0.0/0.0% 
-  TMI: 74.4  TMI-error=0.0/0.0%  TMI-min=74.4  TMI-max=74.4 
+  DPS: 205539.3  DPS-Error=49.1/0.0%  DPS-Range=16938/8.2%  DPS-Convergence=70.8%
+  HPS: 55872.5 HPS-Error=20.8/0.0%
+  DPR=58.4  RPS-Out=3519.8 RPS-In=3511.6  Resource=(mana) Waiting=6.6 ApM=79.8
+  DTPS: 57881.9  DTPS-error=29.9/0.1% 
+  TMI: 70.3  TMI-error=0.8/1.2%  TMI-min=18.9  TMI-max=2620.5 
   Talents: 311322
   Core Stats:    strength=25720|24495(24495)  agility=112|107(107)  stamina=68677|59874(45627)  intellect=123|117(117)  spirit=132|121(121)  mastery=33.19%|2611.00%(10868)  health=1107881|984639  mana=60000|60000
   Spell Stats:   power=28430|24620(0)  hit=22.88%|22.88%(2581)  crit=10.78%|5.77%(1432)  haste=56.31%|44.83%(19052)  speed=71.94%|44.83%(19052)  manareg=300|300(0)
@@ -47,71 +47,74 @@ Player: Paladin_Protection_T16H blood_elf paladin protection 90
     consecration,if=target.debuff.flying.down&!ticking
     sacred_shield,if=talent.sacred_shield.enabled
   Actions:
-    arcane_torrent             Count=  5.0|120.74sec  DPE=     0| 0%  DPET=     0  DPR=  0.0  pDPS=    0  Miss=0.00%
-    avengers_shield            Count= 55.0|  9.21sec  DPE=312860|17%  DPET=301191  DPR= 79.6  pDPS=34854  Miss=0.00%  Hit=283254|160921|336426  Crit=577742|219719|768079|9.1%
-    avenging_wrath             Count=  4.0|143.95sec  DPE=     0| 0%  DPET=     0  DPR=  0.0  pDPS=    0  Miss=0.00%
-    blessing_of_the_guardians  Count= 11.0| 48.09sec  DPE=287009|11%  DPET=     0  DPR=  0.0  pDPS= 6395  Miss=0.00%  TickCount=102  MissTick=0.0%  Tick=28950|0|60682  UpTime=20.7%
-    consecration               Count= 33.0| 12.98sec  DPE=176758| 6%  DPET=170402  DPR= 42.1  pDPS=11815  Miss=0.00%  TickCount=297  MissTick=0.0%  Tick=18133|15394|21347  CritTick=38725|32175|44887|7.7%  UpTime=60.2%
-    crusader_strike            Count=157.0|  3.15sec  DPE= 55883| 8%  DPET= 53642  DPR= 32.4  pDPS=17772  Miss=0.00%  Hit=48171|26379|58276  Crit=105636|67419|144139|13.4%
-    divine_protection          Count= 11.0| 48.09sec  DPE=     0| 0%  DPET=     0  DPR=  0.0  pDPS=    0  Miss=0.00%
-    guardian_of_ancient_kings  Count=  4.0|143.95sec  DPE=     0| 0%  DPET=     0  DPR=  0.0  pDPS=    0  Miss=0.00%
-    hammer_of_wrath            Count= 16.0|  6.19sec  DPE=179599| 3%  DPET=171947  DPR=103.0  pDPS= 5821  Miss=0.00%  Hit=176638|153608|205796  Crit=342196|342196|342196|0.0%
-    holy_wrath                 Count= 54.0|  8.71sec  DPE=221355|12%  DPET=213652  DPR= 77.4  pDPS=24212  Miss=0.00%  Hit=201987|165296|236225  Crit=448070|394934|596829|7.4%
-    judgment                   Count=121.0|  4.04sec  DPE=151722|18%  DPET=145562  DPR= 21.8  pDPS=37186  Miss=0.00%  Hit=132330|43842|157718  Crit=281208|225204|360630|13.2%
-    lights_hammer              Count=  8.0| 63.07sec  DPE=529223| 0%  DPET=511821  DPR=  0.0  pDPS=    0  Miss=0.00%  TickCount=56  UpTime=22.7%
-    lights_hammer_damage_tick  Count= 56.0|  8.21sec  DPE= 42978| 2%  DPET=     0  DPR=  0.0  pDPS= 4875  Miss=0.00%  Hit=38924|32771|45874  Crit=84636|75683|109541|7.1%
-    lights_hammer_heal_tick    Count=  0.0|  0.00sec  DPE=     0| 7%  DPET=     0  DPR=  0.0  pDPS= 3701  Miss=0.00%  Hit=30978|   0|42745  Crit=70319| 9504|88350|5.4%
-    melee                      Count=343.0|  1.44sec  DPE= 41738|14%  DPET= 29011  DPR=  0.0  pDPS=28998  Miss=0.00%  Hit=40315|24923|48594  Crit=84312|52091|118949|9.3%  Glance=30119|25.9%
-    seal_of_insight_proc       Count=530.0|  1.01sec  DPE= 42474|82%  DPET=     0  DPR=  0.0  pDPS=45598  Miss=0.00%  Hit=42274|   0|55954
-    shield_of_the_righteous    Count=112.0|  4.36sec  DPE=161186|17%  DPET=     0  DPR=  0.0  pDPS=36567  Miss=0.00%  Hit=143539|75463|194597  Crit=322173|271986|398049|10.7%
-    stormlash                  Count= 18.0| 19.90sec  DPE=202980| 4%  DPET=     0  DPR=  0.0  pDPS= 7401  Miss=0.00%  Hit=188189|80836|251782  Crit=269745|173068|448176|5.6%
-  Constant Buffs: amplified/attack_power_multiplier/attack_speed/cooldown_reduction/critical_strike/mastery/spell_haste
-  Constant Buffs: spell_power_multiplier/stamina/str_agi_int/vengeance
+    arcane_torrent             Count=  4.3|120.62sec  DPE=     0| 0%  DPET=     0  DPR=  0.0  pDPS=    0  Miss=0.00%
+    avengers_shield            Count= 47.1|  9.61sec  DPE=307632|16%  DPET=296810  DPR= 73.2  pDPS=32211  Miss=0.00%  Hit=281504|105127|391273  Crit=602149|219719|846993|8.2%
+    avenging_wrath             Count=  3.6|143.94sec  DPE=     0| 0%  DPET=     0  DPR=  0.0  pDPS=    0  Miss=0.00%
+    blessing_of_the_guardians  Count=  9.6| 48.08sec  DPE=315938|12%  DPET=     0  DPR=  0.0  pDPS= 6784  Miss=0.00%  TickCount=95  MissTick=0.0%  Tick=31918|0|106708  UpTime=21.2%
+    consecration               Count= 31.6| 12.82sec  DPE=177279| 6%  DPET=171041  DPR= 42.2  pDPS=12469  Miss=0.00%  TickCount=283  MissTick=0.0%  Tick=18173|14661|25146  CritTick=38668|30642|54074|8.1%  UpTime=62.9%
+    crusader_strike            Count=143.8|  3.14sec  DPE= 53213| 8%  DPET= 51074  DPR= 29.6  pDPS=17016  Miss=0.00%  Hit=47857|21675|63962  Crit=102673|45302|144951|9.8%
+    divine_protection          Count=  9.8| 48.08sec  DPE=     0| 0%  DPET=     0  DPR=  0.0  pDPS=    0  Miss=0.00%
+    guardian_of_ancient_kings  Count=  3.6|143.94sec  DPE=     0| 0%  DPET=     0  DPR=  0.0  pDPS=    0  Miss=0.00%
+    hammer_of_wrath            Count= 13.3|  5.97sec  DPE=197380| 3%  DPET=189350  DPR=109.7  pDPS= 5832  Miss=0.00%  Hit=177943|139568|215643  Crit=380818|291925|522550|9.6%
+    holy_wrath                 Count= 50.2|  8.56sec  DPE=219629|12%  DPET=211894  DPR= 73.2  pDPS=24510  Miss=0.00%  Hit=201125|160069|278668  Crit=429007|341495|602037|8.1%
+    judgment                   Count=110.8|  4.06sec  DPE=146474|18%  DPET=140630  DPR= 20.3  pDPS=36110  Miss=0.00%  Hit=131574|43842|181143  Crit=283527|91631|390589|9.8%
+    lights_hammer              Count=  7.5| 62.57sec  DPE=537962| 0%  DPET=519069  DPR=  0.0  pDPS=    0  Miss=0.00%  TickCount=52  UpTime=23.0%
+    lights_hammer_damage_tick  Count= 51.8|  8.20sec  DPE= 42810| 2%  DPET=     0  DPR=  0.0  pDPS= 4930  Miss=0.00%  Hit=38982|31831|52754  Crit=85983|67038|115194|8.1%
+    lights_hammer_heal_tick    Count=  0.0|  0.00sec  DPE=     0| 7%  DPET=     0  DPR=  0.0  pDPS= 4085  Miss=0.00%  Hit=31840|   0|50242  Crit=64915|    0|103932|11.2%
+    melee                      Count=307.4|  1.46sec  DPE= 42115|14%  DPET= 28838  DPR=  0.0  pDPS=28808  Miss=0.00%  Hit=40012|17446|53483  Crit=85987|36464|120926|9.8%  Glance=30006|24.0%
+    seal_of_insight_proc       Count=478.9|  1.01sec  DPE= 42282|81%  DPET=     0  DPR=  0.0  pDPS=45003  Miss=0.00%  Hit=42282|   0|64407
+    shield_of_the_righteous    Count=101.3|  4.42sec  DPE=160481|18%  DPET=     0  DPR=  0.0  pDPS=36141  Miss=0.00%  Hit=144153|46860|239241  Crit=310273|97939|514319|9.8%
+    stormlash                  Count= 16.7| 20.14sec  DPE=198832| 4%  DPET=     0  DPR=  0.0  pDPS= 7512  Miss=0.00%  Hit=179267|57348|262360  Crit=416823|143831|647108|8.2%
+  Constant Buffs: attack_power_multiplier/attack_speed/critical_strike/mastery/spell_haste/spell_power_multiplier/stamina
+  Constant Buffs: str_agi_int
   Dynamic Buffs:
-    avenging_wrath            : start= 4.0 refresh=  0.0 interval=143.9 trigger=143.9 uptime=24%  benefit=36%
-    bastion_of_glory          : start= 1.0 refresh=111.0 interval=  0.0 trigger=  4.4 uptime=99%
-    bloodlust                 : start= 1.0 refresh=  0.0 interval=  0.0 trigger=  0.0 uptime= 8%  benefit= 8%
-    determination             : start= 5.0 refresh=  0.0 interval=117.1 trigger=117.1 uptime=20%
-    divine_protection         : start=11.0 refresh=  0.0 interval= 48.1 trigger= 48.1 uptime=22%  benefit=22%
-    fortitude                 : start=15.0 refresh=  3.0 interval= 35.6 trigger= 25.1 uptime=48%  benefit=48%
-    glyph_alabaster_shield    : start=47.0 refresh= 11.0 interval= 10.1 trigger=  8.1 uptime=24%  benefit=42%
-    grand_crusader            : start=25.0 refresh=  0.0 interval= 20.3 trigger= 20.3 uptime= 7%  benefit=45%
-    guardian_of_ancient_kings : start= 4.0 refresh=  0.0 interval=143.9 trigger=143.9 uptime=10%  benefit= 9%
-    selfless_healer           : start= 1.0 refresh=120.0 interval=  0.0 trigger=  4.0 uptime=100%
-    shield_of_the_righteous   : start=85.0 refresh=  0.0 interval=  5.8 trigger=  5.8 uptime=68%
-    skull_banner              : start= 6.0 refresh=  0.0 interval= 74.2 trigger= 74.2 uptime=12%  benefit=11%
-    stormlash                 : start= 4.0 refresh=  0.0 interval=103.7 trigger=103.7 uptime= 8%
-    windsong_crit             : start= 5.0 refresh=  0.0 interval= 71.5 trigger= 71.5 uptime=12%
-    windsong_haste            : start= 5.0 refresh=  0.0 interval= 81.3 trigger= 65.1 uptime=12%
-    windsong_mastery          : start= 4.0 refresh=  0.0 interval= 78.8 trigger= 69.0 uptime=10%
+    amplified                 : start= 1.0 refresh=  0.0 interval=  0.0 trigger=  0.0 uptime=100%  benefit=100%
+    avenging_wrath            : start= 3.6 refresh=  0.0 interval=143.9 trigger=143.9 uptime=23%  benefit=34%
+    bastion_of_glory          : start= 1.0 refresh=100.3 interval=  0.0 trigger=  4.4 uptime=99%
+    bloodlust                 : start= 1.0 refresh=  0.0 interval=  0.0 trigger=  0.0 uptime= 9%  benefit=15%
+    cooldown_reduction        : start= 1.0 refresh=  0.0 interval=  0.0 trigger=  0.0 uptime=100%
+    determination             : start= 4.4 refresh=  0.0 interval=117.5 trigger=117.5 uptime=19%
+    divine_protection         : start= 9.8 refresh=  0.0 interval= 48.1 trigger= 48.1 uptime=22%  benefit=22%
+    fortitude                 : start=12.1 refresh= 10.3 interval= 38.4 trigger= 20.2 uptime=56%  benefit=56%
+    glyph_alabaster_shield    : start=47.5 refresh= 13.8 interval=  9.3 trigger=  7.2 uptime=30%  benefit=47%
+    grand_crusader            : start=18.4 refresh=  0.6 interval= 23.2 trigger= 22.5 uptime= 6%  benefit=38%
+    guardian_of_ancient_kings : start= 3.6 refresh=  0.0 interval=143.9 trigger=143.9 uptime=10%  benefit= 9%
+    selfless_healer           : start= 1.0 refresh=109.8 interval=  0.0 trigger=  4.1 uptime=100%
+    shield_of_the_righteous   : start=72.8 refresh=  0.0 interval=  6.2 trigger=  6.2 uptime=67%
+    skull_banner              : start= 5.9 refresh=  0.0 interval= 74.8 trigger= 74.8 uptime=13%  benefit=14%
+    stormlash                 : start= 4.0 refresh=  0.0 interval=103.7 trigger=103.7 uptime= 9%
+    vengeance                 : start= 1.0 refresh=355.9 interval=  0.0 trigger=  1.3 uptime=100%  benefit=100%
+    windsong_crit             : start= 5.6 refresh=  0.9 interval= 71.9 trigger= 60.9 uptime=16%
+    windsong_haste            : start= 5.6 refresh=  0.8 interval= 72.1 trigger= 61.2 uptime=16%
+    windsong_mastery          : start= 5.6 refresh=  0.8 interval= 72.2 trigger= 61.3 uptime=16%
   Up-Times:
-     23.9% : Mana Cap                      
+     22.3% : Mana Cap                      
   Procs:
-    530.0 |   1.01sec : seal_of_insight_proc
-     70.0 |   7.05sec : parry_haste
+    478.9 |   1.01sec : seal_of_insight_proc
+     50.2 |   8.80sec : parry_haste
   Gains:
-    21285161.0 : seal_of_insight_proc             (health)  (overflow=8.9%)
-    2880500.6 : blessing_of_the_guardians        (health)  (overflow=5.7%)
-    1783703.3 : lights_hammer_heal_tick          (health)  (overflow=15.5%)
-      1800.0 : arcane_torrent                   (mana)  (overflow=66.7%)
-    517759.2 : endurance_of_niuzao              (health)
-    115762.5 : mp5_regen                        (mana)  (overflow=18.2%)
-    1550587.5 : guarded_by_the_light             (mana)  (overflow=26.7%)
-       150.5 : holy_power_crusader_strike       (holy_power)
-        23.0 : holy_power_grand_crusader        (holy_power)
-       117.0 : holy_power_judgments_of_the_wise (holy_power)
-        36.5 : holy_power_sanctified_wrath      (holy_power)  (overflow=13.1%)
+    20247897.7 : seal_of_insight_proc             (health)  (overflow=8.7%)
+    3039003.2 : blessing_of_the_guardians        (health)  (overflow=5.2%)
+    1839497.5 : lights_hammer_heal_tick          (health)  (overflow=14.7%)
+      2261.0 : arcane_torrent                   (mana)  (overflow=56.2%)
+    464222.0 : endurance_of_niuzao              (health)
+    110820.0 : mp5_regen                        (mana)  (overflow=17.8%)
+    1465544.4 : guarded_by_the_light             (mana)  (overflow=27.4%)
+       143.8 : holy_power_crusader_strike       (holy_power)
+        18.0 : holy_power_grand_crusader        (holy_power)
+       110.8 : holy_power_judgments_of_the_wise (holy_power)
+        33.9 : holy_power_sanctified_wrath      (holy_power)  (overflow=11.9%)
 
 
  *** Targets *** 
 
 
 Target: Fluffy_Pillow humanoid enemy unknown 93
-  DPS: 77718.8  DPS-Error=0.0/0.0%  DPS-Range=0/0.0%  DPS-Convergence=0.0%
+  DPS: 80175.8  DPS-Error=31.2/0.0%  DPS-Range=9991/12.5%  DPS-Convergence=70.4%
   HPS: 0.0 HPS-Error=0.0/0.0%
 
   Talents: 000000
-  Core Stats:    strength=0|0(0)  agility=0|0(0)  stamina=0|0(0)  intellect=0|0(0)  spirit=0|0(0)  mastery=0.00%|800.00%(0)  health=0|113940042  mana=0|0
+  Core Stats:    strength=0|0(0)  agility=0|0(0)  stamina=0|0(0)  intellect=0|0(0)  spirit=0|0(0)  mastery=0.00%|800.00%(0)  health=0|125789356  mana=0|0
   Spell Stats:   power=0|0(0)  hit=0.00%|0.00%(0)  crit=0.00%|0.00%(0)  haste=1.#J%|0.00%(0)  speed=1.#J%|0.00%(0)  manareg=0|0(0)
   Attack Stats:  power=0|0(0)  hit=0.00%|0.00%(0)  crit=0.00%|5.00%(0)  expertise=0.00%|0.00%(0)  haste=1.#J%|0.00%(0)  speed=1.#J%|0.00%(0)
   Defense Stats: armor=0|24835(24835) miss=0.00%|3.00%  dodge=0.00%|3.00%(0)  parry=0.00%|3.00%(0)  block=0.00%|3.00%(0) crit=0.00%|0.00%
@@ -123,19 +126,19 @@ Target: Fluffy_Pillow humanoid enemy unknown 93
     spell_nuke,damage=500000,cooldown=35,attack_speed=3,aoe_tanks=1
     melee_nuke,damage=1000000,cooldown=27,attack_speed=3,aoe_tanks=1
   Actions:
-    melee_main_hand                     Count=227.0|  2.16sec  DPE= 69395|41%  DPET= 34697  DPR=0.0  pDPS=31908  Miss=0.00%  Hit=111926|   0|255221  Dodge=0.9%  Parry=37.0%
-    melee_nuke_Paladin_Protection_T16H  Count= 16.0| 30.79sec  DPE=850846|35%  DPET=280391  DPR=0.0  pDPS=27575  Miss=0.00%  Hit=420599|   0|746538
-    spell_dot_Paladin_Protection_T16H   Count= 13.0| 40.81sec  DPE=331435|11%  DPET=216037  DPR=0.0  pDPS= 8727  Miss=0.00%  TickCount=122  MissTick=0.0%  Tick=35099|13600|42500  UpTime=49.4%
-    spell_nuke_Paladin_Protection_T16H  Count= 13.0| 39.18sec  DPE=361106|12%  DPET=119083  DPR=0.0  pDPS= 9509  Miss=0.00%  Hit=354980|122657|465792
+    melee_main_hand                     Count=206.3|  2.16sec  DPE= 76843|44%  DPET= 38421  DPR=0.0  pDPS=35254  Miss=0.00%  Hit=110954|   0|255221  Dodge=0.8%  Parry=29.9%
+    melee_nuke_Paladin_Protection_T16H  Count= 14.8| 30.80sec  DPE=826609|34%  DPET=272228  DPR=0.0  pDPS=27310  Miss=0.00%  Hit=413305|   0|749116
+    spell_dot_Paladin_Protection_T16H   Count= 11.5| 40.68sec  DPE=334463|11%  DPET=217687  DPR=0.0  pDPS= 8553  Miss=0.00%  TickCount=112  MissTick=0.0%  Tick=34277|0|42500  UpTime=50.0%
+    spell_nuke_Paladin_Protection_T16H  Count= 12.0| 38.82sec  DPE=339995|11%  DPET=111973  DPR=0.0  pDPS= 9059  Miss=0.00%  Hit=339995|   0|467500
   Constant Buffs: attack_power_multiplier/attack_speed/bleeding/critical_strike/magic_vulnerability/mastery/mortal_wounds
   Constant Buffs: physical_vulnerability/ranged_vulnerability/slowed_casting/spell_haste/spell_power_multiplier/stamina
   Constant Buffs: str_agi_int/weakened_armor/weakened_blows
   Dynamic Buffs:
-    Health Decade (0 - 10)   : start= 1.0 refresh=  0.0 interval=  0.0 trigger=  0.0 uptime=10%
+    Health Decade (0 - 10)   : start= 1.0 refresh=  0.0 interval=  0.0 trigger=  0.0 uptime= 8%
     Health Decade (10 - 20)  : start= 1.0 refresh=  0.0 interval=  0.0 trigger=  0.0 uptime=10%
     Health Decade (20 - 30)  : start= 1.0 refresh=  0.0 interval=  0.0 trigger=  0.0 uptime=10%
-    Health Decade (30 - 40)  : start= 1.0 refresh=  0.0 interval=  0.0 trigger=  0.0 uptime= 9%
-    Health Decade (40 - 50)  : start= 1.0 refresh=  0.0 interval=  0.0 trigger=  0.0 uptime=10%
+    Health Decade (30 - 40)  : start= 1.0 refresh=  0.0 interval=  0.0 trigger=  0.0 uptime=10%
+    Health Decade (40 - 50)  : start= 1.0 refresh=  0.0 interval=  0.0 trigger=  0.0 uptime=11%
     Health Decade (50 - 60)  : start= 1.0 refresh=  0.0 interval=  0.0 trigger=  0.0 uptime=11%
     Health Decade (60 - 70)  : start= 1.0 refresh=  0.0 interval=  0.0 trigger=  0.0 uptime=10%
     Health Decade (70 - 80)  : start= 1.0 refresh=  0.0 interval=  0.0 trigger=  0.0 uptime=11%
@@ -146,12 +149,12 @@ Waiting:
      6.6% : Paladin_Protection_T16H
 
 Baseline Performance:
-  TotalEvents   = 23693
-  MaxEventQueue = 31
-  TargetHealth  = 113940042
-  SimSeconds    = 987
-  CpuSeconds    = 0.010
-  WallSeconds   = 0.010
-  SpeedUp       = 98739
+  TotalEvents   = 282392883
+  MaxEventQueue = 37
+  TargetHealth  = 125789356
+  SimSeconds    = 11238613
+  CpuSeconds    = 25.289
+  WallSeconds   = 25.289
+  SpeedUp       = 444407
 
 

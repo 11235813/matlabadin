@@ -5,8 +5,8 @@ fclose('all');
 % values.
 sim=init_sim;
 sim.header='#Talent Simulation';
-sim.iterations=2;
-sim.threads=1;
+sim.iterations=25000;
+sim.threads=4;
 % sim.paths.exe='d:\simcraft\'
 %fix pdb path - in future may need to set this to "what" if we implement
 %\pdb\ in simc and still wish to use matlab path
