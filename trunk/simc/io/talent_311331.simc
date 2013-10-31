@@ -2,8 +2,8 @@
 #Talent Simulation
 
 #General Simulation Settings
-iterations=2
-threads=1
+iterations=25000
+threads=4
 
 #Player Definition
 paladin="Paladin_Protection_T16H"
