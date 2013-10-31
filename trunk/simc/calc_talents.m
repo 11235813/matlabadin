@@ -44,6 +44,11 @@ end
 
 %% crank through them
 clear results tempresults
+
+%preallocate results
+results=repmat(sf_extract('dummy'),size(talent_combinations,1),1);
+
+%waitbar
 W=waitbar(0,'Simulating');
 tic
 for i=1:size(talent_combinations,1); 
@@ -56,19 +61,23 @@ for i=1:size(talent_combinations,1);
     %rename simc file
     sim.simc=strcat('io\talent_',talent_combinations(i,:),'.simc');
     
-    %set output values - note that we need \\ for \ here due to fprintf
-    sim.output.html=strcat('io\\talent_',talent_combinations(i,:),'.html');
-    sim.output.output=strcat('io\\talent_',talent_combinations(i,:),'.txt');
+    %set output filenames
+    sim.output.html=strcat('io\talent_',talent_combinations(i,:),'.html');
+    sim.output.output=strcat('io\talent_',talent_combinations(i,:),'.txt');
     
-    %create simc file
-    create_simc_file(sim);
+    %construct simc fullpath
+    fullpath=sf_construct_fullpaths(sim);
     
-    %TODO: version/date checking here to create automatic cache; check the
-    %creation date of the .txt output file against the creation date of the
-    %simc.exe file to see which is newer
-    
-    %run sim    
-    sim=run_sim(sim);
+    %if the txt output doesn't exist or is older than an important file, regenerate
+    if ~exist(fullpath.output,'file') || sf_compare_fullpaths(fullpath)
+        
+        %create simc file
+        create_simc_file(sim);
+                
+        %run sim
+        sim=run_sim(sim);
+        
+    end
     
     tempresults=sf_extract(sim.output.output);
     if tempresults.success
