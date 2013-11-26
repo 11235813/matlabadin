@@ -5,7 +5,7 @@ fclose('all');
 % values.
 sim=init_sim;
 sim.header='#Talent Simulation';
-sim.iterations=25000;
+sim.iterations=50000;
 sim.threads=4;
 % sim.paths.exe='d:\simcraft\'
 %fix pdb path - in future may need to set this to "what" if we implement
