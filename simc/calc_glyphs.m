@@ -6,9 +6,10 @@ REGEN_ALL=false; %THIS REGENERATES ALL FILES - SET FALSE FOR CACHING
 % values.
 sim=init_sim;
 sim.header='#Glyph Simulation';
-sim.iterations=10;
+sim.iterations=50000; %min 50, lower causes crashes w/ release versions
 sim.threads=4;
 sim.gear='T16N.simc';
+sim.boss='T16N25.simc';
 % sim.paths.exe='d:\simcraft\'
 %fix pdb path - in future may need to set this to "what" if we implement
 %\pdb\ in simc and still wish to use matlab path
@@ -16,9 +17,9 @@ sim = util_check_pdb_path(sim);
 glyphpath=[sim.paths.pdb 'glyphs\'];
 
 %% set up the list of things we want to vary
-glyph_pool={'empty';'empty';'alabaster_shield';'avenging_wrath';'battle_healer';'devotion_aura';'divine_protection';'final_wrath';'focused_shield';'harsh_words';'immediate_truth';'word_of_glory'};
+glyph_pool={'';'';'alabaster_shield';'avenging_wrath';'battle_healer';'devotion_aura';'divine_protection';'final_wrath';'focused_shield';'harsh_words';'immediate_truth';'word_of_glory'};
 glyph_abbr={'E';'E';'AS';'AW';'BH';'DA';'DP';'FW';'FS';'HW';'IT';'WoG'};
-glyph_combinations=cellstr('empty/empty/empty');
+glyph_combinations=cellstr('');
 glyph_abbreviated=cellstr('E_E_E');
 
 %this part creates every possible combination of the glyph pool
@@ -67,10 +68,10 @@ for i=1:length(glyph_combinations);
     sim.output.output=strcat('io\glyph_',glyph_abbreviated{i},'.txt');
     
     %construct simc fullpath
-    fullpath=sf_construct_fullpaths(sim);
+    sim=sf_construct_fullpaths(sim);
     
     %if the txt output doesn't exist or is older than an important file, regenerate
-    if ~exist(fullpath.output,'file') || sf_compare_fullpaths(fullpath) || REGEN_ALL
+    if ~exist(sim.fullpaths.output,'file') || sf_compare_fullpaths(sim.fullpaths) || REGEN_ALL
         
         %create simc file
         create_simc_file(sim);

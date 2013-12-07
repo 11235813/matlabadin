@@ -1,5 +1,6 @@
 clear sim
 fclose('all');
+REGEN_ALL=false; %THIS REGENERATES ALL FILES - SET FALSE FOR CACHING
 
 % initializes the sim structure, setting certain parameters to default
 % values.
@@ -7,6 +8,8 @@ sim=init_sim;
 sim.header='#Talent Simulation';
 sim.iterations=50000;
 sim.threads=4;
+sim.gear='T16N.simc';
+sim.boss='T16N25.simc';
 % sim.paths.exe='d:\simcraft\'
 %fix pdb path - in future may need to set this to "what" if we implement
 %\pdb\ in simc and still wish to use matlab path
@@ -66,7 +69,7 @@ for i=1:size(talent_combinations,1);
     sim.output.output=strcat('io\talent_',talent_combinations(i,:),'.txt');
     
     %construct simc fullpath
-    fullpath=sf_construct_fullpaths(sim);
+    sim=sf_construct_fullpaths(sim);
     
     %if the txt output doesn't exist or is older than an important file, regenerate
     if ~exist(fullpath.output,'file') || sf_compare_fullpaths(fullpath)
