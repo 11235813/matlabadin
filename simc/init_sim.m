@@ -4,6 +4,7 @@ function [ sim ] = init_sim
 % SimC path/exe information
 sim.exe='simc64.exe';
 sim.paths.exe='G:\simcraft\';
+sim.paths.exe='D:\Simcraft\simc-541-2-win64\';
 
 % sim parameters
 sim.iterations=100;
@@ -20,6 +21,9 @@ sim.talents='default.simc';
 sim.gear='T16H.simc';
 sim.precombat='precombat.simc';
 sim.rotation='default.simc';
+
+% boss parameters
+sim.boss='T16N25.simc';
 
 %file parameters
 sim.paths.input='';

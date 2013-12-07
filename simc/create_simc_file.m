@@ -33,7 +33,7 @@ sf_addstr(fullpath,sim.header);
 fclose(fid);
 
 %% general settings
-sf_addstr(fullpath,'\n#General Simulation Settings');
+sf_addstr(fullpath,'#General Simulation Settings');
 sf_addstr(fullpath,'iterations=',int2str(sim.iterations));
 sf_addstr(fullpath,'threads=',int2str(sim.threads));
 if sim.ptr>0
@@ -41,7 +41,7 @@ if sim.ptr>0
 end
 
 %% player definition
-sf_addstr(fullpath,'\n#Player Definition');
+sf_addstr(fullpath,'#Player Definition');
 % if the player field is a string
 if ischar(sim.player)
     %figure out if it's a simc file definition 
@@ -95,7 +95,7 @@ else
 end
 
 %% action priority list
-sf_addstr(fullpath,'\n#Action Priority List');
+sf_addstr(fullpath,'#Action Priority List');
 % precombat field
 if ischar(sim.precombat)
    if length(sim.precombat)>5 && strcmp(sim.precombat(length(sim.precombat)-[4:-1:0]),'.simc')
@@ -123,7 +123,7 @@ else
 end
 
 %% gear
-sf_addstr(fullpath,'\n#Gear');
+sf_addstr(fullpath,'#Gear');
 if ischar(sim.gear)
    if length(sim.gear)>5 && strcmp(sim.gear(length(sim.gear)-[4:-1:0]),'.simc')
        sf_addsimc(fullpath,[sim.paths.pdb 'gear\' sim.gear]);
@@ -136,8 +136,22 @@ else
     end
 end
 
+%% boss
+sf_addstr(fullpath,'#Boss');
+if ischar(sim.boss)
+    if length(sim.boss)>5 && strcmp(sim.boss(length(sim.boss)-[4:-1:0]),'.simc')
+       sf_addsimc(fullpath,[sim.paths.pdb 'boss\' sim.boss]);
+   else
+       sf_addstr(fullpath,sim.boss);
+   end
+else
+    for i=fields(sim.boss)'
+        sf_addstr(fullpath,i{1},'=',sim.boss.(i{1}));
+    end    
+end
+
 %% output
-sf_addstr(fullpath,'\n#Outputs');
+sf_addstr(fullpath,'#Outputs');
 for i=fields(sim.output)'
     if ~isempty(sim.output.(i{1}))
         sf_addstr(fullpath,i{1},'=',sim.paths.output,sim.output.(i{1}));
