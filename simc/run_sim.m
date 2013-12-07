@@ -13,7 +13,7 @@ if exist(sim.paths.exe,'dir') ~= 7 || exist(strcat(sim.paths.exe,sim.exe),'file'
 end
 
 %% execute
-system(char(strcat(sim.paths.exe,sim.exe,{' '},sim.simc,{'  > nul'})));
+system(char(strcat(sim.fullpaths.exe,{' '},sim.fullpaths.simc,{'  > nul'})));
 
 end
 
