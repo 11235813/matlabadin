@@ -7,35 +7,43 @@ regenerate=false;
 
 %get the txt output file time
 temp=dir(fullpath.output);
-out_time=datenum(temp.date);
+if ~isempty(temp)
+    out_time=temp.datenum;
+else
+    out_time=0;
+end
 
 %get the simc file time
 temp=dir(fullpath.simc);
-time.simc=datenum(temp.date);
+if ~isempty(temp)
+    time.simc=temp.datenum;
+else
+    time.simc=0;
+end
 
 %get the exe file time
 temp=dir(fullpath.exe);
-time.exe=datenum(temp.date);
+time.exe=temp.datenum;
 
 %get the default glyph file time
 temp=dir(fullpath.default.glyphs);
-time.glyphs=datenum(temp.date);
+time.glyphs=temp.datenum;
 
 %get the default player file time
 temp=dir(fullpath.default.player);
-time.player=datenum(temp.date);
+time.player=temp.datenum;
 
 %get the default rotation file time
 temp=dir(fullpath.default.rotation);
-time.rotation=datenum(temp.date);
+time.rotation=temp.datenum;
 
 %get the default precombat file time
 temp=dir(fullpath.default.precombat);
-time.precombat=datenum(temp.date);
+time.precombat=temp.datenum;
 
 %get the default talents file time
 temp=dir(fullpath.default.talents);
-time.talents=datenum(temp.date);
+time.talents=temp.datenum;
 
 for i=fieldnames(time)'
     
