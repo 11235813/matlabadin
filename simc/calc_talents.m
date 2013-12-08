@@ -1,6 +1,6 @@
 clear sim
 fclose('all');
-REGEN_ALL=true; %THIS REGENERATES ALL FILES - SET FALSE FOR CACHING
+REGEN_ALL=false; %THIS REGENERATES ALL FILES - SET FALSE FOR CACHING
 
 % initializes the sim structure, setting certain parameters to default
 % values.
@@ -168,3 +168,21 @@ end
 disp(' ')
 disp('Lowest 10 TMI specs')
 tmit.toText()
+
+%% displays for blog
+
+disp(' ')
+disp('Full List')
+dt.toBlog()
+
+disp(' ')
+disp('Short List')
+dts.toBlog()
+
+disp(' ')
+disp('Top 10 DPS specs')
+dpst.toBlog()
+
+disp(' ')
+disp('Lowest 10 TMI specs')
+tmit.toBlog()
