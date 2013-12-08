@@ -1,6 +1,6 @@
 clear sim
 fclose('all');
-REGEN_ALL=false; %THIS REGENERATES ALL FILES - SET FALSE FOR CACHING
+REGEN_ALL=true; %THIS REGENERATES ALL FILES - SET FALSE FOR CACHING
 
 % initializes the sim structure, setting certain parameters to default
 % values.
@@ -72,7 +72,7 @@ for i=1:size(talent_combinations,1);
     sim=sf_construct_fullpaths(sim);
     
     %if the txt output doesn't exist or is older than an important file, regenerate
-    if ~exist(fullpath.output,'file') || sf_compare_fullpaths(fullpath)
+    if ~exist(sim.fullpaths.output,'file') || sf_compare_fullpaths(sim.fullpaths)
         
         %create simc file
         create_simc_file(sim);
