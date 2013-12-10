@@ -127,8 +127,8 @@ dt.toText()
 dts=DataTable();
 dts{1,1}='Glyph';
 dts{1,2}='DPS';
-dts{1,3}='DPSErr';
-dts{1,4}='dDPS';
+dts{1,3}='Err';
+dts{1,4}='Delta';
 dts{1,5}='HPS';
 dts{1,6}='DTPS';
 dts{1,7}='TMI';
@@ -151,8 +151,8 @@ topDPS=dpsindex(1:10);
 
 dpst=DataTable();
 dpst{1,1:4}=dt.getData(1,1:4);
-dpst{1,5}='DPSErr';
-dpst{1,6}='DPS%Err';
+dpst{1,5}='Err';
+dpst{1,6}='%Err';
 dpst{1,7}='HPS';
 dpst{1,8}='DTPS';
 dpst{1,9}='TMI';
@@ -174,8 +174,8 @@ topTMI=tmiindex(1:10);
 
 tmit=DataTable();
 tmit{1,1:7}=dt.getData(1,1:7);
-tmit{1,8}='TMIErr';
-tmit{1,9}='TMI%Err';
+tmit{1,8}='Err';
+tmit{1,9}='%Err';
 tmit{1,10}='SotR';
 for i=1:length(topTMI)
     tmit{1+i,1:7}=dt.getData(1+topTMI(i),1:7);

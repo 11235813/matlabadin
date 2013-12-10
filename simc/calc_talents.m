@@ -18,9 +18,9 @@ talentpath=[sim.paths.pdb 'talents\'];
 
 %% set up the list of things we want to vary
 label_L45={'SH';'EF';'SS'};
-label_L60={'HoP';'US';'Clem'};
+label_L60={'PU';'US';'CL'};
 label_L75={'HA';'SW';'DP'};
-label_L90={'ES';'LH';'HPr'};
+label_L90={'ES';'LH';'HP'};
 talent_combinations='';
 talent_L45='';talent_L60='';talent_L75='';talent_L90='';
 
@@ -123,6 +123,8 @@ end
 
 disp(' ')
 disp('Full List')
+disp(['Max DPS Err: ' int2str(round(max([results.dps_error]))) ', Max DPS % Err: ' num2str(max([results.dps_pct_error]),'%2.2f') '%'])
+disp(['Max TMI Err: ' num2str(max([results.tmi_error]),'%5.2f') ', Max TMI % Err: ' num2str(max([results.tmi_pct_error]),'%2.2f') '%'])
 dt.toText()
 
 %% Compile short table of select results
@@ -146,9 +148,15 @@ dts.toText()
 topDPS=dpsindex(1:10);
 
 dpst=DataTable();
-dpst{1,1:size(dt,2)}=dt.getData(1,1:size(dt,2));
+dpst{1,1:6}=dt.getData(1,1:6);
+dpst{1,7}='Err';
+dpst{1,8}='%Err';
+dpst{1,9:(size(dt,2)+2)}=dt.getData(1,7:size(dt,2));
 for i=1:length(topDPS)
-    dpst{1+i,1:size(dt,2)}=dt.getData(1+topDPS(i),1:size(dt,2));
+    dpst{1+i,1:6}=dt.getData(1+topDPS(i),1:6);
+    dpst{1+i,7}=round(results(topDPS(i)).dps_error);
+    dpst{1+i,8}=[num2str(results(topDPS(i)).dps_pct_error,'%2.2f') '%'];
+    dpst{1+i,9:(size(dt,2)+2)}=dt.getData(1+topDPS(i),7:size(dt,2));
 end
 
 disp(' ')
@@ -160,9 +168,15 @@ dpst.toText()
 topTMI=tmiindex(1:10);
 
 tmit=DataTable();
-tmit{1,1:size(dt,2)}=dt.getData(1,1:size(dt,2));
+tmit{1,1:9}=dt.getData(1,1:9);
+tmit{1,10}='Err';
+tmit{1,11}='%Err';
+tmit{1,12}='SotR';
 for i=1:length(topTMI)
-    tmit{1+i,1:size(dt,2)}=dt.getData(1+topTMI(i),1:size(dt,2));
+    tmit{1+i,1:9}=dt.getData(1+topTMI(i),1:9);
+    tmit{1+i,10}=num2str(results(topTMI(i)).tmi_error,'%5.2f');
+    tmit{1+i,11}=[num2str(results(topTMI(i)).tmi_pct_error,'%5.2f') '%'];
+    tmit{1+i,12}=dt.getData(1+topTMI(i),size(dt,2));
 end
 
 disp(' ')
