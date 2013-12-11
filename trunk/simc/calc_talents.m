@@ -187,6 +187,8 @@ tmit.toText()
 
 disp(' ')
 disp('Full List')
+disp(['Max DPS Err: ' int2str(round(max([results.dps_error]))) ', Max DPS % Err: ' num2str(max([results.dps_pct_error]),'%2.2f') '%'])
+disp(['Max TMI Err: ' num2str(max([results.tmi_error]),'%5.2f') ', Max TMI % Err: ' num2str(max([results.tmi_pct_error]),'%2.2f') '%'])
 dt.toBlog()
 
 disp(' ')
