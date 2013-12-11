@@ -17,15 +17,25 @@ sim = util_check_pdb_path(sim);
 glyphpath=[sim.paths.pdb 'glyphs\'];
 
 %% set up the list of things we want to vary
-glyph_pool={'';'';'alabaster_shield';'avenging_wrath';'battle_healer';'devotion_aura';'divine_protection';'final_wrath';'focused_shield';'harsh_words';'immediate_truth';'word_of_glory'};
-glyph_abbr={'E';'E';'AS';'AW';'BH';'DA';'DP';'FW';'FS';'HW';'IT';'WoG'};
+glyph_pool={'';'alabaster_shield';'avenging_wrath';'battle_healer';'devotion_aura';'divine_protection';'final_wrath';'focused_shield';'harsh_words';'immediate_truth';'word_of_glory'};
+glyph_abbr={'E';'AS';'AW';'BH';'DA';'DP';'FW';'FS';'HW';'IT';'WoG'};
 glyph_combinations=cellstr('');
 glyph_abbreviated=cellstr('E_E_E');
 
 %this part creates every possible combination of the glyph pool
 cell_index=2;
-for i=1:(length(glyph_pool)-2)
-    for j=(i+1):(length(glyph_pool)-1)
+%first, single glyph combos
+for i=2:(length(glyph_pool))
+       %glyph combinations is the string that gets fed to simc
+       glyph_combinations{cell_index}=glyph_pool{i};
+       %glyph_abbreviated is the short version
+       glyph_abbreviated{cell_index}=strcat('E_E_',glyph_abbr{i});
+       %increment cell index
+       cell_index=cell_index+1;   
+end
+%then multiple glyph combos
+for i=1:(length(glyph_pool)-1)
+    for j=(i+1):(length(glyph_pool))
         for k=(j+1):length(glyph_pool)
             %glyph_combinations is the string that gets fed to simc
             glyph_combinations{cell_index}=...
