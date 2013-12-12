@@ -143,7 +143,7 @@ dts{1,5}='HPS';
 dts{1,6}='DTPS';
 dts{1,7}='TMI';
 dts{1,8}='SotR';
-for i=2:length(glyph_pool)
+for i=2:(1+length(glyph_pool))
     %special formatting here, want some diffs
     dts{i,1:2}=dt.getData(i,3:4); %Glyph, DPS
     dts{i,3}=round(results(i).dps_error);
@@ -175,7 +175,7 @@ for i=1:length(topDPS)
 end
 
 disp(' ')
-disp('Top 10 DPS specs')
+disp('Top 10 DPS Combinations')
 dpst.toText()
 
 %% Lowest 10 TMI combinations
@@ -195,7 +195,7 @@ for i=1:length(topTMI)
 end
 
 disp(' ')
-disp('Lowest 10 TMI specs')
+disp('Lowest 10 TMI Combinations')
 tmit.toText()
 
 
@@ -212,10 +212,10 @@ disp('Single-Glyph List')
 dts.toBlog()
 
 disp(' ')
-disp('Top 10 DPS specs')
+disp('Top 10 DPS Combinations')
 dpst.toBlog()
 
 disp(' ')
-disp('Lowest 10 TMI specs')
+disp('Lowest 10 TMI Combinations')
 tmit.toBlog()
 
