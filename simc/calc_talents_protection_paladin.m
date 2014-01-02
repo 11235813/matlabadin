@@ -10,6 +10,8 @@ sim.iterations=50000;
 sim.threads=4;
 sim.gear='T16N.simc';
 sim.boss='T16N25.simc';
+sim.class='paladin';
+sim.spec='protection';
 % sim.paths.exe='d:\simcraft\'
 %fix pdb path - in future may need to set this to "what" if we implement
 %\pdb\ in simc and still wish to use matlab path
@@ -22,14 +24,16 @@ label_L60={'PU';'US';'CL'};
 label_L75={'HA';'SW';'DP'};
 label_L90={'ES';'LH';'HP'};
 talent_combinations='';
+talent_filenames='';
 talent_L45='';talent_L60='';talent_L75='';talent_L90='';
 
 for L60=1:3 %L60 talent (HoP/US/Clemency)
     for L90=1:3 %L90 talent (EF/LH/HPr)
         for L45=1:3 %L45 talent (SH/EF/SS)
             for L75=1:3 %L75 talent (HA/SW/DP)
-                talent_combinations=[talent_combinations;
-                    strcat('31',int2str(L45),int2str(L60),int2str(L75),int2str(L90))]; %#ok<AGROW>
+                talent_numeric_string=strcat('31',int2str(L45),int2str(L60),int2str(L75),int2str(L90));
+                talent_combinations=[talent_combinations; talent_numeric_string]; %#ok<AGROW>
+                talent_filenames=[talent_filenames; strcat(sim.class,'_',sim.spec,'_',talent_numeric_string)]; %#ok<AGROW>
                 talent_L45=strvcat(talent_L45, label_L45{L45});  %#ok<*REMFF1>
                 talent_L60=strvcat(talent_L60, label_L60{L60}); 
                 talent_L75=strvcat(talent_L75, label_L75{L75}); 
@@ -62,11 +66,11 @@ for i=1:size(talent_combinations,1);
     sim.talents=talent_files{i};
     
     %rename simc file
-    sim.simc=strcat('io\talent_',talent_combinations(i,:),'.simc');
+    sim.simc=strcat('io\talent_',talent_filenames(i,:),'.simc');
     
     %set output filenames
-    sim.output.html=strcat('io\talent_',talent_combinations(i,:),'.html');
-    sim.output.output=strcat('io\talent_',talent_combinations(i,:),'.txt');
+    sim.output.html=strcat('io\talent_',talent_filenames(i,:),'.html');
+    sim.output.output=strcat('io\talent_',talent_filenames(i,:),'.txt');
     
     %construct simc fullpath
     sim=sf_construct_fullpaths(sim);

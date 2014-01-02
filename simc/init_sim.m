@@ -14,6 +14,8 @@ sim.threads=4;
 
 % player parameters
 sim.paths.pdb='';
+sim.class='paladin';
+sim.spec='protection';
 sim.playerstr='';
 sim.player='default.simc';
 sim.glyphs='default.simc';

@@ -10,6 +10,8 @@ sim.iterations=50000; %min 50, lower causes crashes w/ release versions
 sim.threads=4;
 sim.gear='T16N.simc';
 sim.boss='T16N25.simc';
+sim.class='paladin';
+sim.spec='protection';
 % sim.paths.exe='d:\simcraft\'
 %fix pdb path - in future may need to set this to "what" if we implement
 %\pdb\ in simc and still wish to use matlab path
@@ -21,6 +23,7 @@ glyph_pool={'';'alabaster_shield';'avenging_wrath';'battle_healer';'devotion_aur
 glyph_abbr={'E';'AS';'AW';'BH';'DA';'DP';'FW';'FS';'HW';'IT';'WoG'};
 glyph_combinations=cellstr('');
 glyph_abbreviated=cellstr('E_E_E');
+glyph_filenames=cellstr(strcat(sim.class,'_',sim.spec,'_',glyph_abbreviated));
 
 %this part creates every possible combination of the glyph pool
 cell_index=2;
@@ -30,6 +33,8 @@ for i=2:(length(glyph_pool))
        glyph_combinations{cell_index}=glyph_pool{i};
        %glyph_abbreviated is the short version
        glyph_abbreviated{cell_index}=strcat('E_E_',glyph_abbr{i});
+       %glyph_filenames is the list of filenames
+       glyph_filenames{cell_index}=strcat(sim.class,'_',sim.spec,'_',glyph_abbreviated{cell_index});
        %increment cell index
        cell_index=cell_index+1;   
 end
@@ -42,6 +47,8 @@ for i=1:(length(glyph_pool)-1)
                 strcat(glyph_pool{i},'/',glyph_pool{j},'/',glyph_pool{k}); 
             %glyph_abbreviated is the short version
             glyph_abbreviated{cell_index}=strcat(glyph_abbr{i},'_',glyph_abbr{j},'_',glyph_abbr{k});
+            %glyph_filenames is the list of filenames
+            glyph_filenames{cell_index}=strcat(sim.class,'_',sim.spec,'_',glyph_abbreviated{cell_index});
             %increment cell index
             cell_index=cell_index+1;
         end
@@ -49,9 +56,9 @@ for i=1:(length(glyph_pool)-1)
 end
 
 
-%% create the talent .simc files we need
+%% create the glyph .simc files we need
 for i=1:length(glyph_combinations)
-    glyph_files{i}=create_simc_component(['glyphs=' glyph_combinations{i}],glyphpath,glyph_abbreviated{i});  %#ok<SAGROW>
+    glyph_files{i}=create_simc_component(['glyphs=' glyph_combinations{i}],glyphpath,glyph_filenames{i});  %#ok<SAGROW>
 end
 
 %% crank through them
@@ -71,11 +78,11 @@ for i=1:length(glyph_combinations);
     sim.glyphs=glyph_files{i};
     
     %rename simc file
-    sim.simc=strcat('io\glyph_',glyph_abbreviated{i},'.simc');
+    sim.simc=strcat('io\glyph_',glyph_filenames{i},'.simc');
     
     %set output filenames
-    sim.output.html=strcat('io\glyph_',glyph_abbreviated{i},'.html');
-    sim.output.output=strcat('io\glyph_',glyph_abbreviated{i},'.txt');
+    sim.output.html=strcat('io\glyph_',glyph_filenames{i},'.html');
+    sim.output.output=strcat('io\glyph_',glyph_filenames{i},'.txt');
     
     %construct simc fullpath
     sim=sf_construct_fullpaths(sim);
@@ -85,10 +92,9 @@ for i=1:length(glyph_combinations);
         
         %create simc file
         create_simc_file(sim);
-                
+               
         %run sim
         sim=run_sim(sim);
-        
     end
     
     tempresults=sf_extract(sim.output.output);
