@@ -25,31 +25,31 @@ end
 temp=dir(fullpath.exe);
 time.exe=temp.datenum;
 
-%get the default glyph file time
-temp=dir(fullpath.default.glyphs);
+%get the glyph file time
+temp=dir(fullpath.glyphs);
 time.glyphs=temp.datenum;
 
-%get the default player file time
-temp=dir(fullpath.default.player);
+%get the player file time
+temp=dir(fullpath.player);
 time.player=temp.datenum;
 
-%get the default rotation file time
-temp=dir(fullpath.default.rotation);
+%get the rotation file time
+temp=dir(fullpath.rotation);
 time.rotation=temp.datenum;
 
-%get the default precombat file time
-temp=dir(fullpath.default.precombat);
+%get the precombat file time
+temp=dir(fullpath.precombat);
 time.precombat=temp.datenum;
 
-%get the default talents file time
-temp=dir(fullpath.default.talents);
+%get the talents file time
+temp=dir(fullpath.talents);
 time.talents=temp.datenum;
 
 for i=fieldnames(time)'
     
     if (time.(i{1})-out_time)>0
         regenerate=true;
-        warning([i{1} ' is newer than txt output, regenerating data']); %#ok<WNTAG>
+        warning([i{1} ' file is newer than txt output, regenerating data']); %#ok<WNTAG>
     end
 end
 
