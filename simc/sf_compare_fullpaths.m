@@ -26,24 +26,34 @@ temp=dir(fullpath.exe);
 time.exe=temp.datenum;
 
 %get the glyph file time
-temp=dir(fullpath.glyphs);
-time.glyphs=temp.datenum;
+if isfield(fullpath,'glyphs')
+    temp=dir(fullpath.glyphs);
+    time.glyphs=temp.datenum;
+end
 
 %get the player file time
-temp=dir(fullpath.player);
-time.player=temp.datenum;
+if isfield(fullpath,'player')
+    temp=dir(fullpath.player);
+    time.player=temp.datenum;
+end
 
 %get the rotation file time
-temp=dir(fullpath.rotation);
-time.rotation=temp.datenum;
+if isfield(fullpath,'rotation')
+    temp=dir(fullpath.rotation);
+    time.rotation=temp.datenum;
+end
 
 %get the precombat file time
-temp=dir(fullpath.precombat);
-time.precombat=temp.datenum;
+if isfield(fullpath,'precombat')
+    temp=dir(fullpath.precombat);
+    time.precombat=temp.datenum;
+end
 
 %get the talents file time
-temp=dir(fullpath.talents);
-time.talents=temp.datenum;
+if isfield(fullpath,'talents')
+    temp=dir(fullpath.talents);
+    time.talents=temp.datenum;
+end
 
 for i=fieldnames(time)'
     
