@@ -21,8 +21,8 @@ sim.player='default.simc';
 sim.glyphs='default.simc';
 sim.talents='default.simc';
 sim.gear='T16H.simc';
-sim.precombat='precombat.simc';
-sim.rotation='default.simc';
+sim.precombat='paladin_protection_precombat_default.simc';
+sim.rotation='paladin_protection_default.simc';
 
 % boss parameters
 sim.boss='T16N25.simc';

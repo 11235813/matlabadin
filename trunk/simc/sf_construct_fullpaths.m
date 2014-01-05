@@ -45,10 +45,18 @@ fullpath.html=strcat(sim.paths.output,sim.output.html);
 
 %combine paths.pdb with individual components to get full paths
 fullpath.player=strcat(sim.paths.pdb,'player\',sim.player);
-fullpath.glyphs=strcat(sim.paths.pdb,'glyphs\',sim.glyphs);
-fullpath.talents=strcat(sim.paths.pdb,'talents\',sim.talents);
-fullpath.rotation=strcat(sim.paths.pdb,'rotation\',sim.rotation);
-fullpath.precombat=strcat(sim.paths.pdb,'rotation\',sim.precombat);
+if length(sim.glyphs)>5 && strcmp(sim.glyphs(length(sim.glyphs)-[4:-1:0]),'.simc')    
+    fullpath.glyphs=strcat(sim.paths.pdb,'glyphs\',sim.glyphs);
+end
+if length(sim.talents)>5 && strcmp(sim.talents(length(sim.talents)-[4:-1:0]),'.simc')    
+    fullpath.talents=strcat(sim.paths.pdb,'talents\',sim.talents);
+end
+if length(sim.rotation)>5 && strcmp(sim.rotation(length(sim.rotation)-[4:-1:0]),'.simc')
+    fullpath.rotation=strcat(sim.paths.pdb,'rotation\',sim.rotation);
+end
+if length(sim.precombat)>5 && strcmp(sim.precombat(length(sim.precombat)-[4:-1:0]),'.simc')
+    fullpath.precombat=strcat(sim.paths.pdb,'rotation\',sim.precombat);
+end
 
 % also construct paths to default pdb files; not sure if needed anymore
 fullpath.default.glyphs=strcat(sim.paths.pdb,'glyphs\default.simc');

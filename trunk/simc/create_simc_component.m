@@ -26,18 +26,24 @@ fullpath=[path filename];
 
 %% check to see if the file needs to be replaced
 if ~force_replace
-   fid=fopen(fullpath,'r'); 
-   current_line=fgetl(fid); %purge simc header
-   current_line=fgetl(fid); 
-   line_index=1;
-   replace=false;
-   while ischar(current_line) || line_index<=size(str,1) 
-       if ~strcmp(current_line,str(line_index,:))
-           replace=true;
-       end
-       current_line=fgetl(fid);
-       line_index=line_index+1;
-   end
+    replace=false;
+    fid=fopen(fullpath,'r');
+    if fid<0
+        replace=true;
+    else
+        current_line=fgetl(fid); %purge simc header
+        current_line=fgetl(fid);
+        line_index=1;
+        while ischar(current_line) || line_index<=length(str)
+            if ( ischar(str) && ~strcmp(current_line,str(line_index,:)) ) || ...
+                    ( iscell(str) && ~strcmp(current_line,str{line_index}) )
+                replace=true;
+                break
+            end
+            current_line=fgetl(fid);
+            line_index=line_index+1;
+        end
+    end
 end
 
 if ~replace
@@ -52,15 +58,18 @@ sf_addstr(fullpath,'#!./simc');
 fclose(fid);
 
 % loop through str input and write each line
-for i=1:size(str,1)
-    
-    if ischar(str)
+if ischar(str)    
+    for i=1:size(str,1)
         sf_addstr(fullpath,str(i,:));
-    elseif iscell(str)
-        sf_addstr(fullpath,str{i});
-    else
-        %what else is there?
     end
+    
+elseif iscell(str)
+    for i=1:length(str)
+        sf_addstr(fullpath,str{i});
+    end
+    
+else
+    %what else is there?
 end
 
 end
