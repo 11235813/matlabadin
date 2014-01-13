@@ -91,7 +91,7 @@ for i=1:length(glyph_combinations);
     if ~exist(sim.fullpaths.output,'file') || sf_compare_fullpaths(sim.fullpaths) || REGEN_ALL
         
         %create simc file
-        create_simc_file(sim);
+        create_simc_file(sim); %unnecessary? Already done in run_sim
                
         %run sim
         sim=run_sim(sim);
@@ -108,6 +108,7 @@ for i=1:length(glyph_combinations);
 end
 close(W)
 toc
+fclose all;
 
 %% Compile results into usefully-formatted table
 addpath ./helper_func/

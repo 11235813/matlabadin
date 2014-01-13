@@ -97,6 +97,7 @@ for i=1:size(talent_combinations,1);
 end
 close(W)
 toc
+fclose all;
 
 %% Compile results into usefully-formatted table
 addpath ./helper_func/

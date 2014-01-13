@@ -14,7 +14,7 @@ operators={opt_match.operator};
 options={opt_match.options};
 numerics={opt_match.numeric};
 
-talent=false; %flag for talent.X.enabled auto-option
+talent=false; %flag for talent.X.enabled auto-option; set by base switch.
 
 %% Paladin
 if strcmp(class,'paladin')
@@ -98,6 +98,10 @@ if strcmp(class,'paladin')
                     temp_opt_str='buff.divine_purpose.react';
                 case 'DPHP'
                     temp_opt_str=strcat('(buff.divine_purpose.react|holy_power>=',numerics{i});
+                case 'EX'
+                    temp_opt_str=strcat('target.health_pct<=20');
+                case 'FW'
+                    temp_opt_str=strcat('glyph.final_wrath.enabled&target.health_pct<=20');
                 case 'HP'
                     temp_opt_str=strcat('holy_power>=',numerics{i});
                 case 'nt'
