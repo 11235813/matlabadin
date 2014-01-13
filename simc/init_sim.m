@@ -4,7 +4,7 @@ function [ sim ] = init_sim
 % SimC path/exe information
 sim.exe='simc64.exe';
 sim.paths.exe='G:\simcraft\';
-sim.paths.exe='D:\Simcraft\simc-541-2-win64\';
+sim.paths.exe='D:\Simcraft\simc-542-1-win64\';
 
 % sim parameters
 sim.iterations=100;
