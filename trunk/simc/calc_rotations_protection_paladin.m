@@ -137,7 +137,10 @@ block.talents.rot={ ... %ES
 block.talents.glyphs='focused_shield/word_of_glory/final_wrath'; %FS/WoG/FW
 block.talents.talents='custom'; %see simc building stage
           
-          
+
+% ==================== Part 3 ==========================
+% Build a single list for each component that we can loop through simply 
+
 %rotation_combinations is a list of shorthands that describe rotations
 %collapse for readability
 rotation_combinations=[block.basic.rot; ...
@@ -145,7 +148,11 @@ rotation_combinations=[block.basic.rot; ...
                         block.defensive.rot; ...
                         block.talents.rot;];
 
-                    
+%glyph_combinations is the list of glyphs for each rotation
+for i=1:length(rotation_combinations)
+    glyph_combinations=
+end
+%talent_combinatiosn is the talent configuration for each rotation
                     
 
 %rotation_filenames is the list of corresponding .simc filenames 
@@ -167,7 +174,7 @@ for i=1:length(rotation_combinations)
     rotation_files{i}=create_simc_component(simc_rotation_strings,rotationpath,rotation_filenames{i});  %#ok<SAGROW>
     
     %support talents in a hackneyed way    
-    talent_combinations(i,:)='312232'; %#ok<SAGROW> %this is the default, necessary to support talent-based abilities
+    talent_combinations(i,:)='312232'; %this is the default, necessary to support talent-based abilities
     if strfind(char(rotation_combinations(i,:)),'ES')
         talent_combinations(i,6)='3'; %#ok<*SAGROW>
     elseif strfind(char(rotation_combinations(i,:)),'LH')
