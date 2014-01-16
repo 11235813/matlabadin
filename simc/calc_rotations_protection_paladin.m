@@ -1,6 +1,6 @@
 clear sim
 fclose('all');
-REGEN_ALL=true; %THIS REGENERATES ALL FILES - SET FALSE FOR CACHING
+REGEN_ALL=false; %THIS REGENERATES ALL FILES - SET FALSE FOR CACHING
 
 % initializes the sim structure, setting certain parameters to default
 % values.
@@ -58,7 +58,7 @@ simc_rotation_finishers={'actions+=/eternal_flame,if=talent.eternal_flame.enable
 %block 1 - basic tests of ability ordering
 block.basic.rot={ 'CS>J>AS>Cons>HW';
                   'CS>J>AS>HW>Cons';
-                  'CS+W0.35>J>AS>HW>Cons';
+                  'CS+W0.3>J>AS>HW>Cons';
                   'CSw>J>AS>HW>Cons';
                   'CSw>AS>J>HW>Cons';
                   'J>CSw>AS>HW>Cons';
@@ -264,6 +264,7 @@ dtb1{1,5}='DTPS';
 dtb1{1,6}='TMI';
 dtb1{1,7}='err';
 dtb1{1,8}='SotR';
+dtb1{1,9}='Wait';
 for i=1:length(block.basic.rot)
    dtb1{1+i,1}=block.basic.rot{i};
    r=results(i);
@@ -274,6 +275,7 @@ for i=1:length(block.basic.rot)
    dtb1{1+i,6}=num2str(r.tmi,'%6.1f');
    dtb1{1+i,7}=num2str(r.tmi_error,'%6.1f');
    dtb1{1+i,8}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
+   dtb1{1+i,9}=[num2str(r.waiting*100,'%2.1f') '%'];
 end
 
 disp(' ')
@@ -290,6 +292,7 @@ dtb2{1,5}='DTPS';
 dtb2{1,6}='TMI';
 dtb2{1,7}='err';
 dtb2{1,8}='SotR';
+dtb2{1,9}='Wait';
 for i=1:length(block.execute.rot)
    dtb2{1+i,1}=block.execute.rot{i};
    r=results(length(block.basic.rot)+i);
@@ -300,6 +303,7 @@ for i=1:length(block.execute.rot)
    dtb2{1+i,6}=num2str(r.tmi,'%6.1f');
    dtb2{1+i,7}=num2str(r.tmi_error,'%6.1f');
    dtb2{1+i,8}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
+   dtb2{1+i,9}=[num2str(r.waiting*100,'%2.1f') '%'];
 end
 
 disp(' ')
@@ -316,6 +320,7 @@ dtb3{1,5}='DTPS';
 dtb3{1,6}='TMI';
 dtb3{1,7}='err';
 dtb3{1,8}='SotR';
+dtb3{1,9}='Wait';
 for i=1:length(block.defensive.rot)
    dtb3{1+i,1}=block.defensive.rot{i};
    r=results(length(block.basic.rot)+length(block.defensive.rot)+i);
@@ -326,6 +331,7 @@ for i=1:length(block.defensive.rot)
    dtb3{1+i,6}=num2str(r.tmi,'%6.1f');
    dtb3{1+i,7}=num2str(r.tmi_error,'%6.1f');
    dtb3{1+i,8}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
+   dtb3{1+i,9}=[num2str(r.waiting*100,'%2.1f') '%'];
 end
 
 disp(' ')
@@ -342,6 +348,7 @@ dtb4{1,5}='DTPS';
 dtb4{1,6}='TMI';
 dtb4{1,7}='err';
 dtb4{1,8}='SotR';
+dtb4{1,9}='Wait';
 for i=1:length(block.talents.rot)
    dtb4{1+i,1}=block.talents.rot{i};
    r=results(length(block.basic.rot)+length(block.defensive.rot)+length(block.execute.rot)+i);
@@ -352,6 +359,7 @@ for i=1:length(block.talents.rot)
    dtb4{1+i,6}=num2str(r.tmi,'%6.1f');
    dtb4{1+i,7}=num2str(r.tmi_error,'%6.1f');
    dtb4{1+i,8}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
+   dtb4{1+i,9}=[num2str(r.waiting*100,'%2.1f') '%'];
 end
 
 disp(' ')
