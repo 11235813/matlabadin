@@ -31,7 +31,7 @@ if strcmp(class,'paladin')
                 ability_str='crusader_strike';
                 options{length(options)+1}='W';
                 operators{length(operators)+1}='+';
-                numerics{length(numerics)+1}='0.3';
+                numerics{length(numerics)+1}='0.35';
             case 'HotR'
                 ability_str='hammer_of_the_righteous';
             case 'J'

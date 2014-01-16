@@ -12,6 +12,6 @@ actions+=/shield_of_the_righteous,if=holy_power>=5|buff.divine_purpose.react|inc
 actions+=/avengers_shield
 actions+=/judgment
 actions+=/crusader_strike
-actions+=/wait,sec=cooldown.crusader_strike.remains,if=cooldown.crusader_strike.remains>0&cooldown.crusader_strike.remains<=0.3
+actions+=/wait,sec=cooldown.crusader_strike.remains,if=cooldown.crusader_strike.remains>0&cooldown.crusader_strike.remains<=0.35
 actions+=/holy_wrath
 actions+=/consecration

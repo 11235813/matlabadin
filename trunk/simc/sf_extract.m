@@ -17,6 +17,7 @@ results.tmi=-1;results.tmi_error=-1;results.tmi_pct_error=-1;
 results.ef_uptime=0;
 results.ss_uptime=0;
 results.sotr_uptime=0;
+results.waiting=0;
 
 if infile>2
     
@@ -24,9 +25,10 @@ if infile>2
     hps_expr='HPS:\s+(?<hps>\d*\.\d*)\s+HPS-Error=(?<hps_error>\d*\.\d*)/(?<hps_pct_error>\d*\.\d*)\%';
     dtps_expr='DTPS:\s+(?<dtps>\d*\.\d*)\s+DTPS-error=(?<dtps_error>\d*\.\d*)/(?<dtps_pct_error>\d*\.\d*)\%';
     tmi_expr='TMI:\s+(?<tmi>\d*.\d*)\s+TMI-error=(?<tmi_error>\d*\.\d*)/(?<tmi_pct_error>\d*\.\d*)\%\s+TMI-min=(?<tmi_min>\d*\.\d*)\s+TMI-max=(?<tmi_max>\d*\.\d*)';
-    sotr_expr='shield_of_the_righteous.*uptime=\s*(?<sotr_uptime>\d*)\%';
-    ef_expr='eternal_flame.*uptime=\s*(?<ef_uptime>\d*)\%';
-    ss_expr='sacred_shield.*uptime=\s*(?<ss_uptime>\d*)\%';
+    sotr_expr='shield_of_the_righteous.*uptime=\s*(?<sotr_uptime>\d*\.\d*)\%';
+    ef_expr='eternal_flame.*uptime=\s*(?<ef_uptime>\d*\.\d*)\%';
+    ss_expr='sacred_shield.*uptime=\s*(?<ss_uptime>\d*\.\d*)\%';
+    wait_expr='Waiting:\s*(?<waiting>\d*\.\d*)\%';
     
     current_line=fgetl(infile);
    
@@ -92,6 +94,14 @@ if infile>2
             if ~isempty(names)
                 results.ef_uptime=0;
                 results.ss_uptime=str2double(names.ss_uptime)./100;
+            end
+        end
+        %check for time spent waiting
+        if results.waiting==0
+            clear names
+            names=regexp(current_line,wait_expr,'names');
+            if ~isempty(names)
+                results.waiting=str2double(names.waiting)./100;
             end
         end
         %get next line
