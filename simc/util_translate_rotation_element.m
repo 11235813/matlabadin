@@ -99,9 +99,9 @@ if strcmp(class,'paladin')
                 case 'DPHP'
                     temp_opt_str=strcat('(buff.divine_purpose.react|holy_power>=',numerics{i});
                 case 'EX'
-                    temp_opt_str=strcat('target.health_pct<=20');
+                    temp_opt_str=strcat('target.health.pct<=20');
                 case 'FW'
-                    temp_opt_str=strcat('glyph.final_wrath.enabled&target.health_pct<=20');
+                    temp_opt_str=strcat('glyph.final_wrath.enabled&target.health.pct<=20');
                 case 'HP'
                     temp_opt_str=strcat('holy_power>=',numerics{i});
                 case 'nt'

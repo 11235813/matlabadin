@@ -1,6 +1,6 @@
 clear sim
 fclose('all');
-REGEN_ALL=false; %THIS REGENERATES ALL FILES - SET FALSE FOR CACHING
+REGEN_ALL=true; %THIS REGENERATES ALL FILES - SET FALSE FOR CACHING
 
 % initializes the sim structure, setting certain parameters to default
 % values.
@@ -12,7 +12,7 @@ sim.gear='T16N.simc';
 sim.boss='T16N25.simc';
 sim.class='paladin';
 sim.spec='protection';
-% sim.paths.exe='d:\simcraft\'
+sim.paths.exe='g:\simulationcraft\'
 %fix pdb path - in future may need to set this to "what" if we implement
 %\pdb\ in simc and still wish to use matlab path
 sim = util_check_pdb_path(sim);
@@ -69,7 +69,6 @@ block.basic.rot={ 'CS>J>AS>Cons>HW';
                   %vary AS+GC
                   'AS+GC>CSw>J>AS>HW>Cons';
                   'CSw>AS+GC>J>AS>HW>Cons';
-                  'CSw>J>AS>HW>Cons';
                   'CSw>AS+GC>J>HW>AS>Cons';
                   'CSw>AS+GC>J>HW>Cons>AS';
                 };
@@ -149,11 +148,16 @@ rotation_combinations=[block.basic.rot; ...
                         block.talents.rot;];
 
 %glyph_combinations is the list of glyphs for each rotation
-for i=1:length(rotation_combinations)
-    glyph_combinations=
-end
+glyph_combinations=[cellstr(repmat(block.basic.glyphs,length(block.basic.rot),1));...
+                    cellstr(repmat(block.execute.glyphs,length(block.execute.rot),1));...
+                    cellstr(repmat(block.defensive.glyphs,length(block.defensive.rot),1));...
+                    cellstr(repmat(block.talents.glyphs,length(block.talents.rot),1));];
+
 %talent_combinatiosn is the talent configuration for each rotation
-                    
+talent_combinations=[cellstr(repmat(block.basic.talents,length(block.basic.rot),1));...
+                     cellstr(repmat(block.execute.talents,length(block.execute.rot),1));...
+                     cellstr(repmat(block.defensive.talents,length(block.defensive.rot),1));...
+                     cellstr(repmat(block.talents.talents,length(block.talents.rot),1));];                   
 
 %rotation_filenames is the list of corresponding .simc filenames 
 for i=1:length(rotation_combinations)
@@ -173,21 +177,26 @@ for i=1:length(rotation_combinations)
     %create the rotation file
     rotation_files{i}=create_simc_component(simc_rotation_strings,rotationpath,rotation_filenames{i});  %#ok<SAGROW>
     
-    %support talents in a hackneyed way    
-    talent_combinations(i,:)='312232'; %this is the default, necessary to support talent-based abilities
-    if strfind(char(rotation_combinations(i,:)),'ES')
-        talent_combinations(i,6)='3'; %#ok<*SAGROW>
-    elseif strfind(char(rotation_combinations(i,:)),'LH')
-        talent_combinations(i,6)='2';        
-    elseif strfind(char(rotation_combinations(i,:)),'HPr')
-        talent_combinations(i,6)='1';
+end
+%replace all 'custom' entries in talent_combinations with numerics
+for i=1:length(rotation_combinations)
+    if strcmp(talent_combinations{i},'custom')
+        %reset to default
+        temp_talents='312232'; %TODO: grab this from default?
+        if strfind(rotation_combinations{i},'ES')
+            temp_talents(6)='3'; %#ok<*SAGROW>
+        elseif strfind(rotation_combinations{i},'LH')
+            temp_talents(6)='2';
+        elseif strfind(rotation_combinations{i},'HPr')
+            temp_talents(6)='1';
+        end
+        if strfind(rotation_combinations{i},'SS')
+            temp_talents(3)='3';
+        elseif strfind(rotation_combinations{i},'EF')
+            temp_talents(3)='2';
+        end
+        talent_combinations{i}=temp_talents;
     end
-    if strfind(char(rotation_combinations(i,:)),'SS')
-        talent_combinations(i,3)='3';
-    elseif strfind(char(rotation_combinations(i,:)),'EF')
-        talent_combinations(i,3)='2';        
-    end
-    
 end
 
 %% crank through them
@@ -207,7 +216,10 @@ for i=1:length(rotation_combinations);
     sim.rotation=rotation_files{i};
     
     %set talents
-    sim.talents=talent_combinations(i,:);
+    sim.talents=talent_combinations{i};
+    
+    %set glyphs
+    sim.glyphs=glyph_combinations{i};
     
     %rename simc file
     sim.simc=strcat('io\rotation_',rotation_filenames{i},'.simc');
@@ -239,117 +251,139 @@ close(W)
 toc
 fclose all;
 
-%% Compile results into usefully-formatted table
+%% Compile results into usefully-formatted tables
 addpath ./helper_func/
-dt=DataTable();
-dt{1,1}='Rotation';
-dt{1,2}='DPS';
-dt{1,3}='HPS';
-dt{1,4}='DTPS';
-dt{1,5}='TMI';
-dt{1,6}='SotR';
-for i=1:length(rotation_combinations)
-   dt{1+i,1}=rotation_combinations{i};
+
+%block 1
+dtb1=DataTable();
+dtb1{1,1}='Rotation';
+dtb1{1,2}='DPS';
+dtb1{1,3}='err';
+dtb1{1,4}='HPS';
+dtb1{1,5}='DTPS';
+dtb1{1,6}='TMI';
+dtb1{1,7}='err';
+dtb1{1,8}='SotR';
+for i=1:length(block.basic.rot)
+   dtb1{1+i,1}=block.basic.rot{i};
    r=results(i);
-   dt{1+i,2}=num2str(r.dps,'%6.0f');
-   dt{1+i,3}=num2str(r.hps,'%6.0f');
-   dt{1+i,4}=num2str(r.dtps,'%6.0f');
-   dt{1+i,5}=num2str(r.tmi,'%6.1f');
-   dt{1+i,6}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
+   dtb1{1+i,2}=num2str(r.dps,'%6.0f');
+   dtb1{1+i,3}=num2str(r.dps_error,'%6.0f');
+   dtb1{1+i,4}=num2str(r.hps,'%6.0f');
+   dtb1{1+i,5}=num2str(r.dtps,'%6.0f');
+   dtb1{1+i,6}=num2str(r.tmi,'%6.1f');
+   dtb1{1+i,7}=num2str(r.tmi_error,'%6.1f');
+   dtb1{1+i,8}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
 end
 
 disp(' ')
-disp('Full List')
-disp(['Max DPS Err: ' int2str(round(max([results.dps_error]))) ', Max DPS % Err: ' num2str(max([results.dps_pct_error]),'%2.2f') '%'])
-disp(['Max TMI Err: ' num2str(max([results.tmi_error]),'%5.2f') ', Max TMI % Err: ' num2str(max([results.tmi_pct_error]),'%2.2f') '%'])
-dt.toText()
+disp('Basic Rotations')
+dtb1.toText()
 
-% %% Compile short table of single-glyph results
-% dts=DataTable();
-% dts{1,1}='Glyph';
-% dts{1,2}='DPS';
-% dts{1,3}='Err';
-% dts{1,4}='Delta';
-% dts{1,5}='HPS';
-% dts{1,6}='DTPS';
-% dts{1,7}='TMI';
-% dts{1,8}='SotR';
-% for i=2:(1+length(glyph_pool))
-%     %special formatting here, want some diffs
-%     dts{i,1:2}=dt.getData(i,3:4); %Glyph, DPS
-%     dts{i,3}=round(results(i).dps_error);
-%     dts{i,4}=str2num(char(dts.getData(i,2)))-str2num(char(dts.getData(2,2))); %#ok<ST2NM>
-%     dts{i,5:size(dts,2)}=dt.getData(i,5:size(dt,2));
-% end
-% 
-% disp(' ')
-% disp('Single-Glyph List')
-% dts.toText()
-
-if length(results)>10
-%% Top 10 DPS rotations
-[dps dpsindex]=sort([results.dps],'descend');
-topDPS=dpsindex(1:10);
-
-dpst=DataTable();
-dpst{1,1:2}=dt.getData(1,1:2);
-dpst{1,3}='Err';
-dpst{1,4}='%Err';
-dpst{1,5}='HPS';
-dpst{1,6}='DTPS';
-dpst{1,7}='TMI';
-dpst{1,8}='SotR';
-for i=1:length(topDPS)
-    dpst{1+i,1:2}=dt.getData(1+topDPS(i),1:2);
-    dpst{1+i,3}=round(results(topDPS(i)).dps_error);
-    dpst{1+i,4}=[num2str(results(topDPS(i)).dps_pct_error,'%2.2f') '%'];
-    dpst{1+i,5:8}=dt.getData(1+topDPS(i),3:6);
+%block 2
+dtb2=DataTable();
+dtb2{1,1}='Rotation';
+dtb2{1,2}='DPS';
+dtb2{1,3}='err';
+dtb2{1,4}='HPS';
+dtb2{1,5}='DTPS';
+dtb2{1,6}='TMI';
+dtb2{1,7}='err';
+dtb2{1,8}='SotR';
+for i=1:length(block.execute.rot)
+   dtb2{1+i,1}=block.execute.rot{i};
+   r=results(length(block.basic.rot)+i);
+   dtb2{1+i,2}=num2str(r.dps,'%6.0f');
+   dtb2{1+i,3}=num2str(r.dps_error,'%6.0f');
+   dtb2{1+i,4}=num2str(r.hps,'%6.0f');
+   dtb2{1+i,5}=num2str(r.dtps,'%6.0f');
+   dtb2{1+i,6}=num2str(r.tmi,'%6.1f');
+   dtb2{1+i,7}=num2str(r.tmi_error,'%6.1f');
+   dtb2{1+i,8}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
 end
 
 disp(' ')
-disp('Top 10 DPS Combinations')
-dpst.toText()
+disp('Execute Rotations')
+dtb2.toText()
 
-%% Lowest 10 TMI rotations
-[tmi tmiindex]=sort([results.tmi],'ascend');
-topTMI=tmiindex(1:10);
-
-tmit=DataTable();
-tmit{1,1:5}=dt.getData(1,1:5);
-tmit{1,6}='Err';
-tmit{1,7}='%Err';
-tmit{1,8}='SotR';
-for i=1:length(topTMI)
-    tmit{1+i,1:5}=dt.getData(1+topTMI(i),1:5);
-    tmit{1+i,6}=num2str(results(topTMI(i)).tmi_error,'%5.2f');
-    tmit{1+i,7}=[num2str(results(topTMI(i)).tmi_pct_error,'%5.2f') '%'];
-    tmit{1+i,8}=dt.getData(1+topTMI(i),6);
+%block 3
+dtb3=DataTable();
+dtb3{1,1}='Rotation';
+dtb3{1,2}='DPS';
+dtb3{1,3}='err';
+dtb3{1,4}='HPS';
+dtb3{1,5}='DTPS';
+dtb3{1,6}='TMI';
+dtb3{1,7}='err';
+dtb3{1,8}='SotR';
+for i=1:length(block.defensive.rot)
+   dtb3{1+i,1}=block.defensive.rot{i};
+   r=results(length(block.basic.rot)+length(block.defensive.rot)+i);
+   dtb3{1+i,2}=num2str(r.dps,'%6.0f');
+   dtb3{1+i,3}=num2str(r.dps_error,'%6.0f');
+   dtb3{1+i,4}=num2str(r.hps,'%6.0f');
+   dtb3{1+i,5}=num2str(r.dtps,'%6.0f');
+   dtb3{1+i,6}=num2str(r.tmi,'%6.1f');
+   dtb3{1+i,7}=num2str(r.tmi_error,'%6.1f');
+   dtb3{1+i,8}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
 end
 
 disp(' ')
-disp('Lowest 10 TMI Combinations')
-tmit.toText()
+disp('Defensive Rotations')
+dtb3.toText()
+
+%block 4
+dtb4=DataTable();
+dtb4{1,1}='Rotation';
+dtb4{1,2}='DPS';
+dtb4{1,3}='err';
+dtb4{1,4}='HPS';
+dtb4{1,5}='DTPS';
+dtb4{1,6}='TMI';
+dtb4{1,7}='err';
+dtb4{1,8}='SotR';
+for i=1:length(block.talents.rot)
+   dtb4{1+i,1}=block.talents.rot{i};
+   r=results(length(block.basic.rot)+length(block.defensive.rot)+length(block.execute.rot)+i);
+   dtb4{1+i,2}=num2str(r.dps,'%6.0f');
+   dtb4{1+i,3}=num2str(r.dps_error,'%6.0f');
+   dtb4{1+i,4}=num2str(r.hps,'%6.0f');
+   dtb4{1+i,5}=num2str(r.dtps,'%6.0f');
+   dtb4{1+i,6}=num2str(r.tmi,'%6.1f');
+   dtb4{1+i,7}=num2str(r.tmi_error,'%6.1f');
+   dtb4{1+i,8}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
 end
+
+disp(' ')
+disp('L90 Talent Rotations')
+dtb4.toText()
 
 %% displays for blog
 
 disp(' ')
-disp('Full List')
-disp(['Max DPS Err: ' int2str(round(max([results.dps_error]))) ', Max DPS % Err: ' num2str(max([results.dps_pct_error]),'%2.2f') '%'])
-disp(['Max TMI Err: ' num2str(max([results.tmi_error]),'%5.2f') ', Max TMI % Err: ' num2str(max([results.tmi_pct_error]),'%2.2f') '%'])
-dt.toBlog()
+disp('Basic Rotations')
+dtb1.toBlog()
+disp(' ')
+disp('Execute Rotations')
+dtb2.toBlog()
+disp(' ')
+disp('Defensive Rotations')
+dtb3.toBlog()
+disp(' ')
+disp('L90 Talent Rotations')
+dtb4.toBlog()
 % 
 % disp(' ')
 % disp('Single-rotation List')
 % dts.toBlog()
-if length(results)>10
-    
-    disp(' ')
-    disp('Top 10 DPS Rotations')
-    dpst.toBlog()
-    
-    disp(' ')
-    disp('Lowest 10 TMI Rotations')
-    tmit.toBlog()
-end
+% if length(results)>10
+%     
+%     disp(' ')
+%     disp('Top 10 DPS Rotations')
+%     dpst.toBlog()
+%     
+%     disp(' ')
+%     disp('Lowest 10 TMI Rotations')
+%     tmit.toBlog()
+% end
 
