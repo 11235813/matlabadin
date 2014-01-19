@@ -13,8 +13,8 @@ actions+=/crusader_strike
 actions+=/wait,sec=cooldown.crusader_strike.remains,if=cooldown.crusader_strike.remains>0&cooldown.crusader_strike.remains<=0.35
 actions+=/judgment
 actions+=/avengers_shield
-actions+=/sacred_shield,if=talent.sacred_shield.enabled.&buff.sacred_shield.remains<1
+actions+=/sacred_shield,if=talent.sacred_shield.enabled&buff.sacred_shield.remains<1
 actions+=/holy_wrath
 actions+=/hammer_of_wrath
 actions+=/consecration
-actions+=/sacred_shield,if=talent.sacred_shield.enabled.
+actions+=/sacred_shield,if=talent.sacred_shield.enabled

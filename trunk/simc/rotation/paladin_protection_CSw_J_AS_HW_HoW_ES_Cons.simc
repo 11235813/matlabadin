@@ -15,5 +15,5 @@ actions+=/judgment
 actions+=/avengers_shield
 actions+=/holy_wrath
 actions+=/hammer_of_wrath
-actions+=/execution_sentence,if=talent.execution_sentence.enabled.
+actions+=/execution_sentence,if=talent.execution_sentence.enabled
 actions+=/consecration

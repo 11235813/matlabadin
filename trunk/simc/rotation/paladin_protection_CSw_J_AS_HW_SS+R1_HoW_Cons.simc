@@ -14,6 +14,6 @@ actions+=/wait,sec=cooldown.crusader_strike.remains,if=cooldown.crusader_strike.
 actions+=/judgment
 actions+=/avengers_shield
 actions+=/holy_wrath
-actions+=/sacred_shield,if=talent.sacred_shield.enabled.&buff.sacred_shield.remains<1
+actions+=/sacred_shield,if=talent.sacred_shield.enabled&buff.sacred_shield.remains<1
 actions+=/hammer_of_wrath
 actions+=/consecration

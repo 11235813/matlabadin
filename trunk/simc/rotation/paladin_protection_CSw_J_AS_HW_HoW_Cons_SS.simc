@@ -16,4 +16,4 @@ actions+=/avengers_shield
 actions+=/holy_wrath
 actions+=/hammer_of_wrath
 actions+=/consecration
-actions+=/sacred_shield,if=talent.sacred_shield.enabled.
+actions+=/sacred_shield,if=talent.sacred_shield.enabled
