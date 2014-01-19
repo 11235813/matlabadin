@@ -16,4 +16,4 @@ actions+=/avengers_shield
 actions+=/holy_wrath
 actions+=/hammer_of_wrath
 actions+=/consecration
-actions+=/lights_hammer,if=talent.lights_hammer.enabled.
+actions+=/lights_hammer,if=talent.lights_hammer.enabled

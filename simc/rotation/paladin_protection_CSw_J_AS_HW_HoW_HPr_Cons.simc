@@ -15,5 +15,5 @@ actions+=/judgment
 actions+=/avengers_shield
 actions+=/holy_wrath
 actions+=/hammer_of_wrath
-actions+=/holy_prism,if=talent.holy_prism.enabled.
+actions+=/holy_prism,if=talent.holy_prism.enabled
 actions+=/consecration

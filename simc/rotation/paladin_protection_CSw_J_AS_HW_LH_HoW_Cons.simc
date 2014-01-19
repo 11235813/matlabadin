@@ -14,6 +14,6 @@ actions+=/wait,sec=cooldown.crusader_strike.remains,if=cooldown.crusader_strike.
 actions+=/judgment
 actions+=/avengers_shield
 actions+=/holy_wrath
-actions+=/lights_hammer,if=talent.lights_hammer.enabled.
+actions+=/lights_hammer,if=talent.lights_hammer.enabled
 actions+=/hammer_of_wrath
 actions+=/consecration

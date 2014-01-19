@@ -13,7 +13,7 @@ actions+=/crusader_strike
 actions+=/wait,sec=cooldown.crusader_strike.remains,if=cooldown.crusader_strike.remains>0&cooldown.crusader_strike.remains<=0.35
 actions+=/judgment
 actions+=/avengers_shield
-actions+=/execution_sentence,if=talent.execution_sentence.enabled.
+actions+=/execution_sentence,if=talent.execution_sentence.enabled
 actions+=/holy_wrath
 actions+=/hammer_of_wrath
 actions+=/consecration
