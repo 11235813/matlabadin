@@ -72,7 +72,7 @@ if strcmp(class,'paladin')
         
         %automatically validate talents
         if talent
-            opt_str=strcat(',if=talent.',ability_str,'.enabled.');
+            opt_str=strcat(',if=talent.',ability_str,'.enabled');
         end
         
         for i=1:length(options)

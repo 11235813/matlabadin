@@ -1,6 +1,6 @@
-clear sim
+clear
 fclose('all');
-REGEN_ALL=false; %THIS REGENERATES ALL FILES - SET FALSE FOR CACHING
+REGEN_ALL=true; %THIS REGENERATES ALL FILES - SET FALSE FOR CACHING
 
 % initializes the sim structure, setting certain parameters to default
 % values.
@@ -97,9 +97,15 @@ block.execute.talents='default.simc';
 block.defensive.rot={ ... %SS
                       'CSw>J>AS>HW>HoW>Cons>SS';
                       'CSw>J>AS>HW>HoW>SS+R1>Cons';
-                      'CSw>J>AS>HW>SS+R1>HoW>Cons';
+                      'CSw>J>AS>HW>HoW>SS+R1>Cons>SS';
+                      'CSw>J>AS>HW>SS+R1>HoW>Cons>SS';
                       'CSw>J>AS>SS+R1>HW>HoW>Cons';
                       'CSw>J>AS>SS+R1>HW>HoW>Cons>SS';
+                      'CSw>J>AS+GC>SS+R1>AS>HW>HoW>Cons>SS';
+                      'CSw>J>AS>SS+R2>HW>HoW>Cons>SS';
+                      'CSw>J>AS>SS+R3>HW>HoW>Cons>SS';
+                      'CSw>J>AS>SS+R4>HW>HoW>Cons>SS';
+                      'CSw>J>AS>SS+R5>HW>HoW>Cons>SS';
                       'CSw>J>SS+R1>AS>HW>HoW>Cons';
                       'CSw>SS+R1>J>AS>HW>HoW>Cons';
                       'SS+R1>CSw>J>AS>HW>HoW>Cons';
@@ -254,132 +260,183 @@ fclose all;
 %% Compile results into usefully-formatted tables
 addpath ./helper_func/
 
-%block 1
-dtb1=DataTable();
-dtb1{1,1}='Rotation';
-dtb1{1,2}='DPS';
-dtb1{1,3}='err';
-dtb1{1,4}='HPS';
-dtb1{1,5}='DTPS';
-dtb1{1,6}='TMI';
-dtb1{1,7}='err';
-dtb1{1,8}='SotR';
-dtb1{1,9}='Wait';
-for i=1:length(block.basic.rot)
-   dtb1{1+i,1}=block.basic.rot{i};
-   r=results(i);
-   dtb1{1+i,2}=num2str(r.dps,'%6.0f');
-   dtb1{1+i,3}=num2str(r.dps_error,'%6.0f');
-   dtb1{1+i,4}=num2str(r.hps,'%6.0f');
-   dtb1{1+i,5}=num2str(r.dtps,'%6.0f');
-   dtb1{1+i,6}=num2str(r.tmi,'%6.1f');
-   dtb1{1+i,7}=num2str(r.tmi_error,'%6.1f');
-   dtb1{1+i,8}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
-   dtb1{1+i,9}=[num2str(r.waiting*100,'%2.1f') '%'];
+
+blockfields=fieldnames(block);
+
+Lprev=0;
+for j=1:length(blockfields)
+    
+    L=length(block.(char(blockfields(j))).rot);
+    
+    dtb=DataTable();
+    dtb{1,1}='Rotation';
+    dtb{1,2}='DPS';
+    dtb{1,3}='HPS';
+    dtb{1,4}='DTPS';
+    dtb{1,5}='TMI';
+    dtb{1,6}='err';
+    dtb{1,7}='SotR';
+    dtb{1,8}='Wait';
+    for i=1:L
+        dtb{1+i,1}=block.(char(blockfields(j))).rot{i};
+        r=results(Lprev+i);
+        dtb{1+i,2}=num2str(r.dps,'%6.0f');
+        dtb{1+i,3}=num2str(r.hps,'%6.0f');
+        dtb{1+i,4}=num2str(r.dtps,'%6.0f');
+        dtb{1+i,5}=num2str(r.tmi,'%6.1f');
+        dtb{1+i,6}=num2str(r.tmi_error,'%6.1f');
+        dtb{1+i,7}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
+        dtb{1+i,8}=[num2str(r.waiting*100,'%2.1f') '%'];
+    end
+    
+    %store DPS error for later use
+    dt_dps_error=max([results(Lprev+[1:L]).dps_error]);
+    eval(['dtb' int2str(j) '=dtb;']);
+    clear dtb;
+    disp(' ')
+    disp([char(blockfields(j)) ' Rotations'])
+    disp(['Max DPS Error: ' num2str(dt_dps_error,'%5.0f')])
+    eval(['dtb' int2str(j) '.toText()'])
+
+    Lprev=Lprev+L;
 end
 
-disp(' ')
-disp('Basic Rotations')
-dtb1.toText()
 
-%block 2
-dtb2=DataTable();
-dtb2{1,1}='Rotation';
-dtb2{1,2}='DPS';
-dtb2{1,3}='err';
-dtb2{1,4}='HPS';
-dtb2{1,5}='DTPS';
-dtb2{1,6}='TMI';
-dtb2{1,7}='err';
-dtb2{1,8}='SotR';
-dtb2{1,9}='Wait';
-for i=1:length(block.execute.rot)
-   dtb2{1+i,1}=block.execute.rot{i};
-   r=results(length(block.basic.rot)+i);
-   dtb2{1+i,2}=num2str(r.dps,'%6.0f');
-   dtb2{1+i,3}=num2str(r.dps_error,'%6.0f');
-   dtb2{1+i,4}=num2str(r.hps,'%6.0f');
-   dtb2{1+i,5}=num2str(r.dtps,'%6.0f');
-   dtb2{1+i,6}=num2str(r.tmi,'%6.1f');
-   dtb2{1+i,7}=num2str(r.tmi_error,'%6.1f');
-   dtb2{1+i,8}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
-   dtb2{1+i,9}=[num2str(r.waiting*100,'%2.1f') '%'];
+%% Blog Output
+for j=1:length(blockfields)
+    disp(' ')
+    disp([char(blockfields(j)) ' Rotations'])
+    disp(['Max DPS Error: ' num2str(dt_dps_error,'%5.0f')])
+    eval(['dtb' int2str(j) '.toBlog()']);
 end
 
-disp(' ')
-disp('Execute Rotations')
-dtb2.toText()
 
-%block 3
-dtb3=DataTable();
-dtb3{1,1}='Rotation';
-dtb3{1,2}='DPS';
-dtb3{1,3}='err';
-dtb3{1,4}='HPS';
-dtb3{1,5}='DTPS';
-dtb3{1,6}='TMI';
-dtb3{1,7}='err';
-dtb3{1,8}='SotR';
-dtb3{1,9}='Wait';
-for i=1:length(block.defensive.rot)
-   dtb3{1+i,1}=block.defensive.rot{i};
-   r=results(length(block.basic.rot)+length(block.defensive.rot)+i);
-   dtb3{1+i,2}=num2str(r.dps,'%6.0f');
-   dtb3{1+i,3}=num2str(r.dps_error,'%6.0f');
-   dtb3{1+i,4}=num2str(r.hps,'%6.0f');
-   dtb3{1+i,5}=num2str(r.dtps,'%6.0f');
-   dtb3{1+i,6}=num2str(r.tmi,'%6.1f');
-   dtb3{1+i,7}=num2str(r.tmi_error,'%6.1f');
-   dtb3{1+i,8}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
-   dtb3{1+i,9}=[num2str(r.waiting*100,'%2.1f') '%'];
-end
+%% Old block-specific code (depricated)
 
-disp(' ')
-disp('Defensive Rotations')
-dtb3.toText()
+% %block 1
+% dtb1=DataTable();
+% dtb1{1,1}='Rotation';
+% dtb1{1,2}='DPS';
+% dtb1{1,3}='HPS';
+% dtb1{1,4}='DTPS';
+% dtb1{1,5}='TMI';
+% dtb1{1,6}='err';
+% dtb1{1,7}='SotR';
+% dtb1{1,8}='Wait';
+% for i=1:length(block.basic.rot)
+%    dtb1{1+i,1}=block.basic.rot{i};
+%    r=results(i);
+%    dtb1{1+i,2}=num2str(r.dps,'%6.0f');
+%    dtb1{1+i,3}=num2str(r.hps,'%6.0f');
+%    dtb1{1+i,4}=num2str(r.dtps,'%6.0f');
+%    dtb1{1+i,5}=num2str(r.tmi,'%6.1f');
+%    dtb1{1+i,6}=num2str(r.tmi_error,'%6.1f');
+%    dtb1{1+i,7}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
+%    dtb1{1+i,8}=[num2str(r.waiting*100,'%2.1f') '%'];
+% end
+% 
+% disp(' ')
+% disp('Basic Rotations')
+% disp(['Max DPS Error: ' num2str(max([results(1:length(block.basic.rot)).dps_error]),'%5.1f')])
+% dtb1.toText()
+% 
+% %block 2
+% dtb2=DataTable();
+% dtb2{1,1}='Rotation';
+% dtb2{1,2}='DPS';
+% dtb2{1,3}='HPS';
+% dtb2{1,4}='DTPS';
+% dtb2{1,5}='TMI';
+% dtb2{1,6}='err';
+% dtb2{1,7}='SotR';
+% dtb2{1,8}='Wait';
+% for i=1:length(block.execute.rot)
+%    dtb2{1+i,1}=block.execute.rot{i};
+%    r=results(length(block.basic.rot)+i);
+%    dtb2{1+i,2}=num2str(r.dps,'%6.0f');
+%    dtb2{1+i,3}=num2str(r.hps,'%6.0f');
+%    dtb2{1+i,4}=num2str(r.dtps,'%6.0f');
+%    dtb2{1+i,5}=num2str(r.tmi,'%6.1f');
+%    dtb2{1+i,6}=num2str(r.tmi_error,'%6.1f');
+%    dtb2{1+i,7}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
+%    dtb2{1+i,8}=[num2str(r.waiting*100,'%2.1f') '%'];
+% end
+% 
+% disp(' ')
+% disp('Execute Rotations')
+% dtb2.toText()
+% 
+% %block 3
+% dtb3=DataTable();
+% dtb3{1,1}='Rotation';
+% dtb3{1,2}='DPS';
+% dtb3{1,3}='HPS';
+% dtb3{1,4}='DTPS';
+% dtb3{1,5}='TMI';
+% dtb3{1,6}='err';
+% dtb3{1,7}='SotR';
+% dtb3{1,8}='Wait';
+% for i=1:length(block.defensive.rot)
+%    dtb3{1+i,1}=block.defensive.rot{i};
+%    r=results(length(block.basic.rot)+length(block.execute.rot)+i);
+%    dtb3{1+i,2}=num2str(r.dps,'%6.0f');
+%    dtb3{1+i,3}=num2str(r.dps_error,'%6.0f');
+%    dtb3{1+i,4}=num2str(r.hps,'%6.0f');
+%    dtb3{1+i,5}=num2str(r.dtps,'%6.0f');
+%    dtb3{1+i,6}=num2str(r.tmi,'%6.1f');
+%    dtb3{1+i,7}=num2str(r.tmi_error,'%6.1f');
+%    dtb3{1+i,8}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
+%    dtb3{1+i,9}=[num2str(r.waiting*100,'%2.1f') '%'];
+% end
+% 
+% disp(' ')
+% disp('Defensive Rotations')
+% dtb3.toText()
+% 
+% %block 4
+% dtb4=DataTable();
+% dtb4{1,1}='Rotation';
+% dtb4{1,2}='DPS';
+% dtb4{1,3}='err';
+% dtb4{1,4}='HPS';
+% dtb4{1,5}='DTPS';
+% dtb4{1,6}='TMI';
+% dtb4{1,7}='err';
+% dtb4{1,8}='SotR';
+% dtb4{1,9}='Wait';
+% for i=1:length(block.talents.rot)
+%    dtb4{1+i,1}=block.talents.rot{i};
+%    r=results(length(block.basic.rot)+length(block.defensive.rot)+length(block.execute.rot)+i);
+%    dtb4{1+i,2}=num2str(r.dps,'%6.0f');
+%    dtb4{1+i,3}=num2str(r.dps_error,'%6.0f');
+%    dtb4{1+i,4}=num2str(r.hps,'%6.0f');
+%    dtb4{1+i,5}=num2str(r.dtps,'%6.0f');
+%    dtb4{1+i,6}=num2str(r.tmi,'%6.1f');
+%    dtb4{1+i,7}=num2str(r.tmi_error,'%6.1f');
+%    dtb4{1+i,8}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
+%    dtb4{1+i,9}=[num2str(r.waiting*100,'%2.1f') '%'];
+% end
+% 
+% disp(' ')
+% disp('L90 Talent Rotations')
+% dtb4.toText()
 
-%block 4
-dtb4=DataTable();
-dtb4{1,1}='Rotation';
-dtb4{1,2}='DPS';
-dtb4{1,3}='err';
-dtb4{1,4}='HPS';
-dtb4{1,5}='DTPS';
-dtb4{1,6}='TMI';
-dtb4{1,7}='err';
-dtb4{1,8}='SotR';
-dtb4{1,9}='Wait';
-for i=1:length(block.talents.rot)
-   dtb4{1+i,1}=block.talents.rot{i};
-   r=results(length(block.basic.rot)+length(block.defensive.rot)+length(block.execute.rot)+i);
-   dtb4{1+i,2}=num2str(r.dps,'%6.0f');
-   dtb4{1+i,3}=num2str(r.dps_error,'%6.0f');
-   dtb4{1+i,4}=num2str(r.hps,'%6.0f');
-   dtb4{1+i,5}=num2str(r.dtps,'%6.0f');
-   dtb4{1+i,6}=num2str(r.tmi,'%6.1f');
-   dtb4{1+i,7}=num2str(r.tmi_error,'%6.1f');
-   dtb4{1+i,8}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
-   dtb4{1+i,9}=[num2str(r.waiting*100,'%2.1f') '%'];
-end
+%% Old displays for blog (depricated)
+% 
+% disp(' ')
+% disp('Basic Rotations')
+% dtb1.toBlog()
+% disp(' ')
+% disp('Execute Rotations')
+% dtb2.toBlog()
+% disp(' ')
+% disp('Defensive Rotations')
+% dtb3.toBlog()
+% disp(' ')
+% disp('L90 Talent Rotations')
+% dtb4.toBlog()
 
-disp(' ')
-disp('L90 Talent Rotations')
-dtb4.toText()
-
-%% displays for blog
-
-disp(' ')
-disp('Basic Rotations')
-dtb1.toBlog()
-disp(' ')
-disp('Execute Rotations')
-dtb2.toBlog()
-disp(' ')
-disp('Defensive Rotations')
-dtb3.toBlog()
-disp(' ')
-disp('L90 Talent Rotations')
-dtb4.toBlog()
+%% Even Older
 % 
 % disp(' ')
 % disp('Single-rotation List')

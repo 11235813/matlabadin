@@ -29,8 +29,12 @@ classdef BlogTablePrinter < TablePrinterInterface
         function printColumnEndDelimiter(this, fid)
             fprintf(fid,'\n', this.delimiter);
         end
-        function printTableHeader(this, fid)
-            fprintf(fid,'[table caption="Title" width="600" colalign="center|center"]\n');
+        function printTableHeader(this, fid, numcols)
+            fprintf(fid,'[table caption="Title" width="600" colalign="center');
+            for i=2:numcols
+                fprintf(fid,'|right');
+            end
+            fprintf(fid,'"]\n');
         end
         function printTableEnd(this, fid)
             fprintf(fid,'[/table]\n');
