@@ -1027,7 +1027,7 @@ classdef DataTable < handle
             
             usecolspan = false; % no colspan at this moment
             
-            printer.printTableHeader(fid);
+            printer.printTableHeader(fid,length(colwidth));
             for x = 1:this.numrows
                 lastentry = '';
                 lastentrycol = 1;
