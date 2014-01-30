@@ -1,22 +1,28 @@
 clear
 fclose('all');
-REGEN_ALL=true; %THIS REGENERATES ALL FILES - SET FALSE FOR CACHING
+REGEN_ALL=false; %THIS REGENERATES ALL FILES - SET FALSE FOR CACHING
 
 % initializes the sim structure, setting certain parameters to default
 % values.
 sim=init_sim;
 sim.header='#Rotation Simulation';
-sim.iterations=50000; %min 50, lower causes crashes w/ release versions
+sim.iterations=250000; %min 50, lower causes crashes w/ release versions
 sim.threads=4;
 sim.gear='T16N.simc';
 sim.boss='T16N25.simc';
 sim.class='paladin';
 sim.spec='protection';
-sim.paths.exe='g:\simulationcraft\'
+% sim.paths.exe='g:\simulationcraft\'
+sim.paths.exe='d:\simcraft\simc-542-2-built\';
 %fix pdb path - in future may need to set this to "what" if we implement
 %\pdb\ in simc and still wish to use matlab path
 sim = util_check_pdb_path(sim);
 rotationpath=[sim.paths.pdb 'rotation\'];
+
+%get default talents from default.simc
+fid=fopen('.\talents\default.simc');
+line=fgetl(fid);
+default_talents=char(regexp(line,'\d*','match'));
 
 %% set up the list of things we want to vary
 
@@ -59,13 +65,17 @@ simc_rotation_finishers={'actions+=/eternal_flame,if=talent.eternal_flame.enable
 block.basic.rot={ 'CS>J>AS>Cons>HW';
                   'CS>J>AS>HW>Cons';
                   'CS+W0.3>J>AS>HW>Cons';
+                  'CSw>J>AS>Cons>HW';
                   'CSw>J>AS>HW>Cons';
+                  'CSw>J>HW>AS>Cons';
+                  'CSw>HW>J>AS>Cons';
+                  'HW>CSw>J>AS>Cons';
                   'CSw>AS>J>HW>Cons';
                   'J>CSw>AS>HW>Cons';
                   'J>AS>CSw>HW>Cons';
                   'AS>J>CSw>HW>Cons';
                   'AS>CSw>J>HW>Cons';
-                  'HotR>J>AS>HW>Cons';
+                  'HotR+W0.35>J>AS>HW>Cons';
                   %vary AS+GC
                   'AS+GC>CSw>J>AS>HW>Cons';
                   'CSw>AS+GC>J>AS>HW>Cons';
@@ -73,9 +83,9 @@ block.basic.rot={ 'CS>J>AS>Cons>HW';
                   'CSw>AS+GC>J>HW>Cons>AS';
                 };
 %use default glyphs            
-block.basic.glyphs='focused_shield/word_of_glory/final_wrath'; %FS/WoG/FW
+block.basic.glyphs='focused_shield/word_of_glory'; %FS/WoG/FW
 %use default talents
-block.basic.talents='default.simc';
+block.basic.talents=default_talents;
         
 %block 2 - Execute Range tests
 block.execute.rot={ ... %HoW
@@ -87,11 +97,12 @@ block.execute.rot={ ... %HoW
                     'HoW>CSw>J>AS>HW>Cons';
                     % Final Wrath glyph
                     'CSw>J>HW+FW>AS>HW>HoW>Cons';
+                    'CSw>J>AS+GC>HW+FW>AS>HW>HoW>Cons';
                     'CSw>HW+FW>J>AS>HW>HoW>Cons';
                     'HW+FW>CSw>J>AS>HW>HoW>Cons';
                   };
 block.execute.glyphs='focused_shield/word_of_glory/final_wrath'; %FS/WoG/FW
-block.execute.talents='default.simc';
+block.execute.talents=default_talents;
 
 %block 3 - Defensive stuff (SS mostly)
 block.defensive.rot={ ... %SS
@@ -106,12 +117,13 @@ block.defensive.rot={ ... %SS
                       'CSw>J>AS>SS+R3>HW>HoW>Cons>SS';
                       'CSw>J>AS>SS+R4>HW>HoW>Cons>SS';
                       'CSw>J>AS>SS+R5>HW>HoW>Cons>SS';
+                      'CSw>J>AS+GC>SS+R1>AS>HW>HoW>Cons';
                       'CSw>J>SS+R1>AS>HW>HoW>Cons';
                       'CSw>SS+R1>J>AS>HW>HoW>Cons';
                       'SS+R1>CSw>J>AS>HW>HoW>Cons';
                     };  
 block.defensive.glyphs='focused_shield/word_of_glory/final_wrath'; %FS/WoG/FW
-block.defensive.talents='custom'; %see simc building stage
+block.defensive.talents=default_talents;block.defensive.talents(3)='3';
                 
 %block 4 - L90 talents
 block.talents.rot={ ... %ES
@@ -122,6 +134,9 @@ block.talents.rot={ ... %ES
                     'CSw>J>ES>AS>HW>HoW>Cons';
                     'CSw>ES>J>AS>HW>HoW>Cons';
                     'ES>CSw>J>AS>HW>HoW>Cons';
+                    'CSw>J>AS>ES+ex>HW>ES>HoW>Cons';
+                    'CSw>J>AS+GC>HW>AS>ES>HoW>Cons';
+                    'CSw>J>AS+GC>HW+FW>AS>HW>ES>HoW>Cons';
                     %LH
                     'CSw>J>AS>HW>HoW>Cons>LH';
                     'CSw>J>AS>HW>HoW>LH>Cons';
@@ -130,6 +145,9 @@ block.talents.rot={ ... %ES
                     'CSw>J>LH>AS>HW>HoW>Cons';
                     'CSw>LH>J>AS>HW>HoW>Cons';
                     'LH>CSw>J>AS>HW>HoW>Cons';
+                    'CSw>J>AS>LH+ex>HW>LH>HoW>Cons';
+                    'CSw>J>AS+GC>HW>AS>LH>HoW>Cons';
+                    'CSw>J>AS+GC>HW+FW>AS>HW>LH>HoW>Cons';
                     %HPr
                     'CSw>J>AS>HW>HoW>Cons>HPr';
                     'CSw>J>AS>HW>HoW>HPr>Cons';
@@ -138,9 +156,12 @@ block.talents.rot={ ... %ES
                     'CSw>J>HPr>AS>HW>HoW>Cons';
                     'CSw>HPr>J>AS>HW>HoW>Cons';
                     'HPr>CSw>J>AS>HW>HoW>Cons';
+                    'CSw>J>AS>HPr+ex>HW>HPr>HoW>Cons';
+                    'CSw>J>AS+GC>HW>AS>HPr>HoW>Cons';
+                    'CSw>J>AS+GC>HW+FW>AS>HW>HPr>HoW>Cons';
                    };  
 block.talents.glyphs='focused_shield/word_of_glory/final_wrath'; %FS/WoG/FW
-block.talents.talents='custom'; %see simc building stage
+block.talents.talents=[default_talents '+custom']; %see simc building stage
           
 
 % ==================== Part 3 ==========================
@@ -186,9 +207,10 @@ for i=1:length(rotation_combinations)
 end
 %replace all 'custom' entries in talent_combinations with numerics
 for i=1:length(rotation_combinations)
-    if strcmp(talent_combinations{i},'custom')
+    term=strfind(talent_combinations{i},'+custom');
+    if term>0
         %reset to default
-        temp_talents='312232'; %TODO: grab this from default?
+        temp_talents=talent_combinations{i}(1:(term-1));
         if strfind(rotation_combinations{i},'ES')
             temp_talents(6)='3'; %#ok<*SAGROW>
         elseif strfind(rotation_combinations{i},'LH')
@@ -274,7 +296,7 @@ for j=1:length(blockfields)
     dtb{1,3}='HPS';
     dtb{1,4}='DTPS';
     dtb{1,5}='TMI';
-    dtb{1,6}='err';
+    dtb{1,6}='Var';
     dtb{1,7}='SotR';
     dtb{1,8}='Wait';
     for i=1:L
@@ -283,8 +305,8 @@ for j=1:length(blockfields)
         dtb{1+i,2}=num2str(r.dps,'%6.0f');
         dtb{1+i,3}=num2str(r.hps,'%6.0f');
         dtb{1+i,4}=num2str(r.dtps,'%6.0f');
-        dtb{1+i,5}=num2str(r.tmi,'%6.1f');
-        dtb{1+i,6}=num2str(r.tmi_error,'%6.1f');
+        dtb{1+i,5}=num2str(r.tmi,'%6.0f');
+        dtb{1+i,6}=num2str(r.tmi_error,'%6.0f');
         dtb{1+i,7}=[num2str(r.sotr_uptime*100,'%2.1f') '%'];
         dtb{1+i,8}=[num2str(r.waiting*100,'%2.1f') '%'];
     end
@@ -296,6 +318,8 @@ for j=1:length(blockfields)
     disp(' ')
     disp([char(blockfields(j)) ' Rotations'])
     disp(['Max DPS Error: ' num2str(dt_dps_error,'%5.0f')])
+    disp(['Talents: ' block.(char(blockfields(j))).talents])
+    disp(['Glyphs: '  block.(char(blockfields(j))).glyphs])
     eval(['dtb' int2str(j) '.toText()'])
 
     Lprev=Lprev+L;
@@ -307,6 +331,8 @@ for j=1:length(blockfields)
     disp(' ')
     disp([char(blockfields(j)) ' Rotations'])
     disp(['Max DPS Error: ' num2str(dt_dps_error,'%5.0f')])
+    disp(['Talents: ' block.(char(blockfields(j))).talents])
+    disp(['Glyphs: '  block.(char(blockfields(j))).glyphs])
     eval(['dtb' int2str(j) '.toBlog()']);
 end
 

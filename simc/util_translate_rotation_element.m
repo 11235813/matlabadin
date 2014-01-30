@@ -92,13 +92,13 @@ if strcmp(class,'paladin')
                     else
                         temp_opt_str=strcat(temp_opt_str,'buff.grand_crusader.remains<',numerics{i});
                     end
-                case 'ex'
                     temp_opt_str='target.health.pct<20';
                 case 'DP'
                     temp_opt_str='buff.divine_purpose.react';
                 case 'DPHP'
-                    temp_opt_str=strcat('(buff.divine_purpose.react|holy_power>=',numerics{i});
+                    temp_opt_str=strcat('(buff.divine_purpose.react|holy_power>=',numerics{i},')');
                 case 'EX'
+                case 'ex'
                     temp_opt_str=strcat('target.health.pct<=20');
                 case 'FW'
                     temp_opt_str=strcat('glyph.final_wrath.enabled&target.health.pct<=20');

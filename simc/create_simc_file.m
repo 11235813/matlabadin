@@ -143,11 +143,15 @@ if ischar(sim.boss)
        sf_addsimc(fullpath,[sim.paths.pdb 'boss\' sim.boss]);
    else
        sf_addstr(fullpath,sim.boss);
-   end
+    end
 else
     for i=fields(sim.boss)'
         sf_addstr(fullpath,i{1},'=',sim.boss.(i{1}));
     end    
+end
+%handles the optional target_health definition
+if sim.target_health>0
+    sf_addstr(fullpath,'target_health=',int2str(sim.target_health));
 end
 
 %% output

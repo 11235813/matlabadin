@@ -26,6 +26,7 @@ sim.rotation='paladin_protection_default.simc';
 
 % boss parameters
 sim.boss='T16N25.simc';
+sim.target_health=0;
 
 %file parameters
 sim.paths.input='';

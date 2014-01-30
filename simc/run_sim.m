@@ -12,8 +12,13 @@ if exist(sim.paths.exe,'dir') ~= 7 || exist(strcat(sim.paths.exe,sim.exe),'file'
     error('SimC directory or executable cannot be found');
 end
 
+%check for fullpaths field; if it doesn't exist, go find it.
+if isfield(sim,'fullpaths')==0
+    %construct simc fullpath
+    sim=sf_construct_fullpaths(sim);
+end
 %% execute
-system(char(strcat(sim.fullpaths.exe,{' '},sim.fullpaths.simc,{'  > nul'})));
+system(char(strcat(sim.fullpaths.exe,{' '},sim.fullpaths.simc,{' '},sim.argstr,{'  > nul'})));
 
 end
 
