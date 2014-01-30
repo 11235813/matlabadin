@@ -1,0 +1,17 @@
+#!./simc
+actions=/auto_attack
+actions+=/blood_fury
+actions+=/berserking
+actions+=/arcane_torrent
+actions+=/avenging_wrath
+actions+=/holy_avenger,if=talent.holy_avenger.enabled
+actions+=/divine_protection
+actions+=/guardian_of_ancient_kings
+actions+=/eternal_flame,if=talent.eternal_flame.enabled&(buff.eternal_flame.remains<2&buff.bastion_of_glory.react>2&(holy_power>=3|buff.divine_purpose.react))
+actions+=/shield_of_the_righteous,if=holy_power>=5|buff.divine_purpose.react|incoming_damage_1500ms>=health.max*0.3
+actions+=/hammer_of_the_righteous
+actions+=/wait,sec=cooldown.hammer_of_the_righteous.remains,if=cooldown.hammer_of_the_righteous.remains>0&cooldown.hammer_of_the_righteous.remains<=0.35
+actions+=/judgment
+actions+=/avengers_shield
+actions+=/holy_wrath
+actions+=/consecration
