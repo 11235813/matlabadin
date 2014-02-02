@@ -36,6 +36,11 @@ if strcmp(class,'paladin')
                 ability_str='hammer_of_the_righteous';
             case 'J'
                 ability_str='judgment';
+            case 'Jw'
+                ability_str='judgment';
+                options{length(options)+1}='W';
+                operators{length(operators)+1}='+';
+                numerics{length(numerics)+1}='0.35';                
             case 'AS'
                 ability_str='avengers_shield';
             case 'HW'
