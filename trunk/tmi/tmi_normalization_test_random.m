@@ -1,7 +1,7 @@
 % clear
 %setup
 % damage_mean=0.30; %in units of player health
-damage_mean=0.01:0.01:0.50;
+damage_mean=-0.05:0.01:0.50;
 damage_range=0.2; %in units of damage_mean; i.e. 0.2 means +/-20% of mean dmg
 swing_timer=1.5; %in seconds
 

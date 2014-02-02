@@ -7,11 +7,20 @@ DF=H/10; %500 per 0.1
 
 D=10; %
 
-c1=10*DF/D;
+c1=20*DF/D;
 c2=exp(H/c1);
 c210=10^(H/c1);
 
+fudge=50;
+c2=c2*fudge;
+c210=c2*fudge;
+% 
 
+D=20;
+% b=10e3;
+m=1e3;
+c1=10*m/D
+c2=exp(D)
 % 
 % tmi_old=10000*window^2/fight_length*swma0;
 % tmic(1,:)=c1*log(c2+c3*swmae/fight_length);
@@ -24,19 +33,23 @@ tmi_normalization_test_random
 tmi_normalization_test_single_spike
 tmi_normalization_test_uniform
 
-
+%% plots
 figure(5)
 subplot 211
 plot(ss.maxma,ss.tmie,rd.maxma,rd.tmie,uf.maxma,uf.tmie)
 xlabel('max(MA)')
 ylabel('New TMI')
-legend('SS','RD','UF')
+legend('SS','RD','UF','Location','NorthWest')
 title(['exponential forms, D=' int2str(D)])
+minx=min([min(ss.maxma) min(rd.maxma) min(uf.maxma)]);
+maxx=max([max(ss.maxma) max(rd.maxma) max(uf.maxma)])
+xlim([minx maxx])
 
 
 subplot 212
 plot(ss.maxma,ss.tmi10,rd.maxma,rd.tmi10,uf.maxma,uf.tmi10)
 xlabel('max(MA)')
 ylabel('New TMI')
-legend('SS','RD','UF')
+legend('SS','RD','UF','Location','NorthWest')
 title(['base-10 forms, D=' int2str(D)])
+xlim([0 max(ss.maxma)])
