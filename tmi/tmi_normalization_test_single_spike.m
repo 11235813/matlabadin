@@ -1,15 +1,15 @@
 % clear
 %setup
 % fight_length=500;
-damage_steps=150;
+damage_steps=-0.05:0.01:1.5;
 window=4;
 bin_time=1; %in seconds
 
 %construct timelines
-timeline=zeros(fight_length,damage_steps);
-for i=1:damage_steps
+timeline=zeros(fight_length,length(damage_steps));
+for i=1:length(damage_steps)
     timeline(:,i)=repmat(0.00,fight_length,1); %#ok<*SAGROW>
-    timeline(37,i)=0.01*i;
+    timeline(37,i)=damage_steps(i);
 end
 
 
@@ -20,7 +20,7 @@ tmi_definitions;
 %% Plots
 x3=mean(ma)';xlbl3='Mean(MA)';
 x2=max(ma)';xlbl2='Max(MA)';
-x1=0.01*(1:damage_steps)';xlbl1='Size of spike';
+x1=damage_steps';xlbl1='Size of spike';
 xy1=repmat(x1,1,size(tmic,1));
 xy2=repmat(x2,1,size(tmic,1));
 xy3=repmat(x3,1,size(tmic,1));

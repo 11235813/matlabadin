@@ -1,13 +1,13 @@
 % clear
 %setup
-damage_steps=50;
+damage_steps=-0.1:0.01:0.5;
 window=4;
 bin_time=1; %in seconds
 
 %construct timelines
 timeline=zeros(fight_length,damage_steps);
-for i=1:damage_steps
-    timeline(:,i)=repmat(0.01*(i-2),fight_length,1); %#ok<*SAGROW>
+for i=1:length(damage_steps)
+    timeline(:,i)=repmat(damage_steps(i),fight_length,1); %#ok<*SAGROW>
 %     timeline(37,i)=0.01*i;
 end
 
