@@ -1,4 +1,5 @@
-num_iterations=[50 100 250 500 1000 2500 5000 10000 25000 50000 100000 250000];
+num_iterations=[50 100 250 500 1000 2500 5000 10000 25000 50000 100000];
+% num_iterations=[500 1000 2500 5000].*1e3;
 for j=1:length(num_iterations)
     clear sim
     
@@ -10,12 +11,14 @@ for j=1:length(num_iterations)
     sim.header='#Statistics Test';
     sim.iterations=num_iterations(j); %min 50, lower causes crashes w/ release versions
     sim.threads=4;
-    sim.argstr='vary_combat_length=0';
+%     sim.argstr='vary_combat_length=0';
+    sim.argstr='vary_combat_length=0 fixed_time=1';
     sim.gear='T16N.simc';
     sim.boss='T16N25.simc';
-    % sim.target_health=100;
+%     sim.target_health=171000000;
     sim.class='paladin';
     sim.spec='protection';
+    sim.paths.exe='D:\Simcraft\simc-542-2-built';
     
     create_simc_file(sim);
     
@@ -38,10 +41,10 @@ for j=1:length(num_iterations)
     dps(:,j)=[results.dps]';
     dps_err(:,j)=[results.dps_error]';
     [metric, CI95(j), pc]=conf_ellipsoid_stats(dps(:,j));
-    reported_CI95(j)=2*max(dps_err(:,j));
+    RCI95(j)=2*max(dps_err(:,j));
     
     disp(['Num Iterations: ' int2str(num_iterations(j)) ])
-    disp(['Reported 95% CI: ' num2str(reported_CI95(j)),'%5.1f')])
+    disp(['Reported 95% CI: ' num2str(RCI95(j),'%5.1f')])
     disp(['Observed 95% CI: ' num2str(CI95(j),'%5.1f')])
     
 end
@@ -49,18 +52,18 @@ end
 %% figure
 figure(1)
 subplot 211
-semilogx(num_iterations,reported_CI95,'o-',num_iterations,CI95,'o-')
+semilogx(num_iterations,RCI95,'o-',num_iterations,CI95,'o-')
 xlabel('# Iterations')
 ylabel('95% Confidence Interval (DPS)')
 legend('Reported (2*DPS\_Error)','Observed (conf\_ellipsoid)','Location','NorthEast')
 subplot 212
-loglog(num_iterations,reported_CI95,'o-',num_iterations,CI95,'o-')
+loglog(num_iterations,RCI95,'o-',num_iterations,CI95,'o-')
 xlabel('# Iterations')
 ylabel('95% Confidence Interval (DPS)')
 legend('Reported (2*DPS\_Error)','Observed (conf\_ellipsoid)','Location','NorthEast')
 
 figure(2)
-plot(num_iterations,reported_CI95,'o-',num_iterations,CI95,'o-')
+plot(num_iterations,RCI95,'o-',num_iterations,CI95,'o-')
 xlabel('# Iterations')
 ylabel('95% Confidence Interval (DPS)')
 legend('Reported (2*DPS\_Error)','Observed (conf\_ellipsoid)','Location','NorthEast')
