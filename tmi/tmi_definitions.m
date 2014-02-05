@@ -4,8 +4,7 @@
 %M=number of realizations of the fight
 
 clear ma wma0 wmae swma0 swmae tmi_old tmic
-%construct moving average 
-moving_average=filter(ones(4,1),1,timeline);
+
 ma=moving_average;
 
 %construct weighted moving average
