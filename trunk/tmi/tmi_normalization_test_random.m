@@ -1,7 +1,7 @@
 % clear
 %setup
 % damage_mean=0.30; %in units of player health
-damage_mean=-0.5:0.01:0.60;
+damage_mean=0:0.01:1;
 damage_range=0.2; %in units of damage_mean; i.e. 0.2 means +/-20% of mean dmg
 swing_timer=1.5; %in seconds
 
@@ -10,7 +10,8 @@ window=6; %in seconds
 bin_time=1; %in seconds
 
 avoidance=0.3;
-sotr_chance=0.0;
+sotr_chance=0.3;
+block_chance=0.3;
 sotr_value=0.5;
 
 %% construct arrays
@@ -23,18 +24,26 @@ timeline=zeros(fight_length/bin_time,length(damage_mean));
 for j=1:length(damage_mean)
     for i=1:num_swings
         
+        damage=-0.3; %baseline, from healing
+            
         if rand>avoidance
-            if rand<sotr_chance
-                DRmod=1-sotr_value;
-            else
-                DRmod=1;
+          
+            base_damage=damage_mean(j)+2*damage_range*(rand()-0.5);
+            
+            if rand<block_chance
+                base_damage=base_damage*0.7;
             end
             
-            damage=DRmod*damage_mean(j)+2*damage_range*(rand()-0.5);
+            if rand<sotr_chance
+                base_damage=base_damage*(1-sotr_value);
+            end
             
-            timeline_bin_number=1+floor(swing_timer*(i-1)/bin_time);
-            timeline(timeline_bin_number,j)=damage;
+            damage=damage+base_damage;
         end
+        
+        timeline_bin_number=1+floor(swing_timer*(i-1)/bin_time);
+        timeline(timeline_bin_number,j)=damage;
+        
     end
 end
 
