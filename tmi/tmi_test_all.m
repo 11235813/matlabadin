@@ -29,7 +29,7 @@ for D=[10 20]
     
     
     subplot(2,1,q)
-    plot(ss.maxma,ss.tmie,rdc.maxma,rdc.tmie,'.',uf.maxma,uf.tmie)
+    plot(ss.maxma,ss.tmie,rdc.maxma,rdc.tmie,'.',uf.maxma,uf.tmie,'MarkerSize',4)
     xlabel('max(MA)')
     ylabel('New TMI')
     legend('SS','RD','UF','Location','NorthWest')
