@@ -1,45 +1,59 @@
 clear
 num_iterations=[50 100 250 500 1000 2500 5000 10000 25000 50000 100000];
+tic
 for j=1:length(num_iterations)
     clear sim
     
     N=100;
-    
+       
     % initializes the sim structure, setting certain parameters to default
     % values.
     sim=init_sim;
-    sim.header='#Statistics Test';
+    sim.simc='Paladin_Protection_T16H.simc';
     sim.iterations=num_iterations(j); %min 50, lower causes crashes w/ release versions
-    sim.threads=4;
-%     sim.argstr='vary_combat_length=0';
-%     sim.argstr='vary_combat_length=0 fixed_time=1';
-    sim.argstr='fixed_time=1';
-    sim.gear='T16N.simc';
-    sim.boss='T16N25.simc';
-%     sim.target_health=171000000;
-    sim.class='paladin';
-    sim.spec='protection';
+    if num_iterations(j)>100
+        sim.threads=6;
+    else
+        sim.threads=4;
+    end
+    sim.varystr=' ';
+    sim.fixedtime=' ';
+    sim.fixedhealth=' ';
+%     sim.varystr='vary_combat_length=0';
+%     sim.fixedtime='fixed_time=1';
+%     sim.fixedhealth='target_health=171000000';
     sim.paths.exe='D:\Simcraft\simc-542-2-built';
+    sim.paths.input=[sim.paths.exe '\profiles\Tier16H'];
+    sim=sf_construct_fullpaths(sim);
     
-    create_simc_file(sim);
-    
-    
+    call_str=char(strcat(sim.fullpaths.exe,{' '},...
+                         sim.fullpaths.simc,{' '},...
+                         'threads=',int2str(sim.threads),{' '},...
+                         'iterations=',int2str(sim.iterations),{' '},...
+                         'output=',sim.output.output,{' '},...
+                         sim.varystr,{' '},sim.fixedtime,{' '},...
+                         'enemy=FluffyPillow',{' '},...
+                         sim.fixedhealth,{' '},...
+                         {'  > nul'})...
+                  );
+                     
     %waitbar
     W=waitbar(0,'Simulating');
-    tic
+%     tic
     for i=1:N
         waitbar(i/N,W,['Simulating ' num2str(100*i/N,'%2.1f') '%']);
         
-        sim=run_sim(sim);
+        system(call_str);
+
         results(i)=sf_extract(sim.output.output);
     end
     close(W)
-    toc
+%     toc
     fclose all;
     
     
     %% post-processing
-    dps(:,j)=[results.dps]';
+    dps(:,j)=[results.dps]'; %#ok<*SAGROW>
     dps_err(:,j)=[results.dps_error]';
     [metric, CI95(j), pc]=conf_ellipsoid_stats(dps(:,j));
     RCI95(j)=2*max(dps_err(:,j));
@@ -49,6 +63,7 @@ for j=1:length(num_iterations)
     disp(['Observed 95% CI: ' num2str(CI95(j),'%5.1f')])
     
 end
+toc
 
 %% figure
 figure(1)
@@ -62,9 +77,9 @@ loglog(num_iterations,RCI95,'o-',num_iterations,CI95,'o-')
 xlabel('# Iterations')
 ylabel('95% Confidence Interval (DPS)')
 legend('Reported (2*DPS\_Error)','Observed (conf\_ellipsoid)','Location','NorthEast')
-% 
-% figure(2)
-% plot(num_iterations,RCI95,'o-',num_iterations,CI95,'o-')
-% xlabel('# Iterations')
-% ylabel('95% Confidence Interval (DPS)')
-% legend('Reported (2*DPS\_Error)','Observed (conf\_ellipsoid)','Location','NorthEast')
+
+figure(2)
+plot(num_iterations,RCI95,'o-',num_iterations,CI95,'o-')
+xlabel('# Iterations')
+ylabel('95% Confidence Interval (DPS)')
+legend('Reported (2*DPS\_Error)','Observed (conf\_ellipsoid)','Location','NorthEast')
