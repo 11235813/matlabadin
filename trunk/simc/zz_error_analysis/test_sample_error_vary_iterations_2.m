@@ -10,7 +10,7 @@ for j=1:length(num_iterations)
     % initializes the sim structure, setting certain parameters to default
     % values.
     sim=init_sim;
-    sim.simc='Paladin_Protection_T15N.simc';
+    sim.simc='Paladin_Protection_T16H.simc';
     sim.iterations=num_iterations(j); %min 50, lower causes crashes w/ release versions
     if num_iterations(j)>100
         sim.threads=6;
@@ -24,7 +24,9 @@ for j=1:length(num_iterations)
 %     sim.fixedtime='fixed_time=1';
 %     sim.fixedhealth='target_health=171000000';
     sim.paths.exe='D:\Simcraft\simc-542-2-built';
-    sim.paths.input=[sim.paths.exe '\profiles\Tier15N'];
+    sim.paths.exe='D:\Simcraft\simc-542-2-built-newer';
+    sim.paths.exe='G:\simulationcraft\';
+    sim.paths.input=[sim.paths.exe '\profiles\Tier16H'];
     sim=sf_construct_fullpaths(sim);
     
     call_str=char(strcat(sim.fullpaths.exe,{' '},...
@@ -62,6 +64,18 @@ for j=1:length(num_iterations)
     disp(['Num Iterations: ' int2str(num_iterations(j)) ])
     disp(['Reported 95% CI: ' num2str(RCI95(j),'%5.1f')])
     disp(['Observed 95% CI: ' num2str(CI95(j),'%5.1f')])
+    
+    figure(1)
+    subplot 211
+    semilogx(num_iterations(1:j),RCI95,'o-',num_iterations(1:j),CI95,'o-')
+    xlabel('# Iterations')
+    ylabel('95% Confidence Interval (DPS)')
+    legend('Reported (2*DPS\_Error)','Observed (conf\_ellipsoid)','Location','NorthEast')
+    subplot 212
+    loglog(num_iterations(1:j),RCI95,'o-',num_iterations(1:j),CI95,'o-')
+    xlabel('# Iterations')
+    ylabel('95% Confidence Interval (DPS)')
+    legend('Reported (2*DPS\_Error)','Observed (conf\_ellipsoid)','Location','NorthEast')
     
 end
 toc

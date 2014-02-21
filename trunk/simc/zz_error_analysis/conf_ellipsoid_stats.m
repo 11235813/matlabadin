@@ -16,6 +16,6 @@ p = size(v, 2); % Dimensionality of the data.
 
 k = finv(conf, p, n - p)*p*(n - 1)/(n - p);
 [pc, score, lat] = princomp(v);
-ab = diag(sqrt(k*lat));
+ab = diag(k*sqrt(lat)); %2/14/2014 - corrected from diag(sqrt(k*lat))
 metric = sqrt(sum(ab.^2));
 end
