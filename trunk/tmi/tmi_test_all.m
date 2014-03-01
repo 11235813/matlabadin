@@ -1,7 +1,6 @@
 clear
 fight_length=500; 
 
-figure(5)
 q=0;
 for D=[10 20]
     
@@ -28,6 +27,7 @@ for D=[10 20]
     tmi_normalization_test_uniform
     
     
+    figure(5)
     subplot(2,1,q)
     plot(ss.maxma,ss.tmie,rdc.maxma,rdc.tmie,'.',uf.maxma,uf.tmie,'MarkerSize',4)
     xlabel('max(MA)')
@@ -40,6 +40,37 @@ for D=[10 20]
     maxy=max([max(ss.tmie) max(rdc.tmie) max(uf.tmie)]);
     xlim([minx maxx])
     ylim([miny maxy])
+    
+    %determine the spread of the data
+    divisions=1000;
+    xwid=(maxx-minx)/divisions;
+    ywid=(maxy-miny)/divisions;
+    for i=1:divisions 
+        yspread=rdc.tmie(and(rdc.maxma>(minx+(i-1)*xwid),rdc.maxma<(minx+i*xwid)));
+        if ~isempty(yspread)
+            yrange(i)=max(yspread)-min(yspread); %#ok<*SAGROW>
+        else
+            yrange(i)=NaN;
+        end
+        xspread=rdc.maxma(and(rdc.tmie<i*ywid,rdc.tmie>(i-1)*ywid));
+        if ~isempty(xspread)
+            xrange(i)=max(xspread)-min(xspread);
+        else
+            xrange(i)=NaN;
+        end
+    end
+    figure(6)
+    subplot(4,1,2*q-1)
+    plot(minx+[1:divisions]*xwid-xwid/2,yrange);
+    xlim([minx maxx])
+    xlabel('max(MA)')
+    ylabel('Y TMI Spread')
+    subplot(4,1,2*q)
+    plot([1:divisions]*xwid-xwid/2,xrange);
+    xlim([minx maxx])
+    ylim([min(xrange) max(xrange)])
+    xlabel('max(MA)')
+    ylabel('X TMI Spread')
     
 end
 %% plots

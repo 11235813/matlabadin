@@ -16,7 +16,7 @@ end
 %% different TMI calculation types
 
 %construct moving average 
-moving_average=filter(ones(4,1),1,timeline);
+moving_average=filter(ones(window,1),1,timeline);
 
 tmi_definitions;
 

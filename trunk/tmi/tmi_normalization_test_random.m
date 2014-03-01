@@ -1,12 +1,12 @@
 % clear
 %setup
 % damage_mean=0.30; %in units of player health
-damage_mean=0:0.01:1;
+damage_mean=0:0.01:0.9;
 damage_range=0.2; %in units of damage_mean; i.e. 0.2 means +/-20% of mean dmg
-swing_timer=1.5; %in seconds
+swing_timer=1; %in seconds
 
 % fight_length=500; %in seconds
-window=6; %in seconds
+window=4; %in seconds
 bin_time=1; %in seconds
 
 avoidance=0.3;
@@ -50,7 +50,7 @@ end
 %% calculate moving average array, don't worry about endpoints
 
 %construct moving average 
-moving_average=filter(ones(4,1),1,timeline);
+moving_average=filter(ones(window,1),1,timeline);
 
 tmi_definitions
 
