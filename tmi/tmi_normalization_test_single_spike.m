@@ -1,7 +1,7 @@
 % clear
 %setup
 % fight_length=500;
-damage_steps=-0.05:0.01:3.5;
+damage_steps=-0.05:0.01:0.65;
 window=4;
 bin_time=1; %in seconds
 
@@ -9,14 +9,15 @@ bin_time=1; %in seconds
 timeline=zeros(fight_length,length(damage_steps));
 for i=1:length(damage_steps)
     timeline(:,i)=repmat(-0.4,fight_length,1); %#ok<*SAGROW>
-    timeline(37,i)=damage_steps(i);
+    timeline(37:40,i)=damage_steps(i);
 end
 
 
 %% different TMI calculation types
 
 %construct moving average 
-moving_average=filter(ones(window,1),1,timeline);
+temp=filter(ones(window,1),1,repmat(timeline,3,1));
+moving_average=temp((size(timeline,1)+1):(2*size(timeline,1)),:);
 
 tmi_definitions;
 
