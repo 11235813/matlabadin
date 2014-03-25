@@ -1,13 +1,15 @@
 clear
 fight_length=500; 
+M=[500 1000];
 
 q=0;
-for D=[10 20]
+for kk=1:2
     
+    D=10;
     q=q+1;
     % D=10;
     % b=10e3;
-    m=500;
+    m=M(kk);
     c1=10*m/D
     c2=exp(D)
     % c2=fight_length/100*exp(D)
@@ -33,7 +35,7 @@ for D=[10 20]
     xlabel('max(MA)')
     ylabel('New TMI')
     legend('SS','RD','UF','Location','NorthWest')
-    title(['exponential forms, D=' int2str(D)])
+    title(['exponential forms, D=' int2str(D) ', c1=' num2str(c1,'%1.5f') ', c2=' num2str(c2,'%1.5f')])
     minx=min([min(ss.maxma) min(rdc.maxma) min(uf.maxma)]);
     maxx=max([max(ss.maxma) max(rdc.maxma) max(uf.maxma)]);
     miny=min([min(ss.tmie) min(rdc.tmie) min(uf.tmie)]);
