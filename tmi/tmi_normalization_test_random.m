@@ -6,7 +6,7 @@ damage_range=0.2; %in units of damage_mean; i.e. 0.2 means +/-20% of mean dmg
 swing_timer=1; %in seconds
 
 % fight_length=500; %in seconds
-window=4; %in seconds
+window=6; %in seconds
 bin_time=1; %in seconds
 
 avoidance=0.3;
@@ -94,6 +94,6 @@ xz=repmat(max(ma)',1,size(tmic,1));
 % xlabel('Mean(MA)')
 
 rd.tmie=tmic(1,:)';
-rd.tmi10=tmic(3,:)';
+rd.tmie2=tmic(2,:)';
 rd.meanma=x;
 rd.maxma=max(ma)';

@@ -63,7 +63,7 @@ xy3=repmat(x3,1,size(tmic,1));
 %save for later
 
 ss.tmie=tmic(1,:)';
-ss.tmi10=tmic(3,:)';
+ss.tmie2=tmic(2,:)';
 ss.meanma=x3;
 ss.maxma=x2;
 ss.sizeofspike=x1;

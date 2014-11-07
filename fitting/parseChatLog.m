@@ -13,7 +13,7 @@ function [ set ] = parseChatLog( filename , tag )
         if ~isempty(k)
             [m s e]=regexp(txt(k:length(txt)),'\s(\d+\.?\d*)','match');
             if ~isempty(m)
-                for j=1:13
+                for j=1:11
                     data(i,j)=str2num(char(m(j)));
                 end
                 i = i + 1;
@@ -33,8 +33,8 @@ function [ set ] = parseChatLog( filename , tag )
     set.mastery=data(:,9);
     set.preMastery=data(:,10);
     set.postBlock=data(:,11);
-    set.pvpPowerRating=data(:,12);
-    set.pvpPower=data(:,13);
+%     set.pvpPowerRating=data(:,12);
+%     set.pvpPower=data(:,13);
 
 end
 

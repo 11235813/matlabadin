@@ -1,0 +1,76 @@
+7/31 20:41:19.751  Changed Channel: |Hchannel:2726368|h[(null)]|h
+7/31 20:41:19.752  Changed Channel: |Hchannel:2726368|h[(null)]|h
+7/31 20:41:19.752  Changed Channel: |Hchannel:2726368|h[(null)]|h
+7/31 20:41:22.260  Changed Channel: |Hchannel:2726368|h[(null)]|h
+7/31 20:41:26.718  [2. Trade] Marlenaomi: not me.
+7/31 20:41:27.268  Left Channel: |Hchannel:2726544|h[(null)]|h
+7/31 20:41:30.651  Changed Channel: |Hchannel:2726368|h[(null)]|h
+7/31 20:42:07.267  %s has earned the achievement Level 100!
+7/31 20:42:07.267  %s has earned the achievement Hero of Stormshield!
+7/31 20:42:07.267  %s has earned the achievement Somebody Likes Me!
+7/31 20:42:14.442  Thomas Miller says: Fresh bread for sale!
+7/31 20:42:21.895  %s has earned the achievement Level 100!
+7/31 20:42:21.895  %s has earned the achievement Hero of Stormshield!
+7/31 20:42:21.895  %s has earned the achievement Somebody Likes Me!
+7/31 20:42:36.404  %s has earned the achievement Level 100!
+7/31 20:42:36.404  %s has earned the achievement Hero of Stormshield!
+7/31 20:42:36.404  %s has earned the achievement Somebody Likes Me!
+7/31 20:42:48.755  %s has earned the achievement Level 100!
+7/31 20:42:48.755  %s has earned the achievement Hero of Stormshield!
+7/31 20:42:48.755  %s has earned the achievement Somebody Likes Me!
+7/31 20:43:04.280  You have learned a new ability: Shield Slam.
+7/31 20:43:04.280  You have learned a new ability: Shield Block.
+7/31 20:43:04.280  You have learned a new ability: Devastate.
+7/31 20:43:04.280  You have learned a new ability: Revenge.
+7/31 20:43:04.280  You have learned a new ability: Last Stand.
+7/31 20:43:04.280  You have learned a new ability: Shield Barrier.
+7/31 20:43:04.288  You have learned a new passive effect: Mastery: Critical Block.
+7/31 20:43:04.288  You have learned a new ability: Demoralizing Shout.
+7/31 20:43:04.288  You have learned a new passive effect: Readiness: Protection.
+7/31 20:43:04.288  You have learned a new ability: Thunder Clap.
+7/31 20:43:04.288  You have learned a new passive effect: Resolve.
+7/31 20:43:04.288  You have learned a new ability: Shield Wall.
+7/31 20:43:04.288  You have learned a new passive effect: Blood Craze.
+7/31 20:43:04.288  You have learned a new passive effect: Bladed Armor.
+7/31 20:43:04.288  You have learned a new passive effect: Riposte.
+7/31 20:43:04.288  You have learned a new passive effect: Shield Mastery.
+7/31 20:43:04.288  You have learned a new passive effect: Enrage.
+7/31 20:43:04.288  You have learned a new ability: Execute.
+7/31 20:43:04.288  You have learned a new passive effect: Deep Wounds.
+7/31 20:43:04.288  You have learned a new passive effect: Improved Thunder Clap.
+7/31 20:43:04.288  You have learned a new passive effect: Improved Heroic Leap.
+7/31 20:43:04.288  You have learned a new passive effect: Improved Shield Slam.
+7/31 20:43:04.288  You have learned a new passive effect: Improved Charge.
+7/31 20:43:04.304  You have learned a new passive effect: Improved Heroic Throw.
+7/31 20:43:04.304  You have learned a new passive effect: Improved Shield Barrier.
+7/31 20:43:04.304  You have learned a new passive effect: Improved Block.
+7/31 20:43:04.304  You have learned a new passive effect: Improved Revenge.
+7/31 20:43:04.304  You have learned a new passive effect: Improved Defensive Stance.
+7/31 20:43:14.449  [5. SL1] Parryhuman-Level100PvP: SL1 1455 889 5.6411275863647 3.0004189014435 100 0.61728394031525 0 0 0 17.60000038147 27.070831298828 WARRIOR 100
+7/31 20:43:19.000  [5. SL1] Parryhuman-Level100PvP: SL1 1579 889 5.6411275863647 4.3032913208008 100 0.61728394031525 89 0.54938268661499 81 19.219999313354 27.433506011963 WARRIOR 100
+7/31 20:43:23.301  [5. SL1] Parryhuman-Level100PvP: SL1 1703 889 5.6411275863647 5.0283999443054 100 0.61728394031525 89 0.54938268661499 81 19.219999313354 27.433506011963 WARRIOR 100
+7/31 20:43:27.937  %s has earned the achievement Level 100!
+7/31 20:43:27.937  %s has earned the achievement Hero of Stormshield!
+7/31 20:43:27.939  %s has earned the achievement Somebody Likes Me!
+7/31 20:43:30.185  Hakmud of Argus says: What is Hakmud supposed to do now, buddy?
+7/31 20:43:34.654  [5. SL1] Parryhuman-Level100PvP: SL1 1827 889 5.6411275863647 6.3091478347778 100 0.61728394031525 178 1.09876537323 81 19.219999313354 27.433506011963 WARRIOR 100
+7/31 20:43:38.576  [5. SL1] Parryhuman-Level100PvP: SL1 1951 889 5.6411275863647 7.5760216712952 100 0.61728394031525 267 1.6481481790543 81 19.219999313354 27.433506011963 WARRIOR 100
+7/31 20:43:42.269  [5. SL1] Parryhuman-Level100PvP: SL1 2075 889 5.6411275863647 8.7554979324341 100 0.61728394031525 344 2.1234567165375 174 21.080001831055 27.847978591919 WARRIOR 100
+7/31 20:43:45.794  [5. SL1] Parryhuman-Level100PvP: SL1 2241 889 5.6411275863647 9.6890106201172 100 0.61728394031525 344 2.1234567165375 174 21.080001831055 27.847978591919 WARRIOR 100
+7/31 20:43:49.129  [5. SL1] Parryhuman-Level100PvP: SL1 2407 889 5.6411275863647 11.326593399048 100 0.61728394031525 462 2.851851940155 174 21.080001831055 27.847978591919 WARRIOR 100
+7/31 20:43:52.466  [5. SL1] Parryhuman-Level100PvP: SL1 2573 889 5.6411275863647 12.239519119263 100 0.61728394031525 462 2.851851940155 298 23.560001373291 28.396965026855 WARRIOR 100
+7/31 20:43:55.597  [5. SL1] Parryhuman-Level100PvP: SL1 2739 889 5.6411275863647 13.794136047363 100 0.61728394031525 572 3.530864238739 298 23.560001373291 28.396965026855 WARRIOR 100
+7/31 20:43:58.055  [5. SL1] Parryhuman-Level100PvP: SL1 2960 889 5.6411275863647 15.834428787231 100 0.61728394031525 719 4.438271522522 298 23.560001373291 28.396965026855 WARRIOR 100
+7/31 20:43:59.691  %s has earned the achievement Level 100!
+7/31 20:43:59.691  %s has earned the achievement Hero of Stormshield!
+7/31 20:43:59.691  %s has earned the achievement Somebody Likes Me!
+7/31 20:44:01.146  [5. SL1] Parryhuman-Level100PvP: SL1 3181 889 5.6411275863647 17.838270187378 100 0.61728394031525 866 5.3456788063049 298 23.560001373291 28.396965026855 WARRIOR 100
+7/31 20:44:03.266  [5. SL1] Parryhuman-Level100PvP: SL1 3402 889 5.6411275863647 18.984153747559 100 0.61728394031525 866 5.3456788063049 453 26.659999847412 29.084917068481 WARRIOR 100
+7/31 20:44:05.789  [5. SL1] Parryhuman-Level100PvP: SL1 3495 889 5.6411275863647 19.808977127075 100 0.61728394031525 928 5.728394985199 518 27.960000991821 29.362773895264 WARRIOR 100
+7/31 20:44:08.083  [5. SL1] Parryhuman-Level100PvP: SL1 3619 889 5.6411275863647 20.901063919067 100 0.61728394031525 1011 6.240740776062 605 29.700000762939 29.74401473999 WARRIOR 100
+7/31 20:44:11.914  [5. SL1] Parryhuman-Level100PvP: SL1 3623 889 5.6411275863647 20.932371139526 100 0.61728394031525 1013 6.253086566925 607 29.739999771118 29.751470565796 WARRIOR 100
+7/31 20:44:15.076  [5. SL1] Parryhuman-Level100PvP: SL1 3833 889 5.6411275863647 21.991468429565 100 0.61728394031525 1013 6.253086566925 607 29.739999771118 29.751470565796 WARRIOR 100
+7/31 20:44:17.220  [5. SL1] Parryhuman-Level100PvP: SL1 3833 889 5.6411275863647 23.132978439331 100 0.61728394031525 1223 7.549382686615 607 29.739999771118 29.751470565796 WARRIOR 100
+7/31 20:44:26.950  %s has earned the achievement Level 100!
+7/31 20:44:26.950  %s has earned the achievement Hero of Stormshield!
+7/31 20:44:26.950  %s has earned the achievement Somebody Likes Me!

@@ -1,0 +1,55 @@
+﻿8/1 19:18:06.932  You have learned a new ability: Breath of Fire.
+8/1 19:18:06.932  You have learned a new ability: Dizzying Haze.
+8/1 19:18:06.932  You have learned a new spell: Elusive Brew.
+8/1 19:18:06.932  You have learned a new spell: Guard.
+8/1 19:18:06.932  You have learned a new spell: Summon Black Ox Statue.
+8/1 19:18:06.940  You have learned a new passive effect: Mastery: Elusive Brawler.
+8/1 19:18:06.940  You have learned a new ability: Stance of the Sturdy Ox.
+8/1 19:18:06.940  You have learned a new spell: Purifying Brew.
+8/1 19:18:06.940  You have learned a new passive effect: Leather Specialization.
+8/1 19:18:06.940  You have learned a new spell: Keg Smash.
+8/1 19:18:06.940  You have learned a new passive effect: Dual Wield.
+8/1 19:18:06.940  You have learned a new passive effect: Gift of the Ox.
+8/1 19:18:06.940  You have learned a new passive effect: Readiness: Brewmaster.
+8/1 19:18:06.940  You have learned a new spell: Legacy of the White Tiger.
+8/1 19:18:06.940  You have learned a new passive effect: Critical Strikes.
+8/1 19:18:06.940  You have learned a new passive effect: Resolve.
+8/1 19:18:06.940  You have learned a new passive effect: Bladed Armor.
+8/1 19:18:06.940  You have learned a new passive effect: Ferment.
+8/1 19:18:06.940  You have learned a new spell: Zen Meditation.
+8/1 19:18:06.940  You have learned a new passive effect: Empowered Blackout Kick.
+8/1 19:18:06.940  You have learned a new passive effect: Enhanced Transcendence.
+8/1 19:18:06.940  You have learned a new passive effect: Enhanced Roll.
+8/1 19:18:06.940  You have learned a new passive effect: Improved Guard.
+8/1 19:18:06.940  You have learned a new passive effect: Empowered Keg Smash.
+8/1 19:18:06.956  You have learned a new passive effect: Improved Elusive Brew.
+8/1 19:18:06.956  You have learned a new passive effect: Improved Stance of the Sturdy Ox.
+8/1 19:18:06.956  You have learned a new passive effect: Improved Dizzying Haze.
+8/1 19:18:06.956  You have learned a new passive effect: Improved Breath of Fire.
+8/1 19:18:14.070  Changed Channel: |Hchannel:1217632|h[(null)]|h
+8/1 19:18:21.582  [5. SL1] Nemonkdr-Level100PvP: SL1 622 1288 5.0226788520813 3 0 0 0 0 0 5 0 MONK 100
+8/1 19:18:26.240  [2. Trade] Geïsh-Level100PvP: Last dps for Shadowmoon heroic (french)
+8/1 19:18:26.663  [5. SL1] Nemonkdr-Level100PvP: SL1 622 1288 5.0226788520813 3 0 0 0 0 0 5 0 MONK 100
+8/1 19:18:29.667  [5. SL1] Nemonkdr-Level100PvP: SL1 622 1288 5.0226788520813 3 0 0 0 0 0 5 0 MONK 100
+8/1 19:18:31.856  %s has earned the achievement Level 100!
+8/1 19:18:31.856  %s has earned the achievement Hero of Stormshield!
+8/1 19:18:31.856  %s has earned the achievement Somebody Likes Me!
+8/1 19:18:32.130  [5. SL1] Nemonkdr-Level100PvP: SL1 622 1288 5.0226788520813 3 0 0 0 0 0 5 0 MONK 100
+8/1 19:18:34.497  [5. SL1] Nemonkdr-Level100PvP: SL1 622 1288 5.0226788520813 3 0 0 0 0 0 5 0 MONK 100
+8/1 19:18:36.847  [5. SL1] Nemonkdr-Level100PvP: SL1 622 1412 5.5165963172913 3 0 0 0 0 0 5 0 MONK 100
+8/1 19:18:39.039  [5. SL1] Nemonkdr-Level100PvP: SL1 622 1578 6.1762866973877 3 0 0 0 0 0 5 0 MONK 100
+8/1 19:18:41.251  [5. SL1] Nemonkdr-Level100PvP: SL1 622 1744 6.8342409133911 3 0 0 0 0 110 5.625 0 MONK 100
+8/1 19:18:43.410  [5. SL1] Nemonkdr-Level100PvP: SL1 622 1910 7.4904656410217 3 0 0 0 0 212 6.2045454978943 0 MONK 100
+8/1 19:18:45.540  [5. SL1] Nemonkdr-Level100PvP: SL1 622 2076 8.1449689865112 3 0 0 0 0 212 6.2045454978943 0 MONK 100
+8/1 19:18:47.424  [5. SL1] Nemonkdr-Level100PvP: SL1 622 2076 8.1449689865112 3 0 0 0 0 359 7.0397729873657 0 MONK 100
+8/1 19:18:49.438  [5. SL1] Nemonkdr-Level100PvP: SL1 622 2297 9.0136642456055 3 0 0 0 0 506 7.875 0 MONK 100
+8/1 19:18:51.341  [5. SL1] Nemonkdr-Level100PvP: SL1 622 2518 9.8793354034424 3 0 0 0 0 653 8.7102270126343 0 MONK 100
+8/1 19:18:53.340  [5. SL1] Nemonkdr-Level100PvP: SL1 622 2739 10.741998672485 3 0 0 0 0 653 8.7102270126343 0 MONK 100
+8/1 19:18:55.560  [5. SL1] Nemonkdr-Level100PvP: SL1 622 2739 10.741998672485 3 0 0 0 0 653 8.7102270126343 0 MONK 100
+8/1 19:18:57.371  [5. SL1] Nemonkdr-Level100PvP: SL1 622 2739 10.741998672485 3 0 0 0 0 653 8.7102270126343 0 MONK 100
+8/1 19:19:06.720  [5. SL1] Nemonkdr-Level100PvP: SL1 622 2949 11.55894947052 3 0 0 0 0 653 8.7102270126343 0 MONK 100
+8/1 19:19:10.930  [5. SL1] Nemonkdr-Level100PvP: SL1 622 2949 11.55894947052 3 0 0 0 0 653 8.7102270126343 0 MONK 100
+8/1 19:19:11.227  %s has earned the achievement Level 100!
+8/1 19:19:11.227  %s has earned the achievement 50 Quests Completed!
+8/1 19:19:11.227  %s has earned the achievement Hero of Stormshield!
+8/1 19:19:11.227  %s has earned the achievement Somebody Likes Me!

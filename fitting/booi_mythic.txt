@@ -1,0 +1,511 @@
+00:00:03.569	Mythic Tank Dummy Melee Booi 94392
+	
+00:00:08.669	Mythic Tank Dummy Melee Booi 71222 (B: 30524)
+	
+00:00:08.669	Mythic Tank Dummy Dummy Strike Booi 46124
+	
+00:00:08.685	Mythic Tank Dummy Melee Booi 75310 (A: 5867)
+	
+00:00:08.771	Mythic Tank Dummy Melee Booi 42147 (A: 60224)
+	
+00:00:11.034	Mythic Tank Dummy Melee Booi 53888 (A: 46339)
+	
+00:00:11.836	Mythic Tank Dummy Dummy Strike Booi 35973 (A: 5587)
+	
+00:00:11.977	Mythic Tank Dummy Melee Booi Parry
+	
+00:00:16.383	Mythic Tank Dummy Uber Strike Booi 47571 (A: 16699)
+	
+00:04:44.100	Mythic Tank Dummy Melee Booi 96297
+	
+00:04:46.005	Mythic Tank Dummy Melee Booi Parry
+	
+00:04:47.623	Mythic Tank Dummy Dummy Strike Booi 35468
+	
+00:04:48.030	Mythic Tank Dummy Melee Booi Parry
+	
+00:04:50.035	Mythic Tank Dummy Melee Booi Parry
+	
+00:04:52.093	Mythic Tank Dummy Melee Booi 65241 (B: 35130)
+	
+00:04:54.097	Mythic Tank Dummy Melee Booi Parry
+	
+00:04:55.863	Mythic Tank Dummy Uber Strike Booi 77301 (A: 6142)
+	
+00:05:12.584	Mythic Tank Dummy Melee Booi 17076 (A: 30238) (B: 25477)
+	
+00:05:14.620	Mythic Tank Dummy Melee Booi 57797 (A: 2714) (B: 32583)
+	
+00:05:16.356	Mythic Tank Dummy Dummy Strike Booi 36251 (A: 6009)
+	
+00:05:16.628	Mythic Tank Dummy Melee Booi Parry
+	
+00:05:19.604	Mythic Tank Dummy Melee Booi 26321 (A: 24208) (B: 27208)
+	
+00:05:21.640	Mythic Tank Dummy Melee Booi 46208 (A: 5500) (B: 27843)
+	
+00:05:22.464	Mythic Tank Dummy Dummy Strike Booi 48501
+	
+00:05:24.680	Mythic Tank Dummy Uber Strike Booi 28541 (A: 48440)
+	
+00:05:42.471	Mythic Tank Dummy Melee Booi 20625 (A: 44283) (B: 27818)
+	
+00:05:44.431	Mythic Tank Dummy Melee Booi 87103 (A: 6106)
+	
+00:05:45.947	Mythic Tank Dummy Dummy Strike Booi 33799 (A: 5829)
+	
+00:05:46.396	Mythic Tank Dummy Melee Booi 43014 (A: 6512) (B: 26668)
+	
+00:05:48.448	Mythic Tank Dummy Melee Booi 46154 (B: 24852)
+	
+00:05:50.480	Mythic Tank Dummy Melee Booi 37052 (A: 13148) (B: 27031)
+	
+00:05:51.997	Mythic Tank Dummy Dummy Strike Booi 45112
+	
+00:05:52.470	Mythic Tank Dummy Melee Booi 73927
+	
+00:06:09.640	Mythic Tank Dummy Melee Booi 29570 (A: 63058)
+	
+00:06:11.691	Mythic Tank Dummy Melee Booi Parry
+	
+00:06:13.357	Mythic Tank Dummy Dummy Strike Booi 14982 (A: 23159)
+	
+00:06:13.657	Mythic Tank Dummy Melee Booi 42291 (A: 5324) (B: 25639)
+	
+00:06:15.693	Mythic Tank Dummy Melee Booi (A: 20988) (B: 48974)
+	
+00:06:17.701	Mythic Tank Dummy Melee Booi Parry
+	
+00:06:19.074	Mythic Tank Dummy Dummy Strike Booi 34878 (A: 12065)
+	
+00:06:19.616	Mythic Tank Dummy Melee Booi 51827 (A: 6106) (B: 31195)
+	
+00:06:24.456	Mythic Tank Dummy Melee Booi 34481 (A: 22733) (B: 30808)
+	
+00:06:25.553	Mythic Tank Dummy Uber Strike Booi 60883
+	
+00:06:43.090	Mythic Tank Dummy Melee Booi 86746 (A: 11972)
+	
+00:06:45.104	Mythic Tank Dummy Melee Booi 56986 (A: 18381)
+	
+00:06:46.608	Mythic Tank Dummy Dummy Strike Booi 28359 (A: 11746)
+	
+00:06:47.073	Mythic Tank Dummy Melee Booi 47465 (A: 6025) (B: 28803)
+	
+00:06:49.027	Mythic Tank Dummy Melee Booi 30689 (A: 18002) (B: 26218)
+	
+00:06:51.049	Mythic Tank Dummy Melee Booi 15527 (A: 9153) (B: 57589)
+	
+00:06:53.097	Mythic Tank Dummy Melee Booi 81712 (A: 19555)
+	
+00:06:53.891	Mythic Tank Dummy Dummy Strike Booi 34750
+	
+00:06:56.082	Mythic Tank Dummy Uber Strike Booi 53005 (A: 19012)
+	
+00:07:14.946	Mythic Tank Dummy Melee Booi 60295 (A: 33161)
+	
+00:07:17.017	Mythic Tank Dummy Melee Booi 30723 (A: 8679) (B: 59104)
+	
+00:07:17.354	Mythic Tank Dummy Dummy Strike Booi 48804
+	
+00:07:19.009	Mythic Tank Dummy Melee Booi Parry
+	
+00:07:21.042	Mythic Tank Dummy Melee Booi 2692 (A: 24973) (B: 64553)
+	
+00:07:23.040	Mythic Tank Dummy Melee Booi 48237 (A: 7540) (B: 30034)
+	
+00:07:23.438	Mythic Tank Dummy Dummy Strike Booi 29901 (A: 6156)
+	
+00:07:24.976	Mythic Tank Dummy Melee Booi 33814 (A: 18690) (B: 28272)
+	
+00:07:28.433	Mythic Tank Dummy Melee Booi 32926 (A: 13067) (B: 24766)
+	
+00:07:29.450	Mythic Tank Dummy Uber Strike Booi 44730 (A: 11859)
+	
+00:07:45.706	Mythic Tank Dummy Melee Booi 48469 (A: 6106) (B: 29387)
+	
+00:07:47.735	Mythic Tank Dummy Melee Booi 53866 (B: 29005)
+	
+00:07:48.101	Mythic Tank Dummy Dummy Strike Booi 42941
+	
+00:07:49.734	Mythic Tank Dummy Melee Booi 20553 (A: 24841) (B: 24443)
+	
+00:07:51.735	Mythic Tank Dummy Melee Booi 39489 (A: 24210) (B: 27300)
+	
+00:07:53.740	Mythic Tank Dummy Melee Booi 72987 (A: 10489)
+	
+00:07:55.462	Mythic Tank Dummy Dummy Strike Booi 26066 (A: 15667)
+	
+00:07:55.723	Mythic Tank Dummy Melee Booi 58696 (B: 31606)
+	
+00:07:57.644	Mythic Tank Dummy Uber Strike Booi 54099 (A: 23287)
+	
+00:08:16.786	Mythic Tank Dummy Melee Booi 92607 (A: 6106)
+	
+00:08:17.789	Mythic Tank Dummy Uber Strike Booi 64970 (A: 6106)
+	
+00:08:39.925	Mythic Tank Dummy Melee Booi 49899 (A: 30171)
+	
+00:08:41.899	Mythic Tank Dummy Melee Booi 40400 (A: 13805) (B: 23231)
+	
+00:08:42.340	Mythic Tank Dummy Dummy Strike Booi 44511
+	
+00:08:43.978	Mythic Tank Dummy Melee Booi 16272 (A: 4503) (B: 48477)
+	
+00:08:46.001	Mythic Tank Dummy Melee Booi 43582 (A: 7626) (B: 27574)
+	
+00:08:48.014	Mythic Tank Dummy Melee Booi 42386 (A: 19761) (B: 33464)
+	
+00:08:49.628	Mythic Tank Dummy Dummy Strike Booi 35427 (A: 5887)
+	
+00:08:50.005	Mythic Tank Dummy Melee Booi 66010 (A: 12450)
+	
+00:08:51.836	Mythic Tank Dummy Uber Strike Booi 61497 (A: 11972)
+	
+00:09:08.442	Mythic Tank Dummy Melee Booi 59370 (A: 34578)
+	
+00:09:10.447	Mythic Tank Dummy Melee Booi Parry
+	
+00:09:10.760	Mythic Tank Dummy Dummy Strike Booi 31183 (A: 6844)
+	
+00:09:12.462	Mythic Tank Dummy Melee Booi 71216 (A: 17647)
+	
+00:09:14.457	Mythic Tank Dummy Melee Booi Parry
+	
+00:09:16.461	Mythic Tank Dummy Melee Booi 28663 (A: 17538) (B: 24878)
+	
+00:09:16.766	Mythic Tank Dummy Dummy Strike Booi 46815
+	
+00:09:18.465	Mythic Tank Dummy Melee Booi 15994 (A: 6238) (B: 51875)
+	
+00:09:20.259	Mythic Tank Dummy Uber Strike Booi 70594 (A: 11450)
+	
+00:09:38.355	Mythic Tank Dummy Melee Booi 2078 (A: 26051) (B: 65636)
+	
+00:09:40.309	Mythic Tank Dummy Melee Booi 14763 (A: 7626) (B: 52242)
+	
+00:09:41.090	Mythic Tank Dummy Dummy Strike Booi 35457
+	
+00:09:42.347	Mythic Tank Dummy Melee Booi 28596 (A: 18118) (B: 25154)
+	
+00:09:44.447	Mythic Tank Dummy Melee Booi 27583 (B: 64362)
+	
+00:09:46.358	Mythic Tank Dummy Melee Booi Parry
+	
+00:09:47.199	Mythic Tank Dummy Dummy Strike Booi 13208 (A: 21742)
+	
+00:09:48.323	Mythic Tank Dummy Melee Booi 11802 (A: 14059) (B: 60344)
+	
+00:09:50.602	Mythic Tank Dummy Uber Strike Booi 53459 (A: 11379)
+	
+00:10:10.052	Mythic Tank Dummy Melee Booi 35810 (A: 22110) (B: 24823)
+	
+00:10:11.968	Mythic Tank Dummy Melee Booi 48195 (A: 11547) (B: 25604)
+	
+00:10:13.580	Mythic Tank Dummy Dummy Strike Booi 35132 (A: 5933)
+	
+00:10:13.982	Mythic Tank Dummy Melee Booi Parry
+	
+00:10:16.014	Mythic Tank Dummy Melee Booi 31649 (A: 13911) (B: 24533)
+	
+00:10:18.015	Mythic Tank Dummy Melee Booi 36049 (A: 15728) (B: 27880)
+	
+00:10:19.632	Mythic Tank Dummy Dummy Strike Booi 41975 (A: 6596)
+	
+00:10:20.025	Mythic Tank Dummy Melee Booi Parry
+	
+00:10:21.902	Mythic Tank Dummy Uber Strike Booi (A: 60917)
+	
+00:10:38.431	Mythic Tank Dummy Melee Booi 78282 (A: 20680)
+	
+00:10:40.432	Mythic Tank Dummy Melee Booi 74816 (A: 16089)
+	
+00:10:41.939	Mythic Tank Dummy Dummy Strike Booi 34492 (A: 6106)
+	
+00:10:42.434	Mythic Tank Dummy Melee Booi 66771 (A: 5977)
+	
+00:10:44.355	Mythic Tank Dummy Melee Booi (A: 35823) (B: 53735)
+	
+00:10:46.347	Mythic Tank Dummy Melee Booi 57051 (A: 13974)
+	
+00:10:48.012	Mythic Tank Dummy Dummy Strike Booi 9778 (A: 25832)
+	
+00:10:48.392	Mythic Tank Dummy Melee Booi 76991
+	
+00:10:50.179	Mythic Tank Dummy Uber Strike Booi 2192 (A: 55204)
+	
+00:11:06.470	Mythic Tank Dummy Melee Booi 45584 (A: 40186)
+	
+00:11:08.454	Mythic Tank Dummy Melee Booi 74883 (A: 11535)
+	
+00:11:09.901	Mythic Tank Dummy Dummy Strike Booi 20326 (A: 21742)
+	
+00:11:10.542	Mythic Tank Dummy Melee Booi 60737 (B: 32705)
+	
+00:11:12.539	Mythic Tank Dummy Melee Booi 34643 (A: 19123) (B: 28951)
+	
+00:11:14.545	Mythic Tank Dummy Melee Booi 7925 (A: 18501) (B: 61662)
+	
+00:11:16.487	Mythic Tank Dummy Melee Booi 83899 (A: 14474)
+	
+00:11:18.122	Mythic Tank Dummy Uber Strike Booi 23717 (A: 54929)
+	
+00:11:18.414	Mythic Tank Dummy Dummy Strike Booi 44724
+	
+00:11:35.012	Mythic Tank Dummy Melee Booi 72757 (A: 25729)
+	
+00:11:36.963	Mythic Tank Dummy Melee Booi 30896 (A: 25210) (B: 30211)
+	
+00:11:37.353	Mythic Tank Dummy Dummy Strike Booi 46899
+	
+00:11:38.967	Mythic Tank Dummy Melee Booi 50642 (B: 27269)
+	
+00:11:40.987	Mythic Tank Dummy Melee Booi 35956 (A: 19037) (B: 29612)
+	
+00:11:42.992	Mythic Tank Dummy Melee Booi 34444 (A: 40054)
+	
+00:11:44.702	Mythic Tank Dummy Dummy Strike Booi 16391 (A: 27439)
+	
+00:11:44.990	Mythic Tank Dummy Melee Booi 79755
+	
+00:11:46.902	Mythic Tank Dummy Uber Strike Booi 60463 (A: 13275)
+	
+00:12:05.436	Mythic Tank Dummy Melee Booi 65954 (A: 6106)
+	
+00:12:07.459	Mythic Tank Dummy Melee Booi 59987 (A: 11179)
+	
+00:12:07.764	Mythic Tank Dummy Dummy Strike Booi 36856
+	
+00:12:09.467	Mythic Tank Dummy Melee Booi Parry
+	
+00:12:11.456	Mythic Tank Dummy Melee Booi Parry
+	
+00:12:13.469	Mythic Tank Dummy Melee Booi 28568 (A: 31098) (B: 32128)
+	
+00:12:13.785	Mythic Tank Dummy Dummy Strike Booi 50988
+	
+00:12:15.462	Mythic Tank Dummy Melee Booi Parry
+	
+00:12:17.320	Mythic Tank Dummy Uber Strike Booi 43132 (A: 27819)
+	
+00:12:33.919	Mythic Tank Dummy Melee Booi 80364 (A: 7041)
+	
+00:12:35.843	Mythic Tank Dummy Melee Booi 92621 (A: 7041)
+	
+00:12:37.350	Mythic Tank Dummy Dummy Strike Booi (A: 42825)
+	
+00:12:37.927	Mythic Tank Dummy Melee Booi 91257 (A: 10872)
+	
+00:12:39.942	Mythic Tank Dummy Melee Booi Parry
+	
+00:12:41.938	Mythic Tank Dummy Melee Booi 53248 (A: 23945)
+	
+00:12:43.339	Mythic Tank Dummy Dummy Strike Booi 30381 (A: 11733)
+	
+00:12:43.953	Mythic Tank Dummy Melee Booi 83576 (A: 6105)
+	
+00:12:45.644	Mythic Tank Dummy Uber Strike Booi (A: 61923)
+	
+00:13:09.782	Mythic Tank Dummy 1 Melee Booi 74537 (A: 13732)
+	
+00:13:11.756	Mythic Tank Dummy 1 Melee Booi Parry
+	
+00:13:12.550	Mythic Tank Dummy 1 Dummy Strike Booi 44039 (A: 3640)
+	
+00:13:13.795	Mythic Tank Dummy 1 Melee Booi 24479 (A: 5584) (B: 70148)
+	
+00:13:15.777	Mythic Tank Dummy 1 Melee Booi (A: 30444) (B: 71037)
+	
+00:13:17.765	Mythic Tank Dummy 1 Melee Booi 40207 (A: 17044) (B: 30828)
+	
+00:13:18.190	Mythic Tank Dummy 1 Dummy Strike Booi 38140
+	
+00:13:19.782	Mythic Tank Dummy 1 Melee Booi 21573 (A: 27793) (B: 26582)
+	
+00:13:28.705	Mythic Tank Dummy 2 Melee Booi 26356 (A: 60379)
+	
+00:13:30.617	Mythic Tank Dummy 2 Melee Booi 46916 (A: 24256)
+	
+00:13:32.066	Mythic Tank Dummy 2 Dummy Strike Booi 39869 (A: 1545)
+	
+00:13:32.703	Mythic Tank Dummy 2 Melee Booi 55628 (A: 13253)
+	
+00:13:34.759	Mythic Tank Dummy 2 Melee Booi 73243 (A: 15044)
+	
+00:13:36.704	Mythic Tank Dummy 2 Melee Booi Parry
+	
+00:13:38.080	Mythic Tank Dummy 2 Dummy Strike Booi 18203 (A: 21087)
+	
+00:13:38.681	Mythic Tank Dummy 2 Melee Booi 39472 (A: 5849) (B: 24404)
+	
+00:13:43.635	Mythic Tank Dummy 3 Melee Booi 70389 (A: 21190)
+	
+00:13:43.635	Mythic Tank Dummy 3 Melee Booi 70389 (A: 21190)
+	
+00:13:45.668	Mythic Tank Dummy 3 Melee Booi 30471 (A: 20124) (B: 27244)
+	
+00:13:45.668	Mythic Tank Dummy 3 Melee Booi 30471 (A: 20124) (B: 27244)
+	
+00:13:47.293	Mythic Tank Dummy 3 Dummy Strike Booi 37740
+	
+00:13:47.666	Mythic Tank Dummy 3 Melee Booi 48938 (B: 26352)
+	
+00:13:47.666	Mythic Tank Dummy 3 Melee Booi 48938 (B: 26352)
+	
+00:13:49.648	Mythic Tank Dummy 3 Melee Booi 33553 (A: 19015) (B: 28306)
+	
+00:13:49.648	Mythic Tank Dummy 3 Melee Booi 33553 (A: 19015) (B: 28306)
+	
+00:13:51.678	Mythic Tank Dummy 3 Melee Booi 53102 (A: 5474) (B: 31541)
+	
+00:13:51.678	Mythic Tank Dummy 3 Melee Booi 53102 (A: 5474) (B: 31541)
+	
+00:13:53.378	Mythic Tank Dummy 3 Dummy Strike Booi 41031 (A: 5866)
+	
+00:13:53.627	Mythic Tank Dummy 3 Melee Booi Parry
+	
+00:13:57.363	Mythic Tank Dummy 4 Melee Booi 37481 (A: 24077) (B: 33147)
+	
+00:13:59.347	Mythic Tank Dummy 4 Melee Booi 55768 (A: 23932)
+	
+00:14:01.182	Mythic Tank Dummy 4 Dummy Strike Booi 35160 (A: 15876)
+	
+00:14:01.412	Mythic Tank Dummy 4 Melee Booi 74222
+	
+00:14:03.360	Mythic Tank Dummy 4 Melee Booi 14785 (A: 52451) (B: 28816)
+	
+00:14:05.401	Mythic Tank Dummy 4 Melee Booi 37556 (A: 18226) (B: 23907)
+	
+00:14:07.471	Mythic Tank Dummy 4 Melee Booi 85963 (A: 7792)
+	
+00:14:10.981	Mythic Tank Dummy 1 Melee Booi 5109 (A: 25695) (B: 71877)
+	
+00:14:12.938	Mythic Tank Dummy 1 Melee Booi Parry
+	
+00:14:14.595	Mythic Tank Dummy 1 Dummy Strike Booi 6874 (A: 39360)
+	
+00:14:14.975	Mythic Tank Dummy 1 Melee Booi 46385 (B: 24977)
+	
+00:14:16.995	Mythic Tank Dummy 1 Melee Booi 40312 (A: 6447) (B: 25178)
+	
+00:14:18.975	Mythic Tank Dummy 1 Melee Booi 56853 (A: 6764) (B: 34256)
+	
+00:14:20.580	Mythic Tank Dummy 1 Dummy Strike Booi 31085 (A: 13848)
+	
+00:14:20.904	Mythic Tank Dummy 1 Melee Booi Parry
+	
+00:14:25.464	Mythic Tank Dummy 2 Melee Booi Parry
+	
+00:14:27.471	Mythic Tank Dummy 2 Melee Booi (A: 54285) (B: 29231)
+	
+00:14:27.940	Mythic Tank Dummy 2 Dummy Strike Booi 29512 (A: 5599)
+	
+00:14:29.467	Mythic Tank Dummy 2 Melee Booi 43451 (A: 20373) (B: 34367)
+	
+00:14:31.499	Mythic Tank Dummy 2 Melee Booi 58255 (A: 7626) (B: 35475)
+	
+00:14:33.467	Mythic Tank Dummy 2 Melee Booi 63184 (B: 34022)
+	
+00:14:35.249	Mythic Tank Dummy 2 Dummy Strike Booi (A: 47809)
+	
+00:14:35.488	Mythic Tank Dummy 2 Melee Booi Parry
+	
+00:14:37.489	Mythic Tank Dummy 2 Uber Strike Booi 33450 (A: 25823)
+	
+00:14:40.411	Mythic Tank Dummy 3 Melee Booi 50263 (A: 23187)
+	
+00:14:40.420	Mythic Tank Dummy 3 Melee Booi 50263 (A: 23187)
+	
+00:14:42.428	Mythic Tank Dummy 3 Melee Booi 66450 (A: 13385)
+	
+00:14:42.431	Mythic Tank Dummy 3 Melee Booi 66450 (A: 13385)
+	
+00:14:43.195	Mythic Tank Dummy 3 Dummy Strike Booi 40073 (A: 5601)
+	
+00:14:44.383	Mythic Tank Dummy 3 Melee Booi 49561 (B: 26687)
+	
+00:14:44.383	Mythic Tank Dummy 3 Melee Booi 49561 (B: 26687)
+	
+00:14:46.404	Mythic Tank Dummy 3 Melee Booi (A: 28494) (B: 66487)
+	
+00:14:48.562	Mythic Tank Dummy 3 Melee Booi (A: 21771) (B: 50800)
+	
+00:14:49.712	Mythic Tank Dummy 3 Dummy Strike Booi 30220 (A: 15217)
+	
+00:14:50.769	Mythic Tank Dummy 3 Melee Booi 35971 (A: 19126) (B: 29668)
+	
+00:14:50.769	Mythic Tank Dummy 3 Melee Booi 35971 (A: 19126) (B: 29668)
+	
+00:14:53.050	Mythic Tank Dummy 3 Uber Strike Booi 69413 (A: 3299)
+	
+00:14:56.145	Mythic Tank Dummy 4 Melee Booi 73438 (A: 20901)
+	
+00:14:58.100	Mythic Tank Dummy 4 Melee Booi 77574 (A: 7657)
+	
+00:14:59.460	Mythic Tank Dummy 4 Dummy Strike Booi (A: 40206)
+	
+00:15:00.187	Mythic Tank Dummy 4 Melee Booi Parry
+	
+00:15:01.761	Mythic Tank Dummy 4 Melee Booi 56506 (A: 14135)
+	
+00:15:03.807	Mythic Tank Dummy 4 Melee Booi 79954 (A: 12031)
+	
+00:15:05.194	Mythic Tank Dummy 4 Dummy Strike Booi (A: 45950)
+	
+00:15:05.763	Mythic Tank Dummy 4 Melee Booi Dodge
+	
+00:15:09.483	Mythic Tank Dummy 1 Melee Booi 60162 (A: 36084)
+	
+00:15:11.551	Mythic Tank Dummy 1 Melee Booi Parry
+	
+00:15:12.463	Mythic Tank Dummy 1 Dummy Strike Booi 18711 (A: 21313)
+	
+00:15:13.463	Mythic Tank Dummy 1 Melee Booi 43603 (A: 7890) (B: 27727)
+	
+00:15:15.545	Mythic Tank Dummy 1 Melee Booi 58233 (A: 7381) (B: 35331)
+	
+00:15:17.557	Mythic Tank Dummy 1 Melee Booi 50937 (A: 13804) (B: 34861)
+	
+00:15:19.933	Mythic Tank Dummy 1 Uber Strike Booi 74586 (A: 5866)
+	
+00:15:20.076	Mythic Tank Dummy 1 Dummy Strike Booi 43132
+	
+00:15:23.990	Mythic Tank Dummy 2 Melee Booi Parry
+	
+00:15:25.974	Mythic Tank Dummy 2 Melee Booi (A: 83269)
+	
+00:15:27.425	Mythic Tank Dummy 2 Dummy Strike Booi 11869 (A: 26191)
+	
+00:15:27.968	Mythic Tank Dummy 2 Melee Booi 91885
+	
+00:15:30.651	Mythic Tank Dummy 2 Melee Booi 65857 (A: 17588)
+	
+00:15:32.623	Mythic Tank Dummy 2 Melee Booi 4900 (A: 50595) (B: 29882)
+	
+00:15:33.490	Mythic Tank Dummy 2 Dummy Strike Booi 30117 (A: 15667)
+	
+00:15:34.576	Mythic Tank Dummy 2 Melee Booi 53821 (A: 3280) (B: 30747)
+	
+00:15:37.544	Mythic Tank Dummy 3 Melee Booi 66063 (A: 13711)
+	
+00:15:37.642	Mythic Tank Dummy 3 Melee Booi 66063 (A: 13711)
+	
+00:15:39.485	Mythic Tank Dummy 3 Melee Booi 85275 (A: 15917)
+	
+00:15:39.641	Mythic Tank Dummy 3 Melee Booi 85275 (A: 15917)
+	
+00:15:41.183	Mythic Tank Dummy 3 Dummy Strike Booi (A: 42121)
+	
+00:15:41.573	Mythic Tank Dummy 3 Melee Booi Parry
+	
+00:15:43.540	Mythic Tank Dummy 3 Melee Booi 50820 (A: 12014) (B: 33834)
+	
+00:15:43.653	Mythic Tank Dummy 3 Melee Booi 50820 (A: 12014) (B: 33834)
+	
+00:15:45.523	Mythic Tank Dummy 3 Melee Booi 26056 (A: 24076) (B: 26994)
+	
+00:15:45.627	Mythic Tank Dummy 3 Melee Booi 26056 (A: 24076) (B: 26994)
+	
+00:15:47.626	Mythic Tank Dummy 3 Melee Booi Parry
+	
+00:15:50.608	Mythic Tank Dummy 4 Melee Booi (A: 23626) (B: 55129)

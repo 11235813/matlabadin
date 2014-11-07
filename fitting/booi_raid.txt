@@ -1,0 +1,379 @@
+00:28:51.075	Raid Tank Dummy Melee Booi 55934
+	
+00:28:53.106	Raid Tank Dummy Melee Booi Parry
+	
+00:28:53.787	Raid Tank Dummy Dummy Strike Booi 14241 (A: 16969)
+	
+00:28:55.010	Raid Tank Dummy Melee Booi Parry
+	
+00:28:57.020	Raid Tank Dummy Melee Booi 61390 (A: 3220)
+	
+00:28:59.002	Raid Tank Dummy Melee Booi 22884 (B: 34327)
+	
+00:28:59.439	Raid Tank Dummy Dummy Strike Booi 25054
+	
+00:29:01.120	Raid Tank Dummy Melee Booi 35803 (A: 3340) (B: 21077)
+	
+00:29:03.120	Raid Tank Dummy Melee Booi 34884 (A: 7394) (B: 22765)
+	
+00:29:05.021	Raid Tank Dummy Melee Booi 30249 (A: 4041) (B: 18464)
+	
+00:29:06.001	Raid Tank Dummy Dummy Strike Booi 22592 (A: 4009)
+	
+00:29:07.035	Raid Tank Dummy Melee Booi 56526 (A: 3706)
+	
+00:29:09.106	Raid Tank Dummy Melee Booi 65340 (A: 1771)
+	
+00:29:11.141	Raid Tank Dummy Melee Booi 5955 (A: 8404) (B: 33506)
+	
+00:29:13.120	Raid Tank Dummy Melee Booi 33287 (A: 2063) (B: 19035)
+	
+00:29:13.304	Raid Tank Dummy Dummy Strike Booi 22285
+	
+00:29:15.124	Raid Tank Dummy Melee Booi 26221 (A: 6973) (B: 17874)
+	
+00:29:17.162	Raid Tank Dummy Melee Booi 10981 (A: 6441) (B: 40652)
+	
+00:29:19.181	Raid Tank Dummy Melee Booi 4299 (A: 13003) (B: 40372)
+	
+00:29:20.546	Raid Tank Dummy Dummy Strike Booi 13973 (A: 6382)
+	
+00:29:21.072	Raid Tank Dummy Melee Booi 33492 (B: 18034)
+	
+00:29:23.132	Raid Tank Dummy Melee Booi 46007 (A: 3355)
+	
+00:29:25.096	Raid Tank Dummy Melee Booi Parry
+	
+00:29:26.620	Raid Tank Dummy Dummy Strike Booi 18792 (A: 6427)
+	
+00:29:27.133	Raid Tank Dummy Melee Booi 37148 (B: 20003)
+	
+00:29:29.146	Raid Tank Dummy Melee Booi Parry
+	
+00:29:31.157	Raid Tank Dummy Melee Booi 39273 (A: 8401)
+	
+00:29:32.818	Raid Tank Dummy Dummy Strike Booi (A: 27396)
+	
+00:29:33.140	Raid Tank Dummy Melee Booi 22859 (A: 21221)
+	
+00:29:35.153	Raid Tank Dummy Melee Booi 58879 (A: 3340)
+	
+00:29:37.147	Raid Tank Dummy Melee Booi 40477 (A: 4874) (B: 19436)
+	
+00:29:38.701	Raid Tank Dummy Dummy Strike Booi 24735 (A: 3416)
+	
+00:29:39.189	Raid Tank Dummy Melee Booi 32124 (B: 17298)
+	
+00:29:41.164	Raid Tank Dummy Melee Booi 15984 (A: 3340) (B: 45091)
+	
+00:29:43.186	Raid Tank Dummy Melee Booi Parry
+	
+00:29:45.145	Raid Tank Dummy Melee Booi Parry
+	
+00:29:46.066	Raid Tank Dummy Dummy Strike Booi 13458 (A: 10124)
+	
+00:29:47.198	Raid Tank Dummy Melee Booi Parry
+	
+00:29:49.223	Raid Tank Dummy Melee Booi 10086 (A: 45026)
+	
+00:29:51.245	Raid Tank Dummy Melee Booi 63896 (A: 3609)
+	
+00:29:52.169	Raid Tank Dummy Dummy Strike Booi 25710
+	
+00:29:53.190	Raid Tank Dummy Melee Booi Parry
+	
+00:29:55.204	Raid Tank Dummy Melee Booi Parry
+	
+00:29:57.187	Raid Tank Dummy Melee Booi Parry
+	
+00:29:59.214	Raid Tank Dummy Melee Booi (A: 40282) (B: 21691)
+	
+00:29:59.367	Raid Tank Dummy Dummy Strike Booi 27205
+	
+00:30:01.209	Raid Tank Dummy Melee Booi Parry
+	
+00:30:03.196	Raid Tank Dummy Melee Booi Parry
+	
+00:30:05.150	Raid Tank Dummy Melee Booi 26419 (A: 10087) (B: 19657)
+	
+00:30:05.466	Raid Tank Dummy Dummy Strike Booi 31123
+	
+00:30:07.216	Raid Tank Dummy Melee Booi 38137 (A: 3879) (B: 22624)
+	
+00:30:09.265	Raid Tank Dummy Melee Booi 37519 (B: 20203)
+	
+00:30:11.135	Raid Tank Dummy Melee Booi Parry
+	
+00:30:12.708	Raid Tank Dummy Dummy Strike Booi 13699 (A: 9514)
+	
+00:30:13.213	Raid Tank Dummy Melee Booi 31545 (B: 16986)
+	
+00:30:15.192	Raid Tank Dummy Melee Booi 37906 (A: 3879) (B: 22500)
+	
+00:30:17.216	Raid Tank Dummy Melee Booi 36534 (A: 3879) (B: 21761)
+	
+00:30:19.238	Raid Tank Dummy Melee Booi 15161 (A: 3328) (B: 27734)
+	
+00:30:20.020	Raid Tank Dummy Dummy Strike Booi (A: 26485)
+	
+00:30:21.167	Raid Tank Dummy Melee Booi 2284 (A: 17069) (B: 29030)
+	
+00:30:23.251	Raid Tank Dummy Melee Booi 46472 (B: 19917)
+	
+00:30:25.287	Raid Tank Dummy Melee Booi 34240 (A: 7770) (B: 22621)
+	
+00:30:26.956	Raid Tank Dummy Dummy Strike Booi 33625
+	
+00:30:27.254	Raid Tank Dummy Melee Booi Parry
+	
+00:30:29.275	Raid Tank Dummy Melee Booi (A: 34490) (B: 18572)
+	
+00:30:31.285	Raid Tank Dummy Melee Booi 33455 (A: 11066) (B: 19081)
+	
+00:30:33.321	Raid Tank Dummy Melee Booi 42409 (A: 3340) (B: 19607)
+	
+00:30:33.471	Raid Tank Dummy Dummy Strike Booi 28527
+	
+00:30:35.278	Raid Tank Dummy Melee Booi Parry
+	
+00:30:37.352	Raid Tank Dummy Melee Booi 38572 (A: 4342) (B: 23108)
+	
+00:30:39.378	Raid Tank Dummy Melee Booi 33625 (A: 7548) (B: 22170)
+	
+00:30:40.688	Raid Tank Dummy Dummy Strike Booi 26659 (A: 3340)
+	
+00:30:41.933	Raid Tank Dummy Melee Booi 35490 (B: 19110)
+	
+00:30:43.414	Raid Tank Dummy Melee Booi 13873 (A: 5331) (B: 44811)
+	
+00:30:45.267	Raid Tank Dummy Melee Booi Dodge
+	
+00:30:47.333	Raid Tank Dummy Melee Booi 12420 (A: 5344) (B: 41451)
+	
+00:30:49.134	Raid Tank Dummy Dummy Strike Booi 27665 (A: 3340)
+	
+00:30:49.337	Raid Tank Dummy Melee Booi 50859
+	
+00:30:51.343	Raid Tank Dummy Melee Booi 32165 (A: 6517) (B: 20829)
+	
+00:30:53.459	Raid Tank Dummy Melee Booi 35637 (A: 3340) (B: 20988)
+	
+00:30:55.389	Raid Tank Dummy Melee Booi 27905 (A: 4570) (B: 17487)
+	
+00:30:56.457	Raid Tank Dummy Dummy Strike Booi 29672
+	
+00:30:57.262	Raid Tank Dummy Melee Booi 49614 (A: 3340)
+	
+00:30:59.291	Raid Tank Dummy Melee Booi 12592 (A: 45123)
+	
+00:31:01.332	Raid Tank Dummy Melee Booi 51686 (A: 3926)
+	
+00:31:03.330	Raid Tank Dummy Melee Booi Parry
+	
+00:31:03.787	Raid Tank Dummy Dummy Strike Booi 22614 (A: 3879)
+	
+00:31:05.383	Raid Tank Dummy Melee Booi 18775 (A: 1807) (B: 48026)
+	
+00:31:07.340	Raid Tank Dummy Melee Booi (A: 33738) (B: 18167)
+	
+00:31:09.311	Raid Tank Dummy Melee Booi 18928 (A: 17482) (B: 19606)
+	
+00:31:11.048	Raid Tank Dummy Dummy Strike Booi 19495 (A: 10100)
+	
+00:31:11.335	Raid Tank Dummy Melee Booi 55684
+	
+00:31:13.354	Raid Tank Dummy Melee Booi 28030 (A: 5481) (B: 14362)
+	
+00:31:15.397	Raid Tank Dummy Melee Booi Parry
+	
+00:31:17.061	Raid Tank Dummy Dummy Strike Booi 19462 (A: 11506)
+	
+00:31:17.441	Raid Tank Dummy Melee Booi 36714 (B: 19769)
+	
+00:31:19.361	Raid Tank Dummy Melee Booi 33065 (A: 3340) (B: 19603)
+	
+00:31:21.420	Raid Tank Dummy Melee Booi 31380 (B: 16897)
+	
+00:31:23.492	Raid Tank Dummy Melee Booi 4783 (A: 42252)
+	
+00:31:24.333	Raid Tank Dummy Dummy Strike Booi 25085
+	
+00:31:25.422	Raid Tank Dummy Melee Booi 35011 (B: 15005)
+	
+00:31:27.427	Raid Tank Dummy Melee Booi 40064 (A: 22729)
+	
+00:31:29.434	Raid Tank Dummy Melee Booi 54103 (A: 3604)
+	
+00:31:30.429	Raid Tank Dummy Dummy Strike Booi 32323
+	
+00:31:31.396	Raid Tank Dummy Melee Booi Parry
+	
+00:31:33.383	Raid Tank Dummy Melee Booi 41503 (A: 8389)
+	
+00:31:35.438	Raid Tank Dummy Melee Booi 18584 (A: 40228)
+	
+00:31:36.499	Raid Tank Dummy Dummy Strike Booi 25433 (A: 6933)
+	
+00:31:37.407	Raid Tank Dummy Melee Booi 60653 (A: 5490)
+	
+00:31:39.449	Raid Tank Dummy Melee Booi 38403 (A: 1996) (B: 21754)
+	
+00:31:41.398	Raid Tank Dummy Melee Booi Parry
+	
+00:31:43.413	Raid Tank Dummy Melee Booi 9563 (A: 9049) (B: 43429)
+	
+00:31:43.856	Raid Tank Dummy Dummy Strike Booi 26734
+	
+00:31:45.537	Raid Tank Dummy Melee Booi 34668 (A: 4103) (B: 20877)
+	
+00:31:47.439	Raid Tank Dummy Melee Booi Parry
+	
+00:31:49.467	Raid Tank Dummy Melee Booi 25215 (A: 5496) (B: 16537)
+	
+00:31:51.042	Raid Tank Dummy Dummy Strike Booi 27924 (A: 3400)
+	
+00:31:51.469	Raid Tank Dummy Melee Booi 43447 (B: 23395)
+	
+00:31:53.581	Raid Tank Dummy Melee Booi 39147 (A: 3340) (B: 22878)
+	
+00:31:55.484	Raid Tank Dummy Melee Booi 10136 (A: 26178) (B: 19554)
+	
+00:31:57.452	Raid Tank Dummy Melee Booi 14503 (A: 1556) (B: 37472)
+	
+00:31:58.432	Raid Tank Dummy Dummy Strike Booi 26217
+	
+00:31:59.463	Raid Tank Dummy Melee Booi Parry
+	
+00:32:01.471	Raid Tank Dummy Melee Booi 34262 (A: 9567) (B: 23600)
+	
+00:32:03.471	Raid Tank Dummy Melee Booi Parry
+	
+00:32:04.459	Raid Tank Dummy Dummy Strike Booi 28062
+	
+00:32:05.467	Raid Tank Dummy Melee Booi 43234 (A: 3879)
+	
+00:32:07.469	Raid Tank Dummy Melee Booi Dodge
+	
+00:32:09.483	Raid Tank Dummy Melee Booi 2410 (A: 55823)
+	
+00:32:10.520	Raid Tank Dummy Dummy Strike Booi 28259
+	
+00:32:11.470	Raid Tank Dummy Melee Booi 42232 (B: 18100)
+	
+00:32:13.468	Raid Tank Dummy Melee Booi 63736 (A: 3879)
+	
+00:32:15.529	Raid Tank Dummy Melee Booi (A: 36219) (B: 15523)
+	
+00:32:16.620	Raid Tank Dummy Dummy Strike Booi 6616 (A: 20810)
+	
+00:32:17.465	Raid Tank Dummy Melee Booi Parry
+	
+00:32:19.485	Raid Tank Dummy Melee Booi Parry
+	
+00:32:21.533	Raid Tank Dummy Melee Booi 12162 (A: 4342) (B: 38511)
+	
+00:32:23.561	Raid Tank Dummy Melee Booi 12955 (A: 3340) (B: 38023)
+	
+00:32:23.935	Raid Tank Dummy Dummy Strike Booi 32138
+	
+00:32:25.479	Raid Tank Dummy Melee Booi 28540 (A: 5331) (B: 18238)
+	
+00:32:27.473	Raid Tank Dummy Melee Booi 56011
+	
+00:32:29.468	Raid Tank Dummy Melee Booi Parry
+	
+00:32:30.020	Raid Tank Dummy Dummy Strike Booi 21289 (A: 3340)
+	
+00:32:31.570	Raid Tank Dummy Melee Booi Parry
+	
+00:32:33.789	Raid Tank Dummy Melee Booi 30597 (A: 8215) (B: 20899)
+	
+00:32:35.602	Raid Tank Dummy Melee Booi Parry
+	
+00:32:36.096	Raid Tank Dummy Dummy Strike Booi 23810 (A: 4342)
+	
+00:32:37.555	Raid Tank Dummy Melee Booi 34262 (A: 4560) (B: 20904)
+	
+00:32:39.583	Raid Tank Dummy Melee Booi 20399 (B: 47600)
+	
+00:32:41.614	Raid Tank Dummy Melee Booi 30354 (A: 9270) (B: 21336)
+	
+00:32:42.149	Raid Tank Dummy Dummy Strike Booi 29413 (A: 3895)
+	
+00:32:43.639	Raid Tank Dummy Melee Booi 37640 (A: 708) (B: 16435)
+	
+00:32:45.629	Raid Tank Dummy Melee Booi 56285 (A: 4569)
+	
+00:32:47.605	Raid Tank Dummy Melee Booi (A: 30440) (B: 16391)
+	
+00:32:48.215	Raid Tank Dummy Dummy Strike Booi 18137 (A: 14731)
+	
+00:32:49.568	Raid Tank Dummy Melee Booi 42811 (A: 399) (B: 23267)
+	
+00:32:51.591	Raid Tank Dummy Melee Booi 2300 (A: 39569) (B: 22545)
+	
+00:32:53.669	Raid Tank Dummy Melee Booi 42146 (A: 3340) (B: 19494)
+	
+00:32:54.344	Raid Tank Dummy Dummy Strike Booi 24416
+	
+00:32:55.606	Raid Tank Dummy Melee Booi 68519
+	
+00:32:57.616	Raid Tank Dummy Melee Booi 53043 (A: 9697)
+	
+00:32:59.531	Raid Tank Dummy Melee Booi 61098 (A: 3879)
+	
+00:33:00.270	Raid Tank Dummy Dummy Strike Booi 33712
+	
+00:33:01.613	Raid Tank Dummy Melee Booi 40862 (B: 22003)
+	
+00:33:03.710	Raid Tank Dummy Melee Booi Parry
+	
+00:33:05.563	Raid Tank Dummy Melee Booi (A: 34771) (B: 18723)
+	
+00:33:06.325	Raid Tank Dummy Dummy Strike Booi 27391 (A: 6223)
+	
+00:33:07.652	Raid Tank Dummy Melee Booi 57899 (A: 5953)
+	
+00:33:09.646	Raid Tank Dummy Melee Booi 43002 (B: 18430)
+	
+00:33:11.657	Raid Tank Dummy Melee Booi 25591 (A: 32478)
+	
+00:33:12.485	Raid Tank Dummy Dummy Strike Booi 24163 (A: 4089)
+	
+00:33:13.659	Raid Tank Dummy Melee Booi 55719 (A: 3696)
+	
+00:33:15.674	Raid Tank Dummy Melee Booi Parry
+	
+00:33:17.678	Raid Tank Dummy Melee Booi Parry
+	
+00:33:19.690	Raid Tank Dummy Melee Booi 24877 (A: 26725)
+	
+00:33:19.690	Raid Tank Dummy Dummy Strike Booi 27743
+	
+00:33:21.689	Raid Tank Dummy Melee Booi (A: 20968) (B: 31453)
+	
+00:33:23.685	Raid Tank Dummy Melee Booi 26433 (A: 17013) (B: 23394)
+	
+00:33:25.651	Raid Tank Dummy Melee Booi 16397 (A: 3173) (B: 45665)
+	
+00:33:25.834	Raid Tank Dummy Dummy Strike Booi 33846
+	
+00:33:27.704	Raid Tank Dummy Melee Booi 35204 (A: 7684) (B: 23094)
+	
+00:33:29.612	Raid Tank Dummy Melee Booi 32147 (A: 3340) (B: 19109)
+	
+00:33:31.740	Raid Tank Dummy Melee Booi 36434 (A: 5168) (B: 22401)
+	
+00:33:32.049	Raid Tank Dummy Dummy Strike Booi 29816
+	
+00:33:33.714	Raid Tank Dummy Melee Booi Parry
+	
+00:33:35.697	Raid Tank Dummy Melee Booi 34469 (A: 4766) (B: 21127)
+	
+00:33:37.686	Raid Tank Dummy Melee Booi 38369 (A: 3340) (B: 22459)
+	
+00:33:37.991	Raid Tank Dummy Dummy Strike Booi 24243
+	
+00:33:39.642	Raid Tank Dummy Melee Booi 27915 (A: 7010) (B: 18806)
+	
+00:33:41.854	Raid Tank Dummy Melee Booi (A: 20054) (B: 46794)
