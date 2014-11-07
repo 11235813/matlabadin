@@ -20,7 +20,6 @@ for fight_length=[300 400 500 600 700];
         tmi_normalization_test_random
         rdc.maxma=[rdc.maxma; rd.maxma];
         rdc.tmie=[rdc.tmie;rd.tmie];
-        rdc.tmi10=[rdc.tmi10;rd.tmi10];
         rdc.meanma=[rdc.meanma;rd.meanma];
     end
     tmi_normalization_test_single_spike

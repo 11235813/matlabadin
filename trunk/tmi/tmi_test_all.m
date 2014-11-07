@@ -5,15 +5,15 @@ M=[500 1000];
 q=0;
 for kk=1:2
     
-    D=10;
+    F=10;
     q=q+1;
     % D=10;
     % b=10e3;
     m=M(kk);
-    c1=10*m/D
-    c2=exp(D)
-    % c2=fight_length/100*exp(D)
-    c210=10.^D;
+    c1=10*m/F
+    c2=exp(F)
+    % c2=fight_length/100*exp(F)
+%     c210=10.^F;
     
     
     tmi_normalization_test_random
@@ -22,15 +22,15 @@ for kk=1:2
         tmi_normalization_test_random
         rdc.maxma=[rdc.maxma; rd.maxma];
         rdc.tmie=[rdc.tmie;rd.tmie];
-        rdc.tmi10=[rdc.tmi10;rd.tmi10];
+%         rdc.tmi10=[rdc.tmi10;rd.tmi10];
         rdc.meanma=[rdc.meanma;rd.meanma];
     end
     tmi_normalization_test_single_spike
     tmi_normalization_test_uniform
     
     
-    figure(5)
-    subplot(2,1,q)
+    figure(4+q)
+%     subplot(2,1,q)
     plot(ss.maxma,ss.tmie,rdc.maxma,rdc.tmie,'.',uf.maxma,uf.tmie,'MarkerSize',4)
     xlabel('max(MA)')
     ylabel('New TMI')

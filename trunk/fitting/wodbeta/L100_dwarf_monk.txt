@@ -1,0 +1,118 @@
+8/1 18:59:54.130  Changed Channel: |Hchannel:2856624|h[(null)]|h
+8/1 18:59:54.130  Changed Channel: |Hchannel:2856624|h[(null)]|h
+8/1 18:59:54.130  Changed Channel: |Hchannel:2856624|h[(null)]|h
+8/1 19:00:09.135  %s has earned the achievement Level 100!
+8/1 19:00:09.135  %s has earned the achievement Hero of Stormshield!
+8/1 19:00:09.135  %s has earned the achievement Somebody Likes Me!
+8/1 19:00:29.123  Thomas Miller says: Freshly baked bread for sale!
+8/1 19:00:37.274  %s has earned the achievement Level 100!
+8/1 19:00:37.274  %s has earned the achievement Hero of Stormshield!
+8/1 19:00:37.274  %s has earned the achievement Somebody Likes Me!
+8/1 19:00:37.274  %s has earned the achievement Dynamic Duo!
+8/1 19:00:43.035  [2. Trade] Sakadz-Level100PvP: SEEK ONE FAT DPS AND GO HM DUNGEON
+8/1 19:00:45.082  [2. Trade] Sakadz-Level100PvP: SEEK ONE FAT DPS AND GO HM DUNGEON
+8/1 19:00:46.447  %s has earned the achievement Level 100!
+8/1 19:00:47.307  Donna says: Now who's the crybaby, crybaby!?
+8/1 19:00:47.307  William says: No fair!  Gimme back my gorilla!!
+8/1 19:01:08.365  [2. Trade] Geïsh-Level100PvP: Seek un tank et un dps pour Shadowmoon heroic (french) 
+8/1 19:01:08.365  Donna says: Now who's the crybaby, crybaby!?
+8/1 19:01:08.835  William says: No fair!  Gimme back my gorilla!!
+8/1 19:01:44.953  Thomas Miller says: Warm, wholesome bread!
+8/1 19:01:55.250  [2. Trade] Elel-Level100PvP: fury war lf 2s
+8/1 19:01:59.864  %s has earned the achievement Collector's Edition: Mini Thor!
+8/1 19:02:16.597  %s has earned the achievement Level 100!
+8/1 19:02:16.597  %s has earned the achievement 50 Quests Completed!
+8/1 19:02:16.597  %s has earned the achievement Hero of Stormshield!
+8/1 19:02:16.597  %s has earned the achievement Somebody Likes Me!
+8/1 19:02:46.776  %s has earned the achievement Level 100!
+8/1 19:02:46.776  %s has earned the achievement Hero of Stormshield!
+8/1 19:02:46.776  %s has earned the achievement Somebody Likes Me!
+8/1 19:02:47.007  %s has earned the achievement Dynamic Duo!
+8/1 19:02:56.509  [2. Trade] Sakadz-Level100PvP: One DPS and go HM DUNGEON
+8/1 19:02:57.351  [2. Trade] Sakadz-Level100PvP: One DPS and go HM DUNGEON
+8/1 19:03:45.149  %s has earned the achievement Level 100!
+8/1 19:03:45.149  %s has earned the achievement Hero of Stormshield!
+8/1 19:03:45.149  %s has earned the achievement Somebody Likes Me!
+8/1 19:03:45.492  %s has earned the achievement Swift Razzashi Raptor!
+8/1 19:03:45.492  %s has earned the achievement Swift Zulian Tiger!
+8/1 19:03:45.492  %s has earned the achievement Call in the Cavalry!
+8/1 19:03:45.492  %s has earned the achievement Friends In High Places!
+8/1 19:03:45.492  %s has earned the achievement Amani War Bear!
+8/1 19:03:45.492  %s has earned the achievement Big Blizzard Bear!
+8/1 19:03:45.492  %s has earned the achievement And I'll Form the Head!!
+8/1 19:03:45.492  %s has earned the achievement Fiery Warhorse's Reins!
+8/1 19:03:45.492  %s has earned the achievement Old School Ride!
+8/1 19:03:45.492  %s has earned the achievement Invincible's Reins!
+8/1 19:03:45.492  %s has earned the achievement Friends In Even Higher Places!
+8/1 19:03:45.492  %s has earned the achievement Friends In Places Higher Yet!
+8/1 19:03:45.492  %s has earned the achievement I've Got 9999 Problems but a Bone-White Primal Raptor Ain't One!
+8/1 19:03:45.492  %s has earned the achievement Big Love Rocket!
+8/1 19:03:45.492  %s has earned the achievement Scourer of the Eternal Sands!
+8/1 19:03:45.492  %s has earned the achievement Mount Parade!
+8/1 19:03:45.502  %s has earned the achievement Dynamic Duo!
+8/1 19:03:50.862  You have learned a new ability: Breath of Fire.
+8/1 19:03:50.862  You have learned a new ability: Dizzying Haze.
+8/1 19:03:50.862  You have learned a new spell: Elusive Brew.
+8/1 19:03:50.862  You have learned a new spell: Guard.
+8/1 19:03:50.862  You have learned a new spell: Summon Black Ox Statue.
+8/1 19:03:50.869  You have learned a new passive effect: Mastery: Elusive Brawler.
+8/1 19:03:50.869  You have learned a new ability: Stance of the Sturdy Ox.
+8/1 19:03:50.869  You have learned a new spell: Purifying Brew.
+8/1 19:03:50.869  You have learned a new passive effect: Leather Specialization.
+8/1 19:03:50.869  You have learned a new spell: Keg Smash.
+8/1 19:03:50.869  You have learned a new passive effect: Dual Wield.
+8/1 19:03:50.869  You have learned a new passive effect: Gift of the Ox.
+8/1 19:03:50.869  You have learned a new passive effect: Readiness: Brewmaster.
+8/1 19:03:50.869  You have learned a new spell: Legacy of the White Tiger.
+8/1 19:03:50.869  You have learned a new passive effect: Critical Strikes.
+8/1 19:03:50.869  You have learned a new passive effect: Resolve.
+8/1 19:03:50.869  You have learned a new passive effect: Bladed Armor.
+8/1 19:03:50.869  You have learned a new passive effect: Ferment.
+8/1 19:03:50.869  You have learned a new spell: Zen Meditation.
+8/1 19:03:50.869  You have learned a new passive effect: Empowered Blackout Kick.
+8/1 19:03:50.869  You have learned a new passive effect: Enhanced Transcendence.
+8/1 19:03:50.869  You have learned a new passive effect: Enhanced Roll.
+8/1 19:03:50.869  You have learned a new passive effect: Improved Guard.
+8/1 19:03:50.885  You have learned a new passive effect: Empowered Keg Smash.
+8/1 19:03:50.885  You have learned a new passive effect: Improved Elusive Brew.
+8/1 19:03:50.885  You have learned a new passive effect: Improved Stance of the Sturdy Ox.
+8/1 19:03:50.885  You have learned a new passive effect: Improved Dizzying Haze.
+8/1 19:03:50.885  You have learned a new passive effect: Improved Breath of Fire.
+8/1 19:04:10.955  Changed Channel: |Hchannel:2856624|h[(null)]|h
+8/1 19:04:11.858  [5. SL1] Monkdr-Level100PvP: SL1 631 1280 2.9773213863373 3 0 0 0 0 0 5 0 MONK 100
+8/1 19:04:13.255  Donna says: I wonder if your Grindgear Gorilla can jump across the Park!
+8/1 19:04:13.255  William says: You're being mean!  I'm telling Mommy!
+8/1 19:04:21.494  [2. Trade] Whyyoumean-Level100PvP: H preist LF H dung pst
+8/1 19:04:26.687  [5. SL1] Monkdr-Level100PvP: SL1 631 1404 3.4712386131287 3 0 0 0 0 77 5.4375 0 MONK 100
+8/1 19:04:29.188  [2. Trade] Geïsh-Level100PvP: Seek un tank et un dps pour Shadowmoon heroic (french) 
+8/1 19:04:30.154  [5. SL1] Monkdr-Level100PvP: SL1 631 1528 3.9641835689545 3 0 0 0 0 154 5.875 0 MONK 100
+8/1 19:04:31.146  %s has earned the achievement Level 100!
+8/1 19:04:31.146  %s has earned the achievement Hero of Stormshield!
+8/1 19:04:31.148  %s has earned the achievement Somebody Likes Me!
+8/1 19:04:36.532  Thomas Miller says: Freshly baked bread for sale!
+8/1 19:04:37.760  [5. SL1] Monkdr-Level100PvP: SL1 631 1528 3.9641835689545 3 0 0 0 0 154 5.875 0 MONK 100
+8/1 19:04:40.880  [5. SL1] Monkdr-Level100PvP: SL1 631 1528 3.9641835689545 3 0 0 0 0 154 5.875 0 MONK 100
+8/1 19:04:46.813  [5. SL1] Monkdr-Level100PvP: SL1 631 1652 4.4561586380005 3 0 0 0 0 231 6.3125 0 MONK 100
+8/1 19:04:52.192  [5. SL1] Monkdr-Level100PvP: SL1 631 1776 4.9471673965454 3 0 0 0 0 231 6.3125 0 MONK 100
+8/1 19:04:56.995  [5. SL1] Monkdr-Level100PvP: SL1 631 1900 5.4372124671936 3 0 0 0 0 231 6.3125 0 MONK 100
+8/1 19:04:57.273  %s has earned the achievement Level 100!
+8/1 19:05:01.394  [5. SL1] Monkdr-Level100PvP: SL1 631 2066 6.0917363166809 3 0 0 0 0 231 6.3125 0 MONK 100
+8/1 19:05:07.094  [5. SL1] Monkdr-Level100PvP: SL1 631 2232 6.7445440292358 3 0 0 0 0 341 6.9375 0 MONK 100
+8/1 19:05:11.311  [5. SL1] Monkdr-Level100PvP: SL1 631 2398 7.3956446647644 3 0 0 0 0 341 6.9375 0 MONK 100
+8/1 19:05:11.714  [2. Trade] Geïsh-Level100PvP: Seek un tank et un dps pour Shadowmoon heroic (french) 
+8/1 19:05:24.166  [5. SL1] Monkdr-Level100PvP: SL1 631 2608 8.2168865203857 3 0 0 0 0 341 6.9375 0 MONK 100
+8/1 19:05:27.673  [2. Trade] Kalinox-Level100PvP: French group looking for 1 tank and 1 dd; purpose = testing hc dungeons 
+8/1 19:05:28.362  [5. SL1] Monkdr-Level100PvP: SL1 631 2608 8.2168865203857 3 0 0 0 0 341 6.9375 0 MONK 100
+8/1 19:05:30.908  [5. SL1] Monkdr-Level100PvP: SL1 631 2829 9.0782194137573 3 0 0 0 0 341 6.9375 0 MONK 100
+8/1 19:05:31.618  %s has earned the achievement Level 100!
+8/1 19:05:31.618  %s has earned the achievement Hero of Stormshield!
+8/1 19:05:31.618  %s has earned the achievement Somebody Likes Me!
+8/1 19:05:33.962  [5. SL1] Monkdr-Level100PvP: SL1 631 2829 9.0782194137573 3 0 0 0 0 488 7.7727270126343 0 MONK 100
+8/1 19:05:36.519  [5. SL1] Monkdr-Level100PvP: SL1 631 3050 9.9365663528442 3 0 0 0 0 635 8.6079549789429 0 MONK 100
+8/1 19:05:38.596  [2. Trade] Geïsh-Level100PvP: Seek un tank et un dps pour Shadowmoon heroic (french) 
+8/1 19:05:41.133  [5. SL1] Monkdr-Level100PvP: SL1 631 3216 10.579342842102 3 0 0 0 0 737 9.1875 0 MONK 100
+8/1 19:05:42.740  %s has earned the achievement Level 100!
+8/1 19:05:42.740  %s has earned the achievement Hero of Stormshield!
+8/1 19:05:42.740  %s has earned the achievement Somebody Likes Me!
+8/1 19:05:43.251  [5. SL1] Monkdr-Level100PvP: SL1 631 3437 11.432497024536 3 0 0 0 0 884 10.022727012634 0 MONK 100
+8/1 19:05:48.144  [2. Trade] Killu: boomy LF H dung

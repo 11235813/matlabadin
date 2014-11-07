@@ -1,0 +1,59 @@
+8/1 19:21:25.977  Changed Channel: |Hchannel:1217632|h[(null)]|h
+8/1 19:21:25.977  Changed Channel: |Hchannel:1217632|h[(null)]|h
+8/1 19:21:25.977  Changed Channel: |Hchannel:1217632|h[(null)]|h
+8/1 19:21:37.193  Thomas Miller says: Rolls, buns and bread. Baked fresh!
+8/1 19:21:51.173  %s has earned the achievement Level 100!
+8/1 19:21:51.173  %s has earned the achievement Hero of Stormshield!
+8/1 19:21:51.175  %s has earned the achievement Somebody Likes Me!
+8/1 19:22:00.957  [2. Trade] Geïsh: Last dps for Shadowmoon heroic (french)
+8/1 19:22:24.250  Donna says: Ha ha! I have your Grindgear Gorilla!
+8/1 19:22:24.250  William says: Gimmie back Jum-jump!
+8/1 19:22:27.893  William says: WAAAHHH!!!
+8/1 19:22:40.168  You have learned a new spell: Savage Defense.
+8/1 19:22:40.168  You have learned a new passive effect: Nurturing Instinct.
+8/1 19:22:40.168  You have learned a new ability: Berserk.
+8/1 19:22:40.168  You have learned a new passive effect: Leather Specialization.
+8/1 19:22:40.168  You have learned a new ability: Skull Bash.
+8/1 19:22:40.168  You have learned a new spell: Remove Corruption.
+8/1 19:22:40.175  You have learned a new passive effect: Mastery: Primal Tenacity.
+8/1 19:22:40.175  You have learned a new passive effect: Tooth and Claw.
+8/1 19:22:40.175  You have learned a new passive effect: Readiness: Guardian.
+8/1 19:22:40.175  You have learned a new passive effect: Critical Strikes.
+8/1 19:22:40.175  You have learned a new passive effect: Resolve.
+8/1 19:22:40.175  You have learned a new passive effect: Ursa Major.
+8/1 19:22:40.175  You have learned a new passive effect: Bladed Armor.
+8/1 19:22:40.175  You have learned a new passive effect: Survival of the Fittest.
+8/1 19:22:40.175  You have learned a new spell: Barkskin.
+8/1 19:22:40.175  You have learned a new spell: Faerie Fire.
+8/1 19:22:40.175  You have learned a new ability: Maul.
+8/1 19:22:40.175  You have learned a new ability: Lacerate.
+8/1 19:22:40.175  You have learned a new ability: Might of Ursoc.
+8/1 19:22:40.175  You have learned a new ability: Survival Instincts.
+8/1 19:22:40.175  You have learned a new passive effect: Empowered Thrash.
+8/1 19:22:40.191  You have learned a new passive effect: Improved Mangle.
+8/1 19:22:40.191  You have learned a new passive effect: Improved Frenzied Regeneration.
+8/1 19:22:40.191  You have learned a new passive effect: Enhanced Tooth and Claw.
+8/1 19:22:40.191  You have learned a new passive effect: Enhanced Faerie Fire.
+8/1 19:22:40.191  You have learned a new passive effect: Improved Maul.
+8/1 19:22:40.191  You have learned a new passive effect: Empowered Berserk.
+8/1 19:22:40.191  You have learned a new passive effect: Empowered Bear Form.
+8/1 19:22:40.191  You have learned a new passive effect: Improved Barkskin.
+8/1 19:22:45.513  Changed Channel: |Hchannel:1217632|h[(null)]|h
+8/1 19:22:49.613  Donna says: Now who's the crybaby, crybaby!?
+8/1 19:22:49.614  William says: No fair!  Gimme back my gorilla!!
+8/1 19:22:52.149  [5. SL1] Nedruiddr-Level100PvP: SL1 622 1288 5.0226788520813 0 0 0 0 0 0 16 0 DRUID 100
+8/1 19:22:56.903  [5. SL1] Nedruiddr-Level100PvP: SL1 622 1288 5.0226788520813 0 0 0 0 0 81 17.472726821899 0 DRUID 100
+8/1 19:23:02.367  [5. SL1] Nedruiddr-Level100PvP: SL1 622 1412 5.5958080291748 0 0 0 0 0 162 18.945453643799 0 DRUID 100
+8/1 19:23:05.349  [5. SL1] Nedruiddr-Level100PvP: SL1 622 1536 6.1645851135254 0 0 0 0 0 243 20.418182373047 0 DRUID 100
+8/1 19:23:13.900  [5. SL1] Nedruiddr-Level100PvP: SL1 622 1660 6.7290587425232 0 0 0 0 0 243 20.418182373047 0 DRUID 100
+8/1 19:23:16.849  [5. SL1] Nedruiddr-Level100PvP: SL1 622 1784 7.2892785072327 0 0 0 0 0 243 20.418182373047 0 DRUID 100
+8/1 19:23:19.929  [5. SL1] Nedruiddr-Level100PvP: SL1 622 1950 8.0326747894287 0 0 0 0 0 358 22.509090423584 0 DRUID 100
+8/1 19:23:22.298  [5. SL1] Nedruiddr-Level100PvP: SL1 622 2116 8.7686452865601 0 0 0 0 0 465 24.454544067383 0 DRUID 100
+8/1 19:23:24.507  [5. SL1] Nedruiddr-Level100PvP: SL1 622 2282 9.4973011016846 0 0 0 0 0 465 24.454544067383 0 DRUID 100
+8/1 19:23:27.052  [5. SL1] Nedruiddr-Level100PvP: SL1 622 2448 10.218750953674 0 0 0 0 0 465 24.454544067383 0 DRUID 100
+8/1 19:23:29.566  [5. SL1] Nedruiddr-Level100PvP: SL1 622 2669 11.168235778809 0 0 0 0 0 620 27.272727966309 0 DRUID 100
+8/1 19:23:31.891  [5. SL1] Nedruiddr-Level100PvP: SL1 622 2669 11.168235778809 0 0 0 0 0 774 30.072727203369 0 DRUID 100
+8/1 19:23:33.821  [5. SL1] Nedruiddr-Level100PvP: SL1 622 2890 12.105381011963 0 0 0 0 0 928 32.87272644043 0 DRUID 100
+8/1 19:23:35.813  [5. SL1] Nedruiddr-Level100PvP: SL1 622 3111 13.030427932739 0 0 0 0 0 928 32.87272644043 0 DRUID 100
+8/1 19:23:40.844  [5. SL1] Nedruiddr-Level100PvP: SL1 622 3111 13.030427932739 0 0 0 0 0 928 32.87272644043 0 DRUID 100
+8/1 19:23:43.862  [5. SL1] Nedruiddr-Level100PvP: SL1 622 3321 13.898431777954 0 0 0 0 0 928 32.87272644043 0 DRUID 100

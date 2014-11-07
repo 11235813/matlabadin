@@ -1,0 +1,88 @@
+7/31 15:23:31.113  Changed Channel: |Hchannel:3053440|h[(null)]|h
+7/31 15:23:31.113  Changed Channel: |Hchannel:3053440|h[(null)]|h
+7/31 15:23:31.113  Changed Channel: |Hchannel:3053440|h[(null)]|h
+7/31 15:23:49.885  %s has earned the achievement Level 100!
+7/31 15:23:49.885  %s has earned the achievement Hero of Stormshield!
+7/31 15:23:49.885  %s has earned the achievement Somebody Likes Me!
+7/31 15:24:04.601  [1. General] Caliyarah: LF mage port to Theramore.
+7/31 15:24:15.407  [1. General] Prune: LF 2s partner\
+7/31 15:24:16.059  %s has earned the achievement Level 100!
+7/31 15:24:16.438  %s has earned the achievement I Choose You!
+7/31 15:24:38.784  Gil says: I wanna see the Mage Tower.
+7/31 15:24:39.342  %s has earned the achievement Level 100!
+7/31 15:24:39.342  %s has earned the achievement Hero of Stormshield!
+7/31 15:24:39.342  %s has earned the achievement Somebody Likes Me!
+7/31 15:24:39.604  Thomas Miller says: Freshly baked bread for sale!
+7/31 15:24:39.604  %s has earned the achievement Quintessential Quintet!
+7/31 15:24:39.604  %s has earned the achievement Jack of All Trades!
+7/31 15:24:47.411  %s has earned the achievement Level 100!
+7/31 15:24:47.411  %s has earned the achievement Hero of Stormshield!
+7/31 15:24:47.411  %s has earned the achievement Somebody Likes Me!
+7/31 15:25:19.725  You have learned a new ability: Shield Slam.
+7/31 15:25:19.725  You have learned a new ability: Shield Block.
+7/31 15:25:19.725  You have learned a new ability: Devastate.
+7/31 15:25:19.725  You have learned a new ability: Revenge.
+7/31 15:25:19.725  You have learned a new ability: Last Stand.
+7/31 15:25:19.725  You have learned a new ability: Shield Barrier.
+7/31 15:25:19.725  You have learned a new passive effect: Mastery: Critical Block.
+7/31 15:25:19.725  You have learned a new ability: Demoralizing Shout.
+7/31 15:25:19.734  You have learned a new passive effect: Readiness: Protection.
+7/31 15:25:19.734  You have learned a new ability: Thunder Clap.
+7/31 15:25:19.734  You have learned a new passive effect: Resolve.
+7/31 15:25:19.734  You have learned a new ability: Shield Wall.
+7/31 15:25:19.734  You have learned a new passive effect: Blood Craze.
+7/31 15:25:19.734  You have learned a new passive effect: Bladed Armor.
+7/31 15:25:19.734  You have learned a new passive effect: Riposte.
+7/31 15:25:19.734  You have learned a new passive effect: Shield Mastery.
+7/31 15:25:19.734  You have learned a new passive effect: Enrage.
+7/31 15:25:19.734  You have learned a new ability: Execute.
+7/31 15:25:19.734  You have learned a new passive effect: Deep Wounds.
+7/31 15:25:19.734  You have learned a new passive effect: Improved Thunder Clap.
+7/31 15:25:19.734  You have learned a new passive effect: Improved Heroic Leap.
+7/31 15:25:19.734  You have learned a new passive effect: Improved Shield Slam.
+7/31 15:25:19.734  You have learned a new passive effect: Improved Charge.
+7/31 15:25:19.734  You have learned a new passive effect: Improved Heroic Throw.
+7/31 15:25:19.734  You have learned a new passive effect: Improved Shield Barrier.
+7/31 15:25:19.751  You have learned a new passive effect: Improved Block.
+7/31 15:25:19.751  You have learned a new passive effect: Improved Revenge.
+7/31 15:25:19.751  You have learned a new passive effect: Improved Defensive Stance.
+7/31 15:25:30.474  %s has earned the achievement Level 100!
+7/31 15:25:30.474  %s has earned the achievement Hero of Stormshield!
+7/31 15:25:30.474  %s has earned the achievement Somebody Likes Me!
+7/31 15:25:30.722  %s has earned the achievement Dynamic Duo!
+7/31 15:25:30.722  %s has earned the achievement I Choose You!
+7/31 15:25:31.063  [1. General] Raaela-Level100PvP: anyone know the stat priority for holy priests?
+7/31 15:25:31.063  Donna says: Ha ha! I have your Grindgear Gorilla!
+7/31 15:25:31.063  William says: No fair!  Gimme back my gorilla!!
+7/31 15:25:52.246  Donna says: Whoops!
+7/31 15:25:52.246  William says: No fair!  Gimme back my gorilla!!
+7/31 15:25:55.908  Changed Channel: |Hchannel:3053440|h[(null)]|h
+7/31 15:25:56.470  [1. General] Æruid-Level100PvP: int
+7/31 15:25:57.596  [5. Sl1] Parrytwo-Level100PvP: SL1 1521 951 4.9999995231628 3.3909547328949 0 0 0 0 0 17.60000038147 27.070831298828 WARRIOR 100
+7/31 15:25:58.933  [1. General] Dated-Level100PvP: not being disc?
+7/31 15:26:00.278  [5. Sl1] Parrytwo-Level100PvP: SL1 1742 951 4.9999995231628 4.6902112960815 0 0 0 0 154 20.680000305176 27.763738632202 WARRIOR 100
+7/31 15:26:03.597  [5. Sl1] Parrytwo-Level100PvP: SL1 1866 951 4.9999995231628 5.8991169929504 0 0 77 0.4753086566925 248 22.559999465942 28.176340103149 WARRIOR 100
+7/31 15:26:06.035  [5. Sl1] Parrytwo-Level100PvP: SL1 2032 951 4.9999995231628 6.8558125495911 0 0 77 0.4753086566925 248 22.559999465942 28.176340103149 WARRIOR 100
+7/31 15:26:08.705  [5. Sl1] Parrytwo-Level100PvP: SL1 2253 951 4.9999995231628 9.0225858688354 0 0 224 1.3827160596848 248 22.559999465942 28.176340103149 WARRIOR 100
+7/31 15:26:09.334  [1. General] Raaela-Level100PvP: eh, wanna try holy
+7/31 15:26:11.465  [5. Sl1] Parrytwo-Level100PvP: SL1 2419 951 4.9999995231628 10.669697761536 0 0 342 2.111111164093 248 22.559999465942 28.176340103149 WARRIOR 100
+7/31 15:26:14.527  [5. Sl1] Parrytwo-Level100PvP: SL1 2543 951 4.9999995231628 11.88995552063 0 0 431 2.660493850708 248 22.559999465942 28.176340103149 WARRIOR 100
+7/31 15:26:16.223  [1. General] Áeta-Level100PvP: Multistrike is your attuned secondary for holy
+7/31 15:26:17.152  [5. Sl1] Parrytwo-Level100PvP: SL1 2709 951 4.9999995231628 13.449403762817 0 0 541 3.339506149292 248 22.559999465942 28.176340103149 WARRIOR 100
+7/31 15:26:18.005  [1. General] Raaela-Level100PvP: and i meant secondary stats you smartass
+7/31 15:26:19.636  [5. Sl1] Parrytwo-Level100PvP: SL1 2833 951 4.9999995231628 14.640360832214 0 0 630 3.888888835907 248 22.559999465942 28.176340103149 WARRIOR 100
+7/31 15:26:22.123  [5. Sl1] Parrytwo-Level100PvP: SL1 3054 951 4.9999995231628 16.665596008301 0 0 777 4.7962961196899 248 22.559999465942 28.176340103149 WARRIOR 100
+7/31 15:26:22.789  %s has earned the achievement Level 100!
+7/31 15:26:22.789  %s has earned the achievement Hero of Stormshield!
+7/31 15:26:22.789  %s has earned the achievement Somebody Likes Me!
+7/31 15:26:23.163  %s has earned the achievement Quintessential Quintet!
+7/31 15:26:24.612  [5. Sl1] Parrytwo-Level100PvP: SL1 3220 951 4.9999995231628 17.536548614502 0 0 777 4.7962961196899 372 25.040000915527 28.722854614258 WARRIOR 100
+7/31 15:26:27.337  [5. Sl1] Parrytwo-Level100PvP: SL1 3344 951 4.9999995231628 18.685064315796 0 0 866 5.3456788063049 453 26.659999847412 29.084917068481 WARRIOR 100
+7/31 15:26:27.861  [1. General] Marlenaomi-Level100PvP: I like holy more than disc, but idk what stats go for it :P
+7/31 15:26:29.863  [5. Sl1] Parrytwo-Level100PvP: SL1 3468 951 4.9999995231628 19.324600219727 0 0 866 5.3456788063049 453 26.659999847412 29.084917068481 WARRIOR 100
+7/31 15:26:32.669  [5. Sl1] Parrytwo-Level100PvP: SL1 3468 951 4.9999995231628 20.494171142578 0 0 1076 6.641975402832 453 26.659999847412 29.084917068481 WARRIOR 100
+7/31 15:26:34.881  [5. Sl1] Parrytwo-Level100PvP: SL1 3678 951 4.9999995231628 21.557548522949 0 0 1076 6.641975402832 453 26.659999847412 29.084917068481 WARRIOR 100
+7/31 15:26:37.152  [5. Sl1] Parrytwo-Level100PvP: SL1 3899 951 4.9999995231628 23.460998535156 0 0 1223 7.549382686615 607 29.739999771118 29.751470565796 WARRIOR 100
+7/31 15:26:43.859  [5. Sl1] Parrytwo-Level100PvP: SL1 3771 951 4.9999995231628 22.363370895386 0 0 1138 7.0246915817261 518 27.960000991821 29.362773895264 WARRIOR 100
+7/31 15:26:46.358  [5. Sl1] Parrytwo-Level100PvP: SL1 3895 951 4.9999995231628 23.430404663086 0 0 1221 7.537036895752 605 29.700000762939 29.74401473999 WARRIOR 100
+7/31 15:26:47.437  [1. General] Dated-Level100PvP: holy is way better than disc atm. so that stat prior for holy is to not be disc.

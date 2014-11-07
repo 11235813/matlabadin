@@ -15,58 +15,74 @@ function [fitresult, gof] = blockFit( set, base )
 %% unpack data set
 preMastery=set.preMastery;
 postBlock=set.postBlock;
-mast2block=base.mast2block;
+m2b=base.mast2block;
+baseBlock=base.block;
+bf = base.bf;
+hs = base.hs;
+vs = base.vs;
+
+bonusBlock = preMastery.*m2b;
 
 %% Fit: 'untitled fit 1'.
-xInput = preMastery.*mast2block;
-yInput = postBlock;
+xInput = round(128*bonusBlock)/128;
+zOutput = postBlock;
 
-ok_ = isfinite(xInput) & isfinite(yInput);
-if ~all( ok_ )
-    warning( 'GenerateMFile:IgnoringNansAndInfs',...
-        'Ignoring NaNs and Infs in data.' );
-end
-st_ = [150 0.956 ];
-ft_ = fittype('13+1/(1/C+k/round(128*x)*128)',...
-    'dependent',{'y'},'independent',{'x'},...
-    'coefficients',{'C', 'k'});
+%fit function 13+1/(1/C+k/round(128*x)*128)
+fitType = [ int2str(baseBlock) '+R+x/(x*' num2str(bf) '*vs+hs)'];
 
-% Fit this model using new data
-[fitresult gof] = fit(xInput(ok_),yInput(ok_),ft_,'Startpoint',st_);
-% Alternatively uncomment the following lines to use coefficients from the
-% original fit. You can use this choice to plot the original fit against new
-% data.
-%    cv_ = { 135.62774573404502, 0.94858345279285428};
-%    cf_ = cfit(ft_,cv_{:});
+%bounds on HS/VS
+deltaQ=10;
+deltaHS=0.000001;
+deltaVS=0.0000001;
 
-res_ = yInput - fitresult(xInput);
+% Set up fittype and options.
+ft = fittype( fitType , 'indep', 'x', 'depend', 'z' );
+opts = fitoptions( ft );
+opts.DiffMinChange = 1e-012;
+opts.Display = 'Off';
+opts.Lower = [ -deltaQ hs-deltaHS vs-deltaVS];
+opts.MaxFunEvals = 60000;
+opts.MaxIter = 40000;
+opts.Robust = 'Bisquare';
+opts.StartPoint = [ 0 hs vs];
+opts.TolFun = 1e-012;
+opts.TolX = 1e-012;
+opts.Upper = [ deltaQ hs+deltaHS vs+deltaVS];
+
+% Fit model to data.
+[fitresult, gof] = fit( xInput, zOutput, ft, opts );
+residuals = fitresult(xInput)-zOutput;
 
 % Create a figure for the plots.
 figure( 5 );
 
 % Plot fit with data.
-h = plot( fitresult, xInput, yInput );
-legend( h, 'fit', 'postBlock vs. preBlock', 'Location', 'NorthWest' );
+h = plot( fitresult, xInput, zOutput );
+legend( h, 'fit', 'postBlock vs. preBlock', 'Location', 'Best' );
 % Label axes
-xlabel( 'preBlock' );
+xlabel( 'bonusBlock' );
 ylabel( 'postBlock' );
 grid on
 
 % Plot residuals.
 figure(6)
-h = plot( xInput, zeros(size(xInput)),'k-', xInput, res_, '.');
-legend( h, 'fit residuals', 'Location', 'NorthEast' );
+h = plot( xInput, zeros(size(xInput)),'k-', xInput, residuals, 'o-');
+legend( 'fit residuals', 'Location', 'Best' );
 % Label axes
-xlabel( 'preBlock' );
+xlabel( 'bonusBlock' );
 ylabel( 'postBlock' );
+grid on
 
 
-% % Compute and plot residuals.
-% [x_,i_] = sort(preMastery);
-% axes(ax2_);
-% hold on;
-% h_ = line(x_,res_(i_),'Parent',ax2_,'Color',[1 0 0],...
-%     'LineStyle','none', 'LineWidth',1,...
-%     'Marker','.', 'MarkerSize',6);
-% axes(ax_);
+disp('==== Block Curve Fit=====')
 
+
+if sum(bonusBlock==0)==length(bonusBlock)
+    warning('---------------No bonusBlock to fit-------------------')
+end
+
+% fitresult
+% %% 
+% [fitresult(xInput) zOutput fitresult(xInput)-zOutput]
+%  num2str(coeffvalues(fitresult)','%1.10f')
+end

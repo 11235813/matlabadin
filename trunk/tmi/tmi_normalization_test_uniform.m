@@ -64,6 +64,6 @@ xz=repmat(max(ma)',1,size(tmic,1));
 % ylabel('0.1*Diff(New TMI)/Diff(Mean(MA))')
 
 uf.tmie=tmic(1,:)';
-uf.tmi10=tmic(3,:)';
+uf.tmie2=tmic(2,:)';
 uf.meanma=x;
 uf.maxma=max(ma)';

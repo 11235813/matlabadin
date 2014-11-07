@@ -1,0 +1,43 @@
+7/31 19:21:33.442  Changed Channel: |Hchannel:3053136|h[(null)]|h
+7/31 19:21:33.442  Changed Channel: |Hchannel:3053136|h[(null)]|h
+7/31 19:21:33.442  Changed Channel: |Hchannel:3053136|h[(null)]|h
+7/31 19:21:33.442  Changed Channel: |Hchannel:3053136|h[(null)]|h
+7/31 19:21:34.285  [5. Sl1] Parrydk-Level100PvP: SL1 1450 1073 4.9999995231628 2.9720702171326 0 0 0 0 550 81.25 0 DEATHKNIGHT 100
+7/31 19:21:39.240  %s has earned the achievement Level 100!
+7/31 19:21:39.240  %s has earned the achievement Hero of Stormshield!
+7/31 19:21:39.242  %s has earned the achievement Somebody Likes Me!
+7/31 19:21:40.040  [5. Sl1] Parrydk-Level100PvP: SL1 1574 1073 4.9999995231628 4.2749428749084 0 0 89 0.54938268661499 627 85.625 0 DEATHKNIGHT 100
+7/31 19:21:41.965  [2. Trade] Dinadrion-Level100PvP: 2 dps and go raid test
+7/31 19:21:43.114  %s has earned the achievement Level 100!
+7/31 19:21:43.114  %s has earned the achievement Hero of Stormshield!
+7/31 19:21:43.114  %s has earned the achievement Somebody Likes Me!
+7/31 19:21:44.205  [5. Sl1] Parrydk-Level100PvP: SL1 1698 1073 4.9999995231628 5.0000510215759 0 0 89 0.54938268661499 627 85.625 0 DEATHKNIGHT 100
+7/31 19:21:47.485  [5. Sl1] Parrydk-Level100PvP: SL1 1822 1073 4.9999995231628 6.2054386138916 0 0 166 1.0246913433075 716 90.681816101074 0 DEATHKNIGHT 100
+7/31 19:21:47.981  [2. Trade] Caliste: Giving away ports, pst.
+7/31 19:21:48.482  [3. LocalDefense] : 
+7/31 19:21:50.284  [5. Sl1] Parrydk-Level100PvP: SL1 1946 1073 4.9999995231628 7.4731259346008 0 0 255 1.5740740299225 716 90.681816101074 0 DEATHKNIGHT 100
+7/31 19:21:54.990  [5. Sl1] Parrydk-Level100PvP: SL1 2112 1073 4.9999995231628 8.4167613983154 0 0 255 1.5740740299225 834 97.386360168457 0 DEATHKNIGHT 100
+7/31 19:21:57.485  [2. Trade] Justinbartha-Level100PvP: Tank LF group testing
+7/31 19:21:58.753  [5. Sl1] Parrydk-Level100PvP: SL1 2322 1073 4.9999995231628 10.873765945435 0 0 465 2.870370388031 834 97.386360168457 0 DEATHKNIGHT 100
+7/31 19:22:03.936  [5. Sl1] Parrydk-Level100PvP: SL1 2488 1073 4.9999995231628 12.446617126465 0 0 575 3.549382686615 834 97.386360168457 0 DEATHKNIGHT 100
+7/31 19:22:06.602  [5. Sl1] Parrydk-Level100PvP: SL1 2654 1073 4.9999995231628 14.044989585876 0 0 693 4.277777671814 834 97.386360168457 0 DEATHKNIGHT 100
+7/31 19:22:09.468  [5. Sl1] Parrydk-Level100PvP: SL1 2820 1073 4.9999995231628 14.936176300049 0 0 693 4.277777671814 834 97.386360168457 0 DEATHKNIGHT 100
+7/31 19:22:12.087  [5. Sl1] Parrydk-Level100PvP: SL1 3041 1073 4.9999995231628 16.955522537231 0 0 840 5.1851849555969 834 97.386360168457 0 DEATHKNIGHT 100
+7/31 19:22:15.012  [5. Sl1] Parrydk-Level100PvP: SL1 3262 1073 4.9999995231628 18.938976287842 0 0 987 6.092592716217 834 97.386360168457 0 DEATHKNIGHT 100
+7/31 19:22:17.103  [5. Sl1] Parrydk-Level100PvP: SL1 3483 1073 4.9999995231628 20.073282241821 0 0 987 6.092592716217 981 105.73863983154 0 DEATHKNIGHT 100
+7/31 19:22:19.903  [3. LocalDefense] : 
+7/31 19:22:21.595  [5. Sl1] Parrydk-Level100PvP: SL1 3576 1073 4.9999995231628 20.889806747437 0 0 1049 6.4753084182739 1043 109.26136779785 0 DEATHKNIGHT 100
+7/31 19:22:24.351  [5. Sl1] Parrydk-Level100PvP: SL1 3704 1073 4.9999995231628 22.001949310303 0 0 1134 7 1128 114.09090423584 0 DEATHKNIGHT 100
+7/31 19:22:47.032  [2. Trade] Dinadrion-Level100PvP: 2 dps and go raid test
+7/31 19:22:50.714  %s has earned the achievement Level 100!
+7/31 19:22:50.714  %s has earned the achievement Hero of Stormshield!
+7/31 19:22:50.714  %s has earned the achievement Somebody Likes Me!
+7/31 19:22:52.871  %s has earned the achievement Level 100!
+7/31 19:22:52.871  %s has earned the achievement Hero of Stormshield!
+7/31 19:22:52.871  %s has earned the achievement Somebody Likes Me!
+7/31 19:22:53.162  %s has earned the achievement Quintessential Quintet!
+7/31 19:23:07.161  %s has earned the achievement Level 100!
+7/31 19:23:07.161  %s has earned the achievement Hero of Stormshield!
+7/31 19:23:07.161  %s has earned the achievement Somebody Likes Me!
+7/31 19:23:15.901  Thomas Miller says: Fresh bread for sale!
+7/31 19:24:12.763  [2. Trade] Wildsoul: 14/14H guild group LF tank and healer for testing and g2g please have mumble

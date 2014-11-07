@@ -10,10 +10,10 @@ maxma=1+(tmi./c1+log(450)-log(c2))./10;
 
 c1p=2000 %default c1=500
 c2p=e.^10 %default c1=exp(10)
-tmi=c1p.*log(1+c2p./c2.*(e.^(tmi./c1)-1));
-swf=c1p./c1;
-str=swf.*str;agi=swf.*agi;sta=swf.*sta;exp=swf.*exp;hit=swf.*hit;
-crit=swf.*crit;haste=swf.*haste;mast=swf.*mast;dodge=swf.*dodge;parry=swf.*parry;
+% tmi=c1p.*log(1+c2p./c2.*(e.^(tmi./c1)-1));
+% swf=c1p./c1;
+% str=swf.*str;agi=swf.*agi;sta=swf.*sta;exp=swf.*exp;hit=swf.*hit;
+% crit=swf.*crit;haste=swf.*haste;mast=swf.*mast;dodge=swf.*dodge;parry=swf.*parry;
 
 
 maxma=1+(tmi./c1p+log(450)-log(c2p))./10;
@@ -113,8 +113,8 @@ title('Paladins only')
 legend('T15N25','T16N10','T16N25','T16H10','T16H25','T17Q','Location','NorthEastOutside')
 
 %Figure 13 - TMI vs. ilvl broken down by boss
-% figure(13)
-subplot(2,2,3)
+figure(13)
+% subplot(2,2,3)
 plot(ilvl(war1),tmi(war1),'.',...
      ilvl(war2),tmi(war2),'*',...
      ilvl(war3),tmi(war3),'o',...
@@ -172,6 +172,16 @@ ylabel('TMI')
 title('Monks only')
 legend('T15N25','T15H25','T16N10','T16N25','T16H10','T16H25','Location','NorthEastOutside')
 
+figure(17)
+plot(ilvl(pal3),tmi(pal3),'*',...
+     ilvl(war3),tmi(war3),'s',...
+     ilvl(dk3),tmi(dk3),'x',...
+     ilvl(monk3),tmi(monk3),'o',...
+     ilvl(dru3),tmi(dru3),'d');
+xlabel('average ilvl')
+ylabel('TMI')
+title('T16N10 Boss Only')
+legend('Paladin','Warrior','DK','Monk','Druid','Location','NorthEastOutside')
 %% Stat weight plots
 figure(20)
 subplot(2,4,1)

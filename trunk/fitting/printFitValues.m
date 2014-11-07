@@ -16,15 +16,23 @@ rval = floor(log10(err));
 
 % form strings
 for j=1:length(fvals)
+    if isnan(lval(j)) || isinf(lval(j))
+        lval(j)=1;
+    end
+    if isnan(rval(j)) || isinf(rval(j))
+        rval(j)=1;
+    end
     formatString = ['%' int2str(lval(j)) '.' int2str(1-rval(j)) 'f'];
     strings{j}=[ num2str(fvals(j),formatString) ' +/- ' num2str(err(j),formatString) ];
     
 end
 
-Cstr = [' C = ' strings{1}];
-kstr = [' k = ' strings{2}];
+Qstr = [' R = ' strings{1}];
+HSstr = [' HS = ' strings{2}];
+VSstr = [' VS = ' strings{3}];
 
-disp(Cstr)
-disp(kstr)
+disp(Qstr)
+disp(HSstr)
+disp(VSstr)
 end
 

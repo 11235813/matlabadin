@@ -19,49 +19,53 @@ bonusAgi = set.agi - base.agi;
 preDodge = set.preDodge;
 postDodge = set.postDodge;
 a2d = base.agi2dodge;
+vs = base.vs;
+df = base.df;
+k = base.k;
+
+bonusDodge = bonusAgi*a2d+preDodge;
 
 %% Fit: 'untitled fit 1'.
-[xInput, yInput, zOutput] = prepareSurfaceData( bonusAgi, preDodge, postDodge);
-fitType=[ int2str(baseDodge) '+' int2str(baseAgi) '/' num2str(a2d,'%f') '+(x/' num2str(a2d,'%f') '+y)/((x/' num2str(a2d,'%f') '+y)/C+k)'];
+% [xInput, yInput, zOutput] = prepareSurfaceData( bonusAgi, preDodge, postDodge);
+xInput = bonusDodge; zOutput = postDodge;
+fitType=[ int2str(baseDodge) '+x/(x*' num2str(df) '*vs+' int2str(k) ')'];
 
 % Set up fittype and options.
-ft = fittype( fitType , 'indep', {'x', 'y'}, 'depend', 'z' );
+ft = fittype( fitType , 'indep', 'x', 'depend', 'z' );
 opts = fitoptions( ft );
 opts.DiffMinChange = 1e-012;
 opts.Display = 'Off';
-opts.Lower = [50 0.7];
+opts.Lower = [0.00664];
 opts.MaxFunEvals = 60000;
 opts.MaxIter = 40000;
 opts.Robust = 'Bisquare';
-opts.StartPoint = [499.1 1.422];
+opts.StartPoint = [0.00665];
 opts.TolFun = 1e-012;
 opts.TolX = 1e-012;
-opts.Upper = [520 1.5];
+opts.Upper = [0.00666];
 
 % Fit model to data.
-[fitresult, gof] = fit( [xInput, yInput], zOutput, ft, opts );
+[fitresult, gof] = fit( xInput, zOutput, ft, opts );
 
 % Create a figure for the plots.
 figure( 1 );
 
 % Plot fit with data.
-h = plot( fitresult, [xInput, yInput], zOutput );
-legend( h, 'fit', 'postParry vs. bonusStr, preParry', 'Location', 'NorthEast' );
+h = plot( fitresult, xInput, zOutput );
+legend( h, 'fit', 'postDodge vs. bonusDodge', 'Location', 'NorthEast' );
 % Label axes
-xlabel( 'bonusAgi' );
-ylabel( 'preDodge' );
-zlabel( 'postDodge' );
+xlabel( 'bonusDodge' );
+ylabel( 'postDodge' );
 grid on
 
 % Plot residuals.
 figure(2)
-h = plot( fitresult, [xInput, yInput], zOutput, 'Style', 'Residual' );
+h = plot( fitresult, xInput, zOutput, 'Style', 'Residual' );
 legend( h, 'fit residuals', 'Location', 'NorthEast' );
 % Label axes
-xlabel( 'bonusAgi' );
-ylabel( 'preDodge' );
+xlabel( 'bonusDodge' );
 zlabel( 'postDodge' );
 grid on
-view( -57.5, 56 );
+% view( -57.5, 56 );
 
 

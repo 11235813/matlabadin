@@ -6,7 +6,7 @@ REGEN_ALL=false; %THIS REGENERATES ALL FILES - SET FALSE FOR CACHING
 % values.
 sim=init_sim;
 sim.header='#Rotation Simulation';
-sim.iterations=250000; %min 50, lower causes crashes w/ release versions
+sim.iterations=50000; %min 50, lower causes crashes w/ release versions
 sim.threads=4;
 sim.gear='T16N.simc';
 sim.boss='T16N25.simc';
@@ -59,14 +59,16 @@ simc_rotation_finishers={'actions+=/eternal_flame,if=talent.eternal_flame.enable
 'actions+=/shield_of_the_righteous,if=holy_power>=5|buff.divine_purpose.react|incoming_damage_1500ms>=health.max*0.3'};
 
 % ==================== Part 2 ==========================
-% define the rotation blocks we're interested in. 
+% define the rotation groups we're interested in. 
 
-%block 1 - basic tests of ability ordering
-block.basic.rot={ 'CS>J>AS>Cons>HW';
+%group 1 - basic tests of ability ordering
+group.basic.rot={ 'CS>J>AS>Cons>HW';
                   'CS>J>AS>HW>Cons';
                   'CS+W0.3>J>AS>HW>Cons';
                   'CSw>J>AS>Cons>HW';
-                  'CSw>J>AS>HW>Cons';
+                  'CSw>Jw>AS>Cons>HW';
+                  'CSw>Jw>AS>HW>Cons';
+                  'CSw>Jw>AS+W0.35>HW+W0.35>Cons';
                   'CSw>J>HW>AS>Cons';
                   'CSw>HW>J>AS>Cons';
                   'HW>CSw>J>AS>Cons';
@@ -83,12 +85,12 @@ block.basic.rot={ 'CS>J>AS>Cons>HW';
                   'CSw>AS+GC>J>HW>Cons>AS';
                 };
 %use default glyphs            
-block.basic.glyphs='focused_shield/word_of_glory'; %FS/WoG/FW
+group.basic.glyphs='focused_shield/word_of_glory'; %FS/WoG/FW
 %use default talents
-block.basic.talents=default_talents;
+group.basic.talents=default_talents;
         
-%block 2 - Execute Range tests
-block.execute.rot={ ... %HoW
+%group 2 - Execute Range tests
+group.execute.rot={ ... %HoW
                     'CSw>J>AS>HW>Cons>HoW';
                     'CSw>J>AS>HW>HoW>Cons';
                     'CSw>J>AS>HoW>HW>Cons';
@@ -101,11 +103,11 @@ block.execute.rot={ ... %HoW
                     'CSw>HW+FW>J>AS>HW>HoW>Cons';
                     'HW+FW>CSw>J>AS>HW>HoW>Cons';
                   };
-block.execute.glyphs='focused_shield/word_of_glory/final_wrath'; %FS/WoG/FW
-block.execute.talents=default_talents;
+group.execute.glyphs='focused_shield/word_of_glory/final_wrath'; %FS/WoG/FW
+group.execute.talents=default_talents;
 
-%block 3 - Defensive stuff (SS mostly)
-block.defensive.rot={ ... %SS
+%group 3 - Defensive stuff (SS mostly)
+group.defensive.rot={ ... %SS
                       'CSw>J>AS>HW>HoW>Cons>SS';
                       'CSw>J>AS>HW>HoW>SS+R1>Cons';
                       'CSw>J>AS>HW>HoW>SS+R1>Cons>SS';
@@ -122,14 +124,15 @@ block.defensive.rot={ ... %SS
                       'CSw>SS+R1>J>AS>HW>HoW>Cons';
                       'SS+R1>CSw>J>AS>HW>HoW>Cons';
                     };  
-block.defensive.glyphs='focused_shield/word_of_glory/final_wrath'; %FS/WoG/FW
-block.defensive.talents=default_talents;block.defensive.talents(3)='3';
+group.defensive.glyphs='focused_shield/word_of_glory/final_wrath'; %FS/WoG/FW
+group.defensive.talents=default_talents;group.defensive.talents(3)='3';
                 
-%block 4 - L90 talents
-block.talents.rot={ ... %ES
+%group 4 - L90 talents
+group.talents.rot={ ... %ES
                     'CSw>J>AS>HW>HoW>Cons>ES';
                     'CSw>J>AS>HW>HoW>ES>Cons';
                     'CSw>J>AS>HW>ES>HoW>Cons';
+                    'CSw>J>AS>HW+FW>ES>HW>HoW>Cons';
                     'CSw>J>AS>ES>HW>HoW>Cons';
                     'CSw>J>ES>AS>HW>HoW>Cons';
                     'CSw>ES>J>AS>HW>HoW>Cons';
@@ -141,6 +144,7 @@ block.talents.rot={ ... %ES
                     'CSw>J>AS>HW>HoW>Cons>LH';
                     'CSw>J>AS>HW>HoW>LH>Cons';
                     'CSw>J>AS>HW>LH>HoW>Cons';
+                    'CSw>J>AS>HW+FW>LH>HW>HoW>Cons';
                     'CSw>J>AS>LH>HW>HoW>Cons';
                     'CSw>J>LH>AS>HW>HoW>Cons';
                     'CSw>LH>J>AS>HW>HoW>Cons';
@@ -152,6 +156,7 @@ block.talents.rot={ ... %ES
                     'CSw>J>AS>HW>HoW>Cons>HPr';
                     'CSw>J>AS>HW>HoW>HPr>Cons';
                     'CSw>J>AS>HW>HPr>HoW>Cons';
+                    'CSw>J>AS>HW+FW>HPr>HW>HoW>Cons';
                     'CSw>J>AS>HPr>HW>HoW>Cons';
                     'CSw>J>HPr>AS>HW>HoW>Cons';
                     'CSw>HPr>J>AS>HW>HoW>Cons';
@@ -160,8 +165,8 @@ block.talents.rot={ ... %ES
                     'CSw>J>AS+GC>HW>AS>HPr>HoW>Cons';
                     'CSw>J>AS+GC>HW+FW>AS>HW>HPr>HoW>Cons';
                    };  
-block.talents.glyphs='focused_shield/word_of_glory/final_wrath'; %FS/WoG/FW
-block.talents.talents=[default_talents '+custom']; %see simc building stage
+group.talents.glyphs='focused_shield/word_of_glory/final_wrath'; %FS/WoG/FW
+group.talents.talents=[default_talents '+custom']; %see simc building stage
           
 
 % ==================== Part 3 ==========================
@@ -169,22 +174,22 @@ block.talents.talents=[default_talents '+custom']; %see simc building stage
 
 %rotation_combinations is a list of shorthands that describe rotations
 %collapse for readability
-rotation_combinations=[block.basic.rot; ...
-                        block.execute.rot; ...
-                        block.defensive.rot; ...
-                        block.talents.rot;];
+rotation_combinations=[group.basic.rot; ...
+                        group.execute.rot; ...
+                        group.defensive.rot; ...
+                        group.talents.rot;];
 
 %glyph_combinations is the list of glyphs for each rotation
-glyph_combinations=[cellstr(repmat(block.basic.glyphs,length(block.basic.rot),1));...
-                    cellstr(repmat(block.execute.glyphs,length(block.execute.rot),1));...
-                    cellstr(repmat(block.defensive.glyphs,length(block.defensive.rot),1));...
-                    cellstr(repmat(block.talents.glyphs,length(block.talents.rot),1));];
+glyph_combinations=[cellstr(repmat(group.basic.glyphs,length(group.basic.rot),1));...
+                    cellstr(repmat(group.execute.glyphs,length(group.execute.rot),1));...
+                    cellstr(repmat(group.defensive.glyphs,length(group.defensive.rot),1));...
+                    cellstr(repmat(group.talents.glyphs,length(group.talents.rot),1));];
 
 %talent_combinatiosn is the talent configuration for each rotation
-talent_combinations=[cellstr(repmat(block.basic.talents,length(block.basic.rot),1));...
-                     cellstr(repmat(block.execute.talents,length(block.execute.rot),1));...
-                     cellstr(repmat(block.defensive.talents,length(block.defensive.rot),1));...
-                     cellstr(repmat(block.talents.talents,length(block.talents.rot),1));];                   
+talent_combinations=[cellstr(repmat(group.basic.talents,length(group.basic.rot),1));...
+                     cellstr(repmat(group.execute.talents,length(group.execute.rot),1));...
+                     cellstr(repmat(group.defensive.talents,length(group.defensive.rot),1));...
+                     cellstr(repmat(group.talents.talents,length(group.talents.rot),1));];                   
 
 %rotation_filenames is the list of corresponding .simc filenames 
 for i=1:length(rotation_combinations)
@@ -283,12 +288,12 @@ fclose all;
 addpath ./helper_func/
 
 
-blockfields=fieldnames(block);
+groupfields=fieldnames(group);
 
 Lprev=0;
-for j=1:length(blockfields)
+for j=1:length(groupfields)
     
-    L=length(block.(char(blockfields(j))).rot);
+    L=length(group.(char(groupfields(j))).rot);
     
     dtb=DataTable();
     dtb{1,1}='Rotation';
@@ -300,7 +305,7 @@ for j=1:length(blockfields)
     dtb{1,7}='SotR';
     dtb{1,8}='Wait';
     for i=1:L
-        dtb{1+i,1}=block.(char(blockfields(j))).rot{i};
+        dtb{1+i,1}=group.(char(groupfields(j))).rot{i};
         r=results(Lprev+i);
         dtb{1+i,2}=num2str(r.dps,'%6.0f');
         dtb{1+i,3}=num2str(r.hps,'%6.0f');
@@ -316,10 +321,10 @@ for j=1:length(blockfields)
     eval(['dtb' int2str(j) '=dtb;']);
     clear dtb;
     disp(' ')
-    disp([char(blockfields(j)) ' Rotations'])
+    disp([char(groupfields(j)) ' Rotations'])
     disp(['Max DPS Error: ' num2str(dt_dps_error,'%5.0f')])
-    disp(['Talents: ' block.(char(blockfields(j))).talents])
-    disp(['Glyphs: '  block.(char(blockfields(j))).glyphs])
+    disp(['Talents: ' group.(char(groupfields(j))).talents])
+    disp(['Glyphs: '  group.(char(groupfields(j))).glyphs])
     eval(['dtb' int2str(j) '.toText()'])
 
     Lprev=Lprev+L;
@@ -327,19 +332,19 @@ end
 
 
 %% Blog Output
-for j=1:length(blockfields)
+for j=1:length(groupfields)
     disp(' ')
-    disp([char(blockfields(j)) ' Rotations'])
+    disp([char(groupfields(j)) ' Rotations'])
     disp(['Max DPS Error: ' num2str(dt_dps_error,'%5.0f')])
-    disp(['Talents: ' block.(char(blockfields(j))).talents])
-    disp(['Glyphs: '  block.(char(blockfields(j))).glyphs])
+    disp(['Talents: ' group.(char(groupfields(j))).talents])
+    disp(['Glyphs: '  group.(char(groupfields(j))).glyphs])
     eval(['dtb' int2str(j) '.toBlog()']);
 end
 
 
-%% Old block-specific code (depricated)
+%% Old group-specific code (depricated)
 
-% %block 1
+% %group 1
 % dtb1=DataTable();
 % dtb1{1,1}='Rotation';
 % dtb1{1,2}='DPS';

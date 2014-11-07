@@ -1,0 +1,1000 @@
+00:00:00.372	Kyalara gains Sacred Shield from Kyalara
+	
+00:00:06.039	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:00:11.688	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:00:17.396	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:00:22.965	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:00:28.743	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:00:30.393	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 2177)
+	
+00:00:30.393	Kyalara's Sacred Shield fades from Kyalara
+	
+00:00:34.445	Kyalara gains Sacred Shield from Kyalara
+	
+00:00:36.292	Kyalara's Sacred Shield fades from Kyalara (Remaining: 2177)
+	
+00:00:40.213	Kyalara gains Sacred Shield from Kyalara (Remaining: 7438)
+	
+00:00:45.878	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:00:51.554	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:00:57.259	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:01:02.821	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:01:04.567	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1674)
+	
+00:01:04.567	Kyalara's Sacred Shield fades from Kyalara
+	
+00:01:10.562	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1674)
+	
+00:01:15.530	Kyalara gains Sacred Shield from Kyalara
+	
+00:01:21.244	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:01:26.913	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 14876)
+	
+00:01:32.531	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:01:38.206	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:01:43.482	Kyalara's Sacred Shield is refreshed by Kyalara
+	
+00:01:43.885	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:01:49.565	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:01:55.250	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:02:00.846	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:02:06.556	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:02:12.186	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:02:12.186	Kyalara's Sacred Shield fades from Kyalara
+	
+00:02:12.720	Kyalara gains Sacred Shield from Kyalara
+	
+00:02:18.281	Kyalara's Sacred Shield fades from Kyalara (Remaining: 5721)
+	
+00:02:18.413	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:02:24.091	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:02:29.748	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:02:35.367	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:02:41.064	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:02:41.866	Kyalara's Sacred Shield is refreshed by Kyalara
+	
+00:02:42.738	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:02:48.342	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:02:54.063	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:02:59.681	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:03:05.359	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:03:11.080	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:03:11.080	Kyalara's Sacred Shield fades from Kyalara
+	
+00:03:11.870	Kyalara gains Sacred Shield from Kyalara
+	
+00:03:17.057	Kyalara's Sacred Shield fades from Kyalara (Remaining: 7438)
+	
+00:03:17.551	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:03:23.570	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:03:28.912	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:03:34.871	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:03:40.217	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:03:41.883	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 2674)
+	
+00:03:41.883	Kyalara's Sacred Shield fades from Kyalara
+	
+00:03:42.399	Kyalara gains Sacred Shield from Kyalara
+	
+00:03:47.918	Kyalara's Sacred Shield fades from Kyalara (Remaining: 2674)
+	
+00:03:48.080	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:03:53.715	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:03:59.408	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:04:05.062	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:04:10.667	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:04:12.386	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1674)
+	
+00:04:12.386	Kyalara's Sacred Shield fades from Kyalara
+	
+00:04:13.568	Kyalara gains Sacred Shield from Kyalara
+	
+00:04:18.414	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1674)
+	
+00:04:19.281	Kyalara gains Sacred Shield from Kyalara (Remaining: 7438)
+	
+00:04:24.933	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:04:30.574	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:04:36.258	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:04:41.911	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:04:43.599	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 4349)
+	
+00:04:43.599	Kyalara's Sacred Shield fades from Kyalara
+	
+00:04:49.586	Kyalara's Sacred Shield fades from Kyalara (Remaining: 4349)
+	
+00:04:50.123	Kyalara gains Sacred Shield from Kyalara
+	
+00:04:55.821	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:05:01.529	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:05:07.171	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:05:12.828	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:05:18.531	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:05:20.166	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 4351)
+	
+00:05:20.166	Kyalara's Sacred Shield fades from Kyalara
+	
+00:05:20.968	Kyalara gains Sacred Shield from Kyalara
+	
+00:05:26.193	Kyalara's Sacred Shield fades from Kyalara (Remaining: 4351)
+	
+00:05:26.622	Kyalara gains Sacred Shield from Kyalara (Remaining: 11443)
+	
+00:05:32.229	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:05:38.080	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:05:43.629	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:05:49.289	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:05:50.952	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1674)
+	
+00:05:50.952	Kyalara's Sacred Shield fades from Kyalara
+	
+00:05:50.952	Kyalara gains Sacred Shield from Kyalara
+	
+00:05:56.658	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:06:02.355	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 9154)
+	
+00:06:08.054	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:06:13.718	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:06:19.339	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:06:21.277	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1672)
+	
+00:06:21.277	Kyalara's Sacred Shield fades from Kyalara
+	
+00:06:23.597	Kyalara gains Sacred Shield from Kyalara
+	
+00:06:27.026	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1672)
+	
+00:06:29.279	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:06:34.864	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:06:40.620	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:06:46.291	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 9154)
+	
+00:06:51.968	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:06:52.709	Kyalara's Sacred Shield is refreshed by Kyalara
+	
+00:06:53.727	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:06:59.284	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:07:04.983	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:07:10.627	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:07:16.300	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:07:21.978	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 9154)
+	
+00:07:21.978	Kyalara's Sacred Shield fades from Kyalara
+	
+00:07:25.703	Kyalara gains Sacred Shield from Kyalara
+	
+00:07:27.902	Kyalara's Sacred Shield fades from Kyalara (Remaining: 9154)
+	
+00:07:31.415	Kyalara gains Sacred Shield from Kyalara (Remaining: 14876)
+	
+00:07:37.049	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 9154)
+	
+00:07:42.657	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:07:48.421	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:07:54.051	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:07:55.712	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1674)
+	
+00:07:55.712	Kyalara's Sacred Shield fades from Kyalara
+	
+00:07:55.712	Kyalara gains Sacred Shield from Kyalara
+	
+00:08:01.449	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:08:07.118	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:08:12.803	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 14876)
+	
+00:08:18.258	Kyalara's Sacred Shield is refreshed by Kyalara
+	
+00:08:18.442	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:08:24.040	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:08:29.798	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:08:35.462	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:08:41.105	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:08:46.788	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:08:52.461	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:08:52.461	Kyalara's Sacred Shield fades from Kyalara
+	
+00:08:53.630	Kyalara gains Sacred Shield from Kyalara
+	
+00:08:58.502	Kyalara's Sacred Shield fades from Kyalara (Remaining: 5721)
+	
+00:08:59.260	Kyalara gains Sacred Shield from Kyalara (Remaining: 7438)
+	
+00:09:04.935	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:09:10.923	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:09:16.299	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:09:21.969	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:09:23.560	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1672)
+	
+00:09:23.560	Kyalara's Sacred Shield fades from Kyalara
+	
+00:09:24.209	Kyalara gains Sacred Shield from Kyalara
+	
+00:09:29.646	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1672)
+	
+00:09:29.872	Kyalara gains Sacred Shield from Kyalara (Remaining: 7438)
+	
+00:09:35.581	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:09:41.252	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:09:46.879	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:09:52.549	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:09:54.208	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 2178)
+	
+00:09:54.208	Kyalara's Sacred Shield fades from Kyalara
+	
+00:09:54.732	Kyalara gains Sacred Shield from Kyalara
+	
+00:10:00.204	Kyalara's Sacred Shield fades from Kyalara (Remaining: 2178)
+	
+00:10:00.468	Kyalara gains Sacred Shield from Kyalara (Remaining: 7438)
+	
+00:10:06.108	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:10:11.758	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:10:17.416	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:10:23.120	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:10:24.770	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1670)
+	
+00:10:24.770	Kyalara's Sacred Shield fades from Kyalara
+	
+00:10:27.818	Kyalara gains Sacred Shield from Kyalara
+	
+00:10:30.755	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1670)
+	
+00:10:33.511	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:10:39.217	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:10:44.853	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:10:50.508	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:10:56.199	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:10:57.863	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1674)
+	
+00:10:57.863	Kyalara's Sacred Shield fades from Kyalara
+	
+00:11:01.685	Kyalara gains Sacred Shield from Kyalara
+	
+00:11:03.871	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1674)
+	
+00:11:07.367	Kyalara gains Sacred Shield from Kyalara (Remaining: 11443)
+	
+00:11:13.057	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:11:18.726	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:11:24.359	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:11:30.065	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 18309)
+	
+00:11:31.897	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 2174)
+	
+00:11:31.897	Kyalara's Sacred Shield fades from Kyalara
+	
+00:11:33.072	Kyalara gains Sacred Shield from Kyalara
+	
+00:11:37.688	Kyalara's Sacred Shield fades from Kyalara (Remaining: 2174)
+	
+00:11:38.776	Kyalara gains Sacred Shield from Kyalara (Remaining: 7438)
+	
+00:11:44.452	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:11:50.121	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:11:55.777	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:12:01.435	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:12:03.061	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1675)
+	
+00:12:03.061	Kyalara's Sacred Shield fades from Kyalara
+	
+00:12:03.692	Kyalara gains Sacred Shield from Kyalara
+	
+00:12:09.073	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1675)
+	
+00:12:09.369	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:12:14.958	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:12:20.716	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:12:26.369	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:12:29.092	Kyalara's Sacred Shield is refreshed by Kyalara
+	
+00:12:32.034	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:12:37.709	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:12:43.423	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:12:49.035	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:12:54.703	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:13:00.369	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:13:03.657	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 3349)
+	
+00:13:03.657	Kyalara's Sacred Shield fades from Kyalara
+	
+00:13:04.220	Kyalara gains Sacred Shield from Kyalara
+	
+00:13:09.735	Kyalara's Sacred Shield fades from Kyalara (Remaining: 3349)
+	
+00:13:09.868	Kyalara gains Sacred Shield from Kyalara (Remaining: 7438)
+	
+00:13:15.587	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:13:21.259	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:13:26.949	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:13:32.571	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:13:34.230	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1672)
+	
+00:13:34.230	Kyalara's Sacred Shield fades from Kyalara
+	
+00:13:34.683	Kyalara gains Sacred Shield from Kyalara
+	
+00:13:40.255	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1672)
+	
+00:13:40.387	Kyalara gains Sacred Shield from Kyalara (Remaining: 11443)
+	
+00:13:45.979	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:13:51.733	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:13:57.356	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:14:03.058	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:14:04.727	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 2177)
+	
+00:14:04.727	Kyalara's Sacred Shield fades from Kyalara
+	
+00:14:09.685	Kyalara gains Sacred Shield from Kyalara
+	
+00:14:10.706	Kyalara's Sacred Shield fades from Kyalara (Remaining: 2177)
+	
+00:14:15.398	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:14:21.078	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:14:26.728	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:14:32.381	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:14:38.045	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 9154)
+	
+00:14:39.693	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 2177)
+	
+00:14:39.693	Kyalara's Sacred Shield fades from Kyalara
+	
+00:14:42.362	Kyalara gains Sacred Shield from Kyalara
+	
+00:14:45.703	Kyalara's Sacred Shield fades from Kyalara (Remaining: 2177)
+	
+00:14:48.061	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:14:53.735	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:14:59.396	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:15:05.029	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:15:10.697	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:15:12.351	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1673)
+	
+00:15:12.351	Kyalara's Sacred Shield fades from Kyalara
+	
+00:15:14.273	Kyalara gains Sacred Shield from Kyalara
+	
+00:15:18.373	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1673)
+	
+00:15:19.990	Kyalara gains Sacred Shield from Kyalara (Remaining: 7438)
+	
+00:15:25.632	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:15:31.320	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:15:36.957	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:15:42.638	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:15:44.282	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1674)
+	
+00:15:44.282	Kyalara's Sacred Shield fades from Kyalara
+	
+00:15:44.741	Kyalara gains Sacred Shield from Kyalara
+	
+00:15:50.300	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1674)
+	
+00:15:50.300	Kyalara gains Sacred Shield from Kyalara (Remaining: 7438)
+	
+00:15:56.047	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:16:01.766	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:16:07.379	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:16:13.024	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:16:14.726	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 2674)
+	
+00:16:14.726	Kyalara's Sacred Shield fades from Kyalara
+	
+00:16:20.713	Kyalara's Sacred Shield fades from Kyalara (Remaining: 2674)
+	
+00:16:21.317	Kyalara gains Sacred Shield from Kyalara
+	
+00:16:26.958	Kyalara gains Sacred Shield from Kyalara (Remaining: 7438)
+	
+00:16:32.652	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:16:38.326	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:16:44.009	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:16:49.679	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:16:51.258	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 2175)
+	
+00:16:51.258	Kyalara's Sacred Shield fades from Kyalara
+	
+00:16:54.020	Kyalara gains Sacred Shield from Kyalara
+	
+00:16:57.344	Kyalara's Sacred Shield fades from Kyalara (Remaining: 2175)
+	
+00:16:59.692	Kyalara gains Sacred Shield from Kyalara (Remaining: 11443)
+	
+00:17:05.382	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:17:11.002	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:17:16.688	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 9154)
+	
+00:17:22.309	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:17:24.016	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 2173)
+	
+00:17:24.016	Kyalara's Sacred Shield fades from Kyalara
+	
+00:17:24.605	Kyalara gains Sacred Shield from Kyalara
+	
+00:17:30.002	Kyalara's Sacred Shield fades from Kyalara (Remaining: 2173)
+	
+00:17:30.331	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:17:35.860	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:17:42.142	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:17:47.256	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:17:52.897	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:17:54.516	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1671)
+	
+00:17:54.516	Kyalara's Sacred Shield fades from Kyalara
+	
+00:17:55.120	Kyalara gains Sacred Shield from Kyalara
+	
+00:18:00.548	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1671)
+	
+00:18:00.764	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:18:06.448	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:18:12.090	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:18:17.754	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:18:23.445	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:18:25.474	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1672)
+	
+00:18:25.474	Kyalara's Sacred Shield fades from Kyalara
+	
+00:18:26.587	Kyalara gains Sacred Shield from Kyalara
+	
+00:18:31.075	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1672)
+	
+00:18:32.262	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:18:37.931	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:18:43.609	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+00:18:49.257	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:18:54.978	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:18:56.575	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1673)
+	
+00:18:56.575	Kyalara's Sacred Shield fades from Kyalara
+	
+00:18:57.356	Kyalara gains Sacred Shield from Kyalara
+	
+00:19:02.596	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1673)
+	
+00:19:03.077	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:19:08.778	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:19:14.463	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:19:20.116	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:19:25.772	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:19:26.760	Kyalara's Sacred Shield is refreshed by Kyalara
+	
+00:19:27.440	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:19:33.086	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:19:38.795	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:19:44.438	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:19:50.140	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:19:55.846	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:19:55.846	Kyalara's Sacred Shield fades from Kyalara
+	
+00:20:00.213	Kyalara gains Sacred Shield from Kyalara
+	
+00:20:01.871	Kyalara's Sacred Shield fades from Kyalara (Remaining: 5721)
+	
+00:20:05.918	Kyalara gains Sacred Shield from Kyalara (Remaining: 7438)
+	
+00:20:11.637	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:20:17.313	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:20:22.956	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:20:29.098	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:20:30.198	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1673)
+	
+00:20:30.198	Kyalara's Sacred Shield fades from Kyalara
+	
+00:20:31.320	Kyalara gains Sacred Shield from Kyalara
+	
+00:20:36.266	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1673)
+	
+00:20:36.992	Kyalara gains Sacred Shield from Kyalara (Remaining: 11443)
+	
+00:20:42.668	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:20:48.349	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:20:54.026	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:20:59.664	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:21:01.314	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1674)
+	
+00:21:01.314	Kyalara's Sacred Shield fades from Kyalara
+	
+00:21:01.822	Kyalara gains Sacred Shield from Kyalara
+	
+00:21:07.348	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1674)
+	
+00:21:07.478	Kyalara gains Sacred Shield from Kyalara (Remaining: 9154)
+	
+00:21:13.160	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:21:18.842	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:21:24.518	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:21:30.214	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:21:31.813	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 2173)
+	
+00:21:31.813	Kyalara's Sacred Shield fades from Kyalara
+	
+00:21:32.405	Kyalara gains Sacred Shield from Kyalara
+	
+00:21:37.822	Kyalara's Sacred Shield fades from Kyalara (Remaining: 2173)
+	
+00:21:38.078	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:21:43.738	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 14876)
+	
+00:21:49.427	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:21:55.074	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:22:00.744	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:22:02.014	Kyalara's Sacred Shield is refreshed by Kyalara
+	
+00:22:02.385	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 18309)
+	
+00:22:08.109	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:22:13.773	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:22:19.474	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:22:25.323	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:22:30.733	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:22:30.733	Kyalara's Sacred Shield fades from Kyalara
+	
+00:22:31.847	Kyalara gains Sacred Shield from Kyalara
+	
+00:22:36.690	Kyalara's Sacred Shield fades from Kyalara (Remaining: 11443)
+	
+00:22:37.554	Kyalara gains Sacred Shield from Kyalara (Remaining: 7438)
+	
+00:22:43.240	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:22:48.879	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:22:54.514	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:23:00.212	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:23:01.844	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 2676)
+	
+00:23:01.844	Kyalara's Sacred Shield fades from Kyalara
+	
+00:23:03.974	Kyalara gains Sacred Shield from Kyalara
+	
+00:23:07.873	Kyalara's Sacred Shield fades from Kyalara (Remaining: 2676)
+	
+00:23:09.686	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:23:15.346	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:23:21.035	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:23:26.728	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:23:32.368	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:23:34.048	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1673)
+	
+00:23:34.048	Kyalara's Sacred Shield fades from Kyalara
+	
+00:23:36.216	Kyalara gains Sacred Shield from Kyalara
+	
+00:23:40.050	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1673)
+	
+00:23:41.888	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:23:47.446	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:23:53.220	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:23:58.894	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:24:04.536	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:24:06.211	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 4351)
+	
+00:24:06.211	Kyalara's Sacred Shield fades from Kyalara
+	
+00:24:06.756	Kyalara gains Sacred Shield from Kyalara
+	
+00:24:12.115	Kyalara's Sacred Shield fades from Kyalara (Remaining: 4351)
+	
+00:24:12.544	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:24:18.186	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:24:23.895	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:24:29.540	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:24:35.184	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:24:36.854	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 3351)
+	
+00:24:36.854	Kyalara's Sacred Shield fades from Kyalara
+	
+00:24:37.416	Kyalara gains Sacred Shield from Kyalara
+	
+00:24:42.866	Kyalara's Sacred Shield fades from Kyalara (Remaining: 3351)
+	
+00:24:43.029	Kyalara gains Sacred Shield from Kyalara (Remaining: 14876)
+	
+00:24:48.734	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:24:54.439	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:25:00.082	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:25:05.719	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:25:07.424	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1673)
+	
+00:25:07.424	Kyalara's Sacred Shield fades from Kyalara
+	
+00:25:08.346	Kyalara gains Sacred Shield from Kyalara
+	
+00:25:13.403	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1673)
+	
+00:25:14.063	Kyalara gains Sacred Shield from Kyalara (Remaining: 11443)
+	
+00:25:19.704	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 14876)
+	
+00:25:25.304	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:25:31.051	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:25:36.672	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:25:38.337	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 2175)
+	
+00:25:38.337	Kyalara's Sacred Shield fades from Kyalara
+	
+00:25:38.895	Kyalara gains Sacred Shield from Kyalara
+	
+00:25:44.370	Kyalara's Sacred Shield fades from Kyalara (Remaining: 2175)
+	
+00:25:44.567	Kyalara gains Sacred Shield from Kyalara (Remaining: 11443)
+	
+00:25:50.270	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:25:55.933	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:26:01.552	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:26:07.140	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 9154)
+	
+00:26:07.661	Kyalara's Sacred Shield is refreshed by Kyalara
+	
+00:26:08.776	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:26:14.557	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:26:20.218	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:26:25.928	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:26:31.563	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:26:37.232	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:26:37.232	Kyalara's Sacred Shield fades from Kyalara
+	
+00:26:38.232	Kyalara gains Sacred Shield from Kyalara
+	
+00:26:43.236	Kyalara's Sacred Shield fades from Kyalara (Remaining: 5721)
+	
+00:26:43.896	Kyalara gains Sacred Shield from Kyalara (Remaining: 7438)
+	
+00:26:49.567	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:26:55.258	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:27:00.821	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:27:06.581	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:27:08.219	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 2171)
+	
+00:27:08.219	Kyalara's Sacred Shield fades from Kyalara
+	
+00:27:08.916	Kyalara gains Sacred Shield from Kyalara
+	
+00:27:14.233	Kyalara's Sacred Shield fades from Kyalara (Remaining: 2171)
+	
+00:27:14.618	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:27:20.291	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:27:25.949	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:27:31.620	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:27:37.272	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:27:38.925	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 2171)
+	
+00:27:38.925	Kyalara's Sacred Shield fades from Kyalara
+	
+00:27:38.925	Kyalara gains Sacred Shield from Kyalara
+	
+00:27:44.644	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:27:50.287	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:27:56.307	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:28:01.675	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:28:07.279	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:28:08.981	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 2175)
+	
+00:28:08.981	Kyalara's Sacred Shield fades from Kyalara
+	
+00:28:09.495	Kyalara gains Sacred Shield from Kyalara
+	
+00:28:14.990	Kyalara's Sacred Shield fades from Kyalara (Remaining: 2175)
+	
+00:28:15.121	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:28:20.856	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:28:26.548	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:28:32.179	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:28:37.860	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:28:39.500	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1646)
+	
+00:28:39.500	Kyalara's Sacred Shield fades from Kyalara
+	
+00:28:40.155	Kyalara gains Sacred Shield from Kyalara
+	
+00:28:45.570	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1646)
+	
+00:28:45.867	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:28:51.543	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:28:57.246	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:29:02.849	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:29:08.567	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:29:10.096	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1672)
+	
+00:29:10.096	Kyalara's Sacred Shield fades from Kyalara
+	
+00:29:10.764	Kyalara gains Sacred Shield from Kyalara
+	
+00:29:16.158	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1672)
+	
+00:29:16.454	Kyalara gains Sacred Shield from Kyalara (Remaining: 7438)
+	
+00:29:22.126	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:29:27.793	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 9154)
+	
+00:29:33.470	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:29:39.082	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 11443)
+	
+00:29:40.730	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1647)
+	
+00:29:40.730	Kyalara's Sacred Shield fades from Kyalara
+	
+00:29:41.843	Kyalara gains Sacred Shield from Kyalara
+	
+00:29:46.745	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1647)
+	
+00:29:47.548	Kyalara gains Sacred Shield from Kyalara (Remaining: 7438)
+	
+00:29:53.182	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:29:58.866	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:30:04.490	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 14876)
+	
+00:30:10.093	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:30:11.839	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 1673)
+	
+00:30:11.839	Kyalara's Sacred Shield fades from Kyalara
+	
+00:30:12.755	Kyalara gains Sacred Shield from Kyalara
+	
+00:30:17.863	Kyalara's Sacred Shield fades from Kyalara (Remaining: 1673)
+	
+00:30:18.457	Kyalara gains Sacred Shield from Kyalara (Remaining: 5721)
+	
+00:30:24.106	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 5721)
+	
+00:30:29.764	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:30:35.434	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:30:41.103	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 7438)
+	
+00:30:42.791	Kyalara's Sacred Shield is refreshed by Kyalara (Remaining: 2674)
+	
+00:30:42.791	Kyalara's Sacred Shield fades from Kyalara	

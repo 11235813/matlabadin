@@ -1,0 +1,77 @@
+7/31 15:40:29.440  Changed Channel: |Hchannel:1610976|h[(null)]|h
+7/31 15:40:29.440  Changed Channel: |Hchannel:1610976|h[(null)]|h
+7/31 15:40:29.440  Changed Channel: |Hchannel:1610976|h[(null)]|h
+7/31 15:40:36.176  Changed Channel: |Hchannel:1610976|h[(null)]|h
+7/31 15:40:49.045  You have learned a new ability: Shield Slam.
+7/31 15:40:49.045  You have learned a new ability: Shield Block.
+7/31 15:40:49.048  You have learned a new ability: Devastate.
+7/31 15:40:49.048  You have learned a new ability: Revenge.
+7/31 15:40:49.048  You have learned a new ability: Last Stand.
+7/31 15:40:49.048  You have learned a new ability: Shield Barrier.
+7/31 15:40:49.048  You have learned a new passive effect: Mastery: Critical Block.
+7/31 15:40:49.048  You have learned a new ability: Demoralizing Shout.
+7/31 15:40:49.048  You have learned a new passive effect: Readiness: Protection.
+7/31 15:40:49.048  You have learned a new ability: Thunder Clap.
+7/31 15:40:49.048  You have learned a new passive effect: Resolve.
+7/31 15:40:49.048  You have learned a new ability: Shield Wall.
+7/31 15:40:49.048  You have learned a new passive effect: Blood Craze.
+7/31 15:40:49.048  You have learned a new passive effect: Bladed Armor.
+7/31 15:40:49.048  You have learned a new passive effect: Riposte.
+7/31 15:40:49.048  You have learned a new passive effect: Shield Mastery.
+7/31 15:40:49.048  You have learned a new passive effect: Enrage.
+7/31 15:40:49.048  You have learned a new ability: Execute.
+7/31 15:40:49.048  You have learned a new passive effect: Deep Wounds.
+7/31 15:40:49.063  You have learned a new passive effect: Improved Thunder Clap.
+7/31 15:40:49.063  You have learned a new passive effect: Improved Heroic Leap.
+7/31 15:40:49.063  You have learned a new passive effect: Improved Shield Slam.
+7/31 15:40:49.063  You have learned a new passive effect: Improved Charge.
+7/31 15:40:49.063  You have learned a new passive effect: Improved Heroic Throw.
+7/31 15:40:49.063  You have learned a new passive effect: Improved Shield Barrier.
+7/31 15:40:49.063  You have learned a new passive effect: Improved Block.
+7/31 15:40:49.063  You have learned a new passive effect: Improved Revenge.
+7/31 15:40:49.063  You have learned a new passive effect: Improved Defensive Stance.
+7/31 15:41:04.679  [5. SL1] Parrythree-Level100PvP: SL1 1460 885 4.9999995231628 3.0287668704987 0 0 0 0 0 17.60000038147 27.070831298828 WARRIOR 100
+7/31 15:41:05.711  %s has earned the achievement Level 100!
+7/31 15:41:05.711  %s has earned the achievement Hero of Stormshield!
+7/31 15:41:05.711  %s has earned the achievement Somebody Likes Me!
+7/31 15:41:10.082  [5. SL1] Parrythree-Level100PvP: SL1 1584 885 4.9999995231628 4.331639289856 0 0 89 0.54938268661499 81 19.219999313354 27.433506011963 WARRIOR 100
+7/31 15:41:12.267  %s has earned the achievement Level 100!
+7/31 15:41:12.267  %s has earned the achievement Hero of Stormshield!
+7/31 15:41:12.267  %s has earned the achievement Somebody Likes Me!
+7/31 15:41:14.534  [5. SL1] Parrythree-Level100PvP: SL1 1708 885 4.9999995231628 5.0567479133606 0 0 89 0.54938268661499 81 19.219999313354 27.433506011963 WARRIOR 100
+7/31 15:41:16.848  Donna says: Baby wants his dolly!
+7/31 15:41:16.848  William says: No fair!  Gimme back my gorilla!!
+7/31 15:41:17.180  [5. SL1] Parrythree-Level100PvP: SL1 1832 885 4.9999995231628 6.2621355056763 0 0 166 1.0246913433075 174 21.080001831055 27.847978591919 WARRIOR 100
+7/31 15:41:20.484  [5. SL1] Parrythree-Level100PvP: SL1 1956 885 4.9999995231628 7.5298218727112 0 0 255 1.5740740299225 174 21.080001831055 27.847978591919 WARRIOR 100
+7/31 15:41:21.054  %s has earned the achievement Level 100!
+7/31 15:41:21.054  %s has earned the achievement Hero of Stormshield!
+7/31 15:41:21.054  %s has earned the achievement Somebody Likes Me!
+7/31 15:41:22.266  William says: No fair!  Gimme back my gorilla!!
+7/31 15:41:22.770  %s has earned the achievement Level 100!
+7/31 15:41:23.435  [5. SL1] Parrythree-Level100PvP: SL1 2177 885 4.9999995231628 8.7844228744507 0 0 255 1.5740740299225 329 24.180002212524 28.533559799194 WARRIOR 100
+7/31 15:41:26.029  [5. SL1] Parrythree-Level100PvP: SL1 2343 885 4.9999995231628 9.7179298400879 0 0 255 1.5740740299225 329 24.180002212524 28.533559799194 WARRIOR 100
+7/31 15:41:28.365  [5. SL1] Parrythree-Level100PvP: SL1 2564 885 4.9999995231628 11.832528114319 0 0 402 2.481481552124 329 24.180002212524 28.533559799194 WARRIOR 100
+7/31 15:41:30.521  %s has earned the achievement Level 100!
+7/31 15:41:30.521  %s has earned the achievement Hero of Stormshield!
+7/31 15:41:30.521  %s has earned the achievement Somebody Likes Me!
+7/31 15:41:30.854  [5. SL1] Parrythree-Level100PvP: SL1 2688 885 4.9999995231628 13.040722846985 0 0 491 3.030864238739 329 24.180002212524 28.533559799194 WARRIOR 100
+7/31 15:41:33.187  [5. SL1] Parrythree-Level100PvP: SL1 2909 885 4.9999995231628 15.095067024231 0 0 638 3.938271522522 483 27.260000228882 29.212713241577 WARRIOR 100
+7/31 15:41:35.306  [5. SL1] Parrythree-Level100PvP: SL1 3075 885 4.9999995231628 16.611486434937 0 0 748 4.617283821106 483 27.260000228882 29.212713241577 WARRIOR 100
+7/31 15:41:37.537  [5. SL1] Parrythree-Level100PvP: SL1 3241 885 4.9999995231628 18.152900695801 0 0 866 5.3456788063049 483 27.260000228882 29.212713241577 WARRIOR 100
+7/31 15:41:39.602  [5. SL1] Parrythree-Level100PvP: SL1 3462 885 4.9999995231628 20.116226196289 0 0 1013 6.253086566925 483 27.260000228882 29.212713241577 WARRIOR 100
+7/31 15:41:39.831  %s has earned the achievement Level 100!
+7/31 15:41:39.831  %s has earned the achievement Hero of Stormshield!
+7/31 15:41:39.831  %s has earned the achievement Somebody Likes Me!
+7/31 15:41:41.949  %s has earned the achievement Level 100!
+7/31 15:41:41.949  %s has earned the achievement Hero of Stormshield!
+7/31 15:41:41.949  %s has earned the achievement Somebody Likes Me!
+7/31 15:41:44.398  [5. SL1] Parrythree-Level100PvP: SL1 3672 885 4.9999995231628 22.33373260498 0 0 1223 7.549382686615 483 27.260000228882 29.212713241577 WARRIOR 100
+7/31 15:41:46.666  [5. SL1] Parrythree-Level100PvP: SL1 3838 885 4.9999995231628 23.161325454712 0 0 1223 7.549382686615 607 29.739999771118 29.751470565796 WARRIOR 100
+7/31 15:41:51.131  %s has earned the achievement Level 100!
+7/31 15:41:51.131  %s has earned the achievement Hero of Stormshield!
+7/31 15:41:51.131  %s has earned the achievement Somebody Likes Me!
+7/31 15:41:51.616  [5. SL1] Parrythree-Level100PvP: SL1 3710 885 4.9999995231628 22.060428619385 0 0 1138 7.0246915817261 518 27.960000991821 29.362773895264 WARRIOR 100
+7/31 15:41:53.399  [5. SL1] Parrythree-Level100PvP: SL1 3834 885 4.9999995231628 23.130643844604 0 0 1221 7.537036895752 605 29.700000762939 29.74401473999 WARRIOR 100
+7/31 15:41:56.544  %s has earned the achievement Level 100!
+7/31 15:41:56.544  %s has earned the achievement Hero of Stormshield!
+7/31 15:41:56.544  %s has earned the achievement Somebody Likes Me!
