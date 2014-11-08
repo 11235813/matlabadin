@@ -10,7 +10,7 @@ damage_timeline=zeros(fight_length,1);
 
     for i=1:num_swings
         
-        damage=0; %baseline, from healing
+        damage=-0.0; %baseline, from healing
             
         if rand>avoidance
           

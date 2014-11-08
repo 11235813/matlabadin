@@ -2,9 +2,9 @@ clear
 %% define fight/TMI parameters
 fight_length=650;
 window=6;
-N0=1;
+N0=450;
 % N0=fight_length;
-c1mod=1.3;
+c1mod=1.0;
 
 %% create single-spike data
 damage_steps=(-0.20:0.02:3.5);
@@ -60,10 +60,12 @@ for i=1:length(damage_mean)
         D = generate_random_damage_alt_timeline(fight_length,damage_mean(i),damage_var,swing_timer);
         M = calculate_moving_sum_timeline(D, window);
         tmi=calculate_tmi( M, N0);
+        tmia=calculate_tmi_alt( M, N0);
        
         %store results
         k=k+1;
         rz.tmi(k)=tmi./1e3*c1mod;
+        rz.tmia(k)=tmia./1e3;
         rz.msd(k)=max(M);
     end
 end
@@ -71,9 +73,9 @@ end
 %% plot results
 
 figure(1)
-plot(ss.msd,ss.tmi,rd.msd,rd.tmi,'.',uf.msd,uf.tmi,rz.msd,rz.tmi,'.')
+plot(ss.msd,ss.tmi,rd.msd,rd.tmi,'.',uf.msd,uf.tmi,rz.msd,rz.tmi,'.',rz.msd,rz.tmia,'.')
 xlabel('MSD')
 ylabel('TMI (k)');
 xlim([-0.5 4]);
-legend('single-spike','random','uniform','random scaled','Location','NorthWest')
+legend('single-spike','random','uniform','random scaled','random scaled altTMI','Location','NorthWest')
 title(['Calculations using c_1 = ' num2str(c1mod,'%1.2f') '\times 10^4, c_2 = ' int2str(N0) 'e^F'])
